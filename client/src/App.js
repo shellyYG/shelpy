@@ -1,30 +1,22 @@
-import logo from './logo.svg';
-import HomeNavigation from './components/HomeNavigation';
-import Wrapper from './components/Wrapper';
-import HomeCard from './components/HomeCard';
-import Divider from './components/Divider';
-import Dropdown from './components/Dropdown';
+// export default App;
+import React from 'react';
 import './App.css';
+import NavBar from './components/NavBar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './pages/home';
+import About from './pages/about';
+import SignUp from './pages/signup';
 
 function App() {
-  const mainStyle = {
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
-  };
   return (
-    
-    <div style={mainStyle} >
-      <HomeNavigation />
-      <Divider text={"I want to"} />
-      <Wrapper>
-        <HomeCard position={"left"} text={"Find Help"} />
-        <HomeCard position={"right"} text={"Offer Help"} />
-      </Wrapper>
-      <Divider text={"at"} />
-      <Dropdown />
-    </div>
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/sign-up" component={SignUp} />
+      </Switch>
+    </Router>
   );
 }
 

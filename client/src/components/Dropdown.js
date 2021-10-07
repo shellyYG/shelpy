@@ -3,7 +3,7 @@ function Dropdown(props) {
     props.handleSelect(e.target.value);
   };
   return (
-    <tr>
+    <tr className="flexContainer">
       <label>
         <th className="dropdownTitle">{props.title}</th>
         <th>
