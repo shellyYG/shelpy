@@ -1,25 +1,29 @@
 import React from 'react';
-import { Nav, NavLink, NavMenu, NavBtn, NavBtnLink } from './NavBarElements';
-
+import { NavLink } from 'react-router-dom';
 import GlobalIcon from './icon';
 
 const NavBar = () => {
   return (
     <>
-      <Nav>
-        <NavMenu>
-          <NavLink to="/" exact={true} activeStyle>
-            Home
+      <nav>
+        <div className="nav-menu">
+          <NavLink className="nav-logo" to="/" exact={true} activeStyle>
+            <img src={'/Shelpy_logo.jpg'} />
           </NavLink>
-          <NavLink to="/about" activeStyle>
+          <NavLink className="nav-link" to="/about" activeStyle>
             About
           </NavLink>
-        </NavMenu>
-        <NavBtn>
-          <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>
+          <NavLink className="nav-link" to="/find-helpers" activeStyle>
+            Find Helpers
+          </NavLink>
+        </div>
+        <div className="nav-button">
+          <NavLink className="nav-button-link" to="/sign-up">
+            Sign Up
+          </NavLink>
           <GlobalIcon />
-        </NavBtn>
-      </Nav>
+        </div>
+      </nav>
     </>
   );
 };

@@ -3,11 +3,15 @@ function Dropdown(props) {
     props.handleSelect(e.target.value);
   };
   return (
-    <tr className="flexContainer">
+    <tr className="dropdown-wrapper">
       <label>
-        <th className="dropdownTitle">{props.title}</th>
+        
         <th>
-          <select ref={props.selectRef} onChange={handleSelect}>
+          <select
+            ref={props.selectRef}
+            onChange={handleSelect}
+            className="dropdown-body"
+          >
             <option> Frankfurt </option>
             <option> Berlin </option>
             <option> Münich </option>
