@@ -1,0 +1,7 @@
+chromedriver
+.env
+node_modules
+.png
+/public/imgs
+.jpg
+,jpeg

@@ -11,7 +11,6 @@ import SignUpPage from './pages/SignUpPage';
 import Footer from './components/Footer';
 import BookAppointmentPage from './pages/BookAppointmentPage';
 
-
 function App() {
   return (
     <Router>

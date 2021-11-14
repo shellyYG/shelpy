@@ -1,31 +1,39 @@
 // Handle HTTP requests
-import { axios } from 'axios';
+import axios from 'axios';
 import { notificationActions } from '../notification/notification-slice'; 
 import { helpeeActions } from "./helpee-slice";
 
-const userPath = '';
+const userPath = '/api/helpee';
+const testPath = '/api/test';
 
 export const fetchHelpeeData = () => {
-  console.log('running fetchHelpeeData');
+  console.log('..............running fetchHelpeeData');
     return async (dispatch) => {
         try {
             // const response = await axios.get(userPath);
             // const data = { response };
             
-            const data = {
-              helpeeName: '',
-              helpeeLanguage: '',
-              serviceType: 'testtest',
-            };
-            console.log('~~ replaceHelpeeInfo');
-            dispatch(
-              helpeeActions.replaceHelpeeInfo({
-                helpeeName: data.helpeeName,
-                helpeeLanguage: data.helpeeLanguage,
-                serviceType: data.serviceType,
-              })
-            );
+            
+            // here
+            // const data = {
+            //   helpeeName: '',
+            //   helpeeLanguage: '',
+            //   serviceType: 'testtest',
+            // };
+            // console.log('~~ replaceHelpeeInfo');
+            // dispatch(
+            //   helpeeActions.replaceHelpeeInfo({
+            //     helpeeName: data.helpeeName,
+            //     helpeeLanguage: data.helpeeLanguage,
+            //     serviceType: data.serviceType,
+            //   })
+            // );
+
+            // test api
+            const response = await axios.get(testPath);
+            console.log('response from API: ', response);
         } catch (err) {
+          console.log('...oops error!err: ', err);
             notificationActions.showNotification({
               status: 'error',
               title: 'Error!',

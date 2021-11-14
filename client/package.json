@@ -26,9 +26,10 @@
     "sweetalert2-react-content": "^4.1.1",
     "web-vitals": "^1.0.1"
   },
+  "proxy": "http://localhost:9000/",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cd ..&& rm -rf views && mv client/build/ views",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write ./src"
