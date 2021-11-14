@@ -8,7 +8,7 @@ const NavBar = () => {
       <nav>
         <div className="nav-menu">
           <NavLink className="nav-logo" to="/" exact={true} activeStyle>
-            <img src={'/Shelpy_logo.jpg'} />
+            <img src={'/Shelpy_logo.jpg'} alt={'logo'} />
           </NavLink>
           <NavLink className="nav-link" to="/about" activeStyle>
             About
