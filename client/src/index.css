@@ -181,11 +181,7 @@ body {
   align-items: center;
   flex-direction: column;
   opacity: 1;
-}
-
-/* Here is the transition event */
-.container .card-active .content {
-  opacity: 1;
+  transition: 0.5s;
   transform: translateY(-3px);
 }
 
