@@ -14,11 +14,6 @@ const BookAppointmentPage = () => {
           <AppointmentForm />
         </div>
       </div>
-      <div className="section-right-align">
-        {/* <button className="btn-next" onClick={handleNext}>
-          Next ❯
-        </button> */}
-      </div>
     </div>
   );
 };

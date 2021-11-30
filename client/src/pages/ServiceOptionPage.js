@@ -27,13 +27,6 @@ const ServiceOptionPage = () => {
  
   return (
     <div className="main-content-wrapper">
-      <div className="section-left-align">
-        <div>
-          {/* <button className="btn-back" onClick={handleNext}>
-            ❮ Back
-          </button> */}
-        </div>
-      </div>
       <div className="section-center-align">
         <div className="container">
           {serviceOptions.map((option) => (
@@ -46,11 +39,11 @@ const ServiceOptionPage = () => {
             />
           ))}
         </div>
-      </div>
-      <div className="section-right-align">
-        <button className="btn-next" onClick={handleNext}>
-          Next ❯
-        </button>
+        <div style={{ textAlign: 'center' }}>
+          <button className="btn-next" onClick={handleNext}>
+            Next ❯
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -47,7 +47,8 @@ const LandingPage = () => {
             marginBottom: '10px',
           }}
         >
-          Create an account to find a helper who goes with you to your German meetings!
+          Create an account to find a helper who goes with you to your German
+          meetings!
         </h5>
 
         <form action="" className="centerbox-landing">
@@ -56,7 +57,7 @@ const LandingPage = () => {
             className="form-control-landing"
             placeholder="Email address"
           />
-          <ConfirmBtn cta="Sign Up >" handleConfirm={handleConfirm} />
+          <ConfirmBtn cta="Sign Up ❯" handleConfirm={handleConfirm} />
         </form>
       </div>
     </div>

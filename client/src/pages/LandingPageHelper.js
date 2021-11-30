@@ -49,7 +49,8 @@ const LandingPageHelper = () => {
             color: 'white',
           }}
         >
-          Create an account to be a helper who accompany foreigners to their German meetings.
+          Create an account to be a helper who accompany foreigners to their
+          German meetings.
         </h5>
         <form action="" className="centerbox-landing">
           <input
@@ -57,7 +58,7 @@ const LandingPageHelper = () => {
             className="form-control-landing"
             placeholder="Email address"
           />
-          <ConfirmBtn cta="Sign Up >" handleConfirm={handleConfirm} />
+          <ConfirmBtn cta="Sign Up ❯" handleConfirm={handleConfirm} />
         </form>
       </div>
     </div>

@@ -37,7 +37,7 @@ export const serviceOptions = [
   },
   {
     value: 'prepaidPhoneCardActivate',
-    label: 'Activate Pre-Paid Phone Card Consulting',
+    label: 'Phone Card Activating',
     price: '30',
     location: 'Online Call',
     description:
@@ -46,7 +46,7 @@ export const serviceOptions = [
   },
   {
     value: 'internetConsult',
-    label: 'Wohnung Internet Booking Consulting',
+    label: 'Wohnung Internet Booking',
     price: '30',
     location: 'Online Call',
     description:
@@ -60,6 +60,7 @@ export const serviceOptions = [
     location: 'Online Call',
     description:
       'Say No to default option. We help you save your long-term money by finding out the best option for you!',
+    imgPath: '/offer_help.jpeg',
   },
   {
     value: 'others',
@@ -67,6 +68,7 @@ export const serviceOptions = [
     price: '15',
     location: 'Others',
     description: 'Please provide details in the inquiry.',
+    imgPath: '/offer_help.jpeg',
   },
 ];
 
