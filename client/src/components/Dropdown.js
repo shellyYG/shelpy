@@ -1,25 +1,25 @@
-function Dropdown(props) {
+function DropDown(props) {
   const handleSelect = (e) => {
     props.handleSelect(e.target.value);
   };
   return (
-    <tr className="dropdown-wrapper">
-      <label>
-        
-        <th>
-          <select
-            ref={props.selectRef}
-            onChange={handleSelect}
-            className="dropdown-body"
-          >
-            <option> Frankfurt </option>
-            <option> Berlin </option>
-            <option> Münich </option>
-          </select>
-        </th>
-      </label>
-    </tr>
+    <div className="form-wrapper">
+      <label>{props.title}</label>
+      <select
+        ref={props.ref}
+        onChange={handleSelect}
+        value={props.selected}
+        className="form-control"
+      >
+        {props.options.map((option) => (
+          <option value={option.value} key={option.value}>
+            {' '}
+            {option.label}{' '}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
 
-export default Dropdown;
+export default DropDown;

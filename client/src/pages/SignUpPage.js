@@ -1,12 +1,22 @@
+// import { useHistory } from 'react-router-dom';
+import SignUpForm from '../components/SignUpForm';
+import '../App.css';
+
 const SignUpPage = () => {
+  // const history = useHistory();
   return (
-    <body>
-      <section>
-        <div className="main-content-wrapper">
-          <h1>Sign Up</h1>
+    <div className="main-content-wrapper" style={{ height: 500 }}>
+      <div className="section-left-align">
+        <div></div>
+      </div>
+      <div className="section-center-align">
+        <div className="container">
+          <SignUpForm />
         </div>
-      </section>
-    </body>
+      </div>
+      <div className="section-right-align">
+      </div>
+    </div>
   );
 };
 

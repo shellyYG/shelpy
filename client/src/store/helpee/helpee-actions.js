@@ -56,10 +56,11 @@ export const sendHelpeeData = (data) => {
         try {
           
             // talk to API:
-            // const response = await axios.post(userPath, {
-            //     body: JSON.stringify(data),
-            // });
-            // const res = response.data;
+            const response = await axios.post(userPath, {
+                body: JSON.stringify(data),
+            });
+            const res = response.data;
+            console.log(`res from axios.post to API: ${res}`);
 
             // update global Helpee state:
             dispatch(

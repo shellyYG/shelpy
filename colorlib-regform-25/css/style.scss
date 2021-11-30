@@ -1,12 +1,4 @@
 @font-face {
-	font-family: "Muli-Regular";
-	src: url('../fonts/muli/Muli-Regular.ttf');
-}
-@font-face {
-	font-family: "Muli-SemiBold";
-	src: url('../fonts/muli/Muli-SemiBold.ttf');
-}
-@font-face {
 	font-family: "Poppins-Regular";
 	src: url('../fonts/poppins/Poppins-Regular.ttf');
 }
@@ -102,7 +94,7 @@ h3 {
 	position: relative;
 	label {
 		display: block;
-		font-family: "Muli-SemiBold";
+		font-family: "system-ui";
 		font-size: 17px;
 		color: #4c4c4c;
 		margin-bottom: 8px;
@@ -182,7 +174,7 @@ button {
 	background: #3e91f7;
 	color: #fff;
 	text-transform: uppercase;
-	font-family: "Muli-SemiBold";
+	font-family: "system-ui";
 	font-size: 15px;
 	position: relative;
 	transition: all 0.3s ease;

@@ -333,6 +333,36 @@ code {
   width: 100%;
   height: 500px;
 }
+.main-content-wrapper-homepage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  align-items: stretch;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/landingpage.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
+.main-content-wrapper-homepage-helper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  align-items: stretch;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/deliveryman.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
 
 .main-content {
   position: 'absolute';
@@ -391,16 +421,19 @@ footer {
     margin: 3px;
     height: 40px;
 }
+.form-title {
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
 
 .form-inner {
   left: 11.07%;
-  width: 511px;
+  width: 590px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   -ms-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   -o-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-  /* background: url("../images/bg-inner.png") repeat; */
   background: black;
   color: white;
   padding: 15px; 
@@ -415,13 +448,17 @@ footer {
     width: 50%; }
     .form-row .form-wrapper:first-child {
       margin-right: 25px; }
+  .form-row .form-wrapper-full {
+    width: 100%; }
+    .form-row .form-wrapper:first-child {
+      margin-right: 25px; }
 
 .form-wrapper {
   position: relative; }
   .form-wrapper label {
     display: block;
-    font-family: "Muli-SemiBold";
-    font-size: 17px;
+    font-family: "system-ui";
+    font-size: 15px;
     color: rgb(238, 241, 222);
     margin-bottom: 8px; }
   .form-wrapper i.zmdi-chevron-down {
@@ -436,6 +473,26 @@ footer {
     font-size: 15px;
     color: #666;
     top: 43px; }
+.form-wrapper-full {
+  position: relative; }
+  .form-wrapper-full label {
+    display: block;
+    font-family: "system-ui";
+    font-size: 17px;
+    color: rgb(238, 241, 222);
+    margin-bottom: 8px; }
+  .form-wrapper-full i.zmdi-chevron-down {
+    position: absolute;
+    right: 16px;
+    top: 42px;
+    font-size: 15px;
+    color: #666; }
+  .form-wrapper-full span.lnr-calendar-full {
+    position: absolute;
+    left: 16px;
+    font-size: 15px;
+    color: #666;
+    top: 43px; }
 
     .form-control {
   border: 1px solid #e6e6e6;
@@ -444,5 +501,17 @@ footer {
   width: 100%;
   height: 42px;
   padding: 0 14px; }
+
   .form-control.datepicker-here {
     padding-left: 39px; }
+    .form-control-landing {
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  width: 45%;
+  height: 42px;
+  padding: 0 14px; }
+
+  .centerbox-landing {
+    text-align: center;
+  }
+  

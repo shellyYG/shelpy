@@ -4,7 +4,9 @@ import './App.css';
 // import { useSelector, useDispatch } from 'react-redux';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import LandingPage from './pages/LandingPage';
+import LandingPageHelper from './pages/LandingPageHelper';
+import ServiceOptionPage from './pages/ServiceOptionPage';
 import AboutPage from './pages/AboutPage';
 import HelperListPage from './pages/HelperListPage';
 import SignUpPage from './pages/SignUpPage';
@@ -16,7 +18,9 @@ function App() {
     <Router>
       <NavBar />
       <Switch>
-        <Route path="/" exact component={HomePage} />
+        <Route path="/" exact component={LandingPage} />
+        <Route path="/helper" exact component={LandingPageHelper} />
+        <Route path="/service-options" exact component={ServiceOptionPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/find-helpers" component={HelperListPage} />
         <Route path="/sign-up" component={SignUpPage} />

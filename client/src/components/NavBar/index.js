@@ -19,7 +19,7 @@ const NavBar = () => {
         </div>
         <div className="nav-button">
           <NavLink className="nav-button-link" to="/sign-up">
-            Sign Up
+            Sign In
           </NavLink>
           <GlobalIcon />
         </div>

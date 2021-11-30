@@ -24,11 +24,11 @@ function HomeCard(props) {
     e.preventDefault();
     setServiceType(props.value); // set local service type state
     // should change DB when click "next"
-    // dispatch(sendHelpeeData({ // change DB
-      // helpeeName: '',
-      // helpeeLanguage: '',
-      // serviceType: props.value,
-    // }));
+    dispatch(sendHelpeeData({ // change DB
+      helpeeName: '',
+      helpeeLanguage: '',
+      serviceType: props.value,
+    }));
     // change active service type
     dispatch(
       helpeeActions.setActiveServiceType({
@@ -81,23 +81,6 @@ function HomeCard(props) {
           </h3>
         </div>
       </div>
-      {/* <ul className="sci">
-        <li style={{ ['--i']: 1 }}>
-          <a href="#">
-            <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
-          </a>
-        </li>
-        <li style={{ ['--i']: 2 }}>
-          <a href="#">
-            <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
-          </a>
-        </li>
-        <li style={{ ['--i']: 3 }}>
-          <a href="#">
-            <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
-          </a>
-        </li>
-      </ul> */}
     </div>
   );
 }
