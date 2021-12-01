@@ -6,11 +6,11 @@ const getHelpeeInfo = async (req, res) => {
 }
 
 
-const postHelpeeInfo = async (req, res) => {
-  console.log('start controller postHelpeeInfo...');
-    const serviceType = req.body.serviceType;
-    const response = await helpeeModel.postHelpeeInfo(serviceType);
-    return response;
+const postHelpeeSignUpEmail = async (req, res) => {
+  const response = await helpeeModel.postHelpeeSignUpEmail(
+    req.body.data
+  );
+  return response;
 };
 
 const testAPIConnection = async (req, res) => {
@@ -21,6 +21,6 @@ const testAPIConnection = async (req, res) => {
 
 module.exports = {
   getHelpeeInfo,
-  postHelpeeInfo,
+  postHelpeeSignUpEmail,
   testAPIConnection,
 };

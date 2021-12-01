@@ -1,9 +1,8 @@
-// Handle HTTP requests
 import axios from 'axios';
 import { notificationActions } from '../notification/notification-slice'; 
 import { helpeeActions } from "./helpee-slice";
 
-const userPath = '/api/helpee';
+const userSignUpEmailPath = '/api/helpee-signup-email';
 const testPath = '/api/test';
 
 export const fetchHelpeeData = () => {
@@ -43,45 +42,26 @@ export const fetchHelpeeData = () => {
     }
 }
 
-export const sendHelpeeData = (data) => {
-  console.log('running sedHelpeeData, data: ', data);
-    return async (dispatch) => {
-        dispatch(
-            notificationActions.showNotification({
-                status: "pending",
-                title: "Sending..",
-                message: "Sending helpee data...",
-            })
-        )
-        try {
-          
-            // talk to API:
-            const response = await axios.post(userPath, {
-                body: JSON.stringify(data),
-            });
-            const res = response.data;
-            console.log(`res from axios.post to API: ${res}`);
-
-            // update global Helpee state:
-            dispatch(
-              helpeeActions.updateHelpeeInfoAfterUserInput({
-                helpeeName: data.helpeeName,
-                helpeeLanguage: data.helpeeLanguage,
-                serviceType: data.serviceType,
-              })
-            );
-            // update global notification state:
-            // notificationActions.showNotification({
-            //   status: 'success',
-            //   title: 'Success!',
-            //   message: `Successfully post helpee data to DB, res: ${res}`,
-            // });
-        } catch (err) {
-            notificationActions.showNotification({
-              status: 'error',
-              title: 'Error!',
-              message: `Error: ${err}`,
-            });
-        }
+export const postHelpeeSignUpEmail = (data) => {
+  return async (dispatch) => {
+    try {
+      // talk to API:
+      await axios.post(userSignUpEmailPath, {
+        data,
+      });
+      // update global Helpee state:
+      dispatch(
+        helpeeActions.updateHelpeeInfoAfterInsertEmail({
+          helpeeEmail: data.helpeeEmail,
+        })
+      );
+    } catch (err) {
+      console.error(err);
+        notificationActions.showNotification({
+          status: 'error',
+          title: 'Error!',
+          message: `Error: ${err}`,
+        });
     }
-}
+  };
+};

@@ -7,24 +7,12 @@ async function getHelpeeInfo() {
     console.log(`queryResult: ${queryResult}`)
     return queryResult;
 }
-async function postHelpeeInfo(data) {
-  console.log('start model post HelpeeInfo...');
+async function postHelpeeSignUpEmail(data) {
   const dataToInsert = {
-    username: data.helpeeName,
-    gender: "Male",
-    service_type: "Rathaus", // data.serviceType
-    target_helper_gender: "Male",
-    meet_date: "2021-01-01",
-    meet_time: "8am-9am",
-    meet_country: "Germany",
-    meet_city: "Berlin",
-    meet_address: "Landgrafering 300, 63333 Berlin",
-    phone: "01111111111",
-    native_language: "Chinese", // data.helpeeLanguage
-    first_language: "English",
-    notes: 'I speak Japanese.',
+    email: data.helpeeEmail,
+    sign_up_status: 'email_submitted',
   };
-  const sql = "INSERT INTO helpee_requests SET?"; 
+  const sql = "INSERT INTO helpee_account SET?"; 
   const queryResult = await query(sql, dataToInsert);
   return queryResult;
 }
@@ -32,5 +20,5 @@ async function postHelpeeInfo(data) {
 
 module.exports = {
   getHelpeeInfo,
-  postHelpeeInfo,
+  postHelpeeSignUpEmail,
 };

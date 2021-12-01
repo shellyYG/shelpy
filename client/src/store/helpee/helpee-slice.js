@@ -1,33 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const helpeeSlice = createSlice({
-  name: 'helpee',
+  name: 'helpeeAccount',
   initialState: {
     pageFirstTimeLoaded: true,
-    activeServiceType: '',
-    DBHelpeeName: '',
-    DBHelpeeLanguage: '',
-    DBServiceType: '',
+    DBHelpeeEmail: '',
+    DBSignUpStatus: '',
   },
   reducers: {
-    replaceHelpeeInfo(state, action) {
-      // const { payload } = action;
-      // console.log('payload: ', payload);
-      // state.pageFirstTimeLoaded = true; // stays true
-      // state.DBHelpeeName = payload.helpeeName;
-      // state.DBHelpeeLanguage = payload.helpeeLanguage;
-      state.DBServiceType = 'hihi'; //payload.serviceType;
-    },
-    updateHelpeeInfoAfterUserInput(state, action) {
+    updateHelpeeInfoAfterInsertEmail(state, action) {
       const { payload } = action;
       state.pageFirstTimeLoaded = false;
-      state.DBHelpeeName = payload.helpeeName;
-      state.DBHelpeeLanguage = payload.helpeeLanguage;
-      state.DBServiceType = payload.serviceType;
+      state.DBemail = payload.helpeeEmail;
     },
-    setActiveServiceType(state,action) {
-      state.activeServiceType = action.payload.activeServiceType;
-    }
   },
 });
 

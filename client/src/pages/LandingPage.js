@@ -7,16 +7,27 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import '../App.css';
+import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions'
 
 const MySwal = withReactContent(Swal);
 
 const LandingPage = () => {
-  // const history = useHistory();
-  const [dataHandoverChecked, setDataHandoverChecked] = useState(false);
-  const dataHandoverCheckedRef = useRef();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const DBHelpeeEmail  = useSelector((state) => state.helpeeAccount);
+  const emailRef = useRef();
+  const [email, setEmail] = useState(DBHelpeeEmail);
   async function handleConfirm(e) {
     e.preventDefault();
+    // change DB & global state
+    const data = {
+      helpeeEmail: emailRef.current.value,
+    };
+    try {
+      dispatch(postHelpeeSignUpEmail(data));
+    } catch (err) {
+      console.error(err);
+    }
     await MySwal.fire({
       title: <strong>Thank you!</strong>,
       html: <i>You are signed up successfully.</i>,
@@ -25,6 +36,15 @@ const LandingPage = () => {
     let path = 'book-appointment-form';
     history.push(path);
   }
+  function handleEmailTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    console.log('typingInput: ', typingInput);
+    setEmail(typingInput);
+  }
+  useEffect(() => {
+    setEmail(DBHelpeeEmail);
+  }, [DBHelpeeEmail]);
   return (
     <div className="main-content-wrapper-homepage">
       <div className="section-center-align">
@@ -56,6 +76,9 @@ const LandingPage = () => {
             type="text"
             className="form-control-landing"
             placeholder="Email address"
+            value={email}
+            onChange={handleEmailTyping}
+            ref={emailRef}
           />
           <ConfirmBtn cta="Sign Up ❯" handleConfirm={handleConfirm} />
         </form>
