@@ -1,9 +1,10 @@
 {
   "scripts": {
-    "start": "node app.js && cd client/ npm run start",
-    "build": "node app.js && cd client/ npm run build"
+    "start": "cd client/ && npm run start && cd ../ && nodemon app.js",
+    "build": "cd client/ && npm run build && cd ../ && nodemon app.js"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
