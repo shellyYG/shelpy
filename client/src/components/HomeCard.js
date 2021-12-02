@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import {
   fetchHelpeeData,
-  sendHelpeeData,
 } from '../store/helpee/helpee-actions';
 import { helpeeActions } from '../store/helpee/helpee-slice';
 
@@ -24,11 +23,11 @@ function HomeCard(props) {
     e.preventDefault();
     setServiceType(props.value); // set local service type state
     // should change DB when click "next"
-    dispatch(sendHelpeeData({ // change DB
-      helpeeName: '',
-      helpeeLanguage: '',
-      serviceType: props.value,
-    }));
+    // dispatch(sendHelpeeData({ // change DB
+    //   helpeeName: '',
+    //   helpeeLanguage: '',
+    //   serviceType: props.value,
+    // }));
     // change active service type
     dispatch(
       helpeeActions.setActiveServiceType({

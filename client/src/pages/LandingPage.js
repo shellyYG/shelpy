@@ -1,22 +1,18 @@
 // import { useHistory } from 'react-router-dom';
 import CheckBox from '../components/CheckBox';
 import ConfirmBtn from '../components/ConfirmBtn';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import '../App.css';
 import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions'
 
-const MySwal = withReactContent(Swal);
-
 const LandingPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const DBHelpeeEmail  = useSelector((state) => state.helpeeAccount);
   const emailRef = useRef();
-  const [email, setEmail] = useState(DBHelpeeEmail);
+  const [email, setEmail] = useState('');
   async function handleConfirm(e) {
     e.preventDefault();
     // change DB & global state
@@ -28,12 +24,7 @@ const LandingPage = () => {
     } catch (err) {
       console.error(err);
     }
-    await MySwal.fire({
-      title: <strong>Thank you!</strong>,
-      html: <i>You are signed up successfully.</i>,
-      icon: 'success',
-    });
-    let path = 'book-appointment-form';
+    let path = 'sign-up-final-step';
     history.push(path);
   }
   function handleEmailTyping(e) {

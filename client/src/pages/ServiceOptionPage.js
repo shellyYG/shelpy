@@ -28,6 +28,18 @@ const ServiceOptionPage = () => {
   return (
     <div className="main-content-wrapper">
       <div className="section-center-align">
+        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+          I need a helper to attend ... with me.
+        </h1>
+        <h2
+          style={{
+            textAlign: 'center',
+            marginTop: '10px',
+            marginBottom: '30px',
+          }}
+        >
+          We will send a helper to translate for you!
+        </h2>
         <div className="container">
           {serviceOptions.map((option) => (
             <HomeCard

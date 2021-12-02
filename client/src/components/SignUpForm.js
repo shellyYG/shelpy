@@ -12,6 +12,7 @@ function SignUpForm(props) {
   const { DBHelpeeName, DBHelpeeLanguage, DBServiceType } = useSelector(
     (state) => state.helpee
   );
+  const [email, setEmail] = useState('shellyyangtw@gmail.com');
   const [dataHandoverChecked, setDataHandoverChecked] = useState(false);
   const dataHandoverCheckedRef = useRef();
   const history = useHistory();
@@ -25,30 +26,38 @@ function SignUpForm(props) {
      let path = 'book-appointment-form';
      history.push(path);
   }
+  console.log('email: ', email);
   return (
     <div className="form-inner">
       <form action="">
-        <h3></h3>
-        <div className="form-row last">
-          <div className="form-wrapper-full">
-            <label for="">Username</label>
-            <input type="text" className="form-control" placeholder="xxx" />
-          </div>
-        </div>
         <div className="form-row last">
           <div className="form-wrapper-full">
             <label for="">Email</label>
             <input
               type="text"
               className="form-control"
-              placeholder="xxx@xxx.com"
+              value={email}
             />
           </div>
         </div>
         <div className="form-row last">
           <div className="form-wrapper-full">
+            <label for="">Username</label>
+            <input type="text" className="form-control" placeholder="xxx" />
+          </div>
+        </div>
+
+        <div className="form-row last">
+          <div className="form-wrapper-full">
             <label for="">Password</label>
-            <input type="text" className="form-control" placeholder="***" />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="****"
+              value={props.password}
+              onChange={props.handlePasswordTyping}
+              ref={props.passwordRef}
+            />
           </div>
         </div>
         <CheckBox

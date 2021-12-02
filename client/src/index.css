@@ -450,6 +450,19 @@ footer {
     .form-row .form-wrapper:first-child {
       margin-right: 25px; }
 
+.form-row-password {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: grey;
+}
+.checkbox-text-password-page {
+  font-size: '12px';
+  font-weight: 'normal';
+  padding-left: '30px';
+  vertical-align: 'middle';
+  color: black;
+}
 .form-wrapper {
   position: relative; }
   .form-wrapper label {
@@ -501,12 +514,23 @@ footer {
 
   .form-control.datepicker-here {
     padding-left: 39px; }
-    .form-control-landing {
+  .form-control-landing {
   border: 1px solid #e6e6e6;
   border-radius: 5px;
   width: 45%;
   height: 42px;
   padding: 0 14px; }
+  .form-control-password {
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  width: 45%;
+  height: 42px;
+  padding: 0 14px; 
+  display: flex;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
 
   .centerbox-landing {
     text-align: center;
