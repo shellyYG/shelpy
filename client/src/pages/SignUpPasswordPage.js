@@ -1,9 +1,8 @@
-// import { useHistory } from 'react-router-dom';
 import CheckBox from '../components/CheckBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import '../App.css';
@@ -12,7 +11,7 @@ import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions';
 const MySwal = withReactContent(Swal);
 
 const SignUpPasswordPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const passwordRef = useRef();
   const dispatch = useDispatch();
   const DBHelpeePassword = useSelector((state) => state.helpeeAccount);
@@ -35,7 +34,7 @@ const SignUpPasswordPage = () => {
       icon: 'success',
     });
     let path = 'service-options';
-    history.push(path);
+    navigate(path);
   }
   function handlePasswordTyping(e) {
     e.preventDefault();

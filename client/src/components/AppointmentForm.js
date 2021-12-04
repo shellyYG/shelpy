@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-date-picker';
 import  DropDown  from './Dropdown';
 import CheckBox from './CheckBox';
@@ -35,7 +35,7 @@ const firstLangRef = useRef();
 const secondLangRef = useRef();
 const dataHandoverCheckedRef = useRef();
 
-const history = useHistory();
+const navigate = useNavigate();
   async function handleConfirm(e) {
     e.preventDefault();
     await MySwal.fire({
@@ -48,7 +48,7 @@ const history = useHistory();
       icon: 'success',
     });
      let path = '/'; // HERE: change to user appointment list section. (appointment, status)
-     history.push(path);
+     navigate(path);
   }
   const [service, setService] = useState(
     'Visum'

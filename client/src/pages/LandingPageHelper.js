@@ -1,20 +1,18 @@
-// import { useHistory } from 'react-router-dom';
 import CheckBox from '../components/CheckBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import '../App.css';
 
 const MySwal = withReactContent(Swal);
 
 const LandingPageHelper = () => {
-  // const history = useHistory();
   const [dataHandoverChecked, setDataHandoverChecked] = useState(false);
   const dataHandoverCheckedRef = useRef();
-  const history = useHistory();
+  const navigate = useNavigate();
   async function handleConfirm(e) {
     e.preventDefault();
     await MySwal.fire({
@@ -23,7 +21,7 @@ const LandingPageHelper = () => {
       icon: 'success',
     });
     let path = 'book-appointment-form';
-    history.push(path);
+    navigate(path);
   }
   return (
     <div className="main-content-wrapper-homepage-helper">

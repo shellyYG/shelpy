@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import CheckBox from './CheckBox';
 import ConfirmBtn from './ConfirmBtn';
 
@@ -15,7 +15,7 @@ function SignUpForm(props) {
   const [email, setEmail] = useState('shellyyangtw@gmail.com');
   const [dataHandoverChecked, setDataHandoverChecked] = useState(false);
   const dataHandoverCheckedRef = useRef();
-  const history = useHistory();
+  const navigate = useNavigate();
   async function handleConfirm(e) {
     e.preventDefault();
     await MySwal.fire({
@@ -24,7 +24,7 @@ function SignUpForm(props) {
       icon: 'success',
     });
      let path = 'book-appointment-form';
-     history.push(path);
+     navigate(path);
   }
   console.log('email: ', email);
   return (

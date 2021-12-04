@@ -1,14 +1,13 @@
-// import { useHistory } from 'react-router-dom';
 import CheckBox from '../components/CheckBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import '../App.css';
 import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions'
 
 const LandingPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const DBHelpeeEmail  = useSelector((state) => state.helpeeAccount);
   const emailRef = useRef();
@@ -25,7 +24,7 @@ const LandingPage = () => {
       console.error(err);
     }
     let path = 'sign-up-final-step';
-    history.push(path);
+    navigate(path);
   }
   function handleEmailTyping(e) {
     e.preventDefault();

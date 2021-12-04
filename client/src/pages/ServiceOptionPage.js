@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import HomeCard from '../components/HomeCard';
 import { serviceOptions } from '../store/options/options';
@@ -17,12 +17,12 @@ const ServiceOptionPage = () => {
     `DBServiceType: ${DBServiceType} | DBHelpeeName: ${DBHelpeeName} | DBHelpeeLanguage: ${DBHelpeeLanguage}`
   );
   
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function handleNext(e) {
     e.preventDefault();
     let path = 'sign-up';
-    history.push(path);
+    navigate(path);
   }
  
   return (
