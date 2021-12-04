@@ -6,7 +6,7 @@
 }
 
 nav {
-  background: black;
+  background: #231f20;
   color: white;
   height: 66px;
   display: flex;
@@ -203,7 +203,7 @@ body {
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(40px);
-  background-color: black;
+  background-color: #231f20;
   border: 3px solid #fff995;
 }
 .task-container .task-card {
@@ -226,7 +226,7 @@ body {
 }
 .chat-box-title-container-text {
   text-align: center;
-  background-color: black;
+  background-color: #231f20;
   width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -348,7 +348,7 @@ body {
 }
 
 .container .card .content .contentBx h3 {
-  color: black;
+  color: #231f20;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 500;
@@ -502,7 +502,7 @@ img {
 
 footer {
   height: 66px;
-  background-color: black;
+  background-color: #231f20;
   color: white;
   /* stick the position: */
   position: sticky;
@@ -533,7 +533,7 @@ footer {
   border-radius: 1px;
     background-color: #fff995;
     padding: 10px 22px;
-    color: black;
+    color: #231f20;
     font-weight: bold;
     outline: none;
     border: none;
@@ -550,7 +550,7 @@ footer {
 .btn-task-category {
     border-radius: 1px;
     width: 50%;
-    color: Black;
+    color: #231f20;
     font-weight: bold;
     outline: none;
     cursor: pointer;
@@ -564,7 +564,7 @@ footer {
   border-radius: 1px;
     background-color: #fff995;
     width: 50%;
-    color: black;
+    color: #231f20;
     font-weight: bold;
     outline: none;
     border: none;
@@ -600,7 +600,7 @@ footer {
   -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   -ms-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   -o-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-  background: black;
+  background: #231f20;
   color: white;
   padding: 15px; 
   border-radius: 5px;
@@ -630,7 +630,7 @@ footer {
   font-weight: 'normal';
   padding-left: '30px';
   vertical-align: 'middle';
-  color: black;
+  color: #231f20;
 }
 .form-wrapper {
   position: relative; }
@@ -724,7 +724,7 @@ footer {
 
   /* CHAT ROOM MESSAGES */
   .left-chat-container {
-    color: black;
+    color: #231f20;
     width: fit-content;
     border-radius: 10px;
     border: 1px solid grey;
@@ -735,7 +735,7 @@ footer {
   }
   .right-chat-container {
     background-color: #fff995;
-    color: black;
+    color: #231f20;
     width: fit-content;
     border-radius: 10px;
     padding: 10px;
