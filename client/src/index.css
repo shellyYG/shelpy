@@ -8,7 +8,7 @@
 nav {
   background: black;
   color: white;
-  height: 80px;
+  height: 66px;
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc((100vw - 1000px) / 2);
@@ -24,8 +24,7 @@ nav {
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 0 1.5rem;
-  height: 50%;
+  padding: 10px 22px;
   cursor: pointer;
   border: 1px solid #fff995;
   border-radius: 4px;
@@ -124,10 +123,19 @@ body {
   left: 0;
   width: 30px;
   flex:4;
-  /* border: 10px solid blue; */
   overflow: auto;
   height: 80%;
-  /* padding-top: 30vh; */
+  padding-bottom: 30vh;
+}
+.section-center-align-landing {
+  padding-top: 80px;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  width: 30px;
+  flex:4;
+  overflow: auto;
+  height: 80%;
   padding-bottom: 30vh;
 }
 .chat-section-center-align {
@@ -493,7 +501,7 @@ img {
 }
 
 footer {
-  height: 80px;
+  height: 66px;
   background-color: black;
   color: white;
   /* stick the position: */
@@ -503,7 +511,7 @@ footer {
 }
 
 .footer-text {
-  line-height: 30px;
+  line-height: 25px;
   text-align: center;
 }
 

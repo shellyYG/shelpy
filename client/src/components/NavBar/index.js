@@ -11,10 +11,10 @@ const NavBar = () => {
             <img src={'/Shelpy_logo.jpg'} alt={'logo'} />
           </NavLink>
           <NavLink className="nav-link" to="/about" activeStyle>
-            About
+            Forum
           </NavLink>
           <NavLink className="nav-link" to="/find-helpers" activeStyle>
-            Find Helpers
+            Book a Shelper
           </NavLink>
         </div>
         <div className="nav-button">

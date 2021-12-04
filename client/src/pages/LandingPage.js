@@ -38,7 +38,7 @@ const LandingPage = () => {
   }, [DBHelpeeEmail]);
   return (
     <div className="main-content-wrapper-homepage">
-      <div className="section-center-align">
+      <div className="section-center-align-landing">
         <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
           Afraid of speaking in German?
         </h1>

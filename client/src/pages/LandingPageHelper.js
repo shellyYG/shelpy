@@ -27,7 +27,7 @@ const LandingPageHelper = () => {
   }
   return (
     <div className="main-content-wrapper-homepage-helper">
-      <div className="section-center-align">
+      <div className="section-center-align-landing">
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           Tired of earning money with busy cycling?
         </h1>
