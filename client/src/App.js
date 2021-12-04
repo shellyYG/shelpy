@@ -12,6 +12,7 @@ import AboutPage from './pages/AboutPage';
 import HelperListPage from './pages/HelperListPage';
 import Footer from './components/Footer';
 import BookAppointmentPage from './pages/BookAppointmentPage';
+import ChatRoomPage from './pages/ChatRoomPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/about" component={AboutPage} />
         <Route path="/find-helpers" component={HelperListPage} />
         <Route path="/book-appointment-form" component={BookAppointmentPage} />
+        <Route path="/chatroom" exact component={ChatRoomPage} />
       </Switch>
       <Footer />
     </Router>
