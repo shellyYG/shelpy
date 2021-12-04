@@ -1,20 +1,25 @@
+import io from 'socket.io-client';
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import TaskCard from '../components/TaskCard';
 import { serviceOptions } from '../store/options/options';
 import { Icon } from '@iconify/react';
 import '../App.css';
 
-const ChatRoomPage = () => {
-  const { DBHelpeeName, DBHelpeeLanguage, DBServiceType } = useSelector(
-    (state) => state.helpee
-  );
-  console.log(
-    `DBServiceType: ${DBServiceType} | DBHelpeeName: ${DBHelpeeName} | DBHelpeeLanguage: ${DBHelpeeLanguage}`
-  );
 
-  const [showTaskSection,setShowTaskSection] = useState(true);
+const ChatRoomPage = () => {
+  const navigate = useNavigate();
+  
+  const socket = io.connect('http://localhost:9000'); // connect to API
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [room, setRoom] = useState('abc');
+  
+  
+  const q = searchParams.get('roomId');
+  console.log(`Room: ${q}`);
+  const [showTaskSection, setShowTaskSection] = useState(true);
 
   function handleSchrink(e) {
     e.preventDefault();
@@ -24,6 +29,14 @@ const ChatRoomPage = () => {
     e.preventDefault();
     setShowTaskSection(true);
   }
+  function handleSend(e) {
+    e.preventDefault();
+    // navigate({
+    //   pathname: "/chatroom",
+    //   search: `roomId=${room}`,
+    // });
+    socket.emit('join_room', room)
+  }
 
   return (
     <>
@@ -31,8 +44,8 @@ const ChatRoomPage = () => {
         {!showTaskSection && (
           <div className="task-expander">
             <h3 className="expander" onClick={handleExpand}>
-              {' '}
-              {'>>'}{' '}
+              {" "}
+              {">>"}{" "}
             </h3>
           </div>
         )}
@@ -40,8 +53,8 @@ const ChatRoomPage = () => {
           <div className="section-left-align">
             <div className="task-schrinker">
               <h3 className="schrinker" onClick={handleSchrink}>
-                {' '}
-                {'<<'}{' '}
+                {" "}
+                {"<<"}{" "}
               </h3>
             </div>
             <div className="task-category">
@@ -106,7 +119,11 @@ const ChatRoomPage = () => {
                 className="form-control-chat"
                 placeholder="Send some message here"
               />
-              <button data-text="Book Room" className="btn-send">
+              <button
+                data-text="Book Room"
+                className="btn-send"
+                onClick={handleSend}
+              >
                 <span>
                   <Icon icon="fa:paper-plane-o" />
                 </span>
