@@ -17,12 +17,14 @@ const io = new Server(server, {
 })
 io.on("connection", (socket)=>{
   console.log(`User ${socket.id} conneted...`);
-  socket.on('join_room', (data) =>{
-    socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room: ${data}`)
+  socket.on('join_room', (roomId) =>{
+    socket.join(roomId);
   })
-  socket.on('disconnect',()=>{
-    console.log(`User ${societ.id} disconnected.`);
+  socket.on('send_message', (data) => {
+    socket.to(data.room).emit("server_send_message", data); // emit to others except self
+  })
+  socket.on('disconnect', (data) =>{
+    console.log(`User ${socket.id} disconnected.`);
   })
 });
 

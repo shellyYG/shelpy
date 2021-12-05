@@ -1,24 +1,28 @@
-import io from 'socket.io-client';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import ScrollToBottom from 'react-scroll-to-bottom';
 import TaskCard from '../components/TaskCard';
+import ChatMessageSelf from "../components/ChatMessageSelf";
+import ChatMessageOther from "../components/ChatMessageOther";
 import { serviceOptions } from '../store/options/options';
+import {socket} from '../service/socket';
 import { Icon } from '@iconify/react';
 import '../App.css';
 
 
 const ChatRoomPage = () => {
   const navigate = useNavigate();
-  
-  const socket = io.connect('http://localhost:9000'); // connect to API
   const [searchParams, setSearchParams] = useSearchParams();
-  const [room, setRoom] = useState('abc');
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
   
-  
-  const q = searchParams.get('roomId');
-  console.log(`Room: ${q}`);
+  console.log("messageList:");
+  console.log(messageList);
+  const roomId = searchParams.get('roomId');
+  const userId = searchParams.get('userId');
+ 
   const [showTaskSection, setShowTaskSection] = useState(true);
 
   function handleSchrink(e) {
@@ -29,14 +33,43 @@ const ChatRoomPage = () => {
     e.preventDefault();
     setShowTaskSection(true);
   }
-  function handleSend(e) {
+  function handleMessageInput(e) {
     e.preventDefault();
+    setCurrentMessage(e.target.value);
+  }
+  socket.emit("join_room", roomId);
+  async function handleSend(e) {
+    e.preventDefault();
+    if (currentMessage !== "") {
+      const messageData = {
+        room: roomId,
+        author: userId, // username,
+        message: currentMessage,
+        time:
+          new Date(Date.now()).getHours() +
+          ":" +
+          new Date(Date.now()).getMinutes(),
+      };
+      await socket.emit("send_message", messageData); // send to everyone in the room
+      console.log('1 new message: ', messageData);
+      console.log("---");
+      setMessageList((list) => [...list, messageData]); // add messageList on self
+      setCurrentMessage(''); // clear input message
+    }
     // navigate({
     //   pathname: "/chatroom",
     //   search: `roomId=${room}`,
     // });
-    socket.emit('join_room', room)
+    
   }
+  // listen to changes from socket server
+  useEffect(() => {
+    socket.on('server_send_message', (data) => {
+      console.log("2 new messsage from server: ", data);
+      console.log('~~~');
+      setMessageList((list) => [...list, data]); // add messageList on other
+    })
+  },[socket])
 
   return (
     <>
@@ -44,8 +77,7 @@ const ChatRoomPage = () => {
         {!showTaskSection && (
           <div className="task-expander">
             <h3 className="expander" onClick={handleExpand}>
-              {" "}
-              {">>"}{" "}
+              {">>"}
             </h3>
           </div>
         )}
@@ -53,8 +85,7 @@ const ChatRoomPage = () => {
           <div className="section-left-align">
             <div className="task-schrinker">
               <h3 className="schrinker" onClick={handleSchrink}>
-                {" "}
-                {"<<"}{" "}
+                {"<<"}
               </h3>
             </div>
             <div className="task-category">
@@ -81,43 +112,35 @@ const ChatRoomPage = () => {
               <h3> Your chat with Markus </h3>
             </div>
           </div>
-          <div className="chat-box">
-            <div className="left-chat-container">Hi Shelly</div>
-            <div className="right-chat-container">Hi Markus</div>
-            <div className="left-chat-container">
-              Thanks for booking me as Shelper.
-            </div>
-            <div className="right-chat-container">No problem!</div>
-            <div className="right-chat-container">
-              Can we meet at 7:30am tomorrow?
-            </div>
-            <div className="right-chat-container">
-              I want to be at the forginer office a bit earlier.
-            </div>
-            <div className="left-chat-container">Sure thing! See you then.</div>
-            <div className="left-chat-container">
-              My phone number is : 015555555555My phone number is :
-              015555555555My phone number is : 015555555555My phone number is :
-              015555555555My phone number is : 015555555555My phone number is :
-              015555555555My phone number is : 015555555555
-            </div>
-            <div className="right-chat-container">
-              Thank you! See you at 7:30am! :) My phone number is :
-              015555555555My phone number is : 015555555555My phone number is :
-              015555555555My phone number is : 015555555555My phone number is :
-              015555555555My phone number is : 015555555555My phone number is :
-              015555555555
-            </div>
-            <div className="right-chat-container">
-              My phone number is : 100000000
-            </div>
-          </div>
+          {/* <div className="chat-box"> */}
+            <ScrollToBottom className="chat-box">
+            {messageList.map((messageContent)=>{
+              return messageContent.author === userId ? (
+                <ChatMessageSelf
+                  message={messageContent.message}
+                  time={messageContent.time}
+                />
+              ) : (
+                <ChatMessageOther
+                  message={messageContent.message}
+                  time={messageContent.time}
+                  author={messageContent.author}
+                />
+              );
+            })}
+            </ScrollToBottom>
+          {/* </div> */}
           <div className="send-msg-container">
             <form action="" className="centerbox-chat">
               <input
                 type="text"
+                value={currentMessage}
                 className="form-control-chat"
                 placeholder="Send some message here"
+                onChange={handleMessageInput}
+                onKeyPress={(e)=>{
+                  e.key === "Enter" && handleSend(e);
+                }}
               />
               <button
                 data-text="Book Room"
