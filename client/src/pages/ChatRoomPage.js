@@ -37,7 +37,6 @@ const ChatRoomPage = () => {
     e.preventDefault();
     setCurrentMessage(e.target.value);
   }
-  socket.emit("join_room", roomId);
   async function handleSend(e) {
     e.preventDefault();
     if (currentMessage !== "") {
@@ -46,27 +45,33 @@ const ChatRoomPage = () => {
         author: userId, // username,
         message: currentMessage,
         time:
+          new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+            new Date(Date.now())
+          ) + " " +
+          new Date(Date.now()).getDate() +
+          " " +
           new Date(Date.now()).getHours() +
           ":" +
           new Date(Date.now()).getMinutes(),
       };
       await socket.emit("send_message", messageData); // send to everyone in the room
       console.log('1 new message: ', messageData);
-      console.log("---");
       setMessageList((list) => [...list, messageData]); // add messageList on self
       setCurrentMessage(''); // clear input message
     }
-    // navigate({
-    //   pathname: "/chatroom",
-    //   search: `roomId=${room}`,
-    // });
     
   }
+
+ // only render once when onload. Rrevent infinite loop
+  useEffect(() => {
+    socket.emit("join_room", roomId);
+    socket.on("history", (data) => {
+      setMessageList(data); // add messageList on self
+    });
+  }, []);
   // listen to changes from socket server
   useEffect(() => {
     socket.on('server_send_message', (data) => {
-      console.log("2 new messsage from server: ", data);
-      console.log('~~~');
       setMessageList((list) => [...list, data]); // add messageList on other
     })
   },[socket])

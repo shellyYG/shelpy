@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
 const { Server } = require('socket.io');
+const socketChat = require('./api/controllers/chatController');
 
 
 const server = require("http").createServer(app);
@@ -15,18 +16,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   }
 })
-io.on("connection", (socket)=>{
-  console.log(`User ${socket.id} conneted...`);
-  socket.on('join_room', (roomId) =>{
-    socket.join(roomId);
-  })
-  socket.on('send_message', (data) => {
-    socket.to(data.room).emit("server_send_message", data); // emit to others except self
-  })
-  socket.on('disconnect', (data) =>{
-    console.log(`User ${socket.id} disconnected.`);
-  })
-});
+io.on("connection", socketChat);
 
 const PORT = process.env.PORT || 9000;
 app.use(bodyParser.json());
