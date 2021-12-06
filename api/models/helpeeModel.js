@@ -16,9 +16,15 @@ async function postHelpeeSignUpEmail(data) {
   const queryResult = await query(sql, dataToInsert);
   return queryResult;
 }
+async function postHelpeeSignUpPassword(data) {
+  sql = `UPDATE helpee_account SET password_encoded='${data.helpeePassword}', sign_up_status='password_created' WHERE email='${data.helpeeEmail}'`;
+  const queryResult = await query(sql);
+  return queryResult;
+}
 
 
 module.exports = {
   getHelpeeInfo,
   postHelpeeSignUpEmail,
+  postHelpeeSignUpPassword,
 };

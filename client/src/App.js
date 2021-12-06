@@ -23,7 +23,7 @@ function App() {
         <Route
           path="/sign-up-final-step"
           exact
-          component={SignUpPasswordPage}
+          element={<SignUpPasswordPage/>}
         />
         <Route path="/helper" exact element={<LandingPageHelper />} />
         <Route path="/service-options" exact element={<ServiceOptionPage />} />

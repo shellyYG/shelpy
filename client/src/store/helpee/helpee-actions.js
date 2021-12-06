@@ -3,6 +3,7 @@ import { notificationActions } from '../notification/notification-slice';
 import { helpeeActions } from "./helpee-slice";
 
 const userSignUpEmailPath = '/api/helpee-signup-email';
+const userSignUpPasswordPath = "/api/helpee-signup-password";
 const testPath = '/api/test';
 
 export const fetchHelpeeData = () => {
@@ -62,6 +63,29 @@ export const postHelpeeSignUpEmail = (data) => {
           title: 'Error!',
           message: `Error: ${err}`,
         });
+    }
+  };
+};
+export const postHelpeeSignUpPassword = (data) => {
+  return async (dispatch) => {
+    try {
+      // talk to API:
+      await axios.post(userSignUpPasswordPath, {
+        data,
+      });
+      // update global Helpee state:
+      dispatch(
+        helpeeActions.updateHelpeeInfoAfterInsertPassword({
+          helpeePassword: data.helpeePassword,
+        })
+      );
+    } catch (err) {
+      console.error(err);
+      notificationActions.showNotification({
+        status: "error",
+        title: "Error!",
+        message: `Insert password error: ${err}`,
+      });
     }
   };
 };

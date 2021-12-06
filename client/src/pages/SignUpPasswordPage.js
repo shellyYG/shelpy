@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import '../App.css';
-import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions';
+import { postHelpeeSignUpPassword } from "../store/helpee/helpee-actions";
 
 const MySwal = withReactContent(Swal);
 
@@ -21,10 +21,11 @@ const SignUpPasswordPage = () => {
     e.preventDefault();
     // change DB & global state
     const data = {
+      helpeeEmail: email,
       helpeePassword: passwordRef.current.value,
     };
     try {
-      dispatch(postHelpeeSignUpEmail(data));
+      dispatch(postHelpeeSignUpPassword(data));
     } catch (err) {
       console.error(err);
     }
@@ -39,7 +40,7 @@ const SignUpPasswordPage = () => {
   function handlePasswordTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
-    console.log('typingInput: ', typingInput);
+    console.log('typingPassword: ', typingInput);
     setPassword(typingInput);
   }
   useEffect(() => {

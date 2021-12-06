@@ -13,6 +13,11 @@ const postHelpeeSignUpEmail = async (req, res) => {
   return response;
 };
 
+const postHelpeeSignUpPassword = async (req, res) => {
+  const response = await helpeeModel.postHelpeeSignUpPassword(req.body.data);
+  return response;
+};
+
 const testAPIConnection = async (req, res) => {
   // res.send('Successfully connected to /test API!');
   const serviceType = await helpeeModel.getHelpeeInfo();
@@ -22,5 +27,6 @@ const testAPIConnection = async (req, res) => {
 module.exports = {
   getHelpeeInfo,
   postHelpeeSignUpEmail,
+  postHelpeeSignUpPassword,
   testAPIConnection,
 };
