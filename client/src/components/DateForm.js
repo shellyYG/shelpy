@@ -8,7 +8,7 @@ function DateForm(props) {
             className="form-control"
             value={props.value}
             onChange={props.handleInput}
-            ref={props.ref}
+            ref={props.dateFormRef}
           ></input>
         </span>
       </div>

@@ -8,6 +8,7 @@ function FullLineTextBox(props) {
             className="form-control"
             style={{ fontSize: '12px' }}
             placeholder={props.placeholder}
+            ref={props.inputRef}
           />
         </div>
       </div>

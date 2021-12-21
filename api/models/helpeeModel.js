@@ -22,9 +22,17 @@ async function postHelpeeSignUpPassword(data) {
   return queryResult;
 }
 
+async function postHelpeeServiceRequestForm(data) {
+  console.log('helpee data: ', data);
+  const sql = "INSERT INTO request_form SET?";
+  const queryResult = await query(sql, data);
+  return queryResult;
+}
+
 
 module.exports = {
   getHelpeeInfo,
   postHelpeeSignUpEmail,
   postHelpeeSignUpPassword,
+  postHelpeeServiceRequestForm,
 };

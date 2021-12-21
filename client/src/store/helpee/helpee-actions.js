@@ -4,6 +4,7 @@ import { helpeeActions } from "./helpee-slice";
 
 const userSignUpEmailPath = '/api/helpee-signup-email';
 const userSignUpPasswordPath = "/api/helpee-signup-password";
+const userRequestFormPath = "/api/helpee-request-form";
 const testPath = '/api/test';
 
 export const fetchHelpeeData = () => {
@@ -85,6 +86,30 @@ export const postHelpeeSignUpPassword = (data) => {
         status: "error",
         title: "Error!",
         message: `Insert password error: ${err}`,
+      });
+    }
+  };
+};
+
+export const postHelpeeServiceRequestForm = (data) => {
+  return async (dispatch) => {
+    try {
+      // talk to API:
+      await axios.post(userRequestFormPath, {
+        data,
+      });
+      // update global Helpee state:
+      dispatch(
+        helpeeActions.updateHelpeeInfoAfterInsertEmail({
+          data
+        })
+      );
+    } catch (err) {
+      console.error(err);
+      notificationActions.showNotification({
+        status: "error",
+        title: "Error!",
+        message: `Error: ${err}`,
       });
     }
   };
