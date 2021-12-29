@@ -6,12 +6,17 @@ const helpeeSlice = createSlice({
     pageFirstTimeLoaded: true,
     DBHelpeeEmail: '',
     DBSignUpStatus: '',
+    globalServiceType: '',
   },
   reducers: {
     updateHelpeeInfoAfterInsertEmail(state, action) {
       const { payload } = action;
       state.pageFirstTimeLoaded = false;
       state.DBemail = payload.helpeeEmail;
+    },
+    onClickUpdateActiveServiceType(state, action) {
+      const { payload } = action;
+      state.globalServiceType = payload.globalServiceType;
     },
   },
 });

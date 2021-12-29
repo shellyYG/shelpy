@@ -9,7 +9,7 @@ import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions'
 const LandingPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const DBHelpeeEmail  = useSelector((state) => state.helpeeAccount);
+  const { DBHelpeeEmail }= useSelector((state) => state.helpee);
   const emailRef = useRef();
   const [email, setEmail] = useState('');
   async function handleConfirm(e) {

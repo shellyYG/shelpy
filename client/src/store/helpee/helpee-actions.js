@@ -7,6 +7,17 @@ const userSignUpPasswordPath = "/api/helpee-signup-password";
 const userRequestFormPath = "/api/helpee-request-form";
 const testPath = '/api/test';
 
+export const onClickUpdateActiveServiceType = (data) => {
+  console.log("...onClickUpdateActiveServiceType");
+  return async (dispatch) => {
+    // update global Helpee state:
+    dispatch(
+      helpeeActions.onClickUpdateActiveServiceType({
+        globalServiceType: data.globalServiceType,
+      })
+    );
+  };
+};
 export const fetchHelpeeData = () => {
   console.log('..............running fetchHelpeeData');
     return async (dispatch) => {
