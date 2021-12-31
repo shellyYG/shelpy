@@ -8,12 +8,19 @@ const userRequestFormPath = "/api/helpee-request-form";
 const testPath = '/api/test';
 
 export const onClickUpdateActiveServiceType = (data) => {
-  console.log("...onClickUpdateActiveServiceType");
   return async (dispatch) => {
-    // update global Helpee state:
     dispatch(
       helpeeActions.onClickUpdateActiveServiceType({
         globalServiceType: data.globalServiceType,
+      })
+    );
+  };
+};
+export const onClickUpdateActiveNavigateTarget = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.onClickUpdateActiveNavigateTarget({
+        globalNavigateTarget: data.globalNavigateTarget,
       })
     );
   };

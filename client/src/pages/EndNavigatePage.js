@@ -1,34 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import ServiceTypeCard from "../components/ServiceTypeCard";
-import { serviceOptions } from '../store/options/service-options';
-import '../App.css';
+import { navigateOptions } from "../store/options/navigate-options";
+import "../App.css";
+import NavigateCard from "../components/NavigateCard";
 
-
-const ServiceOptionPage = () => {
-  const { globalServiceType }= useSelector((state) => state.helpee);
+const EndNavigatePage = () => {
+  const { globalNavigateTarget } = useSelector((state) => state.helpee);
   const navigate = useNavigate();
+  function handleNext(e) {
+    e.preventDefault();
+    let path;
+    switch(globalNavigateTarget) {
+      case 'bookHelper':
+        path = "/service-options";
+        break;
+      case 'viewOrderHistory':
+        path = "/profile";
+        break;
+      default:
+        path = "/service-options";
+    }
+    navigate(path, { replace: true });
+  }
   const onBackButtonEvent = (e) => {
     e.preventDefault();
     window.removeEventListener("popstate", onBackButtonEvent);
     navigate(-1);
   };
-  useEffect(() => {
+  useEffect(()=>{
+    console.log('window.location.pathname: ', window.location.pathname);
     window.history.pushState(null, null, window.location.pathname);
     window.addEventListener("popstate", onBackButtonEvent, { once: true });
-  }, []);
-  function handleNext(e) {
-    e.preventDefault();
-    let path = '/book-appointment-form';
-    navigate(path, { replace: true });
-  }
+  },[])
   return (
     <div className="main-content-wrapper">
       <div className="section-center-align">
-        <h1 style={{ textAlign: "center", marginTop: "30px" }}>
-          I need a helper to attend ... with me.
-        </h1>
+        <h1 style={{ textAlign: "center", marginTop: "30px" }}>Welcome back</h1>
         <h2
           style={{
             textAlign: "center",
@@ -36,17 +45,15 @@ const ServiceOptionPage = () => {
             marginBottom: "30px",
           }}
         >
-          We will send a helper to translate for you!
+          What can we offer you today?
         </h2>
         <div className="container">
-          {serviceOptions.map((option) => (
-            <ServiceTypeCard
+          {navigateOptions.map((option) => (
+            <NavigateCard
               imageSrc={option.imgPath}
               title={option.label}
-              valueProps1={option.price}
-              valueProps2={option.location}
               value={option.value}
-              globalServiceType={globalServiceType}
+              globalNavigateTarget={globalNavigateTarget}
             />
           ))}
         </div>
@@ -60,4 +67,4 @@ const ServiceOptionPage = () => {
   );
 };
 
-export default ServiceOptionPage;
+export default EndNavigatePage;

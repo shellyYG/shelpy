@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const helpeeSlice = createSlice({
-  name: 'helpeeAccount',
+  name: "helpeeAccount",
   initialState: {
     pageFirstTimeLoaded: true,
-    DBHelpeeEmail: '',
-    DBSignUpStatus: '',
-    globalServiceType: '',
+    DBHelpeeEmail: "",
+    DBSignUpStatus: "",
+    globalServiceType: "",
+    globalNavigateTarget: "",
   },
   reducers: {
     updateHelpeeInfoAfterInsertEmail(state, action) {
@@ -17,6 +18,10 @@ const helpeeSlice = createSlice({
     onClickUpdateActiveServiceType(state, action) {
       const { payload } = action;
       state.globalServiceType = payload.globalServiceType;
+    },
+    onClickUpdateActiveNavigateTarget(state, action) {
+      const { payload } = action;
+      state.globalNavigateTarget = payload.globalNavigateTarget;
     },
   },
 });

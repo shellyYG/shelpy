@@ -7,13 +7,13 @@ const NavBar = () => {
     <>
       <nav>
         <div className="nav-menu">
-          <NavLink className="nav-logo" to="/" exact={true} activeStyle>
+          <NavLink className="nav-logo" to="/home" exact={true} activeStyle>
             <img src={'/Shelpy_logo.jpg'} alt={'logo'} />
           </NavLink>
           <NavLink className="nav-link" to="/about" activeStyle>
             Forum
           </NavLink>
-          <NavLink className="nav-link" to="/find-helpers" activeStyle>
+          <NavLink className="nav-link" to="/service-options" activeStyle>
             Book a Shelper
           </NavLink>
         </div>

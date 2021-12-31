@@ -6,7 +6,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import TaskCard from '../components/TaskCard';
 import ChatMessageSelf from "../components/ChatMessageSelf";
 import ChatMessageOther from "../components/ChatMessageOther";
-import { serviceOptions } from '../store/options/options';
+import { serviceOptions } from '../store/options/service-options';
 import {socket} from '../service/socket';
 import { Icon } from '@iconify/react';
 import '../App.css';
@@ -17,13 +17,22 @@ const ChatRoomPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-  
-  console.log("messageList:");
-  console.log(messageList);
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
  
   const [showTaskSection, setShowTaskSection] = useState(true);
+  const onBackButtonEvent = (e) => {
+    e.preventDefault();
+    window.removeEventListener("popstate", onBackButtonEvent);
+    navigate(-1);
+  };
+  useEffect(() => {
+    window.history.pushState(null, null, window.location.pathname);
+    window.addEventListener("popstate", onBackButtonEvent);
+    return () => {
+      window.removeEventListener("popstate", onBackButtonEvent);
+    };
+  }, []);
 
   function handleSchrink(e) {
     e.preventDefault();

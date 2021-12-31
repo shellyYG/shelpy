@@ -12,6 +12,19 @@ const LandingPage = () => {
   const { DBHelpeeEmail }= useSelector((state) => state.helpee);
   const emailRef = useRef();
   const [email, setEmail] = useState('');
+  const [goBack, setGoBack] = useState('');
+  const onBackButtonEvent = (e) => {
+    e.preventDefault();
+    window.removeEventListener("popstate", onBackButtonEvent);
+    navigate(-1);
+  };
+  const { globalServiceType } = useSelector((state) => state.helpee);
+  console.log('globalServiceType: ', globalServiceType);
+  useEffect(() => {
+    console.log("window.location.pathname: ", window.location.pathname);
+    window.history.pushState(null, null, window.location.pathname);
+    window.addEventListener("popstate", onBackButtonEvent, { once: true });
+  }, []);
   async function handleConfirm(e) {
     e.preventDefault();
     // change DB & global state
@@ -23,8 +36,8 @@ const LandingPage = () => {
     } catch (err) {
       console.error(err);
     }
-    let path = 'sign-up-final-step';
-    navigate(path);
+    let path = '/sign-up-final-step';
+    navigate(path, { replace: true });
   }
   function handleEmailTyping(e) {
     e.preventDefault();

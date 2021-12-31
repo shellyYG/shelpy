@@ -13,6 +13,15 @@ const LandingPageHelper = () => {
   const [dataHandoverChecked, setDataHandoverChecked] = useState(false);
   const dataHandoverCheckedRef = useRef();
   const navigate = useNavigate();
+  const onBackButtonEvent = (e) => {
+    e.preventDefault();
+    window.removeEventListener("popstate", onBackButtonEvent);
+    navigate(-1);
+  };
+  useEffect(() => {
+    window.history.pushState(null, null, window.location.pathname);
+    window.addEventListener("popstate", onBackButtonEvent, { once: true });
+  }, []);
   async function handleConfirm(e) {
     e.preventDefault();
     await MySwal.fire({
@@ -20,8 +29,8 @@ const LandingPageHelper = () => {
       html: <i>You are signed up successfully.</i>,
       icon: 'success',
     });
-    let path = 'book-appointment-form';
-    navigate(path);
+    let path = '/book-appointment-form';
+    navigate(path, { replace: true });
   }
   return (
     <div className="main-content-wrapper-homepage-helper">

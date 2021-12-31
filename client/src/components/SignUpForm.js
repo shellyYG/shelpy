@@ -23,8 +23,8 @@ function SignUpForm(props) {
       html: <i>You are signed up successfully.</i>,
       icon: 'success',
     });
-     let path = 'book-appointment-form';
-     navigate(path);
+     let path = '/book-appointment-form';
+     navigate(path, { replace: true });
   }
   console.log('email: ', email);
   return (

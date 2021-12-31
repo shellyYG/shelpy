@@ -16,7 +16,7 @@ import {
   meetCityOptions,
   meetTimeOptions,
   languageOptions,
-} from '../store/options/options';
+} from '../store/options/service-options';
 import { postHelpeeServiceRequestForm } from '../store/helpee/helpee-actions'
 const MySwal = withReactContent(Swal);
 
@@ -26,6 +26,7 @@ const AppointmentForm = (props) => {
 const { DBHelpeeName, DBHelpeeLanguage, DBServiceType } = useSelector(
   (state) => state.helpee
 );
+const { globalServiceType } = useSelector((state) => state.helpee);
 const serviceRef = useRef();
 const genderRef = useRef();
 const meetDateRef = useRef();
@@ -74,12 +75,10 @@ const navigate = useNavigate();
       html: <p>We will find you a helper / friend as soon as possible!</p>,
       icon: "success",
     });
-    let path = "/"; // HERE: change to user appointment list section. (appointment, status)
-    navigate(path);
+    let path = "/choose-navigations";
+    navigate(path, { replace: true });
   }
-  const [service, setService] = useState(
-    'Visum'
-  );
+  const [service, setService] = useState(globalServiceType);
   const [gender, setGender] = useState('Male'); // 一般 dropdown 不用另外寫 handleInput or handleSelect function() 有內建
   const [meetDate, setMeetDate] = useState('2021-11-12'); // display will be 2021/11/12 though
   const [meetTime, setMeetTime] = useState('8am-9am');

@@ -32,6 +32,7 @@ nav {
 }
 
 .nav-link:active {
+  color: black;
   background-color: #fff995;
   font-weight: bold;
 }
