@@ -11,13 +11,9 @@ const ServiceOptionPage = () => {
   const navigate = useNavigate();
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    window.removeEventListener("popstate", onBackButtonEvent);
-    navigate(-1);
+    navigate("/home", { replace: true });
   };
-  useEffect(() => {
-    window.history.pushState(null, null, window.location.pathname);
-    window.addEventListener("popstate", onBackButtonEvent, { once: true });
-  }, []);
+  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   function handleNext(e) {
     e.preventDefault();
     let path = '/book-appointment-form';

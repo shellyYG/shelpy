@@ -23,17 +23,9 @@ const ChatRoomPage = () => {
   const [showTaskSection, setShowTaskSection] = useState(true);
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    window.removeEventListener("popstate", onBackButtonEvent);
-    navigate(-1);
+    navigate("/home", { replace: true });
   };
-  useEffect(() => {
-    window.history.pushState(null, null, window.location.pathname);
-    window.addEventListener("popstate", onBackButtonEvent);
-    return () => {
-      window.removeEventListener("popstate", onBackButtonEvent);
-    };
-  }, []);
-
+  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   function handleSchrink(e) {
     e.preventDefault();
     setShowTaskSection(false);

@@ -11,7 +11,7 @@ const NavBar = () => {
             <img src={'/Shelpy_logo.jpg'} alt={'logo'} />
           </NavLink>
           <NavLink className="nav-link" to="/about" activeStyle>
-            Forum
+            About
           </NavLink>
           <NavLink className="nav-link" to="/service-options" activeStyle>
             Book a Shelper

@@ -9,51 +9,47 @@ import '../App.css';
 
 const MySwal = withReactContent(Swal);
 
-const LandingPageHelper = () => {
+const SignUpPageHelper = () => {
   const [dataHandoverChecked, setDataHandoverChecked] = useState(false);
   const dataHandoverCheckedRef = useRef();
   const navigate = useNavigate();
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    window.removeEventListener("popstate", onBackButtonEvent);
-    navigate(-1);
+    navigate("/home", { replace: true });
   };
-  useEffect(() => {
-    window.history.pushState(null, null, window.location.pathname);
-    window.addEventListener("popstate", onBackButtonEvent, { once: true });
-  }, []);
+  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   async function handleConfirm(e) {
     e.preventDefault();
     await MySwal.fire({
       title: <strong>Thank you!</strong>,
       html: <i>You are signed up successfully.</i>,
-      icon: 'success',
+      icon: "success",
     });
-    let path = '/book-appointment-form';
+    let path = "/book-appointment-form";
     navigate(path, { replace: true });
   }
   return (
     <div className="main-content-wrapper-homepage-helper">
       <div className="section-center-align-landing">
-        <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
+        <h1 style={{ textAlign: "center", marginTop: "30px", color: "white" }}>
           Tired of earning money with busy cycling?
         </h1>
         <h2
           style={{
-            textAlign: 'center',
-            marginTop: '10px',
-            marginBottom: '30px',
-            color: 'white',
+            textAlign: "center",
+            marginTop: "10px",
+            marginBottom: "30px",
+            color: "white",
           }}
         >
           Join us, help people, and get easy pay!
         </h2>
         <h5
           style={{
-            textAlign: 'center',
-            marginTop: '10px',
-            marginBottom: '10px',
-            color: 'white',
+            textAlign: "center",
+            marginTop: "10px",
+            marginBottom: "10px",
+            color: "white",
           }}
         >
           Create an account to be a helper who accompany foreigners to their
@@ -72,4 +68,4 @@ const LandingPageHelper = () => {
   );
 };
 
-export default LandingPageHelper;
+export default SignUpPageHelper;

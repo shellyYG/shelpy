@@ -6,25 +6,17 @@ import { useNavigate } from "react-router-dom";
 import '../App.css';
 import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions'
 
-const LandingPage = () => {
+const SignUpPageHelpee = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { DBHelpeeEmail }= useSelector((state) => state.helpee);
+  const { DBHelpeeEmail } = useSelector((state) => state.helpee);
   const emailRef = useRef();
-  const [email, setEmail] = useState('');
-  const [goBack, setGoBack] = useState('');
+  const [email, setEmail] = useState("");
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    window.removeEventListener("popstate", onBackButtonEvent);
-    navigate(-1);
+    navigate("/home", { replace: true });
   };
-  const { globalServiceType } = useSelector((state) => state.helpee);
-  console.log('globalServiceType: ', globalServiceType);
-  useEffect(() => {
-    console.log("window.location.pathname: ", window.location.pathname);
-    window.history.pushState(null, null, window.location.pathname);
-    window.addEventListener("popstate", onBackButtonEvent, { once: true });
-  }, []);
+  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   async function handleConfirm(e) {
     e.preventDefault();
     // change DB & global state
@@ -36,13 +28,12 @@ const LandingPage = () => {
     } catch (err) {
       console.error(err);
     }
-    let path = '/sign-up-final-step';
-    navigate(path, { replace: true });
+    navigate("/sign-up-final-step", { replace: true });
   }
   function handleEmailTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
-    console.log('typingInput: ', typingInput);
+    console.log("typingInput: ", typingInput);
     setEmail(typingInput);
   }
   useEffect(() => {
@@ -51,23 +42,23 @@ const LandingPage = () => {
   return (
     <div className="main-content-wrapper-homepage">
       <div className="section-center-align-landing">
-        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+        <h1 style={{ textAlign: "center", marginTop: "30px" }}>
           Afraid of speaking in German?
         </h1>
         <h2
           style={{
-            textAlign: 'center',
-            marginTop: '10px',
-            marginBottom: '30px',
+            textAlign: "center",
+            marginTop: "10px",
+            marginBottom: "30px",
           }}
         >
           Don't worry. We speak for you.
         </h2>
         <h5
           style={{
-            textAlign: 'center',
-            marginTop: '10px',
-            marginBottom: '10px',
+            textAlign: "center",
+            marginTop: "10px",
+            marginBottom: "10px",
           }}
         >
           Create an account to find a helper who goes with you to your German
@@ -90,4 +81,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default SignUpPageHelpee;

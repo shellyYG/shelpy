@@ -4,21 +4,32 @@ const AboutPage = () => {
   const navigate = useNavigate();
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    window.removeEventListener("popstate", onBackButtonEvent);
-    navigate(-1);
+    navigate("/home", { replace: true });
   };
-  useEffect(() => {
-    console.log("window.location.pathname: ", window.location.pathname);
-    window.history.pushState(null, null, window.location.pathname);
-    window.addEventListener("popstate", onBackButtonEvent, { once: true });
-  }, []);
+  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   return (
     <div className="main-content-wrapper">
-      <section>
-        <div>
-          <h1>About</h1>
-        </div>
-      </section>
+      <div className="section-center-align">
+        <h1 style={{ textAlign: "center", marginTop: "30px" }}>SHELPY</h1>
+        <h2
+          style={{
+            textAlign: "center",
+            marginTop: "10px",
+            marginBottom: "30px",
+          }}
+        >
+          is a German-based company.
+        </h2>
+        <h2
+          style={{
+            textAlign: "center",
+            marginTop: "10px",
+            marginBottom: "30px",
+          }}
+        >
+          We aim at integrating foreigners to local society globally.
+        </h2>
+      </div>
     </div>
   );
 };

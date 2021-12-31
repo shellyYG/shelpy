@@ -75,7 +75,7 @@ const navigate = useNavigate();
       html: <p>We will find you a helper / friend as soon as possible!</p>,
       icon: "success",
     });
-    let path = "/choose-navigations";
+    let path = "/home";
     navigate(path, { replace: true });
   }
   const [service, setService] = useState(globalServiceType);

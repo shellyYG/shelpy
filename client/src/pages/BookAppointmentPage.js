@@ -7,14 +7,9 @@ const BookAppointmentPage = () => {
   const navigate = useNavigate();
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    window.removeEventListener("popstate", onBackButtonEvent);
-    navigate(-1);
+    navigate("/home", { replace: true });
   };
-  useEffect(() => {
-    console.log("window.location.pathname: ", window.location.pathname);
-    window.history.pushState(null, null, window.location.pathname);
-    window.addEventListener("popstate", onBackButtonEvent, { once: true });
-  }, []);
+  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   return (
     <div className="main-content-wrapper" style={{ height: 500 }}>
       <div className="section-center-align">

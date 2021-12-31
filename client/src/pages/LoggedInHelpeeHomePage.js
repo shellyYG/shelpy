@@ -6,17 +6,17 @@ import { navigateOptions } from "../store/options/navigate-options";
 import "../App.css";
 import NavigateCard from "../components/NavigateCard";
 
-const EndNavigatePage = () => {
+const LoggedInHelpeeHomePage = () => {
   const { globalNavigateTarget } = useSelector((state) => state.helpee);
   const navigate = useNavigate();
   function handleNext(e) {
     e.preventDefault();
     let path;
-    switch(globalNavigateTarget) {
-      case 'bookHelper':
+    switch (globalNavigateTarget) {
+      case "bookHelper":
         path = "/service-options";
         break;
-      case 'viewOrderHistory':
+      case "viewOrderHistory":
         path = "/profile";
         break;
       default:
@@ -26,14 +26,9 @@ const EndNavigatePage = () => {
   }
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    window.removeEventListener("popstate", onBackButtonEvent);
-    navigate(-1);
+    navigate("/home", { replace: true });
   };
-  useEffect(()=>{
-    console.log('window.location.pathname: ', window.location.pathname);
-    window.history.pushState(null, null, window.location.pathname);
-    window.addEventListener("popstate", onBackButtonEvent, { once: true });
-  },[])
+  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   return (
     <div className="main-content-wrapper">
       <div className="section-center-align">
@@ -67,4 +62,4 @@ const EndNavigatePage = () => {
   );
 };
 
-export default EndNavigatePage;
+export default LoggedInHelpeeHomePage;

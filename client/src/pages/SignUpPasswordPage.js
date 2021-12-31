@@ -17,22 +17,12 @@ const SignUpPasswordPage = () => {
   const DBHelpeePassword = useSelector((state) => state.helpeeAccount);
   const [email, setEmail] = useState('shellyyangtw@gmail.com');
   const [password, setPassword] = useState('');
-  const [firstRender, setFirstRender] = useState(false);
-  console.log("firstRender: ", firstRender);
+  
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    window.removeEventListener("popstate", onBackButtonEvent);
-    let path = "/home";
-    navigate(path, { replace: true });
+    navigate("/home", { replace: true });
   };
-  useEffect(() => {
-    setFirstRender(true);
-  }, []);
-  useEffect(() => {
-    console.log("signup final: ", window.location.pathname);
-    if (firstRender) window.history.pushState(null, null, window.location.pathname);
-    if (!firstRender) window.addEventListener("popstate", onBackButtonEvent, { once: true });
-  }, []);
+  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   async function handleConfirm(e) {
     e.preventDefault();
     // change DB & global state
