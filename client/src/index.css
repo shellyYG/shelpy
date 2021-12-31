@@ -19,23 +19,7 @@ nav {
   top: 0px;
 }
 
-.nav-link {
-  color: white;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  padding: 10px 22px;
-  cursor: pointer;
-  border: 1px solid #fff995;
-  border-radius: 4px;
-  margin: 3px;
-}
 
-.nav-link:active {
-  color: black;
-  background-color: #fff995;
-  font-weight: bold;
-}
 
 .nav-logo {
   color: #ffff;
