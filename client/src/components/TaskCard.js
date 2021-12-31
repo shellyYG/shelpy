@@ -12,7 +12,7 @@ function TaskCard(props) {
       className={active ? 'task-card-active' : 'task-card'}
     >
       <div className="content">
-        <div className="task-ImgBx">
+        <div className="helper-ImgBx">
           <img src={'/visa.jpeg'} alt={'visa'}></img>
         </div>
 

@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import BookAppointmentPage from './pages/BookAppointmentPage';
 import ChatRoomPage from './pages/ChatRoomPage';
 import HomePage from './pages/HomePage';
+import OrderHistoryPage from './pages/OrderHistoryPage';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           element={<BookAppointmentPage />}
         />
         <Route path={"/chatroom"} exact element={<ChatRoomPage />} />
+        <Route path={"/order-history"} exact element={<OrderHistoryPage/>} />
       </Routes>
       <Footer />
     </Router>

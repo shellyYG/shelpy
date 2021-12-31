@@ -751,3 +751,69 @@ footer {
   margin: auto;
   border-radius: 3px;
 }
+
+.history-card {
+  display: flex;
+  min-width: 70%;
+  margin: auto;
+  margin-top: 10px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  justify-content: start;
+  align-items: center;
+  backdrop-filter: blur(40px);
+  cursor: pointer;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.task-container .history-card .content {
+  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: row;
+  opacity: 1;
+  padding: 3px;
+}
+.helper-ImgBx {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.task-card .content .contentBx {
+  padding-left: 30px;
+}
+.helper-ImgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.nonActiveStyle {
+  color: black;
+  text-decoration: none;
+  padding: 10px 22px;
+  cursor: pointer;
+  border-bottom: 1px solid #e6e6e6;
+  width: 50%;
+  justify-content: start;
+  text-align: center;
+}
+.activeStyle {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 10px 22px;
+  cursor: pointer;
+  border-bottom: 1px solid #e6e6e6;
+  width: 50%;
+  justify-content: start;
+  text-align: center;
+}
