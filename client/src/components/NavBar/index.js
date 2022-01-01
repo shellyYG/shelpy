@@ -69,7 +69,7 @@ const NavBar = () => {
           >
             My Requests
           </NavLink>
-          <GlobalIcon />
+          {/* <GlobalIcon /> */}
         </div>
       </nav>
     </>

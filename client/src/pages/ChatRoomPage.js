@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import TaskCard from '../components/TaskCard';
+import ChatRoomCard from "../components/ChatRoomCard";
 import ChatMessageSelf from "../components/ChatMessageSelf";
 import ChatMessageOther from "../components/ChatMessageOther";
 import { serviceOptions } from '../store/options/service-options';
@@ -95,19 +95,14 @@ const ChatRoomPage = () => {
               </h3>
             </div>
             <div className="task-category">
-              <button data-text="Book Room" className="btn-task-category">
-                <span>Avtive</span>
-              </button>
-              <button
-                data-text="Book Room"
-                className="btn-task-category-active"
-              >
-                <span>Complete</span>
-              </button>
+              <a className="btn-task-category">Avtive</a>
+              <a className="btn-task-category-active">
+                <p>Complete</p>
+              </a>
             </div>
             <div className="task-container">
               {serviceOptions.map((option) => (
-                <TaskCard title={option.label} valueProps1={option.price} />
+                <ChatRoomCard title={option.label} valueProps1={option.price} />
               ))}
             </div>
           </div>

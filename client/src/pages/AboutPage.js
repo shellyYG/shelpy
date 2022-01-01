@@ -9,7 +9,7 @@ const AboutPage = () => {
   window.addEventListener("popstate", onBackButtonEvent, { once: true });
   return (
     <div className="main-content-wrapper">
-      <div className="section-center-align">
+      <div className="section-center-align" style={{ paddingTop: '5%'}}>
         <h1 style={{ textAlign: "center", marginTop: "30px" }}>SHELPY</h1>
         <h2
           style={{

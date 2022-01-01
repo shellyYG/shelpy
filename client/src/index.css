@@ -91,10 +91,10 @@ body {
 .section-left-align {
   justify-content: start;
   flex-shrink: 0; /* so not shrink when smaller window */
-  /* border-right: 10px solid pink; */
   background-color: white;
   overflow-y:scroll;
   height: 90vh;
+  min-width: 20%;
   /* padding-top: 60vh; */ /* without 60vh, will start from top */
   
 }
@@ -192,8 +192,8 @@ body {
 }
 .task-container .task-card {
   position: relative;
-  width: 175px;
-  height: 50px;
+  width: auto;
+  height: auto;
   margin: 5px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   border-radius: 1px;
@@ -203,6 +203,7 @@ body {
   backdrop-filter: blur(40px);
   cursor: pointer;
   flex-direction: column;
+  padding: 10px 0;
 }
 .chat-box-title-container {
   width: 90%;
@@ -291,9 +292,6 @@ body {
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-}
-.task-card .content .contentBx {
-  padding-left: 30px;
 }
 .task-container .task-card .content .task-ImgBx img {
   position: absolute;
@@ -560,30 +558,27 @@ footer {
   margin: 5px;
 }
 .btn-task-category {
-    border-radius: 1px;
-    width: 50%;
-    color: #231f20;
-    font-weight: bold;
-    outline: none;
-    cursor: pointer;
-    text-decoration: none;
-    margin-top: 10px;
-    margin-left: 3px;
-    border: 1px solid #fff995;
-    background-color: white;  
+  width: 50%;
+  color: #231f20;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-bottom: 1px solid #e6e6e6;
+  text-align: center;
 }
 .btn-task-category-active {
-  border-radius: 1px;
-    background-color: #fff995;
-    width: 50%;
-    color: #231f20;
-    font-weight: bold;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    margin-top: 10px;
-    margin-right: 1px;
+  background-color: #231f20;
+  width: 50%;
+  color: white;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 10px 15px;
+  text-align: center;
 }
 
 .btn-back{

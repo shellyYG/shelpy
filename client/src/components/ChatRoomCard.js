@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchHelpeeData } from '../store/helpee/helpee-actions';
 import { helpeeActions } from '../store/helpee/helpee-slice';
 
-function TaskCard(props) {
+function ChatRoomCard(props) {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
 
@@ -28,4 +28,4 @@ function TaskCard(props) {
     </div>
   );
 }
-export default TaskCard;
+export default ChatRoomCard;

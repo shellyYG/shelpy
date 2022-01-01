@@ -55,7 +55,7 @@ const SignInPage = () => {
 
   return (
     <div className="main-content-wrapper-homepage-no-background">
-      <div className="section-center-align">
+      <div className="section-center-align" style={{ paddingTop: "5%" }}>
         <h1 style={{ textAlign: "center", marginTop: "30px" }}>
           Welcome back!
         </h1>
