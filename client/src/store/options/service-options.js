@@ -70,54 +70,7 @@ export const serviceOptions = [
     description: 'Please provide details in the inquiry.',
     imgPath: '/offer_help.jpeg',
   },
-  {
-    value: 'others',
-    label: 'Sonstiges',
-    price: '15',
-    location: 'Others',
-    description: 'Please provide details in the inquiry.',
-    imgPath: '/offer_help.jpeg',
-  },
-  {
-    value: 'others',
-    label: 'Sonstiges',
-    price: '15',
-    location: 'Others',
-    description: 'Please provide details in the inquiry.',
-    imgPath: '/offer_help.jpeg',
-  },
-  {
-    value: 'others',
-    label: 'Sonstiges',
-    price: '15',
-    location: 'Others',
-    description: 'Please provide details in the inquiry.',
-    imgPath: '/offer_help.jpeg',
-  },
-  {
-    value: 'others',
-    label: 'Sonstiges',
-    price: '15',
-    location: 'Others',
-    description: 'Please provide details in the inquiry.',
-    imgPath: '/offer_help.jpeg',
-  },
-  {
-    value: 'others',
-    label: 'Sonstiges',
-    price: '15',
-    location: 'Others',
-    description: 'Please provide details in the inquiry.',
-    imgPath: '/offer_help.jpeg',
-  },
-  {
-    value: 'others',
-    label: 'Sonstiges',
-    price: '15',
-    location: 'Others',
-    description: 'Please provide details in the inquiry.',
-    imgPath: '/offer_help.jpeg',
-  },
+  
 ];
 
 export const genderOptions = [

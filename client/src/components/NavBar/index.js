@@ -10,8 +10,7 @@ const NavBar = () => {
     textDecoration: "none",
     padding: "10px 22px",
     cursor: "pointer",
-    border: "1px solid #fff995",
-    borderRadius: "4px",
+    borderBottom: "1px solid #fff995",
     margin: "3px",
   };
   const activeStyle = {
@@ -23,7 +22,7 @@ const NavBar = () => {
     cursor: 'pointer',
     border: '1px solid #fff995',
     backgroundColor: '#fff995',
-    borderRadius: '4px',
+    borderRadius: '1px',
     margin: '3px',
     fontWeight: 'bold',
   }
@@ -68,7 +67,7 @@ const NavBar = () => {
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to="/order-history"
           >
-            Shelly Yang
+            My Requests
           </NavLink>
           <GlobalIcon />
         </div>

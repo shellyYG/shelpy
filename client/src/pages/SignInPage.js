@@ -1,23 +1,23 @@
-import CheckBox from '../components/CheckBox';
-import ConfirmBtn from '../components/ConfirmBtn';
-import { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import CheckBox from "../components/CheckBox";
+import ConfirmBtn from "../components/ConfirmBtn";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import '../App.css';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import "../App.css";
 import { postHelpeeSignUpPassword } from "../store/helpee/helpee-actions";
 
 const MySwal = withReactContent(Swal);
 
-const SignUpPasswordPage = () => {
+const SignInPage = () => {
   const navigate = useNavigate();
   const passwordRef = useRef();
   const dispatch = useDispatch();
   const DBHelpeePassword = useSelector((state) => state.helpeeAccount);
-  const [email, setEmail] = useState('shellyyangtw@gmail.com');
-  const [password, setPassword] = useState('');
-  
+  const [email, setEmail] = useState("shellyyangtw@gmail.com");
+  const [password, setPassword] = useState("");
+
   const onBackButtonEvent = (e) => {
     e.preventDefault();
     navigate("/home", { replace: true });
@@ -37,27 +37,27 @@ const SignUpPasswordPage = () => {
     }
     await MySwal.fire({
       title: <strong>Thank you!</strong>,
-      html: <p>Successfully signed-up.</p>,
+      html: <p>Successfully signed-in.</p>,
       icon: "success",
     });
-    let path = '/service-options';
+    let path = "/service-options";
     navigate(path, { replace: true });
   }
   function handlePasswordTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
-    console.log('typingPassword: ', typingInput);
+    console.log("typingPassword: ", typingInput);
     setPassword(typingInput);
   }
   useEffect(() => {
     setPassword(DBHelpeePassword);
   }, [DBHelpeePassword]);
-  
+
   return (
-    <div className="main-content-wrapper-homepage">
+    <div className="main-content-wrapper-homepage-no-background">
       <div className="section-center-align">
         <h1 style={{ textAlign: "center", marginTop: "30px" }}>
-          Create Password to finish signing up
+          Welcome back!
         </h1>
         <h2
           style={{
@@ -66,7 +66,7 @@ const SignUpPasswordPage = () => {
             marginBottom: "30px",
           }}
         >
-          Take less than a minute!
+          Please insert your username and password to sign in.
         </h2>
 
         <form action="" className="centerbox-landing">
@@ -74,7 +74,6 @@ const SignUpPasswordPage = () => {
             type="text"
             className="form-control-password"
             placeholder="Enter Email Address"
-            value={email}
           />
           <input
             type="text"
@@ -84,25 +83,11 @@ const SignUpPasswordPage = () => {
             onChange={handlePasswordTyping}
             ref={passwordRef}
           />
-
-          <div className="form-row-password">
-            <input
-              type="checkbox"
-              // checked={props.checked}
-              // onChange={handleCheck}
-              // ref={props.checkRef}
-              style={{ marginRight: "20px " }}
-            />
-            <div className="checkbox-text-password-page">
-              Yes, please email me Shelpy's special offers.
-            </div>
-          </div>
-
-          <ConfirmBtn cta="Sign Up ❯" handleConfirm={handleConfirm} />
+          <ConfirmBtn cta="Sign In ❯" handleConfirm={handleConfirm} />
         </form>
       </div>
     </div>
   );
 };
 
-export default SignUpPasswordPage;
+export default SignInPage;

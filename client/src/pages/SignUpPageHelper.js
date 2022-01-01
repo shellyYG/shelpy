@@ -59,7 +59,7 @@ const SignUpPageHelper = () => {
           <input
             type="text"
             className="form-control-landing"
-            placeholder="Email address"
+            placeholder="Enter Email Address"
           />
           <ConfirmBtn cta="Sign Up ❯" handleConfirm={handleConfirm} />
         </form>

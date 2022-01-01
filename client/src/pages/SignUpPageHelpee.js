@@ -69,7 +69,7 @@ const SignUpPageHelpee = () => {
           <input
             type="text"
             className="form-control-landing"
-            placeholder="Email address"
+            placeholder="Enter Email Address"
             value={email}
             onChange={handleEmailTyping}
             ref={emailRef}

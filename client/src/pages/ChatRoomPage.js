@@ -79,7 +79,7 @@ const ChatRoomPage = () => {
 
   return (
     <>
-      <div className="main-content-wrapper">
+      <div className="main-content-wrapper-no-background">
         {!showTaskSection && (
           <div className="task-expander">
             <h3 className="expander" onClick={handleExpand}>
@@ -119,8 +119,8 @@ const ChatRoomPage = () => {
             </div>
           </div>
           {/* <div className="chat-box"> */}
-            <ScrollToBottom className="chat-box">
-            {messageList.map((messageContent)=>{
+          <ScrollToBottom className="chat-box">
+            {messageList.map((messageContent) => {
               return messageContent.author === userId ? (
                 <ChatMessageSelf
                   message={messageContent.message}
@@ -134,7 +134,7 @@ const ChatRoomPage = () => {
                 />
               );
             })}
-            </ScrollToBottom>
+          </ScrollToBottom>
           {/* </div> */}
           <div className="send-msg-container">
             <form action="" className="centerbox-chat">
@@ -144,7 +144,7 @@ const ChatRoomPage = () => {
                 className="form-control-chat"
                 placeholder="Send some message here"
                 onChange={handleMessageInput}
-                onKeyPress={(e)=>{
+                onKeyPress={(e) => {
                   e.key === "Enter" && handleSend(e);
                 }}
               />

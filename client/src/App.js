@@ -11,6 +11,7 @@ import ChatRoomPage from './pages/ChatRoomPage';
 import HomePage from './pages/HomePage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
 import HelperListPage from "./pages/HelperListPage";
+import SignInPage from './pages/SignInPage';
 
 function App() {
   return (
@@ -23,6 +24,11 @@ function App() {
           path="/sign-up-final-step"
           exact
           element={<SignUpPasswordPage />}
+        />
+        <Route
+          path="/sign-in"
+          exact
+          element={<SignInPage />}
         />
         <Route path="/helper" exact element={<SignUpPageHelper />} />
         <Route path="/service-options" exact element={<ServiceOptionPage />} />

@@ -20,7 +20,7 @@ const ServiceOptionPage = () => {
     navigate(path, { replace: true });
   }
   return (
-    <div className="main-content-wrapper">
+    <div className="main-content-wrapper-no-background">
       <div className="section-center-align">
         <h1 style={{ textAlign: "center", marginTop: "30px" }}>
           I need a helper to attend ... with me.
