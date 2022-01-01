@@ -8,6 +8,7 @@ const helpeeSlice = createSlice({
     DBSignUpStatus: "",
     globalServiceType: "",
     globalNavigateTarget: "",
+    globalActiveRequest: "",
   },
   reducers: {
     updateHelpeeInfoAfterInsertEmail(state, action) {
@@ -22,6 +23,14 @@ const helpeeSlice = createSlice({
     onClickUpdateActiveNavigateTarget(state, action) {
       const { payload } = action;
       state.globalNavigateTarget = payload.globalNavigateTarget;
+    },
+    onClickUpdateActiveRequest(state, action) {
+      const { payload } = action;
+      state.globalActiveRequest = payload.globalActiveRequest;
+    },
+    onClickUpdateActiveHelperLists(state, action) {
+      const { payload } = action;
+      state.globalActiveHelperLists = payload.globalActiveHelperLists;
     },
   },
 });

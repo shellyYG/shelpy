@@ -22,6 +22,7 @@ const OrderHistoryPage = () => {
     }
     navigate(path, { replace: true });
   }
+  
   const onBackButtonEvent = (e) => {
     e.preventDefault();
     navigate("/home", { replace: true });

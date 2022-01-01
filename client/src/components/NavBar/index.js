@@ -63,6 +63,13 @@ const NavBar = () => {
           >
             Sign-In
           </NavLink>
+          <NavLink
+            exact
+            style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
+            to="/order-history"
+          >
+            Shelly Yang
+          </NavLink>
           <GlobalIcon />
         </div>
       </nav>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { onClickUpdateActiveNavigateTarget, onClickUpdateActiveServiceType } from "../store/helpee/helpee-actions";
+import { onClickUpdateActiveNavigateTarget } from "../store/helpee/helpee-actions";
 
 function NavigateCard(props) {
     

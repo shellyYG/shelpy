@@ -1,14 +1,21 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchHelpeeData } from "../store/helpee/helpee-actions";
 import { helpeeActions } from "../store/helpee/helpee-slice";
 
 function OrderCard(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [active, setActive] = useState(false);
+  function handleOnClick(e) {
+    e.preventDefault();
+    navigate("/helper-lists", { replace: true });
+  }
+  
 
   return (
-    <div className={active ? "history-card-active" : "history-card"}>
+    <div className={active ? "history-card-active" : "history-card"} onClick={handleOnClick}>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div className="content">
           <div className="contentBx">

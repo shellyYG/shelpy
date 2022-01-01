@@ -6,6 +6,7 @@ const userSignUpEmailPath = '/api/helpee-signup-email';
 const userSignUpPasswordPath = "/api/helpee-signup-password";
 const userRequestFormPath = "/api/helpee-request-form";
 const testPath = '/api/test';
+const activeHelperPath = '/api/active-helpers'
 
 export const onClickUpdateActiveServiceType = (data) => {
   return async (dispatch) => {
@@ -25,6 +26,36 @@ export const onClickUpdateActiveNavigateTarget = (data) => {
     );
   };
 };
+export const onClickUpdateActiveRequest = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.onClickUpdateActiveRequest({
+        globalActiveRequest: data.globalActiveRequest,
+      })
+    );
+  }
+}
+export const onClickUpdateActiveHelperLists = (data) => {
+  return async (dispatch) => {
+    try {
+      const activeHelpers = await axios.post(activeHelperPath, {
+        data,
+      });
+      dispatch(
+        helpeeActions.onClickUpdateActiveHelperLists({
+          globalActiveHelperLists: activeHelpers,
+        })
+      );
+    } catch (err) {
+      console.error(err);
+      notificationActions.showNotification({
+        status: "error",
+        title: "Error!",
+        message: `Error: ${err}`,
+      });
+    }
+  };
+}
 export const fetchHelpeeData = () => {
   console.log('..............running fetchHelpeeData');
     return async (dispatch) => {

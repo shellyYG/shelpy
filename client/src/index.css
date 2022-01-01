@@ -169,7 +169,7 @@ body {
   height: 230px;
   margin: 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
+  border-radius: 4px;
   border: 1px solid #e6e6e6;
   display: flex;
   justify-content: center;
@@ -183,13 +183,12 @@ body {
   height: 230px;
   margin: 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
+  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(40px);
-  background-color: #231f20;
-  border: 3px solid #fff995;
+  border: 3px solid #231f20;
 }
 .task-container .task-card {
   position: relative;
@@ -343,7 +342,7 @@ body {
   line-height: 1.1em;
 }
 .container .card-active .content .contentBx h3 {
-  color: white;
+  color: #231f20;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 500;
@@ -759,7 +758,7 @@ footer {
   margin-top: 10px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   border: 1px solid #e6e6e6;
-  border-radius: 4px;
+  border-radius: 1px;
   justify-content: start;
   align-items: center;
   backdrop-filter: blur(40px);
@@ -806,7 +805,7 @@ footer {
   text-align: center;
 }
 .activeStyle {
-  background-color: black;
+  background-color: #231f20;
   color: white;
   font-weight: bold;
   text-decoration: none;
@@ -816,4 +815,31 @@ footer {
   width: 50%;
   justify-content: start;
   text-align: center;
+}
+
+.three-dot-list-popup {
+  z-index: 9;
+  position: absolute;
+  right: 15%;
+  top: 130px;
+  background-color: white;
+  padding: 0px;
+  border-radius: 4px;
+}
+
+.request-active {
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.request {
+  display: flex;
+  flex-direction: row;
+  color: black;
+  padding: 5px;
+  cursor: pointer;
 }
