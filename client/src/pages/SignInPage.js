@@ -2,7 +2,7 @@ import CheckBox from "../components/CheckBox";
 import ConfirmBtn from "../components/ConfirmBtn";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../App.css";
@@ -83,6 +83,15 @@ const SignInPage = () => {
             onChange={handlePasswordTyping}
             ref={passwordRef}
           />
+          <div style={{ paddingBottom: '10px', fontSize: '12px'}}>
+            <Link
+              exact
+              to="/about"
+            >
+              Forget Password
+            </Link>
+          </div>
+
           <ConfirmBtn cta="Sign In ❯" handleConfirm={handleConfirm} />
         </form>
       </div>
