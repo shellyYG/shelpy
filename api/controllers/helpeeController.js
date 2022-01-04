@@ -1,15 +1,12 @@
 const helpeeModel = require('../models/helpeeModel');
 
 const getHelpeeInfo = async (req, res) => {
-    const serviceType = await helpeeModel.getHelpeeInfo();
-    return serviceType;
-}
-
+  const serviceType = await helpeeModel.getHelpeeInfo();
+  return serviceType;
+};
 
 const postHelpeeSignUpEmail = async (req, res) => {
-  const response = await helpeeModel.postHelpeeSignUpEmail(
-    req.body.data
-  );
+  const response = await helpeeModel.postHelpeeSignUpEmail(req.body.data);
   return response;
 };
 
@@ -19,9 +16,11 @@ const postHelpeeSignUpPassword = async (req, res) => {
 };
 
 const postHelpeeServiceRequestForm = async (req, res) => {
-  const response = await helpeeModel.postHelpeeServiceRequestForm(req.body.data);
+  const response = await helpeeModel.postHelpeeServiceRequestForm(
+    req.body.data
+  );
   return response;
-}
+};
 
 const testAPIConnection = async (req, res) => {
   // res.send('Successfully connected to /test API!');

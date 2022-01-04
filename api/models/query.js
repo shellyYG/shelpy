@@ -1,6 +1,6 @@
-require("dotenv").config();
-const express = require("express");
-const mysql = require("mysql");
+require('dotenv').config();
+const express = require('express');
+const mysql = require('mysql');
 
 const db = mysql.createPool({
   host: process.env.DBHOST,
@@ -9,16 +9,16 @@ const db = mysql.createPool({
   database: process.env.DBDATABASE,
 });
 
-let query = function (sql, values) {
+const query = function (sql, values) {
   return new Promise((resolve, reject) => {
-    db.getConnection(function (err, connection) {
+    db.getConnection((err, connection) => {
       if (err) {
-        console.log("sql connection error: ", err);
+        console.log('sql connection error: ', err);
         reject(err);
       } else {
         connection.query(sql, values, (err, rows) => {
           if (err) {
-            console.log("sql querying error: ", err);
+            console.log('sql querying error: ', err);
             reject(err);
           } else {
             resolve(rows);

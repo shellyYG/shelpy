@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "cd client/ && npm run start && cd ../ && nodemon app.js",
-    "build": "cd client/ && npm run build && cd ../ && nodemon app.js"
+    "build": "cd client/ && npm run build && cd ../ && nodemon app.js",
+    "lint": "cd api && eslint --fix --ext .js,.jsx ."
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
@@ -9,7 +10,21 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "socket.io": "^4.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "^2.5.1"
   }
 }
