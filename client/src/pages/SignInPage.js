@@ -6,17 +6,16 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../App.css";
-import { postHelpeeSignUpPassword } from "../store/helpee/helpee-actions";
+import { postHelpeeSignInData } from '../store/helpee/helpee-actions';
 
 const MySwal = withReactContent(Swal);
 
 const SignInPage = () => {
   const navigate = useNavigate();
+  const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
   const DBHelpeePassword = useSelector((state) => state.helpeeAccount);
-  const [email, setEmail] = useState("shellyyangtw@gmail.com");
-  const [password, setPassword] = useState("");
 
   const onBackButtonEvent = (e) => {
     e.preventDefault();
@@ -27,11 +26,12 @@ const SignInPage = () => {
     e.preventDefault();
     // change DB & global state
     const data = {
-      helpeeEmail: email,
+      helpeeEmail: emailRef.current.value,
       helpeePassword: passwordRef.current.value,
     };
+    console.log('postHelpeeSignInData -> data: ', data);
     try {
-      dispatch(postHelpeeSignUpPassword(data));
+      dispatch(postHelpeeSignInData(data));
     } catch (err) {
       console.error(err);
     }
@@ -43,15 +43,6 @@ const SignInPage = () => {
     let path = "/service-options";
     navigate(path, { replace: true });
   }
-  function handlePasswordTyping(e) {
-    e.preventDefault();
-    const typingInput = e.target.value;
-    console.log("typingPassword: ", typingInput);
-    setPassword(typingInput);
-  }
-  useEffect(() => {
-    setPassword(DBHelpeePassword);
-  }, [DBHelpeePassword]);
 
   return (
     <div className="main-content-wrapper-homepage-no-background">
@@ -74,13 +65,12 @@ const SignInPage = () => {
             type="text"
             className="form-control-password"
             placeholder="Enter Email Address"
+            ref={emailRef}
           />
           <input
             type="text"
             className="form-control-password"
             placeholder="Enter Password"
-            value={password}
-            onChange={handlePasswordTyping}
             ref={passwordRef}
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px'}}>

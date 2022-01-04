@@ -15,6 +15,11 @@ const postHelpeeSignUpPassword = async (req, res) => {
   return response;
 };
 
+const postHelpeeSignInData = async (req, res) => {
+  const response = await helpeeModel.postHelpeeSignInData(req.body.data);
+  return response;
+};
+
 const postHelpeeServiceRequestForm = async (req, res) => {
   const response = await helpeeModel.postHelpeeServiceRequestForm(
     req.body.data
@@ -32,6 +37,7 @@ module.exports = {
   getHelpeeInfo,
   postHelpeeSignUpEmail,
   postHelpeeSignUpPassword,
+  postHelpeeSignInData,
   postHelpeeServiceRequestForm,
   testAPIConnection,
 };

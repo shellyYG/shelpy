@@ -2,8 +2,9 @@ import axios from 'axios';
 import { notificationActions } from '../notification/notification-slice'; 
 import { helpeeActions } from "./helpee-slice";
 
-const userSignUpEmailPath = '/api/helpee-signup-email';
-const userSignUpPasswordPath = "/api/helpee-signup-password";
+const helpeeSignUpEmailPath = '/api/helpee-signup-email';
+const helpeeSignUpPasswordPath = "/api/helpee-signup-password";
+const helpeeSignInPath = 'api/helpee/sign-in';
 const userRequestFormPath = "/api/helpee-request-form";
 const testPath = '/api/test';
 const activeHelperPath = '/api/active-helpers'
@@ -97,7 +98,7 @@ export const postHelpeeSignUpEmail = (data) => {
   return async (dispatch) => {
     try {
       // talk to API:
-      await axios.post(userSignUpEmailPath, {
+      await axios.post(helpeeSignUpEmailPath, {
         data,
       });
       // update global Helpee state:
@@ -120,7 +121,7 @@ export const postHelpeeSignUpPassword = (data) => {
   return async (dispatch) => {
     try {
       // talk to API:
-      await axios.post(userSignUpPasswordPath, {
+      await axios.post(helpeeSignUpPasswordPath, {
         data,
       });
       // update global Helpee state:
@@ -135,6 +136,31 @@ export const postHelpeeSignUpPassword = (data) => {
         status: "error",
         title: "Error!",
         message: `Insert password error: ${err}`,
+      });
+    }
+  };
+};
+
+export const postHelpeeSignInData = (data) => {
+  return async (dispatch) => {
+    try {
+      // talk to API:
+      await axios.post(helpeeSignInPath, {
+        data,
+      });
+      // update global Helpee state:
+      dispatch(
+        helpeeActions.updateHelpeeInfoAfterSignIn({
+          helpeeEmail: data.helpeeEmail,
+          token: data.token,
+        })
+      );
+    } catch (err) {
+      console.error(err);
+      notificationActions.showNotification({
+        status: 'error',
+        title: 'Error!',
+        message: `Error: ${err}`,
       });
     }
   };

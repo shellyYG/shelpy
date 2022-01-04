@@ -33,7 +33,6 @@ const SignUpPageHelpee = () => {
   function handleEmailTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
-    console.log("typingInput: ", typingInput);
     setEmail(typingInput);
   }
   useEffect(() => {

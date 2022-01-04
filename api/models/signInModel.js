@@ -1,12 +1,18 @@
-const { query } = require('../query');
+const { query } = require('./query');
 
-async function insertLoginHelpee(req) {
-  const { email } = req.body;
-  const sql = `SELECT id, provider, username, email, encryptpass, ivString FROM politicmotion.user_basic WHERE email = '${email}'`;
-  const userLoginInput = await query(sql);
-  return userLoginInput;
+async function postHelpeeSignInData(data) {
+  const dataToInsert = {
+    provider: 'native',
+    email: data.helpeeEmail,
+    sign_up_status: 'signed_in',
+    encryptpass: data.helpeeEmail,
+    ivString: '',
+  };
+  const sql = 'INSERT INTO helpee_account SET?'; // TODO: should be SELECT rather than INSERT
+  const queryResult = await query(sql, dataToInsert);
+  return queryResult;
 }
 
 module.exports = {
-  insertLoginHelpee,
+  postHelpeeSignInData,
 };

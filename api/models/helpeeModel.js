@@ -10,15 +10,18 @@ async function getHelpeeInfo() {
 }
 async function postHelpeeSignUpEmail(data) {
   const dataToInsert = {
+    provider: 'native',
     email: data.helpeeEmail,
     sign_up_status: 'email_submitted',
+    encryptpass: '',
+    ivString: '',
   };
   const sql = 'INSERT INTO helpee_account SET?';
   const queryResult = await query(sql, dataToInsert);
   return queryResult;
 }
 async function postHelpeeSignUpPassword(data) {
-  sql = `UPDATE helpee_account SET password_encoded='${data.helpeePassword}', sign_up_status='password_created' WHERE email='${data.helpeeEmail}'`;
+  const sql = `UPDATE helpee_account SET password_encoded='${data.helpeePassword}', sign_up_status='password_created' WHERE email='${data.helpeeEmail}'`;
   const queryResult = await query(sql);
   return queryResult;
 }

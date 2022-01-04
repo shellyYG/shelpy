@@ -1,14 +1,15 @@
 require('dotenv').config();
-const helpeeSignInModel = require('../../models/user/signInModel');
-const { generateAccessToken } = require('../../../util/util');
+const helpeeSignInModel = require('../models/signInModel');
+const { generateAccessToken } = require('../../util/util');
 
-const helpeeSignIn = async (req, res) => {
-  const data = req.body;
+const postHelpeeSignInData = async (req, res) => {
+  console.log('posthelpeeSignIn..., req.body: ', req.body);
+  const { data } = req.body;
 
   async function getLogInUserPass() {
-    const LoginUserResult = await helpeeSignInModel.insertLoginHelpee(req);
+    const LoginUserResult = await helpeeSignInModel.postHelpeeSignInData(req.body.data);
     const LoginUserResultivString = LoginUserResult[0].ivString;
-    const { password } = data;
+    const password = data.helpeePassword;
     const key = process.env.ACCESS_TOKEN_KEY;
     const ivBack = Buffer.from(LoginUserResultivString, 'base64');
     const cipher = crypto.createCipheriv('aes-256-cbc', key, ivBack);
@@ -27,7 +28,7 @@ const helpeeSignIn = async (req, res) => {
   }
 
   async function comparepass() {
-    const LoginUserResult = await helpeeSignInModel.insertLoginHelpee(req);
+    const LoginUserResult = await helpeeSignInModel.postHelpeeSignInData(req.body.data);
     console.log('LoginUserResult: ', LoginUserResult);
     if (LoginUserResult.length === 0) {
       res.send('Email not existed.');
@@ -35,7 +36,7 @@ const helpeeSignIn = async (req, res) => {
       const DataBasePass = LoginUserResult[0].encryptpass;
       const userPass = await getLogInUserPass();
 
-      if (userPass == DataBasePass) {
+      if (userPass === DataBasePass) {
         const userObject = {};
         const { id, provider, username, email } = LoginUserResult[0];
         userObject.id = id;
@@ -68,5 +69,5 @@ const helpeeSignIn = async (req, res) => {
 };
 
 module.exports = {
-  helpeeSignIn,
+  postHelpeeSignInData,
 };

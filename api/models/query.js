@@ -16,10 +16,10 @@ const query = function (sql, values) {
         console.log('sql connection error: ', err);
         reject(err);
       } else {
-        connection.query(sql, values, (err, rows) => {
-          if (err) {
-            console.log('sql querying error: ', err);
-            reject(err);
+        connection.query(sql, values, (error, rows) => {
+          if (error) {
+            console.log('sql querying error: ', error);
+            reject(error);
           } else {
             resolve(rows);
           }
