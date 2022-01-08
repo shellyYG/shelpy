@@ -49,7 +49,7 @@ export const onClickUpdateActiveHelperLists = (data) => {
       );
     } catch (err) {
       console.error(err);
-      notificationActions.showNotification({
+      notificationActions.setNotification({
         signUpEmailStatus: 'error',
         signUpEmailStatusTitle: 'Oops!',
         signUpEmailStatusMessage: `Error: ${err}`,
@@ -84,7 +84,7 @@ export const fetchHelpeeData = () => {
             const response = await axios.get(testPath);
             console.log('response from API: ', response);
         } catch (err) {
-            notificationActions.showNotification({
+            notificationActions.setNotification({
               signUpEmailStatus: 'error',
               signUpEmailStatusTitle: 'Oops!',
               signUpEmailStatusMessage: `Error: ${err}`,
@@ -107,17 +107,17 @@ export const postHelpeeSignUpEmail = (data) => {
         })
       );
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.setNotification({
           signUpEmailStatus: 'success',
-          signUpEmailStatusTitle: 'Success',
-          signUpEmailStatusMessage: 'Email submitted successfully.',
+          signUpEmailStatusTitle: 'Email successfully submitted.',
+          signUpEmailStatusMessage: 'Create password to complete Sign-Up.',
         })
       );
     } catch (error) {
       if (error.response) {
         console.log('error.response exist...');
         dispatch(
-          notificationActions.showNotification({
+          notificationActions.setNotification({
             signUpEmailStatus: 'error',
             signUpEmailStatusTitle: 'Oops!',
             signUpEmailStatusMessage: error.response.data,
@@ -142,7 +142,7 @@ export const postHelpeeSignUpPassword = (data) => {
       );
     } catch (err) {
       console.error(err);
-      notificationActions.showNotification({
+      notificationActions.setNotification({
         signUpEmailStatus: 'error',
         signUpEmailStatusTitle: 'Oops!',
         signUpEmailStatusMessage: `Insert password error: ${err}`,
@@ -167,7 +167,7 @@ export const postHelpeeSignInData = (data) => {
       );
     } catch (err) {
       console.error(err);
-      notificationActions.showNotification({
+      notificationActions.setNotification({
         signUpEmailStatus: 'error',
         signUpEmailStatusTitle: 'Oops!',
         signUpEmailStatusMessage: `Error: ${err}`,
@@ -191,7 +191,7 @@ export const postHelpeeServiceRequestForm = (data) => {
       );
     } catch (err) {
       console.error(err);
-      notificationActions.showNotification({
+      notificationActions.setNotification({
         signUpEmailStatus: 'error',
         signUpEmailStatusTitle: 'Oops!',
         signUpEmailStatusMessage: `Error: ${err}`,
@@ -203,7 +203,7 @@ export const postHelpeeServiceRequestForm = (data) => {
 export const clearSignUpEmailStatus = (data) => {
   return async (dispatch) => {
     dispatch(
-      notificationActions.showNotification({
+      notificationActions.setNotification({
         signUpEmailStatus: 'initial',
         signUpEmailStatusTitle: '',
         signUpEmailStatusMessage: '',
