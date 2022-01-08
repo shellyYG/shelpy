@@ -49,12 +49,18 @@ const SignUpPageHelpee = () => {
   }, [DBHelpeeEmail]);
   useEffect(() => {
     if (signUpEmailStatus === 'error') {
-      MySwal.fire({
-        title: <strong>{signUpEmailStatusTitle}</strong>,
-        html: <p>{signUpEmailStatusMessage}</p>,
-        icon: 'error',
-      });
-      dispatch(clearSignUpEmailStatus());
+      async function sweetAlertAndClearStatus(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          html: <p>{message}</p>,
+          icon: 'error',
+        });
+        dispatch(clearSignUpEmailStatus());
+      }
+      sweetAlertAndClearStatus(
+        signUpEmailStatusTitle,
+        signUpEmailStatusMessage
+      );
       return;
     } else if (signUpEmailStatus === 'success') {
       // need to create sweetAlert function inside useEffect or it will rerender everytime
