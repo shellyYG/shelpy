@@ -50,9 +50,9 @@ export const onClickUpdateActiveHelperLists = (data) => {
     } catch (err) {
       console.error(err);
       notificationActions.showNotification({
-        status: "error",
-        title: "Error!",
-        message: `Error: ${err}`,
+        signUpEmailStatus: 'error',
+        signUpEmailStatusTitle: 'Oops!',
+        signUpEmailStatusMessage: `Error: ${err}`,
       });
     }
   };
@@ -84,11 +84,10 @@ export const fetchHelpeeData = () => {
             const response = await axios.get(testPath);
             console.log('response from API: ', response);
         } catch (err) {
-          console.log('...oops error!err: ', err);
             notificationActions.showNotification({
-              status: 'error',
-              title: 'Error!',
-              message: `Error: ${err}`,
+              signUpEmailStatus: 'error',
+              signUpEmailStatusTitle: 'Oops!',
+              signUpEmailStatusMessage: `Error: ${err}`,
             });
         }
     }
@@ -109,9 +108,9 @@ export const postHelpeeSignUpEmail = (data) => {
       );
       dispatch(
         notificationActions.showNotification({
-          status: 'success',
-          title: 'Success',
-          message: 'Email submitted successfully.',
+          signUpEmailStatus: 'success',
+          signUpEmailStatusTitle: 'Success',
+          signUpEmailStatusMessage: 'Email submitted successfully.',
         })
       );
     } catch (error) {
@@ -119,11 +118,11 @@ export const postHelpeeSignUpEmail = (data) => {
         console.log('error.response exist...');
         dispatch(
           notificationActions.showNotification({
-            status: 'error',
-            title: 'Error!',
-            message: `Error: ${error.response.data}`,
+            signUpEmailStatus: 'error',
+            signUpEmailStatusTitle: 'Oops!',
+            signUpEmailStatusMessage: error.response.data,
           })
-        )
+        );
       }
     }
   };
@@ -144,9 +143,9 @@ export const postHelpeeSignUpPassword = (data) => {
     } catch (err) {
       console.error(err);
       notificationActions.showNotification({
-        status: "error",
-        title: "Error!",
-        message: `Insert password error: ${err}`,
+        signUpEmailStatus: 'error',
+        signUpEmailStatusTitle: 'Oops!',
+        signUpEmailStatusMessage: `Insert password error: ${err}`,
       });
     }
   };
@@ -169,9 +168,9 @@ export const postHelpeeSignInData = (data) => {
     } catch (err) {
       console.error(err);
       notificationActions.showNotification({
-        status: 'error',
-        title: 'Error!',
-        message: `Error: ${err}`,
+        signUpEmailStatus: 'error',
+        signUpEmailStatusTitle: 'Oops!',
+        signUpEmailStatusMessage: `Error: ${err}`,
       });
     }
   };
@@ -193,10 +192,22 @@ export const postHelpeeServiceRequestForm = (data) => {
     } catch (err) {
       console.error(err);
       notificationActions.showNotification({
-        status: "error",
-        title: "Error!",
-        message: `Error: ${err}`,
+        signUpEmailStatus: 'error',
+        signUpEmailStatusTitle: 'Oops!',
+        signUpEmailStatusMessage: `Error: ${err}`,
       });
     }
+  };
+};
+
+export const clearSignUpEmailStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      notificationActions.showNotification({
+        signUpEmailStatus: 'initial',
+        signUpEmailStatusTitle: '',
+        signUpEmailStatusMessage: '',
+      })
+    );
   };
 };

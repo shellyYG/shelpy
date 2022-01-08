@@ -6,7 +6,10 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import '../App.css';
-import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions';
+import {
+  clearSignUpEmailStatus,
+  postHelpeeSignUpEmail,
+} from '../store/helpee/helpee-actions';
 
 const MySwal = withReactContent(Swal);
 
@@ -14,7 +17,11 @@ const SignUpPageHelpee = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
-  const { status, title, message } = useSelector((state) => state.notification);
+  const {
+    signUpEmailStatus,
+    signUpEmailStatusTitle,
+    signUpEmailStatusMessage,
+  } = useSelector((state) => state.notification);
   const emailRef = useRef();
   const [email, setEmail] = useState("");
   const onBackButtonEvent = (e) => {
@@ -41,14 +48,15 @@ const SignUpPageHelpee = () => {
     setEmail(DBHelpeeEmail);
   }, [DBHelpeeEmail]);
   useEffect(() => {
-    if (status === 'error') {
+    if (signUpEmailStatus === 'error') {
       MySwal.fire({
-        title: <strong>{title}</strong>,
-        html: <p>{message}</p>,
+        title: <strong>{signUpEmailStatusTitle}</strong>,
+        html: <p>{signUpEmailStatusMessage}</p>,
         icon: 'error',
       });
+      dispatch(clearSignUpEmailStatus());
       return;
-    } else if (status === 'success') {
+    } else if (signUpEmailStatus === 'success') {
       // need to create sweetAlert function inside useEffect or it will rerender everytime
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
@@ -56,12 +64,19 @@ const SignUpPageHelpee = () => {
           html: <p>{message}</p>,
           icon: 'success',
         });
+        dispatch(clearSignUpEmailStatus());
         // to perform navigate after await MySwal, we need to create extra async function sweetAlertAndNavigate to wrap MySwal.
         navigate('/sign-up-final-step', { replace: true });
       }
-      sweetAlertAndNavigate(title, message);
+      sweetAlertAndNavigate(signUpEmailStatusTitle, signUpEmailStatusMessage);
     }
-  }, [status, message, title, navigate])
+  }, [
+    signUpEmailStatus,
+    signUpEmailStatusMessage,
+    signUpEmailStatusTitle,
+    navigate,
+    dispatch,
+  ]);
   return (
     <div className="main-content-wrapper-homepage">
       <div className="section-center-align-landing">

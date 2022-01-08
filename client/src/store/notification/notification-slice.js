@@ -3,16 +3,16 @@ import { createSlice } from '@reduxjs/toolkit';
 const notificationSlice = createSlice({
   name: 'notification',
   initialState: {
-    status: null,
-    title: '',
-    message: '',
+    signUpEmailStatus: 'initial',
+    signUpEmailStatusTitle: '',
+    signUpEmailStatusMessage: '',
   },
   reducers: {
     showNotification(state, action) {
       const { payload } = action;
-      state.status = payload.status;
-      state.title = payload.title;
-      state.message = payload.message;
+      state.signUpEmailStatus = payload.signUpEmailStatus;
+      state.signUpEmailStatusTitle = payload.signUpEmailStatusTitle;
+      state.signUpEmailStatusMessage = payload.signUpEmailStatusMessage;
     },
   },
 });
