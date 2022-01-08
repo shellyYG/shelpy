@@ -104,16 +104,27 @@ export const postHelpeeSignUpEmail = (data) => {
       // update global Helpee state:
       dispatch(
         helpeeActions.updateHelpeeInfoAfterInsertEmail({
-          helpeeEmail: data.helpeeEmail,
+          email: data.email,
         })
       );
-    } catch (err) {
-      console.error(err);
+      dispatch(
         notificationActions.showNotification({
-          status: 'error',
-          title: 'Error!',
-          message: `Error: ${err}`,
-        });
+          status: 'success',
+          title: 'Success',
+          message: 'Email submitted successfully.',
+        })
+      );
+    } catch (error) {
+      if (error.response) {
+        console.log('error.response exist...');
+        dispatch(
+          notificationActions.showNotification({
+            status: 'error',
+            title: 'Error!',
+            message: `Error: ${error.response.data}`,
+          })
+        )
+      }
     }
   };
 };
@@ -151,7 +162,7 @@ export const postHelpeeSignInData = (data) => {
       // update global Helpee state:
       dispatch(
         helpeeActions.updateHelpeeInfoAfterSignIn({
-          helpeeEmail: data.helpeeEmail,
+          helpeeEmail: data.email,
           token: data.token,
         })
       );

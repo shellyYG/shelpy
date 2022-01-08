@@ -3,13 +3,18 @@ import ConfirmBtn from '../components/ConfirmBtn';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import '../App.css';
-import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions'
+import { postHelpeeSignUpEmail } from '../store/helpee/helpee-actions';
+
+const MySwal = withReactContent(Swal);
 
 const SignUpPageHelpee = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
+  const { status, title, message } = useSelector((state) => state.notification);
   const emailRef = useRef();
   const [email, setEmail] = useState("");
   const onBackButtonEvent = (e) => {
@@ -21,15 +26,12 @@ const SignUpPageHelpee = () => {
     e.preventDefault();
     // change DB & global state
     const data = {
-      helpeeEmail: emailRef.current.value,
+      email: emailRef.current.value,
+      isHelpee: true,
+      status: 'only_email_signed_up',
     };
-    try {
-      dispatch(postHelpeeSignUpEmail(data));
-    } catch (err) {
-      console.error(err);
-    }
-    navigate("/sign-up-final-step", { replace: true });
-  }
+    dispatch(postHelpeeSignUpEmail(data)); // can't await useDispatch(), hence, use useEffect for status happening afterwards
+  } 
   function handleEmailTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
@@ -38,6 +40,28 @@ const SignUpPageHelpee = () => {
   useEffect(() => {
     setEmail(DBHelpeeEmail);
   }, [DBHelpeeEmail]);
+  useEffect(() => {
+    if (status === 'error') {
+      MySwal.fire({
+        title: <strong>{title}</strong>,
+        html: <p>{message}</p>,
+        icon: 'error',
+      });
+      return;
+    } else if (status === 'success') {
+      // need to create sweetAlert function inside useEffect or it will rerender everytime
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          html: <p>{message}</p>,
+          icon: 'success',
+        });
+        // to perform navigate after await MySwal, we need to create extra async function sweetAlertAndNavigate to wrap MySwal.
+        navigate('/sign-up-final-step', { replace: true });
+      }
+      sweetAlertAndNavigate(title, message);
+    }
+  }, [status, message, title, navigate])
   return (
     <div className="main-content-wrapper-homepage">
       <div className="section-center-align-landing">

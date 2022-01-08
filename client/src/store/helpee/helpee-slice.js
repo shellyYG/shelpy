@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const helpeeSlice = createSlice({
-  name: "helpeeAccount",
+  name: "helpee",
   initialState: {
     pageFirstTimeLoaded: true,
     DBHelpeeEmail: "",
@@ -14,7 +14,7 @@ const helpeeSlice = createSlice({
     updateHelpeeInfoAfterInsertEmail(state, action) {
       const { payload } = action;
       state.pageFirstTimeLoaded = false;
-      state.DBemail = payload.helpeeEmail;
+      state.DBHelpeeemail = payload.email;
     },
     onClickUpdateActiveServiceType(state, action) {
       const { payload } = action;

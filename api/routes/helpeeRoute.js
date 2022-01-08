@@ -10,12 +10,11 @@ const {
 } = require('../controllers/helpeeController');
 
 const { postHelpeeSignInData } = require('../controllers/signInController');
+const { postSignUpData } = require('../controllers/signUpController');
 
 router.route('/api/helpee').get(wrapAsync(getHelpeeInfo));
-router.route('/api/helpee-signup-email').post(wrapAsync(postHelpeeSignUpEmail));
-router
-  .route('/api/helpee-signup-password')
-  .post(wrapAsync(postHelpeeSignUpPassword));
+router.route('/api/helpee-signup-email').post(wrapAsync(postSignUpData));
+router.route('/api/helpee-signup-password').post(wrapAsync(postSignUpData));
 router
   .route('/api/helpee-request-form')
   .post(wrapAsync(postHelpeeServiceRequestForm));
