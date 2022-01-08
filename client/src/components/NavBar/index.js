@@ -29,43 +29,36 @@ const NavBar = () => {
   return (
     <>
       <nav>
-        <div className="nav-menu">
+        <div className='nav-menu'>
           <NavLink
-            exact
-            className="nav-logo"
-            to="/home"
-            exact={true}
-            activeStyle
+            className='nav-logo'
+            to='/home'
           >
-            <img src={"/Shelpy_logo.jpg"} alt={"logo"} />
+            <img src={'/Shelpy_logo.jpg'} alt={'logo'} />
           </NavLink>
           <NavLink
-            exact
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to="/about"
+            to='/about'
           >
             About
           </NavLink>
           <NavLink
-            exact
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to="/service-options"
+            to='/service-options'
           >
             Book a Shelper
           </NavLink>
         </div>
-        <div className="nav-button">
+        <div className='nav-button'>
           <NavLink
-            exact
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to="/sign-in"
+            to='/sign-in'
           >
             Sign-In
           </NavLink>
           <NavLink
-            exact
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to="/order-history"
+            to='/order-history'
           >
             My Requests
           </NavLink>

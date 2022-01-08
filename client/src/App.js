@@ -12,34 +12,31 @@ import HomePage from './pages/HomePage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
 import HelperListPage from "./pages/HelperListPage";
 import SignInPage from './pages/SignInPage';
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
   return (
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/" exact element={<Navigate replace to="/home" />} />
-        <Route path="/home" exact element={<HomePage />} />
+        <Route path='/' element={<Navigate replace to='/home' />} />
+        <Route path='/home' element={<HomePage />} />
         <Route
-          path="/sign-up-final-step"
-          exact
+          path='/sign-up-final-step'
           element={<SignUpPasswordPage />}
         />
+        <Route path='/sign-in' element={<SignInPage />} />
+        <Route path='/helper' element={<SignUpPageHelper />} />
+        <Route path='/service-options' element={<ServiceOptionPage />} />
+        <Route path='/about' element={<AboutPage />} />
         <Route
-          path="/sign-in"
-          exact
-          element={<SignInPage />}
-        />
-        <Route path="/helper" exact element={<SignUpPageHelper />} />
-        <Route path="/service-options" exact element={<ServiceOptionPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route
-          path="/book-appointment-form"
+          path='/book-appointment-form'
           element={<BookAppointmentPage />}
         />
-        <Route path={"/chatroom"} exact element={<ChatRoomPage />} />
-        <Route path={"/order-history"} exact element={<OrderHistoryPage />} />
-        <Route path={"/helper-lists"} exact element={<HelperListPage />} />
+        <Route path={'/chatroom'} element={<ChatRoomPage />} />
+        <Route path={'/order-history'} element={<OrderHistoryPage />} />
+        <Route path={'/helper-lists'} element={<HelperListPage />} />
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
       <Footer />
     </Router>
