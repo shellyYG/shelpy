@@ -8,6 +8,8 @@ import '../App.css';
 
 const ServiceOptionPage = () => {
   const { globalServiceType }= useSelector((state) => state.helpee);
+  const { DBHelpeeEmail } = useSelector((state) => state.helpee);
+  const [email, setEmail] = useState(DBHelpeeEmail);
   const navigate = useNavigate();
   const onBackButtonEvent = (e) => {
     e.preventDefault();

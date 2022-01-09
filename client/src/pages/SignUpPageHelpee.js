@@ -86,7 +86,7 @@ const SignUpPageHelpee = () => {
         });
         dispatch(clearSignUpEmailStatus());
         // to perform navigate after await MySwal, we need to create extra async function sweetAlertAndNavigate to wrap MySwal.
-        navigate('/sign-up-final-step', { replace: true });
+        navigate('/service-options', { replace: true });
       }
       sweetAlertAndNavigate(signUpEmailStatusTitle, signUpEmailStatusMessage);
     }

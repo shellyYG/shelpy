@@ -26,6 +26,8 @@ const AppointmentForm = (props) => {
 const { DBHelpeeName, DBHelpeeLanguage, DBServiceType } = useSelector(
   (state) => state.helpee
 );
+const { helpeeFormStatus, helpeeFormStatusTitle, helpeeFormStatusMessage } =
+  useSelector((state) => state.notification);
 const { globalServiceType } = useSelector((state) => state.helpee);
 const serviceRef = useRef();
 const genderRef = useRef();
@@ -39,10 +41,21 @@ const firstLangRef = useRef();
 const secondLangRef = useRef();
 const notesRef = useRef();
 const dataHandoverCheckedRef = useRef();
-
+const token = false;
 const navigate = useNavigate();
   async function handleConfirm(e) {
     e.preventDefault();
+    if(!token){
+      MySwal.fire({
+        title: (
+          <strong>Oops</strong>
+        ),
+        html: <p>Please create an account or sign-in to continue.</p>,
+        icon: 'error',
+      });
+      // TODO: pop-up window for sign-up
+      return;
+    }
     const userId = 0; // placeholder
     // change DB & global state
     console.log("serviceRef: ", serviceRef.current.value);
