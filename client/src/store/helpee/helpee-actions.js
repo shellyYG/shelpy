@@ -97,13 +97,13 @@ export const postHelpeeSignUpEmail = (data) => {
   return async (dispatch) => {
     try {
       // talk to API:
-      await axios.post(helpeeSignUpEmailPath, {
+      const response = await axios.post(helpeeSignUpEmailPath, {
         data,
       });
       // update global Helpee state:
       dispatch(
         helpeeActions.updateHelpeeInfoAfterInsertEmail({
-          email: data.email,
+          email: response.data.user.email,
         })
       );
       dispatch(
@@ -130,23 +130,33 @@ export const postHelpeeSignUpEmail = (data) => {
 export const postHelpeeSignUpPassword = (data) => {
   return async (dispatch) => {
     try {
-      // talk to API:
-      await axios.post(helpeeSignUpPasswordPath, {
+      const response = await axios.post(helpeeSignUpPasswordPath, {
         data,
       });
-      // update global Helpee state:
+      window.localStorage.setItem('shelpy-token', response.data.accessToken);
       dispatch(
         helpeeActions.updateHelpeeInfoAfterInsertPassword({
-          helpeePassword: data.helpeePassword,
+          password: data.password,
         })
       );
-    } catch (err) {
-      console.error(err);
-      notificationActions.setNotification({
-        signUpEmailStatus: 'error',
-        signUpEmailStatusTitle: 'Oops!',
-        signUpEmailStatusMessage: `Insert password error: ${err}`,
-      });
+      dispatch(
+        notificationActions.setNotification({
+          signUpPasswordStatus: 'success',
+          signUpPasswordStatusTitle: 'Password successfully created.',
+          signUpPasswordStatusMessage: 'Password successfully created.',
+        })
+      );
+    } catch (error) {
+      if (error.response) {
+        console.log('error.response exist...');
+        dispatch(
+          notificationActions.setNotification({
+            signUpPasswordStatus: 'error',
+            signUpPasswordStatusTitle: 'Oops!',
+            signUpPasswordStatusMessage: error.response.data,
+          })
+        );
+      }
     }
   };
 };
@@ -207,6 +217,18 @@ export const clearSignUpEmailStatus = (data) => {
         signUpEmailStatus: 'initial',
         signUpEmailStatusTitle: '',
         signUpEmailStatusMessage: '',
+      })
+    );
+  };
+};
+
+export const clearSignUpPasswordStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      notificationActions.setNotification({
+        signUpPasswordStatus: 'initial',
+        signUpPasswordStatusTitle: '',
+        signUpPasswordStatusMessage: '',
       })
     );
   };

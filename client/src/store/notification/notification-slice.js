@@ -7,8 +7,8 @@ const notificationSlice = createSlice({
     signUpEmailStatusTitle: '',
     signUpEmailStatusMessage: '',
     signUpPasswordStatus: 'initial',
-    signUpPasswordTitle: '',
-    signUpPasswordMessage: '',
+    signUpPasswordStatusTitle: '',
+    signUpPasswordStatusMessage: '',
   },
   reducers: {
     setNotification(state, action) {
@@ -17,15 +17,17 @@ const notificationSlice = createSlice({
         signUpEmailStatusTitle,
         signUpEmailStatusMessage,
         signUpPasswordStatus,
-        signUpPasswordTitle,
-        signUpPasswordMessage,
+        signUpPasswordStatusTitle,
+        signUpPasswordStatusMessage,
       } = action.payload;
       if (signUpEmailStatus) state.signUpEmailStatus = signUpEmailStatus;
       if (signUpEmailStatusTitle) state.signUpEmailStatusTitle = signUpEmailStatusTitle;
       if (signUpEmailStatusMessage) state.signUpEmailStatusMessage = signUpEmailStatusMessage;
       if (signUpPasswordStatus) state.signUpPasswordStatus = signUpPasswordStatus;
-      if (signUpPasswordTitle) state.signUpPasswordTitle = signUpPasswordTitle;
-      if (signUpPasswordMessage) state.signUpPasswordMessage = signUpPasswordMessage;
+      if (signUpPasswordStatusTitle)
+        state.signUpPasswordStatusTitle = signUpPasswordStatusTitle;
+      if (signUpPasswordStatusMessage)
+        state.signUpPasswordStatusMessage = signUpPasswordStatusMessage;
     },
   },
 });

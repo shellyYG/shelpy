@@ -1,20 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const helpeeSlice = createSlice({
-  name: "helpee",
+  name: 'helpee',
   initialState: {
     pageFirstTimeLoaded: true,
-    DBHelpeeEmail: "",
-    DBSignUpStatus: "",
-    globalServiceType: "",
-    globalNavigateTarget: "",
-    globalActiveRequest: "",
+    DBHelpeeEmail: '',
+    DBHelpeePassword: '',
+    DBSignUpStatus: '',
+    globalServiceType: '',
+    globalNavigateTarget: '',
+    globalActiveRequest: '',
   },
   reducers: {
     updateHelpeeInfoAfterInsertEmail(state, action) {
       const { payload } = action;
       state.pageFirstTimeLoaded = false;
-      state.DBHelpeeemail = payload.email;
+      state.DBHelpeeEmail = payload.email;
+    },
+    updateHelpeeInfoAfterInsertPassword(state, action) {
+      const { payload } = action;
+      state.DBHelpeePassword = payload.password;
     },
     onClickUpdateActiveServiceType(state, action) {
       const { payload } = action;

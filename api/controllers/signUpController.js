@@ -5,63 +5,71 @@ const signUpModel = require('../models/signUpModel');
 const { generateAccessToken } = require('../../util/util');
 
 const createUserObject = async (data, encryptedpass, ivString) => {
-    // insert to
-    const userRawAttri = await signUpModel.getUserRawAttributeAfterInsert(
-    data,
-    encryptedpass,
-    ivString,
-  );
-  const { id, provider, name, email } = userRawAttri[0];
-  const dataObject = {
-    user: {
-      id,
-      provider,
-      name,
-      email,
-    },
-  };
-  const userObject = {
-    data: dataObject,
-  };
-  const payloadObject = {
-    data: dataObject.user,
-  };
-  const accessToken = generateAccessToken(payloadObject);
-
-  dataObject.access_token = accessToken;
-
-  // Verify token to get lifetime for token
-  jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
-    // eslint-disable-line no-shadow
-    if (err) throw Error('TOKEN_EXPIRED_OR_NOT_MATCH');
-    dataObject.access_expired = payload.exp - payload.iat;
-  });
-  console.log('createUserObject returned value userObject: ', userObject);
-  return userObject
-};
-
-const checkExist = async (data, encryptedpass, ivString) => {
-  const existingEmails = await signUpModel.checkEmailExist(data);
-  if (existingEmails.length > 0) {
-    throw Error('EMAIL_EXIST');
-  } else {
-    const userObject = createUserObject(
+  const { provider, username, email } = data;
+  // insert to DB
+  if (data.status === 'only_email_signed_up') {
+    const userId = await signUpModel.insertUserAndGetUserId(
       data,
       encryptedpass,
-      ivString,
+      ivString
     );
-    return userObject;
+    return { user: { id: userId, provider, username, email } };
   }
+  try {
+    const { userId } = await signUpModel.getUserIdByEmail(data);
+    const { isHelpee } = data;
+    await signUpModel.updateUserPassword(isHelpee, userId, encryptedpass, ivString);
+    const id = userId;
+    const dataObject = {
+      user: {
+        id,
+        provider,
+        username,
+        email,
+      },
+    };
+    const accessToken = generateAccessToken({
+      data: {
+        id,
+        provider,
+        username,
+        email,
+      },
+    });
+    dataObject.accessToken = accessToken;
+    // Verify token to get lifetime for token
+    jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
+      // eslint-disable-line no-shadow
+      if (err) throw Error('TOKEN_EXPIRED_OR_NOT_MATCH');
+      dataObject.accessExpired = payload.exp - payload.iat;
+    });
+    return dataObject;
+  } catch (error) {
+    console.error(error);
+    throw Error(error.message);
+  } 
+};
+
+const emailExisted = async (data) => {
+  const existingEmails = await signUpModel.checkEmailExist(data);
+  if (existingEmails.length > 0) {
+    return true;
+  } return false;
 };
 
 const postSignUpData = async (req, res) => {
   const { data } = req.body;
+  const { status, password } = data;
   const iv = crypto.randomBytes(16); // different everytime
   const ivString = iv.toString('base64');
-  const { password } = data;
-  if (!password) { // User finished first sign-up step.
+  // Insert Email only.
+  if (status === 'only_email_signed_up') {
     try {
-      const { userObject } = await checkExist(data, '', ivString);
+      const isEmailExisted = await emailExisted(data);
+      if (isEmailExisted) {
+        throw Error('EMAIL_EXIST');
+      }
+      const userObject = await createUserObject(data); // insert DB
       res.status(200).json(userObject);
       return;
     } catch (error) {
@@ -69,18 +77,19 @@ const postSignUpData = async (req, res) => {
       return;
     }
   }
+  // Update password.
   const key = process.env.ACCESS_TOKEN_KEY;
   const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
   let encryptedpass = cipher.update(password, 'utf-8', 'hex');
   encryptedpass += cipher.final('hex');
   try {
-    const { userObject } = checkExist(data, encryptedpass, ivString);
+    const userObject = await createUserObject(data, encryptedpass, ivString);
     if (userObject) {
-        res.json(userObject);
+      res.status(200).json(userObject);
     }
   } catch (error) {
-      console.error(error);
-      res.status(500).send(error.message);
+    console.error(error);
+    res.status(500).send(error.message);
   }
 };
 
