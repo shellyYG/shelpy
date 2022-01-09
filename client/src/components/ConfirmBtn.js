@@ -1,12 +1,17 @@
 function ConfirmBtn(props) {
     return (
-      <button
-        data-text="Book Room"
-        className="btn-next"
-        onClick={props.handleConfirm}
-      >
-        <span>{props.cta}</span>
-      </button>
+      <>
+        {!props.disable && (
+          <button className='btn-next' onClick={props.handleConfirm}>
+            <span>{props.cta}</span>
+          </button>
+        )}
+        {props.disable && (
+          <button className='btn-disable' disabled>
+            <span>{props.cta}</span>
+          </button>
+        )}
+      </>
     );
 }
 

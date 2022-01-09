@@ -66,8 +66,7 @@ const SignUpPasswordPage = () => {
     e.preventDefault();
     setPassword(e.target.value);
   }
-  function handleHasGiveConsent(e) {
-    e.preventDefault();
+  function handleHasGiveConsent() {
     setHasGiveConsent(!hasGiveConsent);
   }
   useEffect(() => {
@@ -147,8 +146,7 @@ const SignUpPasswordPage = () => {
             onChange={handlePasswordTyping}
             ref={passwordRef}
           />
-
-          <div className='form-row-password'>
+          <div className='form-row-password' style={{ marginBottom: '20px' }}>
             <input
               type='checkbox'
               checked={hasGiveConsent}
@@ -156,11 +154,22 @@ const SignUpPasswordPage = () => {
               style={{ marginRight: '20px ' }}
             />
             <div className='checkbox-text-password-page'>
-              Yes, please email me Shelpy's special offers.
+              You agree to Shelpy's{' '}
+              <a href='/privacy-policy' target='_blank'>
+                privacy policy
+              </a>{' '}
+              and{' '}
+              <a href='/terms-and-conditions' target='_blank'>
+                terms and conditions
+              </a>
+              .
             </div>
           </div>
-
-          <ConfirmBtn cta='Sign Up ❯' handleConfirm={handleConfirm} />
+          <ConfirmBtn
+            cta='Sign Up ❯'
+            disable={!hasGiveConsent || password.length === 0}
+            handleConfirm={handleConfirm}
+          />
         </form>
       </div>
     </div>

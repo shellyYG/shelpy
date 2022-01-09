@@ -539,6 +539,19 @@ footer {
     height: 40px;
 }
 
+.btn-disable {
+  border-radius: 4px;
+    background-color: #D4D4D4;
+    padding: 10px 22px;
+    color: #fff;
+    outline: none;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    margin: 3px;
+    height: 40px;
+}
+
 .btn-send{
   border-radius: 1px;
     background-color: #fff995;
