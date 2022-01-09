@@ -19,6 +19,7 @@ const SignUpPasswordPage = () => {
   const [email, setEmail] = useState(DBHelpeeEmail);
   const [password, setPassword] = useState('');
   const [loading, setIsLoading] = useState(false);
+  const [hasGiveConsent, setHasGiveConsent] = useState(false);
   const {
     signUpPasswordStatus,
     signUpPasswordStatusTitle,
@@ -43,6 +44,14 @@ const SignUpPasswordPage = () => {
   }
   async function handleConfirm(e) {
     e.preventDefault();
+    if (!hasGiveConsent) {
+      await MySwal.fire({
+        title: <strong>Please checkmark!</strong>,
+        html: <p>Please click on yes to finish the final sign-up process</p>,
+        icon: 'error',
+      });
+      return;
+    }
     setIsLoading(true);
     // change DB & global state
     const data = {
@@ -56,6 +65,10 @@ const SignUpPasswordPage = () => {
   function handlePasswordTyping(e) {
     e.preventDefault();
     setPassword(e.target.value);
+  }
+  function handleHasGiveConsent(e) {
+    e.preventDefault();
+    setHasGiveConsent(!hasGiveConsent);
   }
   useEffect(() => {
     setEmail(DBHelpeeEmail);
@@ -138,9 +151,8 @@ const SignUpPasswordPage = () => {
           <div className='form-row-password'>
             <input
               type='checkbox'
-              // checked={props.checked}
-              // onChange={handleCheck}
-              // ref={props.checkRef}
+              checked={hasGiveConsent}
+              onChange={handleHasGiveConsent}
               style={{ marginRight: '20px ' }}
             />
             <div className='checkbox-text-password-page'>
