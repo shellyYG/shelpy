@@ -5,16 +5,6 @@ const getHelpeeInfo = async (req, res) => {
   return serviceType;
 };
 
-const postHelpeeSignUpEmail = async (req, res) => {
-  const response = await helpeeModel.postHelpeeSignUpEmail(req.body.data);
-  return response;
-};
-
-const postHelpeeSignUpPassword = async (req, res) => {
-  const response = await helpeeModel.postHelpeeSignUpPassword(req.body.data);
-  return response;
-};
-
 const postHelpeeSignInData = async (req, res) => {
   const response = await helpeeModel.postHelpeeSignInData(req.body.data);
   return response;
@@ -35,8 +25,6 @@ const testAPIConnection = async (req, res) => {
 
 module.exports = {
   getHelpeeInfo,
-  postHelpeeSignUpEmail,
-  postHelpeeSignUpPassword,
   postHelpeeSignInData,
   postHelpeeServiceRequestForm,
   testAPIConnection,

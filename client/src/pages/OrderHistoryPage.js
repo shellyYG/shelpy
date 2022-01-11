@@ -41,14 +41,12 @@ const OrderHistoryPage = () => {
         }}
       >
         <Link
-          exact
           className={active ? "activeStyle" : "nonActiveStyle"}
           to="/about"
         >
           Active Orders
         </Link>
         <Link
-          exact
           className={!active ? "activeStyle" : "nonActiveStyle"}
           to="/service-options"
         >

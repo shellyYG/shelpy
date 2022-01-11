@@ -15,7 +15,7 @@ const SignInPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
-  const DBHelpeePassword = useSelector((state) => state.helpeeAccount);
+  const DBHelpeePassword = useSelector((state) => state.helpee);
 
   const onBackButtonEvent = (e) => {
     e.preventDefault();
@@ -26,8 +26,8 @@ const SignInPage = () => {
     e.preventDefault();
     // change DB & global state
     const data = {
-      helpeeEmail: emailRef.current.value,
-      helpeePassword: passwordRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
     };
     console.log('postHelpeeSignInData -> data: ', data);
     try {
@@ -75,7 +75,6 @@ const SignInPage = () => {
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px'}}>
             <Link
-              exact
               to="/about"
             >
               Forget Password
