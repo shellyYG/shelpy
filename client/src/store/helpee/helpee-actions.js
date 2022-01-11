@@ -2,7 +2,6 @@ import axios from 'axios';
 import { notificationActions } from '../notification/notification-slice'; 
 import { helpeeActions } from "./helpee-slice";
 
-const helpeeSignUpEmailPath = '/api/helpee-signup-email';
 const helpeeSignUpPasswordPath = "/api/helpee-signup-password";
 const helpeeSignInPath = 'api/helpee/sign-in';
 const userRequestFormPath = "/api/helpee-request-form";
@@ -96,14 +95,10 @@ export const fetchHelpeeData = () => {
 export const postHelpeeSignUpEmail = (data) => {
   return async (dispatch) => {
     try {
-      // talk to API:
-      const response = await axios.post(helpeeSignUpEmailPath, {
-        data,
-      });
       // update global Helpee state:
       dispatch(
         helpeeActions.updateHelpeeInfoAfterInsertEmail({
-          email: response.data.user.email,
+          email: data.email,
         })
       );
       dispatch(
@@ -148,7 +143,6 @@ export const postHelpeeSignUpPassword = (data) => {
       );
     } catch (error) {
       if (error.response) {
-        console.log('error.response exist...');
         dispatch(
           notificationActions.setNotification({
             signUpPasswordStatus: 'error',
@@ -189,23 +183,33 @@ export const postHelpeeSignInData = (data) => {
 export const postHelpeeServiceRequestForm = (data) => {
   return async (dispatch) => {
     try {
-      // talk to API:
-      await axios.post(userRequestFormPath, {
+      const response = await axios.post(userRequestFormPath, {
         data,
       });
-      // update global Helpee state:
+      console.log('response: ', response);
       dispatch(
-        helpeeActions.updateHelpeeInfoAfterInsertEmail({
-          data
+        helpeeActions.updateHelpeeRequestFormData({
+          data,
         })
       );
-    } catch (err) {
-      console.error(err);
-      notificationActions.setNotification({
-        signUpEmailStatus: 'error',
-        signUpEmailStatusTitle: 'Oops!',
-        signUpEmailStatusMessage: `Error: ${err}`,
-      });
+      dispatch(
+        notificationActions.setNotification({
+          helpeeFormStatus: 'success',
+          helpeeFormStatusTitle: 'You are all set!',
+          helpeeFormStatusMessage: 'We will inform you via email as soon as we find a helper!',
+        })
+      );
+    } catch (error) {
+      console.log('form submit error');
+      if (error.response) {
+        dispatch(
+          notificationActions.setNotification({
+            helpeeFormStatus: 'error',
+            helpeeFormStatusTitle: 'Oops!',
+            helpeeFormStatusMessage: error.response.data,
+          })
+        );
+      }
     }
   };
 };

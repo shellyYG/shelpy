@@ -4,22 +4,30 @@ const jwt = require('jsonwebtoken'); // create json web token
 const signUpModel = require('../models/signUpModel');
 const { generateAccessToken } = require('../../util/util');
 
-const createUserObject = async (data, encryptedpass, ivString) => {
-  const { provider, username, email } = data;
-  // insert to DB
-  if (data.status === 'only_email_signed_up') {
-    const userId = await signUpModel.insertUserAndGetUserId(
-      data,
-      encryptedpass,
-      ivString
-    );
-    return { user: { id: userId, provider, username, email } };
+const emailExisted = async (data) => {
+  const existingEmails = await signUpModel.checkEmailExist(data);
+  if (existingEmails.length > 0) {
+    return true;
   }
+  return false;
+};
+
+const createUserObject = async (data, encryptedpass, ivString) => {
+  const { provider, username, email, status } = data;
+  // insert to DB
   try {
-    const { userId } = await signUpModel.getUserIdByEmail(data);
     const { isHelpee } = data;
-    await signUpModel.updateUserPassword(isHelpee, userId, encryptedpass, ivString);
-    const id = userId;
+    const isEmailExisted = await emailExisted(data);
+    if (isEmailExisted) {
+      throw Error('EMAIL_EXIST');
+    }
+    const id = await signUpModel.insertUserAndGetUserId({
+      email,
+      status,
+      isHelpee,
+      password: encryptedpass,
+      ivString,
+    });
     const dataObject = {
       user: {
         id,
@@ -50,33 +58,11 @@ const createUserObject = async (data, encryptedpass, ivString) => {
   } 
 };
 
-const emailExisted = async (data) => {
-  const existingEmails = await signUpModel.checkEmailExist(data);
-  if (existingEmails.length > 0) {
-    return true;
-  } return false;
-};
-
 const postSignUpData = async (req, res) => {
   const { data } = req.body;
   const { status, password } = data;
   const iv = crypto.randomBytes(16); // different everytime
   const ivString = iv.toString('base64');
-  // Insert Email only.
-  if (status === 'only_email_signed_up') {
-    try {
-      const isEmailExisted = await emailExisted(data);
-      if (isEmailExisted) {
-        throw Error('EMAIL_EXIST');
-      }
-      const userObject = await createUserObject(data); // insert DB
-      res.status(200).json(userObject);
-      return;
-    } catch (error) {
-      res.status(400).send(error.message);
-      return;
-    }
-  }
   // Update password.
   const key = process.env.ACCESS_TOKEN_KEY;
   const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);

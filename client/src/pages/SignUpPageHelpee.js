@@ -24,33 +24,20 @@ const SignUpPageHelpee = () => {
   } = useSelector((state) => state.notification);
   const emailRef = useRef();
   const [email, setEmail] = useState("");
-  const [loading, setIsLoading] = useState(false);
   const onBackButtonEvent = (e) => {
     e.preventDefault();
     navigate("/home", { replace: true });
   };
-  if (loading) {
-    MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
-      allowOutsideClick: false,
-      showConfirmButton: false,
-      willOpen: () => {
-        MySwal.showLoading();
-      },
-    });
-  }
   window.addEventListener("popstate", onBackButtonEvent, { once: true });
   async function handleConfirm(e) {
     e.preventDefault();
-    setIsLoading(true);
     // change DB & global state
     const data = {
       email: emailRef.current.value,
       isHelpee: true,
       status: 'only_email_signed_up',
     };
-    dispatch(postHelpeeSignUpEmail(data)); // can't await useDispatch(), hence, use useEffect for status happening afterwards
+    dispatch(postHelpeeSignUpEmail(data));
   } 
   function handleEmailTyping(e) {
     e.preventDefault();
@@ -62,7 +49,6 @@ const SignUpPageHelpee = () => {
   }, [DBHelpeeEmail]);
   useEffect(() => {
     if (signUpEmailStatus === 'error') {
-      setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
           title: <strong>{title}</strong>,
@@ -77,18 +63,8 @@ const SignUpPageHelpee = () => {
       );
       return;
     } else if (signUpEmailStatus === 'success') {
-      setIsLoading(false);
-      async function sweetAlertAndNavigate(title, message) {
-        await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
-          icon: 'success',
-        });
-        dispatch(clearSignUpEmailStatus());
-        // to perform navigate after await MySwal, we need to create extra async function sweetAlertAndNavigate to wrap MySwal.
-        navigate('/service-options', { replace: true });
-      }
-      sweetAlertAndNavigate(signUpEmailStatusTitle, signUpEmailStatusMessage);
+      navigate('/sign-up-final-step', { replace: true });
+      dispatch(clearSignUpEmailStatus());
     }
   }, [
     signUpEmailStatus,

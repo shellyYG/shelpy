@@ -12,6 +12,8 @@ async function insertUserAndGetUserId(data) {
     provider: 'native',
     email: data.email,
     status: data.status,
+    encryptedpass: data.password,
+    ivString: data.ivString,
   };
   const table = data.isHelpee ? 'helpee_account' : 'helper_account';
   const sql = `INSERT INTO ${table} SET ?`;
@@ -26,12 +28,6 @@ async function getUserIdByEmail(data) {
   return { userId: sqlResult[0].id };
 }
 
-async function updateUserPassword(isHelpee, userId, encryptedpass, ivString) {
-  const table = isHelpee ? 'helpee_account' : 'helper_account';
-  const sql = `UPDATE ${table} SET encryptedpass='${encryptedpass}', ivString='${ivString}', status='password_created' WHERE id='${userId}'`;
-  await query(sql);
-}
-
 async function getUserAccountData(data, userId) {
   const table = data.isHelpee ? 'helpee_account' : 'helper_account';
   const sql = `SELECT id, provider, username, email, encryptpass FROM ${table} WHERE id =${userId}`;
@@ -44,6 +40,5 @@ module.exports = {
   checkEmailExist,
   insertUserAndGetUserId,
   getUserIdByEmail,
-  updateUserPassword,
   getUserAccountData,
 };
