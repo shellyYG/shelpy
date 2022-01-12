@@ -1,18 +1,12 @@
 const { query } = require('./query');
 
-async function postHelpeeSignInData(data) {
-  const dataToInsert = {
-    provider: 'native',
-    email: data.email,
-    sign_up_status: 'signed_in',
-    encryptpass: data.email,
-    ivString: '',
-  };
-  const sql = 'INSERT INTO helpee_account SET?'; // TODO: should be SELECT rather than INSERT
-  const queryResult = await query(sql, dataToInsert);
+async function getUserDataByEmail(data) {
+  const table = data.isHelpee ? 'helpee_account' : 'helper_account';
+  const sql = `SELECT id, provider, username, email, encryptedpass, ivString FROM ${table} WHERE email = '${data.email}'`;
+  const queryResult = await query(sql);
   return queryResult;
 }
 
 module.exports = {
-  postHelpeeSignInData,
+  getUserDataByEmail,
 };
