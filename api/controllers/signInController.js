@@ -1,10 +1,10 @@
 require('dotenv').config();
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken'); 
 const helpeeSignInModel = require('../models/signInModel');
 const { generateAccessToken } = require('../../util/util');
 
 const postHelpeeSignInData = async (req, res) => {
-  console.log('posthelpeeSignIn..., req.body: ', req.body);
   const { data } = req.body;
 
   async function getUserEncryptedPass() {
@@ -34,27 +34,37 @@ const postHelpeeSignInData = async (req, res) => {
         if (userInsertedEncryptedPass === DataBasePass) {
           const userObject = {};
           const { id, provider, username, email } = LoginUserResult[0];
-          userObject.id = id;
-          userObject.provider = provider;
-          userObject.name = username;
-          userObject.email = email;
-
-          const finalObject = {};
-          const dataObject = {};
-
-          dataObject.user = userObject;
-          finalObject.data = dataObject;
-
+          const dataObject = {
+            user: {
+              id,
+              provider,
+              username,
+              email,
+            },
+          };
           const payloadObject = {};
           payloadObject.data = userObject;
 
-          // ------Create token
-          const payload = payloadObject;
-          const accessToken = generateAccessToken(payload);
+          const accessToken = generateAccessToken({
+            data: {
+              id,
+              provider,
+              username,
+              email,
+            },
+          });
 
-          dataObject.access_token = accessToken;
-          dataObject.access_expired = 30;
-          res.send(finalObject);
+          dataObject.accessToken = accessToken;
+          jwt.verify(
+            accessToken,
+            process.env.ACCESS_TOKEN_SECRET,
+            (err, payload) => {
+              // eslint-disable-line no-shadow
+              if (err) throw Error('TOKEN_EXPIRED_OR_NOT_MATCH');
+              dataObject.accessExpired = payload.exp - payload.iat;
+            }
+          );
+          res.send(dataObject);
         } else {
           throw Error('WRONG_PASSWORD');
         }

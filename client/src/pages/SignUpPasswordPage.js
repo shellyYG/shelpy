@@ -87,6 +87,7 @@ const SignUpPasswordPage = () => {
         signUpPasswordStatusTitle,
         signUpPasswordStatusMessage
       );
+      navigate('/home', { replace: true });
       return;
     } else if (signUpPasswordStatus === 'success') {
       setIsLoading(false);

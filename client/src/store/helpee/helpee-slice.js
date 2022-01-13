@@ -14,12 +14,20 @@ const helpeeSlice = createSlice({
   reducers: {
     updateHelpeeInfoAfterInsertEmail(state, action) {
       const { payload } = action;
-      state.pageFirstTimeLoaded = false;
       state.DBHelpeeEmail = payload.email;
     },
     updateHelpeeInfoAfterInsertPassword(state, action) {
       const { payload } = action;
       state.DBHelpeePassword = payload.password;
+    },
+    updateHelpeeInfoAfterSignIn(state, action) {
+      const { payload } = action;
+      state.DBHelpeeEmail = payload.email;
+    },
+    updateHelpeeRequestFormData(state, action) {
+      const { payload } = action;
+      state.serviceType = payload.serviceType;
+      // TODO
     },
     onClickUpdateActiveServiceType(state, action) {
       const { payload } = action;

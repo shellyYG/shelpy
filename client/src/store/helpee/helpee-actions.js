@@ -109,6 +109,7 @@ export const postHelpeeSignUpEmail = (data) => {
         })
       );
     } catch (error) {
+      console.error(error);
       if (error.response) {
         console.log('error.response exist...');
         dispatch(
@@ -142,6 +143,7 @@ export const postHelpeeSignUpPassword = (data) => {
         })
       );
     } catch (error) {
+      console.error(error);
       if (error.response) {
         dispatch(
           notificationActions.setNotification({
@@ -155,30 +157,39 @@ export const postHelpeeSignUpPassword = (data) => {
   };
 };
 
-export const postHelpeeSignInData = (data) => {
+export const postSignInData = (data) => {
   return async (dispatch) => {
     try {
-      // talk to API:
-      await axios.post(helpeeSignInPath, {
+      const response = await axios.post(helpeeSignInPath, {
         data,
       });
-      // update global Helpee state:
+      window.localStorage.setItem('shelpy-token', response.data.accessToken);
       dispatch(
         helpeeActions.updateHelpeeInfoAfterSignIn({
-          helpeeEmail: data.email,
-          token: data.token,
+          email: data.email,
         })
       );
-    } catch (err) {
-      console.error(err);
-      notificationActions.setNotification({
-        signUpEmailStatus: 'error',
-        signUpEmailStatusTitle: 'Oops!',
-        signUpEmailStatusMessage: `Error: ${err}`,
-      });
-    }
+      dispatch(
+        notificationActions.setNotification({
+          signInStatus: 'success',
+          signInStatusTitle: 'Successfully Signed-In.',
+          signInStatusMessage: 'Successfully Signed-In.',
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      if (error.response) {
+        dispatch(
+          notificationActions.setNotification({
+            signInStatus: 'error',
+            signInStatusTitle: 'Oops!',
+            signInStatusMessage: error.response.data,
+          })
+        );
+      }
   };
 };
+}
 
 export const postHelpeeServiceRequestForm = (data) => {
   return async (dispatch) => {
@@ -200,7 +211,7 @@ export const postHelpeeServiceRequestForm = (data) => {
         })
       );
     } catch (error) {
-      console.log('form submit error');
+      console.error(error);
       if (error.response) {
         dispatch(
           notificationActions.setNotification({
@@ -233,6 +244,18 @@ export const clearSignUpPasswordStatus = (data) => {
         signUpPasswordStatus: 'initial',
         signUpPasswordStatusTitle: '',
         signUpPasswordStatusMessage: '',
+      })
+    );
+  };
+};
+
+export const clearSignInStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      notificationActions.setNotification({
+        signInStatus: 'initial',
+        signInStatusTitle: '',
+        signInStatusMessage: '',
       })
     );
   };

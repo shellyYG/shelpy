@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../App.css";
-import { postHelpeeSignInData } from '../store/helpee/helpee-actions';
+import { clearSignInStatus, postSignInData } from '../store/helpee/helpee-actions';
 
 const MySwal = withReactContent(Swal);
 
@@ -15,34 +15,74 @@ const SignInPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
-  const DBHelpeePassword = useSelector((state) => state.helpee);
+  const [loading, setIsLoading] = useState(false);
+  const {
+    signInStatus,
+    signInStatusTitle,
+    signInStatusMessage,
+  } = useSelector((state) => state.notification);
 
   const onBackButtonEvent = (e) => {
     e.preventDefault();
     navigate("/home", { replace: true });
   };
   window.addEventListener("popstate", onBackButtonEvent, { once: true });
+  if (loading) {
+    MySwal.fire({
+      title: 'Loading...',
+      html: 'Please do not close the window.',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        MySwal.showLoading();
+      },
+    });
+  }
   async function handleConfirm(e) {
     e.preventDefault();
     // change DB & global state
     const data = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
+      isHelpee: true,
     };
     console.log('postHelpeeSignInData -> data: ', data);
-    try {
-      dispatch(postHelpeeSignInData(data));
-    } catch (err) {
-      console.error(err);
-    }
-    await MySwal.fire({
-      title: <strong>Thank you!</strong>,
-      html: <p>Successfully signed-in.</p>,
-      icon: "success",
-    });
-    let path = "/service-options";
-    navigate(path, { replace: true });
+    dispatch(postSignInData(data));
+    setIsLoading(true);
   }
+  useEffect(() => {
+    if (signInStatus === 'error') {
+      setIsLoading(false);
+      async function sweetAlertAndClearStatus(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          html: <p>{message}</p>,
+          icon: 'error',
+        });
+        dispatch(clearSignInStatus());
+      }
+      sweetAlertAndClearStatus(signInStatus, signInStatusMessage);
+      return;
+    } else if (signInStatus === 'success') {
+      setIsLoading(false);
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          html: <p>{message}</p>,
+          icon: 'success',
+        });
+        dispatch(clearSignInStatus());
+        navigate('/service-options', { replace: true });
+      }
+      sweetAlertAndNavigate(signInStatus, signInStatusMessage);
+    }
+  }, [
+    signInStatus,
+    signInStatusMessage,
+    signInStatusTitle,
+    navigate,
+    dispatch,
+  ]);
 
   return (
     <div className="main-content-wrapper-homepage-no-background">
