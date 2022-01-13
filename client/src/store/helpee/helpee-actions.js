@@ -194,30 +194,46 @@ export const postSignInData = (data) => {
 export const postHelpeeServiceRequestForm = (data) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(userRequestFormPath, {
-        data,
-      });
-      console.log('response: ', response);
-      dispatch(
-        helpeeActions.updateHelpeeRequestFormData({
-          data,
-        })
-      );
-      dispatch(
-        notificationActions.setNotification({
-          helpeeFormStatus: 'success',
-          helpeeFormStatusTitle: 'You are all set!',
-          helpeeFormStatusMessage: 'We will inform you via email as soon as we find a helper!',
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      if (error.response) {
+      const generalToken = localStorage.getItem('shelpy-token');
+      if (!generalToken) {
+        throw Error('NO_TOKEN');
+      }
+      if (generalToken){
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.post(
+          userRequestFormPath,
+          {
+            data,
+          },
+          { headers }
+        );
+        data.requestId = response.data.requestId;
+        dispatch(
+          helpeeActions.updateHelpeeRequestFormData({
+            data,
+          })
+        );
         dispatch(
           notificationActions.setNotification({
-            helpeeFormStatus: 'error',
-            helpeeFormStatusTitle: 'Oops!',
-            helpeeFormStatusMessage: error.response.data,
+            requestFormStatus: 'success',
+            requestFormStatusTitle: 'You are all set!',
+            requestFormStatusMessage:
+              'We will inform you via email as soon as we find a helper!',
+          })
+        );
+      }
+    } catch (error) {
+      const errorResponse = error.response ? error.response.data : '';
+      const errorMessage = errorResponse || error.message;
+      if (errorMessage) {
+        dispatch(
+          notificationActions.setNotification({
+            requestFormStatus: 'error',
+            requestFormStatusTitle: 'Oops!',
+            requestFormStatusMessage: errorMessage,
           })
         );
       }
@@ -260,3 +276,15 @@ export const clearSignInStatus = (data) => {
     );
   };
 };
+
+export const clearRequestFormStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      notificationActions.setNotification({
+        requestFormStatus: 'initial',
+        requestFormStatusTitle: '',
+        requestFormStatusMessage: '',
+      })
+    );
+  };
+}

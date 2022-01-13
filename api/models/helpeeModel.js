@@ -4,19 +4,17 @@ const DBName = 'shelpydb';
 
 async function getHelpeeInfo() {
   const sql = `SELECT * FROM ${DBName}.helpee_requests`;
-  const queryResult = await query(sql);
-  console.log(`queryResult: ${queryResult}`);
-  return queryResult;
+  const sqlResult = await query(sql);
+  return sqlResult;
 }
 
-async function postHelpeeServiceRequestForm(data) {
-  console.log('helpee data: ', data);
+async function insertHelpeeRequestFormAndGetId(data) {
   const sql = 'INSERT INTO request_form SET?';
-  const queryResult = await query(sql, data);
-  return queryResult;
+  const sqlResult = await query(sql, data);
+  return sqlResult.insertId;
 }
 
 module.exports = {
   getHelpeeInfo,
-  postHelpeeServiceRequestForm,
+  insertHelpeeRequestFormAndGetId,
 };

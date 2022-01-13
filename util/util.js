@@ -7,19 +7,23 @@ const wrapAsync = (func) => function (req, res, next) {
 
 const generateAccessToken = function (user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '10800s',
+    expiresIn: '1s',
   });
 };
 
 const verifyToken = function (req, res, next) {
   const bearerHeader = req.headers.authorization;
-  if (typeof bearerHeader !== 'undefined') {
-    const bearer = bearerHeader.split(' ');
-    const bearerToken = bearer[1];
-    req.token = bearerToken;
-    next();
-  } else {
-    res.sendStatus(403); // forbidden
+  try {
+    if (typeof bearerHeader !== 'undefined') {
+      const bearer = bearerHeader.split(' ');
+      const bearerToken = bearer[1];
+      jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET);
+      next();
+    } else {
+      res.status(403).send('INVALID_TOKEN');
+    }
+  } catch (error) {
+    res.status(403).send('INVALID_TOKEN');
   }
 };
 

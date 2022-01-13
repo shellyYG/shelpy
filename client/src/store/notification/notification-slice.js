@@ -12,9 +12,9 @@ const notificationSlice = createSlice({
     signInStatus: 'initial',
     signInStatusTitle: '',
     signInStatusMessage: '',
-    helpeeFormStatus: 'initial',
-    helpeeFormStatusTitle: '',
-    helpeeFormStatusMessage: '',
+    requestFormStatus: 'initial',
+    requestFormStatusTitle: '',
+    requestFormStatusMessage: '',
   },
   reducers: {
     setNotification(state, action) {
@@ -28,9 +28,9 @@ const notificationSlice = createSlice({
         signInStatus,
         signInStatusTitle,
         signInStatusMessage,
-        helpeeFormStatus,
-        helpeeFormStatusTitle,
-        helpeeFormStatusMessage,
+        requestFormStatus,
+        requestFormStatusTitle,
+        requestFormStatusMessage,
       } = action.payload;
       if (signUpEmailStatus) state.signUpEmailStatus = signUpEmailStatus;
       if (signUpEmailStatusTitle)
@@ -46,11 +46,11 @@ const notificationSlice = createSlice({
       if (signInStatus) state.signInStatus = signInStatus;
       if (signInStatusTitle) state.signInStatusTitle = signInStatusTitle;
       if (signInStatusMessage) state.signInStatusMessage = signInStatusMessage;
-      if (helpeeFormStatus) state.helpeeFormStatus = helpeeFormStatus;
-      if (helpeeFormStatusTitle)
-        state.helpeeFormStatusTitle = helpeeFormStatusTitle;
-      if (helpeeFormStatusMessage)
-        state.helpeeFormStatusMessage = helpeeFormStatusMessage;
+      if (requestFormStatus) state.requestFormStatus = requestFormStatus;
+      if (requestFormStatusTitle)
+        state.requestFormStatusTitle = requestFormStatusTitle;
+      if (requestFormStatusMessage)
+        state.requestFormStatusMessage = requestFormStatusMessage;
     },
   },
 });

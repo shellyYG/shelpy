@@ -10,6 +10,7 @@ const helpeeSlice = createSlice({
     globalServiceType: '',
     globalNavigateTarget: '',
     globalActiveRequest: '',
+    DBRequestId: 0,
   },
   reducers: {
     updateHelpeeInfoAfterInsertEmail(state, action) {
@@ -26,8 +27,10 @@ const helpeeSlice = createSlice({
     },
     updateHelpeeRequestFormData(state, action) {
       const { payload } = action;
-      state.serviceType = payload.serviceType;
+      const { requestId } = payload.data;
+      state.DBRequestId = requestId;
       // TODO
+      // state.serviceType = payload.serviceType;
     },
     onClickUpdateActiveServiceType(state, action) {
       const { payload } = action;
