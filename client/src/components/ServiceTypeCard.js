@@ -29,19 +29,19 @@ function ServiceTypeCard(props) {
   }, [props.globalServiceType, props.value]);
 
   return (
-    <div className={active ? "card-active" : "card"} onClick={handleOnClick}>
-      <div className="content">
-        <div className="imgBx">
+    <div className={active ? 'card-active' : 'card'} onClick={handleOnClick}>
+      <div className='content'>
+        <div className='imgBx'>
           <img src={props.imageSrc} alt={props.text}></img>
         </div>
-        <div className="contentBx">
-          <h3>
-            {props.title}
-            <br />
-            <span>{props.valueProps1}</span>
-            <br />
-            <span>{props.valueProps2}</span>
-          </h3>
+        <div className='contentBx'>
+          <div style={{ marginTop: '18px', display: 'flex' }}>
+            <h3 style={{ margin: 'auto' }}>{props.title}</h3>
+          </div>
+          <div style={{ marginTop: '6px', display: 'flex' }}>
+            <h3 style={{ margin: 'auto' }}>{props.price}</h3>
+          </div>
+          <br />
         </div>
       </div>
     </div>

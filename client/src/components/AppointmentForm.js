@@ -3,7 +3,6 @@ import withReactContent from 'sweetalert2-react-content';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import DatePicker from 'react-date-picker';
 import  DropDown  from './Dropdown';
 import CheckBox from './CheckBox';
 import DateForm from './DateForm';
@@ -15,18 +14,16 @@ import {
   meetCountryOptions,
   meetCityOptions,
   meetTimeOptions,
+  nativeLanguageOptions,
   languageOptions,
+  doYouSpeakEnglishOptions,
 } from '../store/options/service-options';
 import { clearRequestFormStatus, postHelpeeServiceRequestForm } from '../store/helpee/helpee-actions'
 const MySwal = withReactContent(Swal);
 
 const AppointmentForm = (props) => {
   const dispatch = useDispatch();
-  const [date, setDate] = useState(new Date());
   const { userId } = useSelector((state) => state.helpee);
-  const { DBServiceType } = useSelector(
-    (state) => state.helpee
-  );
 const { requestFormStatus, requestFormStatusTitle, requestFormStatusMessage } =
   useSelector((state) => state.notification);
 const { globalServiceType } = useSelector((state) => state.helpee);
@@ -37,18 +34,17 @@ const meetTimeRef = useRef();
 const meetCountryRef = useRef();
 const meetCityRef = useRef();
 const phoneRef = useRef();
+const meetAddressRef = useRef();
 const motherTongueRef = useRef();
-const firstLangRef = useRef();
-const secondLangRef = useRef();
+const speakEnglishRef = useRef();
+const otherLangRef = useRef();
 const notesRef = useRef();
-const dataHandoverCheckedRef = useRef();
 const [loading, setIsLoading] = useState(false);
 
 const navigate = useNavigate();
   async function handleConfirm(e) {
     e.preventDefault();
     // change DB & global state
-    console.log("serviceRef: ", serviceRef.current.value);
     const data = {
       userId,
       service: serviceRef.current.value,
@@ -57,12 +53,12 @@ const navigate = useNavigate();
       meetTime: meetTimeRef.current.value,
       meetCountry: meetCountryRef.current.value,
       meetCity: meetCityRef.current.value,
+      meetAddress: meetAddressRef.current.value,
       phone: phoneRef.current.value,
       motherTongue: motherTongueRef.current.value,
-      firstLang: firstLangRef.current.value,
-      secondLang: secondLangRef.current.value,
+      speakEnglish: speakEnglishRef.current.value,
+      otherLanguage: otherLangRef.current.value,
       notes: notesRef.current.value,
-      dataHandoverChecked: dataHandoverCheckedRef.current.checked,
     };
     dispatch(postHelpeeServiceRequestForm(data));
     setIsLoading(true);
@@ -73,12 +69,10 @@ const navigate = useNavigate();
   const [meetTime, setMeetTime] = useState('8am-9am');
   const [meetCountry, setMeetCountry] = useState('germany');
   const [meetCity, setMeetCity] = useState('berlin');
-  const [phone, setPhone] = useState('');
   const [motherTongue, setMotherTongue] = useState('chinese');
-  const [firstLang, setFirstLang] = useState('english');
-  const [secondLang, setSecondLang] = useState('german');
-  const [note, setNote] = useState('');
-  const [dataHandoverChecked, setDataHandoverChecked] = useState(false);
+  const [speakEnglish, setSpeakEnglish] = useState('default yes');
+  const [otherLang, setOtherLang] = useState('german');
+  const [hasGiveConsent, setHasGiveConsent] = useState(false);
   const handleDateInput = (e) => {
     e.preventDefault();
     setMeetDate(e.target.value);
@@ -122,6 +116,7 @@ const navigate = useNavigate();
         let path = '/home';
         navigate(path, { replace: true });
       }
+      dispatch(clearRequestFormStatus());
       sweetAlertAndNavigate(requestFormStatus, requestFormStatusMessage);
     }
   }, [
@@ -131,47 +126,44 @@ const navigate = useNavigate();
     navigate,
     dispatch,
   ]);
-  
-  console.log(
-    userId,
-    service,
-    gender,
-    meetDate,
-    meetTime,
-    meetCountry,
-    meetCity,
-    motherTongue,
-    firstLang,
-    secondLang,
-    dataHandoverChecked
-  );
   return (
-    <div className="form-inner">
-      <form action="">
-        <div className="form-title">
-          <h3 style={{ margin: "10 !important" }}>
-            Find a Helper who speaks your language for your {DBServiceType}{" "}
-          </h3>
-        </div>
-        <div className="form-row">
+    <div className='form-inner'>
+      <form action=''>
+        <div className='form-row'>
           <DropDown
             selected={service}
             handleSelect={setService}
-            title={"Service"}
+            title={'Service *'}
             selectRef={serviceRef}
             options={serviceOptions}
           />
           <DropDown
             selected={gender}
             handleSelect={setGender}
-            title={"Gender"}
+            title={'Your Gender'}
             selectRef={genderRef}
             options={genderOptions}
           />
         </div>
-        <div className="form-row">
+        <div className='form-row last'>
+          <DropDown
+            selected={meetCountry}
+            handleSelect={setMeetCountry}
+            title={'Appointment Country *'}
+            selectRef={meetCountryRef}
+            options={meetCountryOptions}
+          />
+          <DropDown
+            selected={meetCity}
+            handleSelect={setMeetCity}
+            title={'Appointment City *'}
+            selectRef={meetCityRef}
+            options={meetCityOptions}
+          />
+        </div>
+        <div className='form-row'>
           <DateForm
-            title={"Appointment Date *"}
+            title={'Appointment Date *'}
             handleInput={handleDateInput}
             value={meetDate}
             dateFormRef={meetDateRef}
@@ -179,83 +171,83 @@ const navigate = useNavigate();
           <DropDown
             selected={meetTime}
             handleSelect={setMeetTime}
-            title={"Appointment Time*"}
+            title={'Appointment Time *'}
             selectRef={meetTimeRef}
             options={meetTimeOptions}
           />
         </div>
-        <div className="form-row last">
-          <DropDown
-            selected={meetCountry}
-            handleSelect={setMeetCountry}
-            title={"Appointment Country*"}
-            selectRef={meetCountryRef}
-            options={meetCountryOptions}
-          />
-          <DropDown
-            selected={meetCity}
-            handleSelect={setMeetCity}
-            title={"Appointment City*"}
-            selectRef={meetCityRef}
-            options={meetCityOptions}
-          />
-        </div>
+
         <FullLineTextBox
-          title={"Appointment Address*"}
+          title={'Appointment Address *'}
           placeholder={
-            "Bezirksamt Friedrichshain Frankfurter Allee 35/37, 10247 Berlin"
+            'Bezirksamt Friedrichshain Frankfurter Allee 35/37, 10247 Berlin'
           }
+          inputRef={meetAddressRef}
         />
-        <div className="form-row last">
-          <div className="form-wrapper">
-            <label for="">Phone *</label>
+        <div className='form-row last'>
+          <div className='form-wrapper'>
+            <label for=''>Your Phone Number</label>
             <input
-              type="text"
-              className="form-control"
-              placeholder="Phone"
+              type='text'
+              className='form-control'
+              placeholder='Phone'
               ref={phoneRef}
             />
           </div>
           <DropDown
             selected={motherTongue}
             handleSelect={setMotherTongue}
-            title={"Native Language*"}
+            title={'Your Native Language *'}
             selectRef={motherTongueRef}
-            options={languageOptions}
+            options={nativeLanguageOptions}
           />
         </div>
-        <div className="form-row last">
+        <div className='form-row last'>
           <DropDown
-            selected={firstLang}
-            handleSelect={setFirstLang}
-            title={"Your Best Foreign Language*"}
-            selectRef={firstLangRef}
-            options={languageOptions}
+            selected={speakEnglish}
+            handleSelect={setSpeakEnglish}
+            title={'Do you speak English? *'}
+            selectRef={speakEnglishRef}
+            options={doYouSpeakEnglishOptions}
           />
           <DropDown
-            selected={secondLang}
-            handleSelect={setSecondLang}
-            title={"Other language that you speak? *"}
-            selectRef={secondLangRef}
+            selected={otherLang}
+            handleSelect={setOtherLang}
+            title={'Other language that you speak?'}
+            selectRef={otherLangRef}
             options={languageOptions}
           />
         </div>
         <FullLineTextBox
-          title={"Notes"}
+          title={'Notes'}
           placeholder={
-            "If your language is not listed, please specify here. Any other comments is also welcome."
+            'If your language is not listed, please specify here. Any other comments is also welcome.'
           }
           inputRef={notesRef}
         />
         <CheckBox
-          checked={dataHandoverChecked}
-          handleCheck={setDataHandoverChecked}
-          details="By clicking
-            Book Appointment, you consent to send your personal information to
-            Shelpy."
-          checkRef={dataHandoverCheckedRef}
+          checked={hasGiveConsent}
+          handleCheck={setHasGiveConsent}
+          details='You agree to send above personal information to
+            Shelpy so that we can best match a Helper for you.'
         />
-        <ConfirmBtn cta="Book Appointment" handleConfirm={handleConfirm} />
+
+        <ConfirmBtn
+          cta='Book Appointment'
+          disable={
+            !hasGiveConsent ||
+            !serviceRef.current.value ||
+            !genderRef.current.value ||
+            !meetDateRef.current.value ||
+            !meetTimeRef.current.value ||
+            !meetCountryRef.current.value ||
+            !meetCityRef.current.value ||
+            !meetAddressRef.current.value ||
+            !motherTongueRef.current.value ||
+            !speakEnglishRef.current.value
+          }
+          handleConfirm={handleConfirm}
+        />
       </form>
     </div>
   );

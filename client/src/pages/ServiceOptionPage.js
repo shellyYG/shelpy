@@ -22,34 +22,43 @@ const ServiceOptionPage = () => {
     navigate(path, { replace: true });
   }
   return (
-    <div className="main-content-wrapper-no-background">
-      <div className="section-center-align">
-        <h1 style={{ textAlign: "center", marginTop: "30px" }}>
-          I need a helper to attend ... with me.
-        </h1>
-        <h2
-          style={{
-            textAlign: "center",
-            marginTop: "10px",
-            marginBottom: "30px",
-          }}
+    <div className='main-content-wrapper-no-background'>
+      <div
+        className='section-center-align'
+      >
+        <div>
+          <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+            I need a helper to go ... with me.
+          </h1>
+        </div>
+        <div>
+          <h2
+            style={{
+              textAlign: 'center',
+              marginTop: '10px',
+              marginBottom: '30px',
+            }}
+          >
+            
+          </h2>
+        </div>
+        <div
+          className='container'
+          style={{ display: 'flex', flexDirection: 'row', maxWidth: '800px', margin: 'auto' }}
         >
-          We will send a helper to translate for you!
-        </h2>
-        <div className="container">
           {serviceOptions.map((option) => (
             <ServiceTypeCard
               imageSrc={option.imgPath}
               title={option.label}
-              valueProps1={option.price}
+              price={option.price}
               valueProps2={option.location}
               value={option.value}
               globalServiceType={globalServiceType}
             />
           ))}
         </div>
-        <div style={{ textAlign: "center" }}>
-          <button className="btn-next" onClick={handleNext}>
+        <div style={{ textAlign: 'center' }}>
+          <button className='btn-next' onClick={handleNext}>
             Next ❯
           </button>
         </div>
