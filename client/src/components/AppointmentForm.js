@@ -23,9 +23,10 @@ const MySwal = withReactContent(Swal);
 const AppointmentForm = (props) => {
   const dispatch = useDispatch();
   const [date, setDate] = useState(new Date());
-const { DBHelpeeName, DBHelpeeLanguage, DBServiceType } = useSelector(
-  (state) => state.helpee
-);
+  const { userId } = useSelector((state) => state.helpee);
+  const { DBServiceType } = useSelector(
+    (state) => state.helpee
+  );
 const { requestFormStatus, requestFormStatusTitle, requestFormStatusMessage } =
   useSelector((state) => state.notification);
 const { globalServiceType } = useSelector((state) => state.helpee);
@@ -46,7 +47,6 @@ const [loading, setIsLoading] = useState(false);
 const navigate = useNavigate();
   async function handleConfirm(e) {
     e.preventDefault();
-    const userId = 0; // placeholder
     // change DB & global state
     console.log("serviceRef: ", serviceRef.current.value);
     const data = {
@@ -133,6 +133,7 @@ const navigate = useNavigate();
   ]);
   
   console.log(
+    userId,
     service,
     gender,
     meetDate,

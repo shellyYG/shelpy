@@ -1,13 +1,13 @@
 const helpeeModel = require('../models/helpeeModel');
 
+const allowPrivateRoute = async (req, res) => {
+  const { userId } = res.locals;
+  res.status(200).json({ isAuthenticated: true, userId });
+}
+
 const getHelpeeInfo = async (req, res) => {
   const serviceType = await helpeeModel.getHelpeeInfo();
   return serviceType;
-};
-
-const postHelpeeSignInData = async (req, res) => {
-  const response = await helpeeModel.postHelpeeSignInData(req.body.data);
-  return response;
 };
 
 const postHelpeeServiceRequestForm = async (req, res) => {
@@ -29,8 +29,8 @@ const testAPIConnection = async (req, res) => {
 };
 
 module.exports = {
+  allowPrivateRoute,
   getHelpeeInfo,
-  postHelpeeSignInData,
   postHelpeeServiceRequestForm,
   testAPIConnection,
 };

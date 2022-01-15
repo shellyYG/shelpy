@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const helpeeSlice = createSlice({
   name: 'helpee',
   initialState: {
+    userId: 0,
+    isAuthenticated: false,
     pageFirstTimeLoaded: true,
     DBHelpeeEmail: '',
     DBHelpeePassword: '',
@@ -13,6 +15,11 @@ const helpeeSlice = createSlice({
     DBRequestId: 0,
   },
   reducers: {
+    updateAuthStatus(state, action) {
+      const { payload } = action;
+      state.isAuthenticated = payload.isAuthenticated;
+      state.userId = payload.userId;
+    },
     updateHelpeeInfoAfterInsertEmail(state, action) {
       const { payload } = action;
       state.DBHelpeeEmail = payload.email;

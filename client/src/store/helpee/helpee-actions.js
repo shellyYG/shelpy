@@ -2,11 +2,43 @@ import axios from 'axios';
 import { notificationActions } from '../notification/notification-slice'; 
 import { helpeeActions } from "./helpee-slice";
 
+const getAuthStatusPath = '/api/get-auth-status';
 const helpeeSignUpPasswordPath = "/api/helpee-signup-password";
 const helpeeSignInPath = 'api/helpee/sign-in';
 const userRequestFormPath = "/api/helpee-request-form";
 const testPath = '/api/test';
 const activeHelperPath = '/api/active-helpers'
+
+export const getAuthStatus = () => {
+  return async (dispatch) => {
+    try {
+      const generalToken = localStorage.getItem('shelpy-token');
+      if (!generalToken) {
+        throw Error('NO_TOKEN');
+      }
+      if (generalToken) {
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.post(getAuthStatusPath, {}, { headers });
+        dispatch(
+          helpeeActions.updateAuthStatus({
+            isAuthenticated: response.data.isAuthenticated,
+            userId: response.data.userId,
+          })
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        helpeeActions.updateAuthStatus({
+          isAuthenticated: false,
+        })
+      );
+    }
+  }
+}
 
 export const onClickUpdateActiveServiceType = (data) => {
   return async (dispatch) => {

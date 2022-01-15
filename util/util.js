@@ -7,7 +7,7 @@ const wrapAsync = (func) => function (req, res, next) {
 
 const generateAccessToken = function (user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '1s',
+    expiresIn: '100000s',
   });
 };
 
@@ -17,7 +17,10 @@ const verifyToken = function (req, res, next) {
     if (typeof bearerHeader !== 'undefined') {
       const bearer = bearerHeader.split(' ');
       const bearerToken = bearer[1];
-      jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET);
+      const decodedData = jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET);
+      if (decodedData && decodedData.data) {
+        res.locals.userId = decodedData.data.id;
+      }
       next();
     } else {
       res.status(403).send('INVALID_TOKEN');

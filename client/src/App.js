@@ -1,6 +1,7 @@
 import './App.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import SignUpPasswordPage from './pages/SignUpPasswordPage';
 import SignUpPageHelper from "./pages/SignUpPageHelper";
 import ServiceOptionPage from './pages/ServiceOptionPage';
@@ -13,25 +14,33 @@ import OrderHistoryPage from './pages/OrderHistoryPage';
 import HelperListPage from "./pages/HelperListPage";
 import SignInPage from './pages/SignInPage';
 import ErrorPage from './pages/ErrorPage';
+import PreSignInPage from './pages/PreSignInPage';
+import { getAuthStatus } from './store/helpee/helpee-actions';
 
 function App() {
+  const dispatch = useDispatch();
+  dispatch(getAuthStatus());
+  const { isAuthenticated } = useSelector((state) => state.helpee);
   return (
     <Router>
       <NavBar />
       <Routes>
         <Route path='/' element={<Navigate replace to='/home' />} />
         <Route path='/home' element={<HomePage />} />
-        <Route
-          path='/sign-up-final-step'
-          element={<SignUpPasswordPage />}
-        />
+        <Route path='/sign-up-final-step' element={<SignUpPasswordPage />} />
         <Route path='/sign-in' element={<SignInPage />} />
         <Route path='/helper' element={<SignUpPageHelper />} />
         <Route path='/service-options' element={<ServiceOptionPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route
           path='/book-appointment-form'
-          element={<BookAppointmentPage />}
+          element={
+            isAuthenticated ? (
+              <BookAppointmentPage isAuthenticated={isAuthenticated} />
+            ) : (
+              <PreSignInPage />
+            )
+          }
         />
         <Route path={'/chatroom'} element={<ChatRoomPage />} />
         <Route path={'/order-history'} element={<OrderHistoryPage />} />
