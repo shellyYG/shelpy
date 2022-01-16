@@ -13,12 +13,19 @@ const helpeeSlice = createSlice({
     globalNavigateTarget: '',
     globalActiveRequest: '',
     DBRequestId: 0,
+    activeOrders: [],
+    completeOrders: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
       const { payload } = action;
       state.isAuthenticated = payload.isAuthenticated;
       state.userId = payload.userId;
+    },
+    updateActiveAndCompleteOrders(state, action) {
+      const { payload } = action;
+      state.activeOrders = payload.activeOrders;
+      state.completeOrders = payload.completeOrders;
     },
     updateHelpeeInfoAfterInsertEmail(state, action) {
       const { payload } = action;

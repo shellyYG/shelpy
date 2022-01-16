@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchHelpeeData } from "../store/helpee/helpee-actions";
 import { helpeeActions } from "../store/helpee/helpee-slice";
 
-function OrderCard(props) {
+function PastOrderCard(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
@@ -86,4 +86,4 @@ function OrderCard(props) {
     </div>
   );
 }
-export default OrderCard;
+export default PastOrderCard;

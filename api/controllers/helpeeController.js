@@ -5,11 +5,6 @@ const allowPrivateRoute = async (req, res) => {
   res.status(200).json({ isAuthenticated: true, userId });
 }
 
-const getHelpeeInfo = async (req, res) => {
-  const serviceType = await helpeeModel.getHelpeeInfo();
-  return serviceType;
-};
-
 const postHelpeeServiceRequestForm = async (req, res) => {
   try {
     const id = await helpeeModel.insertHelpeeRequestFormAndGetId(
@@ -22,15 +17,27 @@ const postHelpeeServiceRequestForm = async (req, res) => {
   }
 };
 
-const testAPIConnection = async (req, res) => {
-  // res.send('Successfully connected to /test API!');
-  const serviceType = await helpeeModel.getHelpeeInfo();
-  return serviceType;
-};
+const getAllOrders = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    const response = await helpeeModel.getAllOrders({ userId });
+    if (response.data) {
+      res.status(200).json({
+        activeOrders: response.data.activeOrders,
+        completeOrders: response.data.completeOrders,
+      });
+    } else {
+      throw Error('NO_ORDER_RESPONSE');
+    }
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
 
 module.exports = {
   allowPrivateRoute,
-  getHelpeeInfo,
   postHelpeeServiceRequestForm,
-  testAPIConnection,
+  getAllOrders,
 };

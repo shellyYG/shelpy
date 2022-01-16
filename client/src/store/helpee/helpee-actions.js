@@ -6,8 +6,8 @@ const getAuthStatusPath = '/api/get-auth-status';
 const helpeeSignUpPasswordPath = "/api/helpee-signup-password";
 const helpeeSignInPath = 'api/helpee/sign-in';
 const userRequestFormPath = "/api/helpee-request-form";
-const testPath = '/api/test';
-const activeHelperPath = '/api/active-helpers'
+const activeHelperPath = '/api/active-helpers';
+const getAllOrdersPath = 'api/all-orders';
 
 export const getAuthStatus = () => {
   return async (dispatch) => {
@@ -39,6 +39,29 @@ export const getAuthStatus = () => {
     }
   }
 }
+
+export const getAllOrders = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(getAllOrdersPath, { params: { userId: data.userId }});
+      console.log('response from helpee-actions: ', response);
+      dispatch(
+        helpeeActions.updateActiveAndCompleteOrders({
+          activeOrders: response.data.activeOrders,
+          completeOrders: response.data.completeOrders,
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        helpeeActions.updateActiveAndCompleteOrders({
+          activeOrders: [],
+          completeOrders: [],
+        })
+      );
+    }
+  };
+};
 
 export const onClickUpdateActiveServiceType = (data) => {
   return async (dispatch) => {
@@ -87,41 +110,6 @@ export const onClickUpdateActiveHelperLists = (data) => {
       });
     }
   };
-}
-export const fetchHelpeeData = () => {
-  console.log('..............running fetchHelpeeData');
-    return async (dispatch) => {
-        try {
-            // const response = await axios.get(userPath);
-            // const data = { response };
-            
-            
-            // here
-            // const data = {
-            //   helpeeName: '',
-            //   helpeeLanguage: '',
-            //   serviceType: 'testtest',
-            // };
-            // console.log('~~ replaceHelpeeInfo');
-            // dispatch(
-            //   helpeeActions.replaceHelpeeInfo({
-            //     helpeeName: data.helpeeName,
-            //     helpeeLanguage: data.helpeeLanguage,
-            //     serviceType: data.serviceType,
-            //   })
-            // );
-
-            // test api
-            const response = await axios.get(testPath);
-            console.log('response from API: ', response);
-        } catch (err) {
-            notificationActions.setNotification({
-              signUpEmailStatus: 'error',
-              signUpEmailStatusTitle: 'Oops!',
-              signUpEmailStatusMessage: `Error: ${err}`,
-            });
-        }
-    }
 }
 
 export const postHelpeeSignUpEmail = (data) => {

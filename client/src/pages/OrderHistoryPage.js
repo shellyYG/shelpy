@@ -1,64 +1,72 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { serviceOptions } from "../store/options/service-options";
-import OrderCard from "../components/OrderCard";
-import { useState } from "react";
-const OrderHistoryPage = () => {
-    const [active, setActive] = useState(false);
-  const { globalNavigateTarget } = useSelector((state) => state.helpee);
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { serviceOptions } from '../store/options/service-options';
+import PastOrderCard from '../components/PastOrderCard';
+import ActiveOrderCard from '../components/ActiveOrderCard';
+import { getAllOrders } from '../store/helpee/helpee-actions';
+
+const OrderHistoryPage = (props) => {
+  const [isActiveOrderSelected, setIsActiveOrderSelected] = useState(true);
+  const { activeOrders, pastOrders } = useSelector((state) => state.helpee);
   const navigate = useNavigate();
-  function handleNext(e) {
-    e.preventDefault();
-    let path;
-    switch (globalNavigateTarget) {
-      case "bookHelper":
-        path = "/service-options";
-        break;
-      case "viewOrderHistory":
-        path = "/profile";
-        break;
-      default:
-        path = "/service-options";
-    }
-    navigate(path, { replace: true });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllOrders({ userId: props.userId }));
+  }, [props.userId, dispatch]);
+
+  function handleSelectActiveOrders(e) {
+    e.preventDefault(e);
+    setIsActiveOrderSelected(true);
   }
-  
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate("/home", { replace: true });
-  };
-  window.addEventListener("popstate", onBackButtonEvent, { once: true });
+  function handleSelectPastOrders(e) {
+    e.preventDefault(e);
+    setIsActiveOrderSelected(false);
+  }
+
   return (
-    <div className="section-left-align">
-      <div
-        style={{
-          margin: "auto",
-          minWidth: "70%",
-          maxWidth: "70%",
-          display: "flex",
-          flexDirection: "row",
-          paddingTop: "10px",
-        }}
-      >
-        <Link
-          className={active ? "activeStyle" : "nonActiveStyle"}
-          to="/about"
+    <div className='section-left-align'>
+      <div className='orderHistoryBtnWrapper'>
+        <button
+          className={
+            isActiveOrderSelected
+              ? 'activeSelectedOrderBtn'
+              : 'nonActiveSelectedOrderBtn'
+          }
+          onClick={handleSelectActiveOrders}
         >
           Active Orders
-        </Link>
-        <Link
-          className={!active ? "activeStyle" : "nonActiveStyle"}
-          to="/service-options"
+        </button>
+        <button
+          className={
+            !isActiveOrderSelected
+              ? 'activeSelectedOrderBtn'
+              : 'nonActiveSelectedOrderBtn'
+          }
+          onClick={handleSelectPastOrders}
         >
           Past Orders
-        </Link>
+        </button>
       </div>
 
-      <div className="task-container">
-        {serviceOptions.map((option) => (
-          <OrderCard title={option.label} valueProps1={option.price} />
-        ))}
-      </div>
+      {!isActiveOrderSelected && (
+        <div className='task-container'>
+          {serviceOptions.map((option) => (
+            <PastOrderCard title={option.label} valueProps1={option.price} />
+          ))}
+        </div>
+      )}
+      {isActiveOrderSelected && (
+        <div className='task-container'>
+          {activeOrders.map((option) => (
+            <ActiveOrderCard
+              service={option.service}
+              meetDate={option.meetDate}
+              meetTime={option.meetTime}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

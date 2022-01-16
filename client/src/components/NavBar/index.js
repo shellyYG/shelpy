@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import GlobalIcon from './icon';
+import GlobalIcon from '../Icons/GlobalIcon';
 
 const NavBar = () => {
   const nonActiveStyle = {
@@ -62,7 +62,7 @@ const NavBar = () => {
           >
             My Requests
           </NavLink>
-          {/* <GlobalIcon /> */}
+          <GlobalIcon />
         </div>
       </nav>
     </>

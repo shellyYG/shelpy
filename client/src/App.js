@@ -1,4 +1,5 @@
 import './App.css';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
@@ -19,8 +20,10 @@ import { getAuthStatus } from './store/helpee/helpee-actions';
 
 function App() {
   const dispatch = useDispatch();
-  dispatch(getAuthStatus());
-  const { isAuthenticated } = useSelector((state) => state.helpee);
+  useEffect(() => {
+    dispatch(getAuthStatus());
+  }, [dispatch]);
+  const { userId, isAuthenticated } = useSelector((state) => state.helpee);
   return (
     <Router>
       <NavBar />
@@ -35,16 +38,18 @@ function App() {
         <Route
           path='/book-appointment-form'
           element={
-            isAuthenticated ? (
-              <BookAppointmentPage isAuthenticated={isAuthenticated} />
-            ) : (
-              <PreSignInPage />
-            )
+            isAuthenticated ? <BookAppointmentPage /> : <PreSignInPage />
           }
         />
         <Route path={'/chatroom'} element={<ChatRoomPage />} />
-        <Route path={'/order-history'} element={<OrderHistoryPage />} />
-        <Route path={'/helper-lists'} element={<HelperListPage />} />
+        <Route
+          path={'/order-history'}
+          element={isAuthenticated ? <OrderHistoryPage userId={userId}/> : <PreSignInPage />}
+        />
+        <Route
+          path={'/helper-lists'}
+          element={isAuthenticated ? <HelperListPage /> : <PreSignInPage />}
+        />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
       <Footer />
