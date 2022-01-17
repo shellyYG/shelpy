@@ -63,31 +63,26 @@ function ActiveOrderCard(props) {
 
   return (
     <div className={active ? 'history-card-active' : 'history-card'}>
-      <div
-        style={{ display: 'flex', flexDirection: 'column', flexBasis: '40%' }}
-      >
+      <div style={{ paddingRight: '20px'}}>
+        <div className='helper-ImgBx'>
+          <img src={`${img}.jpeg`} alt={'visa'}></img>
+        </div>
+      </div>
+      <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>{label}</h3>
           </div>
         </div>
       </div>
-      <div className='flexColumnRightMargin5'>
-        <div className='helper-ImgBx'>
-          <img src={`${img}.jpeg`} alt={'visa'}></img>
-        </div>
-      </div>
-
-      <div className='flexColumnRightMargin5'>
+      <div className='smallFlexColumn'>
         <div className='content'>
           <div className='contentBx'>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <CalendarIcon />
               </div>
-              <div className='pureFlexColumn'>
-                <div className='textDateTime'>{props.meetDate}</div>
-              </div>
+              <div className='textDateTime'>{props.meetDate}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
@@ -98,7 +93,7 @@ function ActiveOrderCard(props) {
           </div>
         </div>
       </div>
-      <div className='flexColumnRightMargin5'>
+      <div className='evenSmallFlexColumn'>
         <div className='content'>
           <div className='contentBx'>
             <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>
@@ -108,7 +103,7 @@ function ActiveOrderCard(props) {
           </div>
         </div>
       </div>
-      <div className='content'>
+      <div className='checkBoxWidth'>
         <div className='contentBx'>
           <button className='btn-contact' onClick={handleShowActiveOrderStatus}>
             Check Status

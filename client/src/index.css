@@ -553,7 +553,7 @@ footer {
   text-decoration: none;
   margin: 3px;
   height: 40px;
-  font-size: 22px;
+  font-size: 14px;
   height: auto;
   font-weight: bold;
 }
@@ -820,6 +820,7 @@ footer {
   cursor: pointer;
   flex-direction: row;
   padding: 10px;
+  flex-wrap: wrap;
 }
 
 .task-container .history-card .content {
@@ -839,12 +840,59 @@ footer {
   overflow: hidden;
 }
 
-.flexColumnRightMargin5 {
+.smallFlexColumn {
   display: flex;
   flex-direction: column;
-  margin-right: 1%;
-  margin-left: auto;
+  width: 200px;
 }
+.evenSmallFlexColumn {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+}
+.smallWidth {
+  width: 125px;
+}
+.checkBoxWidth {
+  width: 143px;
+}
+@media (max-width: '1200px') {
+  .smallFlexColumn {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+  }
+  .evenSmallFlexColumn {
+    width: 30%;
+    display:flex;
+    flex-direction: column;
+  }
+  .smallWidth {
+    width: 45%;
+  }
+  .checkBoxWidth {
+    width: 100%;
+  }
+}
+@media (max-width: '500px') {
+  .smallFlexColumn {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+  }
+  .evenSmallFlexColumn {
+    width: 30%;
+    display:flex;
+    flex-direction: column;
+  }
+  .smallWidth {
+    width: 30%;
+  }
+  .checkBoxWidth {
+    width: 30%;
+  }
+}
+
 
 .pureFlexColumn {
   display: flex;
@@ -862,12 +910,14 @@ footer {
   margin: auto;
   margin-left: 10px;
   font-weight: bold;
+  font-size: 14px;
 }
 
 .flexItemVerticalCenter {
   margin: auto;
   margin-left: 0px;
   margin-right: 0px;
+  font-size: 14px;
 }
 
 .task-card .content .contentBx {
@@ -893,6 +943,7 @@ footer {
   justify-content: start;
   text-align: center;
   background: none;
+  font-size: 14px;
 }
 
 .activeSelectedOrderBtn {
@@ -905,6 +956,7 @@ footer {
   width: 50%;
   justify-content: start;
   text-align: center;
+  font-size: 14px;
 }
 
 .nonActiveStyle {
