@@ -12,9 +12,9 @@ const MySwal = withReactContent(Swal);
 
 const SignUpPasswordPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const dispatch = useDispatch();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
   const [email, setEmail] = useState(DBHelpeeEmail);
   const [password, setPassword] = useState('');

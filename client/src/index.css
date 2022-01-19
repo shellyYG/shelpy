@@ -117,7 +117,7 @@ body {
   align-items: center;
   left: 0;
   width: 30px;
-  flex:4;
+  flex: 4;
   overflow: auto;
   height: 90%;
   padding-bottom: 30vh;
@@ -126,11 +126,9 @@ body {
   padding-top: 80px;
   justify-content: center;
   align-items: center;
-  left: 0;
-  width: 30px;
-  flex:4;
+  flex: 4;
   overflow: auto;
-  height: 80%;
+  height: 100vh;
   padding-bottom: 30vh;
 }
 .chat-section-center-align {
@@ -281,6 +279,17 @@ body {
   margin-top: 8px;
   margin-bottom: -16px;
 }
+
+.container .card .content .imgBxHomePage {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+
 .task-schrinker {
   margin-right: 10px;
   text-align: end;
@@ -311,6 +320,14 @@ body {
   height: 100%;
   object-fit: cover;
 }
+.task-container .task-card .content .task-ImgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .container .card-active .content .imgBx {
   position: relative;
@@ -322,6 +339,16 @@ body {
   margin-bottom: -14px;
 }
 
+.container .card-active .content .imgBxHomePage {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: 14px;
+  margin-bottom: 15px;
+}
+
 .container .card .content .imgBx img {
   position: absolute;
   top: 0;
@@ -330,7 +357,23 @@ body {
   height: 100%;
   object-fit: cover;
 }
+.container .card .content .imgBxHomePage img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .container .card-active .content .imgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.container .card-active .content .imgBxHomePage img {
   position: absolute;
   top: 0;
   left: 0;
@@ -725,7 +768,7 @@ footer {
   .form-control-landing {
   border: 1px solid #e6e6e6;
   border-radius: 5px;
-  width: 30%;
+  width: 60%;
   height: 42px;
   padding: 0 14px; }
   .form-control-password {
@@ -856,44 +899,13 @@ footer {
 .checkBoxWidth {
   width: 143px;
 }
-@media (max-width: '1200px') {
-  .smallFlexColumn {
-    width: 45%;
-    display: flex;
-    flex-direction: column;
-  }
-  .evenSmallFlexColumn {
-    width: 30%;
-    display:flex;
-    flex-direction: column;
-  }
-  .smallWidth {
-    width: 45%;
-  }
-  .checkBoxWidth {
-    width: 100%;
-  }
+.centerWrapper {
+  width: 50%;
+  margin: auto;
+  background: white;
+  border-radius: 8px;
+  padding: 14px 10px 28px;
 }
-@media (max-width: '500px') {
-  .smallFlexColumn {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-  }
-  .evenSmallFlexColumn {
-    width: 30%;
-    display:flex;
-    flex-direction: column;
-  }
-  .smallWidth {
-    width: 30%;
-  }
-  .checkBoxWidth {
-    width: 30%;
-  }
-}
-
-
 .pureFlexColumn {
   display: flex;
   flex-direction: column;
@@ -1007,4 +1019,70 @@ footer {
   color: black;
   padding: 5px;
   cursor: pointer;
+}
+
+.logoutButtonActive {
+  color: black;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 22px;
+  cursor: pointer;
+  border: 1px solid #fff995;
+  background-color: #fff995;
+  border-radius: 1px;
+  margin: 3px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.logoutButtonNonActive {
+  color: white;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 22px;
+  cursor: pointer;
+  border: none;
+  border-bottom: 1px solid #fff995;
+  margin: 3px;
+  background-color: #231f20;
+  font-size: 16px;
+}
+
+@media (max-width: '1200px') {
+  .smallFlexColumn {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+  }
+  .evenSmallFlexColumn {
+    width: 30%;
+    display:flex;
+    flex-direction: column;
+  }
+  .smallWidth {
+    width: 45%;
+  }
+  .checkBoxWidth {
+    width: 100%;
+  }
+}
+@media (max-width: '500px') {
+  .smallFlexColumn {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+  }
+  .evenSmallFlexColumn {
+    width: 30%;
+    display:flex;
+    flex-direction: column;
+  }
+  .smallWidth {
+    width: 30%;
+  }
+  .checkBoxWidth {
+    width: 30%;
+  }
 }

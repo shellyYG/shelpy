@@ -6,8 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../App.css";
-import { clearSignInStatus, postSignInData } from '../store/helpee/helpee-actions';
-
+import {
+  clearSignInStatus,
+  postSignInData,
+  getAuthStatus,
+} from '../store/helpee/helpee-actions';
 const MySwal = withReactContent(Swal);
 
 const SignInPage = () => {
@@ -46,7 +49,6 @@ const SignInPage = () => {
       password: passwordRef.current.value,
       isHelpee: true,
     };
-    console.log('postHelpeeSignInData -> data: ', data);
     dispatch(postSignInData(data));
     setIsLoading(true);
   }
@@ -71,6 +73,7 @@ const SignInPage = () => {
           html: <p>{message}</p>,
           icon: 'success',
         });
+        dispatch(getAuthStatus());
         dispatch(clearSignInStatus());
         navigate('/service-options', { replace: true });
       }
@@ -85,43 +88,40 @@ const SignInPage = () => {
   ]);
 
   return (
-    <div className="main-content-wrapper-homepage-no-background">
-      <div className="section-center-align" style={{ paddingTop: "5%" }}>
-        <h1 style={{ textAlign: "center", marginTop: "30px" }}>
+    <div className='main-content-wrapper-homepage-no-background'>
+      <div className='section-center-align' style={{ paddingTop: '5%' }}>
+        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
           Welcome back!
         </h1>
         <h2
           style={{
-            textAlign: "center",
-            marginTop: "10px",
-            marginBottom: "30px",
+            textAlign: 'center',
+            marginTop: '10px',
+            marginBottom: '30px',
           }}
         >
           Please insert your username and password to sign in.
         </h2>
 
-        <form action="" className="centerbox-landing">
+        <form action='' className='centerbox-landing'>
           <input
-            type="text"
-            className="form-control-password"
-            placeholder="Enter Email Address"
+            type='text'
+            className='form-control-password'
+            placeholder='Enter Email Address'
             ref={emailRef}
           />
           <input
-            type="text"
-            className="form-control-password"
-            placeholder="Enter Password"
+            type='text'
+            className='form-control-password'
+            placeholder='Enter Password'
             ref={passwordRef}
           />
-          <div style={{ paddingBottom: '10px', fontSize: '12px'}}>
-            <Link
-              to="/about"
-            >
-              Forget Password
-            </Link>
+          <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
+            <Link to='/about' style={{ marginRight: '10px'}}>Forget Password</Link>
+            <Link to='/home'>Don't have account yet? Sign Up here!</Link>
           </div>
 
-          <ConfirmBtn cta="Sign In ❯" handleConfirm={handleConfirm} />
+          <ConfirmBtn cta='Sign In ❯' handleConfirm={handleConfirm} />
         </form>
       </div>
     </div>

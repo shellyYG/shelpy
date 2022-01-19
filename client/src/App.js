@@ -26,10 +26,13 @@ function App() {
   const { userId, isAuthenticated } = useSelector((state) => state.helpee);
   return (
     <Router>
-      <NavBar />
+      <NavBar isAuthenticated={isAuthenticated} />
       <Routes>
         <Route path='/' element={<Navigate replace to='/home' />} />
-        <Route path='/home' element={<HomePage />} />
+        <Route
+          path='/home'
+          element={<HomePage isAuthenticated={isAuthenticated} />}
+        />
         <Route path='/sign-up-final-step' element={<SignUpPasswordPage />} />
         <Route path='/sign-in' element={<SignInPage />} />
         <Route path='/helper' element={<SignUpPageHelper />} />
@@ -44,7 +47,13 @@ function App() {
         <Route path={'/chatroom'} element={<ChatRoomPage />} />
         <Route
           path={'/order-history'}
-          element={isAuthenticated ? <OrderHistoryPage userId={userId}/> : <PreSignInPage />}
+          element={
+            isAuthenticated ? (
+              <OrderHistoryPage userId={userId} />
+            ) : (
+              <PreSignInPage />
+            )
+          }
         />
         <Route
           path={'/helper-lists'}

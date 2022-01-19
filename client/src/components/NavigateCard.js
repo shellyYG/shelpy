@@ -26,15 +26,13 @@ function NavigateCard(props) {
   }, [props.globalNavigateTarget, props.value]);
 
   return (
-    <div className={active ? "card-active" : "card"} onClick={handleOnClick}>
-      <div className="content">
-        <div className="imgBx">
+    <div className={active ? 'card-active' : 'card'} onClick={handleOnClick}>
+      <div className='content'>
+        <div className='imgBxHomePage'>
           <img src={props.imageSrc} alt={props.text}></img>
         </div>
-        <div className="contentBx">
-          <h3>
-            {props.title}
-          </h3>
+        <div className='contentBx'>
+          <h3>{props.title}</h3>
         </div>
       </div>
     </div>

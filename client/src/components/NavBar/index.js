@@ -1,8 +1,17 @@
 import React from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import GlobalIcon from '../Icons/GlobalIcon';
+import { getAuthStatus } from '../../store/helpee/helpee-actions';
 
-const NavBar = () => {
+const MySwal = withReactContent(Swal);
+
+const NavBar = (props) => {
+  const dispatch = useDispatch();
+  const [buttonActive, setButtonActive] = useState(false);
   const nonActiveStyle = {
     color: "white",
     display: "flex",
@@ -26,14 +35,22 @@ const NavBar = () => {
     margin: '3px',
     fontWeight: 'bold',
   }
+  function handleSignOut(e) {
+    e.preventDefault();
+    setButtonActive(!buttonActive);
+    localStorage.removeItem('shelpy-token');
+    MySwal.fire({
+      title: <strong>Successfully Signed-Out.</strong>,
+      html: <p>You are now signed-out.</p>,
+      icon: 'success',
+    });
+    dispatch(getAuthStatus());
+  }
   return (
     <>
       <nav>
         <div className='nav-menu'>
-          <NavLink
-            className='nav-logo'
-            to='/home'
-          >
+          <NavLink className='nav-logo' to='/home'>
             <img src={'/Shelpy_logo.jpg'} alt={'logo'} />
           </NavLink>
           <NavLink
@@ -50,12 +67,26 @@ const NavBar = () => {
           </NavLink>
         </div>
         <div className='nav-button'>
-          <NavLink
-            style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to='/sign-in'
-          >
-            Sign-In
-          </NavLink>
+          {!props.isAuthenticated && (
+            <NavLink
+              style={({ isActive }) =>
+                isActive ? activeStyle : nonActiveStyle
+              }
+              to='/sign-in'
+            >
+              Sign-In
+            </NavLink>
+          )}
+          {props.isAuthenticated && (
+            <button
+              className={
+                buttonActive ? 'logoutButtonActive' : 'logoutButtonNonActive'
+              }
+              onClick={handleSignOut}
+            >
+              Sign-Out
+            </button>
+          )}
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to='/order-history'

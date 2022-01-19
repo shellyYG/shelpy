@@ -30,19 +30,19 @@ const LoggedInHelpeeHomePage = () => {
   };
   window.addEventListener("popstate", onBackButtonEvent, { once: true });
   return (
-    <div className="main-content-wrapper">
-      <div className="section-center-align">
-        <h1 style={{ textAlign: "center", marginTop: "30px" }}>Welcome back</h1>
+    <div className='main-content-wrapper-no-background'>
+      <div className='section-center-align'>
+        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>Welcome back</h1>
         <h2
           style={{
-            textAlign: "center",
-            marginTop: "10px",
-            marginBottom: "30px",
+            textAlign: 'center',
+            marginTop: '10px',
+            marginBottom: '30px',
           }}
         >
           What can we offer you today?
         </h2>
-        <div className="container">
+        <div className='container'>
           {navigateOptions.map((option) => (
             <NavigateCard
               imageSrc={option.imgPath}
@@ -52,8 +52,8 @@ const LoggedInHelpeeHomePage = () => {
             />
           ))}
         </div>
-        <div style={{ textAlign: "center" }}>
-          <button className="btn-next" onClick={handleNext}>
+        <div style={{ textAlign: 'center' }}>
+          <button className='btn-next' onClick={handleNext}>
             Next ❯
           </button>
         </div>

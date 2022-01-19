@@ -1,8 +1,7 @@
-import CheckBox from '../components/CheckBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import '../App.css';
@@ -76,52 +75,61 @@ const SignUpPageHelpee = () => {
   return (
     <div className='main-content-wrapper-homepage'>
       <div className='section-center-align-landing'>
-        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-          Afraid of speaking in German?
-        </h1>
-        <h2
-          style={{
-            textAlign: 'center',
-            marginTop: '10px',
-            marginBottom: '30px',
-          }}
-        >
-          Don't worry. We speak for you.
-        </h2>
-        <h5
-          style={{
-            textAlign: 'center',
-            marginTop: '10px',
-            marginBottom: '10px',
-          }}
-        >
-          Create an account to find a helper who goes with you to your German
-          meetings!
-        </h5>
+        <div className='centerWrapper'>
+          <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+            Afraid of speaking in German?
+          </h1>
+          <h2
+            style={{
+              textAlign: 'center',
+              marginTop: '10px',
+              marginBottom: '30px',
+            }}
+          >
+            Don't worry. We speak for you.
+          </h2>
+          <h5
+            style={{
+              textAlign: 'center',
+              marginTop: '10px',
+              marginBottom: '10px',
+            }}
+          >
+            Create an account to find a helper who goes with you to your German
+            meetings!
+          </h5>
 
-        <form action='' className='centerbox-landing'>
-          <input
-            type='text'
-            className='form-control-landing'
-            placeholder='Enter Email Address'
-            value={email}
-            onChange={handleEmailTyping}
-            ref={emailRef}
-          />
-          <ConfirmBtn cta='Sign Up ❯' handleConfirm={handleConfirm} />
-        </form>
-        <p
-          style={{
-            textAlign: 'center',
-            marginTop: '5px',
-            marginBottom: '10px',
-            fontSize: '10px',
-          }}
-        >
-          By providing your email address, you agree to receive offers
-          from Shelpy, according to our <a href='/privacy-policy' target='_blank'>privacy policy</a>. <br />
-          You can unsubscribe at any time.
-        </p>
+          <form action='' className='centerbox-landing'>
+            <input
+              type='text'
+              className='form-control-landing'
+              placeholder='Enter Email Address'
+              value={email}
+              onChange={handleEmailTyping}
+              ref={emailRef}
+            />
+            <ConfirmBtn cta='Sign Up ❯' handleConfirm={handleConfirm} />
+          </form>
+          <p
+            style={{
+              textAlign: 'center',
+              marginTop: '5px',
+              marginBottom: '10px',
+              fontSize: '10px',
+            }}
+          >
+            By providing your email address, you agree to receive offers from
+            Shelpy, according to our{' '}
+            <a href='/privacy-policy' target='_blank'>
+              privacy policy
+            </a>
+            . <br />
+            You can unsubscribe at any time.
+          </p>
+          <div style={{ textAlign: 'center' }}>
+            <Link to='/sign-in'>Alreave have an account? Sign In here!</Link>
+          </div>
+        </div>
       </div>
     </div>
   );
