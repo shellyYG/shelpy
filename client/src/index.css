@@ -121,6 +121,7 @@ body {
   overflow: auto;
   height: 90%;
   padding-bottom: 30vh;
+  padding-top: 10vh;
 }
 .section-center-align-landing {
   padding-top: 80px;
@@ -130,6 +131,7 @@ body {
   overflow: auto;
   height: 100vh;
   padding-bottom: 30vh;
+  padding-top: 20vh;
 }
 .chat-section-center-align {
   padding: 5px;
@@ -900,7 +902,7 @@ footer {
   width: 143px;
 }
 .centerWrapper {
-  width: 50%;
+  width: 40%;
   margin: auto;
   background: white;
   border-radius: 8px;

@@ -8,27 +8,19 @@ const AboutPage = () => {
   };
   window.addEventListener("popstate", onBackButtonEvent, { once: true });
   return (
-    <div className="main-content-wrapper">
-      <div className="section-center-align" style={{ paddingTop: '5%'}}>
-        <h1 style={{ textAlign: "center", marginTop: "30px" }}>SHELPY</h1>
-        <h2
-          style={{
-            textAlign: "center",
-            marginTop: "10px",
-            marginBottom: "30px",
-          }}
-        >
-          is a German-based company.
-        </h2>
-        <h2
-          style={{
-            textAlign: "center",
-            marginTop: "10px",
-            marginBottom: "30px",
-          }}
-        >
-          We aim at integrating foreigners to local society globally.
-        </h2>
+    <div className='main-content-wrapper-homepage'>
+      <div className='section-center-align-landing'>
+        <div className='centerWrapper' style={{ textAlign: 'center', paddingTop: '28px' }}>
+          <h2>Mission Statement</h2>
+          <br />
+          <h3>
+            By matching foreigners to a local buddy to accompany them to the
+            local meetings, <br />
+            <br />
+            Shelpy aims at integrating foreigners to local society globally.
+          </h3>
+          <br />
+        </div>
       </div>
     </div>
   );
