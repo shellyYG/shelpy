@@ -106,6 +106,7 @@ export const meetCityOptions = [
 export const nativeLanguageOptions = [
   { value: 'chinese', label: 'Chinese' },
   { value: 'vietnamese', label: 'Vietnamese' },
+  { value: 'ukrainian', label: 'Ukrainian' },
   { value: 'russian', label: 'Russian' },
   { value: 'turkish', label: 'Turkish' },
   { value: 'french', label: 'French' },
@@ -115,6 +116,8 @@ export const nativeLanguageOptions = [
   { value: 'danish', label: 'Danish' },
   { value: 'italian', label: 'Italian' },
   { value: 'spanish', label: 'Spanish' },
+  { value: 'korean', label: 'Korean' },
+  { value: 'japanese', label: 'Japanese' },
   { value: 'others', label: othersText },
 ];
 
@@ -122,6 +125,7 @@ export const languageOptions = [
   { value: 'german', label: 'German' },
   { value: 'chinese', label: 'Chinese' },
   { value: 'vietnamese', label: 'Vietnamese' },
+  { value: 'ukrainian', label: 'Ukrainian' },
   { value: 'russian', label: 'Russian' },
   { value: 'turkish', label: 'Turkish' },
   { value: 'french', label: 'French' },
@@ -131,6 +135,8 @@ export const languageOptions = [
   { value: 'danish', label: 'Danish' },
   { value: 'italian', label: 'Italian' },
   { value: 'spanish', label: 'Spanish' },
+  { value: 'korean', label: 'Korean' },
+  { value: 'japanese', label: 'Japanese' },
   { value: 'others', label: othersText },
 ];
 
