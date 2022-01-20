@@ -25,10 +25,10 @@ export const serviceOptions = [
     imgPath: '/wohnung.jpeg',
   },
   {
-    value: 'localFriend',
-    label: 'Friend to visit Museum/Restaurant',
+    value: 'bankAccount',
+    label: 'Open a Bank Account',
     price: '€15 / Hour',
-    imgPath: '/friend.jpeg',
+    imgPath: '/bank.jpeg',
   },
   {
     value: 'others',

@@ -26,8 +26,8 @@ function ActiveOrderCard(props) {
       case 'apartmentVisit':
         setImg('/wohnung');
         break;
-      case 'localFriend':
-        setImg('/friend');
+      case 'bankAccount':
+        setImg('/bank');
         break;
       case 'others':
         setImg('/offer_help');
@@ -50,8 +50,8 @@ function ActiveOrderCard(props) {
       case 'apartmentVisit':
         setLabel('Apartment Visit');
         break;
-      case 'localFriend':
-        setLabel('Friend');
+      case 'bankAccount':
+        setLabel('Bank');
         break;
       case 'others':
         setLabel('Others');
