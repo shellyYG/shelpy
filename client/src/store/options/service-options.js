@@ -67,7 +67,7 @@ export const meetTimeOptions = [
   { value: '8am-9am', label: '8am-9am' },
   { value: '9am-10am', label: '9am-10am' },
   { value: '10am-11am', label: '10am-11am' },
-  { value: '11am-12pm (afternoon)', label: '11am-12pm (afternoon)' },
+  { value: '11am-12pm', label: '11am-12pm (afternoon)' },
   { value: '1pm-2pm', label: '1pm-2pm' },
   { value: '2pm-3pm', label: '2pm-3pm' },
   { value: '3pm-4pm', label: '3pm-4pm' },
@@ -77,7 +77,6 @@ export const meetTimeOptions = [
   { value: '7pm-8pm', label: '7pm-8pm' },
   { value: '8pm-9pm', label: '8mp-9pm' },
   { value: '9pm-10pm', label: '9pm-10pm' },
-  { value: 'others', label: othersText },
 ];
 
 export const meetCountryOptions = [

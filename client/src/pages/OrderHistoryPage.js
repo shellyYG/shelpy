@@ -1,15 +1,27 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { serviceOptions } from '../store/options/service-options';
 import PastOrderCard from '../components/PastOrderCard';
 import ActiveOrderCard from '../components/ActiveOrderCard';
 import { getAllOrders } from '../store/helpee/helpee-actions';
 
 const OrderHistoryPage = (props) => {
   const [isActiveOrderSelected, setIsActiveOrderSelected] = useState(true);
-  const { activeOrders, pastOrders } = useSelector((state) => state.helpee);
-  const navigate = useNavigate();
+  const [activeOrders, setActiveOrders] = useState([]);
+  const [pastOrders, setPastOrders] = useState([]);
+  const { allOrders } = useSelector((state) => state.helpee);
+  useEffect(()=>{
+    const activeOrdersArr = [];
+    const pastOrdersArr = [];
+    allOrders.forEach((o)=>{
+      if (o.meetTimestamp > Date.now()) {
+        activeOrdersArr.push(o);
+      } else {
+        pastOrdersArr.push(o);
+      }
+    })
+    setActiveOrders(activeOrdersArr);
+    setPastOrders(pastOrdersArr);
+  }, [allOrders]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllOrders({ userId: props.userId }));
@@ -19,7 +31,7 @@ const OrderHistoryPage = (props) => {
     e.preventDefault(e);
     setIsActiveOrderSelected(true);
   }
-  function handleSelectPastOrders(e) {
+  function handleSelectpastOrders(e) {
     e.preventDefault(e);
     setIsActiveOrderSelected(false);
   }
@@ -43,7 +55,7 @@ const OrderHistoryPage = (props) => {
               ? 'activeSelectedOrderBtn'
               : 'nonActiveSelectedOrderBtn'
           }
-          onClick={handleSelectPastOrders}
+          onClick={handleSelectpastOrders}
         >
           Past Orders
         </button>
@@ -51,8 +63,13 @@ const OrderHistoryPage = (props) => {
 
       {!isActiveOrderSelected && (
         <div className='task-container'>
-          {serviceOptions.map((option) => (
-            <PastOrderCard title={option.label} valueProps1={option.price} />
+          {pastOrders.map((option) => (
+            <PastOrderCard
+              service={option.service}
+              meetDate={option.meetDate}
+              meetTime={option.meetTime}
+              orderStatus={option.status}
+            />
           ))}
         </div>
       )}

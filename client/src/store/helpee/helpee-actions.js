@@ -46,17 +46,15 @@ export const getAllOrders = (data) => {
       const response = await axios.get(getAllOrdersPath, { params: { userId: data.userId }});
       console.log('response from helpee-actions: ', response);
       dispatch(
-        helpeeActions.updateActiveAndCompleteOrders({
-          activeOrders: response.data.activeOrders,
-          completeOrders: response.data.completeOrders,
+        helpeeActions.updateActiveAndPastOrders({
+          allOrders: response.data.allOrders,
         })
       );
     } catch (error) {
       console.error(error);
       dispatch(
-        helpeeActions.updateActiveAndCompleteOrders({
-          activeOrders: [],
-          completeOrders: [],
+        helpeeActions.updateActiveAndPastOrders({
+          allOrders: [],
         })
       );
     }

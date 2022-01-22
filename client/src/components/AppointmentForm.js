@@ -45,12 +45,28 @@ const navigate = useNavigate();
   async function handleConfirm(e) {
     e.preventDefault();
     // change DB & global state
+    const meetTimeRange = meetTimeRef.current.value; // 8am-9am;
+    const endMeetTime = meetTimeRange.split('-')[1]; // 9am;
+    const timeAMPM = endMeetTime[endMeetTime.length - 2] + endMeetTime[endMeetTime.length-1];
+    let timeHour;
+    if (timeAMPM === 'am') {
+      timeHour = parseInt(endMeetTime.length > 3 ? endMeetTime[0] + endMeetTime[1]: endMeetTime[0]);
+    } else {
+      timeHour = parseInt(endMeetTime.length > 3 ? endMeetTime[0] + endMeetTime[1]: endMeetTime[0]) + 12;
+    }
+    if (meetCountryRef.current.value === 'germany') {
+      timeHour = timeHour - 1;
+    }
+    const dates = meetDateRef.current.value.split('-');
+    const [year, month, day] = dates;
+    const unixTime = Date.UTC(parseInt(year), parseInt(month)-1 , parseInt(day), timeHour);
     const data = {
       userId,
       service: serviceRef.current.value,
       gender: genderRef.current.value,
       meetDate: meetDateRef.current.value,
       meetTime: meetTimeRef.current.value,
+      meetTimestamp: unixTime,
       meetCountry: meetCountryRef.current.value,
       meetCity: meetCityRef.current.value,
       meetAddress: meetAddressRef.current.value,
@@ -59,7 +75,8 @@ const navigate = useNavigate();
       speakEnglish: speakEnglishRef.current.value,
       otherLanguage: otherLangRef.current.value,
       notes: notesRef.current.value,
-      status: 'request_submitted',
+      step: 'request_submitted',
+      status: 'Not Fulfilled',
     };
     dispatch(postHelpeeServiceRequestForm(data));
     setIsLoading(true);

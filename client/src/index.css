@@ -105,7 +105,7 @@ body {
   height: 90vh;
   min-width: 20%;
   padding: 0.5rem calc((100vw - 1300px) / 2);
-  /* padding-top: 60vh; */ /* without 60vh, will start from top */
+  padding-bottom: 30vh;
   
 }
 .section-left-align-hidden {
@@ -121,7 +121,7 @@ body {
   overflow: auto;
   height: 90%;
   padding-bottom: 30vh;
-  padding-top: 10vh;
+  padding-top: 5vh;
 }
 .section-center-align-landing {
   padding-top: 80px;
@@ -131,7 +131,7 @@ body {
   overflow: auto;
   height: 100vh;
   padding-bottom: 30vh;
-  padding-top: 20vh;
+  padding-top: 15vh;
 }
 .chat-section-center-align {
   padding: 5px;
@@ -901,6 +901,9 @@ footer {
 .checkBoxWidth {
   width: 143px;
 }
+.secondCheckBoxWidth {
+  width: 143px;
+}
 .centerWrapper {
   width: 40%;
   margin: auto;
@@ -1052,25 +1055,44 @@ footer {
   font-size: 16px;
 }
 
+.orderStatusFulfilled {
+  color: #04AA6D;
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.orderStatusNotFulfilled {
+  margin: auto;
+  color: #E35050;
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+
 @media all and (max-width: 1200px) {
   .centerWrapper {
     width: 80%;
   }
   .smallFlexColumn {
-    width: 45%;
+    width: 50%;
     display: flex;
     flex-direction: column;
   }
   .evenSmallFlexColumn {
-    width: 30%;
+    width: 44%;
     display:flex;
     flex-direction: column;
   }
   .smallWidth {
-    width: 45%;
+    width: 20%;
   }
   .checkBoxWidth {
-    width: 100%;
+    width: 35%;
+  }
+  .secondCheckBoxWidth {
+    width: 35%;
   }
 }
 @media (max-width: 500px) {
@@ -1078,19 +1100,22 @@ footer {
     width: 85%;
   }
   .smallFlexColumn {
-    width: 30%;
+    width: 55%;
     display: flex;
     flex-direction: column;
   }
   .evenSmallFlexColumn {
-    width: 30%;
+    width: 45%;
     display:flex;
     flex-direction: column;
   }
   .smallWidth {
-    width: 30%;
+    width: 45%;
   }
   .checkBoxWidth {
-    width: 30%;
+    width: 50%;
+  }
+  .secondCheckBoxWidth {
+    width: 50%;
   }
 }

@@ -23,8 +23,7 @@ const getAllOrders = async (req, res) => {
     const response = await helpeeModel.getAllOrders({ userId });
     if (response.data) {
       res.status(200).json({
-        activeOrders: response.data.activeOrders,
-        completeOrders: response.data.completeOrders,
+        allOrders: response.data.allOrders,
       });
     } else {
       throw Error('NO_ORDER_RESPONSE');
