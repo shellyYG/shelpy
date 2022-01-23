@@ -274,8 +274,8 @@ body {
 
 .container .card .content .imgBx {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
   margin-top: 8px;
@@ -284,8 +284,8 @@ body {
 
 .container .card .content .imgBxHomePage {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
   margin-top: 8px;
@@ -333,8 +333,8 @@ body {
 
 .container .card-active .content .imgBx {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
   margin-top: 14px;
@@ -343,8 +343,8 @@ body {
 
 .container .card-active .content .imgBxHomePage {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
   margin-top: 14px;

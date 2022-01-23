@@ -1,79 +1,71 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchHelpeeData } from "../store/helpee/helpee-actions";
-import { helpeeActions } from "../store/helpee/helpee-slice";
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { onClickUpdateActiveServiceType } from '../store/helpee/helpee-actions';
+import FilledStarIcon from './Icons/FilledStarIcon';
+import FilledHalfStarIcon from './Icons/FilledHalfStarIcon';
+import NoFilledStarIcon from './Icons/NoFilledStarIcon';
 
 function HelperCard(props) {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
 
+  function handleOnClick(e) {
+    e.preventDefault();
+    // change global state for matching active service type for UI changes
+    const data = {
+      globalServiceType: props.value,
+    };
+    try {
+      dispatch(onClickUpdateActiveServiceType(data));
+    } catch (err) {
+      console.error(err);
+    }
+    setActive(!active);
+  }
+
+  useEffect(() => {
+    if (props.globalServiceType !== props.value) {
+      setActive(false);
+    }
+  }, [props.globalServiceType, props.value]);
+
   return (
-    <div className={active ? "history-card-active" : "history-card"}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginRight: "1%",
-        }}
-      >
-        <div className="helper-ImgBx">
-          <img src={"/visa.jpeg"} alt={"visa"}></img>
+    <div className={active ? 'card-active' : 'card'} onClick={handleOnClick}>
+      <div className='content'>
+        <div className='imgBx'>
+          <img src={props.imageSrc} alt={props.text}></img>
         </div>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div className="content">
-          <div className="contentBx">
-            <h3 style={{ fonrWeight: "bold", fontSize: "24px" }}>Shelly</h3>
+        <div className='contentBx'>
+          <div style={{ marginTop: '18px', display: 'flex' }}>
+            <h3 style={{ margin: 'auto' }}>Shelly</h3>
           </div>
-        </div>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div className="content">
-          <div className="contentBx">
-            <h3 style={{ fonrWeight: "bold", fontSize: "20px" }}>***** (16)</h3>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}
+          >
+            <FilledStarIcon />
+            <FilledStarIcon />
+            <FilledStarIcon />
+            <FilledHalfStarIcon />
+            <NoFilledStarIcon />
+            (16)
           </div>
-        </div>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div className="content">
-          <div className="contentBx">
-            <p style={{ fontSize: "20px" }}>Hired xxx times</p>
+          <div
+            style={{
+              marginTop: '6px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <h3 style={{ margin: 'auto', fontSize: '12px' }}>From: Taiwan</h3>
+            <h3 style={{ margin: 'auto', fontSize: '12px' }}>
+              Speaks: Chinese, English, German
+            </h3>
           </div>
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginRight: "5%",
-          marginLeft: "auto",
-        }}
-      >
-        <div className="content">
-          <div className="contentBx">
-            <p
-              style={{
-                marginBottom: "12px",
-                fontWeight: "bold",
-                fontSize: "24px",
-              }}
-            >
-              €100.70 / Hour
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginRight: "5%",
-        }}
-      >
-        <div className="content">
-          <div className="contentBx">
-            <button className="btn-next" style={{ fontSize: '22px', height: 'auto', fontWeight: 'bold'}}>Contact Her</button>
-          </div>
+          <br />
         </div>
       </div>
     </div>
