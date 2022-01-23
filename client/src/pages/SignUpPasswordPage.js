@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import '../App.css';
-import { clearSignUpPasswordStatus, postHelpeeSignUpPassword } from '../store/helpee/helpee-actions';
+import {
+  getAuthStatus,
+  clearSignUpPasswordStatus,
+  postHelpeeSignUpPassword,
+} from '../store/helpee/helpee-actions';
 
 const MySwal = withReactContent(Swal);
 
@@ -97,6 +101,7 @@ const SignUpPasswordPage = () => {
           html: <p>{message}</p>,
           icon: 'success',
         });
+        dispatch(getAuthStatus());
         dispatch(clearSignUpPasswordStatus());
         // to perform navigate after await MySwal, we need to create extra async function sweetAlertAndNavigate to wrap MySwal.
         navigate('/service-options', { replace: true });
