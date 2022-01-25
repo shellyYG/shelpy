@@ -37,7 +37,7 @@ function HelperCard(props) {
         </div>
         <div className='contentBx'>
           <div style={{ marginTop: '18px', display: 'flex' }}>
-            <h3 style={{ margin: 'auto' }}>Shelly</h3>
+            <h3 style={{ margin: 'auto' }}>{props.username}</h3>
           </div>
           <div
             style={{
@@ -60,10 +60,22 @@ function HelperCard(props) {
               flexDirection: 'column',
             }}
           >
-            <h3 style={{ margin: 'auto', fontSize: '12px' }}>From: Taiwan</h3>
             <h3 style={{ margin: 'auto', fontSize: '12px' }}>
-              Speaks: Chinese, English, German
+              From: {props.nationality}
             </h3>
+            <h3 style={{ margin: 'auto', fontSize: '12px' }}>
+              Native language: {props.nativeLanguage}
+            </h3>
+            {props.firstLanguage && (
+              <h3 style={{ margin: 'auto', fontSize: '12px' }}>
+                Also speaks: {props.firstLanguage}
+              </h3>
+            )}
+            {props.firstLanguage && props.secondLanguage && (
+              <h3 style={{ margin: 'auto', fontSize: '12px' }}>
+                Also speaks: {props.firstLanguage}, {props.secondLanguage}
+              </h3>
+            )}
           </div>
           <br />
         </div>
