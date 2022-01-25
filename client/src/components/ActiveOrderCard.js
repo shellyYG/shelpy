@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CalendarIcon from './Icons/CalendarIcon';
@@ -6,13 +7,11 @@ import TimeIcon from './Icons/TimeIcon';
 function ActiveOrderCard(props) {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
-  function handleShowActiveOrderStatus(e) {
-    e.preventDefault();
-    navigate('/helper-lists', { replace: true });
-  }
+  const [helpers, setHelpers] = useState([]);
+  const [helperCount, setHelperCount] = useState(0);
   const [img, setImg] = useState('');
   const [label, setLabel] = useState('');
-  useEffect(()=>{
+  useEffect(() => {
     switch (props.service) {
       case 'visa':
         setImg('/visa');
@@ -35,7 +34,7 @@ function ActiveOrderCard(props) {
       default:
         setImg('/offer_help');
     }
-  },[props.service])
+  }, [props.service]);
   useEffect(() => {
     switch (props.service) {
       case 'visa':
@@ -61,9 +60,33 @@ function ActiveOrderCard(props) {
     }
   }, [props.service]);
 
+  useEffect(() => {
+    async function getHelperLists(orderId) {
+      try {
+        const response = await axios.get('api/helper-list', {
+          params: { orderId },
+        });
+        if (response) {
+          console.log('helper list response: ', response);
+          const { helpers } = response.data;
+          setHelperCount(helpers.length);
+          setHelpers(helpers);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getHelperLists(props.orderId);
+  }, [props.orderId]);
+  
+  function handleShowActiveOrderStatus(e) {
+    e.preventDefault();
+    navigate(`/helper-lists?orderId=${props.orderId}`, { replace: true });
+  }
+
   return (
     <div className={active ? 'history-card-active' : 'history-card'}>
-      <div style={{ paddingRight: '20px'}}>
+      <div style={{ paddingRight: '20px' }}>
         <div className='helper-ImgBx'>
           <img src={`${img}.jpeg`} alt={'visa'}></img>
         </div>
@@ -97,7 +120,7 @@ function ActiveOrderCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>
-              3 Helpers
+              {helperCount} Helpers
             </div>
             <div style={{ marginBottom: '12px' }}>waiting for your reply</div>
           </div>

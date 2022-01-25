@@ -5,6 +5,7 @@ const {
   postHelpeeServiceRequestForm,
   allowPrivateRoute,
   getAllOrders,
+  getHelperList,
 } = require('../controllers/helpeeController');
 
 const { postHelpeeSignInData } = require('../controllers/signInController');
@@ -18,5 +19,6 @@ router.route('/api/helpee-signup-password').post(wrapAsync(postSignUpData));
 router.route('/api/helpee-request-form').post(wrapAsync(postHelpeeServiceRequestForm));
 router.route('/api/all-orders').get(wrapAsync(getAllOrders));
 router.route('/api/helpee/sign-in').post(wrapAsync(postHelpeeSignInData));
+router.route('/api/helper-list').get(wrapAsync(getHelperList));
 
 module.exports = router;

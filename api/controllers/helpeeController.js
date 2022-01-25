@@ -35,8 +35,26 @@ const getAllOrders = async (req, res) => {
   }
 }
 
+const getHelperList = async (req, res) => {
+  try {
+    const { orderId } = req.query;
+    const response = await helpeeModel.getHelperList({ orderId });
+    if (response.data) {
+      res.status(200).json({
+        helpers: response.data.helpers,
+      });
+    } else {
+      throw Error('NO_HELPER_LIST_RESPONSE');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   allowPrivateRoute,
   postHelpeeServiceRequestForm,
   getAllOrders,
+  getHelperList,
 };

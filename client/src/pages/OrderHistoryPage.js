@@ -77,6 +77,8 @@ const OrderHistoryPage = (props) => {
         <div className='task-container'>
           {activeOrders.map((option) => (
             <ActiveOrderCard
+              key={option.id}
+              orderId={option.id}
               service={option.service}
               meetDate={option.meetDate}
               meetTime={option.meetTime}
