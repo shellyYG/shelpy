@@ -111,6 +111,17 @@ body {
 .section-left-align-hidden {
   display: 'none';
 }
+.form-center-wrapper {
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  flex: 4;
+  overflow: auto;
+  height: 90%;
+  padding-bottom: 30vh;
+  padding-top: 5vh;
+}
 .section-center-align {
   padding: 20px;
   justify-content: center;
@@ -1070,6 +1081,10 @@ footer {
   padding-left: 10px;
 }
 
+input[type="checkbox" i] {
+  width: 18px;
+  height: 18px;
+}
 
 @media all and (max-width: 1200px) {
   .centerWrapper {
@@ -1081,7 +1096,7 @@ footer {
     flex-direction: column;
   }
   .evenSmallFlexColumn {
-    width: 44%;
+    width: 40%;
     display:flex;
     flex-direction: column;
   }
@@ -1089,7 +1104,7 @@ footer {
     width: 20%;
   }
   .checkBoxWidth {
-    width: 35%;
+    width: 40%;
   }
   .secondCheckBoxWidth {
     width: 35%;
@@ -1100,7 +1115,7 @@ footer {
     width: 85%;
   }
   .smallFlexColumn {
-    width: 55%;
+    width: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -1110,7 +1125,7 @@ footer {
     flex-direction: column;
   }
   .smallWidth {
-    width: 45%;
+    width: 50%;
   }
   .checkBoxWidth {
     width: 50%;
@@ -1118,4 +1133,10 @@ footer {
   .secondCheckBoxWidth {
     width: 50%;
   }
+}
+
+.fontSize17Title {
+  font-size: 17px;
+  padding-bottom: 10px;
+  font-weight: bold;
 }

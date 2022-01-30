@@ -11,3 +11,21 @@ export const navigateOptions = [
   },
   
 ];
+
+export const jobUniOptions = [
+  {
+    value: 'job',
+    label: 'Apply / Change Job',
+    imgPath: '/job.jpeg',
+  },
+  {
+    value: 'university',
+    label: 'Apply for University',
+    imgPath: '/university.jpeg',
+  },
+  {
+    value: 'selfEmployed',
+    label: 'Housewife/Self-employed',
+    imgPath: '/mom.jpeg',
+  },
+];

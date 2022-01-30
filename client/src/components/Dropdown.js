@@ -13,7 +13,7 @@ function DropDown(props) {
       >
         {props.options.map((option) => (
           <option value={option.value} key={option.value}>
-            {option.label === 'Others' ? 'Others (Please specify in the Notes below)' : option.label}
+            {option.label}
           </option>
         ))}
       </select>

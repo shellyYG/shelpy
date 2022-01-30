@@ -1,8 +1,8 @@
 function FullLineTextBox(props) {
     return (
-      <div className="form-row last">
+      <div className="form-row">
         <div className="form-wrapper-full">
-          <label for="">{props.title}</label>
+          <label>{props.title}</label>
           <input
             type="text"
             className="form-control"

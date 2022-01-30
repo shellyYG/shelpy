@@ -12,9 +12,12 @@ const BookAppointmentPage = () => {
   return (
     <div
       className='main-content-wrapper'
-      style={{ height: 500, backgroundImage: 'none' }}
+      style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
-      <div className='section-center-align'>
+      <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+        I want to know how is life like...
+      </h1>
+      <div className='form-center-wrapper'>
         <div className='container'>
           <AppointmentForm />
         </div>

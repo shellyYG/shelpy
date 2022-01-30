@@ -1,29 +1,28 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { onClickUpdateActiveNavigateTarget } from "../store/helpee/helpee-actions";
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { onClickUpdateActiveJobOrUniTarget } from '../store/helpee/helpee-actions';
 
-function NavigateCard(props) {
-    
+function JobOrUniCard(props) {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
-    
+
   function handleOnClick(e) {
     e.preventDefault();
     const data = {
-      globalNavigateTarget: props.value,
+      globalJobOrUniTarget: props.value,
     };
     try {
-      dispatch(onClickUpdateActiveNavigateTarget(data));
+      dispatch(onClickUpdateActiveJobOrUniTarget(data));
     } catch (err) {
       console.error(err);
     }
     setActive(!active);
   }
   useEffect(() => {
-    if (props.globalNavigateTarget !== props.value) {
+    if (props.globalJobOrUniTarget !== props.value) {
       setActive(false);
     }
-  }, [props.globalNavigateTarget, props.value]);
+  }, [props.globalJobOrUniTarget, props.value]);
 
   return (
     <div className={active ? 'card-active' : 'card'} onClick={handleOnClick}>
@@ -38,4 +37,4 @@ function NavigateCard(props) {
     </div>
   );
 }
-export default NavigateCard;
+export default JobOrUniCard;

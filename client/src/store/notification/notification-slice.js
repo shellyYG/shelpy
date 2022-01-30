@@ -15,6 +15,9 @@ const notificationSlice = createSlice({
     requestFormStatus: 'initial',
     requestFormStatusTitle: '',
     requestFormStatusMessage: '',
+    requestStatus: 'initial',
+    requestStatusTitle: '',
+    requestStatusMessage: '',
   },
   reducers: {
     setNotification(state, action) {
@@ -31,6 +34,9 @@ const notificationSlice = createSlice({
         requestFormStatus,
         requestFormStatusTitle,
         requestFormStatusMessage,
+        requestStatus,
+        requestStatusTitle,
+        requestStatusMessage,
       } = action.payload;
       if (signUpEmailStatus) state.signUpEmailStatus = signUpEmailStatus;
       if (signUpEmailStatusTitle)
@@ -51,6 +57,12 @@ const notificationSlice = createSlice({
         state.requestFormStatusTitle = requestFormStatusTitle;
       if (requestFormStatusMessage)
         state.requestFormStatusMessage = requestFormStatusMessage;
+      if (requestStatus)
+        state.requestStatus = requestStatus;
+      if (requestStatusTitle)
+        state.requestStatusTitle = requestStatusTitle;
+      if (requestStatusMessage)
+        state.requestStatusMessage = requestStatusMessage;
     },
   },
 });

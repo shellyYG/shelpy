@@ -61,9 +61,9 @@ const NavBar = (props) => {
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to='/service-options'
+            to='/book-a-helper'
           >
-            Book a Shelper
+            Book an Insider
           </NavLink>
         </div>
         <div className='nav-button'>

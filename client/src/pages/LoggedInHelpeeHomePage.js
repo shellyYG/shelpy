@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import ServiceTypeCard from "../components/ServiceTypeCard";
 import { navigateOptions } from "../store/options/navigate-options";
 import "../App.css";
-import NavigateCard from "../components/NavigateCard";
+import HomePageCard from '../components/HomePageCard';
 
 const LoggedInHelpeeHomePage = () => {
   const { globalNavigateTarget } = useSelector((state) => state.helpee);
@@ -44,7 +44,7 @@ const LoggedInHelpeeHomePage = () => {
         </h2>
         <div className='container'>
           {navigateOptions.map((option) => (
-            <NavigateCard
+            <HomePageCard
               imageSrc={option.imgPath}
               title={option.label}
               value={option.value}

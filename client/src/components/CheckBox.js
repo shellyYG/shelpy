@@ -2,15 +2,31 @@ function CheckBox(props) {
   const handleCheck = () => {
     props.handleCheck(!props.checked);
   };
+  const fontSize = props.fontSize || '12px';
   return (
-    <div className='form-row'>
-        <input
-          type="checkbox"
-          checked={props.checked}
-          onChange={handleCheck}
-          ref={props.checkRef}
-        />
-      <th style={{fontSize: '12px', fontWeight: 'normal', paddingLeft:'10px', verticalAlign: 'middle'}}>{props.details}</th>
+    <div
+      className='form-row'
+      style={{
+        paddingRight: props.paddingRight,
+        marginBottom: props.marginBottom,
+      }}
+    >
+      <input
+        type='checkbox'
+        checked={props.checked}
+        onChange={handleCheck}
+        ref={props.checkRef}
+      />
+      <p
+        style={{
+          fontSize,
+          fontWeight: 'normal',
+          paddingLeft: '10px',
+          verticalAlign: 'middle',
+        }}
+      >
+        {props.details}
+      </p>
     </div>
   );
 }

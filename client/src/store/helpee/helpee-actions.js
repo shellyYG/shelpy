@@ -5,7 +5,8 @@ import { helpeeActions } from "./helpee-slice";
 const getAuthStatusPath = '/api/get-auth-status';
 const helpeeSignUpPasswordPath = "/api/helpee-signup-password";
 const helpeeSignInPath = 'api/helpee/sign-in';
-const userRequestFormPath = "/api/helpee-request-form";
+const oldUserRequestFormPath = "/api/helpee-request-form";
+const userRequestFormPath = '/api/helpee-request';
 const activeHelperPath = '/api/active-helpers';
 const getAllOrdersPath = 'api/all-orders';
 
@@ -44,7 +45,6 @@ export const getAllOrders = (data) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(getAllOrdersPath, { params: { userId: data.userId }});
-      console.log('response from helpee-actions: ', response);
       dispatch(
         helpeeActions.updateActiveAndPastOrders({
           allOrders: response.data.allOrders,
@@ -66,6 +66,15 @@ export const onClickUpdateActiveServiceType = (data) => {
     dispatch(
       helpeeActions.onClickUpdateActiveServiceType({
         globalServiceType: data.globalServiceType,
+      })
+    );
+  };
+};
+export const onClickUpdateActiveJobOrUniTarget = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.onClickUpdateActiveJobOrUniTarget({
+        globalJobOrUniTarget: data.globalJobOrUniTarget,
       })
     );
   };
@@ -129,7 +138,6 @@ export const postHelpeeSignUpEmail = (data) => {
     } catch (error) {
       console.error(error);
       if (error.response) {
-        console.log('error.response exist...');
         dispatch(
           notificationActions.setNotification({
             signUpEmailStatus: 'error',
@@ -222,7 +230,7 @@ export const postHelpeeServiceRequestForm = (data) => {
           Authorization: 'Bearer ' + generalToken,
         };
         const response = await axios.post(
-          userRequestFormPath,
+          oldUserRequestFormPath,
           {
             data,
           },
@@ -256,6 +264,63 @@ export const postHelpeeServiceRequestForm = (data) => {
         );
       }
     }
+  };
+};
+
+export const postHelpeeRequestForm = (data) => {
+  return async (dispatch) => {
+    try {
+      const generalToken = localStorage.getItem('shelpy-token');
+      if (!generalToken) {
+        throw Error('NO_TOKEN');
+      }
+      if (generalToken) {
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.post(
+          userRequestFormPath,
+          {
+            data,
+          },
+          { headers }
+        );
+        data.requestId = response.data.requestId;
+        dispatch(
+          notificationActions.setNotification({
+            requestStatus: 'success',
+            requestStatusTitle: 'You are all set!',
+            requestStatusMessage:
+              'We will inform you via email as soon as we find a helper!',
+          })
+        );
+      }
+    } catch (error) {
+      const errorResponse = error.response ? error.response.data : '';
+      const errorMessage = errorResponse || error.message;
+      if (errorMessage) {
+        dispatch(
+          notificationActions.setNotification({
+            requestStatus: 'error',
+            requestStatusTitle: 'Oops!',
+            requestStatusMessage: errorMessage,
+          })
+        );
+      }
+    }
+  };
+};
+
+export const clearRequestStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      notificationActions.setNotification({
+        requestStatus: 'initial',
+        requestStatusTitle: '',
+        requestStatusMessage: '',
+      })
+    );
   };
 };
 
@@ -306,3 +371,50 @@ export const clearRequestFormStatus = (data) => {
     );
   };
 }
+
+export const onSubmitUpdateUniData = (data) => {
+  const { school, department, country, degree, notes } = data;
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.onSubmitUpdateUniData({
+        school,
+        department,
+        country,
+        degree,
+        notes,
+      })
+    );
+  };
+};
+
+export const onSubmitUpdateJobData = (data) => {
+  const { industry, job, country, WFH, companySize, years, notes } = data;
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.onSubmitUpdateJobData({
+        industry,
+        job,
+        country,
+        WFH,
+        companySize,
+        years,
+        notes,
+      })
+    );
+  };
+};
+
+export const onSubmitUpdateSelfEmployedData = (data) => {
+  const { type, profession, country, years, notes } = data;
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.onSubmitUpdateSelfEmployedData({
+        type,
+        profession,
+        country,
+        years,
+        notes,
+      })
+    );
+  };
+};

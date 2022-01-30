@@ -76,18 +76,18 @@ const SignUpPageHelpee = () => {
     <div className='main-content-wrapper-homepage'>
       <div className='section-center-align-landing'>
         <div className='centerWrapper'>
-          <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-            Afraid of speaking in German?
-          </h1>
-          <h2
+          <h2 style={{ textAlign: 'center', marginTop: '30px' }}>
+            Change job or apply for university?
+          </h2>
+          <h3
             style={{
               textAlign: 'center',
               marginTop: '10px',
               marginBottom: '30px',
             }}
           >
-            Don't worry. We speak for you.
-          </h2>
+            Talk to insider before you make your decision!
+          </h3>
           <h5
             style={{
               textAlign: 'center',
@@ -95,8 +95,7 @@ const SignUpPageHelpee = () => {
               marginBottom: '10px',
             }}
           >
-            Create an account to find a helper who goes with you to your German
-            meetings!
+            Create an account to find an insider.
           </h5>
 
           <form action='' className='centerbox-landing'>

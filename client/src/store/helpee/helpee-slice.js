@@ -14,6 +14,29 @@ const helpeeSlice = createSlice({
     globalActiveRequest: '',
     DBRequestId: 0,
     allOrders: [],
+
+    globalJobOrUniTarget: '',
+
+    globalUniSchool: '',
+    globalUniDepartment: '',
+    globalUniCountry: '',
+    globalUniDegree: '',
+    globalUniNotes: '',
+
+    globalJobIndustry: '',
+    globalJobJob: '',
+    globalJobCountry: '',
+    globalJobWFH: '',
+    globalJobCompanySize: '',
+    globalJobYears: '',
+    globalJobNotes: '',
+
+    globalSelfEmployedType: '',
+    globalSelfEmployedProfession: '',
+    globalSelfEmployedCountry: '',
+    globalSelfEmployedYears: '',
+    globalSelfEmployedNotes: '',
+
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -59,6 +82,37 @@ const helpeeSlice = createSlice({
     onClickUpdateActiveHelperLists(state, action) {
       const { payload } = action;
       state.globalActiveHelperLists = payload.globalActiveHelperLists;
+    },
+    onClickUpdateActiveJobOrUniTarget(state, action) {
+      const { payload } = action;
+      state.globalJobOrUniTarget = payload.globalJobOrUniTarget;
+    },
+    onSubmitUpdateUniData(state, action) {
+      const { payload } = action;
+      state.globalUniSchool = payload.school;
+      state.globalUniDepartment = payload.department;
+      state.globalUniCountry = payload.country;
+      state.globalJobWFH = payload.WFH;
+      state.globalUniDegree = payload.degree;
+      state.globalUniNotes = payload.notes;
+    },
+    onSubmitUpdateJobData(state, action) {
+      const { payload } = action;
+      state.globalJobIndustry = payload.industry;
+      state.globalJobJob = payload.job;
+      state.globalJobCountry = payload.country;
+      state.globalJobWFH = payload.WFH;
+      state.globalJobCompanySize = payload.companySize;
+      state.globalJobYears = payload.years;
+      state.globalJobNotes = payload.notes;
+    },
+    onSubmitUpdateSelfEmployedData(state, action) {
+      const { payload } = action;
+      state.globalSelfEmployedType = payload.type;
+      state.globalSelfEmployedProfession = payload.profession;
+      state.globalSelfEmployedCountry = payload.country;
+      state.globalSelfEmployedYears = payload.years;
+      state.globalSelfEmployedNotes = payload.notes;
     },
   },
 });
