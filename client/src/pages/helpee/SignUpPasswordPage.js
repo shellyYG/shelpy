@@ -1,16 +1,15 @@
-import CheckBox from '../components/CheckBox';
-import ConfirmBtn from '../components/ConfirmBtn';
+import ConfirmBtn from '../../components/ConfirmBtn';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import '../App.css';
+import '../../App.css';
 import {
   getAuthStatus,
   clearSignUpPasswordStatus,
   postHelpeeSignUpPassword,
-} from '../store/helpee/helpee-actions';
+} from '../../store/helpee/helpee-actions';
 
 const MySwal = withReactContent(Swal);
 
@@ -122,7 +121,7 @@ const SignUpPasswordPage = () => {
   return (
     <div className='main-content-wrapper-homepage'>
       <div className='section-center-align'>
-        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+        <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           Create Password to finish signing up
         </h1>
         <h2
@@ -130,6 +129,7 @@ const SignUpPasswordPage = () => {
             textAlign: 'center',
             marginTop: '10px',
             marginBottom: '30px',
+            color: 'white',
           }}
         >
           Take less than a minute!

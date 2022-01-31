@@ -14,14 +14,14 @@ export const navigateOptions = [
 
 export const jobUniOptions = [
   {
-    value: 'job',
-    label: 'Apply / Change Job',
-    imgPath: '/job.jpeg',
-  },
-  {
     value: 'university',
     label: 'Apply for University',
     imgPath: '/university.jpeg',
+  },
+  {
+    value: 'job',
+    label: 'Apply / Change Job',
+    imgPath: '/job.jpeg',
   },
   {
     value: 'selfEmployed',

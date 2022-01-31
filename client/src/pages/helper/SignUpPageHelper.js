@@ -1,11 +1,9 @@
-import CheckBox from '../components/CheckBox';
-import ConfirmBtn from '../components/ConfirmBtn';
+import ConfirmBtn from '../../components/ConfirmBtn';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import '../App.css';
+import '../../App.css';
 
 const MySwal = withReactContent(Swal);
 

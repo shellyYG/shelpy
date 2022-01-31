@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PastOrderCard from '../components/PastOrderCard';
-import ActiveOrderCard from '../components/ActiveOrderCard';
-import { getAllOrders } from '../store/helpee/helpee-actions';
+import PastOrderCard from '../../components/PastOrderCard';
+import ActiveOrderCard from '../../components/ActiveOrderCard';
+import { getAllOrders } from '../../store/helpee/helpee-actions';
 
 const OrderHistoryPage = (props) => {
   const dispatch = useDispatch();

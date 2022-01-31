@@ -3,9 +3,8 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import HelperCard from '../components/HelperCard';
-import { serviceOptions } from '../store/options/service-options';
-import '../App.css';
+import HelperCard from '../../components/HelperCard';
+import '../../App.css';
 
 const ServiceOptionPage = () => {
   const { globalServiceType } = useSelector((state) => state.helpee);

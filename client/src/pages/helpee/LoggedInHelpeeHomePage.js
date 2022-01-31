@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ServiceTypeCard from "../components/ServiceTypeCard";
-import { navigateOptions } from "../store/options/navigate-options";
-import "../App.css";
-import HomePageCard from '../components/HomePageCard';
+import { navigateOptions } from "../../store/options/navigate-options";
+import "../../App.css";
+import HomePageCard from '../../components/HomePageCard';
 
 const LoggedInHelpeeHomePage = () => {
   const { globalNavigateTarget } = useSelector((state) => state.helpee);

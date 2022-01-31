@@ -134,6 +134,16 @@ body {
   padding-bottom: 30vh;
   padding-top: 5vh;
 }
+.home-page-container {
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  width: 30px;
+  flex: 4;
+  overflow: auto;
+  height: 90%;
+  padding-bottom: 30vh;
+}
 .section-center-align-landing {
   padding-top: 80px;
   justify-content: center;
@@ -143,6 +153,15 @@ body {
   height: 100vh;
   padding-bottom: 30vh;
   padding-top: 15vh;
+}
+.section-center-align-landing-with-image {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: 20vh;
+  background-image: url("./assets/landingpage.jpeg");
+  background-size: cover;
+  background-position: center;
 }
 .chat-section-center-align {
   padding: 5px;
@@ -477,6 +496,9 @@ code {
   color: white;
   font-size: 30px;
 }
+.main-content-wrapper-below-navbar {
+  height: 100vh;
+}
 
 .main-content-wrapper {
   display: flex;
@@ -509,6 +531,20 @@ code {
   background-size: cover;
   background-position: center;
 }
+.main-content-wrapper-no-height {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: row;
+  border: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 120vh;
+  background-size: cover;
+  background-position: center;
+}
 .main-content-wrapper-homepage {
   display: flex;
   justify-content: center;
@@ -519,7 +555,7 @@ code {
   flex-direction: row;
   width: 100%;
   height: 100%;
-  background-image: url("./assets/landingpage.jpeg");
+  background-image: url("./assets/consultant.jpeg");
   background-size: cover;
   background-position: center;
 }
@@ -535,6 +571,19 @@ code {
   height: 100%;
   background-size: cover;
   background-position: center;
+}
+.home-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  overflow-y: scroll;
+  height: 500px;
 }
 
 .main-content-wrapper-homepage-helper {
@@ -777,7 +826,9 @@ footer {
   padding: 0 14px; }
 
   .form-control.datepicker-here {
-    padding-left: 39px; }
+    padding-left: 39px; 
+  }
+
   .form-control-landing {
   border: 1px solid #e6e6e6;
   border-radius: 5px;
@@ -922,6 +973,61 @@ footer {
   border-radius: 8px;
   padding: 14px 10px 28px;
 }
+.centerWrapperWithBackground {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: auto;
+  background: white;
+  padding: 14px 10px 28px;
+  margin-bottom: 30px;
+  background-image: url("./assets/consultant.jpeg");
+  background-size: cover;
+  background-position: center;
+  flex-wrap: wrap;
+  padding: 10vh 30px 50px;
+}
+
+.coverLeft {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: auto;
+  padding-top: 0px;
+}
+.coverRight {
+  width: 50%;
+  padding-top: 0px;
+}
+.whiteWrapper {
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 45px 70px 0px;
+}
+
+.centerWrapperMkt {
+  width: 100%;
+  margin: auto;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.mktWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0 220px 30px;
+}
+.centerHomePageEmailBannerWrapper {
+  width: 50%;
+  margin: auto;
+  background: white;
+  border-radius: 8px;
+  padding: 14px 10px 28px;
+  margin-bottom: 30px;
+}
+
 .pureFlexColumn {
   display: flex;
   flex-direction: column;
@@ -1081,12 +1187,94 @@ footer {
   padding-left: 10px;
 }
 
+.singleMkt {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.lastSingleMkt {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
 input[type="checkbox" i] {
   width: 18px;
   height: 18px;
 }
+.mktTitleLeft {
+  display: flex;
+  flex-direction: column;
+  margin: auto 30px;
+  width: 50%;
+}
+.mktPictureRight {
+  width: 50%;
+}
+.mktTitle {
+  margin-bottom: 10px;
+}
+.mktDetails {
+  margin-bottom: 10px;
+}
+
+.rectangleImageBxRight {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  overflow: hidden;
+}
+.rectangleImageBxRight img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+}
 
 @media all and (max-width: 1200px) {
+  .centerWrapperWithBackground {
+    padding: 10vh 20px 50px;
+  }
+  .mktWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0 60px 30px;
+  }
+  .mktTitleLeft {
+    width: 100%;
+  }
+  .mktPictureRight {
+    width: 100%;
+  }
+  .whiteWrapper {
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0px 20px;
+  }
+  .coverLeft {
+    width: 100%;
+    padding-top: 50px;
+  }
+  .coverRight {
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0px 120px;
+  }
+  .rectangleImageBxRight {
+    margin: auto;
+  }
+  .form-control-password {
+    width: 50%;
+  }
   .centerWrapper {
     width: 80%;
   }
@@ -1111,6 +1299,60 @@ input[type="checkbox" i] {
   }
 }
 @media (max-width: 500px) {
+  .main-content-wrapper-no-height {
+    height: 112vh;
+  }
+  .mktWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0px 30px;
+    flex-wrap: wrap;
+  }
+  .mktTitleLeft {
+    width: 100%;
+  }
+  .mktPictureRight {
+    width: 100%;
+  }
+  .singleMkt {
+    flex-wrap: wrap;
+  }
+  .lastSingleMkt {
+    flex-wrap: wrap;
+    padding-bottom: 70px;
+  }
+  .mktTitle {
+    text-align: center;
+  }
+  .mktDetails {
+    text-align: center;
+  }
+  .rectangleImageBxRight {
+    margin: auto;
+  }
+  .whiteWrapper {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1px;
+    margin: 0px 20px;
+  }
+  .coverLeft {
+    width: 100%;
+    padding-top: 50px;
+  }
+  .coverRight {
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0px 10px;
+  }
+  .form-control-landing {
+    width: 90%;
+  }
+  .form-control-password {
+    width: 90%;
+  }
   .centerWrapper {
     width: 85%;
   }

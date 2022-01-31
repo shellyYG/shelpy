@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import DropDown from '../components/Dropdown';
-import FullLineTextBox from '../components/FullLineTextBox';
-import ConfirmBtn from '../components/ConfirmBtn';
+import DropDown from '../../components/Dropdown';
+import FullLineTextBox from '../../components/FullLineTextBox';
+import ConfirmBtn from '../../components/ConfirmBtn';
 import {
   industryOptions,
   jobOptions,
@@ -11,9 +11,9 @@ import {
   WFHOptions,
   companySizeOptions,
   yearsOptions,
-} from '../store/options/service-options';
+} from '../../store/options/service-options';
 
-import { onSubmitUpdateJobData } from '../store/helpee/helpee-actions';
+import { onSubmitUpdateJobData } from '../../store/helpee/helpee-actions';
 
 const JobFormPage = (props) => {
   const dispatch = useDispatch();

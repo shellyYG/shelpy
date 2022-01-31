@@ -1,24 +1,24 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import DropDown from '../components/Dropdown';
-import FullLineTextBox from '../components/FullLineTextBox';
-import ConfirmBtn from '../components/ConfirmBtn';
+import DropDown from '../../components/Dropdown';
+import FullLineTextBox from '../../components/FullLineTextBox';
+import ConfirmBtn from '../../components/ConfirmBtn';
 import {
-  schoolOptions,
-  departmentOptions,
   countryOptions,
-  degreeOptions,
-} from '../store/options/service-options';
+  typeOptions,
+  professionOptions,
+  yearsOptions,
+} from '../../store/options/service-options';
 
-import { onSubmitUpdateUniData } from '../store/helpee/helpee-actions';
+import { onSubmitUpdateSelfEmployedData } from '../../store/helpee/helpee-actions';
 
-const UniFormPage = (props) => {
+const SelfEmployedPage = (props) => {
   const dispatch = useDispatch();
-  const schoolRef = useRef();
-  const departmentRef = useRef();
+  const typeRef = useRef();
+  const professionRef = useRef();
   const countryRef = useRef();
-  const degreeRef = useRef();
+  const yearsRef = useRef();
   const notesRef = useRef();
   const navigate = useNavigate();
   async function handleConfirm(e) {
@@ -28,34 +28,39 @@ const UniFormPage = (props) => {
       notes = notesRef.current.value;
     }
     const data = {
-      school,
-      department,
+      type,
+      profession,
       country,
-      degree,
+      years,
       notes: notes || '',
     };
     try {
-      dispatch(onSubmitUpdateUniData(data));
+      dispatch(onSubmitUpdateSelfEmployedData(data));
       navigate('/final-form', { replace: true });
     } catch (err) {
       console.error(err);
     }
   }
+  
+  const [type, setType] = useState('default');
+  const [profession, setProfession] = useState('default');
   const [country, setCountry] = useState('default');
-  const [school, setschool] = useState('default');
-  const [matchedDepartments, setMatchedDepartments] = useState([]);
-  const [department, setdepartment] = useState('default');
-  const [degree, setdegree] = useState('default');
+  const [years, setYears] = useState('default');
   const [enableBtn, setEnableBtn] = useState(false);
+  console.log(
+    'type: ',
+    type,
+    'profession: ',
+    profession
+  );
   useEffect(() => {
-    setEnableBtn(country !== 'default' && school !== 'default' && department !== 'default' && degree !== 'default')
-  }, [school, department, country, degree]);
-  useEffect(() => {
-    if(school) {
-        const departments = departmentOptions[school];
-        setMatchedDepartments(departments);
-    }
-  },[school])
+    setEnableBtn(
+      country !== 'default' &&
+        type !== 'default' &&
+        profession !== 'default' &&
+        years !== 'default'
+    );
+  }, [type, profession, country, years]);
   return (
     <div
       className='main-content-wrapper'
@@ -70,18 +75,18 @@ const UniFormPage = (props) => {
             <form action=''>
               <div className='form-row'>
                 <DropDown
-                  selected={school}
-                  handleSelect={setschool}
-                  title={'School *'}
-                  selectRef={schoolRef}
-                  options={schoolOptions}
+                  selected={type}
+                  handleSelect={setType}
+                  title={'type *'}
+                  selectRef={typeRef}
+                  options={typeOptions}
                 />
                 <DropDown
-                  selected={department}
-                  handleSelect={setdepartment}
-                  title={'Department *'}
-                  selectRef={departmentRef}
-                  options={matchedDepartments}
+                  selected={profession}
+                  handleSelect={setProfession}
+                  title={'profession *'}
+                  selectRef={professionRef}
+                  options={professionOptions}
                 />
               </div>
               <div className='form-row last'>
@@ -93,11 +98,11 @@ const UniFormPage = (props) => {
                   options={countryOptions}
                 />
                 <DropDown
-                  selected={degree}
-                  handleSelect={setdegree}
-                  title={'Degree *'}
-                  selectRef={degreeRef}
-                  options={degreeOptions}
+                  selected={years}
+                  handleSelect={setYears}
+                  title={'Year of Experience on that profession *'}
+                  selectRef={yearsRef}
+                  options={yearsOptions}
                 />
               </div>
               <FullLineTextBox
@@ -118,4 +123,4 @@ const UniFormPage = (props) => {
   );
 };
 
-export default UniFormPage;
+export default SelfEmployedPage;

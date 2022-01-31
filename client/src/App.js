@@ -3,25 +3,23 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import SignUpPasswordPage from './pages/SignUpPasswordPage';
-import SignUpPageHelper from "./pages/SignUpPageHelper";
-import ServiceOptionPage from './pages/ServiceOptionPage';
+import SignUpPasswordPage from './pages/helpee/SignUpPasswordPage';
+import SignUpPageHelper from './pages/helper/SignUpPageHelper';
 import AboutPage from './pages/AboutPage';
 import Footer from './components/Footer';
-import BookAppointmentPage from './legacy/BookAppointmentPage';
 import ChatRoomPage from './pages/ChatRoomPage';
-import HomePage from './pages/HomePage';
-import OrderHistoryPage from './pages/OrderHistoryPage';
-import HelperListPage from "./pages/HelperListPage";
-import SignInPage from './pages/SignInPage';
+import HomePage from './pages/helpee/HomePage';
+import OrderHistoryPage from './pages/helpee/OrderHistoryPage';
+import HelperListPage from './pages/helpee/HelperListPage';
+import SignInPage from './pages/helpee/SignInPage';
 import ErrorPage from './pages/ErrorPage';
-import PreSignInPage from './pages/PreSignInPage';
+import PreSignInPage from './pages/helpee/PreSignInPage';
 import { getAuthStatus } from './store/helpee/helpee-actions';
-import JobFormPage from './pages/JobFormPage';
-import SelectJobOrUniPage from './pages/SelectJobOrUniPage';
-import UniFormPage from './pages/UniFormPage';
-import SelfEmployedPage from './pages/SelfEmployedPage';
-import FinalFormPage from './pages/FinalFormPage';
+import JobFormPage from './pages/helpee/JobFormPage';
+import SelectJobOrUniPage from './pages/helpee/SelectJobOrUniPage';
+import UniFormPage from './pages/helpee/UniFormPage';
+import SelfEmployedPage from './pages/helpee/SelfEmployedPage';
+import FinalFormPage from './pages/helpee/FinalFormPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,17 +39,10 @@ function App() {
         <Route path='/sign-up-final-step' element={<SignUpPasswordPage />} />
         <Route path='/sign-in' element={<SignInPage />} />
         <Route path='/helper' element={<SignUpPageHelper />} />
-        <Route path='/service-options' element={<ServiceOptionPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route
           path='/book-a-helper'
           element={isAuthenticated ? <SelectJobOrUniPage /> : <PreSignInPage />}
-        />
-        <Route
-          path='/book-appointment-form'
-          element={
-            isAuthenticated ? <BookAppointmentPage /> : <PreSignInPage />
-          }
         />
         <Route
           path='/job-form'

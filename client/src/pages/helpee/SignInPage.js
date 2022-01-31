@@ -1,16 +1,16 @@
-import CheckBox from "../components/CheckBox";
-import ConfirmBtn from "../components/ConfirmBtn";
+import CheckBox from "../../components/CheckBox";
+import ConfirmBtn from "../../components/ConfirmBtn";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import "../App.css";
+import "../../App.css";
 import {
   clearSignInStatus,
   postSignInData,
   getAuthStatus,
-} from '../store/helpee/helpee-actions';
+} from '../../store/helpee/helpee-actions';
 const MySwal = withReactContent(Swal);
 
 const SignInPage = () => {

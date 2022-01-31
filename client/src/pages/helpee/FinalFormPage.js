@@ -3,14 +3,14 @@ import withReactContent from 'sweetalert2-react-content';
 import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import FullLineTextBox from '../components/FullLineTextBox';
-import ConfirmBtn from '../components/ConfirmBtn';
+import FullLineTextBox from '../../components/FullLineTextBox';
+import ConfirmBtn from '../../components/ConfirmBtn';
 import { useEffect } from 'react';
-import CheckBox from '../components/CheckBox';
+import CheckBox from '../../components/CheckBox';
 import {
   clearRequestStatus,
   postHelpeeRequestForm,
-} from '../store/helpee/helpee-actions';
+} from '../../store/helpee/helpee-actions';
 
 const MySwal = withReactContent(Swal);
 

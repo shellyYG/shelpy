@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { jobUniOptions } from '../store/options/navigate-options';
-import '../App.css';
-import JobOrUniCard from '../components/JobOrUniCard';
+import { jobUniOptions } from '../../store/options/navigate-options';
+import '../../App.css';
+import JobOrUniCard from '../../components/JobOrUniCard';
 const SelectJobOrUniPage = () => {
   const { globalJobOrUniTarget } = useSelector((state) => state.helpee);
   const navigate = useNavigate();
