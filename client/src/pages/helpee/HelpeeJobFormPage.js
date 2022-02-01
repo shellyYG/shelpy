@@ -15,7 +15,7 @@ import {
 
 import { onSubmitUpdateJobData } from '../../store/helpee/helpee-actions';
 
-const JobFormPage = (props) => {
+const HelpeeJobFormPage = (props) => {
   const dispatch = useDispatch();
   const industryRef = useRef();
   const jobRef = useRef();
@@ -42,7 +42,7 @@ const JobFormPage = (props) => {
     };
     try {
       dispatch(onSubmitUpdateJobData(data));
-      navigate('/final-form', { replace: true });
+      navigate('/helpee/final-form', { replace: true });
     } catch (err) {
       console.error(err);
     }
@@ -144,4 +144,4 @@ const JobFormPage = (props) => {
   );
 };
 
-export default JobFormPage;
+export default HelpeeJobFormPage;

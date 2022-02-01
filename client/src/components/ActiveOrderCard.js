@@ -38,7 +38,7 @@ function ActiveOrderCard(props) {
   useEffect(() => {
     async function getHelperLists(orderId) {
       try {
-        const response = await axios.get('api/helper-list', {
+        const response = await axios.get('api/helpee/helper-list', {
           params: { orderId, type: props.type },
         });
         if (response) {
@@ -56,7 +56,7 @@ function ActiveOrderCard(props) {
   
   function handleShowActiveOrderStatus(e) {
     e.preventDefault();
-    navigate(`/helper-lists?orderId=${props.orderId}`, { replace: true });
+    navigate(`/helpee/order/helper-lists?orderId=${props.orderId}`, { replace: true });
   }
 
   return (

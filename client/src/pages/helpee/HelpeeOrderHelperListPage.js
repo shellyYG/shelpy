@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import HelperCard from '../../components/HelperCard';
 import '../../App.css';
 
-const ServiceOptionPage = () => {
+const HelpeeOrderHelperListPage = () => {
   const { globalServiceType } = useSelector((state) => state.helpee);
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
   const [email, setEmail] = useState(DBHelpeeEmail);
@@ -14,11 +14,11 @@ const ServiceOptionPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { orderId } = qs.parse(location.search, { ignoreQueryPrefix: true });
-  
+
   useEffect(() => {
     async function getHelperLists(orderId) {
       try {
-        const response = await axios.get('api/helper-list', {
+        const response = await axios.get('api/helpee/helper-list', {
           params: { orderId },
         });
         if (response) {
@@ -91,4 +91,4 @@ const ServiceOptionPage = () => {
   );
 };
 
-export default ServiceOptionPage;
+export default HelpeeOrderHelperListPage;

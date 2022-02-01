@@ -14,7 +14,7 @@ import {
 
 const MySwal = withReactContent(Swal);
 
-const FinalFormPage = (props) => {
+const HelpeeFinalFormPage = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const notesRef = useRef();
@@ -166,7 +166,7 @@ const FinalFormPage = (props) => {
           html: <p>{message}</p>,
           icon: 'success',
         });
-        let path = '/order-history';
+        let path = '/helpee/order-history';
         navigate(path, { replace: true });
       }
       dispatch(clearRequestStatus());
@@ -367,4 +367,4 @@ const FinalFormPage = (props) => {
   );
 };
 
-export default FinalFormPage;
+export default HelpeeFinalFormPage;

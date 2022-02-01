@@ -5,19 +5,49 @@ const wrapAsync = (func) => function (req, res, next) {
   func(req, res, next).catch(next);
 };
 
-const generateAccessToken = function (user) {
+const generateHelpeeAccessToken = function (user) {
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: '100000s',
+  });
+};
+const generateHelperAccessToken = function (user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: '100000s',
   });
 };
 
-const verifyToken = function (req, res, next) {
+const verifyHelpeeToken = function (req, res, next) {
   const bearerHeader = req.headers.authorization;
   try {
     if (typeof bearerHeader !== 'undefined') {
       const bearer = bearerHeader.split(' ');
       const bearerToken = bearer[1];
-      const decodedData = jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET);
+      const decodedData = jwt.verify(
+        bearerToken,
+        process.env.ACCESS_TOKEN_SECRET
+      );
+      if (decodedData && decodedData.data) {
+        res.locals.userId = decodedData.data.id;
+      }
+      next();
+    } else {
+      res.status(403).send('INVALID_TOKEN');
+    }
+  } catch (error) {
+    res.status(403).send('INVALID_TOKEN');
+  }
+};
+
+const verifyHelperToken = function (req, res, next) {
+  const bearerHeader = req.headers.authorization;
+  try {
+    if (typeof bearerHeader !== 'undefined') {
+      const bearer = bearerHeader.split(' ');
+      const bearerToken = bearer[1];
+      const decodedData = jwt.verify(
+        bearerToken,
+        process.env.ACCESS_TOKEN_SECRET
+      );
       if (decodedData && decodedData.data) {
         res.locals.userId = decodedData.data.id;
       }
@@ -32,6 +62,8 @@ const verifyToken = function (req, res, next) {
 
 module.exports = {
   wrapAsync,
-  verifyToken,
-  generateAccessToken,
+  generateHelpeeAccessToken,
+  generateHelperAccessToken,
+  verifyHelpeeToken,
+  verifyHelperToken,
 };

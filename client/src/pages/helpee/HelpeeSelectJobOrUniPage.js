@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { jobUniOptions } from '../../store/options/navigate-options';
 import '../../App.css';
 import JobOrUniCard from '../../components/JobOrUniCard';
-const SelectJobOrUniPage = () => {
+const HelpeeSelectJobOrUniPage = () => {
   const { globalJobOrUniTarget } = useSelector((state) => state.helpee);
   const navigate = useNavigate();
   console.log('globalJobOrUniTarget: ', globalJobOrUniTarget);
@@ -12,16 +12,16 @@ const SelectJobOrUniPage = () => {
     let path;
     switch (globalJobOrUniTarget) {
       case 'job':
-        path = '/job-form';
+        path = '/helpee/job-form';
         break;
       case 'university':
-        path = '/uni-form';
+        path = '/helpee/uni-form';
         break;
       case 'selfEmployed':
-        path = '/self-employed-form';
+        path = '/helpee/self-employed-form';
         break;
       default:
-        path = '/job-form';
+        path = '/helpee/job-form';
     }
     navigate(path, { replace: true });
   }
@@ -59,4 +59,4 @@ const SelectJobOrUniPage = () => {
   );
 };
 
-export default SelectJobOrUniPage;
+export default HelpeeSelectJobOrUniPage;

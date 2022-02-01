@@ -61,18 +61,30 @@ const NavBar = (props) => {
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to='/book-a-helper'
+            to='/helpee/book-a-helper'
           >
             Book an Insider
           </NavLink>
         </div>
         <div className='nav-button'>
+          <NavLink
+            style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
+            to='/helper/home'
+          >
+            Become Helper
+          </NavLink>
+          <NavLink
+            style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
+            to='/helpee/order-history'
+          >
+            My Requests
+          </NavLink>
           {!props.isAuthenticated && (
             <NavLink
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to='/sign-in'
+              to='/helpee/sign-in'
             >
               Sign-In
             </NavLink>
@@ -87,12 +99,7 @@ const NavBar = (props) => {
               Sign-Out
             </button>
           )}
-          <NavLink
-            style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to='/order-history'
-          >
-            My Requests
-          </NavLink>
+
           <GlobalIcon />
         </div>
       </nav>

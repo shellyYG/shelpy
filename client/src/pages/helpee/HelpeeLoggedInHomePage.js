@@ -4,29 +4,29 @@ import { navigateOptions } from "../../store/options/navigate-options";
 import "../../App.css";
 import HomePageCard from '../../components/HomePageCard';
 
-const LoggedInHelpeeHomePage = () => {
+const HelpeeLoggedInHomePage = () => {
   const { globalNavigateTarget } = useSelector((state) => state.helpee);
   const navigate = useNavigate();
   function handleNext(e) {
     e.preventDefault();
     let path;
     switch (globalNavigateTarget) {
-      case "bookHelper":
-        path = "/service-options";
+      case 'bookHelper':
+        path = '/service-options';
         break;
-      case "viewOrderHistory":
-        path = "/order-history";
+      case 'viewOrderHistory':
+        path = '/helpee/order-history';
         break;
       default:
-        path = "/service-options";
+        path = '/service-options';
     }
     navigate(path, { replace: true });
   }
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    navigate("/home", { replace: true });
+    navigate('/home', { replace: true });
   };
-  window.addEventListener("popstate", onBackButtonEvent, { once: true });
+  window.addEventListener('popstate', onBackButtonEvent, { once: true });
   return (
     <div className='main-content-wrapper-no-background'>
       <div className='section-center-align'>
@@ -60,4 +60,4 @@ const LoggedInHelpeeHomePage = () => {
   );
 };
 
-export default LoggedInHelpeeHomePage;
+export default HelpeeLoggedInHomePage;

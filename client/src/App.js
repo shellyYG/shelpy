@@ -3,23 +3,29 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import SignUpPasswordPage from './pages/helpee/SignUpPasswordPage';
-import SignUpPageHelper from './pages/helper/SignUpPageHelper';
 import AboutPage from './pages/AboutPage';
 import Footer from './components/Footer';
-import ChatRoomPage from './pages/ChatRoomPage';
-import HomePage from './pages/helpee/HomePage';
-import OrderHistoryPage from './pages/helpee/OrderHistoryPage';
-import HelperListPage from './pages/helpee/HelperListPage';
-import SignInPage from './pages/helpee/SignInPage';
+
+import HelpeeSignUpPasswordPage from './pages/helpee/HelpeeSignUpPasswordPage';
+import HelperSignUpPasswordPage from './pages/helper/HelperSignUpPasswordPage';
+import HelpeeChatRoomPage from './pages/HelpeeChatRoomPage';
+import HelpeeHomePage from './pages/helpee/HelpeeHomePage';
+import HelpeeOrderHistoryPage from './pages/helpee/HelpeeOrderHistoryPage';
+import HelperListPage from './pages/helpee/HelpeeOrderHelperListPage';
+import HelpeeSignInPage from './pages/helpee/HelpeeSignInPage';
 import ErrorPage from './pages/ErrorPage';
-import PreSignInPage from './pages/helpee/PreSignInPage';
+import HelpeePreSignInPage from './pages/helpee/HelpeePreSignInPage';
+
+import HelpeeJobFormPage from './pages/helpee/HelpeeJobFormPage';
+import HelpeeSelectJobOrUniPage from './pages/helpee/HelpeeSelectJobOrUniPage';
+import HelpeeUniFormPage from './pages/helpee/HelpeeUniFormPage';
+import HelpeeSelfEmployedPage from './pages/helpee/HelpeeSelfEmployedPage';
+import HelpeeFinalFormPage from './pages/helpee/HelpeeFinalFormPage';
+import HelperHomePage from './pages/helper/HelperHomePage';
+import HelperSignInPage from './pages/helper/HelperSignInPage';
+
 import { getAuthStatus } from './store/helpee/helpee-actions';
-import JobFormPage from './pages/helpee/JobFormPage';
-import SelectJobOrUniPage from './pages/helpee/SelectJobOrUniPage';
-import UniFormPage from './pages/helpee/UniFormPage';
-import SelfEmployedPage from './pages/helpee/SelfEmployedPage';
-import FinalFormPage from './pages/helpee/FinalFormPage';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -31,50 +37,82 @@ function App() {
     <Router>
       <NavBar isAuthenticated={isAuthenticated} />
       <Routes>
+        <Route path='/about' element={<AboutPage />} />
         <Route path='/' element={<Navigate replace to='/home' />} />
         <Route
           path='/home'
-          element={<HomePage isAuthenticated={isAuthenticated} />}
-        />
-        <Route path='/sign-up-final-step' element={<SignUpPasswordPage />} />
-        <Route path='/sign-in' element={<SignInPage />} />
-        <Route path='/helper' element={<SignUpPageHelper />} />
-        <Route path='/about' element={<AboutPage />} />
-        <Route
-          path='/book-a-helper'
-          element={isAuthenticated ? <SelectJobOrUniPage /> : <PreSignInPage />}
+          element={<HelpeeHomePage isAuthenticated={isAuthenticated} />}
         />
         <Route
-          path='/job-form'
-          element={isAuthenticated ? <JobFormPage /> : <PreSignInPage />}
+          path='/helper/home'
+          element={<HelperHomePage isAuthenticated={isAuthenticated} />}
         />
         <Route
-          path='/uni-form'
-          element={isAuthenticated ? <UniFormPage /> : <PreSignInPage />}
+          path='/helpee/sign-up-final-step'
+          element={<HelpeeSignUpPasswordPage />}
         />
         <Route
-          path='/self-employed-form'
-          element={isAuthenticated ? <SelfEmployedPage /> : <PreSignInPage />}
+          path='/helper/sign-up-final-step'
+          element={<HelperSignUpPasswordPage />}
         />
+        <Route path='/helpee/sign-in' element={<HelpeeSignInPage />} />
+        <Route path='/helper/sign-in' element={<HelperSignInPage />} />
+
         <Route
-          path='/final-form'
-          element={isAuthenticated ? <FinalFormPage /> : <PreSignInPage />}
-        />
-        <Route path={'/chatroom'} element={<ChatRoomPage />} />
-        <Route
-          path={'/order-history'}
+          path='/helpee/book-a-helper'
           element={
             isAuthenticated ? (
-              <OrderHistoryPage userId={userId} />
+              <HelpeeSelectJobOrUniPage />
             ) : (
-              <PreSignInPage />
+              <HelpeePreSignInPage />
             )
           }
         />
         <Route
-          path={'/helper-lists'}
-          element={isAuthenticated ? <HelperListPage /> : <PreSignInPage />}
+          path='/helpee/job-form'
+          element={
+            isAuthenticated ? <HelpeeJobFormPage /> : <HelpeePreSignInPage />
+          }
         />
+        <Route
+          path='/helpee/uni-form'
+          element={
+            isAuthenticated ? <HelpeeUniFormPage /> : <HelpeePreSignInPage />
+          }
+        />
+        <Route
+          path='/helpee/self-employed-form'
+          element={
+            isAuthenticated ? (
+              <HelpeeSelfEmployedPage />
+            ) : (
+              <HelpeePreSignInPage />
+            )
+          }
+        />
+        <Route
+          path='/helpee/final-form'
+          element={
+            isAuthenticated ? <HelpeeFinalFormPage /> : <HelpeePreSignInPage />
+          }
+        />
+        <Route
+          path={'/helpee/order-history'}
+          element={
+            isAuthenticated ? (
+              <HelpeeOrderHistoryPage userId={userId} />
+            ) : (
+              <HelpeePreSignInPage />
+            )
+          }
+        />
+        <Route
+          path={'/helpee/order/helper-lists'}
+          element={
+            isAuthenticated ? <HelperListPage /> : <HelpeePreSignInPage />
+          }
+        />
+        <Route path={'/helpee/chatroom'} element={<HelpeeChatRoomPage />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
       <Footer />

@@ -12,7 +12,7 @@ import { Icon } from '@iconify/react';
 import '../App.css';
 
 
-const ChatRoomPage = () => {
+const HelpeeChatRoomPage = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentMessage, setCurrentMessage] = useState("");
@@ -160,4 +160,4 @@ const ChatRoomPage = () => {
   );
 };
 
-export default ChatRoomPage;
+export default HelpeeChatRoomPage;

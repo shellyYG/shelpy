@@ -1,13 +1,15 @@
 const { query } = require('./query');
 
-async function insertHelpeeRequestFormAndGetId(data) { // old.
+async function insertHelperRequestFormAndGetId(data) {
+  // old.
   const sql = 'INSERT INTO request_form SET?';
   const sqlResult = await query(sql, data);
   return sqlResult.insertId;
 }
 
-async function insertHelpeeRequest(data) { // new.
-  const { 
+async function insertHelperRequest(data) {
+  // new.
+  const {
     userId,
     type,
     globalUniSchool,
@@ -168,14 +170,14 @@ async function insertHelpeeRequest(data) { // new.
   return sqlResult.insertId;
 }
 
-async function getHelpeeAllOrders(data) {
+// TODO
+async function getHelperAllMatchedRequests(data) {
   const sql = `SELECT * FROM requests WHERE userId=${data.userId} ORDER BY id DESC;`;
   const allOrders = await query(sql);
   return { data: { allOrders } };
 }
 
-
-async function getHelpeeOrderHelperList(data) {
+async function getHelperOrderHelperList(data) {
   const { orderId } = data;
   const sql = `
     SELECT DISTINCT a.id AS helperId, a.username, a.nationality, a.nativeLanguage, a.firstLanguage, a.secondLanguage
@@ -187,8 +189,8 @@ async function getHelpeeOrderHelperList(data) {
 }
 
 module.exports = {
-  insertHelpeeRequestFormAndGetId,
-  insertHelpeeRequest,
-  getHelpeeAllOrders,
-  getHelpeeOrderHelperList,
+  insertHelperRequestFormAndGetId,
+  insertHelperRequest,
+  getHelperAllMatchedRequests,
+  getHelperOrderHelperList,
 };

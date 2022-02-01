@@ -5,20 +5,20 @@ import DropDown from '../../components/Dropdown';
 import FullLineTextBox from '../../components/FullLineTextBox';
 import ConfirmBtn from '../../components/ConfirmBtn';
 import {
+  schoolOptions,
+  departmentOptions,
   countryOptions,
-  typeOptions,
-  professionOptions,
-  yearsOptions,
+  degreeOptions,
 } from '../../store/options/service-options';
 
-import { onSubmitUpdateSelfEmployedData } from '../../store/helpee/helpee-actions';
+import { onSubmitUpdateUniData } from '../../store/helpee/helpee-actions';
 
-const SelfEmployedPage = (props) => {
+const HelpeeUniFormPage = (props) => {
   const dispatch = useDispatch();
-  const typeRef = useRef();
-  const professionRef = useRef();
+  const schoolRef = useRef();
+  const departmentRef = useRef();
   const countryRef = useRef();
-  const yearsRef = useRef();
+  const degreeRef = useRef();
   const notesRef = useRef();
   const navigate = useNavigate();
   async function handleConfirm(e) {
@@ -28,39 +28,39 @@ const SelfEmployedPage = (props) => {
       notes = notesRef.current.value;
     }
     const data = {
-      type,
-      profession,
+      school,
+      department,
       country,
-      years,
+      degree,
       notes: notes || '',
     };
     try {
-      dispatch(onSubmitUpdateSelfEmployedData(data));
-      navigate('/final-form', { replace: true });
+      dispatch(onSubmitUpdateUniData(data));
+      navigate('/helpee/final-form', { replace: true });
     } catch (err) {
       console.error(err);
     }
   }
-  
-  const [type, setType] = useState('default');
-  const [profession, setProfession] = useState('default');
   const [country, setCountry] = useState('default');
-  const [years, setYears] = useState('default');
+  const [school, setschool] = useState('default');
+  const [matchedDepartments, setMatchedDepartments] = useState([]);
+  const [department, setdepartment] = useState('default');
+  const [degree, setdegree] = useState('default');
   const [enableBtn, setEnableBtn] = useState(false);
-  console.log(
-    'type: ',
-    type,
-    'profession: ',
-    profession
-  );
   useEffect(() => {
     setEnableBtn(
       country !== 'default' &&
-        type !== 'default' &&
-        profession !== 'default' &&
-        years !== 'default'
+        school !== 'default' &&
+        department !== 'default' &&
+        degree !== 'default'
     );
-  }, [type, profession, country, years]);
+  }, [school, department, country, degree]);
+  useEffect(() => {
+    if (school) {
+      const departments = departmentOptions[school];
+      setMatchedDepartments(departments);
+    }
+  }, [school]);
   return (
     <div
       className='main-content-wrapper'
@@ -75,18 +75,18 @@ const SelfEmployedPage = (props) => {
             <form action=''>
               <div className='form-row'>
                 <DropDown
-                  selected={type}
-                  handleSelect={setType}
-                  title={'type *'}
-                  selectRef={typeRef}
-                  options={typeOptions}
+                  selected={school}
+                  handleSelect={setschool}
+                  title={'School *'}
+                  selectRef={schoolRef}
+                  options={schoolOptions}
                 />
                 <DropDown
-                  selected={profession}
-                  handleSelect={setProfession}
-                  title={'profession *'}
-                  selectRef={professionRef}
-                  options={professionOptions}
+                  selected={department}
+                  handleSelect={setdepartment}
+                  title={'Department *'}
+                  selectRef={departmentRef}
+                  options={matchedDepartments}
                 />
               </div>
               <div className='form-row last'>
@@ -98,11 +98,11 @@ const SelfEmployedPage = (props) => {
                   options={countryOptions}
                 />
                 <DropDown
-                  selected={years}
-                  handleSelect={setYears}
-                  title={'Year of Experience on that profession *'}
-                  selectRef={yearsRef}
-                  options={yearsOptions}
+                  selected={degree}
+                  handleSelect={setdegree}
+                  title={'Degree *'}
+                  selectRef={degreeRef}
+                  options={degreeOptions}
                 />
               </div>
               <FullLineTextBox
@@ -123,4 +123,4 @@ const SelfEmployedPage = (props) => {
   );
 };
 
-export default SelfEmployedPage;
+export default HelpeeUniFormPage;

@@ -1,6 +1,6 @@
 const helpeeModel = require('../models/helpeeModel');
 
-const allowPrivateRoute = async (req, res) => {
+const allowHelpeePrivateRoute = async (req, res) => {
   const { userId } = res.locals;
   res.status(200).json({ isAuthenticated: true, userId });
 }
@@ -27,28 +27,10 @@ const postHelpeeRequest = async (req, res) => { // new.
   }
 }
 
-const getAllOrders = async (req, res) => {
+const getHelpeeAllOrders = async (req, res) => {
   try {
     const { userId } = req.query;
-    const response = await helpeeModel.getAllOrders({ userId });
-    if (response.data) {
-      res.status(200).json({
-        allOrders: response.data.allOrders,
-      });
-    } else {
-      throw Error('NO_ORDER_RESPONSE');
-    }
-    
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-  }
-}
-
-const getAllJobOrders = async (req, res) => {
-  try {
-    const { userId } = req.query;
-    const response = await helpeeModel.getAllJobOrders({ userId });
+    const response = await helpeeModel.getHelpeeAllOrders({ userId });
     if (response.data) {
       res.status(200).json({
         allOrders: response.data.allOrders,
@@ -62,10 +44,10 @@ const getAllJobOrders = async (req, res) => {
   }
 };
 
-const getHelperList = async (req, res) => {
+const getHelpeeOrderHelperList = async (req, res) => {
   try {
     const { orderId } = req.query;
-    const response = await helpeeModel.getHelperList({ orderId });
+    const response = await helpeeModel.getHelpeeOrderHelperList({ orderId });
     if (response.data) {
       res.status(200).json({
         helpers: response.data.helpers,
@@ -77,13 +59,12 @@ const getHelperList = async (req, res) => {
     console.error(error);
     res.status(500).send(error.message);
   }
-}
+};
 
 module.exports = {
-  allowPrivateRoute,
+  allowHelpeePrivateRoute,
   postHelpeeServiceRequestForm,
   postHelpeeRequest,
-  getAllOrders,
-  getAllJobOrders,
-  getHelperList,
+  getHelpeeAllOrders,
+  getHelpeeOrderHelperList,
 };

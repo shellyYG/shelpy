@@ -1,19 +1,19 @@
 import ConfirmBtn from '../../components/ConfirmBtn';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import '../../App.css';
 import {
   getAuthStatus,
   clearSignUpPasswordStatus,
-  postHelpeeSignUpPassword,
-} from '../../store/helpee/helpee-actions';
+  postHelperSignUpPassword,
+} from '../../store/helper/helper-actions';
 
 const MySwal = withReactContent(Swal);
 
-const SignUpPasswordPage = () => {
+const HelperSignUpPasswordPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const emailRef = useRef();
@@ -28,12 +28,12 @@ const SignUpPasswordPage = () => {
     signUpPasswordStatusTitle,
     signUpPasswordStatusMessage,
   } = useSelector((state) => state.notification);
-  
+
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    navigate("/home", { replace: true });
+    navigate('/home', { replace: true });
   };
-  window.addEventListener("popstate", onBackButtonEvent, { once: true });
+  window.addEventListener('popstate', onBackButtonEvent, { once: true });
   if (loading) {
     MySwal.fire({
       title: 'Loading...',
@@ -59,11 +59,11 @@ const SignUpPasswordPage = () => {
     // change DB & global state
     const data = {
       email: email || emailRef.current.value,
-      isHelpee: true,
+      isHelpee: false,
       password: passwordRef.current.value,
       status: 'password_created',
     };
-    dispatch(postHelpeeSignUpPassword(data));
+    dispatch(postHelperSignUpPassword(data));
   }
   function handlePasswordTyping(e) {
     e.preventDefault();
@@ -103,7 +103,7 @@ const SignUpPasswordPage = () => {
         dispatch(getAuthStatus());
         dispatch(clearSignUpPasswordStatus());
         // to perform navigate after await MySwal, we need to create extra async function sweetAlertAndNavigate to wrap MySwal.
-        navigate('/service-options', { replace: true });
+        navigate('/helper/basic-form', { replace: true });
       }
       sweetAlertAndNavigate(
         signUpPasswordStatusTitle,
@@ -117,9 +117,9 @@ const SignUpPasswordPage = () => {
     navigate,
     dispatch,
   ]);
-  
+
   return (
-    <div className='main-content-wrapper-homepage'>
+    <div className='main-content-wrapper-homepage-helper'>
       <div className='section-center-align'>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           Create Password to finish signing up
@@ -182,4 +182,4 @@ const SignUpPasswordPage = () => {
   );
 };
 
-export default SignUpPasswordPage;
+export default HelperSignUpPasswordPage;

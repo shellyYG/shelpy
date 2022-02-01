@@ -4,7 +4,7 @@ import PastOrderCard from '../../components/PastOrderCard';
 import ActiveOrderCard from '../../components/ActiveOrderCard';
 import { getAllOrders } from '../../store/helpee/helpee-actions';
 
-const OrderHistoryPage = (props) => {
+const HelpeeOrderHistoryPage = (props) => {
   const dispatch = useDispatch();
   const [isActiveOrderSelected, setIsActiveOrderSelected] = useState(true);
   const [activeOrders, setActiveOrders] = useState([]);
@@ -162,4 +162,4 @@ const OrderHistoryPage = (props) => {
   );
 };
 
-export default OrderHistoryPage;
+export default HelpeeOrderHistoryPage;

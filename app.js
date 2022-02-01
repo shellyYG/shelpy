@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 9000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use([
-  require('./api/routes/helpeeRoute'),
+  require('./api/routes/route'),
   // express.static(path)
 ]);
 app.use(cors());

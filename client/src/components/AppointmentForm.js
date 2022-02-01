@@ -129,7 +129,7 @@ const navigate = useNavigate();
           html: <p>{message}</p>,
           icon: 'success',
         });
-        let path = '/order-history';
+        let path = '/helpee/order-history';
         navigate(path, { replace: true });
       }
       dispatch(clearRequestFormStatus());

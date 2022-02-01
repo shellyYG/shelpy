@@ -2,19 +2,28 @@ require('dotenv').config();
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken'); 
 const helpeeSignInModel = require('../models/signInModel');
-const { generateAccessToken } = require('../../util/util');
+const {
+  generateHelpeeAccessToken,
+  generateHelperAccessToken,
+} = require('../../util/util');
 
-const postHelpeeSignInData = async (req, res) => {
+const postUserSignInData = async (req, res) => {
   const { data } = req.body;
 
   async function getUserEncryptedPass() {
     // Need to use the same ivString to encryt the password for comparison
-    const LoginUserResult = await helpeeSignInModel.getUserDataByEmail(req.body.data);
+    const LoginUserResult = await helpeeSignInModel.getUserDataByEmail(
+      req.body.data
+    );
     const sharedIvString = LoginUserResult[0].ivString;
     const { password } = data;
     const key = process.env.ACCESS_TOKEN_KEY;
     const sharedIvStringBuffer = Buffer.from(sharedIvString, 'base64');
-    const cipher = crypto.createCipheriv('aes-256-cbc', key, sharedIvStringBuffer);
+    const cipher = crypto.createCipheriv(
+      'aes-256-cbc',
+      key,
+      sharedIvStringBuffer
+    );
     let encryptedLoginPass = cipher.update(password, 'utf-8', 'hex'); // Input: utf-8, Output: hex.
     encryptedLoginPass += cipher.final('hex');
 
@@ -45,14 +54,23 @@ const postHelpeeSignInData = async (req, res) => {
           const payloadObject = {};
           payloadObject.data = userObject;
 
-          const accessToken = generateAccessToken({
-            data: {
-              id,
-              provider,
-              username,
-              email,
-            },
-          });
+          const accessToken = data.isHelpee
+            ? generateHelpeeAccessToken({
+                data: {
+                  id,
+                  provider,
+                  username,
+                  email,
+                },
+              })
+            : generateHelperAccessToken({
+                data: {
+                  id,
+                  provider,
+                  username,
+                  email,
+                },
+              });
 
           dataObject.accessToken = accessToken;
           jwt.verify(
@@ -77,6 +95,9 @@ const postHelpeeSignInData = async (req, res) => {
   comparepass();
 };
 
+
+
+
 module.exports = {
-  postHelpeeSignInData,
+  postUserSignInData,
 };

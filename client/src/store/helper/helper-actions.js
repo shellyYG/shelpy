@@ -1,19 +1,18 @@
 import axios from 'axios';
-import { notificationActions } from '../notification/notification-slice'; 
-import { helpeeActions } from "./helpee-slice";
+import { notificationActions } from '../notification/notification-slice';
+import { helperActions } from './helper-slice';
 
-const getHelpeeAuthStatusPath = '/api/helpee/get-auth-status';
-const helpeeSignUpPasswordPath = '/api/helpee/signup-password';
-const helpeeSignInPath = 'api/helpee/sign-in';
-const oldUserRequestFormPath = '/api/helpee/request-form'; // depreciated
-const userRequestFormPath = '/api/helpee/request';
-const activeHelperPath = '/api/helpee/active-helpers';
-const getAllOrdersPath = 'api/helpee/all-orders';
+const getHelperAuthStatusPath = '/api/helper/get-auth-status';
+const helperSignUpPasswordPath = '/api/helper/signup-password';
+const helperSignInPath = 'api/helper/sign-in';
+const userRequestFormPath = '/api/helper/request';
+const activeHelperPath = '/api/helper/active-helpers';
+const getAllOrdersPath = 'api/helper/all-orders';
 
 export const getAuthStatus = () => {
   return async (dispatch) => {
     try {
-      const generalToken = localStorage.getItem('shelpy-token');
+      const generalToken = localStorage.getItem('shelper-token');
       if (!generalToken) {
         throw Error('NO_TOKEN');
       }
@@ -23,12 +22,12 @@ export const getAuthStatus = () => {
           Authorization: 'Bearer ' + generalToken,
         };
         const response = await axios.post(
-          getHelpeeAuthStatusPath,
+          getHelperAuthStatusPath,
           {},
           { headers }
         );
         dispatch(
-          helpeeActions.updateAuthStatus({
+          helperActions.updateAuthStatus({
             isAuthenticated: response.data.isAuthenticated,
             userId: response.data.userId,
           })
@@ -37,27 +36,29 @@ export const getAuthStatus = () => {
     } catch (error) {
       console.error(error);
       dispatch(
-        helpeeActions.updateAuthStatus({
+        helperActions.updateAuthStatus({
           isAuthenticated: false,
         })
       );
     }
-  }
-}
+  };
+};
 
 export const getAllOrders = (data) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(getAllOrdersPath, { params: { userId: data.userId }});
+      const response = await axios.get(getAllOrdersPath, {
+        params: { userId: data.userId },
+      });
       dispatch(
-        helpeeActions.updateActiveAndPastOrders({
+        helperActions.updateActiveAndPastOrders({
           allOrders: response.data.allOrders,
         })
       );
     } catch (error) {
       console.error(error);
       dispatch(
-        helpeeActions.updateActiveAndPastOrders({
+        helperActions.updateActiveAndPastOrders({
           allOrders: [],
         })
       );
@@ -68,7 +69,7 @@ export const getAllOrders = (data) => {
 export const onClickUpdateActiveServiceType = (data) => {
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onClickUpdateActiveServiceType({
+      helperActions.onClickUpdateActiveServiceType({
         globalServiceType: data.globalServiceType,
       })
     );
@@ -77,7 +78,7 @@ export const onClickUpdateActiveServiceType = (data) => {
 export const onClickUpdateActiveJobOrUniTarget = (data) => {
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onClickUpdateActiveJobOrUniTarget({
+      helperActions.onClickUpdateActiveJobOrUniTarget({
         globalJobOrUniTarget: data.globalJobOrUniTarget,
       })
     );
@@ -86,7 +87,7 @@ export const onClickUpdateActiveJobOrUniTarget = (data) => {
 export const onClickUpdateActiveNavigateTarget = (data) => {
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onClickUpdateActiveNavigateTarget({
+      helperActions.onClickUpdateActiveNavigateTarget({
         globalNavigateTarget: data.globalNavigateTarget,
       })
     );
@@ -95,12 +96,12 @@ export const onClickUpdateActiveNavigateTarget = (data) => {
 export const onClickUpdateActiveRequest = (data) => {
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onClickUpdateActiveRequest({
+      helperActions.onClickUpdateActiveRequest({
         globalActiveRequest: data.globalActiveRequest,
       })
     );
-  }
-}
+  };
+};
 export const onClickUpdateActiveHelperLists = (data) => {
   return async (dispatch) => {
     try {
@@ -108,7 +109,7 @@ export const onClickUpdateActiveHelperLists = (data) => {
         data,
       });
       dispatch(
-        helpeeActions.onClickUpdateActiveHelperLists({
+        helperActions.onClickUpdateActiveHelperLists({
           globalActiveHelperLists: activeHelpers,
         })
       );
@@ -121,14 +122,14 @@ export const onClickUpdateActiveHelperLists = (data) => {
       });
     }
   };
-}
+};
 
-export const postHelpeeSignUpEmail = (data) => {
+export const postHelperSignUpEmail = (data) => {
   return async (dispatch) => {
     try {
-      // update global Helpee state:
+      // update global Helper state:
       dispatch(
-        helpeeActions.updateHelpeeInfoAfterInsertEmail({
+        helperActions.updateHelperInfoAfterInsertEmail({
           email: data.email,
         })
       );
@@ -153,15 +154,15 @@ export const postHelpeeSignUpEmail = (data) => {
     }
   };
 };
-export const postHelpeeSignUpPassword = (data) => {
+export const postHelperSignUpPassword = (data) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(helpeeSignUpPasswordPath, {
+      const response = await axios.post(helperSignUpPasswordPath, {
         data,
       });
-      window.localStorage.setItem('shelpy-token', response.data.accessToken);
+      window.localStorage.setItem('shelper-token', response.data.accessToken);
       dispatch(
-        helpeeActions.updateHelpeeInfoAfterInsertPassword({
+        helperActions.updateHelperInfoAfterInsertPassword({
           password: data.password,
         })
       );
@@ -187,15 +188,15 @@ export const postHelpeeSignUpPassword = (data) => {
   };
 };
 
-export const postSignInData = (data) => {
+export const postHelperSignInData = (data) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(helpeeSignInPath, {
+      const response = await axios.post(helperSignInPath, {
         data,
       });
       window.localStorage.setItem('shelpy-token', response.data.accessToken);
       dispatch(
-        helpeeActions.updateHelpeeInfoAfterSignIn({
+        helperActions.updateHelperInfoAfterSignIn({
           email: data.email,
         })
       );
@@ -217,62 +218,11 @@ export const postSignInData = (data) => {
           })
         );
       }
-  };
-};
-}
-
-// depreciated
-export const postHelpeeServiceRequestForm = (data) => {
-  return async (dispatch) => {
-    try {
-      const generalToken = localStorage.getItem('shelpy-token');
-      if (!generalToken) {
-        throw Error('NO_TOKEN');
-      }
-      if (generalToken){
-        const headers = {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + generalToken,
-        };
-        const response = await axios.post(
-          oldUserRequestFormPath,
-          {
-            data,
-          },
-          { headers }
-        );
-        data.requestId = response.data.requestId;
-        dispatch(
-          helpeeActions.updateHelpeeRequestFormData({
-            data,
-          })
-        );
-        dispatch(
-          notificationActions.setNotification({
-            requestFormStatus: 'success',
-            requestFormStatusTitle: 'You are all set!',
-            requestFormStatusMessage:
-              'We will inform you via email as soon as we find a helper!',
-          })
-        );
-      }
-    } catch (error) {
-      const errorResponse = error.response ? error.response.data : '';
-      const errorMessage = errorResponse || error.message;
-      if (errorMessage) {
-        dispatch(
-          notificationActions.setNotification({
-            requestFormStatus: 'error',
-            requestFormStatusTitle: 'Oops!',
-            requestFormStatusMessage: errorMessage,
-          })
-        );
-      }
     }
   };
 };
 
-export const postHelpeeRequestForm = (data) => {
+export const postHelperRequestForm = (data) => {
   return async (dispatch) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
@@ -375,13 +325,13 @@ export const clearRequestFormStatus = (data) => {
       })
     );
   };
-}
+};
 
 export const onSubmitUpdateUniData = (data) => {
   const { school, department, country, degree, notes } = data;
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onSubmitUpdateUniData({
+      helperActions.onSubmitUpdateUniData({
         school,
         department,
         country,
@@ -396,7 +346,7 @@ export const onSubmitUpdateJobData = (data) => {
   const { industry, job, country, WFH, companySize, years, notes } = data;
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onSubmitUpdateJobData({
+      helperActions.onSubmitUpdateJobData({
         industry,
         job,
         country,
@@ -413,7 +363,7 @@ export const onSubmitUpdateSelfEmployedData = (data) => {
   const { type, profession, country, years, notes } = data;
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onSubmitUpdateSelfEmployedData({
+      helperActions.onSubmitUpdateSelfEmployedData({
         type,
         profession,
         country,

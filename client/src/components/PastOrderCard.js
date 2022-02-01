@@ -38,7 +38,7 @@ function PastOrderCard(props) {
   useEffect(() => {
     async function getHelperLists(orderId) {
       try {
-        const response = await axios.get('api/helper-list', {
+        const response = await axios.get('api/helpee/helper-list', {
           params: { orderId, type: props.type },
         });
         if (response) {

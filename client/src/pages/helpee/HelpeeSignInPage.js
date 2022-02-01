@@ -13,7 +13,7 @@ import {
 } from '../../store/helpee/helpee-actions';
 const MySwal = withReactContent(Swal);
 
-const SignInPage = () => {
+const HelpeeSignInPage = () => {
   const navigate = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -128,4 +128,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default HelpeeSignInPage;

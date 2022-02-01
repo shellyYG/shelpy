@@ -13,7 +13,7 @@ import MktRow from '../../components/MktRow';
 
 const MySwal = withReactContent(Swal);
 
-const SignUpPageHelpee = () => {
+const HelpeeSignUpPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
@@ -63,7 +63,7 @@ const SignUpPageHelpee = () => {
       );
       return;
     } else if (signUpEmailStatus === 'success') {
-      navigate('/sign-up-final-step', { replace: true });
+      navigate('/helpee/sign-up-final-step', { replace: true });
       dispatch(clearSignUpEmailStatus());
     }
   }, [
@@ -142,7 +142,7 @@ const SignUpPageHelpee = () => {
                 at any time.
               </p>
               <div style={{ textAlign: 'center' }}>
-                <Link to='/sign-in'>
+                <Link to='/helpee/sign-in'>
                   Alreave have an account? Sign In here!
                 </Link>
               </div>
@@ -186,4 +186,4 @@ const SignUpPageHelpee = () => {
   );
 };
 
-export default SignUpPageHelpee;
+export default HelpeeSignUpPage;

@@ -2,10 +2,13 @@ require('dotenv').config();
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const signUpModel = require('../models/signUpModel');
-const { generateAccessToken } = require('../../util/util');
+const {
+  generateHelpeeAccessToken,
+  generateHelperAccessToken,
+} = require('../../util/util');
 
-const emailExisted = async (data) => {
-  const existingEmails = await signUpModel.checkEmailExist(data);
+const userEmailExisted = async (data) => {
+  const existingEmails = await signUpModel.checkUserEmailExist(data);
   if (existingEmails.length > 0) {
     return true;
   }
@@ -17,8 +20,8 @@ const createUserObject = async (data, encryptedpass, ivString) => {
   // insert to DB
   try {
     const { isHelpee } = data;
-    const isEmailExisted = await emailExisted(data);
-    if (isEmailExisted) {
+    const isUserEmailExisted = await userEmailExisted(data);
+    if (isUserEmailExisted) {
       throw Error('EMAIL_EXIST');
     }
     const id = await signUpModel.insertUserAndGetUserId({
@@ -36,14 +39,23 @@ const createUserObject = async (data, encryptedpass, ivString) => {
         email,
       },
     };
-    const accessToken = generateAccessToken({
-      data: {
-        id,
-        provider,
-        username,
-        email,
-      },
-    });
+    const accessToken = data.isHelpee
+      ? generateHelpeeAccessToken({
+          data: {
+            id,
+            provider,
+            username,
+            email,
+          },
+        })
+      : generateHelperAccessToken({
+          data: {
+            id,
+            provider,
+            username,
+            email,
+          },
+        }); 
     dataObject.accessToken = accessToken;
     // Verify token to get lifetime for token
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
@@ -58,7 +70,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
   } 
 };
 
-const postSignUpData = async (req, res) => {
+const postUserSignUpData = async (req, res) => {
   const { data } = req.body;
   const { status, password } = data;
   const iv = crypto.randomBytes(16); // different everytime
@@ -80,5 +92,5 @@ const postSignUpData = async (req, res) => {
 };
 
 module.exports = {
-  postSignUpData,
+  postUserSignUpData,
 };
