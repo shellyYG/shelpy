@@ -4,10 +4,11 @@ import { helperActions } from './helper-slice';
 
 const getHelperAuthStatusPath = '/api/helper/get-auth-status';
 const helperSignUpPasswordPath = '/api/helper/signup-password';
-const helperSignInPath = 'api/helper/sign-in';
+const helperSignInPath = '/api/helper/sign-in';
 const userRequestFormPath = '/api/helper/request';
 const activeHelperPath = '/api/helper/active-helpers';
-const getAllOrdersPath = 'api/helper/all-orders';
+const getAllOrdersPath = '/api/helper/all-orders';
+const helperBasicInfoUploadPath = '/api/helper/basic-form-upload';
 
 export const getAuthStatus = () => {
   return async (dispatch) => {
@@ -373,3 +374,45 @@ export const onSubmitUpdateSelfEmployedData = (data) => {
     );
   };
 };
+
+export const onSubmitUploadHelperData = (data) => {
+  return async (dispatch) => {
+    try {
+      const generalToken = localStorage.getItem('shelper-token');
+      if (!generalToken) {
+        throw Error('NO_TOKEN');
+      }
+      if (generalToken) {
+        const headers = {
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.post(helperBasicInfoUploadPath, data, {
+          headers,
+        });
+        console.log('upload response: ', response);
+        // data.requestId = response.data.requestId;
+        // dispatch(
+        //   notificationActions.setNotification({
+        //     requestStatus: 'success',
+        //     requestStatusTitle: 'You are all set!',
+        //     requestStatusMessage:
+        //       'We will inform you via email as soon as we find a helper!',
+        //   })
+        // );
+      }
+    } catch (error) {
+      console.error('upload error: ', error);
+      // const errorResponse = error.response ? error.response.data : '';
+      // const errorMessage = errorResponse || error.message;
+      // if (errorMessage) {
+      //   dispatch(
+      //     notificationActions.setNotification({
+      //       requestStatus: 'error',
+      //       requestStatusTitle: 'Oops!',
+      //       requestStatusMessage: errorMessage,
+      //     })
+      //   );
+      // }
+    }
+  };
+}

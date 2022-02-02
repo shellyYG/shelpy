@@ -738,7 +738,6 @@ footer {
 
 .form-inner {
   left: 11.07%;
-  width: 680px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
@@ -1253,7 +1252,65 @@ input[type="checkbox" i] {
   border-radius: 2px;
 }
 
+.uploadInnerDiv {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  cursor: pointer;
+}
+
+.uploadLabel {
+  color: white;
+  cursor: pointer;
+  background-color: #04AA6D;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 0px;
+}
+
+.blankProfileImageBx {
+  background-color: white;
+  text-align: center;
+  padding: 15px;
+  margin: 0px auto 0px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  display: flex;
+}
+
+.profileImageBx {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 8px auto 15px;
+}
+
+.profileImageBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media all and (max-width: 1200px) {
+  form {
+    width: 60vw;
+  }
+  .form-row {
+    flex-wrap: wrap;
+  }
+  .form-row .form-wrapper {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .form-row .form-wrapper:first-child {
+    margin-right: 0px;
+}
   .centerWrapperWithBackground {
     padding: 10vh 20px 50px;
   }

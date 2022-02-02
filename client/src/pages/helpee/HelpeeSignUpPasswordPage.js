@@ -122,7 +122,7 @@ const HelpeeSignUpPasswordPage = () => {
     <div className='main-content-wrapper-homepage'>
       <div className='section-center-align'>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          Create Password to finish signing up
+          Create password to finish signing up
         </h1>
         <h2
           style={{

@@ -80,7 +80,7 @@ const HelpeeSignUpPage = () => {
           <div className='coverLeft'>
             <div>
               <h1 style={{ textAlign: 'center', color: 'white' }}>
-                Thinking about changing your life ?
+                Thinking about your next step?
               </h1>
             </div>
             <div>
@@ -152,32 +152,25 @@ const HelpeeSignUpPage = () => {
         <div className='centerWrapperMkt'>
           <div className='mktWrapper'>
             <MktRow
-              title='What if...my life could be totally different ?'
-              details1='We understand. Everyone has that moment of doubt in life.'
-              details2='And we believe, everyone has the power to change their own life.'
-              imagePath='/what-if.jpeg'
-              lastChild={false}
+              title='MINIMIZE your risk'
+              details1='Afraid of taking that big leap?'
+              details2='Invest only 30 min and a few bucks before you make the final decision.'
+              imagePath='/dinner.jpeg'
+              lastChild={true}
             />
             <MktRow
-              title='Feeling lonely on your way to your dream ?'
-              details1='Come talk to people who have successfully gone through your dream path.'
-              details2='You are not alone.'
-              imagePath='/yeah-that-way.jpeg'
-              lastChild={false}
-            />
-            <MktRow
-              title='Lacking of friends/role models with similar experience ?'
-              details1="Don't worry."
-              details2='Come search insiders from our database.'
+              title='MEET role models'
+              details1='Do not have the network?'
+              details2='Come talk to people who have successfully gone through your dream path.'
               imagePath='/friends.jpeg'
               lastChild={false}
             />
             <MktRow
-              title='Still afraid of starting ?'
-              details1='Buy us a drink, we share with you.'
-              details2='Invest only 30 min and a few bucks before you make that big leap.'
-              imagePath='/dinner.jpeg'
-              lastChild={true}
+              title='CONTROL your privacy'
+              details1="Still thinking about the adventure but don't want to let people know?"
+              details2='You decide if you want to ask questions anonymously.'
+              imagePath='/oneToOne.jpeg'
+              lastChild={false}
             />
           </div>
         </div>

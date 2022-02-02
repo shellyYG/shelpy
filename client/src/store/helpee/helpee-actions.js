@@ -4,11 +4,11 @@ import { helpeeActions } from "./helpee-slice";
 
 const getHelpeeAuthStatusPath = '/api/helpee/get-auth-status';
 const helpeeSignUpPasswordPath = '/api/helpee/signup-password';
-const helpeeSignInPath = 'api/helpee/sign-in';
+const helpeeSignInPath = '/api/helpee/sign-in';
 const oldUserRequestFormPath = '/api/helpee/request-form'; // depreciated
 const userRequestFormPath = '/api/helpee/request';
 const activeHelperPath = '/api/helpee/active-helpers';
-const getAllOrdersPath = 'api/helpee/all-orders';
+const getAllOrdersPath = '/api/helpee/all-orders';
 
 export const getAuthStatus = () => {
   return async (dispatch) => {

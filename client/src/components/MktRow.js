@@ -4,7 +4,7 @@ function MktRow(props) {
       <div className={props.lastChild ? 'lastSingleMkt' : 'singleMkt'}>
         <div className='mktTitleLeft'>
           <div className='mktTitle'>
-            <h3>{props.title}</h3>
+            <h2>{props.title}</h2>
           </div>
           <div className='mktDetails'>
             <p>{props.details1}</p>

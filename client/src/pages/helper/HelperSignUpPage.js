@@ -152,23 +152,23 @@ const SignUpPageHelper = () => {
         <div className='centerWrapperMkt'>
           <div className='mktWrapper'>
             <MktRow
-              title='Were you once hesitate ?'
-              details1='Help that once you.'
-              details2='They are now standing on the crossroad and wonders.'
+              title='HELP people'
+              details1='Were you once hesitating?'
+              details2='Help people who are now standing on the crossroad and wonders.'
               imagePath='/crossroad.jpeg'
               lastChild={false}
             />
             <MktRow
-              title='Want a side business ?'
-              details1='Earn extra revenue stream with us!'
+              title='GENERATE extra revenue'
+              details1='Thinking about having a side business?'
               details2='Join us and create extra safenet to reach your financial freedom.'
               imagePath='/sidebusiness.jpeg'
               lastChild={false}
             />
             <MktRow
-              title='Already a career/study counselor ?'
-              details1='FREE listing. Get extra exposure with us.'
-              details2='There are many people who may need your professional services later on.'
+              title='FREE marketing listing'
+              details1='Are you already a career/study counselor?'
+              details2='Get extra exposure with us and meet your potential customers.'
               imagePath='/counselor.jpeg'
               lastChild={true}
             />

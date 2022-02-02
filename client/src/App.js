@@ -25,6 +25,7 @@ import HelperHomePage from './pages/helper/HelperHomePage';
 import HelperSignInPage from './pages/helper/HelperSignInPage';
 
 import { getAuthStatus } from './store/helpee/helpee-actions';
+import HelperBasicFormPage from './pages/helper/HelperBasicFormPage';
 
 
 function App() {
@@ -113,6 +114,7 @@ function App() {
           }
         />
         <Route path={'/helpee/chatroom'} element={<HelpeeChatRoomPage />} />
+        <Route path={'/helper/basic-form'} element={<HelperBasicFormPage />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
       <Footer />

@@ -26,22 +26,23 @@ const HelperBasicFormPage = (props) => {
   
   const [nationality, setNationality] = useState('default');
   const [age, setAge] = useState('default');
+  const [profilePic, setProfilePic] = useState();
   const [certificate, setCertificate] = useState();
-  const [certificate2, setCertificate2] = useState();
+  
   const [matchedDepartments, setMatchedDepartments] = useState([]);
   const [department, setdepartment] = useState('default');
   const [degree, setdegree] = useState('default');
   const [enableBtn, setEnableBtn] = useState(false);
-
-  async function handlefileUpload(e) {
+  
+  async function handleProfilePicUpload(e) {
+    e.preventDefault();
+    const file = e.target.files[0];
+    setProfilePic(file);
+  }
+  async function handleResumeUpload(e) {
     e.preventDefault();
     const file = e.target.files[0];
     setCertificate(file);
-  }
-  async function handlefileUpload2(e) {
-    e.preventDefault();
-    const file = e.target.files[0];
-    setCertificate2(file);
   }
 
   async function handleConfirm(e) {
@@ -58,9 +59,11 @@ const HelperBasicFormPage = (props) => {
     data.append('username', username);
     data.append('age', age);
     data.append('notes', notes);
-    data.append('certificate', certificate); // need to append file as last object
-    data.append('certificate', certificate2); // need to append file as last object
+    data.append('document', profilePic); // need to append file as last object
+    data.append('document', certificate); // need to append file as last object
+
     console.log('data to send: ', data); // console.log(data) // browser will be empty
+    
     axios
       .post('https://httpbin.org/anything', data)
       .then((res) => console.log('binres', res))
@@ -88,13 +91,41 @@ const HelperBasicFormPage = (props) => {
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        Apply for becoming a helper
+        Apply to be a helper
       </h1>
 
       <div className='form-center-wrapper'>
         <div className='container'>
           <div className='form-inner'>
             <form action='' method='post' encType='multipart/form-data'>
+              <div className='form-row'>
+                <div
+                  className='form-wrapper'
+                  style={{ width: '100%', margin: '0px' }}
+                >
+                  {!profilePic && (
+                    <div className='blankProfileImageBx'>
+                      {' '}
+                      <div className='uploadInnerDiv'>
+                        <label className='uploadLabel' for='profilePic'>
+                          Upload Picture
+                        </label>
+                        <input
+                          type='file'
+                          id='profilePic'
+                          onChange={handleProfilePicUpload}
+                          hidden={true}
+                        />
+                      </div>{' '}
+                    </div>
+                  )}
+                  {profilePic && (
+                    <div className='profileImageBx'>
+                      <img src='/dinner.jpeg' alt='connection'></img>
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className='form-row'>
                 <LeftHalfLineTextBox
                   title={'Nickname *'}
@@ -119,31 +150,27 @@ const HelperBasicFormPage = (props) => {
                 />
                 <div className='form-wrapper'>
                   <label>Reseme/files</label>
-                  <input type='file' onChange={handlefileUpload} />
+                  {!certificate && (
+                    <>
+                      <label className='uploadLabel' for='resume'>
+                        Upload a file
+                      </label>
+                      <input
+                        type='file'
+                        id='resume'
+                        onChange={handleResumeUpload}
+                        hidden={true}
+                      />
+                    </>
+                  )}
+                  {certificate && (
+                    <div style={{ padding: '10px 0'}}>
+                      <p>{certificate.name || 'Uploaded'}</p>
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className='form-row'>
-                <div className='form-wrapper'>
-                  <div
-                    style={{
-                      backgroundColor: 'pink',
-                      textAlign: 'center',
-                      padding: '30px',
-                      margin: '20px auto 0px',
-                      borderRadius: '50%',
-                      width: '150px',
-                      height: '150px',
-                      display: 'flex',
-                    }}
-                  >
-                    {' '}
-                    <div style={{ margin: 'auto', cursor: 'pointer' }}>
-                      <label>Profile Picture</label>
-                      <input type='file' onChange={handlefileUpload2} />
-                    </div>{' '}
-                  </div>
-                </div>
-              </div>
+
               <FullLineTextBox
                 title={'Notes'}
                 placeholder={'If you choose others, please specify here.'}

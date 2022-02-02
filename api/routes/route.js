@@ -58,7 +58,7 @@ router.route('/api/helper/sign-in').post(wrapAsync(postUserSignInData));
 
 router.post(
   '/api/helper/basic-form-upload',
-  upload.array('certificate', 3),
+  upload.array('document', 3),
   function (req, res, next) { // eslint-disable-line
     console.log('req.body: ', req.body);
     console.log('req.files: ', req.files); // YES works

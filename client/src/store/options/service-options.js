@@ -354,3 +354,32 @@ export const yearsOptions = [
   { value: '10 years plus', label: '> 10 Years' },
   { value: 'Others', label: othersText },
 ];
+
+export const ageOptions = [
+  { value: 'default', label: 'Please Select' },
+  {
+    value: '16-20 years old',
+    label: '16-20 years old',
+  },
+  {
+    value: '21-25 years old',
+    label: '21-25 years old',
+  },
+  {
+    value: '26-30 years old',
+    label: '26-30 years old',
+  },
+  {
+    value: '31-35 years old',
+    label: '31-35 years old',
+  },
+  {
+    value: '36-40 years old',
+    label: '36-40 years old',
+  },
+  {
+    value: 'over 40 years old',
+    label: 'over 40 years old',
+  },
+  { value: 'Others', label: othersText },
+];
