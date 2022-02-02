@@ -172,6 +172,13 @@ const SignUpPageHelper = () => {
               imagePath='/counselor.jpeg'
               lastChild={true}
             />
+            <MktRow
+              title="CONTROL your own privacy"
+              details1='Want to share some private but important insights?'
+              details2='You decide if you want to stay anonymously and how much you want to share.'
+              imagePath='/oneToOne.jpeg'
+              lastChild={false}
+            />
           </div>
         </div>
       </div>

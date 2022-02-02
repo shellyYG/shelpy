@@ -154,7 +154,7 @@ const HelpeeSignUpPage = () => {
             <MktRow
               title='MINIMIZE your risk'
               details1='Afraid of taking that big leap?'
-              details2='Invest only 30 min and a few bucks before you make the final decision.'
+              details2='Invest only 30 min and on average 20 Euro before you make the final decision.'
               imagePath='/dinner.jpeg'
               lastChild={true}
             />
@@ -166,9 +166,9 @@ const HelpeeSignUpPage = () => {
               lastChild={false}
             />
             <MktRow
-              title='CONTROL your privacy'
-              details1="Still thinking about the adventure but don't want to let people know?"
-              details2='You decide if you want to ask questions anonymously.'
+              title="GET answers that you can't find on GOOGLE"
+              details1='Your questions are too personal or too specific?'
+              details2='Ask insiders and get first-hand information.'
               imagePath='/oneToOne.jpeg'
               lastChild={false}
             />
