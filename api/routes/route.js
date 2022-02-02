@@ -1,13 +1,27 @@
-const multer = require('multer');
 const router = require('express').Router();
+const multer = require('multer');
+const fs = require('fs');
+const util = require('util');
 
-const upload = multer();
+const { uploadFile, getFileStream } = require('../../util/s3');
 
 const {
   wrapAsync,
   verifyHelpeeToken,
   verifyHelperToken,
 } = require('../../util/util');
+
+const storage = multer.diskStorage({
+  destination:  (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.originalname}-${Date.now()}`);
+  },
+});
+const upload = multer({ storage });
+
+const unlinkFile = util.promisify(fs.unlink);
 
 const {
   postHelpeeServiceRequestForm,
@@ -21,6 +35,7 @@ const {
   postHelperRequest,
   allowHelperPrivateRoute,
   getHelperAllMatchedRequests,
+  getProfilePic,
 } = require('../controllers/helperController');
 
 const { postUserSignInData } = require('../controllers/signInController');
@@ -56,12 +71,18 @@ router
   .get(wrapAsync(getHelperAllMatchedRequests));
 router.route('/api/helper/sign-in').post(wrapAsync(postUserSignInData));
 
+router
+  .route('/images/:key(*)')
+  .get(wrapAsync(getProfilePic));
+
 router.post(
-  '/api/helper/basic-form-upload',
-  upload.array('document', 3),
-  function (req, res, next) { // eslint-disable-line
-    console.log('req.body: ', req.body);
-    console.log('req.files: ', req.files); // YES works
+  '/api/helper/profile-pic-upload',
+  upload.array('profilePic', 3),
+  async (req, res, next) => {
+    const file = req.files[0];
+    const result = await uploadFile(file, 'user-profile-pictures');
+    await unlinkFile(file.path);
+    res.send({ imagePath: `/images/${result.Key}`})
   }
 );
 

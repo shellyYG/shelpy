@@ -8,6 +8,7 @@ const helperSignInPath = '/api/helper/sign-in';
 const userRequestFormPath = '/api/helper/request';
 const activeHelperPath = '/api/helper/active-helpers';
 const getAllOrdersPath = '/api/helper/all-orders';
+const helperProfilePicUploadPath = '/api/helper/profile-pic-upload';
 const helperBasicInfoUploadPath = '/api/helper/basic-form-upload';
 
 export const getAuthStatus = () => {
@@ -375,6 +376,34 @@ export const onSubmitUpdateSelfEmployedData = (data) => {
   };
 };
 
+export const onUploadProfilePicture = (data) => {
+  return async (dispatch) => {
+    try {
+      const generalToken = localStorage.getItem('shelper-token');
+      if (!generalToken) {
+        throw Error('NO_TOKEN');
+      }
+      if (generalToken) {
+        const headers = {
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.post(helperProfilePicUploadPath, data, {
+          headers,
+        });
+        const { imagePath } = response.data;
+        console.log('imagePath: ', imagePath);
+        dispatch(
+          helperActions.updateProfilePicPath({
+            profilePicPath: imagePath,
+          })
+        );
+      }
+    } catch (error) {
+      console.error('upload error: ', error);
+    }
+  };
+};
+
 export const onSubmitUploadHelperData = (data) => {
   return async (dispatch) => {
     try {
@@ -389,7 +418,7 @@ export const onSubmitUploadHelperData = (data) => {
         const response = await axios.post(helperBasicInfoUploadPath, data, {
           headers,
         });
-        console.log('upload response: ', response);
+        console.log('upload certificate response: ', response);
         // data.requestId = response.data.requestId;
         // dispatch(
         //   notificationActions.setNotification({

@@ -36,6 +36,8 @@ const helperSlice = createSlice({
     globalSelfEmployedCountry: '',
     globalSelfEmployedYears: '',
     globalSelfEmployedNotes: '',
+
+    profilePicPath: '',
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -112,6 +114,11 @@ const helperSlice = createSlice({
       state.globalSelfEmployedCountry = payload.country;
       state.globalSelfEmployedYears = payload.years;
       state.globalSelfEmployedNotes = payload.notes;
+    },
+    updateProfilePicPath(state, action) {
+      console.log('helper slice updateProfilePic...');
+      const { payload } = action;
+      state.profilePicPath = payload.profilePicPath;
     },
   },
 });

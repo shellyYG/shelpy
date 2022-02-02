@@ -1,3 +1,4 @@
+const { getFileStream } = require('../../util/s3');
 const helperModel = require('../models/helperModel');
 
 const allowHelperPrivateRoute = async (req, res) => {
@@ -32,8 +33,20 @@ const getHelperAllMatchedRequests = async (req, res) => {
   }
 };
 
+const getProfilePic = async (req, res) => {
+  const { key } = req.params;
+  try {
+    const readStream = getFileStream(key);
+    readStream.pipe(res); // will show directly on path which is 'images/xxx'
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   allowHelperPrivateRoute,
   postHelperRequest,
   getHelperAllMatchedRequests,
+  getProfilePic,
 };
