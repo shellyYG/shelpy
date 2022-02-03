@@ -9,7 +9,7 @@ const userRequestFormPath = '/api/helper/request';
 const activeHelperPath = '/api/helper/active-helpers';
 const getAllOrdersPath = '/api/helper/all-orders';
 const helperProfilePicUploadPath = '/api/helper/profile-pic-upload';
-const helperBasicInfoUploadPath = '/api/helper/basic-form-upload';
+const helperCertificateUploadPath = '/api/helper/certificate-upload';
 
 export const getAuthStatus = () => {
   return async (dispatch) => {
@@ -415,7 +415,7 @@ export const onSubmitUploadHelperData = (data) => {
         const headers = {
           Authorization: 'Bearer ' + generalToken,
         };
-        const response = await axios.post(helperBasicInfoUploadPath, data, {
+        const response = await axios.post(helperCertificateUploadPath, data, {
           headers,
         });
         console.log('upload certificate response: ', response);

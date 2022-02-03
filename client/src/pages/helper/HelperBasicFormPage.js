@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import DropDown from '../../components/Dropdown';
 import FullLineTextBox from '../../components/FullLineTextBox';
 import ConfirmBtn from '../../components/ConfirmBtn';
@@ -10,13 +12,14 @@ import {
 
 import { onUploadProfilePicture, onSubmitUploadHelperData } from '../../store/helper/helper-actions';
 import LeftHalfLineTextBox from '../../components/LeftHalfLineTextBox';
-import axios from 'axios';
+
+const MySwal = withReactContent(Swal);
 
 const HelperBasicFormPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const ageRef = useRef();
- 
   const notesRef = useRef();
   const usernameRef = useRef();
   
@@ -31,6 +34,27 @@ const HelperBasicFormPage = (props) => {
   async function handleProfilePicUpload(e) {
     e.preventDefault();
     const file = e.target.files[0];
+    
+    if (file.size > 1000000) {
+      await MySwal.fire({
+        title: <strong>Oops!</strong>,
+        html: <p>Max. File size is 1MB. Please choose a smaller file to upload.</p>,
+        icon: 'error',
+      });
+      return;
+    }
+    if (
+      file.type !== 'image/jpeg' &&
+      file.type !== 'image/png' &&
+      file.type !== 'image/jpg'
+    ) {
+      await MySwal.fire({
+        title: <strong>Oops!</strong>,
+        html: <p>Only accepts .jpg, .jpeg or .png file. Please choose another file to upload.</p>,
+        icon: 'error',
+      });
+      return;
+    }
     setProfilePic(file);
     const data = new FormData();
     data.append('profilePic', file);
@@ -44,6 +68,40 @@ const HelperBasicFormPage = (props) => {
   async function handleResumeUpload(e) {
     e.preventDefault();
     const file = e.target.files[0];
+    if (file.size > 1000000) {
+      await MySwal.fire({
+        title: <strong>Oops!</strong>,
+        html: (
+          <p>Max. File size is 1MB. Please choose a smaller file to upload.</p>
+        ),
+        icon: 'error',
+      });
+      return;
+    }
+    if (
+      file.type !== 'image/jpeg' &&
+      file.type !== 'image/png' &&
+      file.type !== 'image/jpg' &&
+      file.type !== 'application/pdf' &&
+      file.type !== 'application/msword' && // .doc
+      file.type !==
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' && // .docx
+      file.type !== 'application/vnd.ms-powerpoint' && // .ppt
+      file.type !==
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation' // .pptx
+    ) {
+      await MySwal.fire({
+        title: <strong>Oops!</strong>,
+        html: (
+          <p>
+            Only accepts .docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg or .png
+            file. Please choose another file to upload.
+          </p>
+        ),
+        icon: 'error',
+      });
+      return;
+    }
     setCertificate(file);
   }
 

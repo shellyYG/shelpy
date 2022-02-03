@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename: (req, file, cb) => {
-    cb(null, `${file.originalname}-${Date.now()}`);
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 const upload = multer({ storage });
@@ -80,9 +80,30 @@ router.post(
   upload.array('profilePic', 3),
   async (req, res, next) => {
     const file = req.files[0];
-    const result = await uploadFile(file, 'user-profile-pictures');
-    await unlinkFile(file.path);
-    res.send({ imagePath: `/images/${result.Key}`})
+    try {
+      const result = await uploadFile(file, 'user-profile-pictures');
+      await unlinkFile(file.path);
+      res.status(200).send({ imagePath: `/images/${result.Key}` });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+    }
+  }
+);
+
+router.post(
+  '/api/helper/certificate-upload',
+  upload.array('certificate', 3),
+  async (req, res, next) => {
+    const file = req.files[0];
+    try {
+      const result = await uploadFile(file, 'user-certificates');
+      await unlinkFile(file.path);
+      res.status(200).send({ filePath: `/${result.Key}` });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+    }
   }
 );
 
