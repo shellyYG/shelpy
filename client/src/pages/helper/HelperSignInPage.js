@@ -8,9 +8,9 @@ import withReactContent from 'sweetalert2-react-content';
 import '../../App.css';
 import {
   clearSignInStatus,
-  postSignInData,
-  getAuthStatus,
-} from '../../store/helpee/helpee-actions';
+  postHelperSignInData,
+  getHelperAuthStatus,
+} from '../../store/helper/helper-actions';
 const MySwal = withReactContent(Swal);
 
 const HelperSignInPage = () => {
@@ -20,7 +20,7 @@ const HelperSignInPage = () => {
   const dispatch = useDispatch();
   const [loading, setIsLoading] = useState(false);
   const { signInStatus, signInStatusTitle, signInStatusMessage } = useSelector(
-    (state) => state.notification
+    (state) => state.helperNotification
   );
 
   const onBackButtonEvent = (e) => {
@@ -47,7 +47,7 @@ const HelperSignInPage = () => {
       password: passwordRef.current.value,
       isHelpee: false,
     };
-    dispatch(postSignInData(data));
+    dispatch(postHelperSignInData(data));
     setIsLoading(true);
   }
   useEffect(() => {
@@ -71,7 +71,7 @@ const HelperSignInPage = () => {
           html: <p>{message}</p>,
           icon: 'success',
         });
-        dispatch(getAuthStatus());
+        dispatch(getHelperAuthStatus());
         dispatch(clearSignInStatus());
         navigate('/service-options', { replace: true });
       }

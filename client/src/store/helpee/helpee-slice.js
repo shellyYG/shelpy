@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const helpeeSlice = createSlice({
   name: 'helpee',
   initialState: {
-    userId: 0,
-    isAuthenticated: false,
+    helpeeUserId: 0,
+    isHelpeeAuthenticated: false,
     pageFirstTimeLoaded: true,
     DBHelpeeEmail: '',
     DBHelpeePassword: '',
@@ -41,8 +41,8 @@ const helpeeSlice = createSlice({
   reducers: {
     updateAuthStatus(state, action) {
       const { payload } = action;
-      state.isAuthenticated = payload.isAuthenticated;
-      state.userId = payload.userId;
+      state.isHelpeeAuthenticated = payload.isHelpeeAuthenticated;
+      state.helpeeUserId = payload.helpeeUserId;
     },
     updateActiveAndPastOrders(state, action) {
       const { payload } = action;

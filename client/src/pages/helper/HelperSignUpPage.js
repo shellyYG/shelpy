@@ -21,7 +21,7 @@ const SignUpPageHelper = () => {
     signUpEmailStatus,
     signUpEmailStatusTitle,
     signUpEmailStatusMessage,
-  } = useSelector((state) => state.notification);
+  } = useSelector((state) => state.helperNotification);
   const emailRef = useRef();
   const [email, setEmail] = useState('');
   const onBackButtonEvent = (e) => {

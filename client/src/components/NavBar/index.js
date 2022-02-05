@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import GlobalIcon from '../Icons/GlobalIcon';
-import { getAuthStatus } from '../../store/helpee/helpee-actions';
+import { getHelpeeAuthStatus } from '../../store/helpee/helpee-actions';
+import { getHelperAuthStatus } from '../../store/helper/helper-actions';
 
 const MySwal = withReactContent(Swal);
 
@@ -44,7 +45,7 @@ const NavBar = (props) => {
       html: <p>You are now signed-out.</p>,
       icon: 'success',
     });
-    dispatch(getAuthStatus());
+    dispatch(getHelpeeAuthStatus());
   }
   return (
     <>
@@ -79,7 +80,7 @@ const NavBar = (props) => {
           >
             My Requests
           </NavLink>
-          {!props.isAuthenticated && (
+          {!props.isHelpeeAuthenticated && (
             <NavLink
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
@@ -89,7 +90,7 @@ const NavBar = (props) => {
               Sign-In
             </NavLink>
           )}
-          {props.isAuthenticated && (
+          {props.isHelpeeAuthenticated && (
             <button
               className={
                 buttonActive ? 'logoutButtonActive' : 'logoutButtonNonActive'

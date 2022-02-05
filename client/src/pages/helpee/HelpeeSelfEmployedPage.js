@@ -77,14 +77,14 @@ const HelpeeSelfEmployedPage = (props) => {
                 <DropDown
                   selected={type}
                   handleSelect={setType}
-                  title={'type *'}
+                  title={'Type *'}
                   selectRef={typeRef}
                   options={typeOptions}
                 />
                 <DropDown
                   selected={profession}
                   handleSelect={setProfession}
-                  title={'profession *'}
+                  title={'Profession *'}
                   selectRef={professionRef}
                   options={professionOptions}
                 />

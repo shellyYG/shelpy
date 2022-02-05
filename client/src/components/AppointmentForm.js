@@ -23,9 +23,9 @@ const MySwal = withReactContent(Swal);
 
 const AppointmentForm = (props) => {
   const dispatch = useDispatch();
-  const { userId } = useSelector((state) => state.helpee);
+  const { helpeeUserId } = useSelector((state) => state.helpee);
 const { requestFormStatus, requestFormStatusTitle, requestFormStatusMessage } =
-  useSelector((state) => state.notification);
+  useSelector((state) => state.helpeeNotification);
 const { globalServiceType } = useSelector((state) => state.helpee);
 const serviceRef = useRef();
 const genderRef = useRef();
@@ -61,7 +61,7 @@ const navigate = useNavigate();
     const [year, month, day] = dates;
     const unixTime = Date.UTC(parseInt(year), parseInt(month)-1 , parseInt(day), timeHour);
     const data = {
-      userId,
+      helpeeUserId,
       service: serviceRef.current.value,
       gender: genderRef.current.value,
       meetDate: meetDateRef.current.value,

@@ -11,8 +11,8 @@ const HelpeeOrderHistoryPage = (props) => {
   const [pastOrders, setPastOrders] = useState([]);
   
   useEffect(() => {
-    dispatch(getAllOrders({ userId: props.userId }));
-  }, [props.userId, dispatch]);
+    dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
+  }, [props.helpeeUserId, dispatch]);
 
   const { allOrders } = useSelector((state) => state.helpee);
   console.log('allOrders: ', allOrders);

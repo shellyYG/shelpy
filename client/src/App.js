@@ -24,29 +24,36 @@ import HelpeeFinalFormPage from './pages/helpee/HelpeeFinalFormPage';
 import HelperHomePage from './pages/helper/HelperHomePage';
 import HelperSignInPage from './pages/helper/HelperSignInPage';
 
-import { getAuthStatus } from './store/helpee/helpee-actions';
+import { getHelpeeAuthStatus } from './store/helpee/helpee-actions';
+import { getHelperAuthStatus } from './store/helper/helper-actions';
 import HelperBasicFormPage from './pages/helper/HelperBasicFormPage';
 
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAuthStatus());
+    dispatch(getHelpeeAuthStatus());
+    dispatch(getHelperAuthStatus());
   }, [dispatch]);
-  const { userId, isAuthenticated } = useSelector((state) => state.helpee);
+  const { helpeeUserId, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
+  const { helperUserId, isHelperAuthenticated } = useSelector((state) => state.helper);
   return (
     <Router>
-      <NavBar isAuthenticated={isAuthenticated} />
+      <NavBar isHelpeeAuthenticated={isHelpeeAuthenticated} />
       <Routes>
         <Route path='/about' element={<AboutPage />} />
         <Route path='/' element={<Navigate replace to='/home' />} />
         <Route
           path='/home'
-          element={<HelpeeHomePage isAuthenticated={isAuthenticated} />}
+          element={
+            <HelpeeHomePage isHelpeeAuthenticated={isHelpeeAuthenticated} />
+          }
         />
         <Route
           path='/helper/home'
-          element={<HelperHomePage isAuthenticated={isAuthenticated} />}
+          element={
+            <HelperHomePage isHelperAuthenticated={isHelperAuthenticated} />
+          }
         />
         <Route
           path='/helpee/sign-up-final-step'
@@ -62,7 +69,7 @@ function App() {
         <Route
           path='/helpee/book-a-helper'
           element={
-            isAuthenticated ? (
+            isHelpeeAuthenticated ? (
               <HelpeeSelectJobOrUniPage />
             ) : (
               <HelpeePreSignInPage />
@@ -72,20 +79,28 @@ function App() {
         <Route
           path='/helpee/job-form'
           element={
-            isAuthenticated ? <HelpeeJobFormPage /> : <HelpeePreSignInPage />
+            isHelpeeAuthenticated ? (
+              <HelpeeJobFormPage helpeeUserId={helpeeUserId} />
+            ) : (
+              <HelpeePreSignInPage />
+            )
           }
         />
         <Route
           path='/helpee/uni-form'
           element={
-            isAuthenticated ? <HelpeeUniFormPage /> : <HelpeePreSignInPage />
+            isHelpeeAuthenticated ? (
+              <HelpeeUniFormPage helpeeUserId={helpeeUserId} />
+            ) : (
+              <HelpeePreSignInPage />
+            )
           }
         />
         <Route
           path='/helpee/self-employed-form'
           element={
-            isAuthenticated ? (
-              <HelpeeSelfEmployedPage />
+            isHelpeeAuthenticated ? (
+              <HelpeeSelfEmployedPage helpeeUserId={helpeeUserId} />
             ) : (
               <HelpeePreSignInPage />
             )
@@ -94,14 +109,18 @@ function App() {
         <Route
           path='/helpee/final-form'
           element={
-            isAuthenticated ? <HelpeeFinalFormPage /> : <HelpeePreSignInPage />
+            isHelpeeAuthenticated ? (
+              <HelpeeFinalFormPage helpeeUserId={helpeeUserId} />
+            ) : (
+              <HelpeePreSignInPage />
+            )
           }
         />
         <Route
           path={'/helpee/order-history'}
           element={
-            isAuthenticated ? (
-              <HelpeeOrderHistoryPage userId={userId} />
+            isHelpeeAuthenticated ? (
+              <HelpeeOrderHistoryPage helpeeUserId={helpeeUserId} />
             ) : (
               <HelpeePreSignInPage />
             )
@@ -110,11 +129,14 @@ function App() {
         <Route
           path={'/helpee/order/helper-lists'}
           element={
-            isAuthenticated ? <HelperListPage /> : <HelpeePreSignInPage />
+            isHelpeeAuthenticated ? <HelperListPage /> : <HelpeePreSignInPage />
           }
         />
         <Route path={'/helpee/chatroom'} element={<HelpeeChatRoomPage />} />
-        <Route path={'/helper/basic-form'} element={<HelperBasicFormPage />} />
+        <Route
+          path={'/helper/basic-form'}
+          element={<HelperBasicFormPage helperUserId={helperUserId} />}
+        />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
       <Footer />

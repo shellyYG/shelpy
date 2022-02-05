@@ -3,7 +3,7 @@ const helperModel = require('../models/helperModel');
 
 const allowHelperPrivateRoute = async (req, res) => {
   const { userId } = res.locals;
-  res.status(200).json({ isAuthenticated: true, userId });
+  res.status(200).json({ isHelperAuthenticated: true, helperUserId: userId });
 };
 
 const postHelperRequest = async (req, res) => {
@@ -18,8 +18,8 @@ const postHelperRequest = async (req, res) => {
 
 const getHelperAllMatchedRequests = async (req, res) => {
   try {
-    const { userId } = req.query;
-    const response = await helperModel.getHelperAllMatchedRequests({ userId });
+    const { helpeeUserId } = req.query;
+    const response = await helperModel.getHelperAllMatchedRequests({ helpeeUserId });
     if (response.data) {
       res.status(200).json({
         allOrders: response.data.allOrders,

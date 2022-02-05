@@ -8,7 +8,7 @@ async function insertHelpeeRequestFormAndGetId(data) { // old.
 
 async function insertHelpeeRequest(data) { // new.
   const { 
-    userId,
+    helpeeUserId,
     type,
     globalUniSchool,
     globalUniDepartment,
@@ -61,7 +61,7 @@ async function insertHelpeeRequest(data) { // new.
   switch (type) {
     case 'university':
       filteredData = {
-        userId,
+        helpeeUserId,
         mainType: type,
         timestamp: Date.now(),
         school: globalUniSchool,
@@ -94,7 +94,7 @@ async function insertHelpeeRequest(data) { // new.
       break;
     case 'job':
       filteredData = {
-        userId,
+        helpeeUserId,
         mainType: type,
         timestamp: Date.now(),
         industry: globalJobIndustry,
@@ -129,7 +129,7 @@ async function insertHelpeeRequest(data) { // new.
       break;
     case 'selfEmployed':
       filteredData = {
-        userId,
+        helpeeUserId,
         mainType: type,
         timestamp: Date.now(),
         type: globalSelfEmployedType,
@@ -169,7 +169,7 @@ async function insertHelpeeRequest(data) { // new.
 }
 
 async function getHelpeeAllOrders(data) {
-  const sql = `SELECT * FROM requests WHERE userId=${data.userId} ORDER BY id DESC;`;
+  const sql = `SELECT * FROM requests WHERE helpeeUserId=${data.helpeeUserId} ORDER BY id DESC;`;
   const allOrders = await query(sql);
   return { data: { allOrders } };
 }

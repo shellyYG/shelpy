@@ -18,7 +18,7 @@ const HelpeeChatRoomPage = () => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const roomId = searchParams.get('roomId');
-  const userId = searchParams.get('userId');
+  const helpeeUserId = searchParams.get('helpeeUserId');
  
   const [showTaskSection, setShowTaskSection] = useState(true);
   const onBackButtonEvent = (e) => {
@@ -43,7 +43,7 @@ const HelpeeChatRoomPage = () => {
     if (currentMessage !== "") {
       const messageData = {
         room: roomId,
-        author: userId, // username,
+        author: helpeeUserId, // username,
         message: currentMessage,
         time:
           new Intl.DateTimeFormat("en-US", { month: "short" }).format(
@@ -116,7 +116,7 @@ const HelpeeChatRoomPage = () => {
           {/* <div className="chat-box"> */}
           <ScrollToBottom className="chat-box">
             {messageList.map((messageContent) => {
-              return messageContent.author === userId ? (
+              return messageContent.author === helpeeUserId ? (
                 <ChatMessageSelf
                   message={messageContent.message}
                   time={messageContent.time}

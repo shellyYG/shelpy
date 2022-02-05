@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import '../../App.css';
 import {
-  getAuthStatus,
+  getHelpeeAuthStatus,
   clearSignUpPasswordStatus,
   postHelpeeSignUpPassword,
 } from '../../store/helpee/helpee-actions';
@@ -27,7 +27,7 @@ const HelpeeSignUpPasswordPage = () => {
     signUpPasswordStatus,
     signUpPasswordStatusTitle,
     signUpPasswordStatusMessage,
-  } = useSelector((state) => state.notification);
+  } = useSelector((state) => state.helpeeNotification);
 
   const onBackButtonEvent = (e) => {
     e.preventDefault();
@@ -100,7 +100,7 @@ const HelpeeSignUpPasswordPage = () => {
           html: <p>{message}</p>,
           icon: 'success',
         });
-        dispatch(getAuthStatus());
+        dispatch(getHelpeeAuthStatus());
         dispatch(clearSignUpPasswordStatus());
         // to perform navigate after await MySwal, we need to create extra async function sweetAlertAndNavigate to wrap MySwal.
         navigate('/helpee/book-a-helper', { replace: true });

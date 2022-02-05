@@ -10,7 +10,7 @@ async function insertHelperRequestFormAndGetId(data) {
 async function insertHelperRequest(data) {
   // new.
   const {
-    userId,
+    helperUserId,
     type,
     globalUniSchool,
     globalUniDepartment,
@@ -63,7 +63,7 @@ async function insertHelperRequest(data) {
   switch (type) {
     case 'university':
       filteredData = {
-        userId,
+        helperUserId,
         mainType: type,
         timestamp: Date.now(),
         school: globalUniSchool,
@@ -96,7 +96,7 @@ async function insertHelperRequest(data) {
       break;
     case 'job':
       filteredData = {
-        userId,
+        helperUserId,
         mainType: type,
         timestamp: Date.now(),
         industry: globalJobIndustry,
@@ -131,7 +131,7 @@ async function insertHelperRequest(data) {
       break;
     case 'selfEmployed':
       filteredData = {
-        userId,
+        helperUserId,
         mainType: type,
         timestamp: Date.now(),
         type: globalSelfEmployedType,
@@ -172,7 +172,7 @@ async function insertHelperRequest(data) {
 
 // TODO
 async function getHelperAllMatchedRequests(data) {
-  const sql = `SELECT * FROM requests WHERE userId=${data.userId} ORDER BY id DESC;`;
+  const sql = `SELECT * FROM requests WHERE helperUserId=${data.helperUserId} ORDER BY id DESC;`;
   const allOrders = await query(sql);
   return { data: { allOrders } };
 }
@@ -188,9 +188,27 @@ async function getHelperOrderHelperList(data) {
   return { data: { helpers: sqlResult } };
 }
 
+async function updateHelperProfilePicPath(data) {
+  const { userId, path } = data;
+  const sql = `
+    UPDATE helper_account SET profilePicPath = '${path}' WHERE id = ${userId}`;
+  const sqlquery = await query(sql);
+  return sqlquery;
+}
+
+async function updateHelperCertificatePath(data) {
+  const { userId, username, path, age, linkedInUrl, notes } = data;
+  const sql = `
+    UPDATE helper_account SET username = '${username}', certificatePath = '${path}', age = '${age}', linkedInUrl = '${linkedInUrl}', notes = '${notes}', status='resume_created' WHERE id = ${userId}`;
+  const sqlquery = await query(sql);
+  return sqlquery;
+}
+
 module.exports = {
   insertHelperRequestFormAndGetId,
   insertHelperRequest,
   getHelperAllMatchedRequests,
   getHelperOrderHelperList,
+  updateHelperProfilePicPath,
+  updateHelperCertificatePath,
 };

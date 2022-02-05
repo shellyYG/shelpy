@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { notificationActions } from '../notification/notification-slice'; 
+import { notificationActions } from './notification-slice'; 
 import { helpeeActions } from "./helpee-slice";
 
 const getHelpeeAuthStatusPath = '/api/helpee/get-auth-status';
@@ -10,7 +10,7 @@ const userRequestFormPath = '/api/helpee/request';
 const activeHelperPath = '/api/helpee/active-helpers';
 const getAllOrdersPath = '/api/helpee/all-orders';
 
-export const getAuthStatus = () => {
+export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
@@ -29,8 +29,8 @@ export const getAuthStatus = () => {
         );
         dispatch(
           helpeeActions.updateAuthStatus({
-            isAuthenticated: response.data.isAuthenticated,
-            userId: response.data.userId,
+            isHelpeeAuthenticated: response.data.isHelpeeAuthenticated,
+            helpeeUserId: response.data.helpeeUserId,
           })
         );
       }
@@ -38,7 +38,7 @@ export const getAuthStatus = () => {
       console.error(error);
       dispatch(
         helpeeActions.updateAuthStatus({
-          isAuthenticated: false,
+          isHelpeeAuthenticated: false,
         })
       );
     }
@@ -48,7 +48,9 @@ export const getAuthStatus = () => {
 export const getAllOrders = (data) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(getAllOrdersPath, { params: { userId: data.userId }});
+      const response = await axios.get(getAllOrdersPath, {
+        params: { helpeeUserId: data.helpeeUserId },
+      });
       dispatch(
         helpeeActions.updateActiveAndPastOrders({
           allOrders: response.data.allOrders,
@@ -187,7 +189,7 @@ export const postHelpeeSignUpPassword = (data) => {
   };
 };
 
-export const postSignInData = (data) => {
+export const postHelpeeSignInData = (data) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(helpeeSignInPath, {
@@ -217,8 +219,8 @@ export const postSignInData = (data) => {
           })
         );
       }
+    };
   };
-};
 }
 
 // depreciated

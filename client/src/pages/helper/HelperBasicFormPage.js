@@ -10,7 +10,12 @@ import {
   ageOptions,
 } from '../../store/options/service-options';
 
-import { onUploadProfilePicture, onSubmitUploadHelperData } from '../../store/helper/helper-actions';
+import {
+  onUploadProfilePicture,
+  onSubmitUploadHelperData,
+  clearApplyHelperStatus,
+} from '../../store/helper/helper-actions';
+
 import LeftHalfLineTextBox from '../../components/LeftHalfLineTextBox';
 
 const MySwal = withReactContent(Swal);
@@ -22,15 +27,31 @@ const HelperBasicFormPage = (props) => {
   const ageRef = useRef();
   const notesRef = useRef();
   const usernameRef = useRef();
-  
+  const linkedInUrlRef = useRef();
+
+  const [loading, setIsLoading] = useState(false);
   const [age, setAge] = useState('default');
   const [profilePic, setProfilePic] = useState();
   const [certificate, setCertificate] = useState();
-  const [profilePicSource, setProfilePicSource] = useState('')
   const [enableBtn, setEnableBtn] = useState(false);
-
   const { profilePicPath } = useSelector((state) => state.helper);
-  
+  const {
+    applyHelperStatus,
+    applyHelperStatusTitle,
+    applyHelperStatusMessage,
+  } = useSelector((state) => state.helperNotification);
+
+  if (loading) {
+    MySwal.fire({
+      title: 'Loading...',
+      html: 'Please do not close the window.',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        MySwal.showLoading();
+      },
+    });
+  }
   async function handleProfilePicUpload(e) {
     e.preventDefault();
     const file = e.target.files[0];
@@ -57,6 +78,7 @@ const HelperBasicFormPage = (props) => {
     }
     setProfilePic(file);
     const data = new FormData();
+    data.append('helperUserId', props.helperUserId);
     data.append('profilePic', file);
     try {
       dispatch(onUploadProfilePicture(data));
@@ -67,7 +89,7 @@ const HelperBasicFormPage = (props) => {
   }
   async function handleResumeUpload(e) {
     e.preventDefault();
-    const file = e.target.files[0];
+    const file = e.target.files[0] || '';
     if (file.size > 1000000) {
       await MySwal.fire({
         title: <strong>Oops!</strong>,
@@ -109,30 +131,89 @@ const HelperBasicFormPage = (props) => {
     e.preventDefault();
     let notes;
     let username;
+    let linkedInUrl;
     if (notesRef && notesRef.current) {
       notes = notesRef.current.value;
     }
     if (usernameRef && usernameRef.current) {
       username = usernameRef.current.value;
     }
-    const data = new FormData();
-    data.append('username', username);
-    data.append('age', age);
-    data.append('notes', notes);
-    data.append('certificate', certificate); // need to append file as last object
-
-    console.log('data to send: ', data); // console.log(data) // browser will be empty
+    if (linkedInUrlRef && linkedInUrlRef.current) {
+      linkedInUrl = linkedInUrlRef.current.value;
+    }
+    let data;
+    if (certificate) {
+      console.log('yes certificate');
+      data = new FormData();
+      data.append('helperUserId', props.helperUserId);
+      data.append('username', username);
+      data.append('age', age);
+      data.append('linkedInUrl', linkedInUrl);
+      data.append('notes', notes);
+      data.append('certificate', certificate); // need to append file as last object
+      console.log('data to send: ', data); // console.log(data) // browser will be empty
+    }else {
+      data = {
+        helperUserId: props.helperUserId,
+        username,
+        age,
+        linkedInUrl,
+        notes,
+      };
+    }
     try {
       dispatch(onSubmitUploadHelperData(data));
-      // navigate('/helpee/final-form', { replace: true });
+      setIsLoading(true);
     } catch (err) {
       console.error(err);
+      setIsLoading(false);
     }
+    
+    
   }
   
   useEffect(() => {
-    setEnableBtn(usernameRef && age !== 'default' && certificate);
-  }, [usernameRef, age, certificate]);
+    setEnableBtn(
+      usernameRef && age !== 'default' && (linkedInUrlRef || certificate)
+    );
+  }, [usernameRef, linkedInUrlRef, age, certificate]);
+
+  useEffect(() => {
+    if (applyHelperStatus === 'error') {
+      setIsLoading(false);
+      async function sweetAlertAndClearStatus(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          html: <p>{message}</p>,
+          icon: 'error',
+        });
+        dispatch(clearApplyHelperStatus());
+      }
+      sweetAlertAndClearStatus(applyHelperStatus, applyHelperStatusMessage);
+      return;
+    } else if (applyHelperStatus === 'success') {
+      setIsLoading(false);
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          imageWidth: 442,
+          imageHeight: 293,
+          html: <p>{message}</p>,
+          icon: 'success',
+        });
+        // let path = '/helpee/order-history';
+        // navigate(path, { replace: true });
+      }
+      dispatch(clearApplyHelperStatus());
+      sweetAlertAndNavigate(applyHelperStatus, applyHelperStatusMessage);
+    }
+  }, [
+    applyHelperStatus,
+    applyHelperStatusTitle,
+    applyHelperStatusMessage,
+    navigate,
+    dispatch,
+  ]);
   
   return (
     <div
@@ -157,7 +238,7 @@ const HelperBasicFormPage = (props) => {
                       {' '}
                       <div className='uploadInnerDiv'>
                         <label className='uploadLabel' for='profilePic'>
-                          Upload Picture
+                          Upload Picture (Optional)
                         </label>
                         <input
                           type='file'
@@ -168,15 +249,14 @@ const HelperBasicFormPage = (props) => {
                       </div>{' '}
                     </div>
                   )}
-                  {profilePic && (!profilePicPath || profilePicPath.length < 1) && 
-                    <div className='blankProfileImageBx'>
-                      <div style={{ margin: 'auto'}}>
-                        <p style={{ color: 'black'}}>  
-                          Loading...
-                        </p>
+                  {profilePic &&
+                    (!profilePicPath || profilePicPath.length < 1) && (
+                      <div className='blankProfileImageBx'>
+                        <div style={{ margin: 'auto' }}>
+                          <p style={{ color: 'black' }}>Loading...</p>
+                        </div>
                       </div>
-                    </div>
-                  }
+                    )}
                   {profilePicPath && profilePicPath.length > 1 && (
                     <div className='profileImageBx'>
                       <img src={profilePicPath} alt='connection'></img>
@@ -200,14 +280,18 @@ const HelperBasicFormPage = (props) => {
               </div>
               <div className='form-row'>
                 <LeftHalfLineTextBox
-                  title={'LinkedIn Link'}
+                  title={
+                    'LinkedIn Link (or upload Resume)'
+                  }
                   placeholder={
                     'https://www.linkedin.com/in/your-linkedin-profile'
                   }
-                  inputRef={notesRef}
+                  inputRef={linkedInUrlRef}
                 />
                 <div className='form-wrapper'>
-                  <label>Reseme/files</label>
+                  <label>
+                    Resume/files (or linkedin link)
+                  </label>
                   {!certificate && (
                     <>
                       <label className='uploadLabel' for='resume'>

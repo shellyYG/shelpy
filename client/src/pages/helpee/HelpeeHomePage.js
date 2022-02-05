@@ -6,8 +6,8 @@ const HelpeeHomePage = (props) => {
   return (
     <HelpeeSignUpPage />
     // <>
-    //   {props.isAuthenticated && <HelpeeLoggedInHomePage />}
-    //   {!props.isAuthenticated && <HelpeeSignUpPage />}
+    //   {props.isHelpeeAuthenticated && <HelpeeLoggedInHomePage />}
+    //   {!props.isHelpeeAuthenticated && <HelpeeSignUpPage />}
     // </>
   );
 };

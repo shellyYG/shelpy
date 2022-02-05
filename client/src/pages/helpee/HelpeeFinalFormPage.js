@@ -44,7 +44,7 @@ const HelpeeFinalFormPage = (props) => {
   console.log('hasMonToFri: ', hasMonToFri);
 
   const {
-    userId,
+    helpeeUserId,
 
     globalJobOrUniTarget,
     globalUniSchool,
@@ -71,7 +71,7 @@ const HelpeeFinalFormPage = (props) => {
     requestStatus,
     requestStatusTitle,
     requestStatusMessage,
-  } = useSelector((state) => state.notification);
+  } = useSelector((state) => state.helpeeNotification);
 
   if (loading) {
     MySwal.fire({
@@ -92,7 +92,7 @@ const HelpeeFinalFormPage = (props) => {
       notes = notesRef.current.value;
     }
     const data = {
-      userId,
+      helpeeUserId,
       type: globalJobOrUniTarget,
       globalUniSchool,
       globalUniDepartment,

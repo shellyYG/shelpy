@@ -2,7 +2,7 @@ const helpeeModel = require('../models/helpeeModel');
 
 const allowHelpeePrivateRoute = async (req, res) => {
   const { userId } = res.locals;
-  res.status(200).json({ isAuthenticated: true, userId });
+  res.status(200).json({ isHelpeeAuthenticated: true, helpeeUserId: userId });
 }
 
 const postHelpeeServiceRequestForm = async (req, res) => { // old.
@@ -29,8 +29,8 @@ const postHelpeeRequest = async (req, res) => { // new.
 
 const getHelpeeAllOrders = async (req, res) => {
   try {
-    const { userId } = req.query;
-    const response = await helpeeModel.getHelpeeAllOrders({ userId });
+    const { helpeeUserId } = req.query;
+    const response = await helpeeModel.getHelpeeAllOrders({ helpeeUserId });
     if (response.data) {
       res.status(200).json({
         allOrders: response.data.allOrders,

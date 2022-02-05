@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { notificationActions } from '../notification/notification-slice';
+import { notificationActions } from './notification-slice';
 import { helperActions } from './helper-slice';
 
 const getHelperAuthStatusPath = '/api/helper/get-auth-status';
@@ -10,8 +10,9 @@ const activeHelperPath = '/api/helper/active-helpers';
 const getAllOrdersPath = '/api/helper/all-orders';
 const helperProfilePicUploadPath = '/api/helper/profile-pic-upload';
 const helperCertificateUploadPath = '/api/helper/certificate-upload';
+const helperBasicFormWithoutCertificatePath = '/api/helper/basic-form';
 
-export const getAuthStatus = () => {
+export const getHelperAuthStatus = () => {
   return async (dispatch) => {
     try {
       const generalToken = localStorage.getItem('shelper-token');
@@ -30,8 +31,8 @@ export const getAuthStatus = () => {
         );
         dispatch(
           helperActions.updateAuthStatus({
-            isAuthenticated: response.data.isAuthenticated,
-            userId: response.data.userId,
+            isHelperAuthenticated: response.data.isHelperAuthenticated,
+            helperUserId: response.data.helperUserId,
           })
         );
       }
@@ -39,7 +40,7 @@ export const getAuthStatus = () => {
       console.error(error);
       dispatch(
         helperActions.updateAuthStatus({
-          isAuthenticated: false,
+          isHelperAuthenticated: false,
         })
       );
     }
@@ -50,7 +51,7 @@ export const getAllOrders = (data) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(getAllOrdersPath, {
-        params: { userId: data.userId },
+        params: { helperUserId: data.helperUserId },
       });
       dispatch(
         helperActions.updateActiveAndPastOrders({
@@ -269,13 +270,13 @@ export const postHelperRequestForm = (data) => {
   };
 };
 
-export const clearRequestStatus = (data) => {
+export const clearApplyHelperStatus = (data) => {
   return async (dispatch) => {
     dispatch(
       notificationActions.setNotification({
-        requestStatus: 'initial',
-        requestStatusTitle: '',
-        requestStatusMessage: '',
+        applyHelperStatus: 'initial',
+        applyHelperStatusTitle: '',
+        applyHelperStatusMessage: '',
       })
     );
   };
@@ -406,6 +407,10 @@ export const onUploadProfilePicture = (data) => {
 
 export const onSubmitUploadHelperData = (data) => {
   return async (dispatch) => {
+    const postPath =
+      data instanceof FormData
+        ? helperCertificateUploadPath
+        : helperBasicFormWithoutCertificatePath;
     try {
       const generalToken = localStorage.getItem('shelper-token');
       if (!generalToken) {
@@ -415,33 +420,34 @@ export const onSubmitUploadHelperData = (data) => {
         const headers = {
           Authorization: 'Bearer ' + generalToken,
         };
-        const response = await axios.post(helperCertificateUploadPath, data, {
+        const response = await axios.post(postPath, data, {
           headers,
         });
         console.log('upload certificate response: ', response);
-        // data.requestId = response.data.requestId;
-        // dispatch(
-        //   notificationActions.setNotification({
-        //     requestStatus: 'success',
-        //     requestStatusTitle: 'You are all set!',
-        //     requestStatusMessage:
-        //       'We will inform you via email as soon as we find a helper!',
-        //   })
-        // );
+        data.requestId = response.data.requestId;
+        dispatch(
+          notificationActions.setNotification({
+            applyHelperStatus: 'success',
+            applyHelperStatusTitle:
+              'You are almost there!',
+            applyHelperStatusMessage:
+              'Last step: select the experiences you want to share.',
+          })
+        );
       }
     } catch (error) {
       console.error('upload error: ', error);
-      // const errorResponse = error.response ? error.response.data : '';
-      // const errorMessage = errorResponse || error.message;
-      // if (errorMessage) {
-      //   dispatch(
-      //     notificationActions.setNotification({
-      //       requestStatus: 'error',
-      //       requestStatusTitle: 'Oops!',
-      //       requestStatusMessage: errorMessage,
-      //     })
-      //   );
-      // }
+      const errorResponse = error.response ? error.response.data : '';
+      const errorMessage = errorResponse || error.message;
+      if (errorMessage) {
+        dispatch(
+          notificationActions.setNotification({
+            applyHelperStatus: 'error',
+            applyHelperStatusTitle: 'Oops!',
+            applyHelperStatusMessage: errorMessage,
+          })
+        );
+      }
     }
   };
 }

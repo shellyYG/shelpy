@@ -6,8 +6,8 @@ const HelperHomePage = (props) => {
   return (
     <HelperSignUpPage />
     // <>
-    //   {props.isAuthenticated && <HelperLoggedInHomePage />}
-    //   {!props.isAuthenticated && <HelperSignUpPage />}
+    //   {props.isHelpeeAuthenticated && <HelperLoggedInHomePage />}
+    //   {!props.isHelpeeAuthenticated && <HelperSignUpPage />}
     // </>
   );
 };
