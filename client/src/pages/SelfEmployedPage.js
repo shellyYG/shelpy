@@ -1,19 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import DropDown from '../../components/Dropdown';
-import FullLineTextBox from '../../components/FullLineTextBox';
-import ConfirmBtn from '../../components/ConfirmBtn';
+import DropDown from '../components/Dropdown';
+import FullLineTextBox from '../components/FullLineTextBox';
+import ConfirmBtn from '../components/ConfirmBtn';
 import {
   countryOptions,
   typeOptions,
   professionOptions,
   yearsOptions,
-} from '../../store/options/service-options';
+} from '../store/options/service-options';
 
-import { onSubmitUpdateSelfEmployedData } from '../../store/helpee/helpee-actions';
+import { onSubmitUpdateHelpeeSelfEmployedData } from '../store/helpee/helpee-actions';
+import { onSubmitUpdateHelperSelfEmployedData } from '../store/helper/helper-actions';
 
-const HelpeeSelfEmployedPage = (props) => {
+const SelfEmployedPage = (props) => {
   const dispatch = useDispatch();
   const typeRef = useRef();
   const professionRef = useRef();
@@ -34,9 +35,15 @@ const HelpeeSelfEmployedPage = (props) => {
       years,
       notes: notes || '',
     };
+    
     try {
-      dispatch(onSubmitUpdateSelfEmployedData(data));
-      navigate('/helpee/final-form', { replace: true });
+      if (props.isHelpee) {
+        dispatch(onSubmitUpdateHelpeeSelfEmployedData(data));
+        navigate('/helpee/final-form', { replace: true });
+      }else {
+        dispatch(onSubmitUpdateHelperSelfEmployedData(data));
+        navigate('/helper/final-form', { replace: true });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -67,7 +74,8 @@ const HelpeeSelfEmployedPage = (props) => {
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        What do you want to study?
+        {props.isHelpee && 'What kind of experiences do you want to know?'}
+        {!props.isHelpee && 'What experiences did you have?'}
       </h1>
       <div className='form-center-wrapper'>
         <div className='container'>
@@ -123,4 +131,4 @@ const HelpeeSelfEmployedPage = (props) => {
   );
 };
 
-export default HelpeeSelfEmployedPage;
+export default SelfEmployedPage;

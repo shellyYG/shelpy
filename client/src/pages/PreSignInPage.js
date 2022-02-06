@@ -1,11 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import '../../App.css';
+import '../App.css';
 
-const HelpeePreSignInPage = () => {
+const PreSignInPage = (props) => {
   const navigate = useNavigate();
   function handleNext(e) {
     e.preventDefault();
-    navigate('/helpee/sign-in', { replace: true });
+    let path = '';
+    if (props.isHelpee) {
+      path = '/helpee/sign-in';
+    } else {
+      path = '/helper/sign-in';
+    }
+    navigate(path, { replace: true });
   }
   return (
     <div className='main-content-wrapper-homepage-no-background'>
@@ -32,4 +38,4 @@ const HelpeePreSignInPage = () => {
   );
 };
 
-export default HelpeePreSignInPage;
+export default PreSignInPage;

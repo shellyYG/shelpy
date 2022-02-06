@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { onClickUpdateActiveJobOrUniTarget } from '../store/helpee/helpee-actions';
+import { onClickUpdateHelpeeActiveJobOrUniTarget } from '../store/helpee/helpee-actions';
+import { onClickUpdateHelperActiveJobOrUniTarget } from '../store/helper/helper-actions';
 
 function JobOrUniCard(props) {
   const dispatch = useDispatch();
@@ -8,21 +9,40 @@ function JobOrUniCard(props) {
 
   function handleOnClick(e) {
     e.preventDefault();
-    const data = {
-      globalJobOrUniTarget: props.value,
-    };
+    let data;
+    if (props.isHelpee) {
+      data = {
+        globalHelpeeJobOrUniTarget: props.value,
+      };
+    } else {
+      data = {
+        globalHelperJobOrUniTarget: props.value,
+      };
+    }
+    
     try {
-      dispatch(onClickUpdateActiveJobOrUniTarget(data));
+      if (props.isHelpee) {
+        dispatch(onClickUpdateHelpeeActiveJobOrUniTarget(data));
+      } else {
+        dispatch(onClickUpdateHelperActiveJobOrUniTarget(data));
+      }
     } catch (err) {
       console.error(err);
     }
     setActive(!active);
   }
   useEffect(() => {
-    if (props.globalJobOrUniTarget !== props.value) {
-      setActive(false);
+    if (props.isHelpee) {
+      if (props.globalHelpeeJobOrUniTarget !== props.value) {
+        setActive(false);
+      }
+    } else {
+      if (props.globalHelperJobOrUniTarget !== props.value) {
+        setActive(false);
+      }
     }
-  }, [props.globalJobOrUniTarget, props.value]);
+    
+  }, [props.globalHelpeeJobOrUniTarget, props.globalHelperJobOrUniTarget, props.value]);
 
   return (
     <div className={active ? 'card-active' : 'card'} onClick={handleOnClick}>

@@ -10,23 +10,26 @@ import HelpeeSignUpPasswordPage from './pages/helpee/HelpeeSignUpPasswordPage';
 import HelperSignUpPasswordPage from './pages/helper/HelperSignUpPasswordPage';
 import HelpeeChatRoomPage from './pages/HelpeeChatRoomPage';
 import HelpeeHomePage from './pages/helpee/HelpeeHomePage';
-import HelpeeOrderHistoryPage from './pages/helpee/HelpeeOrderHistoryPage';
+import HelpeeDashboardPage from './pages/helpee/HelpeeDashboardPage';
 import HelperListPage from './pages/helpee/HelpeeOrderHelperListPage';
 import HelpeeSignInPage from './pages/helpee/HelpeeSignInPage';
 import ErrorPage from './pages/ErrorPage';
-import HelpeePreSignInPage from './pages/helpee/HelpeePreSignInPage';
+import PreSignInPage from './pages/PreSignInPage';
 
-import HelpeeJobFormPage from './pages/helpee/HelpeeJobFormPage';
-import HelpeeSelectJobOrUniPage from './pages/helpee/HelpeeSelectJobOrUniPage';
-import HelpeeUniFormPage from './pages/helpee/HelpeeUniFormPage';
-import HelpeeSelfEmployedPage from './pages/helpee/HelpeeSelfEmployedPage';
-import HelpeeFinalFormPage from './pages/helpee/HelpeeFinalFormPage';
 import HelperHomePage from './pages/helper/HelperHomePage';
 import HelperSignInPage from './pages/helper/HelperSignInPage';
+
+import JobFormPage from './pages/JobFormPage';
+import SelectJobOrUniPage from './pages/SelectJobOrUniPage';
+import UniFormPage from './pages/UniFormPage';
+import SelfEmployedPage from './pages/SelfEmployedPage';
+import FinalFormPage from './pages/FinalFormPage';
 
 import { getHelpeeAuthStatus } from './store/helpee/helpee-actions';
 import { getHelperAuthStatus } from './store/helper/helper-actions';
 import HelperBasicFormPage from './pages/helper/HelperBasicFormPage';
+import HelperAddServicePage from './pages/helper/HelperAddServicePage';
+import HelperDashboardPage from './pages/helper/HelperDashboardPage';
 
 
 function App() {
@@ -67,12 +70,22 @@ function App() {
         <Route path='/helper/sign-in' element={<HelperSignInPage />} />
 
         <Route
-          path='/helpee/book-a-helper'
+          path='/helpee/service-types'
           element={
             isHelpeeAuthenticated ? (
-              <HelpeeSelectJobOrUniPage />
+              <SelectJobOrUniPage isHelpee={true} />
             ) : (
-              <HelpeePreSignInPage />
+              <PreSignInPage isHelpee={true} />
+            )
+          }
+        />
+        <Route
+          path='/helper/service-types'
+          element={
+            isHelpeeAuthenticated ? (
+              <SelectJobOrUniPage isHelpee={false} />
+            ) : (
+              <PreSignInPage isHelpee={false} />
             )
           }
         />
@@ -80,9 +93,19 @@ function App() {
           path='/helpee/job-form'
           element={
             isHelpeeAuthenticated ? (
-              <HelpeeJobFormPage helpeeUserId={helpeeUserId} />
+              <JobFormPage isHelpee={true} />
             ) : (
-              <HelpeePreSignInPage />
+              <PreSignInPage isHelpee={true} />
+            )
+          }
+        />
+        <Route
+          path='/helper/job-form'
+          element={
+            isHelpeeAuthenticated ? (
+              <JobFormPage isHelpee={false} />
+            ) : (
+              <PreSignInPage isHelpee={false} />
             )
           }
         />
@@ -90,9 +113,19 @@ function App() {
           path='/helpee/uni-form'
           element={
             isHelpeeAuthenticated ? (
-              <HelpeeUniFormPage helpeeUserId={helpeeUserId} />
+              <UniFormPage isHelpee={true} />
             ) : (
-              <HelpeePreSignInPage />
+              <PreSignInPage isHelpee={true} />
+            )
+          }
+        />
+        <Route
+          path='/helper/uni-form'
+          element={
+            isHelpeeAuthenticated ? (
+              <UniFormPage isHelpee={false} />
+            ) : (
+              <PreSignInPage isHelpee={false} />
             )
           }
         />
@@ -100,9 +133,19 @@ function App() {
           path='/helpee/self-employed-form'
           element={
             isHelpeeAuthenticated ? (
-              <HelpeeSelfEmployedPage helpeeUserId={helpeeUserId} />
+              <SelfEmployedPage isHelpee={true} />
             ) : (
-              <HelpeePreSignInPage />
+              <PreSignInPage isHelpee={true} />
+            )
+          }
+        />
+        <Route
+          path='/helper/self-employed-form'
+          element={
+            isHelpeeAuthenticated ? (
+              <SelfEmployedPage isHelpee={false} />
+            ) : (
+              <PreSignInPage isHelpee={false} />
             )
           }
         />
@@ -110,32 +153,66 @@ function App() {
           path='/helpee/final-form'
           element={
             isHelpeeAuthenticated ? (
-              <HelpeeFinalFormPage helpeeUserId={helpeeUserId} />
+              <FinalFormPage isHelpee={true} />
             ) : (
-              <HelpeePreSignInPage />
+              <PreSignInPage isHelpee={true} />
             )
           }
         />
         <Route
-          path={'/helpee/order-history'}
+          path='/helper/final-form'
           element={
             isHelpeeAuthenticated ? (
-              <HelpeeOrderHistoryPage helpeeUserId={helpeeUserId} />
+              <FinalFormPage isHelpee={false} />
             ) : (
-              <HelpeePreSignInPage />
+              <PreSignInPage isHelpee={false} />
+            )
+          }
+        />
+        <Route
+          path={'/helpee/dashboard'}
+          element={
+            isHelpeeAuthenticated ? (
+              <HelpeeDashboardPage helpeeUserId={helpeeUserId} />
+            ) : (
+              <PreSignInPage isHelpee={true} />
+            )
+          }
+        />
+        <Route
+          path={'/helper/dashboard'}
+          element={
+            isHelperAuthenticated ? (
+              <HelperDashboardPage helperUserId={helperUserId} />
+            ) : (
+              <PreSignInPage isHelpee={false} />
             )
           }
         />
         <Route
           path={'/helpee/order/helper-lists'}
           element={
-            isHelpeeAuthenticated ? <HelperListPage /> : <HelpeePreSignInPage />
+            isHelpeeAuthenticated ? (
+              <HelperListPage />
+            ) : (
+              <PreSignInPage isHelpee={true} />
+            )
           }
         />
         <Route path={'/helpee/chatroom'} element={<HelpeeChatRoomPage />} />
         <Route
           path={'/helper/basic-form'}
           element={<HelperBasicFormPage helperUserId={helperUserId} />}
+        />
+        <Route
+          path={'/helper/add-service'}
+          element={
+            isHelperAuthenticated ? (
+              <HelperAddServicePage />
+            ) : (
+              <PreSignInPage isHelpee={false} />
+            )
+          }
         />
         <Route path='*' element={<ErrorPage />} />
       </Routes>

@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import DropDown from '../../components/Dropdown';
-import FullLineTextBox from '../../components/FullLineTextBox';
-import ConfirmBtn from '../../components/ConfirmBtn';
+import DropDown from '../components/Dropdown';
+import FullLineTextBox from '../components/FullLineTextBox';
+import ConfirmBtn from '../components/ConfirmBtn';
 import {
   industryOptions,
   jobOptions,
@@ -11,11 +11,12 @@ import {
   WFHOptions,
   companySizeOptions,
   yearsOptions,
-} from '../../store/options/service-options';
+} from '../store/options/service-options';
 
-import { onSubmitUpdateJobData } from '../../store/helpee/helpee-actions';
+import { onSubmitUpdateHelpeeJobData } from '../store/helpee/helpee-actions';
+import { onSubmitUpdateHelperJobData } from '../store/helper/helper-actions';
 
-const HelpeeJobFormPage = (props) => {
+const JobFormPage = (props) => {
   const dispatch = useDispatch();
   const industryRef = useRef();
   const jobRef = useRef();
@@ -41,8 +42,13 @@ const HelpeeJobFormPage = (props) => {
       notes: notes || '',
     };
     try {
-      dispatch(onSubmitUpdateJobData(data));
-      navigate('/helpee/final-form', { replace: true });
+      if (props.isHelpee) {
+        dispatch(onSubmitUpdateHelpeeJobData(data));
+        navigate('/helpee/final-form', { replace: true });
+      } else {
+        dispatch(onSubmitUpdateHelperJobData(data));
+        navigate('/helper/final-form', { replace: true });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -71,7 +77,8 @@ const HelpeeJobFormPage = (props) => {
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        What kind of job are you searching?
+        {props.isHelpee && 'What kind of job are you searching?'}
+        {!props.isHelpee && 'What kind of job did you have?'}
       </h1>
       <div className='form-center-wrapper'>
         <div className='container'>
@@ -144,4 +151,4 @@ const HelpeeJobFormPage = (props) => {
   );
 };
 
-export default HelpeeJobFormPage;
+export default JobFormPage;

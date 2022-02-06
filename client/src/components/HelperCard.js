@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { onClickUpdateActiveServiceType } from '../store/helpee/helpee-actions';
+import { onClickUpdateActiveSelectedHelper } from '../store/helpee/helpee-actions';
 import FilledStarIcon from './Icons/FilledStarIcon';
 import FilledHalfStarIcon from './Icons/FilledHalfStarIcon';
 import NoFilledStarIcon from './Icons/NoFilledStarIcon';
@@ -13,10 +13,10 @@ function HelperCard(props) {
     e.preventDefault();
     // change global state for matching active service type for UI changes
     const data = {
-      globalServiceType: props.value,
+      selectedHelper: props.value,
     };
     try {
-      dispatch(onClickUpdateActiveServiceType(data));
+      dispatch(onClickUpdateActiveSelectedHelper(data));
     } catch (err) {
       console.error(err);
     }
@@ -24,10 +24,10 @@ function HelperCard(props) {
   }
 
   useEffect(() => {
-    if (props.globalServiceType !== props.value) {
+    if (props.selectedHelper !== props.value) {
       setActive(false);
     }
-  }, [props.globalServiceType, props.value]);
+  }, [props.selectedHelper, props.value]);
 
   return (
     <div className={active ? 'card-active' : 'card'} onClick={handleOnClick}>

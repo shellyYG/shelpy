@@ -6,9 +6,9 @@ const allowHelperPrivateRoute = async (req, res) => {
   res.status(200).json({ isHelperAuthenticated: true, helperUserId: userId });
 };
 
-const postHelperRequest = async (req, res) => {
+const postHelperOffer = async (req, res) => {
   try {
-    const id = await helperModel.insertHelperRequest(req.body.data);
+    const id = await helperModel.insertHelperOffer(req.body.data);
     res.status(200).json({ requestId: id, status: 'success' });
   } catch (error) {
     console.error(error);
@@ -46,7 +46,7 @@ const getProfilePic = async (req, res) => {
 
 module.exports = {
   allowHelperPrivateRoute,
-  postHelperRequest,
+  postHelperOffer,
   getHelperAllMatchedRequests,
   getProfilePic,
 };

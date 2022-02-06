@@ -80,7 +80,7 @@ const SignUpPageHelper = () => {
           <div className='coverLeft'>
             <div>
               <h1 style={{ textAlign: 'center', color: 'white' }}>
-                Helping people who were once you!
+                Help people while earning money!
               </h1>
             </div>
             <div>

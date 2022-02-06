@@ -62,9 +62,9 @@ const NavBar = (props) => {
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to='/helpee/book-a-helper'
+            to='/helpee/service-types'
           >
-            Book an Insider
+            Book Shelper
           </NavLink>
         </div>
         <div className='nav-button'>
@@ -72,11 +72,11 @@ const NavBar = (props) => {
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to='/helper/home'
           >
-            Become Helper
+            Become Shelper
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to='/helpee/order-history'
+            to='/helpee/dashboard'
           >
             My Requests
           </NavLink>

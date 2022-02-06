@@ -5,7 +5,7 @@ import { helperActions } from './helper-slice';
 const getHelperAuthStatusPath = '/api/helper/get-auth-status';
 const helperSignUpPasswordPath = '/api/helper/signup-password';
 const helperSignInPath = '/api/helper/sign-in';
-const userRequestFormPath = '/api/helper/request';
+const userOfferFormPath = '/api/helper/offer';
 const activeHelperPath = '/api/helper/active-helpers';
 const getAllOrdersPath = '/api/helper/all-orders';
 const helperProfilePicUploadPath = '/api/helper/profile-pic-upload';
@@ -69,29 +69,23 @@ export const getAllOrders = (data) => {
   };
 };
 
-export const onClickUpdateActiveServiceType = (data) => {
+
+export const onClickUpdateHelperActiveJobOrUniTarget = (data) => {
+  console.log('onClickUpdate data: ', data);
   return async (dispatch) => {
     dispatch(
-      helperActions.onClickUpdateActiveServiceType({
-        globalServiceType: data.globalServiceType,
+      helperActions.onClickUpdateHelperActiveJobOrUniTarget({
+        globalHelperJobOrUniTarget: data.globalHelperJobOrUniTarget,
       })
     );
   };
 };
-export const onClickUpdateActiveJobOrUniTarget = (data) => {
+export const onClickUpdateActiveOfferTarget = (data) => {
+  console.log('onClickUpdateActiveOfferTarget...', data);
   return async (dispatch) => {
     dispatch(
-      helperActions.onClickUpdateActiveJobOrUniTarget({
-        globalJobOrUniTarget: data.globalJobOrUniTarget,
-      })
-    );
-  };
-};
-export const onClickUpdateActiveNavigateTarget = (data) => {
-  return async (dispatch) => {
-    dispatch(
-      helperActions.onClickUpdateActiveNavigateTarget({
-        globalNavigateTarget: data.globalNavigateTarget,
+      helperActions.onClickUpdateActiveOfferTarget({
+        offerTarget: data.offerTarget,
       })
     );
   };
@@ -225,10 +219,10 @@ export const postHelperSignInData = (data) => {
   };
 };
 
-export const postHelperRequestForm = (data) => {
+export const postHelperOfferForm = (data) => {
   return async (dispatch) => {
     try {
-      const generalToken = localStorage.getItem('shelpy-token');
+      const generalToken = localStorage.getItem('shelper-token');
       if (!generalToken) {
         throw Error('NO_TOKEN');
       }
@@ -238,19 +232,19 @@ export const postHelperRequestForm = (data) => {
           Authorization: 'Bearer ' + generalToken,
         };
         const response = await axios.post(
-          userRequestFormPath,
+          userOfferFormPath,
           {
             data,
           },
           { headers }
         );
-        data.requestId = response.data.requestId;
+        data.offerId = response.data.offerId;
         dispatch(
           notificationActions.setNotification({
-            requestStatus: 'success',
-            requestStatusTitle: 'You are all set!',
-            requestStatusMessage:
-              'We will inform you via email as soon as we find a helper!',
+            offerStatus: 'success',
+            offerStatusTitle: 'You are all set!',
+            offerStatusMessage:
+              'We will inform you via email as soon as someone wants your help!',
           })
         );
       }
@@ -260,9 +254,9 @@ export const postHelperRequestForm = (data) => {
       if (errorMessage) {
         dispatch(
           notificationActions.setNotification({
-            requestStatus: 'error',
-            requestStatusTitle: 'Oops!',
-            requestStatusMessage: errorMessage,
+            offerStatus: 'error',
+            offerStatusTitle: 'Oops!',
+            offerStatusMessage: errorMessage,
           })
         );
       }
@@ -318,23 +312,23 @@ export const clearSignInStatus = (data) => {
   };
 };
 
-export const clearRequestFormStatus = (data) => {
+export const clearOfferStatus = (data) => {
   return async (dispatch) => {
     dispatch(
       notificationActions.setNotification({
-        requestFormStatus: 'initial',
-        requestFormStatusTitle: '',
-        requestFormStatusMessage: '',
+        offerStatus: 'initial',
+        offerStatusTitle: '',
+        offerStatusMessage: '',
       })
     );
   };
 };
 
-export const onSubmitUpdateUniData = (data) => {
+export const onSubmitUpdateHelperUniData = (data) => {
   const { school, department, country, degree, notes } = data;
   return async (dispatch) => {
     dispatch(
-      helperActions.onSubmitUpdateUniData({
+      helperActions.onSubmitUpdateHelperUniData({
         school,
         department,
         country,
@@ -345,11 +339,11 @@ export const onSubmitUpdateUniData = (data) => {
   };
 };
 
-export const onSubmitUpdateJobData = (data) => {
+export const onSubmitUpdateHelperJobData = (data) => {
   const { industry, job, country, WFH, companySize, years, notes } = data;
   return async (dispatch) => {
     dispatch(
-      helperActions.onSubmitUpdateJobData({
+      helperActions.onSubmitUpdateHelperJobData({
         industry,
         job,
         country,
@@ -362,11 +356,11 @@ export const onSubmitUpdateJobData = (data) => {
   };
 };
 
-export const onSubmitUpdateSelfEmployedData = (data) => {
+export const onSubmitUpdateHelperSelfEmployedData = (data) => {
   const { type, profession, country, years, notes } = data;
   return async (dispatch) => {
     dispatch(
-      helperActions.onSubmitUpdateSelfEmployedData({
+      helperActions.onSubmitUpdateHelperSelfEmployedData({
         type,
         profession,
         country,

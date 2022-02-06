@@ -9,7 +9,18 @@ export const navigateOptions = [
     label: "View Order History",
     imgPath: "/anmelden.jpeg",
   },
-  
+];
+export const helperAddServiceOptions = [
+  {
+    value: 'addOffer',
+    label: 'Add Offer',
+    imgPath: '/add-offer.jpeg',
+  },
+  {
+    value: 'viewDashboard',
+    label: 'View Requests',
+    imgPath: '/dashboard.jpeg',
+  },
 ];
 
 export const jobUniOptions = [

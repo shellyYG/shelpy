@@ -3,11 +3,11 @@ import withReactContent from 'sweetalert2-react-content';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import  DropDown  from './Dropdown';
-import CheckBox from './CheckBox';
-import DateForm from './DateForm';
-import FullLineTextBox from './FullLineTextBox';
-import ConfirmBtn from './ConfirmBtn';
+import  DropDown  from '../components/Dropdown';
+import CheckBox from '../components/CheckBox';
+import DateForm from '../components/DateForm';
+import FullLineTextBox from '../components/FullLineTextBox';
+import ConfirmBtn from '../components/ConfirmBtn';
 import {
   serviceOptions,
   genderOptions,
@@ -129,7 +129,7 @@ const navigate = useNavigate();
           html: <p>{message}</p>,
           icon: 'success',
         });
-        let path = '/helpee/order-history';
+        let path = '/helpee/dashboard';
         navigate(path, { replace: true });
       }
       dispatch(clearRequestFormStatus());

@@ -67,7 +67,7 @@ export const getAllOrders = (data) => {
   };
 };
 
-export const onClickUpdateActiveServiceType = (data) => {
+export const onClickUpdateActiveServiceType = (data) => { // legacy
   return async (dispatch) => {
     dispatch(
       helpeeActions.onClickUpdateActiveServiceType({
@@ -76,11 +76,22 @@ export const onClickUpdateActiveServiceType = (data) => {
     );
   };
 };
-export const onClickUpdateActiveJobOrUniTarget = (data) => {
+
+export const onClickUpdateActiveSelectedHelper = (data) => {
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onClickUpdateActiveJobOrUniTarget({
-        globalJobOrUniTarget: data.globalJobOrUniTarget,
+      helpeeActions.onClickUpdateActiveSelectedHelper({
+        selectedHelper: data.selectedHelper,
+      })
+    );
+  };
+}
+export const onClickUpdateHelpeeActiveJobOrUniTarget = (data) => {
+  console.log('onClickUpdateHelpeeActiveJobOrUniTarget: data: ', data);
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.onClickUpdateHelpeeActiveJobOrUniTarget({
+        globalHelpeeJobOrUniTarget: data.globalHelpeeJobOrUniTarget,
       })
     );
   };
@@ -275,6 +286,7 @@ export const postHelpeeServiceRequestForm = (data) => {
 };
 
 export const postHelpeeRequestForm = (data) => {
+  console.log('postHelpeeRequestForm->data: ', data);
   return async (dispatch) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
@@ -379,11 +391,11 @@ export const clearRequestFormStatus = (data) => {
   };
 }
 
-export const onSubmitUpdateUniData = (data) => {
+export const onSubmitUpdateHelpeeUniData = (data) => {
   const { school, department, country, degree, notes } = data;
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onSubmitUpdateUniData({
+      helpeeActions.onSubmitUpdateHelpeeUniData({
         school,
         department,
         country,
@@ -394,11 +406,11 @@ export const onSubmitUpdateUniData = (data) => {
   };
 };
 
-export const onSubmitUpdateJobData = (data) => {
+export const onSubmitUpdateHelpeeJobData = (data) => {
   const { industry, job, country, WFH, companySize, years, notes } = data;
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onSubmitUpdateJobData({
+      helpeeActions.onSubmitUpdateHelpeeJobData({
         industry,
         job,
         country,
@@ -411,11 +423,11 @@ export const onSubmitUpdateJobData = (data) => {
   };
 };
 
-export const onSubmitUpdateSelfEmployedData = (data) => {
+export const onSubmitUpdateHelpeeSelfEmployedData = (data) => {
   const { type, profession, country, years, notes } = data;
   return async (dispatch) => {
     dispatch(
-      helpeeActions.onSubmitUpdateSelfEmployedData({
+      helpeeActions.onSubmitUpdateHelpeeSelfEmployedData({
         type,
         profession,
         country,

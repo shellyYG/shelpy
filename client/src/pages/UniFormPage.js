@@ -1,19 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import DropDown from '../../components/Dropdown';
-import FullLineTextBox from '../../components/FullLineTextBox';
-import ConfirmBtn from '../../components/ConfirmBtn';
+import DropDown from '../components/Dropdown';
+import FullLineTextBox from '../components/FullLineTextBox';
+import ConfirmBtn from '../components/ConfirmBtn';
 import {
   schoolOptions,
   departmentOptions,
   countryOptions,
   degreeOptions,
-} from '../../store/options/service-options';
+} from '../store/options/service-options';
 
-import { onSubmitUpdateUniData } from '../../store/helpee/helpee-actions';
+import { onSubmitUpdateHelpeeUniData } from '../store/helpee/helpee-actions';
+import { onSubmitUpdateHelperUniData } from '../store/helper/helper-actions';
 
-const HelpeeUniFormPage = (props) => {
+const UniFormPage = (props) => {
   const dispatch = useDispatch();
   const schoolRef = useRef();
   const departmentRef = useRef();
@@ -35,8 +36,13 @@ const HelpeeUniFormPage = (props) => {
       notes: notes || '',
     };
     try {
-      dispatch(onSubmitUpdateUniData(data));
-      navigate('/helpee/final-form', { replace: true });
+      if (props.isHelpee) {
+        dispatch(onSubmitUpdateHelpeeUniData(data));
+        navigate('/helpee/final-form', { replace: true });
+      } else {
+        dispatch(onSubmitUpdateHelperUniData(data));
+        navigate('/helper/final-form', { replace: true });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -67,7 +73,8 @@ const HelpeeUniFormPage = (props) => {
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        What do you want to study?
+        {props.isHelpee && 'What do you want to study?'}
+        {!props.isHelpee && 'What did you study?'}
       </h1>
       <div className='form-center-wrapper'>
         <div className='container'>
@@ -123,4 +130,4 @@ const HelpeeUniFormPage = (props) => {
   );
 };
 
-export default HelpeeUniFormPage;
+export default UniFormPage;

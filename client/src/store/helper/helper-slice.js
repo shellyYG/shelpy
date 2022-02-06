@@ -15,29 +15,30 @@ const helperSlice = createSlice({
     DBRequestId: 0,
     allOrders: [],
 
-    globalJobOrUniTarget: '',
+    globalHelperJobOrUniTarget: '',
 
-    globalUniSchool: '',
-    globalUniDepartment: '',
-    globalUniCountry: '',
-    globalUniDegree: '',
-    globalUniNotes: '',
+    globalHelperUniSchool: '',
+    globalHelperUniDepartment: '',
+    globalHelperUniCountry: '',
+    globalHelperUniDegree: '',
+    globalHelperUniNotes: '',
 
-    globalJobIndustry: '',
-    globalJobJob: '',
-    globalJobCountry: '',
-    globalJobWFH: '',
-    globalJobCompanySize: '',
-    globalJobYears: '',
+    globalHelperJobIndustry: '',
+    globalHelperJobJob: '',
+    globalHelperJobCountry: '',
+    globalHelperJobWFH: '',
+    globalHelperJobCompanySize: '',
+    globalHelperJobYears: '',
     globalJobNotes: '',
 
-    globalSelfEmployedType: '',
-    globalSelfEmployedProfession: '',
-    globalSelfEmployedCountry: '',
-    globalSelfEmployedYears: '',
-    globalSelfEmployedNotes: '',
+    globalHelperSelfEmployedType: '',
+    globalHelperSelfEmployedProfession: '',
+    globalHelpeeSelfEmployedCountry: '',
+    globalHelperSelfEmployedYears: '',
+    globalHelperSelfEmployedNotes: '',
 
     profilePicPath: '',
+    offerTarget: '',
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -61,59 +62,44 @@ const helperSlice = createSlice({
       const { payload } = action;
       state.DBHelperEmail = payload.email;
     },
-    updateHelperRequestFormData(state, action) {
+    onClickUpdateActiveOfferTarget(state, action) {
       const { payload } = action;
-      const { requestId } = payload.data;
-      state.DBRequestId = requestId;
-      // TODO
-      // state.serviceType = payload.serviceType;
-    },
-    onClickUpdateActiveServiceType(state, action) {
-      const { payload } = action;
-      state.globalServiceType = payload.globalServiceType;
-    },
-    onClickUpdateActiveNavigateTarget(state, action) {
-      const { payload } = action;
-      state.globalNavigateTarget = payload.globalNavigateTarget;
-    },
-    onClickUpdateActiveRequest(state, action) {
-      const { payload } = action;
-      state.globalActiveRequest = payload.globalActiveRequest;
+      state.offerTarget = payload.offerTarget;
     },
     onClickUpdateActiveHelperLists(state, action) {
       const { payload } = action;
       state.globalActiveHelperLists = payload.globalActiveHelperLists;
     },
-    onClickUpdateActiveJobOrUniTarget(state, action) {
+    onClickUpdateHelperActiveJobOrUniTarget(state, action) {
       const { payload } = action;
-      state.globalJobOrUniTarget = payload.globalJobOrUniTarget;
+      state.globalHelperJobOrUniTarget = payload.globalHelperJobOrUniTarget;
     },
-    onSubmitUpdateUniData(state, action) {
+    onSubmitUpdateHelperUniData(state, action) {
       const { payload } = action;
-      state.globalUniSchool = payload.school;
-      state.globalUniDepartment = payload.department;
-      state.globalUniCountry = payload.country;
-      state.globalJobWFH = payload.WFH;
-      state.globalUniDegree = payload.degree;
-      state.globalUniNotes = payload.notes;
+      state.globalHelperUniSchool = payload.school;
+      state.globalHelperUniDepartment = payload.department;
+      state.globalHelperUniCountry = payload.country;
+      state.globalHelperJobWFH = payload.WFH;
+      state.globalHelperUniDegree = payload.degree;
+      state.globalHelperUniNotes = payload.notes;
     },
-    onSubmitUpdateJobData(state, action) {
+    onSubmitUpdateHelperJobData(state, action) {
       const { payload } = action;
-      state.globalJobIndustry = payload.industry;
-      state.globalJobJob = payload.job;
-      state.globalJobCountry = payload.country;
-      state.globalJobWFH = payload.WFH;
-      state.globalJobCompanySize = payload.companySize;
-      state.globalJobYears = payload.years;
+      state.globalHelperJobIndustry = payload.industry;
+      state.globalHelperJobJob = payload.job;
+      state.globalHelperJobCountry = payload.country;
+      state.globalHelperJobWFH = payload.WFH;
+      state.globalHelperJobCompanySize = payload.companySize;
+      state.globalHelperJobYears = payload.years;
       state.globalJobNotes = payload.notes;
     },
-    onSubmitUpdateSelfEmployedData(state, action) {
+    onSubmitUpdateHelperSelfEmployedData(state, action) {
       const { payload } = action;
-      state.globalSelfEmployedType = payload.type;
-      state.globalSelfEmployedProfession = payload.profession;
-      state.globalSelfEmployedCountry = payload.country;
-      state.globalSelfEmployedYears = payload.years;
-      state.globalSelfEmployedNotes = payload.notes;
+      state.globalHelperSelfEmployedType = payload.type;
+      state.globalHelperSelfEmployedProfession = payload.profession;
+      state.globalHelpeeSelfEmployedCountry = payload.country;
+      state.globalHelperSelfEmployedYears = payload.years;
+      state.globalHelperSelfEmployedNotes = payload.notes;
     },
     updateProfilePicPath(state, action) {
       console.log('helper slice updateProfilePic...');

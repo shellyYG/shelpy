@@ -17,6 +17,7 @@ import {
 } from '../../store/helper/helper-actions';
 
 import LeftHalfLineTextBox from '../../components/LeftHalfLineTextBox';
+import CheckBox from '../../components/CheckBox';
 
 const MySwal = withReactContent(Swal);
 
@@ -33,6 +34,8 @@ const HelperBasicFormPage = (props) => {
   const [age, setAge] = useState('default');
   const [profilePic, setProfilePic] = useState();
   const [certificate, setCertificate] = useState();
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [isMarketing, setIsMarketing] = useState(false);
   const [enableBtn, setEnableBtn] = useState(false);
   const { profilePicPath } = useSelector((state) => state.helper);
   const {
@@ -82,7 +85,6 @@ const HelperBasicFormPage = (props) => {
     data.append('profilePic', file);
     try {
       dispatch(onUploadProfilePicture(data));
-      // navigate('/helpee/final-form', { replace: true });
     } catch (err) {
       console.error(err);
     }
@@ -147,6 +149,8 @@ const HelperBasicFormPage = (props) => {
       data = new FormData();
       data.append('helperUserId', props.helperUserId);
       data.append('username', username);
+      data.append('isAnonymous', isAnonymous);
+      data.append('isMarketing', isMarketing);
       data.append('age', age);
       data.append('linkedInUrl', linkedInUrl);
       data.append('notes', notes);
@@ -201,8 +205,7 @@ const HelperBasicFormPage = (props) => {
           html: <p>{message}</p>,
           icon: 'success',
         });
-        // let path = '/helpee/order-history';
-        // navigate(path, { replace: true });
+        navigate('/helper/add-service', { replace: true });
       }
       dispatch(clearApplyHelperStatus());
       sweetAlertAndNavigate(applyHelperStatus, applyHelperStatusMessage);
@@ -280,18 +283,14 @@ const HelperBasicFormPage = (props) => {
               </div>
               <div className='form-row'>
                 <LeftHalfLineTextBox
-                  title={
-                    'LinkedIn Link (or upload Resume)'
-                  }
+                  title={'LinkedIn Link (or upload Resume)'}
                   placeholder={
                     'https://www.linkedin.com/in/your-linkedin-profile'
                   }
                   inputRef={linkedInUrlRef}
                 />
                 <div className='form-wrapper'>
-                  <label>
-                    Resume/files (or linkedin link)
-                  </label>
+                  <label>Resume/files (or linkedin link)</label>
                   {!certificate && (
                     <>
                       <label className='uploadLabel' for='resume'>
@@ -312,7 +311,26 @@ const HelperBasicFormPage = (props) => {
                   )}
                 </div>
               </div>
-
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <CheckBox
+                  checked={isAnonymous}
+                  handleCheck={setIsAnonymous}
+                  details='Stay anonymous (your profile picture will be hide).'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <CheckBox
+                  checked={isMarketing}
+                  handleCheck={setIsMarketing}
+                  details='Promote your offer on our marketing page (this will increase your chance to get hired!).'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+              </div>
               <FullLineTextBox
                 title={'Notes'}
                 placeholder={'If you choose others, please specify here.'}

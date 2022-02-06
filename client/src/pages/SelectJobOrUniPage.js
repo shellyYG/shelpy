@@ -1,27 +1,33 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { jobUniOptions } from '../../store/options/navigate-options';
-import '../../App.css';
-import JobOrUniCard from '../../components/JobOrUniCard';
-const HelpeeSelectJobOrUniPage = () => {
-  const { globalJobOrUniTarget } = useSelector((state) => state.helpee);
+import { jobUniOptions } from '../store/options/navigate-options';
+import '../App.css';
+import JobOrUniCard from '../components/JobOrUniCard';
+const SelectJobOrUniPage = (props) => {
+  const { globalHelpeeJobOrUniTarget } = useSelector((state) => state.helpee);
+  const { globalHelperJobOrUniTarget } = useSelector((state) => state.helper);
   const navigate = useNavigate();
-  console.log('globalJobOrUniTarget: ', globalJobOrUniTarget);
+  console.log('Helpee T: ', globalHelpeeJobOrUniTarget);
+  console.log('Helper T: ', globalHelperJobOrUniTarget);
   function handleNext(e) {
     e.preventDefault();
+    const userType = props.isHelpee? 'helpee': 'helper';
+    const jobOrUniTargetBase = props.isHelpee
+      ? globalHelpeeJobOrUniTarget
+      : globalHelperJobOrUniTarget;
     let path;
-    switch (globalJobOrUniTarget) {
+    switch (jobOrUniTargetBase) {
       case 'job':
-        path = '/helpee/job-form';
+        path = `/${userType}/job-form`;
         break;
       case 'university':
-        path = '/helpee/uni-form';
+        path = `/${userType}/uni-form`;
         break;
       case 'selfEmployed':
-        path = '/helpee/self-employed-form';
+        path = `/${userType}/self-employed-form`;
         break;
       default:
-        path = '/helpee/job-form';
+        path = `/${userType}/job-form`;
     }
     navigate(path, { replace: true });
   }
@@ -36,7 +42,8 @@ const HelpeeSelectJobOrUniPage = () => {
             marginBottom: '30px',
           }}
         >
-          What do you want to know?
+          {props.isHelpee && 'What do you want to know?'}
+          {!props.isHelpee && 'What experiences do you want to offer?'}
         </h2>
         <div className='container'>
           {jobUniOptions.map((option) => (
@@ -44,7 +51,9 @@ const HelpeeSelectJobOrUniPage = () => {
               imageSrc={option.imgPath}
               title={option.label}
               value={option.value}
-              globalJobOrUniTarget={globalJobOrUniTarget}
+              isHelpee={props.isHelpee}
+              globalHelpeeJobOrUniTarget={globalHelpeeJobOrUniTarget}
+              globalHelperJobOrUniTarget={globalHelperJobOrUniTarget}
               key={option.value}
             />
           ))}
@@ -59,4 +68,4 @@ const HelpeeSelectJobOrUniPage = () => {
   );
 };
 
-export default HelpeeSelectJobOrUniPage;
+export default SelectJobOrUniPage;

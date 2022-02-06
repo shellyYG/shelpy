@@ -15,28 +15,27 @@ const helpeeSlice = createSlice({
     DBRequestId: 0,
     allOrders: [],
 
-    globalJobOrUniTarget: '',
+    globalHelpeeJobOrUniTarget: '',
 
-    globalUniSchool: '',
-    globalUniDepartment: '',
-    globalUniCountry: '',
-    globalUniDegree: '',
-    globalUniNotes: '',
+    globalHelpeeUniSchool: '',
+    globalHelpeeUniDepartment: '',
+    globalHelpeeUniCountry: '',
+    globalHelpeeUniDegree: '',
+    globalHelpeeUniNotes: '',
 
-    globalJobIndustry: '',
-    globalJobJob: '',
-    globalJobCountry: '',
-    globalJobWFH: '',
-    globalJobCompanySize: '',
-    globalJobYears: '',
+    globalHelpeeJobIndustry: '',
+    globalHelpeeJobJob: '',
+    globalHelpeeJobCountry: '',
+    globalHelpeeJobWFH: '',
+    globalHelpeeJobCompanySize: '',
+    globalHelpeeJobYears: '',
     globalJobNotes: '',
 
-    globalSelfEmployedType: '',
-    globalSelfEmployedProfession: '',
-    globalSelfEmployedCountry: '',
-    globalSelfEmployedYears: '',
-    globalSelfEmployedNotes: '',
-
+    globalHelpeeSelfEmployedType: '',
+    globalHelpeeSelfEmployedProfession: '',
+    globalHelpeeSelfEmployedCountry: '',
+    globalHelpeeSelfEmployedYears: '',
+    globalHelpeeSelfEmployedNotes: '',
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -67,9 +66,13 @@ const helpeeSlice = createSlice({
       // TODO
       // state.serviceType = payload.serviceType;
     },
-    onClickUpdateActiveServiceType(state, action) {
+    onClickUpdateHelpeeActiveServiceType(state, action) {
       const { payload } = action;
-      state.globalServiceType = payload.globalServiceType;
+      state.globalHelpeeServiceType = payload.globalHelpeeServiceType;
+    },
+    onClickUpdateActiveSelectedHelper(state, action) {
+      const { payload } = action;
+      state.selectedHelper = payload.selectedHelper;
     },
     onClickUpdateActiveNavigateTarget(state, action) {
       const { payload } = action;
@@ -83,36 +86,36 @@ const helpeeSlice = createSlice({
       const { payload } = action;
       state.globalActiveHelperLists = payload.globalActiveHelperLists;
     },
-    onClickUpdateActiveJobOrUniTarget(state, action) {
+    onClickUpdateHelpeeActiveJobOrUniTarget(state, action) {
       const { payload } = action;
-      state.globalJobOrUniTarget = payload.globalJobOrUniTarget;
+      state.globalHelpeeJobOrUniTarget = payload.globalHelpeeJobOrUniTarget;
     },
-    onSubmitUpdateUniData(state, action) {
+    onSubmitUpdateHelpeeUniData(state, action) {
       const { payload } = action;
-      state.globalUniSchool = payload.school;
-      state.globalUniDepartment = payload.department;
-      state.globalUniCountry = payload.country;
-      state.globalJobWFH = payload.WFH;
-      state.globalUniDegree = payload.degree;
-      state.globalUniNotes = payload.notes;
+      state.globalHelpeeUniSchool = payload.school;
+      state.globalHelpeeUniDepartment = payload.department;
+      state.globalHelpeeUniCountry = payload.country;
+      state.globalHelpeeJobWFH = payload.WFH;
+      state.globalHelpeeUniDegree = payload.degree;
+      state.globalHelpeeUniNotes = payload.notes;
     },
-    onSubmitUpdateJobData(state, action) {
+    onSubmitUpdateHelpeeJobData(state, action) {
       const { payload } = action;
-      state.globalJobIndustry = payload.industry;
-      state.globalJobJob = payload.job;
-      state.globalJobCountry = payload.country;
-      state.globalJobWFH = payload.WFH;
-      state.globalJobCompanySize = payload.companySize;
-      state.globalJobYears = payload.years;
+      state.globalHelpeeJobIndustry = payload.industry;
+      state.globalHelpeeJobJob = payload.job;
+      state.globalHelpeeJobCountry = payload.country;
+      state.globalHelpeeJobWFH = payload.WFH;
+      state.globalHelpeeJobCompanySize = payload.companySize;
+      state.globalHelpeeJobYears = payload.years;
       state.globalJobNotes = payload.notes;
     },
-    onSubmitUpdateSelfEmployedData(state, action) {
+    onSubmitUpdateHelpeeSelfEmployedData(state, action) {
       const { payload } = action;
-      state.globalSelfEmployedType = payload.type;
-      state.globalSelfEmployedProfession = payload.profession;
-      state.globalSelfEmployedCountry = payload.country;
-      state.globalSelfEmployedYears = payload.years;
-      state.globalSelfEmployedNotes = payload.notes;
+      state.globalHelpeeSelfEmployedType = payload.type;
+      state.globalHelpeeSelfEmployedProfession = payload.profession;
+      state.globalHelpeeSelfEmployedCountry = payload.country;
+      state.globalHelpeeSelfEmployedYears = payload.years;
+      state.globalHelpeeSelfEmployedNotes = payload.notes;
     },
   },
 });

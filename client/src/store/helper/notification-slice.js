@@ -15,6 +15,9 @@ const notificationSlice = createSlice({
     applyHelperStatus: 'initial',
     applyHelperStatusTitle: '',
     applyHelperStatusMessage: '',
+    offerStatus: 'initial',
+    offerStatusTitle: '',
+    offerStatusMessage: '',
   },
   reducers: {
     setNotification(state, action) {
@@ -31,6 +34,9 @@ const notificationSlice = createSlice({
         applyHelperStatus,
         applyHelperStatusTitle,
         applyHelperStatusMessage,
+        offerStatus,
+        offerStatusTitle,
+        offerStatusMessage,
       } = action.payload;
       if (signUpEmailStatus) state.signUpEmailStatus = signUpEmailStatus;
       if (signUpEmailStatusTitle)
@@ -47,9 +53,16 @@ const notificationSlice = createSlice({
       if (signInStatusTitle) state.signInStatusTitle = signInStatusTitle;
       if (signInStatusMessage) state.signInStatusMessage = signInStatusMessage;
       if (applyHelperStatus) state.applyHelperStatus = applyHelperStatus;
-      if (applyHelperStatusTitle) state.applyHelperStatusTitle = applyHelperStatusTitle;
+      if (applyHelperStatusTitle)
+        state.applyHelperStatusTitle = applyHelperStatusTitle;
       if (applyHelperStatusMessage)
         state.applyHelperStatusMessage = applyHelperStatusMessage;
+      if (offerStatus) 
+        state.offerStatus = offerStatus;
+      if (offerStatusTitle)
+        state.offerStatusTitle = offerStatusTitle;
+      if (offerStatusMessage)
+        state.offerStatusMessage = offerStatusMessage;
     },
   },
 });

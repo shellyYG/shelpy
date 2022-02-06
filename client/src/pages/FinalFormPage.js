@@ -3,21 +3,26 @@ import withReactContent from 'sweetalert2-react-content';
 import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import FullLineTextBox from '../../components/FullLineTextBox';
-import ConfirmBtn from '../../components/ConfirmBtn';
+import FullLineTextBox from '../components/FullLineTextBox';
+import ConfirmBtn from '../components/ConfirmBtn';
 import { useEffect } from 'react';
-import CheckBox from '../../components/CheckBox';
+import CheckBox from '../components/CheckBox';
 import {
   clearRequestStatus,
   postHelpeeRequestForm,
-} from '../../store/helpee/helpee-actions';
+} from '../store/helpee/helpee-actions';
+import {
+  clearOfferStatus,
+  postHelperOfferForm,
+} from '../store/helper/helper-actions';
 
 const MySwal = withReactContent(Swal);
 
-const HelpeeFinalFormPage = (props) => {
+const FinalFormPage = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const notesRef = useRef();
+  const priceRef = useRef();
 
   const [loading, setIsLoading] = useState(false);
 
@@ -41,37 +46,61 @@ const HelpeeFinalFormPage = (props) => {
   const [hasArabic, setHasArabic] = useState(false);
   const [hasOthers, setHasOthers] = useState(false);
 
-  console.log('hasMonToFri: ', hasMonToFri);
-
   const {
     helpeeUserId,
 
-    globalJobOrUniTarget,
-    globalUniSchool,
-    globalUniDepartment,
-    globalUniCountry,
-    globalUniDegree,
-    globalUniNote,
+    globalHelpeeJobOrUniTarget,
+    globalHelpeeUniSchool,
+    globalHelpeeUniDepartment,
+    globalHelpeeUniCountry,
+    globalHelpeeUniDegree,
+    globalHelpeeUniNote,
 
-    globalJobIndustry,
-    globalJobJob,
-    globalJobCountry,
-    globalJobWFH,
-    globalJobCompanySize,
-    globalJobYears,
+    globalHelpeeJobIndustry,
+    globalHelpeeJobJob,
+    globalHelpeeJobCountry,
+    globalHelpeeJobWFH,
+    globalHelpeeJobCompanySize,
+    globalHelpeeJobYears,
 
-    globalSelfEmployedType,
-    globalSelfEmployedProfession,
-    globalSelfEmployedCountry,
-    globalSelfEmployedYears,
-    globalSelfEmployedNotes,
+    globalHelpeeSelfEmployedType,
+    globalHelpeeSelfEmployedProfession,
+    globalHelpeeSelfEmployedCountry,
+    globalHelpeeSelfEmployedYears,
+    globalHelpeeSelfEmployedNotes,
   } = useSelector((state) => state.helpee);
 
   const {
-    requestStatus,
-    requestStatusTitle,
-    requestStatusMessage,
-  } = useSelector((state) => state.helpeeNotification);
+    helperUserId,
+
+    globalHelperJobOrUniTarget,
+    globalHelperUniSchool,
+    globalHelperUniDepartment,
+    globalHelperUniCountry,
+    globalHelperUniDegree,
+    globalHelperUniNote,
+
+    globalHelperJobIndustry,
+    globalHelperJobJob,
+    globalHelperJobCountry,
+    globalHelperJobWFH,
+    globalHelperJobCompanySize,
+    globalHelperJobYears,
+
+    globalHelperSelfEmployedType,
+    globalHelperSelfEmployedProfession,
+    globalHelperSelfEmployedCountry,
+    globalHelperSelfEmployedYears,
+    globalHelperSelfEmployedNotes,
+  } = useSelector((state) => state.helper);
+
+  const { requestStatus, requestStatusTitle, requestStatusMessage } =
+    useSelector((state) => state.helpeeNotification);
+
+  const { offerStatus, offerStatusTitle, offerStatusMessage } = useSelector(
+    (state) => state.helperNotification
+  );
+  console.log('offerStatus: ', offerStatus);
 
   if (loading) {
     MySwal.fire({
@@ -86,63 +115,129 @@ const HelpeeFinalFormPage = (props) => {
   }
   async function handleConfirm(e) {
     e.preventDefault();
-    // change DB & global state
     let notes;
+    let price;
+    let data;
     if (notesRef && notesRef.current) {
       notes = notesRef.current.value;
     }
-    const data = {
-      helpeeUserId,
-      type: globalJobOrUniTarget,
-      globalUniSchool,
-      globalUniDepartment,
-      globalUniCountry,
-      globalUniDegree,
-      globalUniNote,
+    if (priceRef && priceRef.current) {
+      price = priceRef.current.value;
+    }
 
-      globalJobIndustry,
-      globalJobJob,
-      globalJobCountry,
-      globalJobWFH,
-      globalJobCompanySize,
-      globalJobYears,
+    if (props.isHelpee) {
+      console.log(
+        'isHelpee...globalHelpeeJobOrUniTarget: ',
+        globalHelpeeJobOrUniTarget
+      );
+      data = {
+        helpeeUserId,
+        type: globalHelpeeJobOrUniTarget,
+        globalHelpeeUniSchool,
+        globalHelpeeUniDepartment,
+        globalHelpeeUniCountry,
+        globalHelpeeUniDegree,
+        globalHelpeeUniNote,
 
-      globalSelfEmployedType,
-      globalSelfEmployedProfession,
-      globalSelfEmployedCountry,
-      globalSelfEmployedYears,
-      globalSelfEmployedNotes,
+        globalHelpeeJobIndustry,
+        globalHelpeeJobJob,
+        globalHelpeeJobCountry,
+        globalHelpeeJobWFH,
+        globalHelpeeJobCompanySize,
+        globalHelpeeJobYears,
 
-      hasMonToFri,
-      hasWeekend,
+        globalHelpeeSelfEmployedType,
+        globalHelpeeSelfEmployedProfession,
+        globalHelpeeSelfEmployedCountry,
+        globalHelpeeSelfEmployedYears,
+        globalHelpeeSelfEmployedNotes,
 
-      hasBefore12,
-      has12To18,
-      hasAfter18,
+        helpeeHasMonToFri: hasMonToFri,
+        helpeeHasWeekend: hasWeekend,
 
-      hasEnglish,
-      hasGerman,
-      hasFrench,
-      hasItalien,
-      hasChinese,
-      hasCantonese,
-      hasVietnamese,
-      hasKorean,
-      hasJapanese,
-      hasTurkish,
-      hasUkrainian,
-      hasArabic,
-      hasOthers,
+        helpeeHasBefore12: hasBefore12,
+        helpeeHas12To18: has12To18,
+        helpeeHasAfter18: hasAfter18,
 
-      finalNotes: notes,
+        helpeeHasEnglish: hasEnglish,
+        helpeeHasGerman: hasGerman,
+        helpeeHasFrench: hasFrench,
+        helpeeHasItalien: hasItalien,
+        helpeeHasChinese: hasChinese,
+        helpeeHasCantonese: hasCantonese,
+        helpeeHasVietnamese: hasVietnamese,
+        helpeeHasKorean: hasKorean,
+        helpeeHasJapanese: hasJapanese,
+        helpeeHasTurkish: hasTurkish,
+        helpeeHasUkrainian: hasUkrainian,
+        helpeeHasArabic: hasArabic,
+        helpeeHasOthers: hasOthers,
 
-      step: 'request_submitted',
-      status: 'Fulfilled',
-    };
+        finalNotes: notes,
+
+        step: 'request_submitted',
+        status: 'Fulfilled',
+      };
+      console.log('data to post: ', data);
+      dispatch(postHelpeeRequestForm(data));
+      setIsLoading(true);
+    } else {
+      data = {
+        helperUserId,
+        type: globalHelperJobOrUniTarget,
+        globalHelperUniSchool,
+        globalHelperUniDepartment,
+        globalHelperUniCountry,
+        globalHelperUniDegree,
+        globalHelperUniNote,
+
+        globalHelperJobIndustry,
+        globalHelperJobJob,
+        globalHelperJobCountry,
+        globalHelperJobWFH,
+        globalHelperJobCompanySize,
+        globalHelperJobYears,
+
+        globalHelperSelfEmployedType,
+        globalHelperSelfEmployedProfession,
+        globalHelperSelfEmployedCountry,
+        globalHelperSelfEmployedYears,
+        globalHelperSelfEmployedNotes,
+
+        helperHasMonToFri: hasMonToFri,
+        helperHasWeekend: hasWeekend,
+
+        helperHasBefore12: hasBefore12,
+        helperHas12To18: has12To18,
+        helperHasAfter18: hasAfter18,
+
+        helperHasEnglish: hasEnglish,
+        helperHasGerman: hasGerman,
+        helperHasFrench: hasFrench,
+        helperHasItalien: hasItalien,
+        helperHasChinese: hasChinese,
+        helperHasCantonese: hasCantonese,
+        helperHasVietnamese: hasVietnamese,
+        helperHasKorean: hasKorean,
+        helperHasJapanese: hasJapanese,
+        helperHasTurkish: hasTurkish,
+        helperHasUkrainian: hasUkrainian,
+        helperHasArabic: hasArabic,
+        helperHasOthers: hasOthers,
+
+        price,
+
+        finalNotes: notes,
+
+        step: 'first_offer_submitted',
+        status: 'created',
+      };
+      dispatch(postHelperOfferForm(data));
+      setIsLoading(true);
+    }
     console.log('data to dispatch: ', data);
-    dispatch(postHelpeeRequestForm(data));
-    setIsLoading(true);
   }
+  // Is Helpee:
   useEffect(() => {
     if (requestStatus === 'error') {
       setIsLoading(false);
@@ -166,7 +261,7 @@ const HelpeeFinalFormPage = (props) => {
           html: <p>{message}</p>,
           icon: 'success',
         });
-        let path = '/helpee/order-history';
+        let path = '/helpee/dashboard';
         navigate(path, { replace: true });
       }
       dispatch(clearRequestStatus());
@@ -179,6 +274,38 @@ const HelpeeFinalFormPage = (props) => {
     navigate,
     dispatch,
   ]);
+
+  // Is Helper:
+  useEffect(() => {
+    if (offerStatus === 'error') {
+      setIsLoading(false);
+      async function sweetAlertAndClearStatus(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          html: <p>{message}</p>,
+          icon: 'error',
+        });
+        dispatch(clearOfferStatus());
+      }
+      sweetAlertAndClearStatus(offerStatus, offerStatusMessage);
+      return;
+    } else if (offerStatus === 'success') {
+      setIsLoading(false);
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          imageWidth: 442,
+          imageHeight: 293,
+          html: <p>{message}</p>,
+          icon: 'success',
+        });
+        let path = '/helper/dashboard';
+        navigate(path, { replace: true });
+      }
+      dispatch(clearOfferStatus());
+      sweetAlertAndNavigate(offerStatus, offerStatusMessage);
+    }
+  }, [offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
 
   return (
     <div
@@ -349,6 +476,11 @@ const HelpeeFinalFormPage = (props) => {
                   fontSize='14px'
                 />
               </div>
+              {!props.isHelpee && <FullLineTextBox
+                title={'Price per 30 minute (in EUR)'}
+                placeholder={'e.g. 20'}
+                inputRef={priceRef}
+              />}
               <FullLineTextBox
                 title={'Notes'}
                 placeholder={'Please specify languages you speak.'}
@@ -367,4 +499,4 @@ const HelpeeFinalFormPage = (props) => {
   );
 };
 
-export default HelpeeFinalFormPage;
+export default FinalFormPage;

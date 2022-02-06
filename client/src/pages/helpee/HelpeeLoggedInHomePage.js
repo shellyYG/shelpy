@@ -15,7 +15,7 @@ const HelpeeLoggedInHomePage = () => {
         path = '/service-options';
         break;
       case 'viewOrderHistory':
-        path = '/helpee/order-history';
+        path = '/helpee/dashboard';
         break;
       default:
         path = '/service-options';

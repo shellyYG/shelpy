@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import ServiceTypeCard from "../components/ServiceTypeCard";
+import ServiceTypeCard from "./ServiceTypeCard";
 import { serviceOptions } from '../store/options/service-options';
 import '../App.css';
 

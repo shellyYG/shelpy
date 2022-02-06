@@ -4,22 +4,22 @@ import PastOrderCard from '../../components/PastOrderCard';
 import ActiveOrderCard from '../../components/ActiveOrderCard';
 import { getAllOrders } from '../../store/helpee/helpee-actions';
 
-const HelpeeOrderHistoryPage = (props) => {
+const HelperDashboardPage = (props) => {
   const dispatch = useDispatch();
   const [isActiveOrderSelected, setIsActiveOrderSelected] = useState(true);
   const [activeOrders, setActiveOrders] = useState([]);
   const [pastOrders, setPastOrders] = useState([]);
-  
+
   useEffect(() => {
     dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
   }, [props.helpeeUserId, dispatch]);
 
   const { allOrders } = useSelector((state) => state.helpee);
   console.log('allOrders: ', allOrders);
-  useEffect(()=>{
+  useEffect(() => {
     const activeOrdersArr = [];
     const pastOrdersArr = [];
-    allOrders.forEach((o)=>{
+    allOrders.forEach((o) => {
       if (o.status === 'Fulfilled') {
         switch (o.mainType) {
           case 'university': {
@@ -91,12 +91,12 @@ const HelpeeOrderHistoryPage = (props) => {
             break;
         }
       }
-    })
-    
+    });
+
     setActiveOrders(activeOrdersArr);
     setPastOrders(pastOrdersArr);
   }, [allOrders]);
-  
+
   function handleSelectActiveOrders(e) {
     e.preventDefault(e);
     setIsActiveOrderSelected(true);
@@ -162,4 +162,4 @@ const HelpeeOrderHistoryPage = (props) => {
   );
 };
 
-export default HelpeeOrderHistoryPage;
+export default HelperDashboardPage;

@@ -33,7 +33,7 @@ const {
 } = require('../controllers/helpeeController');
 
 const {
-  postHelperRequest,
+  postHelperOffer,
   allowHelperPrivateRoute,
   getHelperAllMatchedRequests,
   getProfilePic,
@@ -57,6 +57,7 @@ router
   .post(wrapAsync(postHelpeeServiceRequestForm));
 // new:
 router.route('/api/helpee/request').post(wrapAsync(postHelpeeRequest));
+router.route('/api/helper/offer').post(wrapAsync(postHelperOffer));
 
 router.route('/api/helpee/all-orders').get(wrapAsync(getHelpeeAllOrders));
 router.route('/api/helpee/sign-in').post(wrapAsync(postUserSignInData));
@@ -65,8 +66,6 @@ router
   .get(wrapAsync(getHelpeeOrderHelperList));
 
 router.route('/api/helper/signup-password').post(wrapAsync(postUserSignUpData));
-
-router.route('/api/helper/request').post(wrapAsync(postHelperRequest));
 
 router
   .route('/api/helper/matched-requests')
@@ -98,11 +97,14 @@ router.post(
 router.post(
   '/api/helper/basic-form',
   async (req, res, next) => {
-    const { helperUserId, username, age, linkedInUrl, notes } = req.body;
+    const { helperUserId, username, isAnonymous, isMarketing, age, linkedInUrl, notes } =
+      req.body;
     try {
       await helperModel.updateHelperCertificatePath({
         userId: helperUserId,
         username,
+        isAnonymous,
+        isMarketing,
         age,
         linkedInUrl,
         notes,
@@ -121,12 +123,15 @@ router.post(
   upload.array('certificate', 3), // leverage multer for pdf files. Set max # of files to upload: 3.
   async (req, res, next) => {
     const file = req.files[0];
-    const { helperUserId, username, age, linkedInUrl, notes } = req.body;
+    const { helperUserId, username, isAnonymous, isMarketing, age, linkedInUrl, notes } =
+      req.body;
     try {
       const result = await uploadFile(file, 'user-certificates');
       await helperModel.updateHelperCertificatePath({
         userId: helperUserId,
         username,
+        isAnonymous,
+        isMarketing,
         age,
         linkedInUrl,
         notes,
