@@ -12,29 +12,20 @@ function PastOrderCard(props) {
   const [img, setImg] = useState('');
   // TODO; get helper ID
   useEffect(() => {
-    switch (props.service) {
-      case 'visa':
-        setImg('/visa');
+    switch (props.type) {
+      case 'University':
+        setImg('/university');
         break;
-      case 'anmelden':
-        setImg('/anmelden');
+      case 'Job':
+        setImg('/job');
         break;
-      case 'arzt':
-        setImg('/arzt');
-        break;
-      case 'apartmentVisit':
-        setImg('/wohnung');
-        break;
-      case 'bankAccount':
-        setImg('/bank');
-        break;
-      case 'others':
-        setImg('/offer_help');
+      case 'Self-Employed':
+        setImg('/mom');
         break;
       default:
         setImg('/offer_help');
     }
-  }, [props.service]);
+  }, [props.type]);
 
   useEffect(() => {
     async function getHelperLists(orderId) {

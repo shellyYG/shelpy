@@ -54,7 +54,7 @@ const FinalFormPage = (props) => {
     globalHelpeeUniDepartment,
     globalHelpeeUniCountry,
     globalHelpeeUniDegree,
-    globalHelpeeUniNote,
+    globalHelpeeUniNotes,
 
     globalHelpeeJobIndustry,
     globalHelpeeJobJob,
@@ -62,7 +62,7 @@ const FinalFormPage = (props) => {
     globalHelpeeJobWFH,
     globalHelpeeJobCompanySize,
     globalHelpeeJobYears,
-    globalHelpeeJobdNotes,
+    globalHelpeeJobNotes,
 
     globalHelpeeSelfEmployedType,
     globalHelpeeSelfEmployedProfession,
@@ -134,7 +134,7 @@ const FinalFormPage = (props) => {
         globalHelpeeUniDepartment,
         globalHelpeeUniCountry,
         globalHelpeeUniDegree,
-        globalHelpeeUniNote,
+        globalHelpeeUniNotes,
 
         globalHelpeeJobIndustry,
         globalHelpeeJobJob,
@@ -142,7 +142,7 @@ const FinalFormPage = (props) => {
         globalHelpeeJobWFH,
         globalHelpeeJobCompanySize,
         globalHelpeeJobYears,
-        globalHelpeeJobdNotes,
+        globalHelpeeJobNotes,
 
         globalHelpeeSelfEmployedType,
         globalHelpeeSelfEmployedProfession,
@@ -174,7 +174,7 @@ const FinalFormPage = (props) => {
         finalNotes: notes,
 
         step: 'request_submitted',
-        status: 'Fulfilled',
+        status: 'Not Fulfilled',
       };
       console.log('data to post: ', data);
       dispatch(postHelpeeRequestForm(data));

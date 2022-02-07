@@ -25,11 +25,6 @@ function OfferCard(props) {
     }
   }, [props.type]);
 
-  
-  function handleViewReceipt(e) {
-    e.preventDefault();
-    navigate(`/receipt?offerId=${props.offerId}`, { replace: true });
-  }
   function handleDeleteOffer(e) {
     e.preventDefault();
     const data = {

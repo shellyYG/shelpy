@@ -113,7 +113,7 @@ const helpeeSlice = createSlice({
       state.globalHelpeeJobWFH = payload.WFH;
       state.globalHelpeeJobCompanySize = payload.companySize;
       state.globalHelpeeJobYears = payload.years;
-      state.globalJobNotes = payload.notes;
+      state.globalHelpeeJobNotes = payload.notes;
     },
     onSubmitUpdateHelpeeSelfEmployedData(state, action) {
       const { payload } = action;

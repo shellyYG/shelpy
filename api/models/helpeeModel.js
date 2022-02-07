@@ -14,7 +14,7 @@ async function insertHelpeeRequest(data) { // new.
     globalHelpeeUniDepartment,
     globalHelpeeUniCountry,
     globalHelpeeUniDegree,
-    globalHelpeeUniNote,
+    globalHelpeeUniNotes,
 
     globalHelpeeJobIndustry,
     globalHelpeeJobJob,
@@ -68,7 +68,7 @@ async function insertHelpeeRequest(data) { // new.
         department: globalHelpeeUniDepartment,
         country: globalHelpeeUniCountry,
         degree: globalHelpeeUniDegree,
-        notes: globalHelpeeUniNote,
+        notes: globalHelpeeUniNotes,
         hasMonToFri: helpeeHasMonToFri,
         hasWeekend: helpeeHasWeekend,
 
