@@ -63,6 +63,8 @@ async function insertHelpeeRequest(data) { // new.
       filteredData = {
         userId: helpeeUserId,
         mainType: type,
+        secondType: globalHelpeeUniSchool,
+        thirdType: globalHelpeeUniDepartment,
         timestamp: Date.now(),
         school: globalHelpeeUniSchool,
         department: globalHelpeeUniDepartment,
@@ -98,6 +100,8 @@ async function insertHelpeeRequest(data) { // new.
       filteredData = {
         userId: helpeeUserId,
         mainType: type,
+        secondType: globalHelpeeJobIndustry,
+        thirdType: globalHelpeeJobJob,
         timestamp: Date.now(),
         industry: globalHelpeeJobIndustry,
         job: globalHelpeeJobJob,
@@ -135,6 +139,8 @@ async function insertHelpeeRequest(data) { // new.
       filteredData = {
         userId: helpeeUserId,
         mainType: type,
+        secondType: globalHelpeeSelfEmployedType,
+        thirdType: globalHelpeeSelfEmployedProfession,
         timestamp: Date.now(),
         type: globalHelpeeSelfEmployedType,
         profession: globalHelpeeSelfEmployedProfession,

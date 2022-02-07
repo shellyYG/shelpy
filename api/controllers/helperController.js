@@ -35,6 +35,25 @@ const deleteHelperOffer = async (req, res) => {
   }
 }
 
+const getPotentialCustomers = async (req, res) => {
+  try {
+    const { helperUserId } = req.query;
+    const response = await helperModel.getPotentialCustomers({
+      helperUserId,
+    });
+    if (response.data) {
+      res.status(200).json({
+        allPotentialCustomers: response.data.allPotentialCustomers,
+      });
+    } else {
+      throw Error('NO_POTENTIAL_CUSTOMER_RESPONSE');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const getHelperAllMatchedRequests = async (req, res) => {
   try {
     const { helpeeUserId } = req.query;
@@ -83,6 +102,7 @@ const getHelperAllOffers = async (req, res) => {
 module.exports = {
   allowHelperPrivateRoute,
   postHelperOffer,
+  getPotentialCustomers,
   deleteHelperOffer,
   getHelperAllMatchedRequests,
   getProfilePic,

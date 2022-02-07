@@ -39,6 +39,8 @@ const helperSlice = createSlice({
 
     helperProfilePicPath: '',
     offerTarget: '',
+    allOffers: [],
+    allPotentialCustomers: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -108,6 +110,10 @@ const helperSlice = createSlice({
     updateAllOffers(state, action) {
       const { payload } = action;
       state.allOffers = payload.allOffers;
+    },
+    updateAllPotentialCustomers(state, action) {
+      const { payload } = action;
+      state.allPotentialCustomers = payload.allPotentialCustomers;
     },
   },
 });

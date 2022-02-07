@@ -59,6 +59,8 @@ async function insertHelperOffer(data) {
         userId: helperUserId,
         price,
         mainType: type,
+        secondType: globalHelperUniSchool,
+        thirdType: globalHelperUniDepartment,
         timestamp: Date.now(),
         school: globalHelperUniSchool,
         department: globalHelperUniDepartment,
@@ -93,6 +95,8 @@ async function insertHelperOffer(data) {
         userId: helperUserId,
         price,
         mainType: type,
+        secondType: globalHelperJobIndustry,
+        thirdType: globalHelperJobJob,
         timestamp: Date.now(),
         industry: globalHelperJobIndustry,
         job: globalHelperJobJob,
@@ -129,6 +133,8 @@ async function insertHelperOffer(data) {
         userId: helperUserId,
         price,
         mainType: type,
+        secondType: globalHelperSelfEmployedType,
+        thirdType: globalHelperSelfEmployedProfession,
         timestamp: Date.now(),
         type: globalHelperSelfEmployedType,
         profession: globalHelperSelfEmployedProfession,
@@ -175,17 +181,24 @@ async function getHelperAllMatchedRequests(data) {
 
 async function getHelperAllOffers(data) {
   const { helperUserId } = data;
-  const sql = ` SELECT * FROM offers WHERE userId = ${helperUserId} AND NOT status='deleted'`;
+  const sql = ` SELECT * FROM offers WHERE userId = ${helperUserId} AND NOT status='deleted' ORDER BY id DESC;`;
   const allOffers = await query(sql);
   return { data: { allOffers } };
 }
 
-async function getHelperOfferDetail(data) {
-  const { offerId } = data;
-  const sql = `
-    SELECT * from offers WHERE id = ${offerId}`;
-  const sqlResult = await query(sql);
-  return { data: { helpers: sqlResult } };
+async function getPotentialCustomers(data) {
+  const { helperUserId } = data;
+  const sql = ` SELECT DISTINCT req.userId AS helpeeID, helpee.username AS helpeeName, helpee.profilePicPath AS profilePicPath,
+		req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType, req.country AS country
+FROM offers ofs
+LEFT JOIN helper_account acc ON ofs.userId = acc.id
+LEFT JOIN requests req ON 
+		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType AND ofs.thirdType = req.thirdType
+        AND ofs.country = req.country
+LEFT JOIN helpee_account helpee ON req.userId = helpee.id
+WHERE acc.id = ${helperUserId} AND NOT req.userId IS NULL;`;
+  const allPotentialCustomers = await query(sql);
+  return { data: { allPotentialCustomers } };
 }
 
 async function updateHelperProfilePicPath(data) {
@@ -215,8 +228,8 @@ module.exports = {
   insertHelperOffer,
   getHelperAllMatchedRequests,
   getHelperAllOffers,
-  getHelperOfferDetail,
   updateHelperProfilePicPath,
   updateHelperCertificatePath,
   deleteHelperOffer,
+  getPotentialCustomers,
 };

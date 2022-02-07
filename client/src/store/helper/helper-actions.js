@@ -8,6 +8,7 @@ const helperSignInPath = '/api/helper/sign-in';
 const userOfferPath = '/api/helper/offer';
 const activeHelperPath = '/api/helper/active-helpers';
 const getAllOffersPath = '/api/helper/all-offers';
+const getPotentialCustomersPath = '/api/helper/potential-customers';
 const helperProfilePicUploadPath = '/api/helper/profile-pic-upload';
 const helperCertificateUploadPath = '/api/helper/certificate-upload';
 const helperBasicFormWithoutCertificatePath = '/api/helper/basic-form';
@@ -63,6 +64,28 @@ export const getAllOffers = (data) => {
       dispatch(
         helperActions.updateAllOffers({
           allOffers: [],
+        })
+      );
+    }
+  };
+};
+
+export const getPotentialCustomers = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(getPotentialCustomersPath, {
+        params: { helperUserId: data.helperUserId },
+      });
+      dispatch(
+        helperActions.updateAllPotentialCustomers({
+          allPotentialCustomers: response.data.allPotentialCustomers,
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        helperActions.updateAllPotentialCustomers({
+          allPotentialCustomers: [],
         })
       );
     }

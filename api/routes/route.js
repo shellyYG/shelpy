@@ -35,6 +35,7 @@ const {
 
 const {
   postHelperOffer,
+  getPotentialCustomers,
   deleteHelperOffer,
   allowHelperPrivateRoute,
   getHelperAllMatchedRequests,
@@ -64,7 +65,10 @@ router.route('/api/helper/offer').post(wrapAsync(postHelperOffer));
 router.route('/api/helper/offer').delete(wrapAsync(deleteHelperOffer));
 
 router.route('/api/helpee/all-orders').get(wrapAsync(getHelpeeAllOrders));
-router.route('/api/helper/all-offers').get(wrapAsync(getHelperAllOffers));;
+router.route('/api/helper/all-offers').get(wrapAsync(getHelperAllOffers));
+
+router.route('/api/helper/potential-customers').get(wrapAsync(getPotentialCustomers));;
+
 router.route('/api/helpee/sign-in').post(wrapAsync(postUserSignInData));
 router
   .route('/api/helpee/helper-list')
@@ -98,6 +102,7 @@ router.post(
     }
   }
 );
+
 router.post(
   '/api/helpee/profile-pic-upload',
   upload.array('profilePic', 3),

@@ -174,7 +174,7 @@ const FinalFormPage = (props) => {
         finalNotes: notes,
 
         step: 'request_submitted',
-        status: 'Not Fulfilled',
+        status: 'Fulfilled', // Not Fulfilled or Fulfilled
       };
       console.log('data to post: ', data);
       dispatch(postHelpeeRequestForm(data));
@@ -411,7 +411,7 @@ const FinalFormPage = (props) => {
                 <CheckBox
                   checked={hasCantonese}
                   handleCheck={setHasCantonese}
-                  details='Chinese'
+                  details='Cantonese'
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
