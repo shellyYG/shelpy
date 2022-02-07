@@ -62,6 +62,7 @@ const FinalFormPage = (props) => {
     globalHelpeeJobWFH,
     globalHelpeeJobCompanySize,
     globalHelpeeJobYears,
+    globalHelpeeJobdNotes,
 
     globalHelpeeSelfEmployedType,
     globalHelpeeSelfEmployedProfession,
@@ -78,7 +79,7 @@ const FinalFormPage = (props) => {
     globalHelperUniDepartment,
     globalHelperUniCountry,
     globalHelperUniDegree,
-    globalHelperUniNote,
+    globalHelperUniNotes,
 
     globalHelperJobIndustry,
     globalHelperJobJob,
@@ -86,6 +87,7 @@ const FinalFormPage = (props) => {
     globalHelperJobWFH,
     globalHelperJobCompanySize,
     globalHelperJobYears,
+    globalHelperJobNotes,
 
     globalHelperSelfEmployedType,
     globalHelperSelfEmployedProfession,
@@ -100,7 +102,6 @@ const FinalFormPage = (props) => {
   const { offerStatus, offerStatusTitle, offerStatusMessage } = useSelector(
     (state) => state.helperNotification
   );
-  console.log('offerStatus: ', offerStatus);
 
   if (loading) {
     MySwal.fire({
@@ -126,10 +127,6 @@ const FinalFormPage = (props) => {
     }
 
     if (props.isHelpee) {
-      console.log(
-        'isHelpee...globalHelpeeJobOrUniTarget: ',
-        globalHelpeeJobOrUniTarget
-      );
       data = {
         helpeeUserId,
         type: globalHelpeeJobOrUniTarget,
@@ -145,6 +142,7 @@ const FinalFormPage = (props) => {
         globalHelpeeJobWFH,
         globalHelpeeJobCompanySize,
         globalHelpeeJobYears,
+        globalHelpeeJobdNotes,
 
         globalHelpeeSelfEmployedType,
         globalHelpeeSelfEmployedProfession,
@@ -189,7 +187,7 @@ const FinalFormPage = (props) => {
         globalHelperUniDepartment,
         globalHelperUniCountry,
         globalHelperUniDegree,
-        globalHelperUniNote,
+        globalHelperUniNotes,
 
         globalHelperJobIndustry,
         globalHelperJobJob,
@@ -197,6 +195,7 @@ const FinalFormPage = (props) => {
         globalHelperJobWFH,
         globalHelperJobCompanySize,
         globalHelperJobYears,
+        globalHelperJobNotes,
 
         globalHelperSelfEmployedType,
         globalHelperSelfEmployedProfession,

@@ -82,7 +82,7 @@ function App() {
         <Route
           path='/helper/service-types'
           element={
-            isHelpeeAuthenticated ? (
+            isHelperAuthenticated ? (
               <SelectJobOrUniPage isHelpee={false} />
             ) : (
               <PreSignInPage isHelpee={false} />
@@ -102,7 +102,7 @@ function App() {
         <Route
           path='/helper/job-form'
           element={
-            isHelpeeAuthenticated ? (
+            isHelperAuthenticated ? (
               <JobFormPage isHelpee={false} />
             ) : (
               <PreSignInPage isHelpee={false} />
@@ -122,7 +122,7 @@ function App() {
         <Route
           path='/helper/uni-form'
           element={
-            isHelpeeAuthenticated ? (
+            isHelperAuthenticated ? (
               <UniFormPage isHelpee={false} />
             ) : (
               <PreSignInPage isHelpee={false} />
@@ -142,7 +142,7 @@ function App() {
         <Route
           path='/helper/self-employed-form'
           element={
-            isHelpeeAuthenticated ? (
+            isHelperAuthenticated ? (
               <SelfEmployedPage isHelpee={false} />
             ) : (
               <PreSignInPage isHelpee={false} />
@@ -162,7 +162,7 @@ function App() {
         <Route
           path='/helper/final-form'
           element={
-            isHelpeeAuthenticated ? (
+            isHelperAuthenticated ? (
               <FinalFormPage isHelpee={false} />
             ) : (
               <PreSignInPage isHelpee={false} />

@@ -1,65 +1,50 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
+import { onClickDeleteOffer } from '../store/helper/helper-actions';
 
-function ActiveOrderCard(props) {
+function OfferCard(props) {
   const navigate = useNavigate();
-  const [active, setActive] = useState(false);
-  const [helpers, setHelpers] = useState([]);
-  const [helperCount, setHelperCount] = useState(0);
+  const dispatch = useDispatch();
   const [img, setImg] = useState('');
   useEffect(() => {
-    switch (props.service) {
-      case 'visa':
-        setImg('/visa');
+    switch (props.type) {
+      case 'University':
+        setImg('/university');
         break;
-      case 'anmelden':
-        setImg('/anmelden');
+      case 'Job':
+        setImg('/job');
         break;
-      case 'arzt':
-        setImg('/arzt');
-        break;
-      case 'apartmentVisit':
-        setImg('/wohnung');
-        break;
-      case 'bankAccount':
-        setImg('/bank');
-        break;
-      case 'others':
-        setImg('/offer_help');
+      case 'Self-Employed':
+        setImg('/mom');
         break;
       default:
         setImg('/offer_help');
     }
-  }, [props.service]);
+  }, [props.type]);
 
-  useEffect(() => {
-    async function getHelperLists(orderId) {
-      try {
-        const response = await axios.get('api/helpee/helper-list', {
-          params: { orderId, type: props.type },
-        });
-        if (response) {
-          const { helpers } = response.data;
-          setHelperCount(helpers.length);
-          setHelpers(helpers);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getHelperLists(props.orderId);
-  }, [props.orderId, props.type]);
   
-  function handleShowActiveOrderStatus(e) {
+  function handleViewReceipt(e) {
     e.preventDefault();
-    navigate(`/helpee/order/helper-lists?orderId=${props.orderId}`, { replace: true });
+    navigate(`/receipt?offerId=${props.offerId}`, { replace: true });
+  }
+  function handleDeleteOffer(e) {
+    e.preventDefault();
+    const data = {
+      offerId: props.offerId,
+      helperUserId: props.helperUserId,
+    };
+    try {
+      dispatch(onClickDeleteOffer(data));
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
-    <div className={active ? 'history-card-active' : 'history-card'}>
+    <div className='history-card'>
       <div className='smallWidth'>
         <div className='helper-ImgBx'>
           <img src={`${img}.jpeg`} alt={'visa'}></img>
@@ -98,25 +83,24 @@ function ActiveOrderCard(props) {
           </div>
         </div>
       </div>
-      <div className='evenSmallFlexColumn'>
-        <div className='content'>
-          <div className='contentBx'>
-            <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>
-              {helperCount} Helpers
-            </div>
-            <div style={{ marginBottom: '12px' }}>waiting for your reply</div>
-          </div>
+      <div className='checkBoxWidth'>
+        <div className='contentBx'>
+          <p style={{ fontWeight: '12px', padding: '6px' }}>
+            Offer ID: {props.offerId}
+          </p>
+          <p style={{ fontWeight: '12px', padding: '6px' }}>
+            Price: {props.price}
+          </p>
         </div>
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>Request ID: {props.orderId}</p>
-          <button className='btn-contact' onClick={handleShowActiveOrderStatus}>
-            Check Status
+          <button className='btn-red' onClick={handleDeleteOffer}>
+            Delete Offer
           </button>
         </div>
       </div>
     </div>
   );
 }
-export default ActiveOrderCard;
+export default OfferCard;

@@ -15,7 +15,6 @@ const HelpeeDashboardPage = (props) => {
   }, [props.helpeeUserId, dispatch]);
 
   const { allOrders } = useSelector((state) => state.helpee);
-  console.log('allOrders: ', allOrders);
   useEffect(() => {
     const activeOrdersArr = [];
     const pastOrdersArr = [];

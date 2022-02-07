@@ -70,7 +70,6 @@ const JobFormPage = (props) => {
         years !== 'default'
     );
   }, [industry, job, country, WFH, companySize, years]);
-  console.log(industry, job, country, WFH, companySize, years);
   return (
     <div
       className='main-content-wrapper'

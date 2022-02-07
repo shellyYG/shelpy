@@ -16,12 +16,20 @@ import { onSubmitUpdateHelperSelfEmployedData } from '../store/helper/helper-act
 
 const SelfEmployedPage = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const typeRef = useRef();
   const professionRef = useRef();
   const countryRef = useRef();
   const yearsRef = useRef();
   const notesRef = useRef();
-  const navigate = useNavigate();
+  
+  const [type, setType] = useState('default');
+  const [profession, setProfession] = useState('default');
+  const [country, setCountry] = useState('default');
+  const [years, setYears] = useState('default');
+  const [enableBtn, setEnableBtn] = useState(false);
+
   async function handleConfirm(e) {
     e.preventDefault();
     let notes;
@@ -49,17 +57,7 @@ const SelfEmployedPage = (props) => {
     }
   }
   
-  const [type, setType] = useState('default');
-  const [profession, setProfession] = useState('default');
-  const [country, setCountry] = useState('default');
-  const [years, setYears] = useState('default');
-  const [enableBtn, setEnableBtn] = useState(false);
-  console.log(
-    'type: ',
-    type,
-    'profession: ',
-    profession
-  );
+  
   useEffect(() => {
     setEnableBtn(
       country !== 'default' &&

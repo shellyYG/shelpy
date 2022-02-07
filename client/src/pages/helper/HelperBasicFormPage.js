@@ -145,7 +145,6 @@ const HelperBasicFormPage = (props) => {
     }
     let data;
     if (certificate) {
-      console.log('yes certificate');
       data = new FormData();
       data.append('helperUserId', props.helperUserId);
       data.append('username', username);

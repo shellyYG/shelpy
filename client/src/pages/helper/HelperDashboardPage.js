@@ -1,26 +1,26 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PastOrderCard from '../../components/PastOrderCard';
 import ActiveOrderCard from '../../components/ActiveOrderCard';
-import { getAllOrders } from '../../store/helpee/helpee-actions';
+import { getAllOffers } from '../../store/helper/helper-actions';
+import OfferCard from '../../components/OfferCard';
+import { useNavigate } from 'react-router-dom';
 
 const HelperDashboardPage = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isActiveOrderSelected, setIsActiveOrderSelected] = useState(true);
-  const [activeOrders, setActiveOrders] = useState([]);
-  const [pastOrders, setPastOrders] = useState([]);
+  const [liveOffers, setLiveOffers] = useState([]);
 
   useEffect(() => {
-    dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
-  }, [props.helpeeUserId, dispatch]);
+    dispatch(getAllOffers({ helperUserId: props.helperUserId }));
+  }, [props.helperUserId, dispatch]);
 
-  const { allOrders } = useSelector((state) => state.helpee);
-  console.log('allOrders: ', allOrders);
+  const { allOffers } = useSelector((state) => state.helper);
+
   useEffect(() => {
-    const activeOrdersArr = [];
-    const pastOrdersArr = [];
-    allOrders.forEach((o) => {
-      if (o.status === 'Fulfilled') {
+    const liveOffersArr = [];
+    if (allOffers) {
+      allOffers.forEach((o) => {
         switch (o.mainType) {
           case 'university': {
             const newObject = {};
@@ -29,7 +29,8 @@ const HelperDashboardPage = (props) => {
             newObject.subCategory = o.department;
             newObject.country = o.country;
             newObject.id = o.id;
-            pastOrdersArr.push(newObject);
+            newObject.price = o.price;
+            liveOffersArr.push(newObject);
             break;
           }
           case 'job': {
@@ -39,7 +40,8 @@ const HelperDashboardPage = (props) => {
             newObject.subCategory = o.job;
             newObject.country = o.country;
             newObject.id = o.id;
-            pastOrdersArr.push(newObject);
+            newObject.price = o.price;
+            liveOffersArr.push(newObject);
             break;
           }
           case 'selfEmployed': {
@@ -49,61 +51,31 @@ const HelperDashboardPage = (props) => {
             newObject.subCategory = o.profession;
             newObject.country = o.country;
             newObject.id = o.id;
-            pastOrdersArr.push(newObject);
+            newObject.price = o.price;
+            liveOffersArr.push(newObject);
             break;
           }
           default:
             break;
         }
-      } else {
-        switch (o.mainType) {
-          case 'university': {
-            const newObject = {};
-            newObject.type = 'University';
-            newObject.mainCategory = o.school;
-            newObject.subCategory = o.department;
-            newObject.country = o.country;
-            newObject.id = o.id;
-            activeOrdersArr.push(newObject);
-            break;
-          }
-          case 'job': {
-            const newObject = {};
-            newObject.type = 'Job';
-            newObject.mainCategory = o.industry;
-            newObject.subCategory = o.job;
-            newObject.country = o.country;
-            newObject.id = o.id;
-            activeOrdersArr.push(newObject);
-            break;
-          }
-          case 'selfEmployed': {
-            const newObject = {};
-            newObject.type = 'Self-Employed';
-            newObject.mainCategory = o.type;
-            newObject.subCategory = o.profession;
-            newObject.country = o.country;
-            newObject.id = o.id;
-            activeOrdersArr.push(newObject);
-            break;
-          }
-          default:
-            break;
-        }
-      }
-    });
-
-    setActiveOrders(activeOrdersArr);
-    setPastOrders(pastOrdersArr);
-  }, [allOrders]);
-
+      });
+    }
+    
+    setLiveOffers(liveOffersArr);
+  }, [allOffers]);
+  
   function handleSelectActiveOrders(e) {
     e.preventDefault(e);
     setIsActiveOrderSelected(true);
   }
-  function handleSelectpastOrders(e) {
+  function handleSelectAllOffers(e) {
     e.preventDefault(e);
     setIsActiveOrderSelected(false);
+  }
+
+  function handleAddOffer(e) {
+    e.preventDefault(e);
+    navigate('/helper/service-types', { replace: true });
   }
 
   return (
@@ -117,7 +89,7 @@ const HelperDashboardPage = (props) => {
           }
           onClick={handleSelectActiveOrders}
         >
-          Active Orders
+          Active Requests
         </button>
         <button
           className={
@@ -125,37 +97,48 @@ const HelperDashboardPage = (props) => {
               ? 'activeSelectedOrderBtn'
               : 'nonActiveSelectedOrderBtn'
           }
-          onClick={handleSelectpastOrders}
+          onClick={handleSelectAllOffers}
         >
-          Past Orders
+          Your Offers
         </button>
       </div>
-      {isActiveOrderSelected && (
+      {isActiveOrderSelected && liveOffers && (
         <div className='task-container'>
-          {activeOrders.map((option) => (
-            <ActiveOrderCard
-              key={option.id}
-              orderId={option.id}
-              type={option.type}
-              mainCategory={option.mainCategory}
-              subCategory={option.subCategory}
-              country={option.country}
-            />
-          ))}
+          {liveOffers.map(
+            (
+              option // TODO: changed to orders
+            ) => (
+              <ActiveOrderCard
+                key={option.id}
+                offerId={option.id}
+                type={option.type}
+                mainCategory={option.mainCategory}
+                subCategory={option.subCategory}
+                country={option.country}
+              />
+            )
+          )}
         </div>
       )}
-      {!isActiveOrderSelected && (
+      {!isActiveOrderSelected && liveOffers && (
         <div className='task-container'>
-          {pastOrders.map((option) => (
-            <PastOrderCard
+          {liveOffers.map((option) => (
+            <OfferCard
               key={option.id}
-              orderId={option.id}
+              offerId={option.id}
               type={option.type}
               mainCategory={option.mainCategory}
               subCategory={option.subCategory}
               country={option.country}
+              price={option.price}
+              helperUserId={props.helperUserId}
             />
           ))}
+          <div className='history-card' style={{ boxShadow: 'none', border: 'none'}}>
+            <button className='btn-contact' onClick={handleAddOffer}>
+              Add Offer
+            </button>
+          </div>
         </div>
       )}
     </div>

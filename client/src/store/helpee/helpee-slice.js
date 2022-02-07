@@ -29,7 +29,7 @@ const helpeeSlice = createSlice({
     globalHelpeeJobWFH: '',
     globalHelpeeJobCompanySize: '',
     globalHelpeeJobYears: '',
-    globalJobNotes: '',
+    globalHelpeeJobNotes: '',
 
     globalHelpeeSelfEmployedType: '',
     globalHelpeeSelfEmployedProfession: '',

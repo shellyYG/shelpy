@@ -42,7 +42,6 @@ function PastOrderCard(props) {
           params: { orderId, type: props.type },
         });
         if (response) {
-          console.log('helper list response: ', response);
           const { helpers } = response.data;
           setHelperCount(helpers.length);
           setHelpers(helpers);

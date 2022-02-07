@@ -87,7 +87,6 @@ export const onClickUpdateActiveSelectedHelper = (data) => {
   };
 }
 export const onClickUpdateHelpeeActiveJobOrUniTarget = (data) => {
-  console.log('onClickUpdateHelpeeActiveJobOrUniTarget: data: ', data);
   return async (dispatch) => {
     dispatch(
       helpeeActions.onClickUpdateHelpeeActiveJobOrUniTarget({
@@ -286,7 +285,6 @@ export const postHelpeeServiceRequestForm = (data) => {
 };
 
 export const postHelpeeRequestForm = (data) => {
-  console.log('postHelpeeRequestForm->data: ', data);
   return async (dispatch) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');

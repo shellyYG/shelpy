@@ -5,9 +5,9 @@ import { helperActions } from './helper-slice';
 const getHelperAuthStatusPath = '/api/helper/get-auth-status';
 const helperSignUpPasswordPath = '/api/helper/signup-password';
 const helperSignInPath = '/api/helper/sign-in';
-const userOfferFormPath = '/api/helper/offer';
+const userOfferPath = '/api/helper/offer';
 const activeHelperPath = '/api/helper/active-helpers';
-const getAllOrdersPath = '/api/helper/all-orders';
+const getAllOffersPath = '/api/helper/all-offers';
 const helperProfilePicUploadPath = '/api/helper/profile-pic-upload';
 const helperCertificateUploadPath = '/api/helper/certificate-upload';
 const helperBasicFormWithoutCertificatePath = '/api/helper/basic-form';
@@ -47,22 +47,22 @@ export const getHelperAuthStatus = () => {
   };
 };
 
-export const getAllOrders = (data) => {
+export const getAllOffers = (data) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(getAllOrdersPath, {
+      const response = await axios.get(getAllOffersPath, {
         params: { helperUserId: data.helperUserId },
       });
       dispatch(
-        helperActions.updateActiveAndPastOrders({
-          allOrders: response.data.allOrders,
+        helperActions.updateAllOffers({
+          allOffers: response.data.allOffers,
         })
       );
     } catch (error) {
       console.error(error);
       dispatch(
-        helperActions.updateActiveAndPastOrders({
-          allOrders: [],
+        helperActions.updateAllOffers({
+          allOffers: [],
         })
       );
     }
@@ -71,7 +71,6 @@ export const getAllOrders = (data) => {
 
 
 export const onClickUpdateHelperActiveJobOrUniTarget = (data) => {
-  console.log('onClickUpdate data: ', data);
   return async (dispatch) => {
     dispatch(
       helperActions.onClickUpdateHelperActiveJobOrUniTarget({
@@ -81,7 +80,6 @@ export const onClickUpdateHelperActiveJobOrUniTarget = (data) => {
   };
 };
 export const onClickUpdateActiveOfferTarget = (data) => {
-  console.log('onClickUpdateActiveOfferTarget...', data);
   return async (dispatch) => {
     dispatch(
       helperActions.onClickUpdateActiveOfferTarget({
@@ -232,7 +230,7 @@ export const postHelperOfferForm = (data) => {
           Authorization: 'Bearer ' + generalToken,
         };
         const response = await axios.post(
-          userOfferFormPath,
+          userOfferPath,
           {
             data,
           },
@@ -386,7 +384,6 @@ export const onUploadProfilePicture = (data) => {
           headers,
         });
         const { imagePath } = response.data;
-        console.log('imagePath: ', imagePath);
         dispatch(
           helperActions.updateProfilePicPath({
             profilePicPath: imagePath,
@@ -417,7 +414,6 @@ export const onSubmitUploadHelperData = (data) => {
         const response = await axios.post(postPath, data, {
           headers,
         });
-        console.log('upload certificate response: ', response);
         data.requestId = response.data.requestId;
         dispatch(
           notificationActions.setNotification({
@@ -444,4 +440,29 @@ export const onSubmitUploadHelperData = (data) => {
       }
     }
   };
+}
+
+export const onClickDeleteOffer = (data) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(userOfferPath, {
+        params: { offerId: data.offerId },
+      });
+      const response = await axios.get(getAllOffersPath, {
+        params: { helperUserId: data.helperUserId },
+      });
+      dispatch(
+        helperActions.updateAllOffers({
+          allOffers: response.data.allOffers,
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        helperActions.updateAllOffers({
+          allOffers: [],
+        })
+      );
+    }
+  }
 }

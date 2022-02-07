@@ -35,6 +35,7 @@ const UniFormPage = (props) => {
       degree,
       notes: notes || '',
     };
+
     try {
       if (props.isHelpee) {
         dispatch(onSubmitUpdateHelpeeUniData(data));

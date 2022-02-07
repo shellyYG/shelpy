@@ -8,7 +8,7 @@ async function insertHelperOffer(data) {
     globalHelperUniDepartment,
     globalHelperUniCountry,
     globalHelperUniDegree,
-    globalHelperUniNote,
+    globalHelperUniNotes,
 
     globalHelperJobIndustry,
     globalHelperJobJob,
@@ -16,7 +16,7 @@ async function insertHelperOffer(data) {
     globalHelperJobWFH,
     globalHelperJobCompanySize,
     globalHelperJobYears,
-    globalJobNotes,
+    globalHelperJobNotes,
 
     globalHelperSelfEmployedType,
     globalHelperSelfEmployedProfession,
@@ -64,7 +64,7 @@ async function insertHelperOffer(data) {
         department: globalHelperUniDepartment,
         country: globalHelperUniCountry,
         degree: globalHelperUniDegree,
-        notes: globalHelperUniNote,
+        notes: globalHelperUniNotes,
         hasMonToFri: helperHasMonToFri,
         hasWeekend: helperHasWeekend,
         hasBefore12: helperHasBefore12,
@@ -100,7 +100,7 @@ async function insertHelperOffer(data) {
         WFH: globalHelperJobWFH,
         companySize: globalHelperJobCompanySize,
         years: globalHelperJobYears,
-        notes: globalJobNotes,
+        notes: globalHelperJobNotes,
         hasMonToFri: helperHasMonToFri,
         hasWeekend: helperHasWeekend,
         hasBefore12: helperHasBefore12,
@@ -173,13 +173,17 @@ async function getHelperAllMatchedRequests(data) {
   return { data: { allOrders } };
 }
 
-async function getHelperOrderHelperList(data) {
-  const { orderId } = data;
+async function getHelperAllOffers(data) {
+  const { helperUserId } = data;
+  const sql = ` SELECT * FROM offers WHERE userId = ${helperUserId} AND NOT status='deleted'`;
+  const allOffers = await query(sql);
+  return { data: { allOffers } };
+}
+
+async function getHelperOfferDetail(data) {
+  const { offerId } = data;
   const sql = `
-    SELECT DISTINCT a.id AS helperId, a.username, a.nationality, a.nativeLanguage, a.firstLanguage, a.secondLanguage
-    FROM helper_account a
-    INNER JOIN helper_accept_request b ON a.id = b.helperId
-    WHERE b.orderId = ${orderId};`;
+    SELECT * from offers WHERE id = ${offerId}`;
   const sqlResult = await query(sql);
   return { data: { helpers: sqlResult } };
 }
@@ -200,10 +204,19 @@ async function updateHelperCertificatePath(data) {
   return sqlquery;
 }
 
+async function deleteHelperOffer(data) {
+  const { offerId } = data;
+  const sql = `UPDATE offers SET status='deleted' WHERE id=${offerId}`;
+  await query(sql);
+  return { data: { status: 'success'} };
+}
+
 module.exports = {
   insertHelperOffer,
   getHelperAllMatchedRequests,
-  getHelperOrderHelperList,
+  getHelperAllOffers,
+  getHelperOfferDetail,
   updateHelperProfilePicPath,
   updateHelperCertificatePath,
+  deleteHelperOffer,
 };

@@ -29,7 +29,7 @@ const helperSlice = createSlice({
     globalHelperJobWFH: '',
     globalHelperJobCompanySize: '',
     globalHelperJobYears: '',
-    globalJobNotes: '',
+    globalHelperJobNotes: '',
 
     globalHelperSelfEmployedType: '',
     globalHelperSelfEmployedProfession: '',
@@ -91,20 +91,23 @@ const helperSlice = createSlice({
       state.globalHelperJobWFH = payload.WFH;
       state.globalHelperJobCompanySize = payload.companySize;
       state.globalHelperJobYears = payload.years;
-      state.globalJobNotes = payload.notes;
+      state.globalHelperJobNotes = payload.notes;
     },
     onSubmitUpdateHelperSelfEmployedData(state, action) {
       const { payload } = action;
       state.globalHelperSelfEmployedType = payload.type;
       state.globalHelperSelfEmployedProfession = payload.profession;
-      state.globalHelpeeSelfEmployedCountry = payload.country;
+      state.globalHelperSelfEmployedCountry = payload.country;
       state.globalHelperSelfEmployedYears = payload.years;
       state.globalHelperSelfEmployedNotes = payload.notes;
     },
     updateProfilePicPath(state, action) {
-      console.log('helper slice updateProfilePic...');
       const { payload } = action;
       state.profilePicPath = payload.profilePicPath;
+    },
+    updateAllOffers(state, action) {
+      const { payload } = action;
+      state.allOffers = payload.allOffers;
     },
   },
 });

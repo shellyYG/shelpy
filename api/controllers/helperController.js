@@ -16,6 +16,25 @@ const postHelperOffer = async (req, res) => {
   }
 };
 
+const deleteHelperOffer = async (req, res) => {
+  try {
+    const { offerId } = req.query;
+    const response = await helperModel.deleteHelperOffer({
+      offerId,
+    });
+    if (response.data) {
+      res.status(200).json({
+        status: 'success'
+      });
+    } else {
+      throw Error('OFFER_DELETE_SERVER_ERROR');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
+
 const getHelperAllMatchedRequests = async (req, res) => {
   try {
     const { helpeeUserId } = req.query;
@@ -44,9 +63,28 @@ const getProfilePic = async (req, res) => {
   }
 };
 
+const getHelperAllOffers = async (req, res) => {
+  try {
+    const { helperUserId } = req.query;
+    const response = await helperModel.getHelperAllOffers({ helperUserId });
+    if (response.data) {
+      res.status(200).json({
+        allOffers: response.data.allOffers,
+      });
+    } else {
+      throw Error('NO_OFFERS_FOUND');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   allowHelperPrivateRoute,
   postHelperOffer,
+  deleteHelperOffer,
   getHelperAllMatchedRequests,
   getProfilePic,
+  getHelperAllOffers,
 };

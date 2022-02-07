@@ -5,7 +5,6 @@ import { onClickUpdateActiveOfferTarget } from '../store/helper/helper-actions';
 function HelperAddServiceCard(props) {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
-  console.log('offerTarget: ', props.offerTarget);
 
   function handleOnClick(e) {
     e.preventDefault();

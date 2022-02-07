@@ -22,7 +22,6 @@ const HelpeeOrderHelperListPage = () => {
           params: { orderId },
         });
         if (response) {
-          console.log('helper list response: ', response);
           const { helpers } = response.data;
           setHelpers(helpers);
         }

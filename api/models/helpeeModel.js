@@ -7,7 +7,7 @@ async function insertHelpeeRequestFormAndGetId(data) { // old.
 }
 
 async function insertHelpeeRequest(data) { // new.
-  const { 
+  const {
     helpeeUserId,
     type,
     globalHelpeeUniSchool,
@@ -22,7 +22,7 @@ async function insertHelpeeRequest(data) { // new.
     globalHelpeeJobWFH,
     globalHelpeeJobCompanySize,
     globalHelpeeJobYears,
-    globalJobNotes,
+    globalHelpeeJobNotes,
 
     globalHelpeeSelfEmployedType,
     globalHelpeeSelfEmployedProfession,
@@ -105,7 +105,7 @@ async function insertHelpeeRequest(data) { // new.
         WFH: globalHelpeeJobWFH,
         companySize: globalHelpeeJobCompanySize,
         years: globalHelpeeJobYears,
-        notes: globalJobNotes,
+        notes: globalHelpeeJobNotes,
         hasMonToFri: helpeeHasMonToFri,
         hasWeekend: helpeeHasWeekend,
 
