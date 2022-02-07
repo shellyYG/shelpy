@@ -8,21 +8,24 @@ function ChatRoomCard(props) {
   const [active, setActive] = useState(false);
 
   return (
-    <div
-      className={active ? 'task-card-active' : 'task-card'}
-    >
-      <div className="content">
-        <div className="helper-ImgBx">
-          <img src={'/visa.jpeg'} alt={'visa'}></img>
+    <div className={active ? 'task-card-active' : 'task-card'}>
+      <div className='chatRoomContent'>
+        <div className='helper-ImgBx'>
+          <img
+            src={`/images/${props.profilePicPath}`}
+            alt={props.customerName}
+          ></img>
         </div>
 
-        <div className="contentBx">
-          <h3>Visum</h3>
+        <div className='contentBx'>
+          <h5>{props.customerName}</h5>
           <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
-            2021/01/01
+            {props.secondType}
           </span>
           <br />
-          <span>{props.valueProps2}</span>
+          <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
+            {props.thirdType}
+          </span>
         </div>
       </div>
     </div>

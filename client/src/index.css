@@ -106,11 +106,17 @@ body {
   min-width: 20%;
   padding: 0.5rem calc((100vw - 1300px) / 2);
   padding-bottom: 30vh;
-  
 }
-.section-left-align-hidden {
-  display: 'none';
+.chatRoomLeft {
+  justify-content: start;
+  flex-shrink: 0; /* so not shrink when smaller window */
+  background-color: white;
+  overflow-y:scroll;
+  height: 90vh;
+  min-width: 20%;
+  padding-bottom: 30vh;
 }
+
 .form-center-wrapper {
   padding: 20px;
   justify-content: center;
@@ -169,7 +175,6 @@ body {
   /* justify-content: center;
   align-items: center; */
   left: 0;
-  width: 30px;
   flex:4;
   /* border: 10px solid blue; */
   overflow: auto;
@@ -232,9 +237,10 @@ body {
 }
 .task-container .task-card {
   position: relative;
-  width: auto;
+  width: 70%;
   height: auto;
   margin: 5px;
+  margin-left: auto;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   border-radius: 1px;
   border: 1px solid #e6e6e6;
@@ -246,20 +252,37 @@ body {
   padding: 10px 0;
 }
 .chat-box-title-container {
-  width: 90%;
+  width: 70%;
   margin: auto;
+  display: flex;
 }
-.chat-box-title-container-text {
+.chat-box-title-container-text-wrapper {
   text-align: center;
   background-color: #231f20;
   width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
   color: white;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
 }
+.chatBoxTitleInnerWrapper {
+  text-align: center;
+  background-color: #231f20;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+.chatBoxTitle {
+  margin: auto;
+  margin-right: 10px;
+}
+
 .chat-box {
   display:flex;
-  width: 90%;
+  width: 70%;
   height: 90%;
   border-top: 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
@@ -280,6 +303,16 @@ body {
 }
 
 .task-container .task-card .content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  opacity: 1;
+  padding: 3px;
+}
+
+.chatRoomContent {
   position: relative;
   display: flex;
   justify-content: center;
@@ -344,6 +377,7 @@ body {
   border-radius: 50%;
   overflow: hidden;
 }
+
 .task-container .task-card .content .task-ImgBx img {
   position: absolute;
   top: 0;
@@ -352,7 +386,8 @@ body {
   height: 100%;
   object-fit: cover;
 }
-.task-container .task-card .content .task-ImgBx img {
+
+.chatRoomContent img {
   position: absolute;
   top: 0;
   left: 0;
@@ -881,6 +916,7 @@ footer {
     display: flex;
     flex-direction:row;
     margin: auto;
+    width: 100%;
   }
   
 
@@ -924,7 +960,7 @@ footer {
   /* CHATROOM SEND MESSAGE */
   
 .send-msg-container {
-  width: 90%;
+  width: 70%;
   margin: auto;
   border-radius: 3px;
 }
@@ -961,6 +997,7 @@ footer {
   height: 80px;
   border-radius: 50%;
   overflow: hidden;
+  margin-right: 8px;
 }
 
 .smallFlexColumn {
@@ -1315,6 +1352,32 @@ input[type="checkbox" i] {
 }
 
 @media all and (max-width: 1200px) {
+  .chatBoxTitleInnerWrapper {
+    text-align: center;
+    background-color: #231f20;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+  .chat-box-title-container {
+    width: 90%;
+  }
+  .chatBoxTitle {
+    margin-bottom: 10px;
+  }
+  .chat-box {
+    width: 90%;
+  }
+  .chatRoomContent {
+    flex-direction: column;
+  }
+  .helper-ImgBx {
+    margin-bottom: 8px;
+  }
+  .send-msg-container {
+    width: 90%;
+  }
   form {
     width: 60vw;
   }

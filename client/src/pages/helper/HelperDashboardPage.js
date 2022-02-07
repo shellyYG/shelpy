@@ -14,8 +14,6 @@ const HelperDashboardPage = (props) => {
   const [isActiveOrderSelected, setIsActiveOrderSelected] = useState(true);
    const [liveOffers, setLiveOffers] = useState([]);
   console.log('helperID:', props.helperUserId);
-  
-
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));
     dispatch(getPotentialCustomers({ helperUserId: props.helperUserId }));

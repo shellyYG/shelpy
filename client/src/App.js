@@ -8,7 +8,7 @@ import Footer from './components/Footer';
 
 import HelpeeSignUpPasswordPage from './pages/helpee/HelpeeSignUpPasswordPage';
 import HelperSignUpPasswordPage from './pages/helper/HelperSignUpPasswordPage';
-import HelpeeChatRoomPage from './pages/HelpeeChatRoomPage';
+import ChatRoomPage from './pages/ChatRoomPage';
 import HelpeeHomePage from './pages/helpee/HelpeeHomePage';
 import HelpeeDashboardPage from './pages/helpee/HelpeeDashboardPage';
 import HelperListPage from './pages/helpee/HelpeeOrderHelperListPage';
@@ -199,7 +199,14 @@ function App() {
             )
           }
         />
-        <Route path={'/helpee/chatroom'} element={<HelpeeChatRoomPage />} />
+        <Route
+          path={'/helpee/chatroom'}
+          element={<ChatRoomPage isHelpee={true} />}
+        />
+        <Route
+          path={'/helper/chatroom'}
+          element={<ChatRoomPage isHelpee={false} />}
+        />
         <Route
           path={'/helper/basic-form'}
           element={

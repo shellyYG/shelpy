@@ -28,14 +28,17 @@ function PotentialCustomerCard(props) {
 
   function handleChat(e) {
     e.preventDefault(e);
-    navigate(`/chatroom?roomId=${props.helperID}-${props.helpeeID}&userId=${props.helpeeID}`);
+    navigate(
+      `/helper/chatroom?roomId=${props.helperID}-${props.helpeeID}&userId=${props.helperID}&customerName=${props.customerName}`
+    );
   }
+  console.log('props.profilePicPath: ', props.profilePicPath);
 
   return (
     <div className='history-card'>
       <div className='smallWidth'>
         <div className='helper-ImgBx'>
-          {img && <img src={`${img}.jpeg`} alt={'img'}></img>}
+          {img && <img src={`/images/${props.profilePicPath}`} alt={props.customerName}></img>}
         </div>
       </div>
       <div className='smallWidth'>

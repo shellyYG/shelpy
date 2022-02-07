@@ -10,15 +10,31 @@ import { serviceOptions } from '../store/options/service-options';
 import {socket} from '../service/socket';
 import { Icon } from '@iconify/react';
 import '../App.css';
+import {
+  getPotentialCustomers,
+} from '../store/helper/helper-actions';
+import LeftCloseIcon from '../components/Icons/LeftCloseIcon';
+import RightOpenIcon from '../components/Icons/RightOpenIcon';
 
 
-const HelpeeChatRoomPage = () => {
+const ChatRoomPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const roomId = searchParams.get('roomId');
-  const helpeeUserId = searchParams.get('helpeeUserId');
+  const userId = searchParams.get('userId');
+  const customerName = searchParams.get('customerName');
+  console.log('customerName: ', customerName);
+  useEffect(() => {
+    dispatch(getPotentialCustomers({ helperUserId: userId }));
+  }, [userId, dispatch]);
+
+  const { allPotentialCustomers } = useSelector(
+    (state) => state.helper
+  );
+  console.log('allPotentialCustomers: ', allPotentialCustomers);
  
   const [showTaskSection, setShowTaskSection] = useState(true);
   const onBackButtonEvent = (e) => {
@@ -43,7 +59,7 @@ const HelpeeChatRoomPage = () => {
     if (currentMessage !== "") {
       const messageData = {
         room: roomId,
-        author: helpeeUserId, // username,
+        author: userId, // username,
         message: currentMessage,
         time:
           new Intl.DateTimeFormat("en-US", { month: "short" }).format(
@@ -79,44 +95,52 @@ const HelpeeChatRoomPage = () => {
 
   return (
     <>
-      <div className="main-content-wrapper-no-background">
+      <div className='main-content-wrapper-no-background'>
         {!showTaskSection && (
-          <div className="task-expander">
-            <h3 className="expander" onClick={handleExpand}>
-              {">>"}
-            </h3>
+          <div className='task-expander'>
+            <div className='expander' onClick={handleExpand}>
+              <RightOpenIcon />
+            </div>
           </div>
         )}
         {showTaskSection && (
-          <div className="section-left-align">
-            <div className="task-schrinker">
-              <h3 className="schrinker" onClick={handleSchrink}>
-                {"<<"}
-              </h3>
+          <div className='chatRoomLeft'>
+            <div className='task-schrinker'>
+              <div className='schrinker' onClick={handleSchrink}>
+                <LeftCloseIcon />
+              </div>
             </div>
-            <div className="task-category">
-              <a className="btn-task-category">Avtive</a>
-              <a className="btn-task-category-active">
-                <p>Complete</p>
-              </a>
-            </div>
-            <div className="task-container">
-              {serviceOptions.map((option) => (
-                <ChatRoomCard title={option.label} valueProps1={option.price} />
+
+            <div className='task-container'>
+              {allPotentialCustomers.map((option) => (
+                <ChatRoomCard
+                  key={option.helpeeID}
+                  customerName={option.helpeeName}
+                  secondType={option.secondType}
+                  thirdType={option.thirdType}
+                  profilePicPath={option.profilePicPath}
+                />
               ))}
             </div>
           </div>
         )}
-        <div className="chat-section-center-align">
-          <div className="chat-box-title-container">
-            <div className="chat-box-title-container-text">
-              <h3> Your chat with Markus </h3>
+        <div className='chat-section-center-align'>
+          <div className='chat-box-title-container'>
+            <div className='chat-box-title-container-text-wrapper'>
+              <div className='chatBoxTitleInnerWrapper'>
+                <div className='chatBoxTitle'>
+                  <h3> Your chat with {customerName} </h3>
+                </div>
+                <div>
+                  <button className='btn-contact'>Book {customerName} </button>
+                </div>
+              </div>
             </div>
           </div>
-          {/* <div className="chat-box"> */}
-          <ScrollToBottom className="chat-box">
+
+          <ScrollToBottom className='chat-box'>
             {messageList.map((messageContent) => {
-              return messageContent.author === helpeeUserId ? (
+              return messageContent.author === userId ? (
                 <ChatMessageSelf
                   message={messageContent.message}
                   time={messageContent.time}
@@ -131,25 +155,25 @@ const HelpeeChatRoomPage = () => {
             })}
           </ScrollToBottom>
           {/* </div> */}
-          <div className="send-msg-container">
-            <form action="" className="centerbox-chat">
+          <div className='send-msg-container'>
+            <form action='' className='centerbox-chat'>
               <input
-                type="text"
+                type='text'
                 value={currentMessage}
-                className="form-control-chat"
-                placeholder="Send some message here"
+                className='form-control-chat'
+                placeholder='Send some message here'
                 onChange={handleMessageInput}
                 onKeyPress={(e) => {
-                  e.key === "Enter" && handleSend(e);
+                  e.key === 'Enter' && handleSend(e);
                 }}
               />
               <button
-                data-text="Book Room"
-                className="btn-send"
+                data-text='Book Room'
+                className='btn-send'
                 onClick={handleSend}
               >
                 <span>
-                  <Icon icon="fa:paper-plane-o" />
+                  <Icon icon='fa:paper-plane-o' />
                 </span>
               </button>
             </form>
@@ -160,4 +184,4 @@ const HelpeeChatRoomPage = () => {
   );
 };
 
-export default HelpeeChatRoomPage;
+export default ChatRoomPage;
