@@ -7,7 +7,8 @@ const socketChat = async (socket) => {
     const data = await chatModel.searchHistory(roomId);
     const history = data.map((d) => {
       const newObj = {
-        room: d.room,
+        id: d.id,
+        room: d.room_id,
         author: d.sender_id,
         message: d.message,
         message_time: d.message_time,

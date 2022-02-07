@@ -188,7 +188,7 @@ async function getHelperAllOffers(data) {
 
 async function getPotentialCustomers(data) {
   const { helperUserId } = data;
-  const sql = ` SELECT DISTINCT req.userId AS helpeeID, helpee.username AS helpeeName, helpee.profilePicPath AS profilePicPath,
+  const sql = ` SELECT DISTINCT req.id AS requestID, ofs.price AS price, req.userId AS helpeeID, helpee.username AS helpeeName, helpee.profilePicPath AS profilePicPath,
 		req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType, req.country AS country
 FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id

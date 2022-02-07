@@ -25,7 +25,7 @@ const ChatRoomPage = () => {
   const [messageList, setMessageList] = useState([]);
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
-  const customerName = searchParams.get('customerName');
+  const customerName = searchParams.get('partnerName');
   console.log('customerName: ', customerName);
   useEffect(() => {
     dispatch(getPotentialCustomers({ helperUserId: userId }));
@@ -59,9 +59,9 @@ const ChatRoomPage = () => {
     if (currentMessage !== "") {
       const messageData = {
         room: roomId,
-        author: userId, // username,
+        author: userId,
         message: currentMessage,
-        time:
+        message_time:
           new Intl.DateTimeFormat("en-US", { month: "short" }).format(
             new Date(Date.now())
           ) + " " +
@@ -72,7 +72,6 @@ const ChatRoomPage = () => {
           new Date(Date.now()).getMinutes(),
       };
       await socket.emit("send_message", messageData); // send to everyone in the room
-      console.log('1 new message: ', messageData);
       setMessageList((list) => [...list, messageData]); // add messageList on self
       setCurrentMessage(''); // clear input message
     }
@@ -85,13 +84,13 @@ const ChatRoomPage = () => {
     socket.on("history", (data) => {
       setMessageList(data); // add messageList on self
     });
-  }, []);
+  }, [roomId]);
   // listen to changes from socket server
   useEffect(() => {
     socket.on('server_send_message', (data) => {
       setMessageList((list) => [...list, data]); // add messageList on other
     })
-  },[socket])
+  },[])
 
   return (
     <>
@@ -114,8 +113,12 @@ const ChatRoomPage = () => {
             <div className='task-container'>
               {allPotentialCustomers.map((option) => (
                 <ChatRoomCard
-                  key={option.helpeeID}
-                  customerName={option.helpeeName}
+                  isHelpee={false}
+                  helperID={userId}
+                  helpeeID={option.helpeeID}
+                  price={option.price}
+                  key={option.requestID}
+                  partnerName={option.helpeeName}
                   secondType={option.secondType}
                   thirdType={option.thirdType}
                   profilePicPath={option.profilePicPath}
@@ -142,14 +145,16 @@ const ChatRoomPage = () => {
             {messageList.map((messageContent) => {
               return messageContent.author === userId ? (
                 <ChatMessageSelf
+                  key={messageContent.id}
                   message={messageContent.message}
-                  time={messageContent.time}
+                  message_time={messageContent.message_time}
                 />
               ) : (
                 <ChatMessageOther
+                  key={messageContent.id}
                   message={messageContent.message}
-                  time={messageContent.time}
-                  author={messageContent.author}
+                  message_time={messageContent.message_time}
+                  author={customerName}
                 />
               );
             })}
