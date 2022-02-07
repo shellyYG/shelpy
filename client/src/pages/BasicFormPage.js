@@ -3,29 +3,36 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import DropDown from '../../components/Dropdown';
-import FullLineTextBox from '../../components/FullLineTextBox';
-import ConfirmBtn from '../../components/ConfirmBtn';
+import DropDown from '../components/Dropdown';
+import FullLineTextBox from '../components/FullLineTextBox';
+import ConfirmBtn from '../components/ConfirmBtn';
 import {
   ageOptions,
-} from '../../store/options/service-options';
+} from '../store/options/service-options';
+import {
+  onUploadHelpeeProfilePicture,
+  onSubmitUploadHelpeeData,
+  clearApplyHelpeeStatus,
+} from '../store/helpee/helpee-actions';
 
 import {
-  onUploadProfilePicture,
+  onUploadHelperProfilePicture,
   onSubmitUploadHelperData,
   clearApplyHelperStatus,
-} from '../../store/helper/helper-actions';
+} from '../store/helper/helper-actions';
 
-import LeftHalfLineTextBox from '../../components/LeftHalfLineTextBox';
-import CheckBox from '../../components/CheckBox';
+import LeftHalfLineTextBox from '../components/LeftHalfLineTextBox';
+import CheckBox from '../components/CheckBox';
 
 const MySwal = withReactContent(Swal);
 
-const HelperBasicFormPage = (props) => {
+const BasicFormPage = (props) => {
+  console.log('helpeeID: ', props.helpeeUserId, 'helperID: ', props.helperUserId, 'isHelpee?', props.isHelpee);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const ageRef = useRef();
+  const introductionRef = useRef();
   const notesRef = useRef();
   const usernameRef = useRef();
   const linkedInUrlRef = useRef();
@@ -37,7 +44,15 @@ const HelperBasicFormPage = (props) => {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(false);
   const [enableBtn, setEnableBtn] = useState(false);
-  const { profilePicPath } = useSelector((state) => state.helper);
+  const { helpeeProfilePicPath } = useSelector((state) => state.helpee);
+  const { helperProfilePicPath } = useSelector((state) => state.helper);
+
+  const {
+    applyHelpeeStatus,
+    applyHelpeeStatusTitle,
+    applyHelpeeStatusMessage,
+  } = useSelector((state) => state.helpeeNotification);
+
   const {
     applyHelperStatus,
     applyHelperStatusTitle,
@@ -58,11 +73,13 @@ const HelperBasicFormPage = (props) => {
   async function handleProfilePicUpload(e) {
     e.preventDefault();
     const file = e.target.files[0];
-    
+
     if (file.size > 1000000) {
       await MySwal.fire({
         title: <strong>Oops!</strong>,
-        html: <p>Max. File size is 1MB. Please choose a smaller file to upload.</p>,
+        html: (
+          <p>Max. File size is 1MB. Please choose a smaller file to upload.</p>
+        ),
         icon: 'error',
       });
       return;
@@ -74,21 +91,36 @@ const HelperBasicFormPage = (props) => {
     ) {
       await MySwal.fire({
         title: <strong>Oops!</strong>,
-        html: <p>Only accepts .jpg, .jpeg or .png file. Please choose another file to upload.</p>,
+        html: (
+          <p>
+            Only accepts .jpg, .jpeg or .png file. Please choose another file to
+            upload.
+          </p>
+        ),
         icon: 'error',
       });
       return;
     }
     setProfilePic(file);
     const data = new FormData();
-    data.append('helperUserId', props.helperUserId);
-    data.append('profilePic', file);
+    if (props.isHelpee) {
+      data.append('helpeeUserId', props.helpeeUserId);
+      data.append('profilePic', file);
+    } else {
+      data.append('helperUserId', props.helperUserId);
+      data.append('profilePic', file);
+    }
     try {
-      dispatch(onUploadProfilePicture(data));
+      if (props.isHelpee) {
+        dispatch(onUploadHelpeeProfilePicture(data));
+      } else {
+        dispatch(onUploadHelperProfilePicture(data));
+      }
     } catch (err) {
       console.error(err);
     }
   }
+
   async function handleResumeUpload(e) {
     e.preventDefault();
     const file = e.target.files[0] || '';
@@ -131,9 +163,13 @@ const HelperBasicFormPage = (props) => {
 
   async function handleConfirm(e) {
     e.preventDefault();
+    let introduction;
     let notes;
     let username;
     let linkedInUrl;
+    if (introductionRef && introductionRef.current) {
+      introduction = introductionRef.current.value;
+    }
     if (notesRef && notesRef.current) {
       notes = notesRef.current.value;
     }
@@ -144,7 +180,7 @@ const HelperBasicFormPage = (props) => {
       linkedInUrl = linkedInUrlRef.current.value;
     }
     let data;
-    if (certificate) {
+    if (certificate) { // must be helper
       data = new FormData();
       data.append('helperUserId', props.helperUserId);
       data.append('username', username);
@@ -152,35 +188,53 @@ const HelperBasicFormPage = (props) => {
       data.append('isMarketing', isMarketing);
       data.append('age', age);
       data.append('linkedInUrl', linkedInUrl);
+      data.append('introduction', introduction);
       data.append('notes', notes);
       data.append('certificate', certificate); // need to append file as last object
       console.log('data to send: ', data); // console.log(data) // browser will be empty
-    }else {
-      data = {
-        helperUserId: props.helperUserId,
-        username,
-        age,
-        linkedInUrl,
-        notes,
-      };
+    } else { // could be helpee or helper
+      if (props.isHelpee) {
+        data = {
+          helpeeUserId: props.helpeeUserId,
+          isAnonymous,
+          username,
+          age,
+          introduction,
+          notes,
+        };
+      } else {
+        data = {
+          helperUserId: props.helperUserId,
+          isAnonymous,
+          isMarketing,
+          username,
+          age,
+          linkedInUrl,
+          introduction,
+          notes,
+        };
+      }
     }
     try {
-      dispatch(onSubmitUploadHelperData(data));
+      if (props.isHelpee) {
+        dispatch(onSubmitUploadHelpeeData(data));
+      } else {
+        dispatch(onSubmitUploadHelperData(data));
+      }
       setIsLoading(true);
     } catch (err) {
       console.error(err);
       setIsLoading(false);
     }
-    
-    
   }
-  
+
   useEffect(() => {
     setEnableBtn(
       usernameRef && age !== 'default' && (linkedInUrlRef || certificate)
     );
   }, [usernameRef, linkedInUrlRef, age, certificate]);
 
+  // is Helper:
   useEffect(() => {
     if (applyHelperStatus === 'error') {
       setIsLoading(false);
@@ -216,14 +270,53 @@ const HelperBasicFormPage = (props) => {
     navigate,
     dispatch,
   ]);
-  
+
+  // is Helpee:
+  useEffect(() => {
+    if (applyHelpeeStatus === 'error') {
+      setIsLoading(false);
+      async function sweetAlertAndClearStatus(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          html: <p>{message}</p>,
+          icon: 'error',
+        });
+        dispatch(clearApplyHelpeeStatus());
+      }
+      sweetAlertAndClearStatus(applyHelpeeStatus, applyHelpeeStatusMessage);
+      return;
+    } else if (applyHelpeeStatus === 'success') {
+      setIsLoading(false);
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{title}</strong>,
+          imageWidth: 442,
+          imageHeight: 293,
+          html: <p>{message}</p>,
+          icon: 'success',
+        });
+        navigate('/helpee/service-types', { replace: true });
+      }
+      dispatch(clearApplyHelpeeStatus());
+      sweetAlertAndNavigate(applyHelpeeStatus, applyHelpeeStatusMessage);
+    }
+  }, [
+    applyHelpeeStatus,
+    applyHelpeeStatusTitle,
+    applyHelpeeStatusMessage,
+    navigate,
+    dispatch,
+  ]);
+  console.log('helpeeProfilePicPath: ', helpeeProfilePicPath);
+  console.log('helperProfilePicPath: ', helperProfilePicPath);
   return (
     <div
       className='main-content-wrapper'
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        Apply to be a helper
+        {props.isHelpee && 'One Last Step!'}
+        {!props.isHelpee && 'Apply to be Helper'}
       </h1>
 
       <div className='form-center-wrapper'>
@@ -235,7 +328,7 @@ const HelperBasicFormPage = (props) => {
                   className='form-wrapper'
                   style={{ width: '100%', margin: '0px' }}
                 >
-                  {!profilePic && (
+                  {!isAnonymous && !profilePic && (
                     <div className='blankProfileImageBx'>
                       {' '}
                       <div className='uploadInnerDiv'>
@@ -251,19 +344,51 @@ const HelperBasicFormPage = (props) => {
                       </div>{' '}
                     </div>
                   )}
-                  {profilePic &&
-                    (!profilePicPath || profilePicPath.length < 1) && (
+                  {!isAnonymous &&
+                    !props.isHelpee &&
+                    profilePic &&
+                    (!helperProfilePicPath ||
+                      helperProfilePicPath.length < 1) && (
                       <div className='blankProfileImageBx'>
                         <div style={{ margin: 'auto' }}>
                           <p style={{ color: 'black' }}>Loading...</p>
                         </div>
                       </div>
                     )}
-                  {profilePicPath && profilePicPath.length > 1 && (
-                    <div className='profileImageBx'>
-                      <img src={profilePicPath} alt='connection'></img>
+                  {!isAnonymous &&
+                    !props.isHelpee &&
+                    helperProfilePicPath &&
+                    helperProfilePicPath.length > 1 && (
+                      <div className='profileImageBx'>
+                        <img src={helperProfilePicPath} alt='connection'></img>
+                      </div>
+                    )}
+                  {!isAnonymous &&
+                    props.isHelpee &&
+                    profilePic &&
+                    (!helpeeProfilePicPath ||
+                      helpeeProfilePicPath.length < 1) && (
+                      <div className='blankProfileImageBx'>
+                        <div style={{ margin: 'auto' }}>
+                          <p style={{ color: 'black' }}>Loading...</p>
+                        </div>
+                      </div>
+                    )}
+                  {isAnonymous && (
+                    <div className='blankProfileImageBx'>
+                      <div style={{ margin: 'auto' }}>
+                        <p style={{ color: 'black' }}>Anonymous</p>
+                      </div>
                     </div>
                   )}
+                  {!isAnonymous &&
+                    props.isHelpee &&
+                    helpeeProfilePicPath &&
+                    helpeeProfilePicPath.length > 1 && (
+                      <div className='profileImageBx'>
+                        <img src={helpeeProfilePicPath} alt='connection'></img>
+                      </div>
+                    )}
                 </div>
               </div>
               <div className='form-row'>
@@ -280,56 +405,70 @@ const HelperBasicFormPage = (props) => {
                   options={ageOptions}
                 />
               </div>
-              <div className='form-row'>
-                <LeftHalfLineTextBox
-                  title={'LinkedIn Link (or upload Resume)'}
-                  placeholder={
-                    'https://www.linkedin.com/in/your-linkedin-profile'
-                  }
-                  inputRef={linkedInUrlRef}
-                />
-                <div className='form-wrapper'>
-                  <label>Resume/files (or linkedin link)</label>
-                  {!certificate && (
-                    <>
-                      <label className='uploadLabel' for='resume'>
-                        Upload a file
-                      </label>
-                      <input
-                        type='file'
-                        id='resume'
-                        onChange={handleResumeUpload}
-                        hidden={true}
-                      />
-                    </>
-                  )}
-                  {certificate && (
-                    <div style={{ padding: '10px 0' }}>
-                      <p>{certificate.name || 'Uploaded'}</p>
-                    </div>
-                  )}
+              {!props.isHelpee && (
+                <div className='form-row'>
+                  <LeftHalfLineTextBox
+                    title={'LinkedIn Link (or upload Resume)'}
+                    placeholder={
+                      'https://www.linkedin.com/in/your-linkedin-profile'
+                    }
+                    inputRef={linkedInUrlRef}
+                  />
+                  <div className='form-wrapper'>
+                    <label>Resume/files (or linkedin link)</label>
+                    {!certificate && (
+                      <>
+                        <label className='uploadLabel' for='resume'>
+                          Upload a file
+                        </label>
+                        <input
+                          type='file'
+                          id='resume'
+                          onChange={handleResumeUpload}
+                          hidden={true}
+                        />
+                      </>
+                    )}
+                    {certificate && (
+                      <div style={{ padding: '10px 0' }}>
+                        <p>{certificate.name || 'Uploaded'}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
               <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <CheckBox
                   checked={isAnonymous}
                   handleCheck={setIsAnonymous}
-                  details='Stay anonymous (your profile picture will be hide).'
+                  details={
+                    props.isHelpee
+                      ? 'Ask question anonymously (your profile picture will be hide).'
+                      : 'Answer question anonymously (your profile picture will be hide).'
+                  }
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
                 />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <CheckBox
-                  checked={isMarketing}
-                  handleCheck={setIsMarketing}
-                  details='Promote your offer on our marketing page (this will increase your chance to get hired!).'
-                  paddingRight='10px'
-                  marginBottom='5px'
-                  fontSize='14px'
-                />
-              </div>
+              {!props.isHelpee && (
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <CheckBox
+                    checked={isMarketing}
+                    handleCheck={setIsMarketing}
+                    details='Promote your offer on our marketing page (this will increase your chance to get hired!).'
+                    paddingRight='10px'
+                    marginBottom='5px'
+                    fontSize='14px'
+                  />
+                </div>
+              )}
+              <FullLineTextBox
+                title={'Introduction'}
+                placeholder={'Introduce yourself in one sentence!'}
+                inputRef={introductionRef}
+                marginTop='15px'
+              />
               <FullLineTextBox
                 title={'Notes'}
                 placeholder={'If you choose others, please specify here.'}
@@ -348,4 +487,4 @@ const HelperBasicFormPage = (props) => {
   );
 };
 
-export default HelperBasicFormPage;
+export default BasicFormPage;

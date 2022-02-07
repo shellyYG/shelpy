@@ -37,7 +37,7 @@ const helperSlice = createSlice({
     globalHelperSelfEmployedYears: '',
     globalHelperSelfEmployedNotes: '',
 
-    profilePicPath: '',
+    helperProfilePicPath: '',
     offerTarget: '',
   },
   reducers: {
@@ -103,7 +103,7 @@ const helperSlice = createSlice({
     },
     updateProfilePicPath(state, action) {
       const { payload } = action;
-      state.profilePicPath = payload.profilePicPath;
+      state.helperProfilePicPath = payload.helperProfilePicPath;
     },
     updateAllOffers(state, action) {
       const { payload } = action;

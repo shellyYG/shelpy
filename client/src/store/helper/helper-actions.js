@@ -369,7 +369,7 @@ export const onSubmitUpdateHelperSelfEmployedData = (data) => {
   };
 };
 
-export const onUploadProfilePicture = (data) => {
+export const onUploadHelperProfilePicture = (data) => {
   return async (dispatch) => {
     try {
       const generalToken = localStorage.getItem('shelper-token');
@@ -386,7 +386,7 @@ export const onUploadProfilePicture = (data) => {
         const { imagePath } = response.data;
         dispatch(
           helperActions.updateProfilePicPath({
-            profilePicPath: imagePath,
+            helperProfilePicPath: imagePath,
           })
         );
       }

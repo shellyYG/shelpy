@@ -31,7 +31,7 @@ const HelperSignUpPasswordPage = () => {
 
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    navigate('/home', { replace: true });
+    navigate('/helper/home', { replace: true });
   };
   window.addEventListener('popstate', onBackButtonEvent, { once: true });
   if (loading) {
@@ -90,7 +90,7 @@ const HelperSignUpPasswordPage = () => {
         signUpPasswordStatusTitle,
         signUpPasswordStatusMessage
       );
-      navigate('/home', { replace: true });
+      navigate('/helper/home', { replace: true });
       return;
     } else if (signUpPasswordStatus === 'success') {
       setIsLoading(false);

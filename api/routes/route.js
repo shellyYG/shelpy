@@ -5,6 +5,7 @@ const util = require('util');
 
 const { uploadFile } = require('../../util/s3');
 const helperModel = require('../models/helperModel');
+const helpeeModel = require('../models/helpeeModel');
 
 const {
   wrapAsync,
@@ -87,8 +88,30 @@ router.post(
     const { helperUserId } = req.body;
     const file = req.files[0];
     try {
-      const result = await uploadFile(file, 'user-profile-pictures');
+      const result = await uploadFile(file, 'helper-profile-pictures');
       await helperModel.updateHelperProfilePicPath({ userId: helperUserId, path: result.Key});
+      await unlinkFile(file.path);
+      res.status(200).send({ imagePath: `/images/${result.Key}` });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+    }
+  }
+);
+router.post(
+  '/api/helpee/profile-pic-upload',
+  upload.array('profilePic', 3),
+  async (req, res, next) => {
+    const { helpeeUserId } = req.body;
+    console.log('@api helpeeUserId: ', helpeeUserId);
+    const file = req.files[0];
+    try {
+      const result = await uploadFile(file, 'helpee-profile-pictures');
+      console.log('helpee-result: ', result);
+      await helpeeModel.updateHelpeeProfilePicPath({
+        userId: helpeeUserId,
+        path: result.Key,
+      });
       await unlinkFile(file.path);
       res.status(200).send({ imagePath: `/images/${result.Key}` });
     } catch (error) {
@@ -101,11 +124,12 @@ router.post(
 router.post(
   '/api/helper/basic-form',
   async (req, res, next) => {
-    const { helperUserId, username, isAnonymous, isMarketing, age, linkedInUrl, notes } =
+    const { helperUserId, introduction, username, isAnonymous, isMarketing, age, linkedInUrl, notes } =
       req.body;
     try {
       await helperModel.updateHelperCertificatePath({
         userId: helperUserId,
+        introduction,
         username,
         isAnonymous,
         isMarketing,
@@ -127,7 +151,7 @@ router.post(
   upload.array('certificate', 3), // leverage multer for pdf files. Set max # of files to upload: 3.
   async (req, res, next) => {
     const file = req.files[0];
-    const { helperUserId, username, isAnonymous, isMarketing, age, linkedInUrl, notes } =
+    const { helperUserId, username, introduction, isAnonymous, isMarketing, age, linkedInUrl, notes } =
       req.body;
     try {
       const result = await uploadFile(file, 'user-certificates');
@@ -137,6 +161,7 @@ router.post(
         isAnonymous,
         isMarketing,
         age,
+        introduction,
         linkedInUrl,
         notes,
         path: result.Key,
@@ -149,5 +174,30 @@ router.post(
     }
   }
 );
+
+router.post('/api/helpee/basic-form', async (req, res, next) => {
+  const {
+    helpeeUserId,
+    introduction,
+    username,
+    isAnonymous,
+    age,
+    notes,
+  } = req.body;
+  try {
+    await helpeeModel.updateHelpeeCertificatePath({
+      userId: helpeeUserId,
+      introduction,
+      username,
+      isAnonymous,
+      age,
+      notes,
+    });
+    res.status(200).send({ status: 'success' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+});
 
 module.exports = router;

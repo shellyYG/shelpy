@@ -15,6 +15,11 @@ const notificationSlice = createSlice({
     requestFormStatus: 'initial',
     requestFormStatusTitle: '',
     requestFormStatusMessage: '',
+
+    applyHelpeeStatus: 'initial',
+    applyHelpeeStatusTitle: '',
+    applyHelpeeStatusMessage: '',
+
     requestStatus: 'initial',
     requestStatusTitle: '',
     requestStatusMessage: '',
@@ -34,6 +39,11 @@ const notificationSlice = createSlice({
         requestFormStatus,
         requestFormStatusTitle,
         requestFormStatusMessage,
+
+        applyHelpeeStatus,
+        applyHelpeeStatusTitle,
+        applyHelpeeStatusMessage,
+
         requestStatus,
         requestStatusTitle,
         requestStatusMessage,
@@ -57,10 +67,13 @@ const notificationSlice = createSlice({
         state.requestFormStatusTitle = requestFormStatusTitle;
       if (requestFormStatusMessage)
         state.requestFormStatusMessage = requestFormStatusMessage;
-      if (requestStatus)
-        state.requestStatus = requestStatus;
-      if (requestStatusTitle)
-        state.requestStatusTitle = requestStatusTitle;
+      
+      if (applyHelpeeStatus) state.applyHelpeeStatus = applyHelpeeStatus;
+      if (applyHelpeeStatusTitle) state.applyHelpeeStatusTitle = applyHelpeeStatusTitle;
+      if (applyHelpeeStatusMessage) state.applyHelpeeStatusMessage = applyHelpeeStatusMessage;
+      
+      if (requestStatus) state.requestStatus = requestStatus;
+      if (requestStatusTitle) state.requestStatusTitle = requestStatusTitle;
       if (requestStatusMessage)
         state.requestStatusMessage = requestStatusMessage;
     },

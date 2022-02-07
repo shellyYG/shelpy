@@ -27,7 +27,7 @@ import FinalFormPage from './pages/FinalFormPage';
 
 import { getHelpeeAuthStatus } from './store/helpee/helpee-actions';
 import { getHelperAuthStatus } from './store/helper/helper-actions';
-import HelperBasicFormPage from './pages/helper/HelperBasicFormPage';
+import BasicFormPage from './pages/BasicFormPage';
 import HelperAddServicePage from './pages/helper/HelperAddServicePage';
 import HelperDashboardPage from './pages/helper/HelperDashboardPage';
 
@@ -202,7 +202,15 @@ function App() {
         <Route path={'/helpee/chatroom'} element={<HelpeeChatRoomPage />} />
         <Route
           path={'/helper/basic-form'}
-          element={<HelperBasicFormPage helperUserId={helperUserId} />}
+          element={
+            <BasicFormPage isHelpee={false} helperUserId={helperUserId} />
+          }
+        />
+        <Route
+          path={'/helpee/basic-form'}
+          element={
+            <BasicFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
+          }
         />
         <Route
           path={'/helper/add-service'}

@@ -12,9 +12,11 @@ const notificationSlice = createSlice({
     signInStatus: 'initial',
     signInStatusTitle: '',
     signInStatusMessage: '',
+
     applyHelperStatus: 'initial',
     applyHelperStatusTitle: '',
     applyHelperStatusMessage: '',
+    
     offerStatus: 'initial',
     offerStatusTitle: '',
     offerStatusMessage: '',

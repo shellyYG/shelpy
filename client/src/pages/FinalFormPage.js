@@ -475,11 +475,13 @@ const FinalFormPage = (props) => {
                   fontSize='14px'
                 />
               </div>
-              {!props.isHelpee && <FullLineTextBox
-                title={'Price per 30 minute (in EUR)'}
-                placeholder={'e.g. 20'}
-                inputRef={priceRef}
-              />}
+              {!props.isHelpee && (
+                <FullLineTextBox
+                  title={'Price per 30 minute (in EUR)'}
+                  placeholder={'e.g. 20'}
+                  inputRef={priceRef}
+                />
+              )}
               <FullLineTextBox
                 title={'Notes'}
                 placeholder={'Please specify languages you speak.'}

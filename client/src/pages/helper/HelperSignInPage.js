@@ -25,7 +25,7 @@ const HelperSignInPage = () => {
 
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    navigate('/home', { replace: true });
+    navigate('/helper/home', { replace: true });
   };
   window.addEventListener('popstate', onBackButtonEvent, { once: true });
   if (loading) {
@@ -118,7 +118,7 @@ const HelperSignInPage = () => {
             <Link to='/about' style={{ marginRight: '10px' }}>
               Forget Password
             </Link>
-            <Link to='/home'>Don't have account yet? Sign Up here!</Link>
+            <Link to='/helper/home'>Don't have account yet? Sign Up here!</Link>
           </div>
 
           <ConfirmBtn cta='Sign In ❯' handleConfirm={handleConfirm} />

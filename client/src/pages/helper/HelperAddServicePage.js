@@ -25,16 +25,9 @@ const HelperAddServicePage = () => {
   return (
     <div className='main-content-wrapper-no-background'>
       <div className='section-center-align'>
-        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>Welcome back</h1>
-        <h2
-          style={{
-            textAlign: 'center',
-            marginTop: '10px',
-            marginBottom: '30px',
-          }}
-        >
-          Add you first offer!
-        </h2>
+        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+          Add an offer!
+        </h1>
         <div className='container'>
           {helperAddServiceOptions.map((option) => (
             <HelperAddServiceCard

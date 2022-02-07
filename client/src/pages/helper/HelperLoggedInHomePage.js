@@ -24,7 +24,7 @@ const HelperLoggedInHomePage = () => {
   }
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    navigate('/home', { replace: true });
+    navigate('/helper/home', { replace: true });
   };
   window.addEventListener('popstate', onBackButtonEvent, { once: true });
   return (

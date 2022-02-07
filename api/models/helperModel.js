@@ -168,7 +168,7 @@ async function insertHelperOffer(data) {
 
 // TODO
 async function getHelperAllMatchedRequests(data) {
-  const sql = `SELECT * FROM requests WHERE helperUserId=${data.helperUserId} ORDER BY id DESC;`;
+  const sql = `SELECT * FROM requests WHERE userId=${data.helperUserId} ORDER BY id DESC;`;
   const allOrders = await query(sql);
   return { data: { allOrders } };
 }
@@ -197,9 +197,9 @@ async function updateHelperProfilePicPath(data) {
 }
 
 async function updateHelperCertificatePath(data) {
-  const { userId, username, isAnonymous, isMarketing, path, age, linkedInUrl, notes } = data;
+  const { userId, introduction, username, isAnonymous, isMarketing, path, age, linkedInUrl, notes } = data;
   const sql = `
-    UPDATE helper_account SET username = '${username}', isAnonymous=${isAnonymous}, isMarketing=${isMarketing}, certificatePath = '${path}', age = '${age}', linkedInUrl = '${linkedInUrl}', notes = '${notes}', status='resume_created' WHERE id = ${userId}`;
+    UPDATE helper_account SET username = '${username}', introduction='${introduction}', isAnonymous=${isAnonymous}, isMarketing=${isMarketing}, certificatePath = '${path}', age = '${age}', linkedInUrl = '${linkedInUrl}', notes = '${notes}', status='resume_created' WHERE id = ${userId}`;
   const sqlquery = await query(sql);
   return sqlquery;
 }

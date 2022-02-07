@@ -9,6 +9,8 @@ const oldUserRequestFormPath = '/api/helpee/request-form'; // depreciated
 const userRequestFormPath = '/api/helpee/request';
 const activeHelperPath = '/api/helpee/active-helpers';
 const getAllOrdersPath = '/api/helpee/all-orders';
+const helpeeProfilePicUploadPath = '/api/helpee/profile-pic-upload';
+const helpeeBasicFormWithoutCertificatePath = '/api/helpee/basic-form';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
@@ -284,6 +286,77 @@ export const postHelpeeServiceRequestForm = (data) => {
   };
 };
 
+export const onUploadHelpeeProfilePicture = (data) => {
+  console.log('onUploadHelpeeProfilePicture...data: ', data);
+  return async (dispatch) => {
+    try {
+      const generalToken = localStorage.getItem('shelper-token');
+      if (!generalToken) {
+        throw Error('NO_TOKEN');
+      }
+      if (generalToken) {
+        const headers = {
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.post(helpeeProfilePicUploadPath, data, {
+          headers,
+        });
+        const { imagePath } = response.data;
+        console.log('imagePath: ', imagePath);
+        dispatch(
+          helpeeActions.updateProfilePicPath({
+            helpeeProfilePicPath: imagePath,
+          })
+        );
+      }
+    } catch (error) {
+      console.error('upload error: ', error);
+    }
+  };
+};
+
+export const onSubmitUploadHelpeeData = (data) => {
+  return async (dispatch) => {
+    const postPath = helpeeBasicFormWithoutCertificatePath;
+    try {
+      const generalToken = localStorage.getItem('shelpy-token');
+      if (!generalToken) {
+        throw Error('NO_TOKEN');
+      }
+      if (generalToken) {
+        const headers = {
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.post(postPath, data, {
+          headers,
+        });
+        data.requestId = response.data.requestId;
+        dispatch(
+          notificationActions.setNotification({
+            applyHelpeeStatus: 'success',
+            applyHelpeeStatusTitle: 'You are almost there!',
+            applyHelpeeStatusMessage:
+              'NOW: select the experiences you want to know.',
+          })
+        );
+      }
+    } catch (error) {
+      console.error('upload error: ', error);
+      const errorResponse = error.response ? error.response.data : '';
+      const errorMessage = errorResponse || error.message;
+      if (errorMessage) {
+        dispatch(
+          notificationActions.setNotification({
+            applyHelpeeStatus: 'error',
+            applyHelpeeStatusTitle: 'Oops!',
+            applyHelpeeStatusMessage: errorMessage,
+          })
+        );
+      }
+    }
+  };
+};
+
 export const postHelpeeRequestForm = (data) => {
   return async (dispatch) => {
     try {
@@ -431,6 +504,18 @@ export const onSubmitUpdateHelpeeSelfEmployedData = (data) => {
         country,
         years,
         notes,
+      })
+    );
+  };
+};
+
+export const clearApplyHelpeeStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      notificationActions.setNotification({
+        applyHelpeeStatus: 'initial',
+        applyHelpeeStatusTitle: '',
+        applyHelpeeStatusMessage: '',
       })
     );
   };

@@ -103,7 +103,7 @@ const HelpeeSignUpPasswordPage = () => {
         dispatch(getHelpeeAuthStatus());
         dispatch(clearSignUpPasswordStatus());
         // to perform navigate after await MySwal, we need to create extra async function sweetAlertAndNavigate to wrap MySwal.
-        navigate('/helpee/service-types', { replace: true });
+        navigate('/helpee/basic-form', { replace: true });
       }
       sweetAlertAndNavigate(
         signUpPasswordStatusTitle,

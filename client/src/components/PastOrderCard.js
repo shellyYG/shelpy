@@ -10,6 +10,7 @@ function PastOrderCard(props) {
   const [helpers, setHelpers] = useState([]);
   const [helperCount, setHelperCount] = useState(0);
   const [img, setImg] = useState('');
+  // TODO; get helper ID
   useEffect(() => {
     switch (props.service) {
       case 'visa':
@@ -114,7 +115,7 @@ function PastOrderCard(props) {
       <div className='checkBoxWidth'>
         <div className='contentBx'>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Request ID: {props.orderId}
+            Helper ID: {props.orderId}
           </p>
           <button className='btn-contact' onClick={handleWriteReview}>
             Write Review

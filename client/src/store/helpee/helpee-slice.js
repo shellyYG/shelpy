@@ -36,6 +36,8 @@ const helpeeSlice = createSlice({
     globalHelpeeSelfEmployedCountry: '',
     globalHelpeeSelfEmployedYears: '',
     globalHelpeeSelfEmployedNotes: '',
+
+    helpeeProfilePicPath: '',
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -58,6 +60,10 @@ const helpeeSlice = createSlice({
     updateHelpeeInfoAfterSignIn(state, action) {
       const { payload } = action;
       state.DBHelpeeEmail = payload.email;
+    },
+    updateProfilePicPath(state, action) {
+      const { payload } = action;
+      state.helpeeProfilePicPath = payload.helpeeProfilePicPath;
     },
     updateHelpeeRequestFormData(state, action) {
       const { payload } = action;

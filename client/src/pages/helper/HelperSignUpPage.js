@@ -26,7 +26,7 @@ const SignUpPageHelper = () => {
   const [email, setEmail] = useState('');
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    navigate('/home', { replace: true });
+    navigate('/helper/home', { replace: true });
   };
   window.addEventListener('popstate', onBackButtonEvent, { once: true });
   async function handleConfirm(e) {

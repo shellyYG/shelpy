@@ -175,7 +175,7 @@ async function insertHelpeeRequest(data) { // new.
 }
 
 async function getHelpeeAllOrders(data) {
-  const sql = `SELECT * FROM requests WHERE helpeeUserId=${data.helpeeUserId} ORDER BY id DESC;`;
+  const sql = `SELECT * FROM requests WHERE userId=${data.helpeeUserId} ORDER BY id DESC;`;
   const allOrders = await query(sql);
   return { data: { allOrders } };
 }
@@ -192,9 +192,34 @@ async function getHelpeeOrderHelperList(data) {
   return { data: { helpers: sqlResult } };
 }
 
+async function updateHelpeeProfilePicPath(data) {
+  const { userId, path } = data;
+  const sql = `
+    UPDATE helpee_account SET profilePicPath = '${path}' WHERE id = ${userId}`;
+  const sqlquery = await query(sql);
+  return sqlquery;
+}
+
+async function updateHelpeeCertificatePath(data) {
+  const {
+    userId,
+    introduction,
+    username,
+    isAnonymous,
+    age,
+    notes,
+  } = data;
+  const sql = `
+    UPDATE helpee_account SET username = '${username}', introduction='${introduction}', isAnonymous=${isAnonymous}, age = '${age}', notes = '${notes}', status='basic_info_created' WHERE id = ${userId}`;
+  const sqlquery = await query(sql);
+  return sqlquery;
+}
+
 module.exports = {
   insertHelpeeRequestFormAndGetId,
   insertHelpeeRequest,
   getHelpeeAllOrders,
   getHelpeeOrderHelperList,
+  updateHelpeeProfilePicPath,
+  updateHelpeeCertificatePath,
 };
