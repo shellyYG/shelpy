@@ -13,7 +13,6 @@ const helpeeSlice = createSlice({
     globalNavigateTarget: '',
     globalActiveRequest: '',
     DBRequestId: 0,
-    allOrders: [],
 
     globalHelpeeJobOrUniTarget: '',
 
@@ -38,6 +37,8 @@ const helpeeSlice = createSlice({
     globalHelpeeSelfEmployedNotes: '',
 
     helpeeProfilePicPath: '',
+    allOrders: [],
+    allPotentialHelpers: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -123,9 +124,17 @@ const helpeeSlice = createSlice({
       state.globalHelpeeSelfEmployedYears = payload.years;
       state.globalHelpeeSelfEmployedNotes = payload.notes;
     },
+    updateAllPotentialHelpers(state, action) {
+      const { payload } = action;
+      state.allPotentialHelpers = payload.allPotentialHelpers;
+    },
+    updateAllOrders(state, action) {
+      const { payload } = action;
+      state.allOrders = payload.allOrders;
+    },
   },
 });
 
-export const helpeeActions = helpeeSlice.actions; // 其實 actions 就是 reducers 啦
+export const helpeeActions = helpeeSlice.actions; // actions === reducers
 
 export default helpeeSlice;

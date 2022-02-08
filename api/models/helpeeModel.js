@@ -186,14 +186,29 @@ async function getHelpeeAllOrders(data) {
   return { data: { allOrders } };
 }
 
+async function getPotentialHelpers(data) {
+  const { helpeeUserId } = data;
+  const sql = `SELECT DISTINCT req.id AS requestId, req.status AS bookingStatus, ofs.price AS price, acc.id AS helperId, acc.username AS helperName, acc.profilePicPath AS profilePicPath,
+		req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType, req.country AS country
+FROM shelpydb.offers ofs
+LEFT JOIN shelpydb.helper_account acc ON ofs.userId = acc.id
+LEFT JOIN shelpydb.requests req ON 
+		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType AND ofs.thirdType = req.thirdType
+        AND ofs.country = req.country
+LEFT JOIN shelpydb.helpee_account helpee ON req.userId = helpee.id
+WHERE helpee.id = ${helpeeUserId} AND NOT ofs.userId IS NULL
+ORDER BY req.id DESC;`;
+  const allPotentialHelpers = await query(sql);
+  return { data: { allPotentialHelpers } };
+}
 
 async function getHelpeeOrderHelperList(data) {
-  const { orderId } = data;
+  const { requestId } = data;
   const sql = `
     SELECT DISTINCT a.id AS helperId, a.username, a.nationality, a.nativeLanguage, a.firstLanguage, a.secondLanguage
     FROM helper_account a
     INNER JOIN helper_accept_request b ON a.id = b.helperId
-    WHERE b.orderId = ${orderId};`;
+    WHERE b.requestId = ${requestId};`;
   const sqlResult = await query(sql);
   return { data: { helpers: sqlResult } };
 }
@@ -221,6 +236,13 @@ async function updateHelpeeCertificatePath(data) {
   return sqlquery;
 }
 
+async function deleteHelpeeRequest(data) {
+  const { requestId } = data;
+  const sql = `UPDATE requests SET status='deleted' WHERE id=${requestId}`;
+  await query(sql);
+  return { data: { status: 'success' } };
+}
+
 module.exports = {
   insertHelpeeRequestFormAndGetId,
   insertHelpeeRequest,
@@ -228,4 +250,6 @@ module.exports = {
   getHelpeeOrderHelperList,
   updateHelpeeProfilePicPath,
   updateHelpeeCertificatePath,
+  getPotentialHelpers,
+  deleteHelpeeRequest,
 };

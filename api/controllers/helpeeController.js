@@ -44,10 +44,30 @@ const getHelpeeAllOrders = async (req, res) => {
   }
 };
 
+const getPotentialHelpers = async (req, res) => {
+  console.log('getPotentialHelpers req.query: ', req.query);
+  try {
+    const { helpeeUserId } = req.query;
+    const response = await helpeeModel.getPotentialHelpers({
+      helpeeUserId,
+    });
+    if (response.data) {
+      res.status(200).json({
+        allPotentialHelpers: response.data.allPotentialHelpers,
+      })
+    } else {
+      throw Error('NO_POTENTIAL_HELPERS_RESPONSE');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
+
 const getHelpeeOrderHelperList = async (req, res) => {
   try {
-    const { orderId } = req.query;
-    const response = await helpeeModel.getHelpeeOrderHelperList({ orderId });
+    const { requestId } = req.query;
+    const response = await helpeeModel.getHelpeeOrderHelperList({ requestId });
     if (response.data) {
       res.status(200).json({
         helpers: response.data.helpers,
@@ -61,10 +81,31 @@ const getHelpeeOrderHelperList = async (req, res) => {
   }
 };
 
+const deleteHelpeeRequest = async (req, res) => {
+  try {
+    const { requestId } = req.query;
+    const response = await helpeeModel.deleteHelpeeRequest({
+      requestId,
+    });
+    if (response.data) {
+      res.status(200).json({
+        status: 'success',
+      });
+    } else {
+      throw Error('REQUEST_DELETE_SERVER_ERROR');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   allowHelpeePrivateRoute,
   postHelpeeServiceRequestForm,
   postHelpeeRequest,
   getHelpeeAllOrders,
   getHelpeeOrderHelperList,
+  getPotentialHelpers,
+  deleteHelpeeRequest,
 };

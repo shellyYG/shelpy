@@ -11,9 +11,9 @@ import { useNavigate } from 'react-router-dom';
 const HelperDashboardPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isActiveOrderSelected, setIsActiveOrderSelected] = useState(true);
+  const [isPotentialCustomersSelected, setIsPotentialCustomersSelected] = useState(true);
    const [liveOffers, setLiveOffers] = useState([]);
-  console.log('helperID:', props.helperUserId);
+  console.log('helperId:', props.helperUserId);
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));
     dispatch(getPotentialCustomers({ helperUserId: props.helperUserId }));
@@ -32,7 +32,7 @@ const HelperDashboardPage = (props) => {
             newObject.mainCategory = o.school;
             newObject.subCategory = o.department;
             newObject.country = o.country;
-            newObject.id = o.id;
+            newObject.Id = o.Id;
             newObject.price = o.price;
             liveOffersArr.push(newObject);
             break;
@@ -43,7 +43,7 @@ const HelperDashboardPage = (props) => {
             newObject.mainCategory = o.industry;
             newObject.subCategory = o.job;
             newObject.country = o.country;
-            newObject.id = o.id;
+            newObject.Id = o.Id;
             newObject.price = o.price;
             liveOffersArr.push(newObject);
             break;
@@ -54,7 +54,7 @@ const HelperDashboardPage = (props) => {
             newObject.mainCategory = o.type;
             newObject.subCategory = o.profession;
             newObject.country = o.country;
-            newObject.id = o.id;
+            newObject.Id = o.Id;
             newObject.price = o.price;
             liveOffersArr.push(newObject);
             break;
@@ -69,11 +69,11 @@ const HelperDashboardPage = (props) => {
   
   function handleSelectActiveOrders(e) {
     e.preventDefault(e);
-    setIsActiveOrderSelected(true);
+    setIsPotentialCustomersSelected(true);
   }
   function handleSelectAllOffers(e) {
     e.preventDefault(e);
-    setIsActiveOrderSelected(false);
+    setIsPotentialCustomersSelected(false);
   }
 
   function handleAddOffer(e) {
@@ -86,7 +86,7 @@ const HelperDashboardPage = (props) => {
       <div className='orderHistoryBtnWrapper'>
         <button
           className={
-            isActiveOrderSelected
+            isPotentialCustomersSelected
               ? 'activeSelectedOrderBtn'
               : 'nonActiveSelectedOrderBtn'
           }
@@ -96,7 +96,7 @@ const HelperDashboardPage = (props) => {
         </button>
         <button
           className={
-            !isActiveOrderSelected
+            !isPotentialCustomersSelected
               ? 'activeSelectedOrderBtn'
               : 'nonActiveSelectedOrderBtn'
           }
@@ -105,33 +105,45 @@ const HelperDashboardPage = (props) => {
           Your Offers
         </button>
       </div>
-      {isActiveOrderSelected && allPotentialCustomers && (
+      <div className='task-container'></div>
+      {isPotentialCustomersSelected && allPotentialCustomers && (
         <div className='task-container'>
           {allPotentialCustomers.map(
             (
               option // TODO: changed to orders
             ) => (
               <PotentialCustomerCard
-                key={option.helpeeID}
-                helperID={props.helperUserId}
-                helpeeID={option.helpeeID}
-                customerName={option.helpeeName}
+                key={option.requestId}
+                helperId={props.helperUserId}
+                helpeeId={option.helpeeId}
+                partnerName={option.helpeeName}
                 mainType={option.mainType}
                 secondType={option.secondType}
                 thirdType={option.thirdType}
                 profilePicPath={option.profilePicPath}
                 country={option.country}
+                requestId={option.requestId}
+                price={option.price}
+                bookingStatus={option.bookingStatus}
               />
             )
           )}
         </div>
       )}
-      {!isActiveOrderSelected && liveOffers && (
+      {!isPotentialCustomersSelected && liveOffers && (
         <div className='task-container'>
+          <div
+            className='history-card'
+            style={{ boxShadow: 'none', border: 'none' }}
+          >
+            <button className='btn-contact' onClick={handleAddOffer}>
+              Add another Offer
+            </button>
+          </div>
           {liveOffers.map((option) => (
             <OfferCard
-              key={option.id}
-              offerId={option.id}
+              key={option.Id}
+              offerId={option.Id}
               type={option.type}
               mainCategory={option.mainCategory}
               subCategory={option.subCategory}
@@ -140,14 +152,6 @@ const HelperDashboardPage = (props) => {
               helperUserId={props.helperUserId}
             />
           ))}
-          <div
-            className='history-card'
-            style={{ boxShadow: 'none', border: 'none' }}
-          >
-            <button className='btn-contact' onClick={handleAddOffer}>
-              Add Offer
-            </button>
-          </div>
         </div>
       )}
     </div>

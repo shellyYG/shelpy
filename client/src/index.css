@@ -1010,8 +1010,11 @@ footer {
   flex-direction: column;
   width: 180px;
 }
+.profilePicWidth {
+  width: 95px;
+}
 .smallWidth {
-  width: 125px;
+  width: 130px;
 }
 .checkBoxWidth {
   width: 143px;
@@ -1372,6 +1375,9 @@ input[type="checkbox" i] {
   .chatRoomContent {
     flex-direction: column;
   }
+  .task-container .task-card {
+    width: 95%;
+  }
   .helper-ImgBx {
     margin-bottom: 8px;
   }
@@ -1443,6 +1449,9 @@ input[type="checkbox" i] {
     width: 40%;
     display:flex;
     flex-direction: column;
+  }
+  .profilePicWidth {
+    width: 20%;
   }
   .smallWidth {
     width: 20%;
@@ -1522,7 +1531,7 @@ input[type="checkbox" i] {
     display:flex;
     flex-direction: column;
   }
-  .smallWidth {
+  .profilePicWidth {
     width: 50%;
   }
   .checkBoxWidth {

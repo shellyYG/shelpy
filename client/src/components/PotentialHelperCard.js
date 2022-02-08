@@ -1,53 +1,57 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
-import { onClickDeleteOffer } from '../store/helper/helper-actions';
 
-function OfferCard(props) {
-  const dispatch = useDispatch();
+function PotentialHelperCard(props) {
+  const navigate = useNavigate();
+  const [title, setTitle] = useState('');
   const [img, setImg] = useState('');
   useEffect(() => {
-    switch (props.type) {
-      case 'University':
+    switch (props.mainType) {
+      case 'university':
         setImg('/university');
+        setTitle('University');
         break;
-      case 'Job':
+      case 'job':
         setImg('/job');
+        setTitle('Job');
         break;
-      case 'Self-Employed':
+      case 'selfEmployed':
         setImg('/mom');
+        setTitle('Self Employed');
         break;
       default:
-        setImg('/offer_help');
+        setImg('/university');
     }
-  }, [props.type]);
+  }, [props.mainType]);
 
-  function handleDeleteOffer(e) {
-    e.preventDefault();
-    const data = {
-      offerId: props.offerId,
-      helperUserId: props.helperUserId,
-    };
-    try {
-      dispatch(onClickDeleteOffer(data));
-    } catch (err) {
-      console.error(err);
-    }
+  function handleChat(e) {
+    e.preventDefault(e);
+    navigate(
+      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+    );
   }
+  console.log('helperId: ', props.helperId, 'helpeeId: ', props.helpeeId)
 
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
         <div className='helper-ImgBx'>
-          <img src={`${img}.jpeg`} alt={'visa'}></img>
+          {img &&
+            props.profilePicPath && (
+              <img
+                src={`/images/${props.profilePicPath}`}
+                alt={props.partnerName}
+              ></img>
+            )}
         </div>
       </div>
-      <div className='smallWidth'>
+      <div className='smallWIdth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
-              {props.type}
+              {props.partnerName}
             </h3>
           </div>
         </div>
@@ -59,13 +63,13 @@ function OfferCard(props) {
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />
               </div>
-              <div className='textDateTime'>{props.mainCategory}</div>
+              <div className='textDateTime'>{props.secondType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.subCategory}</div>
+              <div className='textDateTime'>{props.thirdType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
@@ -76,24 +80,19 @@ function OfferCard(props) {
           </div>
         </div>
       </div>
-      <div className='checkBoxWidth'>
+      <div className='checkBoxWIdth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Offer ID: {props.offerId}
-          </p>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Price: {props.price}
-          </p>
+          <p style={{ fontWeight: '12px', padding: '6px' }}>Type: {title}</p>
         </div>
       </div>
-      <div className='checkBoxWidth'>
+      <div className='checkBoxWIdth'>
         <div className='contentBx'>
-          <button className='btn-red' onClick={handleDeleteOffer}>
-            Delete Offer
+          <button className='btn-contact' onClick={handleChat}>
+            Chat with Helper
           </button>
         </div>
       </div>
     </div>
   );
 }
-export default OfferCard;
+export default PotentialHelperCard;

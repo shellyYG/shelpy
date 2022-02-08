@@ -11,7 +11,6 @@ import HelperSignUpPasswordPage from './pages/helper/HelperSignUpPasswordPage';
 import ChatRoomPage from './pages/ChatRoomPage';
 import HelpeeHomePage from './pages/helpee/HelpeeHomePage';
 import HelpeeDashboardPage from './pages/helpee/HelpeeDashboardPage';
-import HelperListPage from './pages/helpee/HelpeeOrderHelperListPage';
 import HelpeeSignInPage from './pages/helpee/HelpeeSignInPage';
 import ErrorPage from './pages/ErrorPage';
 import PreSignInPage from './pages/PreSignInPage';
@@ -30,6 +29,7 @@ import { getHelperAuthStatus } from './store/helper/helper-actions';
 import BasicFormPage from './pages/BasicFormPage';
 import HelperAddServicePage from './pages/helper/HelperAddServicePage';
 import HelperDashboardPage from './pages/helper/HelperDashboardPage';
+import BookingConfirmPage from './pages/helpee/BookingConfirmPage';
 
 
 function App() {
@@ -190,22 +190,30 @@ function App() {
           }
         />
         <Route
-          path={'/helpee/order/helper-lists'}
+          path={'/helpee/chatroom'}
           element={
             isHelpeeAuthenticated ? (
-              <HelperListPage />
+              <ChatRoomPage isHelpee={true} helperUserId={helperUserId} />
             ) : (
               <PreSignInPage isHelpee={true} />
             )
           }
         />
         <Route
-          path={'/helpee/chatroom'}
-          element={<ChatRoomPage isHelpee={true} />}
+          path={'/helpee/book-helper'}
+          element={
+            <BookingConfirmPage isHelpee={true} helperUserId={helperUserId} />
+          }
         />
         <Route
           path={'/helper/chatroom'}
-          element={<ChatRoomPage isHelpee={false} />}
+          element={
+            isHelperAuthenticated ? (
+              <ChatRoomPage isHelpee={false} helpeeUserId={helpeeUserId} />
+            ) : (
+              <PreSignInPage isHelpee={false} />
+            )
+          }
         />
         <Route
           path={'/helper/basic-form'}

@@ -27,7 +27,7 @@ import CheckBox from '../components/CheckBox';
 const MySwal = withReactContent(Swal);
 
 const BasicFormPage = (props) => {
-  console.log('helpeeID: ', props.helpeeUserId, 'helperID: ', props.helperUserId, 'isHelpee?', props.isHelpee);
+  console.log('helpeeId: ', props.helpeeUserId, 'helperId: ', props.helperUserId, 'isHelpee?', props.isHelpee);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -63,7 +63,7 @@ const BasicFormPage = (props) => {
     MySwal.fire({
       title: 'Loading...',
       html: 'Please do not close the window.',
-      allowOutsideClick: false,
+      allowOutsIdeClick: false,
       showConfirmButton: false,
       willOpen: () => {
         MySwal.showLoading();
@@ -253,7 +253,7 @@ const BasicFormPage = (props) => {
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
           title: <strong>{title}</strong>,
-          imageWidth: 442,
+          imageWIdth: 442,
           imageHeight: 293,
           html: <p>{message}</p>,
           icon: 'success',
@@ -290,7 +290,7 @@ const BasicFormPage = (props) => {
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
           title: <strong>{title}</strong>,
-          imageWidth: 442,
+          imageWIdth: 442,
           imageHeight: 293,
           html: <p>{message}</p>,
           icon: 'success',
@@ -326,7 +326,7 @@ const BasicFormPage = (props) => {
               <div className='form-row'>
                 <div
                   className='form-wrapper'
-                  style={{ width: '100%', margin: '0px' }}
+                  style={{ wIdth: '100%', margin: '0px' }}
                 >
                   {!isAnonymous && !profilePic && (
                     <div className='blankProfileImageBx'>
@@ -337,9 +337,9 @@ const BasicFormPage = (props) => {
                         </label>
                         <input
                           type='file'
-                          id='profilePic'
+                          Id='profilePic'
                           onChange={handleProfilePicUpload}
-                          hidden={true}
+                          hIdden={true}
                         />
                       </div>{' '}
                     </div>
@@ -423,9 +423,9 @@ const BasicFormPage = (props) => {
                         </label>
                         <input
                           type='file'
-                          id='resume'
+                          Id='resume'
                           onChange={handleResumeUpload}
-                          hidden={true}
+                          hIdden={true}
                         />
                       </>
                     )}
@@ -443,8 +443,8 @@ const BasicFormPage = (props) => {
                   handleCheck={setIsAnonymous}
                   details={
                     props.isHelpee
-                      ? 'Ask question anonymously (your profile picture will be hide).'
-                      : 'Answer question anonymously (your profile picture will be hide).'
+                      ? 'Ask question anonymously (your profile picture will be hIde).'
+                      : 'Answer question anonymously (your profile picture will be hIde).'
                   }
                   paddingRight='10px'
                   marginBottom='5px'

@@ -1,11 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchHelpeeData } from '../store/helpee/helpee-actions';
-import { helpeeActions } from '../store/helpee/helpee-slice';
 
 function ChatRoomCard(props) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
 
@@ -13,11 +9,11 @@ function ChatRoomCard(props) {
     e.preventDefault();
     if (!props.isHelpee) {
       navigate(
-        `/helper/chatroom?roomId=${props.helperID}-${props.helpeeID}&userId=${props.helperID}&partnerName=${props.partnerName}`
+        `/helper/chatroom?roomId=${props.helperId}&userId=${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
       );
     } else {
       navigate(
-        `/helpee/chatroom?roomId=${props.helperID}-${props.helpeeID}&userId=${props.helpeeID}&partnerName=${props.partnerName}`
+        `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
       );
     }
     

@@ -1,16 +1,12 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
+import { onClickDeleteRequest } from '../store/helpee/helpee-actions';
 
-function PastOrderCard(props) {
-  const navigate = useNavigate();
-  const [active, setActive] = useState(false);
-  const [helpers, setHelpers] = useState([]);
-  const [helperCount, setHelperCount] = useState(0);
+function RequestCard(props) {
+  const dispatch = useDispatch();
   const [img, setImg] = useState('');
-  // TODO; get helper ID
   useEffect(() => {
     switch (props.type) {
       case 'University':
@@ -27,37 +23,24 @@ function PastOrderCard(props) {
     }
   }, [props.type]);
 
-  useEffect(() => {
-    async function getHelperLists(orderId) {
-      try {
-        const response = await axios.get('api/helpee/helper-list', {
-          params: { orderId, type: props.type },
-        });
-        if (response) {
-          const { helpers } = response.data;
-          setHelperCount(helpers.length);
-          setHelpers(helpers);
-        }
-      } catch (error) {
-        console.error(error);
-      }
+  function handleDeleteRequest(e) {
+    e.preventDefault();
+    const data = {
+      requestId: props.requestId,
+      helpeeUserId: props.helpeeUserId,
+    };
+    try {
+      dispatch(onClickDeleteRequest(data));
+    } catch (err) {
+      console.error(err);
     }
-    getHelperLists(props.orderId);
-  }, [props.orderId, props.type]);
-  function handleViewReceipt(e) {
-    e.preventDefault();
-    navigate(`/receipt?orderId=${props.orderId}`, { replace: true });
-  }
-  function handleWriteReview(e) {
-    e.preventDefault();
-    navigate(`/write-review?orderId=${props.orderId}`, { replace: true });
   }
 
   return (
-    <div className={active ? 'history-card-active' : 'history-card'}>
-      <div className='smallWidth'>
+    <div className='history-card'>
+      <div className='profilePicWidth'>
         <div className='helper-ImgBx'>
-          <img src={`${img}.jpeg`} alt={'visa'}></img>
+          { img && <img src={`${img}.jpeg`} alt={'visa'}></img> }
         </div>
       </div>
       <div className='smallWidth'>
@@ -96,24 +79,19 @@ function PastOrderCard(props) {
       <div className='checkBoxWidth'>
         <div className='contentBx'>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Request ID: {props.orderId}
+            Request ID: {props.requestId}
           </p>
-          <button className='btn-contact' onClick={handleViewReceipt}>
-            View Receipt
-          </button>
+          
         </div>
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Helper ID: {props.orderId}
-          </p>
-          <button className='btn-contact' onClick={handleWriteReview}>
-            Write Review
+          <button className='btn-red' onClick={handleDeleteRequest}>
+            Delete Request
           </button>
         </div>
       </div>
     </div>
   );
 }
-export default PastOrderCard;
+export default RequestCard;

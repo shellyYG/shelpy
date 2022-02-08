@@ -42,7 +42,7 @@ function JobOrUniCard(props) {
       }
     }
     
-  }, [props.globalHelpeeJobOrUniTarget, props.globalHelperJobOrUniTarget, props.value]);
+  }, [props.globalHelpeeJobOrUniTarget, props.globalHelperJobOrUniTarget, props.value, props.isHelpee]);
 
   return (
     <div className={active ? 'card-active' : 'card'} onClick={handleOnClick}>

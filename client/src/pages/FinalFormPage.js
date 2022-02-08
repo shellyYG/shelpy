@@ -174,7 +174,7 @@ const FinalFormPage = (props) => {
         finalNotes: notes,
 
         step: 'request_submitted',
-        status: 'Fulfilled', // Not Fulfilled or Fulfilled
+        status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
       console.log('data to post: ', data);
       dispatch(postHelpeeRequestForm(data));

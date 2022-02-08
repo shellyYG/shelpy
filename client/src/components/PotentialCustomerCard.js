@@ -29,22 +29,28 @@ function PotentialCustomerCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helper/chatroom?roomId=${props.helperID}-${props.helpeeID}&userId=${props.helperID}&customerName=${props.customerName}`
+      `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
     );
   }
-  console.log('props.profilePicPath: ', props.profilePicPath);
 
   return (
     <div className='history-card'>
-      <div className='smallWidth'>
+      <div className='profilePicWidth'>
         <div className='helper-ImgBx'>
-          {img && <img src={`/images/${props.profilePicPath}`} alt={props.customerName}></img>}
+          {img && (
+            <img
+              src={`/images/${props.profilePicPath}`}
+              alt={props.partnerName}
+            ></img>
+          )}
         </div>
       </div>
-      <div className='smallWidth'>
+      <div className='smallWIdth'>
         <div className='content'>
           <div className='contentBx'>
-            <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>{title}</h3>
+            <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
+              {props.partnerName}
+            </h3>
           </div>
         </div>
       </div>
@@ -72,17 +78,15 @@ function PotentialCustomerCard(props) {
           </div>
         </div>
       </div>
-      <div className='checkBoxWidth'>
+      <div className='checkBoxWIdth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
-            customer name: {props.customerName}
-          </p>
+          <p style={{ fontWeight: '12px', padding: '6px' }}>Type: {title}</p>
         </div>
       </div>
-      <div className='checkBoxWidth'>
+      <div className='checkBoxWIdth'>
         <div className='contentBx'>
           <button className='btn-contact' onClick={handleChat}>
-            Chat with customer
+            Chat with Customer
           </button>
         </div>
       </div>

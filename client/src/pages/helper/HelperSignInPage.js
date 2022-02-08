@@ -1,4 +1,3 @@
-import CheckBox from '../../components/CheckBox';
 import ConfirmBtn from '../../components/ConfirmBtn';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';

@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import GlobalIcon from '../Icons/GlobalIcon';
 import { getHelpeeAuthStatus } from '../../store/helpee/helpee-actions';
-import { getHelperAuthStatus } from '../../store/helper/helper-actions';
 
 const MySwal = withReactContent(Swal);
 

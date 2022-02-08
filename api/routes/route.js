@@ -31,6 +31,8 @@ const {
   allowHelpeePrivateRoute,
   getHelpeeAllOrders,
   getHelpeeOrderHelperList,
+  getPotentialHelpers,
+  deleteHelpeeRequest,
 } = require('../controllers/helpeeController');
 
 const {
@@ -61,13 +63,16 @@ router
   .post(wrapAsync(postHelpeeServiceRequestForm));
 // new:
 router.route('/api/helpee/request').post(wrapAsync(postHelpeeRequest));
+router.route('/api/helpee/request').delete(wrapAsync(deleteHelpeeRequest));
+
 router.route('/api/helper/offer').post(wrapAsync(postHelperOffer));
 router.route('/api/helper/offer').delete(wrapAsync(deleteHelperOffer));
 
 router.route('/api/helpee/all-orders').get(wrapAsync(getHelpeeAllOrders));
 router.route('/api/helper/all-offers').get(wrapAsync(getHelperAllOffers));
 
-router.route('/api/helper/potential-customers').get(wrapAsync(getPotentialCustomers));;
+router.route('/api/helper/potential-customers').get(wrapAsync(getPotentialCustomers));
+router.route('/api/helpee/potential-helpers').get(wrapAsync(getPotentialHelpers));
 
 router.route('/api/helpee/sign-in').post(wrapAsync(postUserSignInData));
 router

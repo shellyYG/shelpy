@@ -6,9 +6,10 @@ const getHelpeeAuthStatusPath = '/api/helpee/get-auth-status';
 const helpeeSignUpPasswordPath = '/api/helpee/signup-password';
 const helpeeSignInPath = '/api/helpee/sign-in';
 const oldUserRequestFormPath = '/api/helpee/request-form'; // depreciated
-const userRequestFormPath = '/api/helpee/request';
+const userRequestPath = '/api/helpee/request';
 const activeHelperPath = '/api/helpee/active-helpers';
 const getAllOrdersPath = '/api/helpee/all-orders';
+const getPotentialHelpersPath = '/api/helpee/potential-helpers';
 const helpeeProfilePicUploadPath = '/api/helpee/profile-pic-upload';
 const helpeeBasicFormWithoutCertificatePath = '/api/helpee/basic-form';
 
@@ -63,6 +64,30 @@ export const getAllOrders = (data) => {
       dispatch(
         helpeeActions.updateActiveAndPastOrders({
           allOrders: [],
+        })
+      );
+    }
+  };
+};
+
+export const getPotentialHelpers = (data) => {
+  return async (dispatch) => {
+    console.log('getPotentialHelpers->data: ', data);
+    try {
+      const response = await axios.get(getPotentialHelpersPath, {
+        params: { helpeeUserId: data.helpeeUserId },
+      });
+      console.log('allPotentialHelpers: ', response.data.allPotentialHelpers);
+      dispatch(
+        helpeeActions.updateAllPotentialHelpers({
+          allPotentialHelpers: response.data.allPotentialHelpers,
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        helpeeActions.updateAllPotentialHelpers({
+          allPotentialHelpers: [],
         })
       );
     }
@@ -370,7 +395,7 @@ export const postHelpeeRequestForm = (data) => {
           Authorization: 'Bearer ' + generalToken,
         };
         const response = await axios.post(
-          userRequestFormPath,
+          userRequestPath,
           {
             data,
           },
@@ -518,5 +543,31 @@ export const clearApplyHelpeeStatus = (data) => {
         applyHelpeeStatusMessage: '',
       })
     );
+  };
+};
+
+export const onClickDeleteRequest = (data) => {
+  return async (dispatch) => {
+    console.log('onClickDeleteRequest->data: ', data);
+    try {
+      await axios.delete(userRequestPath, {
+        params: { requestId: data.requestId },
+      });
+      const response = await axios.get(getAllOrdersPath, {
+        params: { helpeeUserId: data.helpeeUserId },
+      });
+      dispatch(
+        helpeeActions.updateAllOrders({
+          allOffers: response.data.allOffers,
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        helpeeActions.updateAllOrders({
+          allOffers: [],
+        })
+      );
+    }
   };
 };
