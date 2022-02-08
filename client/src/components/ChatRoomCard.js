@@ -4,16 +4,17 @@ import { useNavigate } from 'react-router-dom';
 function ChatRoomCard(props) {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
+  console.log('props.bookingStatus: ', props.bookingStatus);
 
   function handleOnClick(e) {
     e.preventDefault();
     if (!props.isHelpee) {
       navigate(
-        `/helper/chatroom?roomId=${props.helperId}&userId=${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+        `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
       );
     } else {
       navigate(
-        `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+        `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
       );
     }
     

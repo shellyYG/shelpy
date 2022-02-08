@@ -188,7 +188,7 @@ async function getHelperAllOffers(data) {
 
 async function getPotentialCustomers(data) {
   const { helperUserId } = data;
-  const sql = ` SELECT DISTINCT req.id AS requestId, req.status AS bookingStatus, ofs.price AS price, req.userId AS helpeeId, helpee.username AS helpeeName, helpee.profilePicPath AS profilePicPath,
+  const sql = ` SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus, req.id AS requestId, ofs.id AS offerId, ofs.price AS price, req.userId AS helpeeId, helpee.username AS helpeeName, helpee.profilePicPath AS profilePicPath,
 		req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType, req.country AS country
 FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
@@ -196,6 +196,7 @@ LEFT JOIN requests req ON
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType AND ofs.thirdType = req.thirdType
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
+LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id
 WHERE acc.id = ${helperUserId} AND NOT req.userId IS NULL
 ORDER BY req.id DESC;`;
   const allPotentialCustomers = await query(sql);

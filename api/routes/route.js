@@ -45,6 +45,10 @@ const {
   getHelperAllOffers,
 } = require('../controllers/helperController');
 
+const {
+  updateBookingStatus, getBookingStatus
+} = require('../controllers/bookingController');
+
 const { postUserSignInData } = require('../controllers/signInController');
 const { postUserSignUpData } = require('../controllers/signUpController');
 
@@ -93,7 +97,7 @@ router
 router.post(
   '/api/helper/profile-pic-upload',
   upload.array('profilePic', 3),
-  async (req, res, next) => {
+  async (req, res) => {
     const { helperUserId } = req.body;
     const file = req.files[0];
     try {
@@ -111,13 +115,11 @@ router.post(
 router.post(
   '/api/helpee/profile-pic-upload',
   upload.array('profilePic', 3),
-  async (req, res, next) => {
+  async (req, res) => {
     const { helpeeUserId } = req.body;
-    console.log('@api helpeeUserId: ', helpeeUserId);
     const file = req.files[0];
     try {
       const result = await uploadFile(file, 'helpee-profile-pictures');
-      console.log('helpee-result: ', result);
       await helpeeModel.updateHelpeeProfilePicPath({
         userId: helpeeUserId,
         path: result.Key,
@@ -133,7 +135,7 @@ router.post(
 
 router.post(
   '/api/helper/basic-form',
-  async (req, res, next) => {
+  async (req, res) => {
     const { helperUserId, introduction, username, isAnonymous, isMarketing, age, linkedInUrl, notes } =
       req.body;
     try {
@@ -159,7 +161,7 @@ router.post(
 router.post(
   '/api/helper/certificate-upload',
   upload.array('certificate', 3), // leverage multer for pdf files. Set max # of files to upload: 3.
-  async (req, res, next) => {
+  async (req, res) => {
     const file = req.files[0];
     const { helperUserId, username, introduction, isAnonymous, isMarketing, age, linkedInUrl, notes } =
       req.body;
@@ -185,7 +187,7 @@ router.post(
   }
 );
 
-router.post('/api/helpee/basic-form', async (req, res, next) => {
+router.post('/api/helpee/basic-form', async (req, res) => {
   const {
     helpeeUserId,
     introduction,
@@ -209,5 +211,9 @@ router.post('/api/helpee/basic-form', async (req, res, next) => {
     res.status(500).send(error.message);
   }
 });
+
+router.route('/api/booking-status').post(wrapAsync(updateBookingStatus));
+
+router.route('/api/booking-status').get(wrapAsync(getBookingStatus));
 
 module.exports = router;

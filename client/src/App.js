@@ -29,7 +29,7 @@ import { getHelperAuthStatus } from './store/helper/helper-actions';
 import BasicFormPage from './pages/BasicFormPage';
 import HelperAddServicePage from './pages/helper/HelperAddServicePage';
 import HelperDashboardPage from './pages/helper/HelperDashboardPage';
-import BookingConfirmPage from './pages/helpee/BookingConfirmPage';
+import BookingConfirmPage from './pages/BookingConfirmPage';
 
 
 function App() {
@@ -202,7 +202,13 @@ function App() {
         <Route
           path={'/helpee/book-helper'}
           element={
-            <BookingConfirmPage isHelpee={true} helperUserId={helperUserId} />
+            <BookingConfirmPage isHelpee={true} />
+          }
+        />
+        <Route
+          path={'/helper/confirm-booking'}
+          element={
+            <BookingConfirmPage isHelpee={false} />
           }
         />
         <Route

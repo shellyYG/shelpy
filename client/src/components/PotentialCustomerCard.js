@@ -29,7 +29,7 @@ function PotentialCustomerCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+      `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
     );
   }
 
@@ -45,7 +45,7 @@ function PotentialCustomerCard(props) {
           )}
         </div>
       </div>
-      <div className='smallWIdth'>
+      <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>

@@ -29,7 +29,7 @@ function PotentialHelperCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
     );
   }
   console.log('helperId: ', props.helperId, 'helpeeId: ', props.helpeeId)
@@ -47,7 +47,7 @@ function PotentialHelperCard(props) {
             )}
         </div>
       </div>
-      <div className='smallWIdth'>
+      <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>

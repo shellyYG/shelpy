@@ -86,9 +86,9 @@ function RequestCard(props) {
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <button className='btn-red' onClick={handleDeleteRequest}>
+          {/* <button className='btn-red' onClick={handleDeleteRequest}>
             Delete Request
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

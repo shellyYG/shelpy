@@ -188,14 +188,15 @@ async function getHelpeeAllOrders(data) {
 
 async function getPotentialHelpers(data) {
   const { helpeeUserId } = data;
-  const sql = `SELECT DISTINCT req.id AS requestId, req.status AS bookingStatus, ofs.price AS price, acc.id AS helperId, acc.username AS helperName, acc.profilePicPath AS profilePicPath,
+  const sql = `SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus, req.id AS requestId, ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, acc.username AS helperName, acc.profilePicPath AS profilePicPath,
 		req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType, req.country AS country
-FROM shelpydb.offers ofs
-LEFT JOIN shelpydb.helper_account acc ON ofs.userId = acc.id
-LEFT JOIN shelpydb.requests req ON 
+FROM offers ofs
+LEFT JOIN helper_account acc ON ofs.userId = acc.id
+LEFT JOIN requests req ON 
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType AND ofs.thirdType = req.thirdType
         AND ofs.country = req.country
-LEFT JOIN shelpydb.helpee_account helpee ON req.userId = helpee.id
+LEFT JOIN helpee_account helpee ON req.userId = helpee.id
+LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id
 WHERE helpee.id = ${helpeeUserId} AND NOT ofs.userId IS NULL
 ORDER BY req.id DESC;`;
   const allPotentialHelpers = await query(sql);

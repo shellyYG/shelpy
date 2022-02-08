@@ -326,7 +326,7 @@ const BasicFormPage = (props) => {
               <div className='form-row'>
                 <div
                   className='form-wrapper'
-                  style={{ wIdth: '100%', margin: '0px' }}
+                  style={{ width: '100%', margin: 'auto' }}
                 >
                   {!isAnonymous && !profilePic && (
                     <div className='blankProfileImageBx'>
@@ -339,7 +339,7 @@ const BasicFormPage = (props) => {
                           type='file'
                           Id='profilePic'
                           onChange={handleProfilePicUpload}
-                          hIdden={true}
+                          hidden={true}
                         />
                       </div>{' '}
                     </div>
@@ -414,7 +414,7 @@ const BasicFormPage = (props) => {
                     }
                     inputRef={linkedInUrlRef}
                   />
-                  <div className='form-wrapper'>
+                  <div className='form-wrapper' style={{ margin: 'auto' }}>
                     <label>Resume/files (or linkedin link)</label>
                     {!certificate && (
                       <>
@@ -425,7 +425,7 @@ const BasicFormPage = (props) => {
                           type='file'
                           Id='resume'
                           onChange={handleResumeUpload}
-                          hIdden={true}
+                          hidden={true}
                         />
                       </>
                     )}

@@ -120,7 +120,9 @@ const HelpeeDashboardPage = (props) => {
               option // TODO: changed to orders
             ) => (
               <PotentialHelperCard
-                key={option.requestId}
+                key={
+                  option.bookingId || `${option.requestId}-${option.offerId}`
+                }
                 helperId={option.helperId}
                 helpeeId={props.helpeeUserId}
                 partnerName={option.helperName}
@@ -130,6 +132,7 @@ const HelpeeDashboardPage = (props) => {
                 profilePicPath={option.profilePicPath}
                 country={option.country}
                 requestId={option.requestId}
+                offerId={option.offerId}
                 price={option.price}
                 bookingStatus={option.bookingStatus}
               />

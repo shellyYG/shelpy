@@ -23,9 +23,10 @@ const ChatRoomPage = (props) => {
   const [messageList, setMessageList] = useState([]);
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
-  const customerName = searchParams.get('partnerName');
+  const partnerName = searchParams.get('partnerName');
   const bookingStatus = searchParams.get('bookingStatus');
   const requestId = searchParams.get('requestId');
+  const offerId = searchParams.get('offerId');
   const price = searchParams.get('price');
   console.log('isHelpee?', props.isHelpee);
   
@@ -39,7 +40,7 @@ const ChatRoomPage = (props) => {
   const { allPotentialCustomers } = useSelector((state) => state.helper);
   const { allPotentialHelpers } = useSelector((state) => state.helpee);
   console.log('allPotentialCustomers: ', allPotentialCustomers);
-
+  console.log('bookingStatus: ', bookingStatus);
   const [showTaskSection, setShowTaskSection] = useState(true);
   const onBackButtonEvent = (e) => {
     e.preventDefault();
@@ -61,14 +62,14 @@ const ChatRoomPage = (props) => {
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/helpee/book-helper?requestId=${requestId}&price=${price}&helperId=${props.helperUserId}`,
+      `/helpee/book-helper?requestId=${requestId}&partnerName=${partnerName}&userId=${userId}&offerId=${offerId}&price=${price}&bookingStatus=${bookingStatus}`,
       { replace: true }
     );
   }
   async function handleConfirmBooking(e) {
     e.preventDefault();
     navigate(
-      `/helper/confirm-booking?requestId=${requestId}&price=${price}&helpeeId=${props.helpeeUserId}`,
+      `/helper/confirm-booking?roomId=${roomId}&userId=${userId}&requestId=${requestId}&offerId=${offerId}&price=${price}&bookingStatus=${bookingStatus}`,
       { replace: true }
     );
   }
@@ -142,6 +143,7 @@ const ChatRoomPage = (props) => {
                     thirdType={option.thirdType}
                     profilePicPath={option.profilePicPath}
                     requestId={option.requestId}
+                    offerId={option.offerId}
                     bookingStatus={option.bookingStatus}
                   />
                 ))}
@@ -158,6 +160,7 @@ const ChatRoomPage = (props) => {
                     thirdType={option.thirdType}
                     profilePicPath={option.profilePicPath}
                     requestId={option.requestId}
+                    offerId={option.offerId}
                     bookingStatus={option.bookingStatus}
                   />
                 ))}
@@ -169,20 +172,25 @@ const ChatRoomPage = (props) => {
             <div className='chat-box-title-container-text-wrapper'>
               <div className='chatBoxTitleInnerWrapper'>
                 <div className='chatBoxTitle'>
-                  <h3> Your chat with {customerName} </h3>
+                  <h3> Your chat with {partnerName} </h3>
                 </div>
                 <div>
-                  {props.isHelpee && bookingStatus !== 'Fulfilled' && (
+                  {props.isHelpee && bookingStatus === 'null' && (
                     <button className='btn-contact' onClick={handleBookHelper}>
-                      Book {customerName}{' '}
+                      Book {partnerName}{' '}
                     </button>
                   )}
-                  {!props.isHelpee && bookingStatus === 'WaitingHelperConfirmation' && (
+                  {props.isHelpee && bookingStatus === 'helperAskChange' && (
+                    <button className='btn-contact' onClick={handleBookHelper}>
+                      Change Booking Time
+                    </button>
+                  )}
+                  {!props.isHelpee && bookingStatus === 'created' && (
                     <button
                       className='btn-contact'
                       onClick={handleConfirmBooking}
                     >
-                      Confirm {customerName}'s Booking
+                      Confirm {partnerName}'s Booking
                     </button>
                   )}
                 </div>
@@ -203,7 +211,7 @@ const ChatRoomPage = (props) => {
                   key={messageContent.Id}
                   message={messageContent.message}
                   message_time={messageContent.message_time}
-                  author={customerName}
+                  author={partnerName}
                 />
               );
             })}

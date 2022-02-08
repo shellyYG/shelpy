@@ -45,7 +45,6 @@ const getHelpeeAllOrders = async (req, res) => {
 };
 
 const getPotentialHelpers = async (req, res) => {
-  console.log('getPotentialHelpers req.query: ', req.query);
   try {
     const { helpeeUserId } = req.query;
     const response = await helpeeModel.getPotentialHelpers({
