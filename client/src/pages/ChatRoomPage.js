@@ -8,19 +8,33 @@ import ChatMessageSelf from "../components/ChatMessageSelf";
 import ChatMessageOther from "../components/ChatMessageOther";
 import {socket} from '../service/socket';
 import { Icon } from '@iconify/react';
+import LeftPointIcon from '../components/Icons/LeftPointIcon'
 import '../App.css';
-import { getPotentialCustomers } from '../store/helper/helper-actions';
-import { getPotentialHelpers } from '../store/helpee/helpee-actions';
+import { getHelperAuthStatus, getPotentialCustomers } from '../store/helper/helper-actions';
+import { getHelpeeAuthStatus, getPotentialHelpers } from '../store/helpee/helpee-actions';
 import LeftCloseIcon from '../components/Icons/LeftCloseIcon';
 import RightOpenIcon from '../components/Icons/RightOpenIcon';
+import DownPointIcon from '../components/Icons/DownPointIcon';
 
 
 const ChatRoomPage = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getHelpeeAuthStatus());
+    dispatch(getHelperAuthStatus());
+  }, [dispatch]);
+  const { helpeeUserId } = useSelector(
+    (state) => state.helpee
+  );
+  const { helperUserId } = useSelector(
+    (state) => state.helper
+  );
   const [searchParams] = useSearchParams();
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
+  console.log('messageList: ', messageList);
+
   const roomId = searchParams.get('roomId');
   const userId = parseInt(searchParams.get('userId'));
   const partnerName = searchParams.get('partnerName');
@@ -28,21 +42,12 @@ const ChatRoomPage = (props) => {
   const requestId = parseInt(searchParams.get('requestId'));
   const offerId = parseInt(searchParams.get('offerId'));
   const price = searchParams.get('price');
-  console.log('@ChatRoom: isHelpee?', props.isHelpee, 'userId: ', userId);
   
-  useEffect(() => {
-    if (userId && !props.isHelpee)
-      dispatch(getPotentialCustomers({ helperUserId: userId }));
-  }, [userId, props.isHelpee, dispatch]);
-
-  useEffect(() => {
-    if (userId && props.isHelpee)
-      dispatch(getPotentialHelpers({ helpeeUserId: userId }));
-  }, [userId, props.isHelpee, dispatch]);
-
+  console.log('@ChatRoom: isHelpee?', props.isHelpee, 'roomId: ', roomId, 'userId: ', userId, 'helpeeId: ', helpeeUserId, 'helperId: ', helperUserId);
+  
   const { allPotentialCustomers } = useSelector((state) => state.helper);
   const { allPotentialHelpers } = useSelector((state) => state.helpee);
-  console.log('@chatroom->allPotentialCustomers: ', allPotentialCustomers);
+  
   const [showTaskSection, setShowTaskSection] = useState(true);
   const onBackButtonEvent = (e) => {
     e.preventDefault();
@@ -75,12 +80,13 @@ const ChatRoomPage = (props) => {
       { replace: true }
     );
   }
+  
   async function handleSend(e) {
     e.preventDefault();
     if (currentMessage !== '') {
       const messageData = {
         room: roomId,
-        author: userId,
+        author: props.isHelpee? helpeeUserId : helperUserId,
         message: currentMessage,
         message_time:
           new Intl.DateTimeFormat('en-US', { month: 'short' }).format(
@@ -112,6 +118,15 @@ const ChatRoomPage = (props) => {
       setMessageList((list) => [...list, data]); // add messageList on other
     });
   }, []);
+  useEffect(() => {
+    if (helperUserId && !props.isHelpee)
+      dispatch(getPotentialCustomers({ helperUserId }));
+  }, [helperUserId, props.isHelpee, dispatch]);
+
+  useEffect(() => {
+    if (helpeeUserId && props.isHelpee)
+      dispatch(getPotentialHelpers({ helpeeUserId }));
+  }, [helpeeUserId, props.isHelpee, dispatch]);
 
   return (
     <>
@@ -136,7 +151,7 @@ const ChatRoomPage = (props) => {
                 allPotentialCustomers.map((option) => (
                   <ChatRoomCard
                     isHelpee={false}
-                    helperId={userId}
+                    helperId={helperUserId}
                     helpeeId={option.helpeeId}
                     price={option.price}
                     key={
@@ -157,7 +172,7 @@ const ChatRoomPage = (props) => {
                   <ChatRoomCard
                     isHelpee={true}
                     helperId={option.helperId}
-                    helpeeId={userId}
+                    helpeeId={helpeeUserId}
                     price={option.price}
                     key={
                       option.bookingId ||
@@ -180,7 +195,7 @@ const ChatRoomPage = (props) => {
             <div className='chat-box-title-container-text-wrapper'>
               <div className='chatBoxTitleInnerWrapper'>
                 <div className='chatBoxTitle'>
-                  <h3> Your chat with {partnerName} </h3>
+                  {roomId && <h3> Your chat with {partnerName} </h3>}
                 </div>
                 <div>
                   {props.isHelpee && bookingStatus === 'null' && (
@@ -207,16 +222,40 @@ const ChatRoomPage = (props) => {
           </div>
 
           <ScrollToBottom className='chat-box'>
+            {!roomId && (
+              <>
+                <div style={{ textAlign: 'center' }}>
+                  <LeftPointIcon />
+                  <div style={{ fontSize: '30px' }}>
+                    Click on the left side to select a{' '}
+                    {props.isHelpee ? 'helper' : 'helpee'} to chat.
+                  </div>
+                </div>
+              </>
+            )}
+            {roomId && (!messageList || messageList.length === 0) && (
+              <div style={{ marginTop: 'auto' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '30px' }}>
+                    You havent with each other yet!
+                  </div>
+                  <div style={{ fontSize: '20px', marginBottom: '10px' }}>
+                    Start chatting by sending your first message to him/her.
+                  </div>
+                  <DownPointIcon />
+                </div>
+              </div>
+            )}
             {messageList.map((messageContent) => {
-              return messageContent.author === userId ? (
+              return parseInt(messageContent.author) === parseInt(userId) ? (
                 <ChatMessageSelf
-                  key={messageContent.Id}
+                  key={messageContent.id}
                   message={messageContent.message}
                   message_time={messageContent.message_time}
                 />
               ) : (
                 <ChatMessageOther
-                  key={messageContent.Id}
+                  key={messageContent.id}
                   message={messageContent.message}
                   message_time={messageContent.message_time}
                   author={partnerName}
@@ -240,7 +279,10 @@ const ChatRoomPage = (props) => {
                 data-text='Send message'
                 className='btn-send'
                 onClick={handleSend}
-                style={{ borderBottomRightRadius: '8px', borderTopRightRadius: '8px' }}
+                style={{
+                  borderBottomRightRadius: '8px',
+                  borderTopRightRadius: '8px',
+                }}
               >
                 <span>
                   <Icon icon='fa:paper-plane-o' />

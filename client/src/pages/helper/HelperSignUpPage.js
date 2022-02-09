@@ -13,6 +13,9 @@ import MktRow from '../../components/MktRow';
 
 const MySwal = withReactContent(Swal);
 
+const regex =
+  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
 const SignUpPageHelper = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +34,16 @@ const SignUpPageHelper = () => {
   window.addEventListener('popstate', onBackButtonEvent, { once: true });
   async function handleConfirm(e) {
     e.preventDefault();
-    // change DB & global state
+    if (emailRef && emailRef.current && emailRef.current.value) {
+      if (!regex.test(emailRef.current.value)) {
+        await MySwal.fire({
+          title: <strong>Invalid Email Form</strong>,
+          html: <p>Please input a valid email.</p>,
+          icon: 'error',
+        });
+        return;
+      }
+    }
     const data = {
       email: emailRef.current.value,
       isHelpee: false,
@@ -111,7 +123,7 @@ const SignUpPageHelper = () => {
 
               <form action='' className='centerbox-landing'>
                 <input
-                  type='text'
+                  type='email'
                   className='form-control-landing'
                   placeholder='Enter Email Address'
                   value={email}
@@ -173,7 +185,7 @@ const SignUpPageHelper = () => {
               lastChild={true}
             />
             <MktRow
-              title="CONTROL your own privacy"
+              title='CONTROL your own privacy'
               details1='Want to share some private but important insights?'
               details2='You decide if you want to stay anonymously and how much you want to share.'
               imagePath='/oneToOne.jpeg'

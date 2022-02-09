@@ -1131,6 +1131,7 @@ footer {
   width: 50%;
   padding-top: 0px;
   align-self: center;
+  display: flex;
 }
 .whiteWrapper {
   background-color: white;

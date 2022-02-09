@@ -197,7 +197,7 @@ function App() {
           path={'/helpee/chatroom'}
           element={
             isHelpeeAuthenticated ? (
-              <ChatRoomPage isHelpee={true} helperUserId={helperUserId} />
+              <ChatRoomPage isHelpee={true} />
             ) : (
               <PreSignInPage isHelpee={true} />
             )
@@ -215,7 +215,7 @@ function App() {
           path={'/helper/chatroom'}
           element={
             isHelperAuthenticated ? (
-              <ChatRoomPage isHelpee={false} helpeeUserId={helpeeUserId} />
+              <ChatRoomPage isHelpee={false} />
             ) : (
               <PreSignInPage isHelpee={false} />
             )

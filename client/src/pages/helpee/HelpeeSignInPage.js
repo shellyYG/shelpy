@@ -105,7 +105,7 @@ const HelpeeSignInPage = () => {
 
         <form action='' className='centerbox-landing'>
           <input
-            type='text'
+            type='email'
             className='form-control-password'
             placeholder='Enter Email Address'
             ref={emailRef}

@@ -12,6 +12,8 @@ import {
 import MktRow from '../../components/MktRow';
 
 const MySwal = withReactContent(Swal);
+const regex =
+  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 const HelpeeSignUpPage = () => {
   const navigate = useNavigate();
@@ -29,9 +31,19 @@ const HelpeeSignUpPage = () => {
     navigate("/home", { replace: true });
   };
   window.addEventListener("popstate", onBackButtonEvent, { once: true });
+  
   async function handleConfirm(e) {
     e.preventDefault();
-    // change DB & global state
+    if (emailRef && emailRef.current && emailRef.current.value) {
+      if (!regex.test(emailRef.current.value)) {
+         await MySwal.fire({
+           title: <strong>Invalid Email Form</strong>,
+           html: <p>Please input a valid email.</p>,
+           icon: 'error',
+         });
+         return;
+      }
+    }
     const data = {
       email: emailRef.current.value,
       isHelpee: true,
@@ -111,7 +123,7 @@ const HelpeeSignUpPage = () => {
 
               <form action='' className='centerbox-landing'>
                 <input
-                  type='text'
+                  type='email'
                   className='form-control-landing'
                   placeholder='Enter Email Address'
                   value={email}
