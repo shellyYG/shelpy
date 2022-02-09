@@ -181,7 +181,14 @@ async function insertHelpeeRequest(data) { // new.
 }
 
 async function getHelpeeAllOrders(data) {
-  const sql = `SELECT * FROM requests WHERE userId=${data.helpeeUserId} ORDER BY id DESC;`;
+  const sql = `SELECT DISTINCT book.id AS bookingId, book.bookingStatus AS bookingStatus, 
+  book.offerId AS offerId,
+  book.appointmentDate AS appointmentDate, book.appointmentTime AS appointmentTime,
+  req.id AS id, req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType,
+  req.country AS country
+  FROM requests req
+  LEFT JOIN bookings book ON req.id = book.requestId
+  WHERE req.userId=${data.helpeeUserId} ORDER BY req.id DESC;`;
   const allOrders = await query(sql);
   return { data: { allOrders } };
 }

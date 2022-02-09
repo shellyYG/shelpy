@@ -14,6 +14,8 @@ const HelpeeDashboardPage = (props) => {
   const [isPotentialHelpersSelected, setIsPotentialHelpersSelected] =
     useState(true);
   const [allRequests, setAllRequests] = useState([]);
+
+  console.log('allRequests: ', allRequests);
   useEffect(() => {
     dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
     dispatch(getPotentialHelpers({ helpeeUserId: props.helpeeUserId }));
@@ -24,52 +26,10 @@ const HelpeeDashboardPage = (props) => {
   );
 
   useEffect(() => {
-    const allRequestsArr = [];
     if (allOrders) {
-      allOrders.forEach((o) => {
-        switch (o.mainType) {
-          case 'university': {
-            const newObject = {};
-            newObject.id = o.id;
-            newObject.type = 'University';
-            newObject.mainCategory = o.school;
-            newObject.subCategory = o.department;
-            newObject.country = o.country;
-            newObject.id = o.id;
-            newObject.price = o.price;
-            allRequestsArr.push(newObject);
-            break;
-          }
-          case 'job': {
-            const newObject = {};
-            newObject.id = o.id;
-            newObject.type = 'Job';
-            newObject.mainCategory = o.industry;
-            newObject.subCategory = o.job;
-            newObject.country = o.country;
-            newObject.id = o.id;
-            newObject.price = o.price;
-            allRequestsArr.push(newObject);
-            break;
-          }
-          case 'selfEmployed': {
-            const newObject = {};
-            newObject.id = o.id;
-            newObject.type = 'Self-Employed';
-            newObject.mainCategory = o.type;
-            newObject.subCategory = o.profession;
-            newObject.country = o.country;
-            newObject.id = o.id;
-            newObject.price = o.price;
-            allRequestsArr.push(newObject);
-            break;
-          }
-          default:
-            break;
-        }
-      });
+      setAllRequests(allOrders);
     }
-    setAllRequests(allRequestsArr);
+    
   }, [allOrders]);
 
   function handleSelectActiveOrders(e) {
@@ -152,12 +112,18 @@ const HelpeeDashboardPage = (props) => {
             <RequestCard
               key={option.id}
               requestId={option.id}
-              type={option.type}
-              mainCategory={option.mainCategory}
-              subCategory={option.subCategory}
+              mainType={option.mainType}
+              secondType={option.secondType}
+              thirdType={option.thirdType}
               country={option.country}
+              bookingStatus={option.bookingStatus}
+              helpeeId={props.helpeeUserId}
+              appointmentDate={option.appointmentDate}
+              appointmentTime={option.appointmentTime}
+              offerId={option.offerId}
               price={option.price}
-              helpeeUserId={props.helpeeUserId}
+              helperId={option.helperId}
+              bookingId={option.bookingId}
             />
           ))}
         </div>

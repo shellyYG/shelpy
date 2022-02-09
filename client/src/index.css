@@ -99,12 +99,13 @@ nav {
   color: #010606;
 }
 
-@media screen and (max-width: 768px) {
-  .nav-menu {
-    display: none;
+.navBarTex {
+    margin-left: 5px;
   }
-  .nav-button {
-    display: none;
+
+@media screen and (max-width: 768px) {
+  .navBarTex {
+    display: none
   }
 }
 
@@ -942,6 +943,7 @@ footer {
 
   .centerbox-landing {
     text-align: center;
+    margin: auto;
   }
   .centerbox-chat {
     text-align: left;
@@ -1030,6 +1032,9 @@ footer {
   border-radius: 50%;
   overflow: hidden;
   margin-right: 8px;
+}
+.nameBx {
+  width: 60%;
 }
 
 .smallFlexColumn {
@@ -1391,6 +1396,12 @@ input[type="checkbox" i] {
   height: 100%;
   object-fit: cover;
 }
+.statusWidth {
+    width: 300px;
+}
+.btnWidth {
+    width: fit-content;
+  }
 
 @media all and (max-width: 1200px) {
   .chatBoxTitleInnerWrapper {
@@ -1410,6 +1421,11 @@ input[type="checkbox" i] {
   .chat-box {
     width: 90%;
   }
+  .nameBx {
+    width: 80%;
+  }
+  
+  
   .chatRoomContent {
     flex-direction: column;
   }

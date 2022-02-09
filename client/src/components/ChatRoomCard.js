@@ -17,7 +17,6 @@ function ChatRoomCard(props) {
         `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
       );
     }
-    
   }
 
   return (
@@ -33,8 +32,8 @@ function ChatRoomCard(props) {
           ></img>
         </div>
 
-        <div className='contentBx'>
-          <h5>{props.partnerName}</h5>
+        <div className='nameBx'>
+          <h5 style={{ lineBreak: 'anywhere' }}>{props.partnerName}</h5>
           <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
             {props.secondType}
           </span>

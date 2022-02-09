@@ -11,7 +11,9 @@ import {
   getHelperAuthStatus,
   getPotentialCustomers,
 } from '../store/helper/helper-actions';
-import ChatIcon from './Icons/ChatIcon';
+import ShopIcon from './Icons/ShopIcon';
+import HelpIcon from './Icons/HelpIcon';
+import AboutIcon from './Icons/AboutIcon';
 import ProfileIcon from './Icons/ProfileIcon';
 
 
@@ -40,7 +42,7 @@ const NavBar = (props) => {
     display: "flex",
     alignItems: "center",
     textDecoration: "none",
-    padding: "10px 22px",
+    padding: "5px 10px",
     cursor: "pointer",
     borderBottom: "1px solid #fff995",
     margin: "3px",
@@ -50,14 +52,14 @@ const NavBar = (props) => {
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none',
-    padding: '10px 22px',
+    padding: '5px 10px',
     cursor: 'pointer',
     border: '1px solid #fff995',
     backgroundColor: '#fff995',
     borderRadius: '1px',
     margin: '3px',
     fontWeight: 'bold',
-  }
+  };
 
   return (
     <>
@@ -70,13 +72,21 @@ const NavBar = (props) => {
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to='/about'
           >
-            About
+            <AboutIcon
+              color={({ isActive }) => (isActive ? 'black' : 'white')}
+            />
+            <div className='navBarTex' style={{ marginLeft: '5px' }}>
+              About
+            </div>
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to='/helpee/service-types'
           >
-            Book Shelper
+            <ShopIcon
+              color={({ isActive }) => (isActive ? 'black' : 'white')}
+            />
+            <div className='navBarTex'>Book Helper</div>
           </NavLink>
           {!props.isHelperAuthenticated && (
             <NavLink
@@ -85,7 +95,10 @@ const NavBar = (props) => {
               }
               to='/helper/home'
             >
-              Become Shelper
+              <HelpIcon
+                color={({ isActive }) => (isActive ? 'black' : 'white')}
+              />
+              <div className='navBarTex'>Become Helper</div>
             </NavLink>
           )}
           {props.isHelperAuthenticated && (

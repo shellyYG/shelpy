@@ -67,7 +67,7 @@ const HelperSignInPage = () => {
         });
         dispatch(getHelperAuthStatus());
         dispatch(clearSignInStatus());
-        navigate('/service-options', { replace: true });
+        navigate('/helpee/service-types', { replace: true });
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
@@ -80,9 +80,9 @@ const HelperSignInPage = () => {
   ]);
 
   return (
-    <div className='main-content-wrapper-homepage-no-background'>
+    <div className='main-content-wrapper-homepage-helper'>
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
-        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+        <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           Welcome back!
         </h1>
         <h2
@@ -90,6 +90,7 @@ const HelperSignInPage = () => {
             textAlign: 'center',
             marginTop: '10px',
             marginBottom: '30px',
+            color: 'white'
           }}
         >
           Please insert your username and password to sign in.

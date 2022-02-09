@@ -67,6 +67,14 @@ const ProfileIcon = (props) => {
     e.preventDefault();
     navigate('/helper/sign-in', { replace: true });
   }
+  function handleToHelpeeChatroom(e) {
+    e.preventDefault();
+    navigate('/helpee/chatroom', { replace: true });
+  }
+  function handleToHelperChatroom(e) {
+    e.preventDefault();
+    navigate('/helper/chatroom', { replace: true });
+  }
 
   useEffect(() => {
     if (props.dropDownNavTarget !== 'profile') {
@@ -85,9 +93,17 @@ const ProfileIcon = (props) => {
                   View Helpee Dashboard
                 </div>
               )}
+              {props.isHelpeeAuthenticated && (
+                <div onClick={handleToHelpeeChatroom}>View Helpee Chatroom</div>
+              )}
               {props.isHelperAuthenticated && (
                 <div onClick={handleToHelperDashboard}>
                   View Helper Dashboard
+                </div>
+              )}
+              {props.isHelperAuthenticated && (
+                <div onClick={handleToHelperChatroom}>
+                  View Helper Chatroom
                 </div>
               )}
               {props.isHelpeeAuthenticated && (

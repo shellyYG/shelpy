@@ -74,7 +74,7 @@ const HelpeeSignInPage = () => {
         });
         dispatch(getHelpeeAuthStatus());
         dispatch(clearSignInStatus());
-        navigate('/service-options', { replace: true });
+        navigate('/helpee/service-types', { replace: true });
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
@@ -87,9 +87,9 @@ const HelpeeSignInPage = () => {
   ]);
 
   return (
-    <div className='main-content-wrapper-homepage-no-background'>
+    <div className='main-content-wrapper-homepage'>
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
-        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+        <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           Welcome back!
         </h1>
         <h2
@@ -97,6 +97,7 @@ const HelpeeSignInPage = () => {
             textAlign: 'center',
             marginTop: '10px',
             marginBottom: '30px',
+            color: 'white',
           }}
         >
           Please insert your username and password to sign in.
@@ -116,7 +117,9 @@ const HelpeeSignInPage = () => {
             ref={passwordRef}
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
-            <Link to='/about' style={{ marginRight: '10px'}}>Forget Password</Link>
+            <Link to='/about' style={{ marginRight: '10px' }}>
+              Forget Password
+            </Link>
             <Link to='/home'>Don't have account yet? Sign Up here!</Link>
           </div>
 
