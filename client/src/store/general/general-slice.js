@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const bookingSlice = createSlice({
+const generalSlice = createSlice({
   name: 'booking',
   initialState: {
+    dropDownNavTarget: '',
     bookingStatus: '',
     bookingDate: '',
     bookingTime: '',
@@ -12,6 +13,10 @@ const bookingSlice = createSlice({
     bookingNotificationStatusMessage: '',
   },
   reducers: {
+    setDropDownNavTarget(state, action) {
+      const { dropDownNavTarget } = action.payload;
+      if (dropDownNavTarget) state.dropDownNavTarget = dropDownNavTarget;
+    },
     setBookingStatus(state, action) {
       const { bookingStatus, bookingDate, bookingTime, bookingNotes } = action.payload;
       if (bookingStatus) state.bookingStatus = bookingStatus;
@@ -34,6 +39,6 @@ const bookingSlice = createSlice({
   },
 });
 
-export const bookingActions = bookingSlice.actions; // actions === reducers
+export const generalActions = generalSlice.actions; // actions === reducers
 
-export default bookingSlice;
+export default generalSlice;

@@ -31,7 +31,7 @@ const getHelpeeAllOrders = async (req, res) => {
   try {
     const { helpeeUserId } = req.query;
     const response = await helpeeModel.getHelpeeAllOrders({ helpeeUserId });
-    if (response.data) {
+    if (response && response.data) {
       res.status(200).json({
         allOrders: response.data.allOrders,
       });
@@ -47,10 +47,13 @@ const getHelpeeAllOrders = async (req, res) => {
 const getPotentialHelpers = async (req, res) => {
   try {
     const { helpeeUserId } = req.query;
-    const response = await helpeeModel.getPotentialHelpers({
-      helpeeUserId,
-    });
-    if (response.data) {
+    let response;
+    if (helpeeUserId) {
+      response = await helpeeModel.getPotentialHelpers({
+        helpeeUserId,
+      });
+    }
+    if (response && response.data) {
       res.status(200).json({
         allPotentialHelpers: response.data.allPotentialHelpers,
       })
@@ -67,7 +70,7 @@ const getHelpeeOrderHelperList = async (req, res) => {
   try {
     const { requestId } = req.query;
     const response = await helpeeModel.getHelpeeOrderHelperList({ requestId });
-    if (response.data) {
+    if (response && response.data) {
       res.status(200).json({
         helpers: response.data.helpers,
       });
@@ -86,7 +89,7 @@ const deleteHelpeeRequest = async (req, res) => {
     const response = await helpeeModel.deleteHelpeeRequest({
       requestId,
     });
-    if (response.data) {
+    if (response && response.data) {
       res.status(200).json({
         status: 'success',
       });

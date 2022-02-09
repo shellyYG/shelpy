@@ -1,59 +1,78 @@
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { navigateOptions } from '../../store/options/navigate-options';
 import '../../App.css';
-import HomePageCard from '../../components/HomePageCard';
+import MktRow from '../../components/MktRow';
 
 const HelperLoggedInHomePage = () => {
-  const { globalNavigateTarget } = useSelector((state) => state.helper);
   const navigate = useNavigate();
-  function handleNext(e) {
+  function handleCreateOfferClick(e) {
     e.preventDefault();
-    let path;
-    switch (globalNavigateTarget) {
-      case 'bookHelper':
-        path = '/service-options';
-        break;
-      case 'viewOrderHistory':
-        path = '/helper/order-history';
-        break;
-      default:
-        path = '/service-options';
-    }
-    navigate(path, { replace: true });
+    navigate('/helper/service-types', { replace: true });
   }
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate('/helper/home', { replace: true });
-  };
-  window.addEventListener('popstate', onBackButtonEvent, { once: true });
+  
   return (
-    <div className='main-content-wrapper-no-background'>
-      <div className='section-center-align'>
-        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>Welcome back</h1>
-        <h2
-          style={{
-            textAlign: 'center',
-            marginTop: '10px',
-            marginBottom: '30px',
-          }}
-        >
-          What can we offer you today?
-        </h2>
-        <div className='container'>
-          {navigateOptions.map((option) => (
-            <HomePageCard
-              imageSrc={option.imgPath}
-              title={option.label}
-              value={option.value}
-              globalNavigateTarget={globalNavigateTarget}
-            />
-          ))}
+    <div className='main-content-wrapper-no-height'>
+      <div className='home-page-container'>
+        <div className='centerWrapperWithBackgroundHelper'>
+          <div className='coverLeft'>
+            <div>
+              <h1 style={{ textAlign: 'center', color: 'white' }}>
+                Help people while earning money!
+              </h1>
+            </div>
+            <div>
+              <h2
+                style={{
+                  textAlign: 'center',
+                  marginTop: '10px',
+                  marginBottom: '30px',
+                  color: 'white',
+                }}
+              >
+                Become a helper <br />
+                and make extra revenue stream!
+              </h2>
+            </div>
+          </div>
+          <div className='coverButtonWrapper'>
+            <div style={{ margin: 'auto' }}>
+              <button class='btn-next' onClick={handleCreateOfferClick}>
+                {' '}
+                CREATE OFFER NOW
+              </button>
+            </div>
+          </div>
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <button className='btn-next' onClick={handleNext}>
-            Next ❯
-          </button>
+        <div className='centerWrapperMkt'>
+          <div className='mktWrapper'>
+            <MktRow
+              title='HELP people'
+              details1='Were you once hesitating?'
+              details2='Help people who are now standing on the crossroad and wonders.'
+              imagePath='/crossroad.jpeg'
+              lastChild={false}
+            />
+            <MktRow
+              title='GENERATE extra revenue'
+              details1='Thinking about having a side business?'
+              details2='Join us and create extra safenet to reach your financial freedom.'
+              imagePath='/sidebusiness.jpeg'
+              lastChild={false}
+            />
+            <MktRow
+              title='FREE marketing listing'
+              details1='Are you already a career/study counselor?'
+              details2='Get extra exposure with us and meet your potential customers.'
+              imagePath='/counselor.jpeg'
+              lastChild={true}
+            />
+            <MktRow
+              title='CONTROL your own privacy'
+              details1='Want to share some private but important insights?'
+              details2='You decide if you want to stay anonymously and how much you want to share.'
+              imagePath='/oneToOne.jpeg'
+              lastChild={false}
+            />
+          </div>
         </div>
       </div>
     </div>

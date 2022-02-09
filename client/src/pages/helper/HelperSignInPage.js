@@ -22,11 +22,6 @@ const HelperSignInPage = () => {
     (state) => state.helperNotification
   );
 
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate('/helper/home', { replace: true });
-  };
-  window.addEventListener('popstate', onBackButtonEvent, { once: true });
   if (loading) {
     MySwal.fire({
       title: 'Loading...',

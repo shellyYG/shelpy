@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { bookingActions } from './booking-slice';
+import { generalActions } from './general-slice';
 
 const bookingStatusPath = '/api/booking-status';
 
@@ -25,12 +25,12 @@ export const postBookingStatus = (data) => {
           headers,
         });
         dispatch(
-          bookingActions.setBookingStatus({
+          generalActions.setBookingStatus({
             bookingStatus: data.bookingStatus,
           })
         )
         dispatch(
-          bookingActions.setBookingNotificationStatus({
+          generalActions.setBookingNotificationStatus({
             bookingNotificationStatus: 'success',
             bookingNotificationStatusTitle: 'Successfully submitted the booking.',
             bookingNotificationStatusMessage: 'Successfully submitted the booking.',
@@ -42,7 +42,7 @@ export const postBookingStatus = (data) => {
       console.error(error);
       if (error.response) {
         dispatch(
-          bookingActions.setBookingNotificationStatus({
+          generalActions.setBookingNotificationStatus({
             bookingNotificationStatus: 'error',
             bookingNotificationStatusTitle: 'Oops!',
             bookingNotificationStatusMessage: error.response.data,
@@ -80,7 +80,7 @@ export const getBookingStatus = (data) => {
         console.log('response: ', response)
         const { booking } = response.data;
         dispatch(
-          bookingActions.setBookingStatus({
+          generalActions.setBookingStatus({
             bookingStatus: booking.bookingStatus,
             bookingDate: booking.appointmentDate,
             bookingTime: booking.appointmentTime,
@@ -97,10 +97,20 @@ export const getBookingStatus = (data) => {
 export const clearBookingNotificationStatus = (data) => {
   return async (dispatch) => {
     dispatch(
-      bookingActions.setBookingNotificationStatus({
+      generalActions.setBookingNotificationStatus({
         bookingNotificationStatus: 'initial',
         bookingNotificationStatusTitle: '',
         bookingNotificationStatusMessage: '',
+      })
+    );
+  };
+};
+
+export const onClickUpdateActiveIconTarget = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      generalActions.setDropDownNavTarget({
+        dropDownNavTarget: data.dropDownNavTarget,
       })
     );
   };

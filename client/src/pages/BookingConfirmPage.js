@@ -15,7 +15,7 @@ import {
   postBookingStatus,
   clearBookingNotificationStatus,
   getBookingStatus,
-} from '../store/general/booking-actions';
+} from '../store/general/general-actions';
 const MySwal = withReactContent(Swal);
 
 const BookingConfirmPage = (props) => {
@@ -34,36 +34,17 @@ const BookingConfirmPage = (props) => {
     bookingNotificationStatus,
     bookingNotificationStatusTitle,
     bookingNotificationStatusMessage,
-  } = useSelector((state) => state.booking);
-  console.log(
-    'bookingStatus: ',
-    bookingStatus,
-    'bookingDate: ',
-    bookingDate,
-    'bookingTime: ',
-    bookingTime,
-    'bookingNotes: ',
-    bookingNotes,
-    'bookingNotificationStatus: ',
-    bookingNotificationStatus
-  );
+  } = useSelector((state) => state.general);
   
   const requestId = searchParams.get('requestId');
   const offerId = searchParams.get('offerId');
   const price = searchParams.get('price');
-  
-  const [enableBtn, setEnableBtn] = useState(false);
-  console.log(
-    'requestId: ',
-    requestId,
-    'offerId: ',
-    offerId,
-    'price: ',
-    price,
-  );
+
   const meetDateRef = useRef();
   const meetTimeRef = useRef();
   const notesRef = useRef();
+  
+  const [enableBtn, setEnableBtn] = useState(false);
   const [loading, setIsLoading] = useState(false);
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');

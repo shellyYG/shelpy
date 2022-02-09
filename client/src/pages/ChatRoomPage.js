@@ -22,25 +22,27 @@ const ChatRoomPage = (props) => {
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const roomId = searchParams.get('roomId');
-  const userId = searchParams.get('userId');
+  const userId = parseInt(searchParams.get('userId'));
   const partnerName = searchParams.get('partnerName');
   const bookingStatus = searchParams.get('bookingStatus');
-  const requestId = searchParams.get('requestId');
-  const offerId = searchParams.get('offerId');
+  const requestId = parseInt(searchParams.get('requestId'));
+  const offerId = parseInt(searchParams.get('offerId'));
   const price = searchParams.get('price');
-  console.log('isHelpee?', props.isHelpee);
+  console.log('@ChatRoom: isHelpee?', props.isHelpee, 'userId: ', userId);
   
   useEffect(() => {
-    dispatch(getPotentialCustomers({ helperUserId: userId }));
-  }, [userId, dispatch]);
+    if (userId && !props.isHelpee)
+      dispatch(getPotentialCustomers({ helperUserId: userId }));
+  }, [userId, props.isHelpee, dispatch]);
+
   useEffect(() => {
-    dispatch(getPotentialHelpers({ helpeeUserId: userId }));
-  }, [userId, dispatch]);
+    if (userId && props.isHelpee)
+      dispatch(getPotentialHelpers({ helpeeUserId: userId }));
+  }, [userId, props.isHelpee, dispatch]);
 
   const { allPotentialCustomers } = useSelector((state) => state.helper);
   const { allPotentialHelpers } = useSelector((state) => state.helpee);
-  console.log('allPotentialCustomers: ', allPotentialCustomers);
-  console.log('bookingStatus: ', bookingStatus);
+  console.log('@chatroom->allPotentialCustomers: ', allPotentialCustomers);
   const [showTaskSection, setShowTaskSection] = useState(true);
   const onBackButtonEvent = (e) => {
     e.preventDefault();
@@ -137,7 +139,10 @@ const ChatRoomPage = (props) => {
                     helperId={userId}
                     helpeeId={option.helpeeId}
                     price={option.price}
-                    key={option.requestId}
+                    key={
+                      option.bookingId ||
+                      `${option.requestId}-${option.offerId}`
+                    }
                     partnerName={option.helpeeName}
                     secondType={option.secondType}
                     thirdType={option.thirdType}
@@ -154,7 +159,10 @@ const ChatRoomPage = (props) => {
                     helperId={option.helperId}
                     helpeeId={userId}
                     price={option.price}
-                    key={option.requestId}
+                    key={
+                      option.bookingId ||
+                      `${option.requestId}-${option.offerId}`
+                    }
                     partnerName={option.helperName}
                     secondType={option.secondType}
                     thirdType={option.thirdType}
@@ -229,9 +237,10 @@ const ChatRoomPage = (props) => {
                 }}
               />
               <button
-                data-text='Book Room'
+                data-text='Send message'
                 className='btn-send'
                 onClick={handleSend}
+                style={{ borderBottomRightRadius: '8px', borderTopRightRadius: '8px' }}
               >
                 <span>
                   <Icon icon='fa:paper-plane-o' />

@@ -4,11 +4,10 @@ import HelperLoggedInHomePage from '../helper/HelperLoggedInHomePage';
 
 const HelperHomePage = (props) => {
   return (
-    <HelperSignUpPage />
-    // <>
-    //   {props.isHelpeeAuthenticated && <HelperLoggedInHomePage />}
-    //   {!props.isHelpeeAuthenticated && <HelperSignUpPage />}
-    // </>
+    <>
+      {props.isHelperAuthenticated && <HelperLoggedInHomePage />}
+      {!props.isHelperAuthenticated && <HelperSignUpPage />}
+    </>
   );
 };
 

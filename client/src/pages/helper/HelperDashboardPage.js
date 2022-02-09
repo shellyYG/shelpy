@@ -12,7 +12,7 @@ const HelperDashboardPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isPotentialCustomersSelected, setIsPotentialCustomersSelected] = useState(true);
-   const [liveOffers, setLiveOffers] = useState([]);
+  const [liveOffers, setLiveOffers] = useState([]);
   console.log('helperId:', props.helperUserId);
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));

@@ -40,9 +40,13 @@ function App() {
   }, [dispatch]);
   const { helpeeUserId, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
   const { helperUserId, isHelperAuthenticated } = useSelector((state) => state.helper);
+  console.log('isHelperAuthenticated: ', isHelperAuthenticated);
   return (
     <Router>
-      <NavBar isHelpeeAuthenticated={isHelpeeAuthenticated} />
+      <NavBar
+        isHelpeeAuthenticated={isHelpeeAuthenticated}
+        isHelperAuthenticated={isHelperAuthenticated}
+      />
       <Routes>
         <Route path='/about' element={<AboutPage />} />
         <Route path='/' element={<Navigate replace to='/home' />} />
@@ -201,15 +205,11 @@ function App() {
         />
         <Route
           path={'/helpee/book-helper'}
-          element={
-            <BookingConfirmPage isHelpee={true} />
-          }
+          element={<BookingConfirmPage isHelpee={true} />}
         />
         <Route
           path={'/helper/confirm-booking'}
-          element={
-            <BookingConfirmPage isHelpee={false} />
-          }
+          element={<BookingConfirmPage isHelpee={false} />}
         />
         <Route
           path={'/helper/chatroom'}

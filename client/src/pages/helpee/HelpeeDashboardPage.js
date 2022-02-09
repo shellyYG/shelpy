@@ -14,8 +14,6 @@ const HelpeeDashboardPage = (props) => {
   const [isPotentialHelpersSelected, setIsPotentialHelpersSelected] =
     useState(true);
   const [allRequests, setAllRequests] = useState([]);
-  console.log('props.helpeeUserId:', props.helpeeUserId);
-  console.log('allRequests: ', allRequests);
   useEffect(() => {
     dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
     dispatch(getPotentialHelpers({ helpeeUserId: props.helpeeUserId }));
@@ -24,7 +22,7 @@ const HelpeeDashboardPage = (props) => {
   const { allOrders, allPotentialHelpers } = useSelector(
     (state) => state.helpee
   );
-  console.log('allPotentialHelpers: ', allPotentialHelpers);
+
   useEffect(() => {
     const allRequestsArr = [];
     if (allOrders) {

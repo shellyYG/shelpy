@@ -22,7 +22,7 @@ const deleteHelperOffer = async (req, res) => {
     const response = await helperModel.deleteHelperOffer({
       offerId,
     });
-    if (response.data) {
+    if (response && response.data) {
       res.status(200).json({
         status: 'success'
       });
@@ -41,7 +41,7 @@ const getPotentialCustomers = async (req, res) => {
     const response = await helperModel.getPotentialCustomers({
       helperUserId,
     });
-    if (response.data) {
+    if (response && response.data) {
       res.status(200).json({
         allPotentialCustomers: response.data.allPotentialCustomers,
       });
@@ -58,7 +58,7 @@ const getHelperAllMatchedRequests = async (req, res) => {
   try {
     const { helpeeUserId } = req.query;
     const response = await helperModel.getHelperAllMatchedRequests({ helpeeUserId });
-    if (response.data) {
+    if (response && response.data) {
       res.status(200).json({
         allOrders: response.data.allOrders,
       });
@@ -86,7 +86,7 @@ const getHelperAllOffers = async (req, res) => {
   try {
     const { helperUserId } = req.query;
     const response = await helperModel.getHelperAllOffers({ helperUserId });
-    if (response.data) {
+    if (response && response.data) {
       res.status(200).json({
         allOffers: response.data.allOffers,
       });

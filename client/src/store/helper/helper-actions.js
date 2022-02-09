@@ -14,6 +14,7 @@ const helperCertificateUploadPath = '/api/helper/certificate-upload';
 const helperBasicFormWithoutCertificatePath = '/api/helper/basic-form';
 
 export const getHelperAuthStatus = () => {
+  console.log('getHelperAuthStatus...');
   return async (dispatch) => {
     try {
       const generalToken = localStorage.getItem('shelper-token');
@@ -50,45 +51,51 @@ export const getHelperAuthStatus = () => {
 
 export const getAllOffers = (data) => {
   return async (dispatch) => {
-    try {
-      const response = await axios.get(getAllOffersPath, {
-        params: { helperUserId: data.helperUserId },
-      });
-      dispatch(
-        helperActions.updateAllOffers({
-          allOffers: response.data.allOffers,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      dispatch(
-        helperActions.updateAllOffers({
-          allOffers: [],
-        })
-      );
+    if (data && data.helperUserId) {
+      try {
+        const response = await axios.get(getAllOffersPath, {
+          params: { helperUserId: data.helperUserId },
+        });
+        dispatch(
+          helperActions.updateAllOffers({
+            allOffers: response.data.allOffers,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helperActions.updateAllOffers({
+            allOffers: [],
+          })
+        );
+      }
     }
+      
   };
 };
 
 export const getPotentialCustomers = (data) => {
   return async (dispatch) => {
-    try {
-      const response = await axios.get(getPotentialCustomersPath, {
-        params: { helperUserId: data.helperUserId },
-      });
-      dispatch(
-        helperActions.updateAllPotentialCustomers({
-          allPotentialCustomers: response.data.allPotentialCustomers,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      dispatch(
-        helperActions.updateAllPotentialCustomers({
-          allPotentialCustomers: [],
-        })
-      );
+    if (data && data.heleperUserId) {
+      try {
+        const response = await axios.get(getPotentialCustomersPath, {
+          params: { helperUserId: data.helperUserId },
+        });
+        dispatch(
+          helperActions.updateAllPotentialCustomers({
+            allPotentialCustomers: response.data.allPotentialCustomers,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helperActions.updateAllPotentialCustomers({
+            allPotentialCustomers: [],
+          })
+        );
+      }
     }
+    
   };
 };
 
@@ -207,12 +214,13 @@ export const postHelperSignUpPassword = (data) => {
 };
 
 export const postHelperSignInData = (data) => {
+  console.log('postHelperSignInData');
   return async (dispatch) => {
     try {
       const response = await axios.post(helperSignInPath, {
         data,
       });
-      window.localStorage.setItem('shelpy-token', response.data.accessToken);
+      window.localStorage.setItem('shelper-token', response.data.accessToken);
       dispatch(
         helperActions.updateHelperInfoAfterSignIn({
           email: data.email,
@@ -467,25 +475,27 @@ export const onSubmitUploadHelperData = (data) => {
 
 export const onClickDeleteOffer = (data) => {
   return async (dispatch) => {
-    try {
-      await axios.delete(userOfferPath, {
-        params: { offerId: data.offerId },
-      });
-      const response = await axios.get(getAllOffersPath, {
-        params: { helperUserId: data.helperUserId },
-      });
-      dispatch(
-        helperActions.updateAllOffers({
-          allOffers: response.data.allOffers,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      dispatch(
-        helperActions.updateAllOffers({
-          allOffers: [],
-        })
-      );
+    if (data && data.offerId && data.helperId) {
+      try {
+        await axios.delete(userOfferPath, {
+          params: { offerId: data.offerId },
+        });
+        const response = await axios.get(getAllOffersPath, {
+          params: { helperUserId: data.helperUserId },
+        });
+        dispatch(
+          helperActions.updateAllOffers({
+            allOffers: response.data.allOffers,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helperActions.updateAllOffers({
+            allOffers: [],
+          })
+        );
+      }
     }
   }
 }

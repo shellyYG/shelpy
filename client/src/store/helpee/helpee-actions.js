@@ -50,47 +50,52 @@ export const getHelpeeAuthStatus = () => {
 
 export const getAllOrders = (data) => {
   return async (dispatch) => {
-    try {
-      const response = await axios.get(getAllOrdersPath, {
-        params: { helpeeUserId: data.helpeeUserId },
-      });
-      dispatch(
-        helpeeActions.updateActiveAndPastOrders({
-          allOrders: response.data.allOrders,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      dispatch(
-        helpeeActions.updateActiveAndPastOrders({
-          allOrders: [],
-        })
-      );
+    if (data && data.helpeeUserId) {
+      try {
+        const response = await axios.get(getAllOrdersPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        dispatch(
+          helpeeActions.updateActiveAndPastOrders({
+            allOrders: response.data.allOrders,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateActiveAndPastOrders({
+            allOrders: [],
+          })
+        );
+      }
     }
   };
 };
 
 export const getPotentialHelpers = (data) => {
   return async (dispatch) => {
-    console.log('getPotentialHelpers->data: ', data);
-    try {
-      const response = await axios.get(getPotentialHelpersPath, {
-        params: { helpeeUserId: data.helpeeUserId },
-      });
-      console.log('allPotentialHelpers: ', response.data.allPotentialHelpers);
-      dispatch(
-        helpeeActions.updateAllPotentialHelpers({
-          allPotentialHelpers: response.data.allPotentialHelpers,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      dispatch(
-        helpeeActions.updateAllPotentialHelpers({
-          allPotentialHelpers: [],
-        })
-      );
+    if (data && data.helpeeUserId) {
+      try {
+        const response = await axios.get(getPotentialHelpersPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        if (response && response.data && response.data.allPotentialHelpers) {
+          dispatch(
+            helpeeActions.updateAllPotentialHelpers({
+              allPotentialHelpers: response.data.allPotentialHelpers,
+            })
+          );
+        }
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateAllPotentialHelpers({
+            allPotentialHelpers: [],
+          })
+        );
+      }
     }
+      
   };
 };
 
@@ -548,26 +553,27 @@ export const clearApplyHelpeeStatus = (data) => {
 
 export const onClickDeleteRequest = (data) => {
   return async (dispatch) => {
-    console.log('onClickDeleteRequest->data: ', data);
-    try {
-      await axios.delete(userRequestPath, {
-        params: { requestId: data.requestId },
-      });
-      const response = await axios.get(getAllOrdersPath, {
-        params: { helpeeUserId: data.helpeeUserId },
-      });
-      dispatch(
-        helpeeActions.updateAllOrders({
-          allOffers: response.data.allOffers,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      dispatch(
-        helpeeActions.updateAllOrders({
-          allOffers: [],
-        })
-      );
+    if (data && data.requestId && data.helpeeUserId) {
+      try {
+        await axios.delete(userRequestPath, {
+          params: { requestId: data.requestId },
+        });
+        const response = await axios.get(getAllOrdersPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        dispatch(
+          helpeeActions.updateAllOrders({
+            allOffers: response.data.allOffers,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateAllOrders({
+            allOffers: [],
+          })
+        );
+      }
     }
   };
 };

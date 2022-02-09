@@ -1,59 +1,67 @@
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { navigateOptions } from "../../store/options/navigate-options";
-import "../../App.css";
-import HomePageCard from '../../components/HomePageCard';
+import { useNavigate } from 'react-router-dom';
+import '../../App.css';
+import MktRow from '../../components/MktRow';
 
 const HelpeeLoggedInHomePage = () => {
-  const { globalNavigateTarget } = useSelector((state) => state.helpee);
   const navigate = useNavigate();
-  function handleNext(e) {
+  function handleBookHelperClick(e) {
     e.preventDefault();
-    let path;
-    switch (globalNavigateTarget) {
-      case 'bookHelper':
-        path = '/service-options';
-        break;
-      case 'viewOrderHistory':
-        path = '/helpee/dashboard';
-        break;
-      default:
-        path = '/service-options';
-    }
-    navigate(path, { replace: true });
+    navigate('/helpee/service-types', { replace: true });
   }
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate('/home', { replace: true });
-  };
-  window.addEventListener('popstate', onBackButtonEvent, { once: true });
   return (
-    <div className='main-content-wrapper-no-background'>
-      <div className='section-center-align'>
-        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>Welcome back</h1>
-        <h2
-          style={{
-            textAlign: 'center',
-            marginTop: '10px',
-            marginBottom: '30px',
-          }}
-        >
-          What can we offer you today?
-        </h2>
-        <div className='container'>
-          {navigateOptions.map((option) => (
-            <HomePageCard
-              imageSrc={option.imgPath}
-              title={option.label}
-              value={option.value}
-              globalNavigateTarget={globalNavigateTarget}
-            />
-          ))}
+    <div className='main-content-wrapper-no-height'>
+      <div className='home-page-container'>
+        <div className='centerWrapperWithBackground'>
+          <div className='coverLeft'>
+            <div>
+              <h1 style={{ textAlign: 'center', color: 'white' }}>
+                Thinking about your next step?
+              </h1>
+            </div>
+            <div>
+              <h2
+                style={{
+                  textAlign: 'center',
+                  marginTop: '10px',
+                  marginBottom: '30px',
+                  color: 'white',
+                }}
+              >
+                Talk to an insider <br />
+                before you make your decision!
+              </h2>
+            </div>
+          </div>
+          <div className='coverButtonWrapper'>
+            <div style={{ margin: 'auto' }}>
+              <button class='btn-next' onClick={handleBookHelperClick}> BOOK HELPER NOW</button>
+            </div>
+          </div>
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <button className='btn-next' onClick={handleNext}>
-            Next ❯
-          </button>
+        <div className='centerWrapperMkt'>
+          <div className='mktWrapper'>
+            <MktRow
+              title='MINIMIZE your risk'
+              details1='Afraid of taking that big leap?'
+              details2='Invest only 30 min and on average 20 Euro before you make the final decision.'
+              imagePath='/dinner.jpeg'
+              lastChild={true}
+            />
+            <MktRow
+              title='MEET role models'
+              details1='Do not have the network?'
+              details2='Come talk to people who have successfully gone through your dream path.'
+              imagePath='/friends.jpeg'
+              lastChild={false}
+            />
+            <MktRow
+              title="GET answers that you can't find on GOOGLE"
+              details1='Your questions are too personal or too specific?'
+              details2='Ask insiders and get first-hand information.'
+              imagePath='/oneToOne.jpeg'
+              lastChild={false}
+            />
+          </div>
         </div>
       </div>
     </div>

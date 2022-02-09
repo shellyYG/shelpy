@@ -19,7 +19,34 @@ nav {
   top: 0px;
 }
 
+.navPopUpWrapper {
+  background-color: #FFFFFF;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  top: 51px;
+}
+.navDropDownContent {
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
 
+.navDropDownContent div {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.navDropDownContent div:hover {
+  background-color: #fff995;
+}
 
 .nav-logo {
   color: #ffff;
@@ -242,7 +269,7 @@ body {
   margin: 5px;
   margin-left: auto;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  border-radius: 1px;
+  border-radius: 8px;
   border: 1px solid #e6e6e6;
   justify-content: center;
   align-items: center;
@@ -266,6 +293,8 @@ body {
   display: flex;
   flex-direction: row;
   margin: auto;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 .chatBoxTitleInnerWrapper {
   text-align: center;
@@ -291,6 +320,8 @@ body {
   overflow-y: auto;
   margin: auto;
   padding-top: 10px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .container .card .content {
@@ -905,7 +936,8 @@ footer {
   padding: 0 14px; 
   margin-right: auto; /* so the send item is on the right */
   margin-top: 10px;
-  
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
   .centerbox-landing {
@@ -1070,6 +1102,11 @@ footer {
 .coverRight {
   width: 50%;
   padding-top: 0px;
+}
+.coverButtonWrapper {
+  width: 50%;
+  padding-top: 0px;
+  align-self: center;
 }
 .whiteWrapper {
   background-color: white;
@@ -1432,6 +1469,12 @@ input[type="checkbox" i] {
     padding: 10px;
     margin: 0px 120px;
   }
+  .coverButtonWrapper {
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0px 120px;
+  }
   .rectangleImageBxRight {
     margin: auto;
   }
@@ -1513,6 +1556,12 @@ input[type="checkbox" i] {
   .coverRight {
     width: 100%;
     background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0px 10px;
+  }
+  .coverButtonWrapper {
+    width: 100%;
     border-radius: 8px;
     padding: 10px;
     margin: 0px 10px;
