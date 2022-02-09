@@ -44,7 +44,6 @@ const NavBar = (props) => {
     textDecoration: "none",
     padding: "5px 10px",
     cursor: "pointer",
-    borderBottom: "1px solid #fff995",
     margin: "3px",
   };
   const activeStyle = {
@@ -75,7 +74,7 @@ const NavBar = (props) => {
             <AboutIcon
               color={({ isActive }) => (isActive ? 'black' : 'white')}
             />
-            <div className='navBarTex' style={{ marginLeft: '5px' }}>
+            <div className='navBarText' style={{ marginLeft: '5px' }}>
               About
             </div>
           </NavLink>
@@ -86,7 +85,7 @@ const NavBar = (props) => {
             <ShopIcon
               color={({ isActive }) => (isActive ? 'black' : 'white')}
             />
-            <div className='navBarTex'>Book Helper</div>
+            <div className='navBarText'>Book Helper</div>
           </NavLink>
           {!props.isHelperAuthenticated && (
             <NavLink
@@ -98,7 +97,7 @@ const NavBar = (props) => {
               <HelpIcon
                 color={({ isActive }) => (isActive ? 'black' : 'white')}
               />
-              <div className='navBarTex'>Become Helper</div>
+              <div className='navBarText'>Become Helper</div>
             </NavLink>
           )}
           {props.isHelperAuthenticated && (

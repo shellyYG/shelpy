@@ -30,7 +30,7 @@ const GlobalIcon = (props) => {
       <div onClick={handleLanguageClick} style={{ cursor: 'pointer' }}>
         {active && (
           <div className='navPopUpWrapper'>
-            <div className='navDropDownContent'>
+            <div className='navDropDownContentLanguage'>
               <div>English</div>
               <div>繁體中文</div>
               <div>简体中文</div>

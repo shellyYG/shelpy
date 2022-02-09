@@ -87,36 +87,30 @@ const ProfileIcon = (props) => {
       <div onClick={handleProfileClick} style={{ cursor: 'pointer' }}>
         {active && (
           <div className='navPopUpWrapper'>
-            <div className='navDropDownContent'>
+            <div className='navDropDownContentProfiles'>
               {props.isHelpeeAuthenticated && (
-                <div onClick={handleToHelpeeDashboard}>
-                  View Helpee Dashboard
-                </div>
+                <div onClick={handleToHelpeeDashboard}>Helpee Dashboard</div>
               )}
               {props.isHelpeeAuthenticated && (
-                <div onClick={handleToHelpeeChatroom}>View Helpee Chatroom</div>
+                <div onClick={handleToHelpeeChatroom}>Helpee Chatroom</div>
               )}
               {props.isHelperAuthenticated && (
-                <div onClick={handleToHelperDashboard}>
-                  View Helper Dashboard
-                </div>
+                <div onClick={handleToHelperDashboard}>Helper Dashboard</div>
               )}
               {props.isHelperAuthenticated && (
-                <div onClick={handleToHelperChatroom}>
-                  View Helper Chatroom
-                </div>
+                <div onClick={handleToHelperChatroom}>Helper Chatroom</div>
               )}
               {props.isHelpeeAuthenticated && (
-                <div onClick={handleHelpeeSignOut}>Sign Out as Helpee</div>
+                <div onClick={handleHelpeeSignOut}>Helpee Sign Out</div>
               )}
               {props.isHelperAuthenticated && (
-                <div onClick={handleHelperSignOut}>Sign Out as Helper</div>
+                <div onClick={handleHelperSignOut}>Helper Sign Out</div>
               )}
               {!props.isHelpeeAuthenticated && (
-                <div onClick={handleHelpeeSignIn}>Sign In as Helpee</div>
+                <div onClick={handleHelpeeSignIn}>Helpee Sign In</div>
               )}
               {!props.isHelperAuthenticated && (
-                <div onClick={handleHelperSignIn}>Sign In as Helper</div>
+                <div onClick={handleHelperSignIn}>Helper Sign In</div>
               )}
             </div>
           </div>
