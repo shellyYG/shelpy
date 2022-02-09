@@ -157,7 +157,7 @@ const HelpeeSignUpPasswordPage = () => {
               type='checkbox'
               checked={hasGiveConsent}
               onChange={handleHasGiveConsent}
-              style={{ marginRight: '20px ' }}
+              style={{ marginRight: '20px', cursor: 'pointer' }}
             />
             <div className='checkbox-text-password-page'>
               You agree to Shelpy's{' '}

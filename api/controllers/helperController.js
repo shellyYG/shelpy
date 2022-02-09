@@ -36,17 +36,20 @@ const deleteHelperOffer = async (req, res) => {
 }
 
 const getPotentialCustomers = async (req, res) => {
+  console.log('@controller getPotentialCustomers: ', req.query.helperUserId);
   try {
     const { helperUserId } = req.query;
-    const response = await helperModel.getPotentialCustomers({
-      helperUserId,
-    });
-    if (response && response.data) {
-      res.status(200).json({
-        allPotentialCustomers: response.data.allPotentialCustomers,
+    if (helperUserId) {
+      const response = await helperModel.getPotentialCustomers({
+        helperUserId,
       });
-    } else {
-      throw Error('NO_POTENTIAL_CUSTOMER_RESPONSE');
+      if (response && response.data) {
+        res.status(200).json({
+          allPotentialCustomers: response.data.allPotentialCustomers,
+        });
+      } else {
+        throw Error('NO_POTENTIAL_CUSTOMER_RESPONSE');
+      }
     }
   } catch (error) {
     console.error(error);
@@ -72,10 +75,18 @@ const getHelperAllMatchedRequests = async (req, res) => {
 };
 
 const getProfilePic = async (req, res) => {
+  console.log('getProfilePic...');
   const { key } = req.params;
   try {
     const readStream = getFileStream(key);
-    readStream.pipe(res); // will show directly on path which is 'images/xxx'
+    if (readStream) {
+      readStream
+        .createReadStream()
+        .on('error', (error) => {
+          console.error(error);
+        })
+        .pipe(res);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

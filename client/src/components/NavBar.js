@@ -20,13 +20,11 @@ import ProfileIcon from './Icons/ProfileIcon';
 const NavBar = (props) => {
   const dispatch = useDispatch();
   
-  const { helpeeUserId, allPotentialHelpers } =
+  const { helpeeUserId } =
     useSelector((state) => state.helpee);
-  const { helperUserId, allPotentialCustomers } =
+  const { helperUserId } =
     useSelector((state) => state.helper);
   const { dropDownNavTarget } = useSelector((state) => state.general);
-  
-  console.log('@NavBar->helpeeUserId: ', helpeeUserId, 'herperUserId: ', helperUserId);
 
   useEffect(() => {
     if (helpeeUserId) dispatch(getPotentialHelpers({ helpeeUserId }));

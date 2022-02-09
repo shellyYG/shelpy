@@ -16,6 +16,7 @@ function CheckBox(props) {
         checked={props.checked}
         onChange={handleCheck}
         ref={props.checkRef}
+        style={{ cursor: 'pointer' }}
       />
       <p
         style={{

@@ -13,10 +13,9 @@ const AboutPage = () => {
           <h2>Mission Statement</h2>
           <br />
           <h3>
-            By matching foreigners to a local buddy to accompany them to the
-            local meetings, <br />
+            By connecting professions and students, <br />
             <br />
-            Shelpy aims at integrating foreigners to local society globally.
+            Shelpy aims at helping people to change their lives.
           </h3>
           <br />
         </div>

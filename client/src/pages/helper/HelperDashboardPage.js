@@ -13,14 +13,13 @@ const HelperDashboardPage = (props) => {
   const navigate = useNavigate();
   const [isPotentialCustomersSelected, setIsPotentialCustomersSelected] = useState(true);
   const [liveOffers, setLiveOffers] = useState([]);
-  console.log('helperId:', props.helperUserId);
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));
     dispatch(getPotentialCustomers({ helperUserId: props.helperUserId }));
   }, [props.helperUserId, dispatch]);
 
   const { allOffers, allPotentialCustomers } = useSelector((state) => state.helper);
-  console.log('allPotentialCustomers: ', allPotentialCustomers);
+  console.log('helperId: ', props.helperUserId, 'allPotentialCustomers: ', allPotentialCustomers);
   useEffect(() => {
     const liveOffersArr = [];
     if (allOffers) {

@@ -14,7 +14,6 @@ const helperCertificateUploadPath = '/api/helper/certificate-upload';
 const helperBasicFormWithoutCertificatePath = '/api/helper/basic-form';
 
 export const getHelperAuthStatus = () => {
-  console.log('getHelperAuthStatus...');
   return async (dispatch) => {
     try {
       const generalToken = localStorage.getItem('shelper-token');
@@ -75,8 +74,9 @@ export const getAllOffers = (data) => {
 };
 
 export const getPotentialCustomers = (data) => {
+  console.log('getPotentialCustomers: ', data);
   return async (dispatch) => {
-    if (data && data.heleperUserId) {
+    if (data && data.helperUserId) {
       try {
         const response = await axios.get(getPotentialCustomersPath, {
           params: { helperUserId: data.helperUserId },
