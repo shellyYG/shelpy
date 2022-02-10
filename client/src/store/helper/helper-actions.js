@@ -196,8 +196,9 @@ export const postHelperSignUpPassword = (data) => {
       dispatch(
         notificationActions.setNotification({
           signUpPasswordStatus: 'success',
-          signUpPasswordStatusTitle: 'Password successfully created.',
-          signUpPasswordStatusMessage: 'Password successfully created.',
+          signUpPasswordStatusTitle:
+            'A confirmation email has been sent!',
+          signUpPasswordStatusMessage: 'Please confirm your email.',
         })
       );
     } catch (error) {

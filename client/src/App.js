@@ -31,6 +31,9 @@ import HelperAddServicePage from './pages/helper/HelperAddServicePage';
 import HelperDashboardPage from './pages/helper/HelperDashboardPage';
 import BookingConfirmPage from './pages/BookingConfirmPage';
 import EmailConfirmPage from './pages/EmailConfirmPage';
+import HelpeeForgetPasswordPage from './pages/helpee/HelpeeForgetPaswordPage';
+import PasswordResetPage from './pages/PasswordResetPage';
+import PasswordResetPrePage from './pages/PasswordResetPrePage';
 
 
 function App() {
@@ -41,7 +44,6 @@ function App() {
   }, [dispatch]);
   const { helpeeUserId, helpeeName, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
   const { helperUserId, helperName, isHelperAuthenticated } = useSelector((state) => state.helper);
-  console.log('@App: ', isHelperAuthenticated, helperName);
   return (
     <Router>
       <NavBar
@@ -63,6 +65,7 @@ function App() {
             <HelperHomePage isHelperAuthenticated={isHelperAuthenticated} />
           }
         />
+
         <Route
           path='/helpee/sign-up-final-step'
           element={<HelpeeSignUpPasswordPage />}
@@ -72,6 +75,18 @@ function App() {
           element={<HelperSignUpPasswordPage />}
         />
         <Route path='/helpee/sign-in' element={<HelpeeSignInPage />} />
+        <Route
+          path='/helpee/forget-password'
+          element={<HelpeeForgetPasswordPage />}
+        />
+        <Route
+          path='/helpee/password/pre/reset'
+          element={<PasswordResetPrePage isHelpee={true} />}
+        />
+        <Route
+          path='/helpee/password/reset/28099a64d7454485ab06a8b1c0080d43738b85dce1d82f13e7a620255'
+          element={<PasswordResetPage isHelpee={true} />}
+        />
         <Route path='/helper/sign-in' element={<HelperSignInPage />} />
 
         <Route
@@ -218,7 +233,8 @@ function App() {
           path={'/helper/confirm-booking'}
           element={<BookingConfirmPage isHelpee={false} />}
         />
-        <Route path={'/helpee/email/confirmation'}
+        <Route
+          path={'/helpee/email/confirmation'}
           element={<EmailConfirmPage isHelpee={true} />}
         />
         <Route

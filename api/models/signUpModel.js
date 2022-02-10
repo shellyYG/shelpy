@@ -22,8 +22,25 @@ async function insertUserAndGetUserId(data) {
   return sqlResult.insertId;
 }
 
+async function resetPassword(data) {
+  const { email, password, ivString, isHelpee } = data;
+  
+  let table;
+  if (isHelpee) {
+    table = 'helpee_account';
+  } else {
+    table = 'helper_account';
+  }
+  const sql = `UPDATE ${table} SET encryptedpass='${password}', ivString='${ivString}'  WHERE email='${email}'`;
+  await query(sql);
+  const getIdSql = `SELECT id FROM ${table} WHERE email = '${email}'`;
+  const sqlResult = await query(getIdSql);
+  return sqlResult[0].id;
+}
+
 
 module.exports = {
   checkUserEmailExist,
   insertUserAndGetUserId,
+  resetPassword,
 };

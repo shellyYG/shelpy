@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import {
   confirmHelpeeEmail,
-  clearHelpeeEmailConfirmationStatus,
 } from '../store/helpee/helpee-actions';
 
 const MySwal = withReactContent(Swal);

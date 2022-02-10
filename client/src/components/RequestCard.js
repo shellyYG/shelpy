@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import { onClickDeleteRequest } from '../store/helpee/helpee-actions';
+const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; // TODO
 
 function RequestCard(props) {
   const dispatch = useDispatch();
@@ -11,6 +12,11 @@ function RequestCard(props) {
   const [img, setImg] = useState('');
   const [title, setTitle] = useState('');
   const [filteredStatus, setFilteredStatus] = useState('');
+  async function handleYoutubeClick(e) {
+    e.preventDefault();
+    const newWindow = window.open(youtubeURL, '_blank', 'noopener,noreferrer');
+    if (newWindow) newWindow.opener = null;
+  }
   useEffect(() => {
     switch (props.mainType) {
       case 'university':
@@ -44,7 +50,7 @@ function RequestCard(props) {
         setFilteredStatus('You have not book any helper yet.');
         break;
       default:
-        setImg('/offer_help');
+        setFilteredStatus('Sorry! We do not find a helper yet. You can help us find more helpers by following us on Youtube.');
     }
   }, [
     props.bookingStatus,
@@ -126,7 +132,7 @@ function RequestCard(props) {
         </div>
       </div>
       <div className='btnWidth'>
-        {props.bookingStatus !== 'fulfilled' && (
+        {props.bookingStatus !== 'fulfilled' && props.helperName && (
           <div className='contentBx'>
             <button
               className='btn-next'
@@ -135,6 +141,17 @@ function RequestCard(props) {
             >
               {' '}
               Chat with {props.helperName}
+            </button>
+          </div>
+        )}
+        {props.bookingStatus !== 'fulfilled' && !props.helperName && (
+          <div className='contentBx'>
+            <button
+              className='btn-next'
+              onClick={handleYoutubeClick}
+              style={{ marginTop: '16px' }}
+            >
+              Follow our Youtube
             </button>
           </div>
         )}

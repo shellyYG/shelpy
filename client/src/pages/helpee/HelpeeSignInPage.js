@@ -72,7 +72,6 @@ const HelpeeSignInPage = () => {
         dispatch(getHelpeeAuthStatus());
         dispatch(clearSignInStatus());
         if (helpeeAccountStatus === 'password_created') {
-          console.log("YES")
           navigate('/helpee/basic-form', { replace: true });
         } else {
           navigate('/helpee/service-types', { replace: true });
@@ -120,7 +119,7 @@ const HelpeeSignInPage = () => {
             ref={passwordRef}
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
-            <Link to='/about' style={{ marginRight: '10px' }}>
+            <Link to='/helpee/forget-password' style={{ marginRight: '10px' }}>
               Forget Password
             </Link>
             <Link to='/home'>Don't have account yet? Sign Up here!</Link>

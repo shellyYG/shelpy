@@ -1,6 +1,9 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const helpeeModel = require('../models/helpeeModel');
+const {
+  sendHelpeeResetPasswordEmail,
+} = require('../../util/email');
 
 const allowHelpeePrivateRoute = async (req, res) => {
   const { userId, username } = res.locals;
@@ -107,15 +110,49 @@ const deleteHelpeeRequest = async (req, res) => {
 };
 
 const confirmHelpeeEmail = async (req, res) => {
-  console.log('@api confirmHelpeeEmail...req.data: ', req.body);
   const { data } = req.body;
   try {
     const user = jwt.verify(data.emailToken, process.env.EMAIL_SECRET);
-    
     if (user) {
       const { id } = user.data;
       await helpeeModel.confirmHelpeeEmail({ id });
     }
+    res.status(200).json({
+      status: 'success',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const confirmHelpeeCanChangePassword = async (req, res) => {
+  const { data } = req.body;
+  try {
+    const user = jwt.verify(
+      data.passwordResetToken,
+      process.env.FORGET_PASSWORD_SECRET
+    );
+    if (user) {
+      res.status(200).json({
+        status: 'success',
+      });
+    }
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const sendHelpeePasswordResetLink = async (req, res) => {
+  const { data } = req.body;
+  try {
+    sendHelpeeResetPasswordEmail({
+      data: {
+        email: data.email,
+      }
+    });
     res.status(200).json({
       status: 'success',
     });
@@ -134,4 +171,6 @@ module.exports = {
   getPotentialHelpers,
   deleteHelpeeRequest,
   confirmHelpeeEmail,
+  confirmHelpeeCanChangePassword,
+  sendHelpeePasswordResetLink,
 };

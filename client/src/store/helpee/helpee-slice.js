@@ -42,6 +42,14 @@ const helpeeSlice = createSlice({
     helpeeProfilePicPath: '',
     allOrders: [],
     allPotentialHelpers: [],
+
+    sendPasswordResetEmailStatus: '',
+    sendPasswordResetEmailStatusTitle: '',
+    sendPasswordResetEmailStatusMessage: '',
+
+    helpeePasswordResetStatus: '',
+    helpeePasswordResetStatusTitle: '',
+    helpeePasswordResetStatusMessage: '',
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -138,6 +146,21 @@ const helpeeSlice = createSlice({
     updateAllOrders(state, action) {
       const { payload } = action;
       state.allOrders = payload.allOrders;
+    },
+    setSendPasswordResetEmailStatus(state, action) {
+      const { payload } = action;
+      state.sendPasswordResetEmailStatus = payload.sendPasswordResetEmailStatus;
+      state.sendPasswordResetEmailStatusTitle =
+        payload.sendPasswordResetEmailStatusTitle;
+      state.sendPasswordResetEmailStatusMessage =
+        payload.sendPasswordResetEmailStatusMessage;
+    },
+    updateHelpeeResetPasswordStatus(state, action) {
+      const { payload } = action;
+      state.helpeePasswordResetStatus = payload.helpeePasswordResetStatus;
+      state.helpeePasswordResetStatusTitle = payload.helpeePasswordResetStatusTitle;
+      state.helpeePasswordResetStatusMessage =
+        payload.helpeePasswordResetStatusMessage;
     },
   },
 });

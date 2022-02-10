@@ -20,7 +20,52 @@ const createUserObject = async (data, encryptedpass, ivString) => {
   const { provider, username, email, status } = data;
   // insert to DB
   try {
-    const { isHelpee } = data;
+    const { isHelpee, isPasswordUpdated } = data;
+    if (isPasswordUpdated) {
+      const id = await signUpModel.resetPassword({
+        email,
+        status,
+        isHelpee,
+        password: encryptedpass,
+        ivString,
+      });
+      const dataObject = {
+        user: {
+          id,
+          provider,
+          username,
+          email,
+        },
+      };
+      const accessToken = data.isHelpee
+        ? generateHelpeeAccessToken({
+            data: {
+              id,
+              provider,
+              username,
+              email,
+            },
+          })
+        : generateHelperAccessToken({
+            data: {
+              id,
+              provider,
+              username,
+              email,
+            },
+          });
+      dataObject.accessToken = accessToken;
+      // Verify token to get lifetime for token
+      jwt.verify(
+        accessToken,
+        process.env.ACCESS_TOKEN_SECRET,
+        (err, payload) => {
+          if (err) throw Error('Log in session expired.');
+          dataObject.accessExpired = payload.exp - payload.iat;
+        }
+      );
+      return dataObject;
+    }
     const isUserEmailExisted = await userEmailExisted(data);
     if (isUserEmailExisted) {
       throw Error('Email existed! Please use another email.');
@@ -60,7 +105,6 @@ const createUserObject = async (data, encryptedpass, ivString) => {
     dataObject.accessToken = accessToken;
     // Verify token to get lifetime for token
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
-      // eslint-disable-line no-shadow
       if (err) throw Error('Log in session expired.');
       dataObject.accessExpired = payload.exp - payload.iat;
     });
@@ -83,10 +127,9 @@ const createUserObject = async (data, encryptedpass, ivString) => {
 
 const postUserSignUpData = async (req, res) => {
   const { data } = req.body;
-  const { status, password } = data;
+  const { password } = data;
   const iv = crypto.randomBytes(16); // different everytime
   const ivString = iv.toString('base64');
-  // Update password.
   const key = process.env.ACCESS_TOKEN_KEY;
   const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
   let encryptedpass = cipher.update(password, 'utf-8', 'hex');

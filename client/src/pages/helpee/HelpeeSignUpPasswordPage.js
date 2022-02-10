@@ -56,7 +56,6 @@ const HelpeeSignUpPasswordPage = () => {
       return;
     }
     setIsLoading(true);
-    // change DB & global state
     const data = {
       email: email || emailRef.current.value,
       isHelpee: true,
@@ -102,8 +101,6 @@ const HelpeeSignUpPasswordPage = () => {
         });
         dispatch(getHelpeeAuthStatus());
         dispatch(clearSignUpPasswordStatus());
-        // to perform navigate after await MySwal, we need to create extra async function sweetAlertAndNavigate to wrap MySwal.
-        navigate('/helpee/basic-form', { replace: true });
       }
       sweetAlertAndNavigate(
         signUpPasswordStatusTitle,

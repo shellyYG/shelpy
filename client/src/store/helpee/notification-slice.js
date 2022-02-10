@@ -27,6 +27,10 @@ const notificationSlice = createSlice({
     confirmHelpeeEmailStatus: 'initial',
     confirmHelpeeEmailStatusTitle: '',
     confirmHelpeeEmailStatusMessage: '',
+
+    confirmHelpeeCanChangePasswordStatus: 'initial',
+    confirmHelpeeCanChangePasswordStatusTitle: '',
+    confirmHelpeeCanChangePasswordStatusMessage: '',
   },
   reducers: {
     setNotification(state, action) {
@@ -55,6 +59,10 @@ const notificationSlice = createSlice({
         confirmHelpeeEmailStatus,
         confirmHelpeeEmailStatusTitle,
         confirmHelpeeEmailStatusMessage,
+
+        confirmHelpeeCanChangePasswordStatus,
+        confirmHelpeeCanChangePasswordStatusTitle,
+        confirmHelpeeCanChangePasswordStatusMessage,
       } = action.payload;
       if (signUpEmailStatus) state.signUpEmailStatus = signUpEmailStatus;
       if (signUpEmailStatusTitle)
@@ -86,12 +94,21 @@ const notificationSlice = createSlice({
       if (requestStatusTitle) state.requestStatusTitle = requestStatusTitle;
       if (requestStatusMessage)
         state.requestStatusMessage = requestStatusMessage;
-      
-      if(confirmHelpeeEmailStatus) state.confirmHelpeeEmailStatus = confirmHelpeeEmailStatus;
+
+      if (confirmHelpeeEmailStatus)
+        state.confirmHelpeeEmailStatus = confirmHelpeeEmailStatus;
       if (confirmHelpeeEmailStatusTitle)
         state.confirmHelpeeEmailStatusTitle = confirmHelpeeEmailStatusTitle;
       if (confirmHelpeeEmailStatusMessage)
         state.confirmHelpeeEmailStatusMessage = confirmHelpeeEmailStatusMessage;
+      if (confirmHelpeeCanChangePasswordStatus) state.confirmHelpeeCanChangePasswordStatus =
+        confirmHelpeeCanChangePasswordStatus;
+      if (confirmHelpeeCanChangePasswordStatusTitle)
+        state.confirmHelpeeCanChangePasswordStatusTitle =
+          confirmHelpeeCanChangePasswordStatusTitle;
+      if (confirmHelpeeCanChangePasswordStatusMessage)
+        state.confirmHelpeeCanChangePasswordStatusMessage =
+          confirmHelpeeCanChangePasswordStatusMessage;
     },
   },
 });
