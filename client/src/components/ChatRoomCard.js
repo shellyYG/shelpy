@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 function ChatRoomCard(props) {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
-  console.log('props.bookingStatus: ', props.bookingStatus);
 
   function handleOnClick(e) {
     e.preventDefault();

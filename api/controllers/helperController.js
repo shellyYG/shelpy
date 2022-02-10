@@ -2,8 +2,10 @@ const { getFileStream } = require('../../util/s3');
 const helperModel = require('../models/helperModel');
 
 const allowHelperPrivateRoute = async (req, res) => {
-  const { userId } = res.locals;
-  res.status(200).json({ isHelperAuthenticated: true, helperUserId: userId });
+  const { userId, username } = res.locals;
+  res
+    .status(200)
+    .json({ isHelperAuthenticated: true, helperUserId: userId, username });
 };
 
 const postHelperOffer = async (req, res) => {

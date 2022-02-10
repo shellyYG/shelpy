@@ -1,10 +1,10 @@
 import { IconContext } from 'react-icons';
-import { RiMenuFoldFill } from 'react-icons/ri';
+import { AiOutlineLeftCircle } from 'react-icons/ai';
 const LeftCloseIcon = () => {
   return (
-    <IconContext.Provider value={{ color: 'white', size: '22' }}>
+    <IconContext.Provider value={{ color: 'white', size: '30' }}>
       <div>
-        <RiMenuFoldFill color='black' />
+        <AiOutlineLeftCircle color='black' />
       </div>
     </IconContext.Provider>
   );

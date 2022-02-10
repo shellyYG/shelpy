@@ -59,6 +59,7 @@ const BookingConfirmPage = (props) => {
   useEffect(() => {
     dispatch(getBookingStatus({ isHelpee: props.isHelpee, requestId, offerId }));
   }, [dispatch, offerId, props.isHelpee, requestId]);
+  console.log('partnerName: ', partnerName);
   async function handleChangeBooking(e) {
     e.preventDefault();
     const data = {
@@ -173,11 +174,21 @@ const BookingConfirmPage = (props) => {
           html: <p>{message}</p>,
           icon: 'success',
         });
+        const path = props.isHelpee ? '/helpee/dashboard' : '/helper/dashboard';
+        navigate(path, { replace: true });
       }
       dispatch(clearBookingNotificationStatus());
       sweetAlertAndNavigate(bookingStatus, bookingNotificationStatusMessage);
     }
-  }, [bookingStatus, bookingNotificationStatus, bookingNotificationStatusTitle, bookingNotificationStatusMessage, dispatch]);
+  }, [
+    navigate,
+    props.isHelpee,
+    bookingStatus,
+    bookingNotificationStatus,
+    bookingNotificationStatusTitle,
+    bookingNotificationStatusMessage,
+    dispatch,
+  ]);
   return (
     <div className='form-center-wrapper'>
       <div
@@ -253,7 +264,7 @@ const BookingConfirmPage = (props) => {
             />
             {!props.isHelpee && (
               <ConfirmBtn
-                cta='Chat with Helpee to change booking'
+                cta='Chat to change booking'
                 disable={!enableBtn}
                 backgroundColor={'#f47174'}
                 handleConfirm={handleChangeBooking}

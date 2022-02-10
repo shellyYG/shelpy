@@ -38,13 +38,12 @@ function PotentialHelperCard(props) {
     <div className='history-card'>
       <div className='profilePicWidth'>
         <div className='helper-ImgBx'>
-          {img &&
-            props.profilePicPath && (
-              <img
-                src={`/images/${props.profilePicPath}`}
-                alt={props.partnerName}
-              ></img>
-            )}
+          {img && props.profilePicPath && (
+            <img
+              src={`/images/${props.profilePicPath}`}
+              alt={props.partnerName}
+            ></img>
+          )}
         </div>
       </div>
       <div className='smallWidth'>
@@ -88,7 +87,7 @@ function PotentialHelperCard(props) {
       <div className='checkBoxWIdth'>
         <div className='contentBx'>
           <button className='btn-contact' onClick={handleChat}>
-            Chat with Helper
+            Chat with {props.partnerName}
           </button>
         </div>
       </div>

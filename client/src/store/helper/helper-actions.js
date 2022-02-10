@@ -30,10 +30,12 @@ export const getHelperAuthStatus = () => {
           {},
           { headers }
         );
+        console.log('helper username: ', response.data.username);
         dispatch(
           helperActions.updateAuthStatus({
             isHelperAuthenticated: response.data.isHelperAuthenticated,
             helperUserId: response.data.helperUserId,
+            helperName: response.data.username,
           })
         );
       }

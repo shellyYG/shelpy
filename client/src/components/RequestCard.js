@@ -33,12 +33,12 @@ function RequestCard(props) {
     switch (props.bookingStatus) {
       case 'helperConfirmed':
         setFilteredStatus(
-          `Meet Helper at ${props.appointmentDate} ${props.appointmentTime}.\n
+          `Meet Helper ${props.helperName} at ${props.appointmentDate} ${props.appointmentTime}.\n
           A zoom link will be sent to your email 10 min before the meeting.`
         );
         break;
       case 'created':
-        setFilteredStatus('Waiting for the helper to reply.');
+        setFilteredStatus(`Waiting for ${props.helperName} to reply.`);
         break;
       case '' || null:
         setFilteredStatus('You have not book any helper yet.');
@@ -46,7 +46,12 @@ function RequestCard(props) {
       default:
         setImg('/offer_help');
     }
-  }, [props.bookingStatus, props.appointmentDate, props.appointmentTime]);
+  }, [
+    props.bookingStatus,
+    props.appointmentDate,
+    props.appointmentTime,
+    props.helperName,
+  ]);
 
   function handleDeleteRequest(e) {
     e.preventDefault();
@@ -61,12 +66,12 @@ function RequestCard(props) {
     }
   }
   console.log(
-    `/helpee/chatroom`
+    props
   );
   function handleChatWithHelpers(e) {
     e.preventDefault();
     navigate(
-      `/helpee/chatroom`
+      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.helperName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
     );
   }
 
@@ -129,7 +134,7 @@ function RequestCard(props) {
               style={{ marginTop: '16px' }}
             >
               {' '}
-              Chat with Potential Helpers{' '}
+              Chat with {props.helperName}
             </button>
           </div>
         )}

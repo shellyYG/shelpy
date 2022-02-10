@@ -10,6 +10,7 @@ function DropDown(props) {
         onChange={handleSelect}
         value={props.selected}
         className='form-control'
+        style={{ cursor: 'pointer' }}
       >
         {props.options.map((option) => (
           <option value={option.value} key={option.value}>

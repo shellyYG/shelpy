@@ -4,6 +4,7 @@ const helpeeSlice = createSlice({
   name: 'helpee',
   initialState: {
     helpeeUserId: 0,
+    helpeeName: '',
     isHelpeeAuthenticated: false,
     pageFirstTimeLoaded: true,
     DBHelpeeEmail: '',
@@ -45,6 +46,7 @@ const helpeeSlice = createSlice({
       const { payload } = action;
       state.isHelpeeAuthenticated = payload.isHelpeeAuthenticated;
       state.helpeeUserId = payload.helpeeUserId;
+      state.helpeeName = payload.helpeeName;
     },
     updateActiveAndPastOrders(state, action) {
       const { payload } = action;

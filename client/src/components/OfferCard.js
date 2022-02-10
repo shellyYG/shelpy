@@ -82,17 +82,17 @@ function OfferCard(props) {
             Offer ID: {props.offerId}
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Price: {props.price}
+            Price: {props.price} €
           </p>
         </div>
       </div>
-      <div className='checkBoxWidth'>
+      {/* <div className='checkBoxWidth'>
         <div className='contentBx'>
           <button className='btn-red' onClick={handleDeleteOffer}>
             Delete Offer
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

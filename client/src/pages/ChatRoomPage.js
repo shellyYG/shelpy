@@ -15,6 +15,7 @@ import { getHelpeeAuthStatus, getPotentialHelpers } from '../store/helpee/helpee
 import LeftCloseIcon from '../components/Icons/LeftCloseIcon';
 import RightOpenIcon from '../components/Icons/RightOpenIcon';
 import DownPointIcon from '../components/Icons/DownPointIcon';
+const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; // TODO
 
 
 const ChatRoomPage = (props) => {
@@ -80,6 +81,11 @@ const ChatRoomPage = (props) => {
       { replace: true }
     );
   }
+  async function handleYoutubeClick(e) {
+    e.preventDefault();
+    const newWindow = window.open(youtubeURL, '_blank', 'noopener,noreferrer');
+    if (newWindow) newWindow.opener = null;
+  }
   
   async function handleSend(e) {
     e.preventDefault();
@@ -127,6 +133,7 @@ const ChatRoomPage = (props) => {
     if (helpeeUserId && props.isHelpee)
       dispatch(getPotentialHelpers({ helpeeUserId }));
   }, [helpeeUserId, props.isHelpee, dispatch]);
+  console.log('allPotentialCustomers: ', allPotentialCustomers);
 
   return (
     <>
@@ -147,6 +154,51 @@ const ChatRoomPage = (props) => {
             </div>
 
             <div className='task-container'>
+              {!props.isHelpee &&
+                (!allPotentialCustomers ||
+                  allPotentialCustomers.length === 0) && (
+                  <div className={'task-card'}>
+                    <div className='chatRoomContent'>
+                      <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
+                        <div
+                          style={{ whiteSpace: 'pre-line' }}
+                        >{`Oops!\n We haven't found \n any customers yet.\n Help us grow by \n following us on \n`}</div>
+                        <button
+                          className='btn-next'
+                          style={{ margin: '10px 0px' }}
+                          onClick={handleYoutubeClick}
+                        >
+                          Youtube
+                        </button>
+                        <div
+                          style={{ whiteSpace: 'pre-line' }}
+                        >{`So we can\n find you a \n customer sooner!`}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              {props.isHelpee &&
+                (!allPotentialHelpers || allPotentialHelpers.length === 0) && (
+                  <div className={'task-card'}>
+                    <div className='chatRoomContent'>
+                      <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
+                        <div
+                          style={{ whiteSpace: 'pre-line' }}
+                        >{`Oops!\n We have not found \n any helpers yet. \n Help us grow by \n following us on \n`}</div>
+                        <button
+                          className='btn-next'
+                          style={{ margin: '10px 0px' }}
+                          onClick={handleYoutubeClick}
+                        >
+                          Youtube
+                        </button>
+                        <div
+                          style={{ whiteSpace: 'pre-line' }}
+                        >{`So we can\n find you a \n helper sooner!`}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               {!props.isHelpee &&
                 allPotentialCustomers.map((option) => (
                   <ChatRoomCard
@@ -228,7 +280,7 @@ const ChatRoomPage = (props) => {
                   <LeftPointIcon />
                   <div style={{ fontSize: '30px' }}>
                     Click on the left side to select a{' '}
-                    {props.isHelpee ? 'helper' : 'helpee'} to chat.
+                    {props.isHelpee ? 'helper' : 'customer'} to chat.
                   </div>
                 </div>
               </>

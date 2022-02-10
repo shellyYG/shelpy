@@ -13,6 +13,9 @@ const HelperDashboardPage = (props) => {
   const navigate = useNavigate();
   const [isPotentialCustomersSelected, setIsPotentialCustomersSelected] = useState(true);
   const [liveOffers, setLiveOffers] = useState([]);
+
+  console.log('@Helper You are now: ', props.helperUserId, props.helperName);
+
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));
     dispatch(getPotentialCustomers({ helperUserId: props.helperUserId }));
@@ -31,7 +34,7 @@ const HelperDashboardPage = (props) => {
             newObject.mainCategory = o.school;
             newObject.subCategory = o.department;
             newObject.country = o.country;
-            newObject.Id = o.Id;
+            newObject.id = o.id;
             newObject.price = o.price;
             liveOffersArr.push(newObject);
             break;
@@ -42,7 +45,7 @@ const HelperDashboardPage = (props) => {
             newObject.mainCategory = o.industry;
             newObject.subCategory = o.job;
             newObject.country = o.country;
-            newObject.Id = o.Id;
+            newObject.id = o.id;
             newObject.price = o.price;
             liveOffersArr.push(newObject);
             break;
@@ -53,7 +56,7 @@ const HelperDashboardPage = (props) => {
             newObject.mainCategory = o.type;
             newObject.subCategory = o.profession;
             newObject.country = o.country;
-            newObject.Id = o.Id;
+            newObject.id = o.id;
             newObject.price = o.price;
             liveOffersArr.push(newObject);
             break;
@@ -82,6 +85,12 @@ const HelperDashboardPage = (props) => {
 
   return (
     <div className='section-left-align'>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <h2 style={{ margin: 'auto' }}>Welcome, {props.helperName}!</h2>
+        <p style={{ margin: 'auto' }}>
+          You are viewing dashboard as helper.
+        </p>
+      </div>
       <div className='orderHistoryBtnWrapper'>
         <button
           className={
@@ -112,7 +121,9 @@ const HelperDashboardPage = (props) => {
               option // TODO: changed to orders
             ) => (
               <PotentialCustomerCard
-                key={option.bookingId || `${option.requestId}-${option.offerId}`}
+                key={
+                  option.bookingId || `${option.requestId}-${option.offerId}`
+                }
                 helperId={props.helperUserId}
                 helpeeId={option.helpeeId}
                 partnerName={option.helpeeName}
@@ -142,8 +153,8 @@ const HelperDashboardPage = (props) => {
           </div>
           {liveOffers.map((option) => (
             <OfferCard
-              key={option.Id}
-              offerId={option.Id}
+              key={option.id}
+              offerId={option.id}
               type={option.type}
               mainCategory={option.mainCategory}
               subCategory={option.subCategory}

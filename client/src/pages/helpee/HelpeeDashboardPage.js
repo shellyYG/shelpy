@@ -15,7 +15,7 @@ const HelpeeDashboardPage = (props) => {
     useState(true);
   const [allRequests, setAllRequests] = useState([]);
 
-  console.log('allRequests: ', allRequests);
+  console.log('You are now: ', props.helpeeUserId, props.helpeeName);
   useEffect(() => {
     dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
     dispatch(getPotentialHelpers({ helpeeUserId: props.helpeeUserId }));
@@ -24,6 +24,7 @@ const HelpeeDashboardPage = (props) => {
   const { allOrders, allPotentialHelpers } = useSelector(
     (state) => state.helpee
   );
+  console.log('allOrders: ', allOrders);
 
   useEffect(() => {
     if (allOrders) {
@@ -47,6 +48,10 @@ const HelpeeDashboardPage = (props) => {
 
   return (
     <div className='section-left-align'>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <h2 style={{ margin: 'auto' }}>Welcome, {props.helpeeName}!</h2>
+        <p style={{ margin: 'auto' }}>You are viewing dashboard as helpee.</p>
+      </div>
       <div className='orderHistoryBtnWrapper'>
         <button
           className={
@@ -122,6 +127,7 @@ const HelpeeDashboardPage = (props) => {
               offerId={option.offerId}
               price={option.price}
               helperId={option.helperId}
+              helperName={option.helperName}
               bookingId={option.bookingId}
             />
           ))}

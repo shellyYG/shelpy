@@ -38,9 +38,9 @@ function App() {
     dispatch(getHelpeeAuthStatus());
     dispatch(getHelperAuthStatus());
   }, [dispatch]);
-  const { helpeeUserId, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
-  const { helperUserId, isHelperAuthenticated } = useSelector((state) => state.helper);
-  console.log('isHelperAuthenticated: ', isHelperAuthenticated);
+  const { helpeeUserId, helpeeName, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
+  const { helperUserId, helperName, isHelperAuthenticated } = useSelector((state) => state.helper);
+  console.log('@App: ', isHelperAuthenticated, helperName);
   return (
     <Router>
       <NavBar
@@ -177,7 +177,10 @@ function App() {
           path={'/helpee/dashboard'}
           element={
             isHelpeeAuthenticated ? (
-              <HelpeeDashboardPage helpeeUserId={helpeeUserId} />
+              <HelpeeDashboardPage
+                helpeeUserId={helpeeUserId}
+                helpeeName={helpeeName}
+              />
             ) : (
               <PreSignInPage isHelpee={true} />
             )
@@ -187,7 +190,10 @@ function App() {
           path={'/helper/dashboard'}
           element={
             isHelperAuthenticated ? (
-              <HelperDashboardPage helperUserId={helperUserId} />
+              <HelperDashboardPage
+                helperUserId={helperUserId}
+                helperName={helperName}
+              />
             ) : (
               <PreSignInPage isHelpee={false} />
             )

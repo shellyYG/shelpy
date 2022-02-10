@@ -1,10 +1,10 @@
 import { IconContext } from 'react-icons';
-import { RiMenuUnfoldFill } from 'react-icons/ri';
+import { AiOutlineRightCircle } from 'react-icons/ai';
 const RightOpenIcon = () => {
   return (
-    <IconContext.Provider value={{ color: 'white', size: '22' }}>
-      <div style={{ marginTop: '10px'}}>
-        <RiMenuUnfoldFill color='black' />
+    <IconContext.Provider value={{ color: 'white', size: '30' }}>
+      <div style={{ marginTop: '10px' }}>
+        <AiOutlineRightCircle color='black' />
       </div>
     </IconContext.Provider>
   );

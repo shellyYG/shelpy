@@ -7,6 +7,7 @@ function PotentialCustomerCard(props) {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [img, setImg] = useState('');
+  console.log('props @potentialCustomerCard: ', props);
   useEffect(() => {
     switch (props.mainType) {
       case 'university':
@@ -25,14 +26,20 @@ function PotentialCustomerCard(props) {
         setImg('/university');
     }
   }, [props.mainType]);
-
+  console.log('props: ', props);
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
       `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
     );
   }
-
+  function handleBookingConfirmation(e) {
+    e.preventDefault(e);
+    navigate(
+      `/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&partnerName=${props.partnerName}`
+    );
+  }
+  console.log('props.bookingStatus: ', props.bookingStatus);
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
@@ -85,9 +92,16 @@ function PotentialCustomerCard(props) {
       </div>
       <div className='checkBoxWIdth'>
         <div className='contentBx'>
-          <button className='btn-contact' onClick={handleChat}>
-            Chat with Customer
-          </button>
+          {props.bookingStatus === 'created' && (
+            <button className='btn-contact' onClick={handleBookingConfirmation}>
+              Confirm {props.partnerName}'s booking
+            </button>
+          )}
+          {props.bookingStatus === 'helperConfirmed' && (
+            <button className='btn-contact' onClick={handleChat}>
+              Chat with {props.partnerName}
+            </button>
+          )}
         </div>
       </div>
     </div>

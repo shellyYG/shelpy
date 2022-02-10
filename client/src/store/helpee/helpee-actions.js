@@ -34,6 +34,7 @@ export const getHelpeeAuthStatus = () => {
           helpeeActions.updateAuthStatus({
             isHelpeeAuthenticated: response.data.isHelpeeAuthenticated,
             helpeeUserId: response.data.helpeeUserId,
+            helpeeName: response.data.username,
           })
         );
       }
