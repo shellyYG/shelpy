@@ -321,7 +321,13 @@ const FinalFormPage = (props) => {
               <p className='fontSize17Title'>
                 What days are you available? (Can choose multiple)
               </p>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
                 <CheckBox
                   checked={hasMonToFri}
                   handleCheck={setHasMonToFri}
@@ -340,7 +346,13 @@ const FinalFormPage = (props) => {
               <p className='fontSize17Title'>
                 What time are you available? (Can choose multiple)
               </p>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
                 <CheckBox
                   checked={hasBefore12}
                   handleCheck={setHasBefore12}
@@ -365,7 +377,13 @@ const FinalFormPage = (props) => {
               </div>
 
               <p className='fontSize17Title'>What languages do you speak?</p>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
                 <CheckBox
                   checked={hasEnglish}
                   handleCheck={setHasEnglish}
@@ -399,7 +417,13 @@ const FinalFormPage = (props) => {
                   fontSize='14px'
                 />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
                 <CheckBox
                   checked={hasChinese}
                   handleCheck={setHasChinese}
@@ -441,7 +465,13 @@ const FinalFormPage = (props) => {
                   fontSize='14px'
                 />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
                 <CheckBox
                   checked={hasTurkish}
                   handleCheck={setHasTurkish}

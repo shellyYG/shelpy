@@ -34,6 +34,7 @@ import EmailConfirmPage from './pages/EmailConfirmPage';
 import HelpeeForgetPasswordPage from './pages/helpee/HelpeeForgetPaswordPage';
 import PasswordResetPage from './pages/PasswordResetPage';
 import PasswordResetPrePage from './pages/PasswordResetPrePage';
+import HelperForgetPasswordPage from './pages/helper/HelperForgetPasswordPage';
 
 
 function App() {
@@ -80,12 +81,24 @@ function App() {
           element={<HelpeeForgetPasswordPage />}
         />
         <Route
+          path='/helper/forget-password'
+          element={<HelperForgetPasswordPage />}
+        />
+        <Route
           path='/helpee/password/pre/reset'
           element={<PasswordResetPrePage isHelpee={true} />}
         />
         <Route
+          path='/helper/password/pre/reset'
+          element={<PasswordResetPrePage isHelpee={false} />}
+        />
+        <Route
           path='/helpee/password/reset/28099a64d7454485ab06a8b1c0080d43738b85dce1d82f13e7a620255'
           element={<PasswordResetPage isHelpee={true} />}
+        />
+        <Route
+          path='/helper/password/reset/28099a64d7454485ab06a8b1c0080d43738b85dce1d82f13e7a620255'
+          element={<PasswordResetPage isHelpee={false} />}
         />
         <Route path='/helper/sign-in' element={<HelperSignInPage />} />
 
@@ -236,6 +249,10 @@ function App() {
         <Route
           path={'/helpee/email/confirmation'}
           element={<EmailConfirmPage isHelpee={true} />}
+        />
+        <Route
+          path={'/helper/email/confirmation'}
+          element={<EmailConfirmPage isHelpee={false} />}
         />
         <Route
           path={'/helper/chatroom'}

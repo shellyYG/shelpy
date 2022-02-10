@@ -226,6 +226,14 @@ async function deleteHelperOffer(data) {
   return { data: { status: 'success'} };
 }
 
+async function confirmHelperEmail(data) {
+  const { id } = data;
+  console.log('@Model confirmHelperEmail id: ', id);
+  const sql = `UPDATE helper_account SET confirmed=${true} WHERE id=${id}`;
+  await query(sql);
+  return { data: { status: 'success' } };
+}
+
 module.exports = {
   insertHelperOffer,
   getHelperAllMatchedRequests,
@@ -234,4 +242,5 @@ module.exports = {
   updateHelperCertificatePath,
   deleteHelperOffer,
   getPotentialCustomers,
+  confirmHelperEmail,
 };

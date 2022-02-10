@@ -14,7 +14,6 @@ const helpeeProfilePicUploadPath = '/api/helpee/profile-pic-upload';
 const helpeeBasicFormWithoutCertificatePath = '/api/helpee/basic-form';
 const helpeeConfirmEmailPath = '/api/helpee/email/confirmation';
 const helpeeCanChangePasswordPath = '/api/helpee/password/allow-change';
-
 const helpeeSendPasswordResetEmailPath = '/api/helpee/password/reset';
 
 export const getHelpeeAuthStatus = () => {

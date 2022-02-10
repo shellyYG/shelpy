@@ -10,6 +10,8 @@ import {
   getHelpeeAuthStatus,
 } from '../../store/helpee/helpee-actions';
 import { getHelperAuthStatus } from '../../store/helper/helper-actions';
+import DownPointIcon from './DownPointIcon';
+import NavbarIdentity from '../NavbarIdentity';
 
 
 const MySwal = withReactContent(Swal);
@@ -88,29 +90,31 @@ const ProfileIcon = (props) => {
         {active && (
           <div className='navPopUpWrapper'>
             <div className='navDropDownContentProfiles'>
+              {<NavbarIdentity isHelpee={true} />}
               {props.isHelpeeAuthenticated && (
-                <div onClick={handleToHelpeeDashboard}>Helpee Dashboard</div>
-              )}
-              {props.isHelpeeAuthenticated && (
-                <div onClick={handleToHelpeeChatroom}>Helpee Chatroom</div>
-              )}
-              {props.isHelperAuthenticated && (
-                <div onClick={handleToHelperDashboard}>Helper Dashboard</div>
-              )}
-              {props.isHelperAuthenticated && (
-                <div onClick={handleToHelperChatroom}>Helper Chatroom</div>
+                <div onClick={handleToHelpeeDashboard}>Dashboard</div>
               )}
               {props.isHelpeeAuthenticated && (
-                <div onClick={handleHelpeeSignOut}>Helpee Sign Out</div>
-              )}
-              {props.isHelperAuthenticated && (
-                <div onClick={handleHelperSignOut}>Helper Sign Out</div>
+                <div onClick={handleToHelpeeChatroom}>Chatroom</div>
               )}
               {!props.isHelpeeAuthenticated && (
-                <div onClick={handleHelpeeSignIn}>Helpee Sign In</div>
+                <div onClick={handleHelpeeSignIn}>Sign In</div>
+              )}
+              {props.isHelpeeAuthenticated && (
+                <div onClick={handleHelpeeSignOut}>Sign Out</div>
+              )}
+              {<NavbarIdentity isHelpee={false} />}
+              {props.isHelperAuthenticated && (
+                <div onClick={handleToHelperDashboard}>Dashboard</div>
+              )}
+              {props.isHelperAuthenticated && (
+                <div onClick={handleToHelperChatroom}>Chatroom</div>
               )}
               {!props.isHelperAuthenticated && (
-                <div onClick={handleHelperSignIn}>Helper Sign In</div>
+                <div onClick={handleHelperSignIn}>Sign In</div>
+              )}
+              {props.isHelperAuthenticated && (
+                <div onClick={handleHelperSignOut}>Sign Out</div>
               )}
             </div>
           </div>

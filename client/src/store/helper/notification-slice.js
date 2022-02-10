@@ -16,10 +16,18 @@ const notificationSlice = createSlice({
     applyHelperStatus: 'initial',
     applyHelperStatusTitle: '',
     applyHelperStatusMessage: '',
-    
+
     offerStatus: 'initial',
     offerStatusTitle: '',
     offerStatusMessage: '',
+
+    confirmHelperEmailStatus: '',
+    confirmHelperEmailStatusTitle: '',
+    confirmHelperEmailStatusMessage: '',
+
+    confirmHelperCanChangePasswordStatus: '',
+    confirmHelperCanChangePasswordStatusTitle: '',
+    confirmHelperCanChangePasswordStatusMessage: ''
   },
   reducers: {
     setNotification(state, action) {
@@ -39,6 +47,14 @@ const notificationSlice = createSlice({
         offerStatus,
         offerStatusTitle,
         offerStatusMessage,
+
+        confirmHelperEmailStatus,
+        confirmHelperEmailStatusTitle,
+        confirmHelperEmailStatusMessage,
+
+        confirmHelperCanChangePasswordStatus,
+        confirmHelperCanChangePasswordStatusTitle,
+        confirmHelperCanChangePasswordStatusMessage,
       } = action.payload;
       if (signUpEmailStatus) state.signUpEmailStatus = signUpEmailStatus;
       if (signUpEmailStatusTitle)
@@ -59,12 +75,24 @@ const notificationSlice = createSlice({
         state.applyHelperStatusTitle = applyHelperStatusTitle;
       if (applyHelperStatusMessage)
         state.applyHelperStatusMessage = applyHelperStatusMessage;
-      if (offerStatus) 
-        state.offerStatus = offerStatus;
-      if (offerStatusTitle)
-        state.offerStatusTitle = offerStatusTitle;
-      if (offerStatusMessage)
-        state.offerStatusMessage = offerStatusMessage;
+      if (offerStatus) state.offerStatus = offerStatus;
+      if (offerStatusTitle) state.offerStatusTitle = offerStatusTitle;
+      if (offerStatusMessage) state.offerStatusMessage = offerStatusMessage;
+      if (confirmHelperEmailStatus)
+        state.confirmHelperEmailStatus = confirmHelperEmailStatus;
+      if (confirmHelperEmailStatusTitle)
+        state.confirmHelperEmailStatusTitle = confirmHelperEmailStatusTitle;
+      if (confirmHelperEmailStatusMessage)
+        state.confirmHelperEmailStatusMessage = confirmHelperEmailStatusMessage;
+      if (confirmHelperCanChangePasswordStatus) 
+      state.confirmHelperCanChangePasswordStatus =
+        confirmHelperCanChangePasswordStatus;
+      if (confirmHelperCanChangePasswordStatusTitle)
+        state.confirmHelperCanChangePasswordStatusTitle =
+          confirmHelperCanChangePasswordStatusTitle;
+      if (confirmHelperCanChangePasswordStatusMessage)
+        state.confirmHelperCanChangePasswordStatusMessage =
+          confirmHelperCanChangePasswordStatusMessage;
     },
   },
 });

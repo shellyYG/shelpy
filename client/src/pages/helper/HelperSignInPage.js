@@ -67,7 +67,7 @@ const HelperSignInPage = () => {
         });
         dispatch(getHelperAuthStatus());
         dispatch(clearSignInStatus());
-        navigate('/helpee/service-types', { replace: true });
+        navigate('/helper/service-types', { replace: true });
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
@@ -90,7 +90,7 @@ const HelperSignInPage = () => {
             textAlign: 'center',
             marginTop: '10px',
             marginBottom: '30px',
-            color: 'white'
+            color: 'white',
           }}
         >
           Please insert your username and password to sign in.
@@ -110,7 +110,7 @@ const HelperSignInPage = () => {
             ref={passwordRef}
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
-            <Link to='/about' style={{ marginRight: '10px' }}>
+            <Link to='/helper/forget-password' style={{ marginRight: '10px' }}>
               Forget Password
             </Link>
             <Link to='/helper/home'>Don't have account yet? Sign Up here!</Link>

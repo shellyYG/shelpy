@@ -117,6 +117,15 @@ const createUserObject = async (data, encryptedpass, ivString) => {
           email,
         },
       });
+    } else {
+      sendHelperEmail({
+        data: {
+          id,
+          provider,
+          username,
+          email,
+        },
+      });
     }
     return dataObject;
   } catch (error) {

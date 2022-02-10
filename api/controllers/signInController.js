@@ -35,7 +35,6 @@ const postUserSignInData = async (req, res) => {
       const LoginUserResult = await helpeeSignInModel.getUserDataByEmail(
         req.body.data
       );
-      console.log('LoginUserResult[0]: ', LoginUserResult[0]);
       
       if (LoginUserResult.length === 0) {
         throw Error('Account does not exist.');

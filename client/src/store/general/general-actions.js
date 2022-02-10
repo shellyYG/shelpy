@@ -77,7 +77,6 @@ export const getBookingStatus = (data) => {
             headers,
           }
         );
-        console.log('response: ', response)
         const { booking } = response.data;
         dispatch(
           generalActions.setBookingStatus({

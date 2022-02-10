@@ -181,6 +181,7 @@ async function insertHelpeeRequest(data) { // new.
 }
 
 async function getHelpeeAllOrders(data) {
+  let resOrders;
   const sql = ` SELECT DISTINCT book.id AS bookingId, book.bookingStatus AS bookingStatus, 
   ofs.price AS price,
   book.offerId AS offerId, helper.id AS helperId, helper.username AS helperName,
@@ -193,7 +194,17 @@ async function getHelpeeAllOrders(data) {
   LEFT JOIN helper_account helper ON helper.id = ofs.userId
   WHERE req.userId=${data.helpeeUserId} ORDER BY req.id DESC;`;
   const allOrders = await query(sql);
-  return { data: { allOrders } };
+  resOrders = allOrders;
+  if (allOrders.length === 0) {
+    const sqlSimplified = ` SELECT DISTINCT 
+  req.id AS id, req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType,
+  req.country AS country
+  FROM requests req
+  WHERE req.userId=${data.helpeeUserId} ORDER BY req.id DESC;`;
+    const simpleOrders = await query(sqlSimplified);
+    resOrders = simpleOrders;
+  }
+  return { data: { allOrders: resOrders } };
 }
 
 async function getPotentialHelpers(data) {

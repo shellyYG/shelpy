@@ -49,7 +49,10 @@ const HelpeeDashboardPage = (props) => {
   return (
     <div className='section-left-align'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2 style={{ margin: 'auto' }}>Welcome, {props.helpeeName}!</h2>
+        {props.helpeeName &&<h2 style={{ margin: 'auto' }}>Welcome, {props.helpeeName}!</h2>}
+        {!props.helpeeName && (
+          <h2 style={{ margin: 'auto' }}>Welcome to Shelpy!</h2>
+        )}
         <p style={{ margin: 'auto' }}>You are viewing dashboard as helpee.</p>
       </div>
       <div className='orderHistoryBtnWrapper'>

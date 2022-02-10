@@ -138,7 +138,6 @@ const confirmHelpeeCanChangePassword = async (req, res) => {
         status: 'success',
       });
     }
-    
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

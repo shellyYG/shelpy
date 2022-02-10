@@ -8,6 +8,10 @@ import {
   changeHelpeePassword,
 } from '../store/helpee/helpee-actions';
 
+import {
+  changeHelperPassword,
+} from '../store/helper/helper-actions';
+
 const MySwal = withReactContent(Swal);
 
 const PasswordResetPage = (props) => {
@@ -20,20 +24,23 @@ const PasswordResetPage = (props) => {
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email');
 
-  const passwordResetToken = searchParams.get('passwordResetToken');
-
   const {
     helpeePasswordResetStatus,
     helpeePasswordResetStatusTitle,
     helpeePasswordResetStatusMessage,
   } = useSelector((state) => state.helpee);
 
+  const {
+    helperPasswordResetStatus,
+    helperPasswordResetStatusTitle,
+    helperPasswordResetStatusMessage,
+  } = useSelector((state) => state.helper);
+
   console.log(
-    'email: ', email,
-    'passwordResetToken: ',
-    passwordResetToken,
-    'helpeePasswordResetStatus: ',
-    helpeePasswordResetStatus
+    'email: ',
+    email,
+    'helperPasswordResetStatus: ',
+    helperPasswordResetStatus
   );
 
   if (loading) {
@@ -53,16 +60,18 @@ const PasswordResetPage = (props) => {
       const data = {
         email,
         password: passwordRef.current.value,
-        isHelpee: props.isHelpee,
+        isHelpee: true,
         isPasswordUpdated: true,
       };
       dispatch(changeHelpeePassword(data));
     } else {
       const data = {
+        email,
         password: passwordRef.current.value,
         isHelpee: false,
+        isPasswordUpdated: true,
       };
-    //   dispatch(changePassword(data));
+      dispatch(changeHelperPassword(data));
     }
 
     setIsLoading(true);
@@ -70,52 +79,96 @@ const PasswordResetPage = (props) => {
   
   
   useEffect(() => {
-    if (helpeePasswordResetStatus === 'error') {
-      setIsLoading(false);
-      async function sweetAlertAndClearStatus(title, message) {
-        await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: (
-            <p>
-              Please contact our customer service for help:
-              shelpyofficial@gmail.com
-            </p>
-          ),
-          icon: 'error',
-        });
+    if (props.isHelpee) {
+      if (helpeePasswordResetStatus === 'error') {
+        setIsLoading(false);
+        async function sweetAlertAndClearStatus(title, message) {
+          await MySwal.fire({
+            title: <strong>{title}</strong>,
+            html: (
+              <p>
+                Please contact our customer service for help:
+                shelpyofficial@gmail.com
+              </p>
+            ),
+            icon: 'error',
+          });
+        }
+        sweetAlertAndClearStatus(
+          helpeePasswordResetStatusTitle,
+          helpeePasswordResetStatusMessage
+        );
+        return;
+      } else if (helpeePasswordResetStatus === 'success') {
+        console.log('SUCCESS!');
+        setIsLoading(false);
+        async function sweetAlertAndNavigate(title, message) {
+          await MySwal.fire({
+            title: <strong>{title}</strong>,
+            imageWIdth: 442,
+            imageHeight: 293,
+            html: <p>{message}</p>,
+            icon: 'success',
+          });
+          navigate('/helpee/sign-in');
+        }
+        sweetAlertAndNavigate(
+          helpeePasswordResetStatusTitle,
+          helpeePasswordResetStatusMessage
+        );
       }
-      sweetAlertAndClearStatus(
-        helpeePasswordResetStatusTitle,
-        helpeePasswordResetStatusMessage
-      );
-      return;
-    } else if (helpeePasswordResetStatus === 'success') {
-      console.log('SUCCESS!');
-      setIsLoading(false);
-      async function sweetAlertAndNavigate(title, message) {
-        await MySwal.fire({
-          title: <strong>{title}</strong>,
-          imageWIdth: 442,
-          imageHeight: 293,
-          html: <p>{message}</p>,
-          icon: 'success',
-        });
-        navigate('/helpee/sign-in');
+    } else {
+      if (helperPasswordResetStatus === 'error') {
+        setIsLoading(false);
+        async function sweetAlertAndClearStatus(title, message) {
+          await MySwal.fire({
+            title: <strong>{title}</strong>,
+            html: (
+              <p>
+                Please contact our customer service for help:
+                shelpyofficial@gmail.com
+              </p>
+            ),
+            icon: 'error',
+          });
+        }
+        sweetAlertAndClearStatus(
+          helperPasswordResetStatusTitle,
+          helperPasswordResetStatusMessage
+        );
+        return;
+      } else if (helperPasswordResetStatus === 'success') {
+        console.log('SUCCESS!');
+        setIsLoading(false);
+        async function sweetAlertAndNavigate(title, message) {
+          await MySwal.fire({
+            title: <strong>{title}</strong>,
+            imageWIdth: 442,
+            imageHeight: 293,
+            html: <p>{message}</p>,
+            icon: 'success',
+          });
+          navigate('/helper/sign-in');
+        }
+        sweetAlertAndNavigate(
+          helperPasswordResetStatusTitle,
+          helperPasswordResetStatusMessage
+        );
       }
-      sweetAlertAndNavigate(
-        helpeePasswordResetStatusTitle,
-        helpeePasswordResetStatusMessage
-      );
     }
   }, [
+    props.isHelpee,
     helpeePasswordResetStatus,
     helpeePasswordResetStatusTitle,
     helpeePasswordResetStatusMessage,
+    helperPasswordResetStatus,
+    helperPasswordResetStatusTitle,
+    helperPasswordResetStatusMessage,
     navigate,
     dispatch,
   ]);
   return (
-    <div className='main-content-wrapper-homepage'>
+    <div className={props.isHelpee? 'main-content-wrapper-homepage': 'main-content-wrapper-homepage-helper'}>
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           Email verified!

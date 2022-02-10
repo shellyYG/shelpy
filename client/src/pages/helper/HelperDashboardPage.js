@@ -86,10 +86,13 @@ const HelperDashboardPage = (props) => {
   return (
     <div className='section-left-align'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2 style={{ margin: 'auto' }}>Welcome, {props.helperName}!</h2>
-        <p style={{ margin: 'auto' }}>
-          You are viewing dashboard as helper.
-        </p>
+        {props.helperName && (
+          <h2 style={{ margin: 'auto' }}>Welcome, {props.helperName}!</h2>
+        )}
+        {!props.helperName && (
+          <h2 style={{ margin: 'auto' }}>Welcome to Shelpy!</h2>
+        )}
+        <p style={{ margin: 'auto' }}>You are viewing dashboard as helper.</p>
       </div>
       <div className='orderHistoryBtnWrapper'>
         <button

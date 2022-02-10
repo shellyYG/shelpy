@@ -42,6 +42,14 @@ const helperSlice = createSlice({
     offerTarget: '',
     allOffers: [],
     allPotentialCustomers: [],
+
+    sendPasswordResetEmailStatus: '',
+    sendPasswordResetEmailStatusTitle: '',
+    sendPasswordResetEmailStatusMessage: '',
+
+    helperPasswordResetStatus: '',
+    helperPasswordResetStatusTitle: '',
+    helperPasswordResetStatusMessage: '',
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -116,6 +124,22 @@ const helperSlice = createSlice({
     updateAllPotentialCustomers(state, action) {
       const { payload } = action;
       state.allPotentialCustomers = payload.allPotentialCustomers;
+    },
+    setSendPasswordResetEmailStatus(state, action) {
+      const { payload } = action;
+      state.sendPasswordResetEmailStatus = payload.sendPasswordResetEmailStatus;
+      state.sendPasswordResetEmailStatusTitle =
+        payload.sendPasswordResetEmailStatusTitle;
+      state.sendPasswordResetEmailStatusMessage =
+        payload.sendPasswordResetEmailStatusMessage;
+    },
+    updateHelperResetPasswordStatus(state, action) {
+      const { payload } = action;
+      state.helperPasswordResetStatus = payload.helperPasswordResetStatus;
+      state.helperPasswordResetStatusTitle =
+        payload.helperPasswordResetStatusTitle;
+      state.helperPasswordResetStatusMessage =
+        payload.helperPasswordResetStatusMessage;
     },
   },
 });

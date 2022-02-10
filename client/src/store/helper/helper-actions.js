@@ -11,7 +11,10 @@ const getAllOffersPath = '/api/helper/all-offers';
 const getPotentialCustomersPath = '/api/helper/potential-customers';
 const helperProfilePicUploadPath = '/api/helper/profile-pic-upload';
 const helperCertificateUploadPath = '/api/helper/certificate-upload';
+const helperConfirmEmailPath = '/api/helper/email/confirmation';
 const helperBasicFormWithoutCertificatePath = '/api/helper/basic-form';
+const helperCanChangePasswordPath = '/api/helper/password/allow-change';
+const helperSendPasswordResetEmailPath = '/api/helper/password/reset';
 
 export const getHelperAuthStatus = () => {
   return async (dispatch) => {
@@ -502,3 +505,131 @@ export const onClickDeleteOffer = (data) => {
     }
   }
 }
+
+export const confirmHelperEmail = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(helperConfirmEmailPath, { data });
+      console.log('confirmHelperEmail response: ', response);
+      if (response && response.data && response.data.status === 'success') {
+        dispatch(
+          notificationActions.setNotification({
+            confirmHelperEmailStatus: 'success',
+            confirmHelperEmailStatusTitle: 'Email confirmed successfully.',
+            confirmHelperEmailStatusMessage: 'Please sign in to continue.',
+          })
+        );
+      } else {
+        throw Error('Error occur when confirming email.');
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        notificationActions.setNotification({
+          confirmHelperEmailStatus: 'error',
+          confirmHelperEmailStatusTitle: 'Oops!',
+          confirmHelperEmailStatusMessage: `Error: ${error}`,
+        })
+      );
+    }
+  };
+};
+
+export const confirmHelperCanChangePassword = (data) => {
+  console.log('confirmHelperCanChangePassword...');
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(helperCanChangePasswordPath, { data });
+      if (response && response.data && response.data.status === 'success') {
+        dispatch(
+          notificationActions.setNotification({
+            confirmHelperCanChangePasswordStatus: 'success',
+            confirmHelperCanChangePasswordStatusTitle:
+              'Your identity is verified.',
+            confirmHelperCanChangePasswordStatusMessage:
+              'Please enter new password to continue.',
+          })
+        );
+      } else {
+        throw Error('Error occur when verifying your identity.');
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        notificationActions.setNotification({
+          confirmHelperCanChangePasswordStatus: 'error',
+          confirmHelperCanChangePasswordStatusTitle: 'Oops!',
+          confirmHelperCanChangePasswordStatusMessage: `Error: ${error}`,
+        })
+      );
+    }
+  };
+};
+
+export const sendHelperPasswordResetLink = (data) => {
+  console.log('sendHelperPasswordResetLink...data: ', data);
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(helperSendPasswordResetEmailPath, {
+        data,
+      });
+      console.log('response from sendHelperPasswordResetLink: ', response);
+      if (response && response.data && response.data.status === 'success') {
+        dispatch(
+          helperActions.setSendPasswordResetEmailStatus({
+            sendPasswordResetEmailStatus: 'success',
+            sendPasswordResetEmailStatusTitle: 'Email confirmed successfully.',
+            sendPasswordResetEmailStatusMessage: 'Please sign in to continue.',
+          })
+        );
+      } else {
+        throw Error('Error occur when sending password reset email.');
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        helperActions.setSendPasswordResetEmailStatus({
+          sendPasswordResetEmailStatus: 'error',
+          sendPasswordResetEmailStatusTitle: 'Oops!',
+          sendPasswordResetEmailStatusMessage: `Error: ${error}`,
+        })
+      );
+    }
+  };
+};
+
+export const changeHelperPassword = (data) => {
+  console.log('changeHelperPassword...');
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(helperSignUpPasswordPath, {
+        data,
+      });
+      window.localStorage.setItem('shelpy-token', response.data.accessToken);
+      dispatch(
+        helperActions.updateHelperInfoAfterInsertPassword({
+          password: data.password,
+        })
+      );
+      dispatch(
+        helperActions.updateHelperResetPasswordStatus({
+          helperPasswordResetStatus: 'success',
+          helperPasswordResetStatusTitle: 'Password changed successfully!',
+          helperPasswordResetStatusMessage:
+            'You may now sign in with new password.',
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      if (error.response) {
+        dispatch(
+          helperActions.updateHelperResetPasswordStatus({
+            helperPasswordResetStatus: 'error',
+            helperPasswordResetStatusTitle: 'Oops!',
+            helperPasswordResetStatusMessage: error.response.data,
+          })
+        );
+      }
+    }
+  };
+};

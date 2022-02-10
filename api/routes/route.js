@@ -46,7 +46,9 @@ const {
   getHelperAllMatchedRequests,
   getProfilePic,
   getHelperAllOffers,
-  // confirmHelperEmail,
+  confirmHelperEmail,
+  confirmHelperCanChangePassword,
+  sendHelperPasswordResetLink,
 } = require('../controllers/helperController');
 
 const {
@@ -67,8 +69,13 @@ router.route('/api/helpee/signup-password').post(wrapAsync(postUserSignUpData));
 router
   .route('/api/helpee/email/confirmation')
   .post(wrapAsync(confirmHelpeeEmail));
-// router.route('/helper/email/confirmation').post(wrapAsync(confirmHelperEmail));
+router
+  .route('/api/helper/email/confirmation')
+  .post(wrapAsync(confirmHelperEmail));
 router.route('/api/helpee/password/allow-change').post(wrapAsync(confirmHelpeeCanChangePassword));
+router
+  .route('/api/helper/password/allow-change')
+  .post(wrapAsync(confirmHelperCanChangePassword));
 // old:
 router
   .route('/api/helpee/request-form')
@@ -93,6 +100,9 @@ router
 
 router.route('/api/helper/signup-password').post(wrapAsync(postUserSignUpData));
 router.route('/api/helpee/password/reset').post(wrapAsync(sendHelpeePasswordResetLink))
+router
+  .route('/api/helper/password/reset')
+  .post(wrapAsync(sendHelperPasswordResetLink));
 
 router
   .route('/api/helper/matched-requests')
