@@ -35,11 +35,16 @@ const postUserSignInData = async (req, res) => {
       const LoginUserResult = await helpeeSignInModel.getUserDataByEmail(
         req.body.data
       );
+      
       if (LoginUserResult.length === 0) {
-        throw Error('EMAIL_NOT_EXIST');
+        throw Error('Email does not exist.');
       } else {
+        if (!LoginUserResult[0].confirmed) {
+          throw Error('Please go to your mailbox and confirm your email first.')
+        }
         const DataBasePass = LoginUserResult[0].encryptedpass;
         const userInsertedEncryptedPass = await getUserEncryptedPass();
+
         if (userInsertedEncryptedPass === DataBasePass) {
           const userObject = {};
           const { id, provider, username, email } = LoginUserResult[0];
@@ -78,13 +83,13 @@ const postUserSignInData = async (req, res) => {
             process.env.ACCESS_TOKEN_SECRET,
             (err, payload) => {
               // eslint-disable-line no-shadow
-              if (err) throw Error('TOKEN_EXPIRED_OR_NOT_MATCH');
+              if (err) throw Error('Log in session expired.');
               dataObject.accessExpired = payload.exp - payload.iat;
             }
           );
           res.send(dataObject);
         } else {
-          throw Error('WRONG_PASSWORD');
+          throw Error('Wrong password');
         }
       }
     } catch (error) {

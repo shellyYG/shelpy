@@ -22,7 +22,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
     const { isHelpee } = data;
     const isUserEmailExisted = await userEmailExisted(data);
     if (isUserEmailExisted) {
-      throw Error('EMAIL_EXIST');
+      throw Error('Email existed! Please use another email.');
     }
     const id = await signUpModel.insertUserAndGetUserId({
       email,
@@ -60,7 +60,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
     // Verify token to get lifetime for token
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
       // eslint-disable-line no-shadow
-      if (err) throw Error('TOKEN_EXPIRED_OR_NOT_MATCH');
+      if (err) throw Error('Log in session expired.');
       dataObject.accessExpired = payload.exp - payload.iat;
     });
     return dataObject;

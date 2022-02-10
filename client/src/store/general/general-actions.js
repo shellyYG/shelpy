@@ -15,7 +15,7 @@ export const postBookingStatus = (data) => {
     }
     try {
       if (!generalToken) {
-        throw Error('NO_TOKEN');
+        throw Error('Access denied. Please log in to continue.');
       }
       if (generalToken) {
         const headers = {
@@ -64,7 +64,7 @@ export const getBookingStatus = (data) => {
     }
     try {
       if (!generalToken) {
-        throw Error('NO_TOKEN');
+        throw Error('Access denied. Please log in to continue.');
       }
       if (generalToken) {
         const headers = {

@@ -29,7 +29,7 @@ const deleteHelperOffer = async (req, res) => {
         status: 'success'
       });
     } else {
-      throw Error('OFFER_DELETE_SERVER_ERROR');
+      throw Error('Server encounters error when deleting offers.');
     }
   } catch (error) {
     console.error(error);
@@ -50,7 +50,7 @@ const getPotentialCustomers = async (req, res) => {
           allPotentialCustomers: response.data.allPotentialCustomers,
         });
       } else {
-        throw Error('NO_POTENTIAL_CUSTOMER_RESPONSE');
+        throw Error('No potential customer response from server.');
       }
     }
   } catch (error) {
@@ -68,7 +68,7 @@ const getHelperAllMatchedRequests = async (req, res) => {
         allOrders: response.data.allOrders,
       });
     } else {
-      throw Error('NO_ORDER_RESPONSE');
+      throw Error('No offer response from server');
     }
   } catch (error) {
     console.error(error);
@@ -104,7 +104,7 @@ const getHelperAllOffers = async (req, res) => {
         allOffers: response.data.allOffers,
       });
     } else {
-      throw Error('NO_OFFERS_FOUND');
+      throw Error('No offers found from server.');
     }
   } catch (error) {
     console.error(error);

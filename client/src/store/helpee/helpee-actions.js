@@ -18,7 +18,7 @@ export const getHelpeeAuthStatus = () => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
-        throw Error('NO_TOKEN');
+        throw Error('Access denied. Please log in to continue.');
       }
       if (generalToken) {
         const headers = {
@@ -272,7 +272,7 @@ export const postHelpeeServiceRequestForm = (data) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
-        throw Error('NO_TOKEN');
+        throw Error('Access denied. Please log in to continue.');
       }
       if (generalToken){
         const headers = {
@@ -323,7 +323,7 @@ export const onUploadHelpeeProfilePicture = (data) => {
     try {
       const generalToken = localStorage.getItem('shelper-token');
       if (!generalToken) {
-        throw Error('NO_TOKEN');
+        throw Error('Access denied. Please log in to continue.');
       }
       if (generalToken) {
         const headers = {
@@ -352,7 +352,7 @@ export const onSubmitUploadHelpeeData = (data) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
-        throw Error('NO_TOKEN');
+        throw Error('Access denied. Please log in to continue.');
       }
       if (generalToken) {
         const headers = {
@@ -393,7 +393,7 @@ export const postHelpeeRequestForm = (data) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
-        throw Error('NO_TOKEN');
+        throw Error('Access denied. Please log in to continue.');
       }
       if (generalToken) {
         const headers = {

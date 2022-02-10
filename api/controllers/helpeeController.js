@@ -36,7 +36,7 @@ const getHelpeeAllOrders = async (req, res) => {
         allOrders: response.data.allOrders,
       });
     } else {
-      throw Error('NO_ORDER_RESPONSE');
+      throw Error('No order response from server.');
     }
   } catch (error) {
     console.error(error);
@@ -58,7 +58,7 @@ const getPotentialHelpers = async (req, res) => {
         allPotentialHelpers: response.data.allPotentialHelpers,
       })
     } else {
-      throw Error('NO_POTENTIAL_HELPERS_RESPONSE');
+      throw Error('No potential helpers response from server.');
     }
   } catch (error) {
     console.error(error);
@@ -75,7 +75,7 @@ const getHelpeeOrderHelperList = async (req, res) => {
         helpers: response.data.helpers,
       });
     } else {
-      throw Error('NO_HELPER_LIST_RESPONSE');
+      throw Error('No helper list response from server.');
     }
   } catch (error) {
     console.error(error);
@@ -94,7 +94,7 @@ const deleteHelpeeRequest = async (req, res) => {
         status: 'success',
       });
     } else {
-      throw Error('REQUEST_DELETE_SERVER_ERROR');
+      throw Error('Server encounter error when deleting requests.');
     }
   } catch (error) {
     console.error(error);
