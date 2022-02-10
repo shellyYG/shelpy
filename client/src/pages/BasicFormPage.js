@@ -315,7 +315,7 @@ const BasicFormPage = (props) => {
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        {props.isHelpee && 'One Last Step!'}
+        {props.isHelpee && 'Update Basic Information'}
         {!props.isHelpee && 'Apply to be Helper'}
       </h1>
 

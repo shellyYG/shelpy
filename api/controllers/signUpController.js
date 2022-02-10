@@ -6,6 +6,7 @@ const {
   generateHelpeeAccessToken,
   generateHelperAccessToken,
 } = require('../../util/util');
+const { sendHelpeeEmail, sendHelperEmail } = require('../../util/email');
 
 const userEmailExisted = async (data) => {
   const existingEmails = await signUpModel.checkUserEmailExist(data);
@@ -63,6 +64,16 @@ const createUserObject = async (data, encryptedpass, ivString) => {
       if (err) throw Error('Log in session expired.');
       dataObject.accessExpired = payload.exp - payload.iat;
     });
+    if (data.isHelpee) {
+      sendHelpeeEmail({
+        data: {
+          id,
+          provider,
+          username,
+          email,
+        },
+      });
+    }
     return dataObject;
   } catch (error) {
     console.error(error);

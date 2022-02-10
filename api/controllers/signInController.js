@@ -35,12 +35,13 @@ const postUserSignInData = async (req, res) => {
       const LoginUserResult = await helpeeSignInModel.getUserDataByEmail(
         req.body.data
       );
+      console.log('LoginUserResult[0]: ', LoginUserResult[0]);
       
       if (LoginUserResult.length === 0) {
-        throw Error('Email does not exist.');
+        throw Error('Account does not exist.');
       } else {
         if (!LoginUserResult[0].confirmed) {
-          throw Error('Please go to your mailbox and confirm your email first.')
+          throw Error('Please go to your mailbox to confirm your email first.')
         }
         const DataBasePass = LoginUserResult[0].encryptedpass;
         const userInsertedEncryptedPass = await getUserEncryptedPass();
@@ -87,7 +88,11 @@ const postUserSignInData = async (req, res) => {
               dataObject.accessExpired = payload.exp - payload.iat;
             }
           );
-          res.send(dataObject);
+          const resObject = {
+            accessToken,
+            status: LoginUserResult[0].status,
+          };
+          res.send(resObject);
         } else {
           throw Error('Wrong password');
         }

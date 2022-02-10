@@ -23,6 +23,10 @@ const notificationSlice = createSlice({
     requestStatus: 'initial',
     requestStatusTitle: '',
     requestStatusMessage: '',
+
+    confirmHelpeeEmailStatus: 'initial',
+    confirmHelpeeEmailStatusTitle: '',
+    confirmHelpeeEmailStatusMessage: '',
   },
   reducers: {
     setNotification(state, action) {
@@ -47,6 +51,10 @@ const notificationSlice = createSlice({
         requestStatus,
         requestStatusTitle,
         requestStatusMessage,
+
+        confirmHelpeeEmailStatus,
+        confirmHelpeeEmailStatusTitle,
+        confirmHelpeeEmailStatusMessage,
       } = action.payload;
       if (signUpEmailStatus) state.signUpEmailStatus = signUpEmailStatus;
       if (signUpEmailStatusTitle)
@@ -67,15 +75,23 @@ const notificationSlice = createSlice({
         state.requestFormStatusTitle = requestFormStatusTitle;
       if (requestFormStatusMessage)
         state.requestFormStatusMessage = requestFormStatusMessage;
-      
+
       if (applyHelpeeStatus) state.applyHelpeeStatus = applyHelpeeStatus;
-      if (applyHelpeeStatusTitle) state.applyHelpeeStatusTitle = applyHelpeeStatusTitle;
-      if (applyHelpeeStatusMessage) state.applyHelpeeStatusMessage = applyHelpeeStatusMessage;
-      
+      if (applyHelpeeStatusTitle)
+        state.applyHelpeeStatusTitle = applyHelpeeStatusTitle;
+      if (applyHelpeeStatusMessage)
+        state.applyHelpeeStatusMessage = applyHelpeeStatusMessage;
+
       if (requestStatus) state.requestStatus = requestStatus;
       if (requestStatusTitle) state.requestStatusTitle = requestStatusTitle;
       if (requestStatusMessage)
         state.requestStatusMessage = requestStatusMessage;
+      
+      if(confirmHelpeeEmailStatus) state.confirmHelpeeEmailStatus = confirmHelpeeEmailStatus;
+      if (confirmHelpeeEmailStatusTitle)
+        state.confirmHelpeeEmailStatusTitle = confirmHelpeeEmailStatusTitle;
+      if (confirmHelpeeEmailStatusMessage)
+        state.confirmHelpeeEmailStatusMessage = confirmHelpeeEmailStatusMessage;
     },
   },
 });

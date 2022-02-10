@@ -1,23 +1,27 @@
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const helpeeModel = require('../models/helpeeModel');
 
 const allowHelpeePrivateRoute = async (req, res) => {
   const { userId, username } = res.locals;
-  res.status(200).json({ isHelpeeAuthenticated: true, helpeeUserId: userId, username });
-}
+  res
+    .status(200)
+    .json({ isHelpeeAuthenticated: true, helpeeUserId: userId, username });
+};
 
-const postHelpeeServiceRequestForm = async (req, res) => { // old.
+const postHelpeeServiceRequestForm = async (req, res) => {
+  // old.
   try {
-    const id = await helpeeModel.insertHelpeeRequestFormAndGetId(
-      req.body.data
-    );
-    res.status(200).json({ requestId: id, status: 'success' })
+    const id = await helpeeModel.insertHelpeeRequestFormAndGetId(req.body.data);
+    res.status(200).json({ requestId: id, status: 'success' });
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.message)
+    res.status(500).send(error.message);
   }
 };
 
-const postHelpeeRequest = async (req, res) => { // new.
+const postHelpeeRequest = async (req, res) => {
+  // new.
   try {
     const id = await helpeeModel.insertHelpeeRequest(req.body.data);
     res.status(200).json({ requestId: id, status: 'success' });
@@ -25,7 +29,7 @@ const postHelpeeRequest = async (req, res) => { // new.
     console.error(error);
     res.status(500).send(error.message);
   }
-}
+};
 
 const getHelpeeAllOrders = async (req, res) => {
   try {
@@ -56,7 +60,7 @@ const getPotentialHelpers = async (req, res) => {
     if (response && response.data) {
       res.status(200).json({
         allPotentialHelpers: response.data.allPotentialHelpers,
-      })
+      });
     } else {
       throw Error('No potential helpers response from server.');
     }
@@ -64,7 +68,7 @@ const getPotentialHelpers = async (req, res) => {
     console.error(error);
     res.status(500).send(error.message);
   }
-}
+};
 
 const getHelpeeOrderHelperList = async (req, res) => {
   try {
@@ -102,6 +106,25 @@ const deleteHelpeeRequest = async (req, res) => {
   }
 };
 
+const confirmHelpeeEmail = async (req, res) => {
+  console.log('@api confirmHelpeeEmail...req.data: ', req.body);
+  const { data } = req.body;
+  try {
+    const user = jwt.verify(data.emailToken, process.env.EMAIL_SECRET);
+    
+    if (user) {
+      const { id } = user.data;
+      await helpeeModel.confirmHelpeeEmail({ id });
+    }
+    res.status(200).json({
+      status: 'success',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   allowHelpeePrivateRoute,
   postHelpeeServiceRequestForm,
@@ -110,4 +133,5 @@ module.exports = {
   getHelpeeOrderHelperList,
   getPotentialHelpers,
   deleteHelpeeRequest,
+  confirmHelpeeEmail,
 };

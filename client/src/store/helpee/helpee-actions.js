@@ -12,6 +12,7 @@ const getAllOrdersPath = '/api/helpee/all-orders';
 const getPotentialHelpersPath = '/api/helpee/potential-helpers';
 const helpeeProfilePicUploadPath = '/api/helpee/profile-pic-upload';
 const helpeeBasicFormWithoutCertificatePath = '/api/helpee/basic-form';
+const helpeeConfirmEmailPath = '/api/helpee/email/confirmation';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
@@ -48,6 +49,37 @@ export const getHelpeeAuthStatus = () => {
     }
   }
 }
+
+export const confirmHelpeeEmail = (data) => {
+  console.log('confirmHelpeeEmail...data: ', data);
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(helpeeConfirmEmailPath, { data });
+      console.log('response: ', response);
+      if (response && response.data && response.data.status === 'success') {
+        dispatch(
+          notificationActions.setNotification({
+            confirmHelpeeEmailStatus: 'success',
+            confirmHelpeeEmailStatusTitle: 'Email confirmed successfully.',
+            confirmHelpeeEmailStatusMessage: 'Please sign in to continue.',
+          })
+        );
+      } else {
+        throw Error('Error occur when confirming email.')
+      }
+      
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        notificationActions.setNotification({
+          confirmHelpeeEmailStatus: 'error',
+          confirmHelpeeEmailStatusTitle: 'Oops!',
+          confirmHelpeeEmailStatusMessage: `Error: ${error}`,
+        })
+      );
+    }
+  };
+};
 
 export const getAllOrders = (data) => {
   return async (dispatch) => {
@@ -233,6 +265,7 @@ export const postHelpeeSignUpPassword = (data) => {
 };
 
 export const postHelpeeSignInData = (data) => {
+  console.log('postHelpeeSignInData...');
   return async (dispatch) => {
     try {
       const response = await axios.post(helpeeSignInPath, {
@@ -242,6 +275,7 @@ export const postHelpeeSignInData = (data) => {
       dispatch(
         helpeeActions.updateHelpeeInfoAfterSignIn({
           email: data.email,
+          helpeeAccountStatus: response.data.status,
         })
       );
       dispatch(
@@ -321,7 +355,7 @@ export const onUploadHelpeeProfilePicture = (data) => {
   console.log('onUploadHelpeeProfilePicture...data: ', data);
   return async (dispatch) => {
     try {
-      const generalToken = localStorage.getItem('shelper-token');
+      const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
         throw Error('Access denied. Please log in to continue.');
       }
@@ -551,6 +585,18 @@ export const clearApplyHelpeeStatus = (data) => {
     );
   };
 };
+
+export const clearHelpeeEmailConfirmationStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      notificationActions.setNotification({
+        confirmHelpeeEmailStatus: 'initial',
+        confirmHelpeeEmailStatusTitle: '',
+        confirmHelpeeEmailStatusMessage: '',
+      })
+    );
+  }
+}
 
 export const onClickDeleteRequest = (data) => {
   return async (dispatch) => {

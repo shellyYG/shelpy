@@ -33,6 +33,7 @@ const {
   getHelpeeOrderHelperList,
   getPotentialHelpers,
   deleteHelpeeRequest,
+  confirmHelpeeEmail,
 } = require('../controllers/helpeeController');
 
 const {
@@ -43,6 +44,7 @@ const {
   getHelperAllMatchedRequests,
   getProfilePic,
   getHelperAllOffers,
+  // confirmHelperEmail,
 } = require('../controllers/helperController');
 
 const {
@@ -60,7 +62,10 @@ router
   .post(verifyHelperToken, wrapAsync(allowHelperPrivateRoute));
 
 router.route('/api/helpee/signup-password').post(wrapAsync(postUserSignUpData));
-
+router
+  .route('/api/helpee/email/confirmation')
+  .post(wrapAsync(confirmHelpeeEmail));
+// router.route('/helper/email/confirmation').post(wrapAsync(confirmHelperEmail));
 // old:
 router
   .route('/api/helpee/request-form')

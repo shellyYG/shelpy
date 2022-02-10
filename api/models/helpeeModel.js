@@ -254,6 +254,14 @@ async function deleteHelpeeRequest(data) {
   return { data: { status: 'success' } };
 }
 
+async function confirmHelpeeEmail(data) {
+  const { id } = data;
+  console.log('@Model confirmHelpeeEmail id: ', id);
+  const sql = `UPDATE helpee_account SET confirmed=${true} WHERE id=${id}`;
+  await query(sql);
+  return { data: { status: 'success' } };
+}
+
 module.exports = {
   insertHelpeeRequestFormAndGetId,
   insertHelpeeRequest,
@@ -263,4 +271,5 @@ module.exports = {
   updateHelpeeCertificatePath,
   getPotentialHelpers,
   deleteHelpeeRequest,
+  confirmHelpeeEmail,
 };

@@ -23,12 +23,9 @@ const HelpeeSignInPage = () => {
     signInStatusTitle,
     signInStatusMessage,
   } = useSelector((state) => state.helpeeNotification);
+  const { helpeeAccountStatus } = useSelector((state) => state.helpee);
+  console.log('helpeeAccountStatus: ', helpeeAccountStatus);
 
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate("/home", { replace: true });
-  };
-  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   if (loading) {
     MySwal.fire({
       title: 'Loading...',
@@ -74,11 +71,17 @@ const HelpeeSignInPage = () => {
         });
         dispatch(getHelpeeAuthStatus());
         dispatch(clearSignInStatus());
-        navigate('/helpee/service-types', { replace: true });
+        if (helpeeAccountStatus === 'password_created') {
+          console.log("YES")
+          navigate('/helpee/basic-form', { replace: true });
+        } else {
+          navigate('/helpee/service-types', { replace: true });
+        }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
   }, [
+    helpeeAccountStatus,
     signInStatus,
     signInStatusMessage,
     signInStatusTitle,

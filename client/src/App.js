@@ -30,6 +30,7 @@ import BasicFormPage from './pages/BasicFormPage';
 import HelperAddServicePage from './pages/helper/HelperAddServicePage';
 import HelperDashboardPage from './pages/helper/HelperDashboardPage';
 import BookingConfirmPage from './pages/BookingConfirmPage';
+import EmailConfirmPage from './pages/EmailConfirmPage';
 
 
 function App() {
@@ -216,6 +217,9 @@ function App() {
         <Route
           path={'/helper/confirm-booking'}
           element={<BookingConfirmPage isHelpee={false} />}
+        />
+        <Route path={'/helpee/email/confirmation'}
+          element={<EmailConfirmPage isHelpee={true} />}
         />
         <Route
           path={'/helper/chatroom'}
