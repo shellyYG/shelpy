@@ -30,10 +30,14 @@ exports.uploadFile = uploadFile;
 
 // download a file from s3 to get url
 function getFileStream(fileKey) {
-    const downloadParams = {
+    if (!fileKey || fileKey === 'null') {
+      throw Error('Can not find matched amazon S3 file key.');
+    } else {
+      const downloadParams = {
         Key: fileKey,
         Bucket: bucketName,
+      };
+      return s3.getObject(downloadParams);
     }
-    return s3.getObject(downloadParams).createReadStream();
 }
 exports.getFileStream = getFileStream;

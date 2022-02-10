@@ -11,6 +11,7 @@ const generateHelpeeAccessToken = function (user) {
   });
 };
 const generateHelperAccessToken = function (user) {
+  console.log('generateHelperAccessToken...user: ', user);
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: '100000s',
   });
@@ -28,6 +29,7 @@ const verifyHelpeeToken = function (req, res, next) {
       );
       if (decodedData && decodedData.data) {
         res.locals.userId = decodedData.data.id;
+        res.locals.username = decodedData.data.username;
       }
       next();
     } else {
@@ -48,8 +50,10 @@ const verifyHelperToken = function (req, res, next) {
         bearerToken,
         process.env.ACCESS_TOKEN_SECRET
       );
+      
       if (decodedData && decodedData.data) {
         res.locals.userId = decodedData.data.id;
+        res.locals.username = decodedData.data.username;
       }
       next();
     } else {
