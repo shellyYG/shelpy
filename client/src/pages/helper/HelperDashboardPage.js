@@ -92,7 +92,6 @@ const HelperDashboardPage = (props) => {
         {!props.helperName && (
           <h2 style={{ margin: 'auto' }}>Welcome to Shelpy!</h2>
         )}
-        <p style={{ margin: 'auto' }}>You are viewing dashboard as helper.</p>
       </div>
       <div className='orderHistoryBtnWrapper'>
         <button
@@ -151,7 +150,7 @@ const HelperDashboardPage = (props) => {
             style={{ boxShadow: 'none', border: 'none' }}
           >
             <button className='btn-contact' onClick={handleAddOffer}>
-              Add another Offer
+              Add a Offer
             </button>
           </div>
           {liveOffers.map((option) => (

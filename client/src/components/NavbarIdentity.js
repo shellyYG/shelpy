@@ -10,6 +10,7 @@ const NavbarIdentity = (props) => {
             cursor: 'default',
             display: 'flex',
             padding: '1px 0px',
+            pointerEvents: 'none',
           }}
         >
           <div style={{ padding: '12px 8px 12px 16px' }}>I am a Helpee</div>
@@ -25,6 +26,7 @@ const NavbarIdentity = (props) => {
             cursor: 'default',
             display: 'flex',
             padding: '1px 0px',
+            pointerEvents: 'none',
           }}
         >
           <div style={{ padding: '12px 8px 12px 16px' }}>I am a Helper</div>

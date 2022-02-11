@@ -206,10 +206,19 @@ export const countryOptions = [
 
 export const WFHOptions = [
   { value: 'default', label: 'Please Select' },
-  { value: 'fullyWFH', label: 'Yes, completely WFH' },
-  { value: 'fullyOnSite', label: 'No, need to go to office everyday' },
-  { value: 'moreWFH', label: 'Mostly WFH, sometimes need to go to office' },
-  { value: 'moreOnSite', label: 'Mostly on site, sometimes can WFH' },
+  { value: 'Yes, completely WFH', label: 'Yes, completely WFH' },
+  {
+    value: 'No, need to go to office everyday',
+    label: 'No, need to go to office everyday',
+  },
+  {
+    value: 'Mostly WFH, sometimes need to go to office',
+    label: 'Mostly WFH, sometimes need to go to office',
+  },
+  {
+    value: 'Mostly on site, sometimes can WFH',
+    label: 'Mostly on site, sometimes can WFH',
+  },
   { value: 'Others', label: othersText },
 ];
 

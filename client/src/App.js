@@ -35,6 +35,7 @@ import HelpeeForgetPasswordPage from './pages/helpee/HelpeeForgetPaswordPage';
 import PasswordResetPage from './pages/PasswordResetPage';
 import PasswordResetPrePage from './pages/PasswordResetPrePage';
 import HelperForgetPasswordPage from './pages/helper/HelperForgetPasswordPage';
+import MarketingPage from './pages/MarketingPage';
 
 
 function App() {
@@ -64,6 +65,12 @@ function App() {
           path='/helper/home'
           element={
             <HelperHomePage isHelperAuthenticated={isHelperAuthenticated} />
+          }
+        />
+        <Route
+          path='/helper-lists'
+          element={
+            <MarketingPage />
           }
         />
 

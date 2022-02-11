@@ -61,6 +61,7 @@ async function insertHelperOffer(data) {
         mainType: type,
         secondType: globalHelperUniSchool,
         thirdType: globalHelperUniDepartment,
+        fourthType: globalHelperUniDegree,
         timestamp: Date.now(),
         school: globalHelperUniSchool,
         department: globalHelperUniDepartment,
@@ -97,6 +98,7 @@ async function insertHelperOffer(data) {
         mainType: type,
         secondType: globalHelperJobIndustry,
         thirdType: globalHelperJobJob,
+        fourthType: globalHelperJobWFH,
         timestamp: Date.now(),
         industry: globalHelperJobIndustry,
         job: globalHelperJobJob,
@@ -135,6 +137,7 @@ async function insertHelperOffer(data) {
         mainType: type,
         secondType: globalHelperSelfEmployedType,
         thirdType: globalHelperSelfEmployedProfession,
+        fourthType: globalHelperSelfEmployedYears,
         timestamp: Date.now(),
         type: globalHelperSelfEmployedType,
         profession: globalHelperSelfEmployedProfession,
@@ -212,9 +215,47 @@ async function updateHelperProfilePicPath(data) {
 }
 
 async function updateHelperCertificatePath(data) {
-  const { userId, introduction, username, isAnonymous, isMarketing, path, age, linkedInUrl, notes } = data;
+  const {
+    userId,
+    introduction,
+    username,
+    isAnonymous,
+    isMarketing,
+    path,
+    age,
+    linkedInUrl,
+
+    hasMonToFri,
+    hasWeekend,
+    hasBefore12,
+    has12To18,
+    hasAfter18,
+    hasEnglish,
+    hasGerman,
+    hasFrench,
+    hasItalien,
+    hasChinese,
+    hasCantonese,
+    hasVietnamese,
+    hasKorean,
+    hasJapanese,
+    hasTurkish,
+    hasUkrainian,
+    hasArabic,
+    hasOthers,
+
+    notes,
+    status,
+  } = data;
   const sql = `
-    UPDATE helper_account SET username = '${username}', introduction='${introduction}', isAnonymous=${isAnonymous}, isMarketing=${isMarketing}, certificatePath = '${path}', age = '${age}', linkedInUrl = '${linkedInUrl}', notes = '${notes}', status='resume_created' WHERE id = ${userId}`;
+    UPDATE helper_account SET username = '${username}', introduction='${introduction}', isAnonymous=${isAnonymous}, isMarketing=${isMarketing}
+    ,certificatePath = '${path}', age = '${age}', linkedInUrl = '${linkedInUrl}', notes = '${notes}', status='${status}'
+    ,hasMonToFri=${hasMonToFri}, hasWeekend=${hasWeekend}, hasBefore12=${hasBefore12}, has12To18=${has12To18}, hasAfter18=${hasAfter18}
+      ,hasEnglish=${hasEnglish}, hasGerman=${hasGerman}, hasFrench=${hasFrench}, hasItalien=${hasItalien}
+      ,hasChinese=${hasChinese}, hasCantonese=${hasCantonese}, hasVietnamese=${hasVietnamese}
+      ,hasKorean=${hasKorean}, hasJapanese=${hasJapanese}, hasTurkish=${hasTurkish}, hasUkrainian=${hasUkrainian}
+      ,hasArabic=${hasArabic}, hasOthers=${hasOthers}
+    WHERE id = ${userId}`;
   const sqlquery = await query(sql);
   return sqlquery;
 }

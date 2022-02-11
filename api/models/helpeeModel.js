@@ -65,6 +65,7 @@ async function insertHelpeeRequest(data) { // new.
         mainType: type,
         secondType: globalHelpeeUniSchool,
         thirdType: globalHelpeeUniDepartment,
+        fourthType: globalHelpeeUniDegree,
         timestamp: Date.now(),
         school: globalHelpeeUniSchool,
         department: globalHelpeeUniDepartment,
@@ -102,6 +103,7 @@ async function insertHelpeeRequest(data) { // new.
         mainType: type,
         secondType: globalHelpeeJobIndustry,
         thirdType: globalHelpeeJobJob,
+        fourthType: globalHelpeeJobWFH,
         timestamp: Date.now(),
         industry: globalHelpeeJobIndustry,
         job: globalHelpeeJobJob,
@@ -141,6 +143,7 @@ async function insertHelpeeRequest(data) { // new.
         mainType: type,
         secondType: globalHelpeeSelfEmployedType,
         thirdType: globalHelpeeSelfEmployedProfession,
+        fourthType: globalHelpeeSelfEmployedYears,
         timestamp: Date.now(),
         type: globalHelpeeSelfEmployedType,
         profession: globalHelpeeSelfEmployedProfession,
@@ -181,30 +184,9 @@ async function insertHelpeeRequest(data) { // new.
 }
 
 async function getHelpeeAllOrders(data) {
-  let resOrders;
-  const sql = ` SELECT DISTINCT book.id AS bookingId, book.bookingStatus AS bookingStatus, 
-  ofs.price AS price,
-  book.offerId AS offerId, helper.id AS helperId, helper.username AS helperName,
-  book.appointmentDate AS appointmentDate, book.appointmentTime AS appointmentTime,
-  req.id AS id, req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType,
-  req.country AS country
-  FROM requests req
-  LEFT JOIN bookings book ON req.id = book.requestId
-  INNER JOIN offers ofs ON req.userId = ofs.id AND req.mainType = ofs.mainType AND req.secondType = ofs.secondType AND req.country = ofs.country
-  LEFT JOIN helper_account helper ON helper.id = ofs.userId
-  WHERE req.userId=${data.helpeeUserId} ORDER BY req.id DESC;`;
-  const allOrders = await query(sql);
-  resOrders = allOrders;
-  if (allOrders.length === 0) {
-    const sqlSimplified = ` SELECT DISTINCT 
-  req.id AS id, req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType,
-  req.country AS country
-  FROM requests req
-  WHERE req.userId=${data.helpeeUserId} ORDER BY req.id DESC;`;
-    const simpleOrders = await query(sqlSimplified);
-    resOrders = simpleOrders;
-  }
-  return { data: { allOrders: resOrders } };
+  const sqlSimplified = ` SELECT * FROM requests WHERE userId=${data.helpeeUserId} ORDER BY id DESC;`;
+  const allRequests = await query(sqlSimplified);
+  return { data: { allOrders: allRequests } };
 }
 
 async function getPotentialHelpers(data) {
@@ -243,17 +225,42 @@ async function updateHelpeeProfilePicPath(data) {
   return sqlquery;
 }
 
-async function updateHelpeeCertificatePath(data) {
+async function updateHelpeeBasicInfo(data) {
   const {
     userId,
     introduction,
     username,
     isAnonymous,
     age,
+    hasMonToFri,
+    hasWeekend,
+    hasBefore12,
+    has12To18,
+    hasAfter18,
+    hasEnglish,
+    hasGerman,
+    hasFrench,
+    hasItalien,
+    hasChinese,
+    hasCantonese,
+    hasVietnamese,
+    hasKorean,
+    hasJapanese,
+    hasTurkish,
+    hasUkrainian,
+    hasArabic,
+    hasOthers,
     notes,
+    status,
   } = data;
   const sql = `
-    UPDATE helpee_account SET username = '${username}', introduction='${introduction}', isAnonymous=${isAnonymous}, age = '${age}', notes = '${notes}', status='basic_info_created' WHERE id = ${userId}`;
+    UPDATE helpee_account SET username = '${username}', introduction='${introduction}', isAnonymous=${isAnonymous}, age = '${age}', notes = '${notes}', status='${status}' 
+      ,hasMonToFri=${hasMonToFri}, hasWeekend=${hasWeekend}, hasBefore12=${hasBefore12}, has12To18=${has12To18}, hasAfter18=${hasAfter18}
+      ,hasEnglish=${hasEnglish}, hasGerman=${hasGerman}, hasFrench=${hasFrench}, hasItalien=${hasItalien}
+      ,hasChinese=${hasChinese}, hasCantonese=${hasCantonese}, hasVietnamese=${hasVietnamese}
+      ,hasKorean=${hasKorean}, hasJapanese=${hasJapanese}, hasTurkish=${hasTurkish}, hasUkrainian=${hasUkrainian}
+      ,hasArabic=${hasArabic}, hasOthers=${hasOthers}
+    WHERE id = ${userId}`;
   const sqlquery = await query(sql);
   return sqlquery;
 }
@@ -267,7 +274,6 @@ async function deleteHelpeeRequest(data) {
 
 async function confirmHelpeeEmail(data) {
   const { id } = data;
-  console.log('@Model confirmHelpeeEmail id: ', id);
   const sql = `UPDATE helpee_account SET confirmed=${true} WHERE id=${id}`;
   await query(sql);
   return { data: { status: 'success' } };
@@ -279,7 +285,7 @@ module.exports = {
   getHelpeeAllOrders,
   getHelpeeOrderHelperList,
   updateHelpeeProfilePicPath,
-  updateHelpeeCertificatePath,
+  updateHelpeeBasicInfo,
   getPotentialHelpers,
   deleteHelpeeRequest,
   confirmHelpeeEmail,

@@ -187,10 +187,9 @@ export const postHelperSignUpEmail = (data) => {
 export const postHelperSignUpPassword = (data) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(helperSignUpPasswordPath, {
+      await axios.post(helperSignUpPasswordPath, {
         data,
       });
-      window.localStorage.setItem('shelper-token', response.data.accessToken);
       dispatch(
         helperActions.updateHelperInfoAfterInsertPassword({
           password: data.password,
@@ -230,6 +229,7 @@ export const postHelperSignInData = (data) => {
       dispatch(
         helperActions.updateHelperInfoAfterSignIn({
           email: data.email,
+          helperAccountStatus: response.data.status,
         })
       );
       dispatch(

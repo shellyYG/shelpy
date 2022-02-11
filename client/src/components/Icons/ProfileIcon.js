@@ -77,6 +77,14 @@ const ProfileIcon = (props) => {
     e.preventDefault();
     navigate('/helper/chatroom', { replace: true });
   }
+  function handleToHelpeeUpdateProfile(e) {
+    e.preventDefault();
+    navigate('/helpee/basic-form', { replace: true });
+  }
+  function handleToHelperUpdateProfile(e) {
+    e.preventDefault();
+    navigate('/helper/basic-form', { replace: true });
+  }
 
   useEffect(() => {
     if (props.dropDownNavTarget !== 'profile') {
@@ -92,10 +100,13 @@ const ProfileIcon = (props) => {
             <div className='navDropDownContentProfiles'>
               {<NavbarIdentity isHelpee={true} />}
               {props.isHelpeeAuthenticated && (
-                <div onClick={handleToHelpeeDashboard}>Dashboard</div>
+                <div onClick={handleToHelpeeDashboard}>View Dashboard</div>
               )}
               {props.isHelpeeAuthenticated && (
-                <div onClick={handleToHelpeeChatroom}>Chatroom</div>
+                <div onClick={handleToHelpeeChatroom}>Chat with Helper</div>
+              )}
+              {props.isHelpeeAuthenticated && (
+                <div onClick={handleToHelpeeUpdateProfile}>Update Profile</div>
               )}
               {!props.isHelpeeAuthenticated && (
                 <div onClick={handleHelpeeSignIn}>Sign In</div>
@@ -105,10 +116,13 @@ const ProfileIcon = (props) => {
               )}
               {<NavbarIdentity isHelpee={false} />}
               {props.isHelperAuthenticated && (
-                <div onClick={handleToHelperDashboard}>Dashboard</div>
+                <div onClick={handleToHelperDashboard}>View Dashboard</div>
               )}
               {props.isHelperAuthenticated && (
-                <div onClick={handleToHelperChatroom}>Chatroom</div>
+                <div onClick={handleToHelperChatroom}>Chat with Helpee</div>
+              )}
+              {props.isHelperAuthenticated && (
+                <div onClick={handleToHelperUpdateProfile}>Update Profile</div>
               )}
               {!props.isHelperAuthenticated && (
                 <div onClick={handleHelperSignIn}>Sign In</div>

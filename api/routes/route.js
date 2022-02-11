@@ -155,19 +155,69 @@ router.post(
 router.post(
   '/api/helper/basic-form',
   async (req, res) => {
-    const { helperUserId, introduction, username, isAnonymous, isMarketing, age, linkedInUrl, notes } =
-      req.body;
+    const {
+      userId,
+      introduction,
+      username,
+      isAnonymous,
+      isMarketing,
+      age,
+      linkedInUrl,
+
+      hasMonToFri,
+      hasWeekend,
+      hasBefore12,
+      has12To18,
+      hasAfter18,
+      hasEnglish,
+      hasGerman,
+      hasFrench,
+      hasItalien,
+      hasChinese,
+      hasCantonese,
+      hasVietnamese,
+      hasKorean,
+      hasJapanese,
+      hasTurkish,
+      hasUkrainian,
+      hasArabic,
+      hasOthers,
+
+      notes,
+      status,
+    } = req.body;
     try {
       await helperModel.updateHelperCertificatePath({
-        userId: helperUserId,
+        userId,
         introduction,
         username,
         isAnonymous,
         isMarketing,
         age,
         linkedInUrl,
+
+        hasMonToFri,
+        hasWeekend,
+        hasBefore12,
+        has12To18,
+        hasAfter18,
+        hasEnglish,
+        hasGerman,
+        hasFrench,
+        hasItalien,
+        hasChinese,
+        hasCantonese,
+        hasVietnamese,
+        hasKorean,
+        hasJapanese,
+        hasTurkish,
+        hasUkrainian,
+        hasArabic,
+        hasOthers,
+
         notes,
         path: 'no_certificate_uploaded',
+        status,
       });
       res.status(200).send({ status: 'success' });
     } catch (error) {
@@ -182,12 +232,41 @@ router.post(
   upload.array('certificate', 3), // leverage multer for pdf files. Set max # of files to upload: 3.
   async (req, res) => {
     const file = req.files[0];
-    const { helperUserId, username, introduction, isAnonymous, isMarketing, age, linkedInUrl, notes } =
-      req.body;
+    const {
+      userId,
+      username,
+      introduction,
+      isAnonymous,
+      isMarketing,
+      age,
+      linkedInUrl,
+      notes,
+
+      hasMonToFri,
+      hasWeekend,
+      hasBefore12,
+      has12To18,
+      hasAfter18,
+      hasEnglish,
+      hasGerman,
+      hasFrench,
+      hasItalien,
+      hasChinese,
+      hasCantonese,
+      hasVietnamese,
+      hasKorean,
+      hasJapanese,
+      hasTurkish,
+      hasUkrainian,
+      hasArabic,
+      hasOthers,
+
+      status,
+    } = req.body;
     try {
       const result = await uploadFile(file, 'user-certificates');
       await helperModel.updateHelperCertificatePath({
-        userId: helperUserId,
+        userId,
         username,
         isAnonymous,
         isMarketing,
@@ -195,7 +274,28 @@ router.post(
         introduction,
         linkedInUrl,
         notes,
+
+        hasMonToFri,
+        hasWeekend,
+        hasBefore12,
+        has12To18,
+        hasAfter18,
+        hasEnglish,
+        hasGerman,
+        hasFrench,
+        hasItalien,
+        hasChinese,
+        hasCantonese,
+        hasVietnamese,
+        hasKorean,
+        hasJapanese,
+        hasTurkish,
+        hasUkrainian,
+        hasArabic,
+        hasOthers,
         path: result.Key,
+
+        status,
       });
       if (file) await unlinkFile(file.path);
       res.status(200).send({ status: 'success' });
@@ -208,21 +308,61 @@ router.post(
 
 router.post('/api/helpee/basic-form', async (req, res) => {
   const {
-    helpeeUserId,
+    userId,
     introduction,
     username,
     isAnonymous,
     age,
+
+    hasMonToFri,
+    hasWeekend,
+    hasBefore12,
+    has12To18,
+    hasAfter18,
+    hasEnglish,
+    hasGerman,
+    hasFrench,
+    hasItalien,
+    hasChinese,
+    hasCantonese,
+    hasVietnamese,
+    hasKorean,
+    hasJapanese,
+    hasTurkish,
+    hasUkrainian,
+    hasArabic,
+    hasOthers,
+
     notes,
+    status,
   } = req.body;
   try {
-    await helpeeModel.updateHelpeeCertificatePath({
-      userId: helpeeUserId,
+    await helpeeModel.updateHelpeeBasicInfo({
+      userId,
       introduction,
       username,
       isAnonymous,
       age,
+      hasMonToFri,
+      hasWeekend,
+      hasBefore12,
+      has12To18,
+      hasAfter18,
+      hasEnglish,
+      hasGerman,
+      hasFrench,
+      hasItalien,
+      hasChinese,
+      hasCantonese,
+      hasVietnamese,
+      hasKorean,
+      hasJapanese,
+      hasTurkish,
+      hasUkrainian,
+      hasArabic,
+      hasOthers,
       notes,
+      status,
     });
     res.status(200).send({ status: 'success' });
   } catch (error) {

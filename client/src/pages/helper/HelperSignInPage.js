@@ -21,6 +21,7 @@ const HelperSignInPage = () => {
   const { signInStatus, signInStatusTitle, signInStatusMessage } = useSelector(
     (state) => state.helperNotification
   );
+  const { helperAccountStatus } = useSelector((state) => state.helper);
 
   if (loading) {
     MySwal.fire({
@@ -67,11 +68,16 @@ const HelperSignInPage = () => {
         });
         dispatch(getHelperAuthStatus());
         dispatch(clearSignInStatus());
-        navigate('/helper/service-types', { replace: true });
+        if (helperAccountStatus === 'password_created') {
+          navigate('/helper/basic-form', { replace: true });
+        } else {
+          navigate('/helper/service-types', { replace: true });
+        }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
   }, [
+    helperAccountStatus,
     signInStatus,
     signInStatusMessage,
     signInStatusTitle,

@@ -11,6 +11,7 @@ function RequestCard(props) {
   const navigate = useNavigate();
   const [img, setImg] = useState('');
   const [title, setTitle] = useState('');
+  const [details, setDetails] = useState('');
   const [filteredStatus, setFilteredStatus] = useState('');
   async function handleYoutubeClick(e) {
     e.preventDefault();
@@ -22,64 +23,47 @@ function RequestCard(props) {
       case 'university':
         setImg('/university');
         setTitle('University');
+        setDetails('Degree: ');
         break;
       case 'job':
         setImg('/job');
         setTitle('Job');
+        setDetails('Work from home status: ');
         break;
       case 'selfEmployed':
         setImg('/mom');
         setTitle('Self-Employed');
+        setDetails('Desired years of experience: ');
         break;
       default:
         setImg('/offer_help');
     }
   }, [props.mainType]);
-  useEffect(() => {
-    switch (props.bookingStatus) {
-      case 'helperConfirmed':
-        setFilteredStatus(
-          `Meet Helper ${props.helperName} at ${props.appointmentDate} ${props.appointmentTime}.\n
-          A zoom link will be sent to your email 10 min before the meeting.`
-        );
-        break;
-      case 'created':
-        setFilteredStatus(`Waiting for ${props.helperName} to reply.`);
-        break;
-      case '' || null:
-        setFilteredStatus('You have not book any helper yet.');
-        break;
-      default:
-        setFilteredStatus('Sorry! We do not find a helper yet. You can help us find more helpers by following us on Youtube.');
-    }
-  }, [
-    props.bookingStatus,
-    props.appointmentDate,
-    props.appointmentTime,
-    props.helperName,
-  ]);
+  // useEffect(() => {
+  //   switch (props.bookingStatus) {
+  //     case 'helperConfirmed':
+  //       setFilteredStatus(
+  //         `Meet Helper ${props.helperName} at ${props.appointmentDate} ${props.appointmentTime}.\n
+  //         A zoom link will be sent to your email 10 min before the meeting.`
+  //       );
+  //       break;
+  //     case 'created':
+  //       setFilteredStatus(`Waiting for ${props.helperName} to reply.`);
+  //       break;
+  //     case '' || null:
+  //       setFilteredStatus('You have not book any helper yet.');
+  //       break;
+  //     default:
+  //       setFilteredStatus('Sorry! We do not find a helper yet. You can help us find more helpers by following us on Youtube.');
+  //   }
+  // }, [
+  //   props.bookingStatus,
+  //   props.appointmentDate,
+  //   props.appointmentTime,
+  //   props.helperName,
+  // ]);
 
-  function handleDeleteRequest(e) {
-    e.preventDefault();
-    const data = {
-      requestId: props.requestId,
-      helpeeUserId: props.helpeeUserId,
-    };
-    try {
-      dispatch(onClickDeleteRequest(data));
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  console.log(
-    props
-  );
-  function handleChatWithHelpers(e) {
-    e.preventDefault();
-    navigate(
-      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.helperName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
-    );
-  }
+  console.log(props);
 
   return (
     <div className='history-card'>
@@ -122,7 +106,21 @@ function RequestCard(props) {
       <div className='checkBoxWidth'>
         <div className='contentBx'>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Booking ID: {props.bookingId || 'N/A'}
+            Request ID: {props.id || 'N/A'}
+          </p>
+        </div>
+        <div className='contentBx'>
+          <p style={{ fontWeight: '12px', padding: '6px' }}>
+            {details} {props.fourthType}
+          </p>
+        </div>
+      </div>
+      <div className='checkBoxWidth'>
+        <div className='contentBx'>
+          <p style={{ fontWeight: '12px', padding: '6px', lineBreak: 'anywhere' }}>
+            Notes:{' '}
+            {props.notes ||
+              'N/A'}
           </p>
         </div>
       </div>
@@ -131,36 +129,7 @@ function RequestCard(props) {
           <p style={{ fontWeight: '12px', padding: '6px' }}>{filteredStatus}</p>
         </div>
       </div>
-      <div className='btnWidth'>
-        {props.bookingStatus !== 'fulfilled' && props.helperName && (
-          <div className='contentBx'>
-            <button
-              className='btn-next'
-              onClick={handleChatWithHelpers}
-              style={{ marginTop: '16px' }}
-            >
-              {' '}
-              Chat with {props.helperName}
-            </button>
-          </div>
-        )}
-        {props.bookingStatus !== 'fulfilled' && !props.helperName && (
-          <div className='contentBx'>
-            <button
-              className='btn-next'
-              onClick={handleYoutubeClick}
-              style={{ marginTop: '16px' }}
-            >
-              Follow our Youtube
-            </button>
-          </div>
-        )}
-        {props.bookingStatus === 'fulfilled' && (
-          <div className='contentBx'>
-            <button className='btn-next'> Write Review </button>
-          </div>
-        )}
-      </div>
+      <div className='btnWidth'></div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
           {/* <button className='btn-red' onClick={handleDeleteRequest}>

@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PotentialHelperCard from '../../components/PotentialHelperCard';
+import PotentialHelperCard from '../components/PotentialHelperCard';
 import {
   getAllOrders,
   getPotentialHelpers,
-} from '../../store/helpee/helpee-actions';
+} from '../store/helpee/helpee-actions';
 import { useNavigate } from 'react-router-dom';
-import RequestCard from '../../components/RequestCard';
+import RequestCard from '../components/RequestCard';
 
-const HelpeeDashboardPage = (props) => {
+const MarketingPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isPotentialHelpersSelected, setIsPotentialHelpersSelected] =
     useState(true);
+  const [allRequests, setAllRequests] = useState([]);
 
   console.log('You are now: ', props.helpeeUserId, props.helpeeName);
   useEffect(() => {
@@ -24,6 +25,12 @@ const HelpeeDashboardPage = (props) => {
     (state) => state.helpee
   );
   console.log('allOrders: ', allOrders);
+
+  useEffect(() => {
+    if (allOrders) {
+      setAllRequests(allOrders);
+    }
+  }, [allOrders]);
 
   function handleSelectActiveOrders(e) {
     e.preventDefault(e);
@@ -79,7 +86,7 @@ const HelpeeDashboardPage = (props) => {
       <div className='task-container'></div>
       {isPotentialHelpersSelected && allPotentialHelpers && (
         <div className='task-container'>
-          {(!allOrders || allOrders.length === 0) && (
+          {(!allRequests || allRequests.length === 0) && (
             <div
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
@@ -120,9 +127,9 @@ const HelpeeDashboardPage = (props) => {
           )}
         </div>
       )}
-      {!isPotentialHelpersSelected && allOrders && (
+      {!isPotentialHelpersSelected && allRequests && (
         <div className='task-container'>
-          {(!allOrders || allOrders.length === 0) && (
+          {(!allRequests || allRequests.length === 0) && (
             <div
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
@@ -138,17 +145,23 @@ const HelpeeDashboardPage = (props) => {
               Add a Request
             </button>
           </div>
-          {allOrders.map((option) => (
+          {allRequests.map((option) => (
             <RequestCard
               key={option.id}
-              id={option.id}
+              requestId={option.id}
               mainType={option.mainType}
               secondType={option.secondType}
               thirdType={option.thirdType}
-              fourthType={option.fourthType}
               country={option.country}
+              bookingStatus={option.bookingStatus}
               helpeeId={props.helpeeUserId}
-              notes={option.finalNotes}
+              appointmentDate={option.appointmentDate}
+              appointmentTime={option.appointmentTime}
+              offerId={option.offerId}
+              price={option.price}
+              helperId={option.helperId}
+              helperName={option.helperName}
+              bookingId={option.bookingId}
             />
           ))}
         </div>
@@ -157,4 +170,4 @@ const HelpeeDashboardPage = (props) => {
   );
 };
 
-export default HelpeeDashboardPage;
+export default MarketingPage;

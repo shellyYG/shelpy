@@ -294,10 +294,9 @@ export const postHelpeeSignUpEmail = (data) => {
 export const postHelpeeSignUpPassword = (data) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(helpeeSignUpPasswordPath, {
+      await axios.post(helpeeSignUpPasswordPath, {
         data,
       });
-      window.localStorage.setItem('shelpy-token', response.data.accessToken);
       dispatch(
         helpeeActions.updateHelpeeInfoAfterInsertPassword({
           password: data.password,

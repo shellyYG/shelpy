@@ -44,6 +44,27 @@ const BasicFormPage = (props) => {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(false);
   const [enableBtn, setEnableBtn] = useState(false);
+  
+  const [hasMonToFri, setHasMonToFri] = useState(false);
+  const [hasWeekend, setHasWeekend] = useState(false);
+  const [hasBefore12, setHasBefore12] = useState(false);
+  const [has12To18, setHas12To18] = useState(false);
+  const [hasAfter18, setHasAfter18] = useState(false);
+
+  const [hasEnglish, setHasEnglish] = useState(false);
+  const [hasGerman, setHasGerman] = useState(false);
+  const [hasFrench, setHasFrench] = useState(false);
+  const [hasItalien, setHasItalien] = useState(false);
+  const [hasChinese, setHasChinese] = useState(false);
+  const [hasCantonese, setHasCantonese] = useState(false);
+  const [hasVietnamese, setHasVietnamese] = useState(false);
+  const [hasKorean, setHasKorean] = useState(false);
+  const [hasJapanese, setHasJapanese] = useState(false);
+  const [hasTurkish, setHasTurkish] = useState(false);
+  const [hasUkrainian, setHasUkrainian] = useState(false);
+  const [hasArabic, setHasArabic] = useState(false);
+  const [hasOthers, setHasOthers] = useState(false);
+
   const { helpeeProfilePicPath } = useSelector((state) => state.helpee);
   const { helperProfilePicPath } = useSelector((state) => state.helper);
 
@@ -74,7 +95,7 @@ const BasicFormPage = (props) => {
     e.preventDefault();
     const file = e.target.files[0];
 
-    if (file.size > 1000000) {
+    if (file && file.size > 1000000) {
       await MySwal.fire({
         title: <strong>Oops!</strong>,
         html: (
@@ -124,7 +145,7 @@ const BasicFormPage = (props) => {
   async function handleResumeUpload(e) {
     e.preventDefault();
     const file = e.target.files[0] || '';
-    if (file.size > 1000000) {
+    if (file && file.size > 1000000) {
       await MySwal.fire({
         title: <strong>Oops!</strong>,
         html: (
@@ -182,39 +203,105 @@ const BasicFormPage = (props) => {
     let data;
     if (certificate) { // must be helper
       data = new FormData();
-      data.append('helperUserId', props.helperUserId);
+      data.append('userId', props.helperUserId);
       data.append('username', username);
       data.append('isAnonymous', isAnonymous);
       data.append('isMarketing', isMarketing);
       data.append('age', age);
       data.append('linkedInUrl', linkedInUrl);
       data.append('introduction', introduction);
+      
+      data.append('hasMonToFri', hasMonToFri);
+      data.append('hasWeekend', hasWeekend);
+      data.append('hasBefore12', hasBefore12);
+      data.append('has12To18', has12To18);
+      data.append('hasAfter18', hasAfter18);
+      
+      data.append('hasEnglish', hasEnglish);
+      data.append('hasGerman', hasGerman);
+      data.append('hasFrench', hasFrench);
+      data.append('hasItalien', hasItalien);
+      data.append('hasChinese', hasChinese);
+      data.append('hasCantonese', hasCantonese);
+      data.append('hasVietnamese', hasVietnamese);
+      data.append('hasKorean', hasKorean);
+      data.append('hasJapanese', hasJapanese);
+      data.append('hasTurkish', hasTurkish);
+      data.append('hasUkrainian', hasUkrainian);
+      data.append('hasArabic', hasArabic);
+      data.append('hasOthers', hasOthers);
       data.append('notes', notes);
+      data.append('status', 'basic_info_updated');
+
       data.append('certificate', certificate); // need to append file as last object
       console.log('data to send: ', data); // console.log(data) // browser will be empty
     } else { // could be helpee or helper
-      if (props.isHelpee) {
+      if (props.isHelpee) { // helpee
         data = {
-          helpeeUserId: props.helpeeUserId,
+          userId: props.helpeeUserId,
           isAnonymous,
           username,
           age,
           introduction,
+
+          hasMonToFri,
+          hasWeekend,
+          hasBefore12,
+          has12To18,
+          hasAfter18,
+          hasEnglish,
+          hasGerman,
+          hasFrench,
+          hasItalien,
+          hasChinese,
+          hasCantonese,
+          hasVietnamese,
+          hasKorean,
+          hasJapanese,
+          hasTurkish,
+          hasUkrainian,
+          hasArabic,
+          hasOthers,
+
           notes,
+          status: 'basic_info_updated',
         };
-      } else {
+      } else { // helper
         data = {
-          helperUserId: props.helperUserId,
+          userId: props.helperUserId,
           isAnonymous,
           isMarketing,
           username,
           age,
           linkedInUrl,
           introduction,
+
+          hasMonToFri,
+          hasWeekend,
+          hasBefore12,
+          has12To18,
+          hasAfter18,
+          hasEnglish,
+          hasGerman,
+          hasFrench,
+          hasItalien,
+          hasChinese,
+          hasCantonese,
+          hasVietnamese,
+          hasKorean,
+          hasJapanese,
+          hasTurkish,
+          hasUkrainian,
+          hasArabic,
+          hasOthers,
+
           notes,
+          status: 'basic_info_updated',
         };
       }
     }
+
+    console.log('data to dispatch: ', data);
     try {
       if (props.isHelpee) {
         dispatch(onSubmitUploadHelpeeData(data));
@@ -233,7 +320,7 @@ const BasicFormPage = (props) => {
       usernameRef && age !== 'default' && (linkedInUrlRef || certificate)
     );
   }, [usernameRef, linkedInUrlRef, age, certificate]);
-
+  console.log('applyHelperStatus: ', applyHelperStatus);
   // is Helper:
   useEffect(() => {
     if (applyHelperStatus === 'error') {
@@ -357,6 +444,7 @@ const BasicFormPage = (props) => {
                     )}
                   {!isAnonymous &&
                     !props.isHelpee &&
+                    profilePic &&
                     helperProfilePicPath &&
                     helperProfilePicPath.length > 1 && (
                       <div className='profileImageBx'>
@@ -383,6 +471,7 @@ const BasicFormPage = (props) => {
                   )}
                   {!isAnonymous &&
                     props.isHelpee &&
+                    profilePic &&
                     helpeeProfilePicPath &&
                     helpeeProfilePicPath.length > 1 && (
                       <div className='profileImageBx'>
@@ -443,8 +532,8 @@ const BasicFormPage = (props) => {
                   handleCheck={setIsAnonymous}
                   details={
                     props.isHelpee
-                      ? 'Ask question anonymously (your profile picture will be hIde).'
-                      : 'Answer question anonymously (your profile picture will be hIde).'
+                      ? 'Ask question anonymously (your profile picture will be hide).'
+                      : 'Answer question anonymously (your profile picture will be hide).'
                   }
                   paddingRight='10px'
                   marginBottom='5px'
@@ -463,6 +552,201 @@ const BasicFormPage = (props) => {
                   />
                 </div>
               )}
+
+              <p className='fontSize17Title' style={{ marginTop: '16px'}}>
+                What days are you available? (Can choose multiple)
+              </p>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <CheckBox
+                  checked={hasMonToFri}
+                  handleCheck={setHasMonToFri}
+                  details='Monday - Friday'
+                  paddingRight='10px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasWeekend}
+                  handleCheck={setHasWeekend}
+                  details='Saturday - Sunday'
+                  paddingRight='10px'
+                  fontSize='14px'
+                />
+              </div>
+              <p className='fontSize17Title'>
+                What time are you available? (Can choose multiple)
+              </p>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <CheckBox
+                  checked={hasBefore12}
+                  handleCheck={setHasBefore12}
+                  details='Before 12:00pm (noon)'
+                  paddingRight='10px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={has12To18}
+                  handleCheck={setHas12To18}
+                  details='12:00pm (noon) - 18:00'
+                  paddingRight='10px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasAfter18}
+                  handleCheck={setHasAfter18}
+                  details='After 18:00'
+                  paddingRight='10px'
+                  fontSize='14px'
+                />
+              </div>
+
+              <p className='fontSize17Title'>What languages do you speak?</p>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <CheckBox
+                  checked={hasEnglish}
+                  handleCheck={setHasEnglish}
+                  details='English'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasGerman}
+                  handleCheck={setHasGerman}
+                  details='German'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasFrench}
+                  handleCheck={setHasFrench}
+                  details='French'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasItalien}
+                  handleCheck={setHasItalien}
+                  details='Italian'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <CheckBox
+                  checked={hasChinese}
+                  handleCheck={setHasChinese}
+                  details='Chinese'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasCantonese}
+                  handleCheck={setHasCantonese}
+                  details='Cantonese'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasVietnamese}
+                  handleCheck={setHasVietnamese}
+                  details='Vietnamese'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasKorean}
+                  handleCheck={setHasKorean}
+                  details='Korean'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasJapanese}
+                  handleCheck={setHasJapanese}
+                  details='Japanese'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <CheckBox
+                  checked={hasTurkish}
+                  handleCheck={setHasTurkish}
+                  details='Turkish'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasUkrainian}
+                  handleCheck={setHasUkrainian}
+                  details='Ukrainian'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasArabic}
+                  handleCheck={setHasArabic}
+                  details='Arabic'
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+                <CheckBox
+                  checked={hasOthers}
+                  handleCheck={setHasOthers}
+                  details='Others (Please specify in Notes below)'
+                  paddingRight='10px'
+                  marginBottom='25px'
+                  fontSize='14px'
+                />
+              </div>
+              {/* {!props.isHelpee && (
+                <FullLineTextBox
+                  title={'Price per 30 minute (in EUR)'}
+                  placeholder={'e.g. 20'}
+                  inputRef={priceRef}
+                />
+              )} */}
               <FullLineTextBox
                 title={'Introduction'}
                 placeholder={'Introduce yourself in one sentence!'}
@@ -471,7 +755,7 @@ const BasicFormPage = (props) => {
               />
               <FullLineTextBox
                 title={'Notes'}
-                placeholder={'If you choose others, please specify here.'}
+                placeholder={'Please specify languages you speak (if you selected others above).'}
                 inputRef={notesRef}
               />
               <ConfirmBtn

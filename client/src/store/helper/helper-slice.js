@@ -5,10 +5,13 @@ const helperSlice = createSlice({
   initialState: {
     helperUserId: 0,
     helperName: '',
-    isHelpeeAuthenticated: false,
+    isHelperAuthenticated: false,
+
     pageFirstTimeLoaded: true,
     DBHelperEmail: '',
     DBHelperPassword: '',
+
+    helperAccountStatus: '',
     DBSignUpStatus: '',
     globalServiceType: '',
     globalNavigateTarget: '',
@@ -34,7 +37,7 @@ const helperSlice = createSlice({
 
     globalHelperSelfEmployedType: '',
     globalHelperSelfEmployedProfession: '',
-    globalHelpeeSelfEmployedCountry: '',
+    globalHelperSelfEmployedCountry: '',
     globalHelperSelfEmployedYears: '',
     globalHelperSelfEmployedNotes: '',
 
@@ -73,6 +76,7 @@ const helperSlice = createSlice({
     updateHelperInfoAfterSignIn(state, action) {
       const { payload } = action;
       state.DBHelperEmail = payload.email;
+      state.helperAccountStatus = payload.helperAccountStatus;
     },
     onClickUpdateActiveOfferTarget(state, action) {
       const { payload } = action;
