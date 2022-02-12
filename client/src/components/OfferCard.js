@@ -7,21 +7,28 @@ import { onClickDeleteOffer } from '../store/helper/helper-actions';
 function OfferCard(props) {
   const dispatch = useDispatch();
   const [img, setImg] = useState('');
+  const [title, setTitle] = useState('');
+  console.log('mainType: ',  props.mainType);
+  
   useEffect(() => {
-    switch (props.type) {
-      case 'University':
+    switch (props.mainType) {
+      case 'university':
         setImg('/university');
+        setTitle('University');
         break;
-      case 'Job':
+      case 'job':
         setImg('/job');
+        setTitle('Job');
         break;
-      case 'Self-Employed':
+      case 'selfEmployed':
         setImg('/mom');
+        setTitle('Self-Employed');
         break;
       default:
         setImg('/offer_help');
+        setTitle('');
     }
-  }, [props.type]);
+  }, [props.mainType]);
 
   function handleDeleteOffer(e) {
     e.preventDefault();
@@ -59,13 +66,19 @@ function OfferCard(props) {
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />
               </div>
-              <div className='textDateTime'>{props.mainCategory}</div>
+              <div className='textDateTime'>{title}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.subCategory}</div>
+              <div className='textDateTime'>{props.secondType}</div>
+            </div>
+            <div className='pureFlexRow'>
+              <div className='flexItemVerticalCenter'>
+                <DiamondIcon color='#ffdf95' />
+              </div>
+              <div className='textDateTime'>{props.thirdType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
@@ -82,7 +95,20 @@ function OfferCard(props) {
             Offer ID: {props.offerId}
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Price: {props.price} €
+            Price: {props.price} € / 30 minutes
+          </p>
+        </div>
+      </div>
+      <div className='checkBoxWidth'>
+        <div className='contentBx'>
+          <p
+            style={{
+              fontWeight: '12px',
+              padding: '6px',
+              lineBreak: 'anywhere',
+            }}
+          >
+            Notes: {props.notes || 'N/A'}
           </p>
         </div>
       </div>

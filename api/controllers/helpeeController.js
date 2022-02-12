@@ -1,6 +1,8 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const helpeeModel = require('../models/helpeeModel');
+const bookingModel = require('../models/bookingModel');
+
 const {
   sendHelpeeResetPasswordEmail,
 } = require('../../util/email');
@@ -45,6 +47,24 @@ const getHelpeeAllOrders = async (req, res) => {
       });
     } else {
       throw Error('No order response from server.');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getHelpeeAllBookings = async (req, res) => {
+  console.log('@api/helpeeController->req.query: ', req.query);
+  try {
+    const { helpeeUserId } = req.query;
+    const response = await helpeeModel.getHelpeeAllBookings({ helpeeUserId });
+    if (response && response.data) {
+      res.status(200).json({
+        allBookings: response.data.allBookings,
+      });
+    } else {
+      throw Error('No bookings response from server.');
     }
   } catch (error) {
     console.error(error);
@@ -162,6 +182,20 @@ const sendHelpeePasswordResetLink = async (req, res) => {
   }
 };
 
+const payHelper = async (req, res) => {
+  const { data } = req.body;
+  console.log('payHelper->data: ', data);
+  try {
+    await bookingModel.updateBookingStatus(data);
+    res.status(200).json({ status: 'success' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+
+
 module.exports = {
   allowHelpeePrivateRoute,
   postHelpeeServiceRequestForm,
@@ -173,4 +207,6 @@ module.exports = {
   confirmHelpeeEmail,
   confirmHelpeeCanChangePassword,
   sendHelpeePasswordResetLink,
+  getHelpeeAllBookings,
+  payHelper,
 };

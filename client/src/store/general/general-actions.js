@@ -4,7 +4,7 @@ import { generalActions } from './general-slice';
 const bookingStatusPath = '/api/booking-status';
 
 export const postBookingStatus = (data) => {
-  console.log('postbookingNotificationStatus->data: ', data);
+  console.log('postBookingStatus->data: ', data);
   
   return async (dispatch) => {
     let generalToken;

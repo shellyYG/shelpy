@@ -37,12 +37,13 @@ const ChatRoomPage = (props) => {
   console.log('messageList: ', messageList);
 
   const roomId = searchParams.get('roomId');
-  const userId = parseInt(searchParams.get('userId'));
+  const userId = searchParams.get('userId');
   const partnerName = searchParams.get('partnerName');
   const bookingStatus = searchParams.get('bookingStatus');
   const requestId = parseInt(searchParams.get('requestId'));
   const offerId = parseInt(searchParams.get('offerId'));
   const price = searchParams.get('price');
+  console.log('userId: ', userId);
   
   console.log('@ChatRoom: isHelpee?', props.isHelpee, 'roomId: ', roomId, 'userId: ', userId, 'helpeeId: ', helpeeUserId, 'helperId: ', helperUserId);
   
@@ -92,7 +93,7 @@ const ChatRoomPage = (props) => {
     if (currentMessage !== '') {
       const messageData = {
         room: roomId,
-        author: props.isHelpee? helpeeUserId : helperUserId,
+        author: userId,
         message: currentMessage,
         message_time:
           new Intl.DateTimeFormat('en-US', { month: 'short' }).format(
@@ -299,7 +300,7 @@ const ChatRoomPage = (props) => {
               </div>
             )}
             {messageList.map((messageContent) => {
-              return parseInt(messageContent.author) === parseInt(userId) ? (
+              return messageContent.author === userId ? (
                 <ChatMessageSelf
                   key={messageContent.id}
                   message={messageContent.message}
@@ -310,7 +311,7 @@ const ChatRoomPage = (props) => {
                   key={messageContent.id}
                   message={messageContent.message}
                   message_time={messageContent.message_time}
-                  author={partnerName}
+                  author={messageContent.author}
                 />
               );
             })}

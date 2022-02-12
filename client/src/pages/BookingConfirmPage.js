@@ -21,11 +21,29 @@ const MySwal = withReactContent(Swal);
 const BookingConfirmPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const meetDateRef = useRef();
+  const meetTimeRef = useRef();
+  const notesRef = useRef();
+
   const [searchParams] = useSearchParams();
+
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
   const partnerName = searchParams.get('partnerName');
-  
+  const requestId = searchParams.get('requestId');
+  const offerId = searchParams.get('offerId');
+  const price = parseInt(searchParams.get('price')); // parseInt?
+
+  const helpeeId = parseInt(searchParams.get('helpeeId'));
+  const helperId = parseInt(searchParams.get('helperId'));
+  const helpeeUsername = searchParams.get('helpeeUsername');
+  const helperUsername = searchParams.get('helperUsername');
+  const country = searchParams.get('country');
+  const mainType = searchParams.get('mainType');
+  const secondType = searchParams.get('secondType');
+  const thirdType = searchParams.get('thirdType');
+  const fourthType = searchParams.get('fourthType');
+
   const {
     bookingStatus,
     bookingTime,
@@ -35,15 +53,7 @@ const BookingConfirmPage = (props) => {
     bookingNotificationStatusTitle,
     bookingNotificationStatusMessage,
   } = useSelector((state) => state.general);
-  
-  const requestId = searchParams.get('requestId');
-  const offerId = searchParams.get('offerId');
-  const price = searchParams.get('price');
 
-  const meetDateRef = useRef();
-  const meetTimeRef = useRef();
-  const notesRef = useRef();
-  
   const [enableBtn, setEnableBtn] = useState(false);
   const [loading, setIsLoading] = useState(false);
   var today = new Date();
@@ -57,9 +67,11 @@ const BookingConfirmPage = (props) => {
   const [meetTime, setMeetTime] = useState('8am-9am');
 
   useEffect(() => {
-    dispatch(getBookingStatus({ isHelpee: props.isHelpee, requestId, offerId }));
+    dispatch(
+      getBookingStatus({ isHelpee: props.isHelpee, requestId, offerId })
+    );
   }, [dispatch, offerId, props.isHelpee, requestId]);
-  console.log('partnerName: ', partnerName);
+ 
   async function handleChangeBooking(e) {
     e.preventDefault();
     const data = {
@@ -70,9 +82,8 @@ const BookingConfirmPage = (props) => {
     dispatch(postBookingStatus(data));
     setIsLoading(true);
     navigate(
-      `/helper/chatroom?roomId=${roomId}&userId=${userId}&partnerName=${partnerName}&requestId=${requestId}&offerId=${offerId}&bookingStatus=${bookingStatus}`
+      `/helper/chatroom?roomId=${roomId}&userId=helper${userId}&partnerName=${partnerName}&requestId=${requestId}&offerId=${offerId}&bookingStatus=${bookingStatus}`
     );
-    
   }
   async function handleConfirm(e) {
     e.preventDefault();
@@ -114,9 +125,18 @@ const BookingConfirmPage = (props) => {
         bookingStatus: 'created',
         requestId,
         offerId,
-        isHelpee: false,
+        helpeeId,
+        helperId,
+        helpeeUsername,
+        helperUsername,
+        country,
+        price,
+        mainType,
+        secondType,
+        thirdType,
+        fourthType,
       };
-      console.log('data: ', data);
+      console.log('@BookingCOnfirmPage create booking ->data: ', data);
       dispatch(postBookingStatus(data));
     } else {
       const data = {
@@ -128,7 +148,7 @@ const BookingConfirmPage = (props) => {
     }
     setIsLoading(true);
   }
-  
+
   useEffect(() => {
     setEnableBtn(meetDateRef && meetTimeRef);
   }, [meetDateRef, meetTimeRef]);
@@ -275,6 +295,6 @@ const BookingConfirmPage = (props) => {
       </div>
     </div>
   );
-};
+};;
 
 export default BookingConfirmPage;

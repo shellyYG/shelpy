@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ChatIcon from './Icons/ChatIcon';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 
@@ -29,7 +30,21 @@ function PotentialHelperCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helpee${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+    );
+  }
+  console.log('props: ', props);
+  async function handleBookHelper(e) {
+    e.preventDefault();
+    navigate(
+      `/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}` +
+        `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}` +
+        `&bookingStatus=${props.bookingStatus}` +
+        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
+        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.partnerName}` +
+        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`,
+      { replace: true }
     );
   }
   console.log('helperId: ', props.helperId, 'helpeeId: ', props.helpeeId)
@@ -62,6 +77,12 @@ function PotentialHelperCard(props) {
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />
               </div>
+              <div className='textDateTime'>{title}</div>
+            </div>
+            <div className='pureFlexRow'>
+              <div className='flexItemVerticalCenter'>
+                <DiamondIcon color='#ffdf95' />
+              </div>
               <div className='textDateTime'>{props.secondType}</div>
             </div>
             <div className='pureFlexRow'>
@@ -79,16 +100,19 @@ function PotentialHelperCard(props) {
           </div>
         </div>
       </div>
-      <div className='checkBoxWIdth'>
+      
+      <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>Type: {title}</p>
-        </div>
-      </div>
-      <div className='checkBoxWIdth'>
-        <div className='contentBx'>
-          <button className='btn-contact' onClick={handleChat}>
-            Chat with {props.partnerName}
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            {!props.bookingStatus && (
+              <button className='btn-contact' onClick={handleBookHelper}>
+                Book {props.partnerName}
+              </button>
+            )}
+            <div >
+              <ChatIcon onClick={handleChat} partnerName={props.partnerName} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

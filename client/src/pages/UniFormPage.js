@@ -256,7 +256,9 @@ const UniFormPage = (props) => {
                   title={
                     'What is your desired university (if more than one, you can seperate by comma)? *'
                   }
-                  placeholder={'London Business School, WHU Otto Beisheim School of Management'}
+                  placeholder={
+                    'London Business School, WHU Otto Beisheim School of Management'
+                  }
                   inputRef={organizationRef}
                 />
               )}
@@ -269,7 +271,7 @@ const UniFormPage = (props) => {
               )}
               {!props.isHelpee && (
                 <FullLineTextBox
-                  title={'Price'}
+                  title={'Price (per 30 minutes)'}
                   placeholder={'(In Euro €)'}
                   inputRef={priceRef}
                 />

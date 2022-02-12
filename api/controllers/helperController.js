@@ -82,7 +82,6 @@ const getHelperAllMatchedRequests = async (req, res) => {
 };
 
 const getProfilePic = async (req, res) => {
-  console.log('getProfilePic...');
   const { key } = req.params;
   try {
     const readStream = getFileStream(key);
@@ -110,6 +109,23 @@ const getHelperAllOffers = async (req, res) => {
       });
     } else {
       throw Error('No offers found from server.');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getHelperAllBookings = async (req, res) => {
+  try {
+    const { helperUserId } = req.query;
+    const response = await helperModel.getHelperAllBookings({ helperUserId });
+    if (response && response.data) {
+      res.status(200).json({
+        allBookings: response.data.allBookings,
+      });
+    } else {
+      throw Error('No bookings found from server.');
     }
   } catch (error) {
     console.error(error);
@@ -182,4 +198,5 @@ module.exports = {
   confirmHelperEmail,
   confirmHelperCanChangePassword,
   sendHelperPasswordResetLink,
+  getHelperAllBookings,
 };

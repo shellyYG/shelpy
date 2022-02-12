@@ -45,7 +45,7 @@ function App() {
   }, [dispatch]);
   const { helpeeUserId, helpeeName, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
   const { helperUserId, helperName, isHelperAuthenticated } = useSelector((state) => state.helper);
-  console.log('helpeeName: ', helpeeName);
+
   return (
     <Router>
       <NavBar
@@ -189,6 +189,7 @@ function App() {
           element={
             isHelpeeAuthenticated ? (
               <HelpeeDashboardPage
+                isHelpee={true}
                 helpeeUserId={helpeeUserId}
                 helpeeName={helpeeName}
               />
@@ -202,6 +203,7 @@ function App() {
           element={
             isHelperAuthenticated ? (
               <HelperDashboardPage
+                isHelpee={false}
                 helperUserId={helperUserId}
                 helperName={helperName}
               />

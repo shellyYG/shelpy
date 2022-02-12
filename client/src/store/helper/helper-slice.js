@@ -11,6 +11,8 @@ const helperSlice = createSlice({
     DBHelperEmail: '',
     DBHelperPassword: '',
 
+    helperDashboardTarget: '',
+
     helperAccountStatus: '',
     DBSignUpStatus: '',
     globalServiceType: '',
@@ -25,6 +27,7 @@ const helperSlice = createSlice({
     offerTarget: '',
     allOffers: [],
     allPotentialCustomers: [],
+    allBookings: [],
 
     sendPasswordResetEmailStatus: '',
     sendPasswordResetEmailStatusTitle: '',
@@ -62,6 +65,10 @@ const helperSlice = createSlice({
       const { payload } = action;
       state.offerTarget = payload.offerTarget;
     },
+    onClickUpdateHelperDashboardTarget(state, action) {
+      const { payload } = action;
+      state.helperDashboardTarget = payload.helperDashboardTarget;
+    },
     onClickUpdateActiveHelperLists(state, action) {
       const { payload } = action;
       state.globalActiveHelperLists = payload.globalActiveHelperLists;
@@ -77,6 +84,10 @@ const helperSlice = createSlice({
     updateAllOffers(state, action) {
       const { payload } = action;
       state.allOffers = payload.allOffers;
+    },
+    updateAllBookings(state, action) {
+      const { payload } = action;
+      state.allBookings = payload.allBookings;
     },
     updateAllPotentialCustomers(state, action) {
       const { payload } = action;

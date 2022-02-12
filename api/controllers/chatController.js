@@ -23,7 +23,6 @@ const socketChat = async (socket) => {
     const messageObj = {
       room_id: data.room,
       sender_id: data.author,
-      service_type: '',
       message: data.message,
       message_time: data.message_time,
     };

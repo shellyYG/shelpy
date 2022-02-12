@@ -8,6 +8,7 @@ const helperSignInPath = '/api/helper/sign-in';
 const userOfferPath = '/api/helper/offer';
 const activeHelperPath = '/api/helper/active-helpers';
 const getAllOffersPath = '/api/helper/all-offers';
+const getAllBookingsPath = '/api/helper/all-bookings';
 const getPotentialCustomersPath = '/api/helper/potential-customers';
 const helperProfilePicUploadPath = '/api/helper/profile-pic-upload';
 const helperCertificateUploadPath = '/api/helper/certificate-upload';
@@ -78,6 +79,31 @@ export const getAllOffers = (data) => {
   };
 };
 
+export const getAllBookings = (data) => {
+  return async (dispatch) => {
+    console.log('@helpeR action->getAllBookings..., data: ', data);
+    if (data && data.helperUserId) {
+      try {
+        const response = await axios.get(getAllBookingsPath, {
+          params: { helperUserId: data.helperUserId },
+        });
+        dispatch(
+          helperActions.updateAllBookings({
+            allBookings: response.data.allBookings,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helperActions.updateAllBookings({
+            allBookings: [],
+          })
+        );
+      }
+    }
+  };
+};
+
 export const getPotentialCustomers = (data) => {
   console.log('getPotentialCustomers: ', data);
   return async (dispatch) => {
@@ -114,6 +140,17 @@ export const onClickUpdateHelperActiveJobOrUniTarget = (data) => {
     );
   };
 };
+
+export const onClickUpdateHelperDashboardTarget = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      helperActions.onClickUpdateHelperDashboardTarget({
+        helperDashboardTarget: data.helperDashboardTarget,
+      })
+    );
+  };
+};
+
 export const onClickUpdateActiveOfferTarget = (data) => {
   return async (dispatch) => {
     dispatch(

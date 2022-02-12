@@ -9,7 +9,6 @@ const checkBookingExisted = async (data) => {
 };
 
 const updateBookingStatus = async (req, res) => {
-  console.log('updateBookingStatus: ', updateBookingStatus);
   const { data } = req.body;
   console.log('updateBookingStatus->data: ', data);
   try {

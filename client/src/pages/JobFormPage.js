@@ -297,7 +297,7 @@ const JobFormPage = (props) => {
               )}
               {!props.isHelpee && (
                 <FullLineTextBox
-                  title={'Price'}
+                  title={'Price (per 30 minutes)'}
                   placeholder={'(In Euro €)'}
                   inputRef={priceRef}
                 />

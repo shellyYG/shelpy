@@ -482,8 +482,8 @@ const BasicFormPage = (props) => {
               </div>
               <div className='form-row'>
                 <LeftHalfLineTextBox
-                  title={'Nickname *'}
-                  placeholder={'Enter Nickname (e.g. Angela)'}
+                  title={'Username (This will be shown publicly) *'}
+                  placeholder={'Enter Username (e.g. Angela)'}
                   inputRef={usernameRef}
                 />
                 <DropDown

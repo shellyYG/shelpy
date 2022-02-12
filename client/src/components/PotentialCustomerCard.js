@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ChatIcon from './Icons/ChatIcon';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 
@@ -27,10 +28,11 @@ function PotentialCustomerCard(props) {
     }
   }, [props.mainType]);
   console.log('props: ', props);
+  
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+      `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helper${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
     );
   }
   function handleBookingConfirmation(e) {
@@ -68,6 +70,12 @@ function PotentialCustomerCard(props) {
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />
               </div>
+              <div className='textDateTime'>{title}</div>
+            </div>
+            <div className='pureFlexRow'>
+              <div className='flexItemVerticalCenter'>
+                <DiamondIcon color='#ffdf95' />
+              </div>
               <div className='textDateTime'>{props.secondType}</div>
             </div>
             <div className='pureFlexRow'>
@@ -85,23 +93,13 @@ function PotentialCustomerCard(props) {
           </div>
         </div>
       </div>
-      <div className='checkBoxWIdth'>
+      <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>Type: {title}</p>
-        </div>
-      </div>
-      <div className='checkBoxWIdth'>
-        <div className='contentBx'>
-          {props.bookingStatus === 'created' && (
-            <button className='btn-contact' onClick={handleBookingConfirmation}>
-              Confirm {props.partnerName}'s booking
-            </button>
-          )}
-          {props.bookingStatus === 'helperConfirmed' && (
-            <button className='btn-contact' onClick={handleChat}>
-              Chat with {props.partnerName}
-            </button>
-          )}
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div>
+              <ChatIcon onClick={handleChat} partnerName={props.partnerName} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

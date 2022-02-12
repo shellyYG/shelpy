@@ -8,27 +8,8 @@ async function checkBookingExisted(data) {
 }
 
 async function insertBooking(data) {
-  const {
-    requestId,
-    offerId,
-    bookingStatus,
-    appointmentDate,
-    appointmentTime,
-    appointmentTimestamp,
-    notes,
-  } = data;
-  const insertedData = {
-    requestId,
-    offerId,
-    appointmentDate,
-    appointmentTime,
-    appointmentTimestamp,
-    notes,
-    bookingStatus,
-  };
-  console.log('insertedData: ', insertedData);
   const sql = 'INSERT INTO bookings SET ?';
-  const sqlResult = await query(sql, insertedData);
+  const sqlResult = await query(sql, data);
   return sqlResult.insertId;
 }
 
@@ -43,7 +24,7 @@ async function updateBookingStatus(data) {
     appointmentTimestamp,
     notes,
   } = data;
-  console.log('data: ', data);
+  console.log('@Model updateBookingStatus->data: ', data);
   const filteredBookingNotes = notes || '';
     if (
       (appointmentDate && appointmentTime && appointmentTimestamp)

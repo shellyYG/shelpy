@@ -1,14 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { jobUniOptionsHelper } from '../store/options/navigate-options';
+import { jobUniOptions, jobUniOptionsHelper } from '../store/options/navigate-options';
 import '../App.css';
 import JobOrUniCard from '../components/JobOrUniCard';
 const SelectJobOrUniPage = (props) => {
   const { globalHelpeeJobOrUniTarget } = useSelector((state) => state.helpee);
   const { globalHelperJobOrUniTarget } = useSelector((state) => state.helper);
   const navigate = useNavigate();
-  console.log('Helpee T: ', globalHelpeeJobOrUniTarget);
-  console.log('Helper T: ', globalHelperJobOrUniTarget);
+  
   function handleNext(e) {
     e.preventDefault();
     const userType = props.isHelpee? 'helpee': 'helper';
@@ -42,21 +41,34 @@ const SelectJobOrUniPage = (props) => {
             marginBottom: '30px',
           }}
         >
-          {props.isHelpee && 'What do you want to know?'}
+          {props.isHelpee && 'What is your next step?'}
           {!props.isHelpee && 'What experiences do you want to offer?'}
         </h2>
         <div className='container'>
-          {jobUniOptionsHelper.map((option) => (
-            <JobOrUniCard
-              imageSrc={option.imgPath}
-              title={option.label}
-              value={option.value}
-              isHelpee={props.isHelpee}
-              globalHelpeeJobOrUniTarget={globalHelpeeJobOrUniTarget}
-              globalHelperJobOrUniTarget={globalHelperJobOrUniTarget}
-              key={option.value}
-            />
-          ))}
+          {props.isHelpee &&
+            jobUniOptions.map((option) => (
+              <JobOrUniCard
+                imageSrc={option.imgPath}
+                title={option.label}
+                value={option.value}
+                isHelpee={props.isHelpee}
+                globalHelpeeJobOrUniTarget={globalHelpeeJobOrUniTarget}
+                globalHelperJobOrUniTarget={globalHelperJobOrUniTarget}
+                key={option.value}
+              />
+            ))}
+          {!props.isHelpee &&
+            jobUniOptionsHelper.map((option) => (
+              <JobOrUniCard
+                imageSrc={option.imgPath}
+                title={option.label}
+                value={option.value}
+                isHelpee={props.isHelpee}
+                globalHelpeeJobOrUniTarget={globalHelpeeJobOrUniTarget}
+                globalHelperJobOrUniTarget={globalHelperJobOrUniTarget}
+                key={option.value}
+              />
+            ))}
         </div>
         <div style={{ textAlign: 'center' }}>
           <button className='btn-next' onClick={handleNext}>

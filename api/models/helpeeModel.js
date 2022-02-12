@@ -18,11 +18,26 @@ async function getHelpeeAllOrders(data) {
   return { data: { allOrders: allRequests } };
 }
 
+async function getHelpeeAllBookings(data) {
+  const sqlSimplified = ` SELECT bookings.*, acc.profilePicPath AS profilePicPath
+  FROM bookings bookings
+  LEFT JOIN helper_account acc ON bookings.helperId = acc.id
+  WHERE helpeeId=${data.helpeeUserId} ORDER BY id DESC;`;
+  console.log('sql: ', sqlSimplified)
+  const allBookings = await query(sqlSimplified);
+  return { data: { allBookings } };
+}
+
 async function getPotentialHelpers(data) {
   const { helpeeUserId } = data;
-  const sql = `SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus, req.id AS requestId, ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, acc.username AS helperName, acc.profilePicPath AS profilePicPath,
-		req.mainType AS mainType, req.secondType AS secondType, req.thirdType AS thirdType, req.country AS country
-FROM offers ofs
+  const sql = `SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus, req.id AS requestId
+    , req.country AS country
+    , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId
+    , helpee.id AS helpeeId, helpee.username AS helpeeUsername
+    , acc.id AS helperId, acc.username AS helperUsername, acc.profilePicPath AS profilePicPath
+		, req.mainType AS mainType, req.secondType AS secondType
+    , req.thirdType AS thirdType, req.fourthType AS fourthType
+    FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
 LEFT JOIN requests req ON 
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType AND ofs.thirdType = req.thirdType
@@ -118,4 +133,5 @@ module.exports = {
   getPotentialHelpers,
   deleteHelpeeRequest,
   confirmHelpeeEmail,
+  getHelpeeAllBookings,
 };

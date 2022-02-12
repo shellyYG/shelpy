@@ -22,6 +22,7 @@ const helpeeSlice = createSlice({
     helpeeProfilePicPath: '',
     allOrders: [],
     allPotentialHelpers: [],
+    allBookings: [],
 
     sendPasswordResetEmailStatus: '',
     sendPasswordResetEmailStatusTitle: '',
@@ -30,6 +31,12 @@ const helpeeSlice = createSlice({
     helpeePasswordResetStatus: '',
     helpeePasswordResetStatusTitle: '',
     helpeePasswordResetStatusMessage: '',
+
+    helpeeDashboardTarget: '',
+
+    payHelperStatus: 'initial',
+    payHelperStatusTitle: '',
+    payHelperStatusMessage: '',
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -41,6 +48,10 @@ const helpeeSlice = createSlice({
     updateActiveAndPastOrders(state, action) {
       const { payload } = action;
       state.allOrders = payload.allOrders;
+    },
+    updateAllBookings(state, action) {
+      const { payload } = action;
+      state.allBookings = payload.allBookings;
     },
     updateHelpeeInfoAfterInsertEmail(state, action) {
       const { payload } = action;
@@ -68,6 +79,18 @@ const helpeeSlice = createSlice({
       // TODO
       // state.serviceType = payload.serviceType;
     },
+    updatePayHelperStatus(state, action) {
+      const { payload } = action;
+      state.payHelperStatus = payload.payHelperStatus;
+      state.payHelperStatusTitle = payload.payHelperStatusTitle;
+      state.payHelperStatusMessage = payload.payHelperStatusMessage;
+    },
+    clearPayHelperStatus(state, action) {
+      const { payload } = action;
+      state.payHelperStatus = payload.payHelperStatus;
+      state.payHelperStatusTitle = payload.payHelperStatusTitle;
+      state.payHelperStatusMessage = payload.payHelperStatusMessage;
+    },
     onClickUpdateHelpeeActiveServiceType(state, action) {
       const { payload } = action;
       state.globalHelpeeServiceType = payload.globalHelpeeServiceType;
@@ -84,6 +107,10 @@ const helpeeSlice = createSlice({
       const { payload } = action;
       state.globalActiveRequest = payload.globalActiveRequest;
     },
+    onClickUpdateHelpeeDashboardTarget(state, action) {
+      const { payload } = action;
+      state.helpeeDashboardTarget = payload.helpeeDashboardTarget;
+    },
     onClickUpdateActiveHelperLists(state, action) {
       const { payload } = action;
       state.globalActiveHelperLists = payload.globalActiveHelperLists;
@@ -92,7 +119,7 @@ const helpeeSlice = createSlice({
       const { payload } = action;
       state.globalHelpeeJobOrUniTarget = payload.globalHelpeeJobOrUniTarget;
     },
-    
+
     updateAllPotentialHelpers(state, action) {
       const { payload } = action;
       state.allPotentialHelpers = payload.allPotentialHelpers;
@@ -112,7 +139,8 @@ const helpeeSlice = createSlice({
     updateHelpeeResetPasswordStatus(state, action) {
       const { payload } = action;
       state.helpeePasswordResetStatus = payload.helpeePasswordResetStatus;
-      state.helpeePasswordResetStatusTitle = payload.helpeePasswordResetStatusTitle;
+      state.helpeePasswordResetStatusTitle =
+        payload.helpeePasswordResetStatusTitle;
       state.helpeePasswordResetStatusMessage =
         payload.helpeePasswordResetStatusMessage;
     },

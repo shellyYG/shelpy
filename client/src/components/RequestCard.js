@@ -75,7 +75,9 @@ function RequestCard(props) {
       <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
-            <h3 style={{ fonrWeight: 'bold', fontSize: '16px', margin: '8px' }}>{title}</h3>
+            <h3 style={{ fonrWeight: 'bold', fontSize: '16px', margin: '8px' }}>
+              {title}
+            </h3>
           </div>
         </div>
       </div>
@@ -85,6 +87,12 @@ function RequestCard(props) {
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />
+              </div>
+              <div className='textDateTime'>{title}</div>
+            </div>
+            <div className='pureFlexRow'>
+              <div className='flexItemVerticalCenter'>
+                <DiamondIcon color='#ffdf95' />
               </div>
               <div className='textDateTime'>{props.secondType}</div>
             </div>
@@ -117,10 +125,14 @@ function RequestCard(props) {
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px', lineBreak: 'anywhere' }}>
-            Notes:{' '}
-            {props.notes ||
-              'N/A'}
+          <p
+            style={{
+              fontWeight: '12px',
+              padding: '6px',
+              lineBreak: 'anywhere',
+            }}
+          >
+            Notes: {props.notes || 'N/A'}
           </p>
         </div>
       </div>

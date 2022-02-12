@@ -36,6 +36,8 @@ const {
   confirmHelpeeEmail,
   confirmHelpeeCanChangePassword,
   sendHelpeePasswordResetLink,
+  getHelpeeAllBookings,
+  payHelper,
 } = require('../controllers/helpeeController');
 
 const {
@@ -49,6 +51,7 @@ const {
   confirmHelperEmail,
   confirmHelperCanChangePassword,
   sendHelperPasswordResetLink,
+  getHelperAllBookings,
 } = require('../controllers/helperController');
 
 const {
@@ -88,7 +91,9 @@ router.route('/api/helper/offer').post(wrapAsync(postHelperOffer));
 router.route('/api/helper/offer').delete(wrapAsync(deleteHelperOffer));
 
 router.route('/api/helpee/all-orders').get(wrapAsync(getHelpeeAllOrders));
+router.route('/api/helpee/all-bookings').get(wrapAsync(getHelpeeAllBookings));
 router.route('/api/helper/all-offers').get(wrapAsync(getHelperAllOffers));
+router.route('/api/helper/all-bookings').get(wrapAsync(getHelperAllBookings));
 
 router.route('/api/helper/potential-customers').get(wrapAsync(getPotentialCustomers));
 router.route('/api/helpee/potential-helpers').get(wrapAsync(getPotentialHelpers));
@@ -372,6 +377,8 @@ router.post('/api/helpee/basic-form', async (req, res) => {
 });
 
 router.route('/api/booking-status').post(wrapAsync(updateBookingStatus));
+
+router.route('/api/helpee/pay').post(wrapAsync(payHelper));
 
 router.route('/api/booking-status').get(wrapAsync(getBookingStatus));
 

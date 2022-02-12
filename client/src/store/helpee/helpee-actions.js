@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { notificationActions } from './notification-slice'; 
 import { helpeeActions } from "./helpee-slice";
+import { generalActions } from '../general/general-slice';
 
 const getHelpeeAuthStatusPath = '/api/helpee/get-auth-status';
 const helpeeSignUpPasswordPath = '/api/helpee/signup-password';
@@ -9,12 +10,14 @@ const oldUserRequestFormPath = '/api/helpee/request-form'; // depreciated
 const userRequestPath = '/api/helpee/request';
 const activeHelperPath = '/api/helpee/active-helpers';
 const getAllOrdersPath = '/api/helpee/all-orders';
+const getAllBookingsPath = '/api/helpee/all-bookings';
 const getPotentialHelpersPath = '/api/helpee/potential-helpers';
 const helpeeProfilePicUploadPath = '/api/helpee/profile-pic-upload';
 const helpeeBasicFormWithoutCertificatePath = '/api/helpee/basic-form';
 const helpeeConfirmEmailPath = '/api/helpee/email/confirmation';
 const helpeeCanChangePasswordPath = '/api/helpee/password/allow-change';
 const helpeeSendPasswordResetEmailPath = '/api/helpee/password/reset';
+const payHelperPath = '/api/helpee/pay';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
@@ -202,6 +205,41 @@ export const onClickUpdateActiveServiceType = (data) => { // legacy
     );
   };
 };
+
+export const onClickUpdateHelpeeDashboardTarget = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.onClickUpdateHelpeeDashboardTarget({
+        helpeeDashboardTarget: data.helpeeDashboardTarget,
+      })
+    );
+  };
+};
+
+export const getAllBookings = (data) => {
+  return async (dispatch) => {
+    console.log('@helpeE action->getAllBookings..., data: ', data);
+    if (data && data.helpeeUserId) {
+      try {
+        const response = await axios.get(getAllBookingsPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        dispatch(
+          helpeeActions.updateAllBookings({
+            allBookings: response.data.allBookings,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateAllBookings({
+            allBookings: [],
+          })
+        );
+      }
+    }
+  };
+}
 
 export const onClickUpdateActiveSelectedHelper = (data) => {
   return async (dispatch) => {
@@ -573,6 +611,18 @@ export const clearRequestStatus = (data) => {
   };
 };
 
+export const clearPayHelperStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.clearPayHelperStatus({
+        payHelperStatus: 'initial',
+        payHelperStatusTitle: '',
+        payHelperStatusMessage: '',
+      })
+    );
+  };
+};
+
 export const clearSignUpEmailStatus = (data) => {
   return async (dispatch) => {
     dispatch(
@@ -653,6 +703,60 @@ export const onClickDeleteRequest = (data) => {
         dispatch(
           helpeeActions.updateAllOrders({
             allOffers: [],
+          })
+        );
+      }
+    }
+  };
+};
+
+export const postPayHelper = (data) => {
+  console.log('postBookingStatus->data: ', data);
+
+  return async (dispatch) => {
+    let generalToken;
+    if (data.isHelpee) {
+      generalToken = localStorage.getItem('shelpy-token');
+    } else {
+      generalToken = localStorage.getItem('shelper-token');
+    }
+    try {
+      if (!generalToken) {
+        throw Error('Access denied. Please log in to continue.');
+      }
+      if (generalToken) {
+        const headers = {
+          Authorization: 'Bearer ' + generalToken,
+        };
+        await axios.post(
+          payHelperPath,
+          { data },
+          {
+            headers,
+          }
+        );
+        dispatch(
+          generalActions.setBookingStatus({
+            bookingStatus: data.bookingStatus,
+          })
+        );
+        dispatch(
+          helpeeActions.updatePayHelperStatus({
+            payHelperStatus: 'success',
+            payHelperStatusTitle: 'Thank you!',
+            payHelperStatusMessage: 'Successfully paid the booking.',
+          })
+        );
+        
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response) {
+        dispatch(
+          helpeeActions.updatePayHelperStatus({
+            payHelperStatus: 'error',
+            payHelperStatusTitle: 'Oops!',
+            payHelperStatusMessage: error.response.data,
           })
         );
       }
