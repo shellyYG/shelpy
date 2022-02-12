@@ -76,12 +76,12 @@ router.route('/api/helpee/password/allow-change').post(wrapAsync(confirmHelpeeCa
 router
   .route('/api/helper/password/allow-change')
   .post(wrapAsync(confirmHelperCanChangePassword));
-// old:
+
 router
-  .route('/api/helpee/request-form')
+  .route('/api/helpee/request-form') // depreciated
   .post(wrapAsync(postHelpeeServiceRequestForm));
-// new:
-router.route('/api/helpee/request').post(wrapAsync(postHelpeeRequest));
+
+router.route('/api/helpee/request').post(wrapAsync(postHelpeeRequest)); // latest
 router.route('/api/helpee/request').delete(wrapAsync(deleteHelpeeRequest));
 
 router.route('/api/helper/offer').post(wrapAsync(postHelperOffer));

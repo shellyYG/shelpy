@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { jobUniOptions } from '../store/options/navigate-options';
+import { jobUniOptionsHelper } from '../store/options/navigate-options';
 import '../App.css';
 import JobOrUniCard from '../components/JobOrUniCard';
 const SelectJobOrUniPage = (props) => {
@@ -46,7 +46,7 @@ const SelectJobOrUniPage = (props) => {
           {!props.isHelpee && 'What experiences do you want to offer?'}
         </h2>
         <div className='container'>
-          {jobUniOptions.map((option) => (
+          {jobUniOptionsHelper.map((option) => (
             <JobOrUniCard
               imageSrc={option.imgPath}
               title={option.label}

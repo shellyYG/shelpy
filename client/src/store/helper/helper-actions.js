@@ -33,12 +33,12 @@ export const getHelperAuthStatus = () => {
           {},
           { headers }
         );
-        console.log('helper username: ', response.data.username);
+
         dispatch(
           helperActions.updateAuthStatus({
             isHelperAuthenticated: response.data.isHelperAuthenticated,
             helperUserId: response.data.helperUserId,
-            helperName: response.data.username,
+            username: response.data.username,
           })
         );
       }
@@ -354,53 +354,6 @@ export const clearOfferStatus = (data) => {
         offerStatus: 'initial',
         offerStatusTitle: '',
         offerStatusMessage: '',
-      })
-    );
-  };
-};
-
-export const onSubmitUpdateHelperUniData = (data) => {
-  const { school, department, country, degree, notes } = data;
-  return async (dispatch) => {
-    dispatch(
-      helperActions.onSubmitUpdateHelperUniData({
-        school,
-        department,
-        country,
-        degree,
-        notes,
-      })
-    );
-  };
-};
-
-export const onSubmitUpdateHelperJobData = (data) => {
-  const { industry, job, country, WFH, companySize, years, notes } = data;
-  return async (dispatch) => {
-    dispatch(
-      helperActions.onSubmitUpdateHelperJobData({
-        industry,
-        job,
-        country,
-        WFH,
-        companySize,
-        years,
-        notes,
-      })
-    );
-  };
-};
-
-export const onSubmitUpdateHelperSelfEmployedData = (data) => {
-  const { type, profession, country, years, notes } = data;
-  return async (dispatch) => {
-    dispatch(
-      helperActions.onSubmitUpdateHelperSelfEmployedData({
-        type,
-        profession,
-        country,
-        years,
-        notes,
       })
     );
   };

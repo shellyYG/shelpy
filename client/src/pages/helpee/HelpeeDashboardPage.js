@@ -9,10 +9,11 @@ import { useNavigate } from 'react-router-dom';
 import RequestCard from '../../components/RequestCard';
 
 const HelpeeDashboardPage = (props) => {
+  console.log('props.helpeeName: ', props.helpeeName);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isPotentialHelpersSelected, setIsPotentialHelpersSelected] =
-    useState(true);
+    useState(false);
 
   console.log('You are now: ', props.helpeeUserId, props.helpeeName);
   useEffect(() => {
@@ -57,16 +58,6 @@ const HelpeeDashboardPage = (props) => {
       <div className='orderHistoryBtnWrapper'>
         <button
           className={
-            isPotentialHelpersSelected
-              ? 'activeSelectedOrderBtn'
-              : 'nonActiveSelectedOrderBtn'
-          }
-          onClick={handleSelectActiveOrders}
-        >
-          Potential Helpers
-        </button>
-        <button
-          className={
             !isPotentialHelpersSelected
               ? 'activeSelectedOrderBtn'
               : 'nonActiveSelectedOrderBtn'
@@ -74,6 +65,16 @@ const HelpeeDashboardPage = (props) => {
           onClick={handleSelectallOrders}
         >
           Your Requests
+        </button>
+        <button
+          className={
+            isPotentialHelpersSelected
+              ? 'activeSelectedOrderBtn'
+              : 'nonActiveSelectedOrderBtn'
+          }
+          onClick={handleSelectActiveOrders}
+        >
+          Potential Helpers
         </button>
       </div>
       <div className='task-container'></div>
@@ -148,7 +149,7 @@ const HelpeeDashboardPage = (props) => {
               fourthType={option.fourthType}
               country={option.country}
               helpeeId={props.helpeeUserId}
-              notes={option.finalNotes}
+              notes={option.notes}
             />
           ))}
         </div>

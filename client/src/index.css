@@ -888,14 +888,14 @@ footer {
   .form-wrapper label {
     display: block;
     font-family: "system-ui";
-    font-size: 15px;
+    font-size: 17px;
     color: rgb(238, 241, 222);
     margin-bottom: 8px; }
   .form-wrapper i.zmdi-chevron-down {
     position: absolute;
     right: 16px;
     top: 42px;
-    font-size: 15px;
+    font-size: 17px;
     color: #666; }
   .form-wrapper span.lnr-calendar-full {
     position: absolute;
@@ -1030,7 +1030,7 @@ footer {
   margin-top: 10px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   border: 1px solid #e6e6e6;
-  border-radius: 1px;
+  border-radius: 8px;
   justify-content: start;
   align-items: center;
   backdrop-filter: blur(40px);
@@ -1077,6 +1077,7 @@ footer {
 .smallWidth {
   width: 130px;
   line-break: anywhere;
+  margin-left: 10px;
 }
 .checkBoxWidth {
   width: 143px;

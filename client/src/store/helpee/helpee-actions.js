@@ -37,7 +37,7 @@ export const getHelpeeAuthStatus = () => {
           helpeeActions.updateAuthStatus({
             isHelpeeAuthenticated: response.data.isHelpeeAuthenticated,
             helpeeUserId: response.data.helpeeUserId,
-            helpeeName: response.data.username,
+            username: response.data.username,
           })
         );
       }
@@ -517,6 +517,7 @@ export const onSubmitUploadHelpeeData = (data) => {
 
 export const postHelpeeRequestForm = (data) => {
   return async (dispatch) => {
+    console.log('postHelpeeRequestForm...');
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
@@ -619,53 +620,6 @@ export const clearRequestFormStatus = (data) => {
     );
   };
 }
-
-export const onSubmitUpdateHelpeeUniData = (data) => {
-  const { school, department, country, degree, notes } = data;
-  return async (dispatch) => {
-    dispatch(
-      helpeeActions.onSubmitUpdateHelpeeUniData({
-        school,
-        department,
-        country,
-        degree,
-        notes,
-      })
-    );
-  };
-};
-
-export const onSubmitUpdateHelpeeJobData = (data) => {
-  const { industry, job, country, WFH, companySize, years, notes } = data;
-  return async (dispatch) => {
-    dispatch(
-      helpeeActions.onSubmitUpdateHelpeeJobData({
-        industry,
-        job,
-        country,
-        WFH,
-        companySize,
-        years,
-        notes,
-      })
-    );
-  };
-};
-
-export const onSubmitUpdateHelpeeSelfEmployedData = (data) => {
-  const { type, profession, country, years, notes } = data;
-  return async (dispatch) => {
-    dispatch(
-      helpeeActions.onSubmitUpdateHelpeeSelfEmployedData({
-        type,
-        profession,
-        country,
-        years,
-        notes,
-      })
-    );
-  };
-};
 
 export const clearApplyHelpeeStatus = (data) => {
   return async (dispatch) => {

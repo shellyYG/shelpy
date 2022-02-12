@@ -40,3 +40,21 @@ export const jobUniOptions = [
     imgPath: '/mom.jpeg',
   },
 ];
+
+export const jobUniOptionsHelper = [
+  {
+    value: 'university',
+    label: 'Experiences on University',
+    imgPath: '/university.jpeg',
+  },
+  {
+    value: 'job',
+    label: 'Experiences on Job',
+    imgPath: '/job.jpeg',
+  },
+  {
+    value: 'selfEmployed',
+    label: 'Experiences on Self Employed / Freelancer',
+    imgPath: '/mom.jpeg',
+  },
+];

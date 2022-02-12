@@ -33,7 +33,7 @@ function RequestCard(props) {
       case 'selfEmployed':
         setImg('/mom');
         setTitle('Self-Employed');
-        setDetails('Desired years of experience: ');
+        setDetails('Years of experience you have: ');
         break;
       default:
         setImg('/offer_help');
@@ -75,7 +75,7 @@ function RequestCard(props) {
       <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
-            <h3 style={{ fonrWeight: 'bold', fontSize: '16px' }}>{title}</h3>
+            <h3 style={{ fonrWeight: 'bold', fontSize: '16px', margin: '8px' }}>{title}</h3>
           </div>
         </div>
       </div>

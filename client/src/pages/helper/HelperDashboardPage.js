@@ -11,10 +11,8 @@ import { useNavigate } from 'react-router-dom';
 const HelperDashboardPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isPotentialCustomersSelected, setIsPotentialCustomersSelected] = useState(true);
+  const [isPotentialCustomersSelected, setIsPotentialCustomersSelected] = useState(false);
   const [liveOffers, setLiveOffers] = useState([]);
-
-  console.log('@Helper You are now: ', props.helperUserId, props.helperName);
 
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));
@@ -96,16 +94,6 @@ const HelperDashboardPage = (props) => {
       <div className='orderHistoryBtnWrapper'>
         <button
           className={
-            isPotentialCustomersSelected
-              ? 'activeSelectedOrderBtn'
-              : 'nonActiveSelectedOrderBtn'
-          }
-          onClick={handleSelectActiveOrders}
-        >
-          Potential Customers
-        </button>
-        <button
-          className={
             !isPotentialCustomersSelected
               ? 'activeSelectedOrderBtn'
               : 'nonActiveSelectedOrderBtn'
@@ -113,6 +101,16 @@ const HelperDashboardPage = (props) => {
           onClick={handleSelectAllOffers}
         >
           Your Offers
+        </button>
+        <button
+          className={
+            isPotentialCustomersSelected
+              ? 'activeSelectedOrderBtn'
+              : 'nonActiveSelectedOrderBtn'
+          }
+          onClick={handleSelectActiveOrders}
+        >
+          Potential Customers
         </button>
       </div>
       <div className='task-container'></div>

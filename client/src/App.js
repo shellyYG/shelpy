@@ -22,7 +22,6 @@ import JobFormPage from './pages/JobFormPage';
 import SelectJobOrUniPage from './pages/SelectJobOrUniPage';
 import UniFormPage from './pages/UniFormPage';
 import SelfEmployedPage from './pages/SelfEmployedPage';
-import FinalFormPage from './pages/FinalFormPage';
 
 import { getHelpeeAuthStatus } from './store/helpee/helpee-actions';
 import { getHelperAuthStatus } from './store/helper/helper-actions';
@@ -46,6 +45,7 @@ function App() {
   }, [dispatch]);
   const { helpeeUserId, helpeeName, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
   const { helperUserId, helperName, isHelperAuthenticated } = useSelector((state) => state.helper);
+  console.log('helpeeName: ', helpeeName);
   return (
     <Router>
       <NavBar
@@ -67,12 +67,7 @@ function App() {
             <HelperHomePage isHelperAuthenticated={isHelperAuthenticated} />
           }
         />
-        <Route
-          path='/helper-lists'
-          element={
-            <MarketingPage />
-          }
-        />
+        <Route path='/helper-lists' element={<MarketingPage />} />
 
         <Route
           path='/helpee/sign-up-final-step'
@@ -100,11 +95,11 @@ function App() {
           element={<PasswordResetPrePage isHelpee={false} />}
         />
         <Route
-          path='/helpee/password/reset/28099a64d7454485ab06a8b1c0080d43738b85dce1d82f13e7a620255'
+          path={`/helpee/password/reset/${process.env.PASS_RESET_URL}`}
           element={<PasswordResetPage isHelpee={true} />}
         />
         <Route
-          path='/helper/password/reset/28099a64d7454485ab06a8b1c0080d43738b85dce1d82f13e7a620255'
+          path={`/helper/password/reset/${process.env.PASS_RESET_URL}`}
           element={<PasswordResetPage isHelpee={false} />}
         />
         <Route path='/helper/sign-in' element={<HelperSignInPage />} />
@@ -133,7 +128,7 @@ function App() {
           path='/helpee/job-form'
           element={
             isHelpeeAuthenticated ? (
-              <JobFormPage isHelpee={true} />
+              <JobFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
             ) : (
               <PreSignInPage isHelpee={true} />
             )
@@ -143,7 +138,7 @@ function App() {
           path='/helper/job-form'
           element={
             isHelperAuthenticated ? (
-              <JobFormPage isHelpee={false} />
+              <JobFormPage isHelpee={false} helperUserId={helperUserId} />
             ) : (
               <PreSignInPage isHelpee={false} />
             )
@@ -153,7 +148,7 @@ function App() {
           path='/helpee/uni-form'
           element={
             isHelpeeAuthenticated ? (
-              <UniFormPage isHelpee={true} />
+              <UniFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
             ) : (
               <PreSignInPage isHelpee={true} />
             )
@@ -163,7 +158,7 @@ function App() {
           path='/helper/uni-form'
           element={
             isHelperAuthenticated ? (
-              <UniFormPage isHelpee={false} />
+              <UniFormPage isHelpee={false} helperUserId={helperUserId} />
             ) : (
               <PreSignInPage isHelpee={false} />
             )
@@ -173,7 +168,7 @@ function App() {
           path='/helpee/self-employed-form'
           element={
             isHelpeeAuthenticated ? (
-              <SelfEmployedPage isHelpee={true} />
+              <SelfEmployedPage isHelpee={true} helpeeUserId={helpeeUserId} />
             ) : (
               <PreSignInPage isHelpee={true} />
             )
@@ -183,27 +178,7 @@ function App() {
           path='/helper/self-employed-form'
           element={
             isHelperAuthenticated ? (
-              <SelfEmployedPage isHelpee={false} />
-            ) : (
-              <PreSignInPage isHelpee={false} />
-            )
-          }
-        />
-        <Route
-          path='/helpee/final-form'
-          element={
-            isHelpeeAuthenticated ? (
-              <FinalFormPage isHelpee={true} />
-            ) : (
-              <PreSignInPage isHelpee={true} />
-            )
-          }
-        />
-        <Route
-          path='/helper/final-form'
-          element={
-            isHelperAuthenticated ? (
-              <FinalFormPage isHelpee={false} />
+              <SelfEmployedPage isHelpee={false} helperUserId={helperUserId} />
             ) : (
               <PreSignInPage isHelpee={false} />
             )

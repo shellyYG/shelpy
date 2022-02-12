@@ -27,7 +27,7 @@ import CheckBox from '../components/CheckBox';
 const MySwal = withReactContent(Swal);
 
 const BasicFormPage = (props) => {
-  console.log('helpeeId: ', props.helpeeUserId, 'helperId: ', props.helperUserId, 'isHelpee?', props.isHelpee);
+  console.log('helpeeId: ', props.helpeeUserId, 'helperId: ', props.helperUserId);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

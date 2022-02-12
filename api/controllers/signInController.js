@@ -48,6 +48,7 @@ const postUserSignInData = async (req, res) => {
         if (userInsertedEncryptedPass === DataBasePass) {
           const userObject = {};
           const { id, provider, username, email } = LoginUserResult[0];
+          console.log('comparepass->username: ', username);
           const dataObject = {
             user: {
               id,
