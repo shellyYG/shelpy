@@ -11,6 +11,7 @@ import OfferCard from '../../components/OfferCard';
 import { useNavigate } from 'react-router-dom';
 import HelperDashboardSection from '../../components/HelperDashboardSection';
 import BookingCard from '../../components/BookingCard';
+import { getPotentialHelpers } from '../../store/helpee/helpee-actions';
 
 const HelperDashboardPage = (props) => {
   const dispatch = useDispatch();
@@ -18,17 +19,12 @@ const HelperDashboardPage = (props) => {
 
   const { allOffers, allBookings, allPotentialCustomers, helperDashboardTarget } =
     useSelector((state) => state.helper);
-  console.log('allPotentialCustomers: ', allPotentialCustomers);
-  console.log('getAllBookings: ', allBookings);
   
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));
     dispatch(getAllBookings({ helperUserId: props.helperUserId }));
     dispatch(getPotentialCustomers({ helperUserId: props.helperUserId }));
-  }, [props.helperUserId, dispatch]);
-
-  console.log('allOffers: ', allOffers)
-  
+  }, [props.helperUserId, props.helpeeUserId, dispatch]);
 
   function handleAddOffer(e) {
     e.preventDefault(e);
@@ -49,12 +45,12 @@ const HelperDashboardPage = (props) => {
         <HelperDashboardSection
           helperDashboardTarget={helperDashboardTarget}
           value='allOffers'
-          title='Your Offers'
+          title='My Offers'
         />
         <HelperDashboardSection
           helperDashboardTarget={helperDashboardTarget}
           value='allBookings'
-          title='Your Bookings'
+          title='My Bookings'
         />
         <HelperDashboardSection
           helperDashboardTarget={helperDashboardTarget}
@@ -114,6 +110,8 @@ const HelperDashboardPage = (props) => {
                 key={
                   option.bookingId || `${option.requestId}-${option.offerId}`
                 }
+                helperAnonymous={option.helperAnonymous}
+                helpeeAnonymous={option.helpeeAnonymous}
                 helperId={props.helperUserId}
                 helpeeId={option.helpeeId}
                 partnerName={option.helpeeUsername}

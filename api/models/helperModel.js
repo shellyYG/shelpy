@@ -2,7 +2,6 @@ const { query } = require('./query');
 
 async function insertHelperOffer(data) {
   const sql = 'INSERT INTO offers SET?';
-  console.log('sql: ', sql);
   const sqlResult = await query(sql, data);
   return sqlResult.insertId;
 }
@@ -36,8 +35,8 @@ async function getPotentialCustomers(data) {
   const sql = ` SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus
     , req.id AS requestId, ofs.id AS offerId
     , ofs.price AS price, req.country AS country
-    , acc.id AS helperId, acc.username AS helperUserName
-    , req.userId AS helpeeId, helpee.username AS helpeeUsername, helpee.profilePicPath AS profilePicPath
+    , acc.id AS helperId, acc.username AS helperUserName, acc.isAnonymous AS helperAnonymous
+    , req.userId AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.profilePicPath AS profilePicPath
     , req.mainType AS mainType, req.secondType AS secondType
     , req.thirdType AS thirdType, req.fourthType AS fourthType
     FROM offers ofs

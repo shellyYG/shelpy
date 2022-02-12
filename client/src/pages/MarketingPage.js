@@ -110,6 +110,8 @@ const MarketingPage = (props) => {
                 key={
                   option.bookingId || `${option.requestId}-${option.offerId}`
                 }
+                helperAnonymous={option.helperAnonymous}
+                helpeeAnonymous={option.helpeeAnonymous}
                 helperId={option.helperId}
                 helpeeId={props.helpeeUserId}
                 partnerName={option.helperName}

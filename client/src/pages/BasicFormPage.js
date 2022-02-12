@@ -345,7 +345,7 @@ const BasicFormPage = (props) => {
           html: <p>{message}</p>,
           icon: 'success',
         });
-        navigate('/helper/add-service', { replace: true });
+        navigate('/helper/service-types', { replace: true });
       }
       dispatch(clearApplyHelperStatus());
       sweetAlertAndNavigate(applyHelperStatus, applyHelperStatusMessage);
@@ -419,7 +419,11 @@ const BasicFormPage = (props) => {
                     <div className='blankProfileImageBx'>
                       {' '}
                       <div className='uploadInnerDiv'>
-                        <label className='uploadLabel' for='profilePic'>
+                        <label
+                          className='uploadLabel'
+                          for='profilePic'
+                          style={{ fontSize: '12px' }}
+                        >
                           Upload Picture (Optional)
                         </label>
                         <input
@@ -489,7 +493,7 @@ const BasicFormPage = (props) => {
                 <DropDown
                   selected={age}
                   handleSelect={setAge}
-                  title={'Age *'}
+                  title={'Age (This will not be shown publicly)*'}
                   selectRef={ageRef}
                   options={ageOptions}
                 />
@@ -497,14 +501,16 @@ const BasicFormPage = (props) => {
               {!props.isHelpee && (
                 <div className='form-row'>
                   <LeftHalfLineTextBox
-                    title={'LinkedIn Link (or upload Resume)'}
+                    title={
+                      'LinkedIn Link (or upload Resume) (This will not be shown publicly)'
+                    }
                     placeholder={
                       'https://www.linkedin.com/in/your-linkedin-profile'
                     }
                     inputRef={linkedInUrlRef}
                   />
                   <div className='form-wrapper' style={{ margin: 'auto' }}>
-                    <label>Resume/files (or linkedin link)</label>
+                    <label>Resume/files (or linkedin link, this will not be shown publicly)</label>
                     {!certificate && (
                       <>
                         <label className='uploadLabel' for='resume'>
@@ -553,7 +559,7 @@ const BasicFormPage = (props) => {
                 </div>
               )}
 
-              <p className='fontSize17Title' style={{ marginTop: '16px'}}>
+              <p className='fontSize17Title' style={{ marginTop: '16px' }}>
                 What days are you available? (Can choose multiple)
               </p>
               <div
@@ -755,7 +761,9 @@ const BasicFormPage = (props) => {
               />
               <FullLineTextBox
                 title={'Notes'}
-                placeholder={'Please specify languages you speak (if you selected others above).'}
+                placeholder={
+                  'Please specify languages you speak (if you selected others above).'
+                }
                 inputRef={notesRef}
               />
               <ConfirmBtn

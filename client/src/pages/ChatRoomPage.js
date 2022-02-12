@@ -19,12 +19,15 @@ const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; /
 
 
 const ChatRoomPage = (props) => {
+  console.log('ChatRoomPage props: ', props);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getHelpeeAuthStatus());
     dispatch(getHelperAuthStatus());
   }, [dispatch]);
+
   const { helpeeUserId } = useSelector(
     (state) => state.helpee
   );
@@ -34,7 +37,6 @@ const ChatRoomPage = (props) => {
   const [searchParams] = useSearchParams();
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  console.log('messageList: ', messageList);
 
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
@@ -43,12 +45,10 @@ const ChatRoomPage = (props) => {
   const requestId = parseInt(searchParams.get('requestId'));
   const offerId = parseInt(searchParams.get('offerId'));
   const price = searchParams.get('price');
-  console.log('userId: ', userId);
-  
-  console.log('@ChatRoom: isHelpee?', props.isHelpee, 'roomId: ', roomId, 'userId: ', userId, 'helpeeId: ', helpeeUserId, 'helperId: ', helperUserId);
   
   const { allPotentialCustomers } = useSelector((state) => state.helper);
   const { allPotentialHelpers } = useSelector((state) => state.helpee);
+  console.log('allPotentialHelpers: ', allPotentialHelpers);
   
   const [showTaskSection, setShowTaskSection] = useState(true);
   const onBackButtonEvent = (e) => {
@@ -134,7 +134,7 @@ const ChatRoomPage = (props) => {
     if (helpeeUserId && props.isHelpee)
       dispatch(getPotentialHelpers({ helpeeUserId }));
   }, [helpeeUserId, props.isHelpee, dispatch]);
-  console.log('allPotentialCustomers: ', allPotentialCustomers);
+  // console.log('allPotentialCustomers: ', allPotentialCustomers);
 
   return (
     <>
@@ -203,7 +203,10 @@ const ChatRoomPage = (props) => {
               {!props.isHelpee &&
                 allPotentialCustomers.map((option) => (
                   <ChatRoomCard
+                    roomId={`${option.requestId}-${option.offerId}`}
                     isHelpee={false}
+                    helperAnonymous={option.helperAnonymous}
+                    helpeeAnonymous={option.helpeeAnonymous}
                     helperId={helperUserId}
                     helpeeId={option.helpeeId}
                     price={option.price}
@@ -211,7 +214,7 @@ const ChatRoomPage = (props) => {
                       option.bookingId ||
                       `${option.requestId}-${option.offerId}`
                     }
-                    partnerName={option.helpeeName}
+                    partnerName={option.helpeeUsername}
                     secondType={option.secondType}
                     thirdType={option.thirdType}
                     profilePicPath={option.profilePicPath}
@@ -223,6 +226,9 @@ const ChatRoomPage = (props) => {
               {props.isHelpee &&
                 allPotentialHelpers.map((option) => (
                   <ChatRoomCard
+                    roomId={`${option.requestId}-${option.offerId}`}
+                    helperAnonymous={option.helperAnonymous}
+                    helpeeAnonymous={option.helpeeAnonymous}
                     isHelpee={true}
                     helperId={option.helperId}
                     helpeeId={helpeeUserId}
@@ -231,7 +237,7 @@ const ChatRoomPage = (props) => {
                       option.bookingId ||
                       `${option.requestId}-${option.offerId}`
                     }
-                    partnerName={option.helperName}
+                    partnerName={option.helperUsername}
                     secondType={option.secondType}
                     thirdType={option.thirdType}
                     profilePicPath={option.profilePicPath}

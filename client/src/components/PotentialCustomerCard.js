@@ -9,6 +9,7 @@ function PotentialCustomerCard(props) {
   const [title, setTitle] = useState('');
   const [img, setImg] = useState('');
   console.log('props @potentialCustomerCard: ', props);
+
   useEffect(() => {
     switch (props.mainType) {
       case 'university':
@@ -27,7 +28,6 @@ function PotentialCustomerCard(props) {
         setImg('/university');
     }
   }, [props.mainType]);
-  console.log('props: ', props);
   
   function handleChat(e) {
     e.preventDefault(e);
@@ -41,18 +41,23 @@ function PotentialCustomerCard(props) {
       `/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&partnerName=${props.partnerName}`
     );
   }
-  console.log('props.bookingStatus: ', props.bookingStatus);
+  
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
-        <div className='helper-ImgBx'>
-          {img && (
+        {!props.helpeeAnonymous && (
+          <div className='helper-ImgBx'>
             <img
               src={`/images/${props.profilePicPath}`}
               alt={props.partnerName}
             ></img>
-          )}
-        </div>
+          </div>
+        )}
+        {!!props.helpeeAnonymous && (
+          <div className='smallBlankProfileImageBx'>
+            <div style={{ margin: 'auto', fontSize: '10px' }}>Anonymous</div>
+          </div>
+        )}
       </div>
       <div className='smallWidth'>
         <div className='content'>

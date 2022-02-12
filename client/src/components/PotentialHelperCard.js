@@ -52,14 +52,19 @@ function PotentialHelperCard(props) {
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
-        <div className='helper-ImgBx'>
-          {img && props.profilePicPath && (
+        {!props.helperAnonymous && img && props.profilePicPath && (
+          <div className='helper-ImgBx'>
             <img
               src={`/images/${props.profilePicPath}`}
               alt={props.partnerName}
             ></img>
-          )}
-        </div>
+          </div>
+        )}
+        {props.helperAnonymous && (
+          <div className='smallBlankProfileImageBx'>
+            <div style={{ margin: 'auto', fontSize: '10px' }}>Anonymous</div>
+          </div>
+        )}
       </div>
       <div className='smallWidth'>
         <div className='content'>
@@ -100,21 +105,30 @@ function PotentialHelperCard(props) {
           </div>
         </div>
       </div>
-      
-      <div className='checkBoxWidth'>
-        <div className='contentBx'>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            {!props.bookingStatus && (
-              <button className='btn-contact' onClick={handleBookHelper}>
-                Book {props.partnerName}
-              </button>
-            )}
-            <div >
-              <ChatIcon onClick={handleChat} partnerName={props.partnerName} />
-            </div>
+
+      {!props.bookingStatus && (
+        <div className='checkBoxWidth'>
+          <div className='bookWrapper'>
+            <button className='btn-contact' onClick={handleBookHelper}>
+              Book {props.partnerName}
+            </button>
           </div>
         </div>
-      </div>
+      )}
+      {props.bookingStatus && (
+        <div className='checkBoxWidth'>
+          <div className='bookWrapper'>
+            You are in booking process with {props.partnerName}. Please check
+            "My Bookings" Tab.
+          </div>
+        </div>
+      )}
+
+      {
+        <div className='checkBoxWidth'>
+          <ChatIcon onClick={handleChat} partnerName={props.partnerName} />
+        </div>
+      }
     </div>
   );
 }

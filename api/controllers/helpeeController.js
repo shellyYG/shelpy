@@ -55,7 +55,6 @@ const getHelpeeAllOrders = async (req, res) => {
 };
 
 const getHelpeeAllBookings = async (req, res) => {
-  console.log('@api/helpeeController->req.query: ', req.query);
   try {
     const { helpeeUserId } = req.query;
     const response = await helpeeModel.getHelpeeAllBookings({ helpeeUserId });

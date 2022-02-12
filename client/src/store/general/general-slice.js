@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const generalSlice = createSlice({
   name: 'booking',
   initialState: {
+    targetChatroomId: '',
     dropDownNavTarget: '',
     bookingStatus: '',
     bookingDate: '',
@@ -18,7 +19,8 @@ const generalSlice = createSlice({
       if (dropDownNavTarget) state.dropDownNavTarget = dropDownNavTarget;
     },
     setBookingStatus(state, action) {
-      const { bookingStatus, bookingDate, bookingTime, bookingNotes } = action.payload;
+      const { bookingStatus, bookingDate, bookingTime, bookingNotes } =
+        action.payload;
       if (bookingStatus) state.bookingStatus = bookingStatus;
       if (bookingDate) state.bookingDate = bookingDate;
       if (bookingTime) state.bookingTime = bookingTime;
@@ -30,12 +32,21 @@ const generalSlice = createSlice({
         bookingNotificationStatusTitle,
         bookingNotificationStatusMessage,
       } = action.payload;
-      if (bookingNotificationStatus) state.bookingNotificationStatus = bookingNotificationStatus;
+      if (bookingNotificationStatus)
+        state.bookingNotificationStatus = bookingNotificationStatus;
       if (bookingNotificationStatusTitle)
         state.bookingNotificationStatusTitle = bookingNotificationStatusTitle;
       if (bookingNotificationStatusMessage)
-        state.bookingNotificationStatusMessage = bookingNotificationStatusMessage;
+        state.bookingNotificationStatusMessage =
+          bookingNotificationStatusMessage;
     },
+    onClickUpdateChatroomRoom(state, action) {
+      const {
+        targetChatroomId,
+      } = action.payload;
+      if (targetChatroomId)
+        state.targetChatroomId = targetChatroomId;
+    }
   },
 });
 

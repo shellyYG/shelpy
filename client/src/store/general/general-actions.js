@@ -53,6 +53,16 @@ export const postBookingStatus = (data) => {
   };
 };
 
+export const onClickUpdateChatroomRoom = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      generalActions.onClickUpdateChatroomRoom({
+        targetChatroomId: data.targetChatroomId,
+      })
+    );
+  };
+};
+
 export const getBookingStatus = (data) => {
   console.log('getBookingStatus->data: ', data);
   return async (dispatch) => {

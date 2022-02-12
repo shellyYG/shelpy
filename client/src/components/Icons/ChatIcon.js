@@ -8,7 +8,7 @@ const ChatIcon = (props) => {
         style={{ cursor: 'pointer', display: 'flex', flexDirection: 'row' }}
       >
         <BsChatDotsFill color='#93ccea' />
-        <div style={{ margin: 'auto'}}>
+        <div style={{ margin: 'auto 0px'}}>
           <p style={{ marginLeft: '5px' }}>Chat with {props.partnerName}</p>
         </div>
       </div>

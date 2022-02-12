@@ -23,7 +23,6 @@ async function getHelpeeAllBookings(data) {
   FROM bookings bookings
   LEFT JOIN helper_account acc ON bookings.helperId = acc.id
   WHERE helpeeId=${data.helpeeUserId} ORDER BY id DESC;`;
-  console.log('sql: ', sqlSimplified)
   const allBookings = await query(sqlSimplified);
   return { data: { allBookings } };
 }
@@ -32,8 +31,8 @@ async function getPotentialHelpers(data) {
   const { helpeeUserId } = data;
   const sql = `SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus, req.id AS requestId
     , req.country AS country
-    , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId
-    , helpee.id AS helpeeId, helpee.username AS helpeeUsername
+    , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, acc.isAnonymous AS helperAnonymous
+    , helpee.id AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous
     , acc.id AS helperId, acc.username AS helperUsername, acc.profilePicPath AS profilePicPath
 		, req.mainType AS mainType, req.secondType AS secondType
     , req.thirdType AS thirdType, req.fourthType AS fourthType

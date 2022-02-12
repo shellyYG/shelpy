@@ -50,12 +50,12 @@ const HelpeeDashboardPage = (props) => {
         <HelpeeDashboardSection
           helpeeDashboardTarget={helpeeDashboardTarget}
           value='allRequests'
-          title='Your Requests'
+          title='My Requests'
         />
         <HelpeeDashboardSection
           helpeeDashboardTarget={helpeeDashboardTarget}
           value='allBookings'
-          title='Your Bookings'
+          title='My Bookings'
         />
         <HelpeeDashboardSection
           helpeeDashboardTarget={helpeeDashboardTarget}
@@ -166,6 +166,8 @@ const HelpeeDashboardPage = (props) => {
                 key={
                   option.bookingId || `${option.requestId}-${option.offerId}`
                 }
+                helperAnonymous={option.helperAnonymous}
+                helpeeAnonymous={option.helpeeAnonymous}
                 helperId={option.helperId}
                 helpeeId={props.helpeeUserId}
                 helpeeUsername={option.helpeeUsername}
