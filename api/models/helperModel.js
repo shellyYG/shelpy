@@ -25,7 +25,7 @@ async function getAllMarketingOffers(data) {
   SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction 
   FROM offers ofs 
   INNER JOIN helper_account acc ON ofs.userId = acc.id
-  WHERE acc.isMarketing = true ORDER BY id DESC;`;
+  WHERE acc.isMarketing = true ORDER BY id, acc.score DESC;`;
   const allMKTOffers = await query(sql);
   return { data: { allMKTOffers } };
 }

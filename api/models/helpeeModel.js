@@ -44,7 +44,7 @@ LEFT JOIN requests req ON
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
 LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id
 WHERE helpee.id = ${helpeeUserId} AND NOT ofs.userId IS NULL
-ORDER BY req.id DESC;`;
+ORDER BY req.id, acc.score DESC;`;
   const allPotentialHelpers = await query(sql);
   return { data: { allPotentialHelpers } };
 }
