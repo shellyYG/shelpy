@@ -150,6 +150,10 @@ body {
   width: 30%;
   margin: 0px auto;
 }
+.mktFilterWrapper {
+  width: 24%;
+  margin: 0px auto;
+}
 
 .section-left-align {
   justify-content: start;
@@ -1490,6 +1494,10 @@ input[type="checkbox" i] {
     width: 30%;
     margin: 0px auto;
   }
+  .mktFilterWrapper {
+    width: 24%;
+    margin: 0px auto;
+  }
   .nonActiveSelectedOrderBtn {
     width: 100%;
     margin: 5px auto;
@@ -1641,6 +1649,10 @@ input[type="checkbox" i] {
     width: 100%;
     margin: 0px auto;
   }
+  .mktFilterWrapper {
+    width: 100%;
+    margin: 0px auto;
+  }
   .nonActiveSelectedOrderBtn {
     margin: 5px auto;
   }
@@ -1653,6 +1665,10 @@ input[type="checkbox" i] {
     height: 112vh;
   }
   .dashboadTargetWrapper {
+    width: 100%;
+    margin: 0px auto;
+  }
+  .mktFilterWrapper {
     width: 100%;
     margin: 0px auto;
   }

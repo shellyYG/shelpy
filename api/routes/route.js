@@ -52,6 +52,7 @@ const {
   confirmHelperCanChangePassword,
   sendHelperPasswordResetLink,
   getHelperAllBookings,
+  getAllMarketingOffers,
 } = require('../controllers/helperController');
 
 const {
@@ -381,5 +382,7 @@ router.route('/api/booking-status').post(wrapAsync(updateBookingStatus));
 router.route('/api/helpee/pay').post(wrapAsync(payHelper));
 
 router.route('/api/booking-status').get(wrapAsync(getBookingStatus));
+
+router.route('/api/marketing-offers').get(wrapAsync(getAllMarketingOffers));
 
 module.exports = router;

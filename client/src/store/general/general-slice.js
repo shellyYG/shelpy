@@ -12,6 +12,7 @@ const generalSlice = createSlice({
     bookingNotificationStatus: 'Initial',
     bookingNotificationStatusTitle: '',
     bookingNotificationStatusMessage: '',
+    allMKTOffers: [],
   },
   reducers: {
     setDropDownNavTarget(state, action) {
@@ -41,11 +42,12 @@ const generalSlice = createSlice({
           bookingNotificationStatusMessage;
     },
     onClickUpdateChatroomRoom(state, action) {
-      const {
-        targetChatroomId,
-      } = action.payload;
-      if (targetChatroomId)
-        state.targetChatroomId = targetChatroomId;
+      const { targetChatroomId } = action.payload;
+      if (targetChatroomId) state.targetChatroomId = targetChatroomId;
+    },
+    updateAllMarketingOffers(state, action) {
+      const { allMKTOffers } = action.payload;
+      if (allMKTOffers) state.allMKTOffers = allMKTOffers;
     }
   },
 });

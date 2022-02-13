@@ -58,3 +58,46 @@ export const jobUniOptionsHelper = [
     imgPath: '/mom.jpeg',
   },
 ];
+
+export const jobUniMarketingOptions = [
+  { value: 'default', label: 'Select Main Type' },
+  {
+    value: 'university',
+    label: 'University',
+    imgPath: '/university.jpeg',
+  },
+  {
+    value: 'job',
+    label: 'Job',
+    imgPath: '/job.jpeg',
+  },
+  {
+    value: 'selfEmployed',
+    label: 'Self-Employed',
+    imgPath: '/mom.jpeg',
+  },
+];
+
+export const secondTypeOptions = {
+  default: [{ value: 'default', label: 'Please Select' }],
+  university: [
+    { value: 'default', label: 'Please Select' },
+    { value: 'Business', label: 'Business' },
+    { value: 'Science', label: 'Science' },
+  ],
+  job: [
+    { value: 'default', label: 'Please Select' },
+    { value: 'Medical', label: 'Medical' },
+    { value: 'Software', label: 'Software' },
+    { value: 'Blockchain', label: 'Blockchain' },
+    { value: 'Finance', label: 'Finance' },
+    { value: 'Consulting', label: 'Consulting' },
+  ],
+  selfEmployed: [
+    { value: 'default', label: 'Please Select' },
+    { value: 'Entreprenuer', label: 'Entreprenuer' },
+    { value: 'House Wife', label: 'House Wife' },
+    { value: 'House Husband', label: 'House Husband' },
+    { value: 'Freelancer', label: 'Freelancer' },
+  ],
+};

@@ -116,6 +116,23 @@ const getHelperAllOffers = async (req, res) => {
   }
 };
 
+const getAllMarketingOffers = async (req, res) => {
+  console.log('@controllers getAllMarketingOffers...');
+  try {
+    const response = await helperModel.getAllMarketingOffers();
+    if (response && response.data) {
+      res.status(200).json({
+        allMKTOffers: response.data.allMKTOffers,
+      });
+    } else {
+      throw Error('No marketing offers found from server.');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const getHelperAllBookings = async (req, res) => {
   try {
     const { helperUserId } = req.query;
@@ -199,4 +216,5 @@ module.exports = {
   confirmHelperCanChangePassword,
   sendHelperPasswordResetLink,
   getHelperAllBookings,
+  getAllMarketingOffers,
 };

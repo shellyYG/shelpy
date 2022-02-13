@@ -325,7 +325,6 @@ export const departmentOptions = {
   ],
   Others: [{ value: 'Others', label: othersText }],
 };
-;
 
 export const degreeOptions = [
   { value: 'default', label: 'Please Select' },
@@ -383,8 +382,12 @@ export const yearsOptions = [
 export const ageOptions = [
   { value: 'default', label: 'Please Select' },
   {
-    value: '16-20 years old',
-    label: '16-20 years old',
+    value: 'below 18 years old',
+    label: 'below 18 years old',
+  },
+  {
+    value: '18-20 years old',
+    label: '18-20 years old',
   },
   {
     value: '21-25 years old',

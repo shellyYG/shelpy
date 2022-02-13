@@ -2,6 +2,7 @@ import axios from 'axios';
 import { generalActions } from './general-slice';
 
 const bookingStatusPath = '/api/booking-status';
+const getAllMarketingOffersPath = '/api/marketing-offers';
 
 export const postBookingStatus = (data) => {
   console.log('postBookingStatus->data: ', data);
@@ -122,5 +123,28 @@ export const onClickUpdateActiveIconTarget = (data) => {
         dropDownNavTarget: data.dropDownNavTarget,
       })
     );
+  };
+};
+
+export const getAllMarketingOffers = (data) => {
+  return async (dispatch) => {
+    console.log('@general action->getAllMarketingOffers...data: ', data);
+    try {
+      const response = await axios.get(getAllMarketingOffersPath);
+      console.log('response: ', response);
+      dispatch(
+        generalActions.updateAllMarketingOffers({
+          allMKTOffers: response.data.allMKTOffers,
+        })
+      );
+    } catch (error) {
+      console.log('Ooopsssss ');
+      console.error(error);
+      dispatch(
+        generalActions.updateAllMarketingOffers({
+          allMKTOffers: [],
+        })
+      );
+    }
   };
 };

@@ -1,55 +1,85 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PotentialHelperCard from '../components/PotentialHelperCard';
-import {
-  getAllOrders,
-  getPotentialHelpers,
-} from '../store/helpee/helpee-actions';
-import { useNavigate } from 'react-router-dom';
-import RequestCard from '../components/RequestCard';
+import OfferCard from '../components/OfferCard';
+import DropDown from '../components/Dropdown';
+import { jobUniMarketingOptions } from '../store/options/navigate-options';
+import { getAllMarketingOffers } from '../store/general/general-actions';
+import MarketingCard from '../components/MarketingCard';
 
-const MarketingPage = (props) => {
+import { secondTypeOptions } from '../store/options/navigate-options';
+import { countryOptions } from '../store/options/service-options';
+
+const HelpeeDashboardPage = (props) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [isPotentialHelpersSelected, setIsPotentialHelpersSelected] =
-    useState(true);
-  const [allRequests, setAllRequests] = useState([]);
+  const mainTypeRef = useRef();
+  const secondTypeRef = useRef();
+  const countryRef = useRef();
 
-  console.log('You are now: ', props.helpeeUserId, props.helpeeName);
-  useEffect(() => {
-    dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
-    dispatch(getPotentialHelpers({ helpeeUserId: props.helpeeUserId }));
-  }, [props.helpeeUserId, dispatch]);
+  const [mainType, setMainType] = useState('default');
+  const [secondType, setSecondType] = useState('default');
+  const [country, setCountry] = useState('default');
+  const [filteredOffers, setFilteredOffers] = useState([]);
+  const [matchedSecondTypes, setMatchedSecondTypes] = useState([]);
 
-  const { allOrders, allPotentialHelpers } = useSelector(
-    (state) => state.helpee
+  const { allMKTOffers } = useSelector((state) => state.general);
+
+  console.log(
+    'mainType: ',
+    mainType,
+    'secondType: ',
+    secondType,
+    'allMKTOffers: ', allMKTOffers,
+    'filteredOffers: ',
+    filteredOffers,
+    'country: ',
+    country
   );
-  console.log('allOrders: ', allOrders);
 
   useEffect(() => {
-    if (allOrders) {
-      setAllRequests(allOrders);
+    if (mainType === 'default') {
+      setFilteredOffers(allMKTOffers);
     }
-  }, [allOrders]);
+    if (mainType !== 'default') {
+      const filteredOffers = allMKTOffers.filter(
+        (offer) => offer.mainType === mainType
+      );
+      setFilteredOffers(filteredOffers);
+    }
+    if (mainType && secondType !== 'default') {
+      const filteredOffers = allMKTOffers.filter(
+        (offer) =>
+          offer.mainType === mainType && offer.secondType === secondType
+      );
+      setFilteredOffers(filteredOffers);
+    }
+    if (mainType && secondType !== 'default' && country !== 'default') {
+      const filteredOffers = allMKTOffers.filter(
+        (offer) =>
+          offer.mainType === mainType &&
+          offer.secondType === secondType &&
+          offer.country === country
+      );
+      setFilteredOffers(filteredOffers);
+    }
+  }, [allMKTOffers, mainType, secondType, country]);
 
-  function handleSelectActiveOrders(e) {
-    e.preventDefault(e);
-    setIsPotentialHelpersSelected(true);
-  }
-  function handleSelectallOrders(e) {
-    e.preventDefault(e);
-    setIsPotentialHelpersSelected(false);
-  }
+  useEffect(() => {
+    dispatch(getAllMarketingOffers());
+  }, [dispatch]);
 
-  function handleAddRequest(e) {
-    e.preventDefault(e);
-    navigate('/helpee/service-types', { replace: true });
-  }
+  useEffect(() => {
+    if (mainType) {
+      const secondTypes = secondTypeOptions[mainType];
+      setMatchedSecondTypes(secondTypes);
+      setSecondType('default');
+    }
+  }, [mainType]);
 
-  function handleSearchHelpers(e) {
-    e.preventDefault(e);
-    navigate('/helper-lists', { replace: true });
-  }
+  useEffect(() => { // clear out country options when secondType is selected
+    if (secondType) {
+      setCountry('default');
+    }
+  }, [secondType]);
 
   return (
     <div className='section-left-align'>
@@ -62,114 +92,64 @@ const MarketingPage = (props) => {
         )}
       </div>
       <div className='orderHistoryBtnWrapper'>
-        <button
-          className={
-            isPotentialHelpersSelected
-              ? 'activeSelectedOrderBtn'
-              : 'nonActiveSelectedOrderBtn'
-          }
-          onClick={handleSelectActiveOrders}
-        >
-          Potential Helpers
-        </button>
-        <button
-          className={
-            !isPotentialHelpersSelected
-              ? 'activeSelectedOrderBtn'
-              : 'nonActiveSelectedOrderBtn'
-          }
-          onClick={handleSelectallOrders}
-        >
-          Your Requests
-        </button>
+        <div className='mktFilterWrapper'>
+          <DropDown
+            selected={mainType}
+            handleSelect={setMainType}
+            selectRef={mainTypeRef}
+            options={jobUniMarketingOptions}
+            titleColor='black'
+            titleSize='10px'
+          />
+        </div>
+        <div className='mktFilterWrapper'>
+          <DropDown
+            selected={secondType}
+            handleSelect={setSecondType}
+            selectRef={secondTypeRef}
+            options={matchedSecondTypes}
+          />
+        </div>
+        <div className='mktFilterWrapper'>
+          <DropDown
+            selected={country}
+            handleSelect={setCountry}
+            selectRef={countryRef}
+            options={countryOptions}
+            titleColor='black'
+            titleSize='10px'
+          />
+        </div>
       </div>
-      <div className='task-container'></div>
-      {isPotentialHelpersSelected && allPotentialHelpers && (
-        <div className='task-container'>
-          {(!allRequests || allRequests.length === 0) && (
-            <div
-              className='history-card'
-              style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
-            >
-              No matched helpers yet
-            </div>
-          )}
+      <div className='task-container'>
+        {(!filteredOffers || filteredOffers.length === 0) && (
           <div
             className='history-card'
-            style={{ boxShadow: 'none', border: 'none' }}
+            style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
           >
-            <button className='btn-contact' onClick={handleSearchHelpers}>
-              Search Helpers
-            </button>
+            No Public Offers yet
           </div>
-          {allPotentialHelpers.map(
-            (
-              option // TODO: changed to orders
-            ) => (
-              <PotentialHelperCard
-                key={
-                  option.bookingId || `${option.requestId}-${option.offerId}`
-                }
-                helperAnonymous={option.helperAnonymous}
-                helpeeAnonymous={option.helpeeAnonymous}
-                helperId={option.helperId}
-                helpeeId={props.helpeeUserId}
-                partnerName={option.helperName}
-                mainType={option.mainType}
-                secondType={option.secondType}
-                thirdType={option.thirdType}
-                profilePicPath={option.profilePicPath}
-                country={option.country}
-                requestId={option.requestId}
-                offerId={option.offerId}
-                price={option.price}
-                bookingStatus={option.bookingStatus}
-              />
-            )
-          )}
-        </div>
-      )}
-      {!isPotentialHelpersSelected && allRequests && (
-        <div className='task-container'>
-          {(!allRequests || allRequests.length === 0) && (
-            <div
-              className='history-card'
-              style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
-            >
-              No Requests yet
-            </div>
-          )}
-          <div
-            className='history-card'
-            style={{ boxShadow: 'none', border: 'none' }}
-          >
-            <button className='btn-contact' onClick={handleAddRequest}>
-              Add a Request
-            </button>
-          </div>
-          {allRequests.map((option) => (
-            <RequestCard
-              key={option.id}
-              requestId={option.id}
-              mainType={option.mainType}
-              secondType={option.secondType}
-              thirdType={option.thirdType}
-              country={option.country}
-              bookingStatus={option.bookingStatus}
-              helpeeId={props.helpeeUserId}
-              appointmentDate={option.appointmentDate}
-              appointmentTime={option.appointmentTime}
-              offerId={option.offerId}
-              price={option.price}
-              helperId={option.helperId}
-              helperName={option.helperName}
-              bookingId={option.bookingId}
-            />
-          ))}
-        </div>
-      )}
+        )}
+        <div
+          className='history-card'
+          style={{ boxShadow: 'none', border: 'none' }}
+        ></div>
+        {filteredOffers.map((option) => (
+          <MarketingCard
+            key={option.id}
+            id={option.id}
+            mainType={option.mainType}
+            secondType={option.secondType}
+            thirdType={option.thirdType}
+            fourthType={option.fourthType}
+            country={option.country}
+            helpeeId={props.helpeeUserId}
+            notes={option.notes}
+          />
+        ))}
+      </div>
     </div>
   );
 };
 
-export default MarketingPage;
+export default HelpeeDashboardPage;

@@ -4,7 +4,7 @@ function DropDown(props) {
   };
   return (
     <div className='form-wrapper'>
-      <label>{props.title}</label>
+      <label style={{ color: props.titleColor || '', fontSize: props.titleSize || '' }}>{props.title}</label>
       <select
         ref={props.selectRef}
         onChange={handleSelect}

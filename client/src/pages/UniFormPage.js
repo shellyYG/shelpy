@@ -50,10 +50,10 @@ const UniFormPage = (props) => {
   }
   
   const [country, setCountry] = useState('default');
-  const [school, setschool] = useState('default');
+  const [school, setSchool] = useState('default');
   const [matchedDepartments, setMatchedDepartments] = useState([]);
-  const [department, setdepartment] = useState('default');
-  const [degree, setdegree] = useState('default');
+  const [department, setDepartment] = useState('default');
+  const [degree, setDegree] = useState('default');
   const [enableBtn, setEnableBtn] = useState(false);
 
   const { requestStatus, requestStatusTitle, requestStatusMessage } =
@@ -206,6 +206,9 @@ const UniFormPage = (props) => {
       setMatchedDepartments(departments);
     }
   }, [school]);
+
+  console.log('matchedDepartments: ', matchedDepartments);
+
   return (
     <div
       className='main-content-wrapper'
@@ -222,14 +225,14 @@ const UniFormPage = (props) => {
               <div className='form-row'>
                 <DropDown
                   selected={school}
-                  handleSelect={setschool}
+                  handleSelect={setSchool}
                   title={'School *'}
                   selectRef={schoolRef}
                   options={schoolOptions}
                 />
                 <DropDown
                   selected={department}
-                  handleSelect={setdepartment}
+                  handleSelect={setDepartment}
                   title={'Department *'}
                   selectRef={departmentRef}
                   options={matchedDepartments}
@@ -245,7 +248,7 @@ const UniFormPage = (props) => {
                 />
                 <DropDown
                   selected={degree}
-                  handleSelect={setdegree}
+                  handleSelect={setDegree}
                   title={'Degree *'}
                   selectRef={degreeRef}
                   options={degreeOptions}

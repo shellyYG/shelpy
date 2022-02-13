@@ -39,7 +39,7 @@ async function getPotentialHelpers(data) {
     FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
 LEFT JOIN requests req ON 
-		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType AND ofs.thirdType = req.thirdType
+		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
 LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id

@@ -54,6 +54,10 @@ function App() {
       />
       <Routes>
         <Route path='/about' element={<AboutPage />} />
+        <Route
+          path='/marketing/offers'
+          element={<MarketingPage />}
+        />
         <Route path='/' element={<Navigate replace to='/home' />} />
         <Route
           path='/home'
