@@ -19,6 +19,7 @@ import {
 const MySwal = withReactContent(Swal);
 
 const BookingConfirmPage = (props) => {
+  console.log('@BookingConfirmPage props: ', props);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const meetDateRef = useRef();
@@ -27,12 +28,16 @@ const BookingConfirmPage = (props) => {
 
   const [searchParams] = useSearchParams();
 
+
+  const bookingId = searchParams.get('bookingId');
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
+  const userIdNumber = parseInt(userId.split('_')[1]);
+  
   const partnerName = searchParams.get('partnerName');
   const requestId = searchParams.get('requestId');
   const offerId = searchParams.get('offerId');
-  const price = parseInt(searchParams.get('price')); // parseInt?
+  const price = parseInt(searchParams.get('price'));
 
   const helpeeId = parseInt(searchParams.get('helpeeId'));
   const helperId = parseInt(searchParams.get('helperId'));
@@ -74,15 +79,8 @@ const BookingConfirmPage = (props) => {
  
   async function handleChangeBooking(e) {
     e.preventDefault();
-    const data = {
-      requestId,
-      offerId,
-      bookingStatus: 'helperAskChange',
-    };
-    dispatch(postBookingStatus(data));
-    setIsLoading(true);
     navigate(
-      `/helper/chatroom?roomId=${roomId}&userId=helper${userId}&partnerName=${partnerName}&requestId=${requestId}&offerId=${offerId}&bookingStatus=${bookingStatus}`
+      `/helper/chatroom?roomId=${roomId}&userId=helper_${userIdNumber}&partnerName=${partnerName}&requestId=${requestId}&offerId=${offerId}&bookingStatus=${bookingStatus}&bookingId=${bookingId}`
     );
   }
   async function handleConfirm(e) {
@@ -123,6 +121,7 @@ const BookingConfirmPage = (props) => {
         appointmentTimestamp: unixTime,
         notes: notesRef.current.value,
         bookingStatus: 'created',
+        bookingId,
         requestId,
         offerId,
         helpeeId,
@@ -142,6 +141,7 @@ const BookingConfirmPage = (props) => {
       const data = {
         requestId,
         offerId,
+        bookingId,
         bookingStatus: 'helperConfirmed',
       };
       dispatch(postBookingStatus(data));

@@ -196,6 +196,8 @@ export const countryOptions = [
   { value: 'USA', label: 'USA' },
   { value: 'UK', label: 'UK' },
   { value: 'Germany', label: 'Germany' },
+  { value: 'Austria', label: 'Austria' },
+  { value: 'Swiss', label: 'Swiss' },
   { value: 'France', label: 'France' },
   { value: 'Italy', label: 'Italy' },
   { value: 'HK', label: 'HK' },

@@ -108,13 +108,32 @@ export const getPotentialCustomers = (data) => {
   console.log('getPotentialCustomers: ', data);
   return async (dispatch) => {
     if (data && data.helperUserId) {
+      const allPotentialCustomers = [];
       try {
-        const response = await axios.get(getPotentialCustomersPath, {
+        const matchedCustomerRes = await axios.get(getPotentialCustomersPath, {
           params: { helperUserId: data.helperUserId },
         });
+        const bookingsRes = await axios.get(getAllBookingsPath, {
+          params: { helperUserId: data.helperUserId },
+        });
+        if (matchedCustomerRes && matchedCustomerRes.data) {
+          const matchedCustomers = matchedCustomerRes.data.allPotentialCustomers;
+          matchedCustomers.forEach((h) => {
+            allPotentialCustomers.push(h);
+          });
+          const matchedHelperIds = matchedCustomers.map((p) => p.helperId);
+          if (bookingsRes && bookingsRes.data) {
+            const bookings = bookingsRes.data.allBookings || [];
+            for (let i = 0; i < bookings.length; i++) {
+              if (matchedHelperIds.indexOf(bookings[i].helpeeId) === -1) {
+                allPotentialCustomers.push(bookings[i]);
+              }
+            }
+          }
+        }
         dispatch(
           helperActions.updateAllPotentialCustomers({
-            allPotentialCustomers: response.data.allPotentialCustomers,
+            allPotentialCustomers,
           })
         );
       } catch (error) {

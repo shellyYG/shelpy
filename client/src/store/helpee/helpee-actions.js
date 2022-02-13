@@ -172,14 +172,36 @@ export const getAllOrders = (data) => {
 export const getPotentialHelpers = (data) => {
   return async (dispatch) => {
     if (data && data.helpeeUserId) {
+      const allPotentialHelpers = [];
       try {
-        const response = await axios.get(getPotentialHelpersPath, {
+        const matchedHelpersRes = await axios.get(getPotentialHelpersPath, {
           params: { helpeeUserId: data.helpeeUserId },
         });
-        if (response && response.data && response.data.allPotentialHelpers) {
+        const bookingsRes = await axios.get(getAllBookingsPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        if (matchedHelpersRes && matchedHelpersRes.data) {
+          const matchedHelpers = matchedHelpersRes.data.allPotentialHelpers;
+          matchedHelpers.forEach((h)=>{
+            allPotentialHelpers.push(h);
+          })
+          const matchedHelperIds = matchedHelpers.map((p) => p.helperId);
+          if (bookingsRes && bookingsRes.data) {
+            const bookings = bookingsRes.data.allBookings || [];
+            for (let i = 0; i < bookings.length; i++) {
+              if (matchedHelperIds.indexOf(bookings[i].helperId) === -1) { // not exist in matchedHelperIds
+                allPotentialHelpers.push(bookings[i]);
+              }
+            }
+          }
+        }
+        console.log('allPotentialHelpers: ', allPotentialHelpers);
+        if (
+          allPotentialHelpers
+        ) {
           dispatch(
             helpeeActions.updateAllPotentialHelpers({
-              allPotentialHelpers: response.data.allPotentialHelpers,
+              allPotentialHelpers,
             })
           );
         }

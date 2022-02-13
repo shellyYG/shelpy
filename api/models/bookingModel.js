@@ -23,6 +23,7 @@ async function updateBookingStatus(data) {
     appointmentTime,
     appointmentTimestamp,
     notes,
+    bookingId
   } = data;
   console.log('@Model updateBookingStatus->data: ', data);
   const filteredBookingNotes = notes || '';
@@ -34,7 +35,8 @@ async function updateBookingStatus(data) {
         UPDATE bookings SET bookingStatus = '${bookingStatus}', appointmentDate = '${appointmentDate}', appointmentTime = '${appointmentTime}', appointmentTimeStamp = '${appointmentTimestamp}', notes='${filteredBookingNotes}' WHERE requestId = ${requestId} AND offerId = ${offerId}`;
     } else {
       sql = `
-        UPDATE bookings SET bookingStatus = '${bookingStatus}' WHERE requestId = ${requestId} AND offerId = ${offerId}`;
+        UPDATE bookings SET bookingStatus = '${bookingStatus}' WHERE id = ${bookingId}`;
+      console.log('updateBookingStatus update sql: ', sql);
     }
     console.log(sql);
     

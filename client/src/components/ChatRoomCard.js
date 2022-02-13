@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onClickUpdateChatroomRoom } from '../store/general/general-actions';
@@ -6,18 +6,32 @@ import { onClickUpdateChatroomRoom } from '../store/general/general-actions';
 function ChatRoomCard(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const buttonRef = useRef();
   const [active, setActive] = useState(false);
   const { targetChatroomId } = useSelector((state) => state.general);
-  console.log('helperAnonymous? ', props.helperAnonymous, 'helpee?', props.helpeeAnonymous);
+
+  useEffect(() => {
+    if (props.roomId === props.pageRoomId && props.offerId === props.pageOfferId) {
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+  }, [props.roomId, props.pageRoomId, props.offerId, props.pageOfferId]);
+  useEffect(() => {
+    if (targetChatroomId && targetChatroomId !== props.roomId) {
+      setActive(false);
+    }
+  }, [targetChatroomId, props.roomId]);
+  
   function handleOnClick(e) {
     e.preventDefault();
     if (!props.isHelpee) {
       navigate(
-        `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helper${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+        `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
       );
     } else {
       navigate(
-        `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helpee${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+        `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helpee_${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
       );
     }
     const data = {
@@ -28,18 +42,13 @@ function ChatRoomCard(props) {
     } catch (err) {
       console.error(err);
     }
-    setActive(!active);
   }
-  useEffect(() => {
-    if (targetChatroomId !== props.roomId) {
-      setActive(false);
-    }
-  }, [targetChatroomId, props.roomId]);
-  console.log('helpeeUserName: ', props.helpeeUsername, 'helperUsername: ', props.helperUsername, 'props.isHelpee: ', props.isHelpee, 'props.helperAnonymous: ', props.helperAnonymous);
+  
   return (
     <div
       className={active ? 'task-card-active' : 'task-card'}
       onClick={handleOnClick}
+      ref={buttonRef}
     >
       <div className='chatRoomContent'>
         {props.isHelpee && !props.helperAnonymous && (

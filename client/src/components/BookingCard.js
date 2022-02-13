@@ -56,21 +56,25 @@ function BookingCard(props) {
   useEffect(() => {
     switch (props.bookingStatus) {
       case 'created':
-        setHelpeeFilteredBookingStatus(`Waiting for ${props.helperUsername} to confirm`);
+        setHelpeeFilteredBookingStatus(
+          `Waiting for ${props.helperUsername} to confirm`
+        );
         break;
       case 'helperConfirmed':
         setHelpeeFilteredBookingStatus(`Waiting for  paying.`);
         break;
       case 'paid':
-        setHelpeeFilteredBookingStatus(`Meet ${props.helperUsername} on ${props.appointmentDate} at ${props.appointmentTime}. We will send you a zoom link to your email 10 min before the meeting.`);
+        setHelpeeFilteredBookingStatus(
+          `Meet ${props.helperUsername} on ${props.appointmentDate} at ${props.appointmentTime}. We will send you a zoom link to your email 10 min before the meeting.`
+        );
         break;
       case 'fulfilled':
-        setHelpeeFilteredBookingStatus();
+        setHelpeeFilteredBookingStatus('');
         break;
       default:
-        setHelpeeFilteredBookingStatus();
+        setHelpeeFilteredBookingStatus('');
     }
-  }, [props.bookingStatus, props.helperUsername]);
+  }, [props.bookingStatus, props.helperUsername, props.appointmentDate, props.appointmentTime]);
 
   useEffect(() => {
     switch (props.bookingStatus) {
@@ -80,7 +84,9 @@ function BookingCard(props) {
         );
         break;
       case 'helperConfirmed':
-        setHelperFilteredBookingStatus(`Waiting for ${props.helpeeUsername} to pay`);
+        setHelperFilteredBookingStatus(
+          `Waiting for ${props.helpeeUsername} to pay`
+        );
         break;
       case 'paid':
         setHelperFilteredBookingStatus(
@@ -88,27 +94,27 @@ function BookingCard(props) {
         );
         break;
       case 'fulfilled':
-        setHelperFilteredBookingStatus();
+        setHelperFilteredBookingStatus('');
         break;
       default:
-        setHelperFilteredBookingStatus();
+        setHelperFilteredBookingStatus('');
     }
-  }, [props.bookingStatus, props.helperUsername]);
+  }, [props.bookingStatus, props.helperUsername, props.appointmentDate, props.appointmentTime, props.helpeeUsername]);
 
   async function handleBookHelper(e) {
     e.preventDefault();
     console.log(
-      `/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
+      `/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
     );
-    // navigate(
-    //   `/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`,
-    //   { replace: true }
-    // );
+    navigate(
+      `/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`,
+      { replace: true }
+    );
   }
   function handleBookingConfirmation(e) {
     e.preventDefault(e);
     navigate(
-      `/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&partnerName=${props.partnerName}`
+      `/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}&partnerName=${props.partnerName}`
     );
   }
   
@@ -117,9 +123,8 @@ function BookingCard(props) {
     console.log('handlePayHelper...');
     try {
       const data = {
-        requestId: props.requestId,
-        offerId: props.offerId,
         bookingStatus: 'paid',
+        bookingId: props.bookingId,
       };
       dispatch(postPayHelper(data));
       setIsLoading(true);
@@ -226,18 +231,20 @@ function BookingCard(props) {
           </div>
         </div>
       )}
-      {!props.isHelpee && (props.bookingStatus === 'helperConfirmed' || props.bookingStatus === 'paid') && (
-        <div className='bookingStatusWidth'>
-          <div className='contentBx'>
-            <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking ID: {props.id}
-            </p>
-            <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking Status: {helperFilteredBookingStatus}
-            </p>
+      {!props.isHelpee &&
+        (props.bookingStatus === 'helperConfirmed' ||
+          props.bookingStatus === 'paid') && (
+          <div className='bookingStatusWidth'>
+            <div className='contentBx'>
+              <p style={{ fontWeight: '12px', padding: '6px' }}>
+                Booking ID: {props.id}
+              </p>
+              <p style={{ fontWeight: '12px', padding: '6px' }}>
+                Booking Status: {helperFilteredBookingStatus}
+              </p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       {props.isHelpee && props.bookingStatus === 'helperConfirmed' && (
         <div className='bookingStatusWidth'>
           <div className='contentBx'>
@@ -250,18 +257,35 @@ function BookingCard(props) {
           </div>
         </div>
       )}
-      {props.isHelpee && (props.bookingStatus === 'created' || props.bookingStatus === 'paid') && (
-        <div className='bookingStatusWidth'>
-          <div className='contentBx'>
-            <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking ID: {props.id}
-            </p>
-            <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking Status: {helpeeFilteredBookingStatus}
-            </p>
+      {props.isHelpee &&
+        (props.bookingStatus === 'created') && (
+          <div className='bookingStatusWidth'>
+            <div className='contentBx'>
+              <p style={{ fontWeight: '12px', padding: '6px' }}>
+                Booking ID: {props.id}
+              </p>
+              <p style={{ fontWeight: '12px', padding: '6px' }}>
+                Booking Status: {helpeeFilteredBookingStatus}
+              </p>
+            </div>
+            <button className='btn-contact' onClick={handleBookHelper}>
+              Propose new booking time to {props.partnerName}
+            </button>
           </div>
-        </div>
-      )}
+        )}
+      {props.isHelpee &&
+        (props.bookingStatus === 'paid') && (
+          <div className='bookingStatusWidth'>
+            <div className='contentBx'>
+              <p style={{ fontWeight: '12px', padding: '6px' }}>
+                Booking ID: {props.id}
+              </p>
+              <p style={{ fontWeight: '12px', padding: '6px' }}>
+                Booking Status: {helpeeFilteredBookingStatus}
+              </p>
+            </div>
+          </div>
+        )}
     </div>
   );
 }

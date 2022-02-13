@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import OfferCard from '../components/OfferCard';
 import DropDown from '../components/Dropdown';
 import { jobUniMarketingOptions } from '../store/options/navigate-options';
 import { getAllMarketingOffers } from '../store/general/general-actions';
@@ -8,6 +7,7 @@ import MarketingCard from '../components/MarketingCard';
 
 import { secondTypeOptions } from '../store/options/navigate-options';
 import { countryOptions } from '../store/options/service-options';
+import DangerIcon from '../components/Icons/DangerIcon';
 
 const HelpeeDashboardPage = (props) => {
   const dispatch = useDispatch();
@@ -83,71 +83,94 @@ const HelpeeDashboardPage = (props) => {
 
   return (
     <div className='section-left-align'>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {props.helpeeName && (
-          <h2 style={{ margin: 'auto' }}>Welcome, {props.helpeeName}!</h2>
-        )}
-        {!props.helpeeName && (
-          <h2 style={{ margin: 'auto' }}>Welcome to Shelpy!</h2>
-        )}
-      </div>
-      <div className='orderHistoryBtnWrapper'>
-        <div className='mktFilterWrapper'>
-          <DropDown
-            selected={mainType}
-            handleSelect={setMainType}
-            selectRef={mainTypeRef}
-            options={jobUniMarketingOptions}
-            titleColor='black'
-            titleSize='10px'
-          />
-        </div>
-        <div className='mktFilterWrapper'>
-          <DropDown
-            selected={secondType}
-            handleSelect={setSecondType}
-            selectRef={secondTypeRef}
-            options={matchedSecondTypes}
-          />
-        </div>
-        <div className='mktFilterWrapper'>
-          <DropDown
-            selected={country}
-            handleSelect={setCountry}
-            selectRef={countryRef}
-            options={countryOptions}
-            titleColor='black'
-            titleSize='10px'
-          />
-        </div>
-      </div>
-      <div className='task-container'>
-        {(!filteredOffers || filteredOffers.length === 0) && (
-          <div
-            className='history-card'
-            style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
-          >
-            No Public Offers yet
+      {!props.isHelpeeAuthenticated && (
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ margin: '50px auto' }}>
+            <DangerIcon />
           </div>
-        )}
-        <div
-          className='history-card'
-          style={{ boxShadow: 'none', border: 'none' }}
-        ></div>
-        {filteredOffers.map((option) => (
-          <MarketingCard
-            key={option.id}
-            id={option.id}
-            mainType={option.mainType}
-            secondType={option.secondType}
-            thirdType={option.thirdType}
-            fourthType={option.fourthType}
-            country={option.country}
-            helpeeId={props.helpeeUserId}
-            notes={option.notes}
-          />
-        ))}
-      </div>
+          <h2 style={{ margin: 'auto' }}>
+            Please sign in as Helpee to view our top offers.
+          </h2>
+        </div>
+      )}
+      {props.isHelpeeAuthenticated && (
+        <>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <h2 style={{ margin: 'auto' }}>Top Offers</h2>
+          </div>
+          <div className='orderHistoryBtnWrapper'>
+            <div className='mktFilterWrapper'>
+              <DropDown
+                selected={mainType}
+                handleSelect={setMainType}
+                title='Select Main-Category'
+                selectRef={mainTypeRef}
+                options={jobUniMarketingOptions}
+                titleColor='black'
+                titleMarginLeft='8px'
+              />
+            </div>
+            <div className='mktFilterWrapper'>
+              <DropDown
+                selected={secondType}
+                handleSelect={setSecondType}
+                title='Select Sub-Category'
+                selectRef={secondTypeRef}
+                options={matchedSecondTypes}
+                titleColor='black'
+                titleMarginLeft='8px'
+              />
+            </div>
+            <div className='mktFilterWrapper'>
+              <DropDown
+                selected={country}
+                handleSelect={setCountry}
+                title='Select Country'
+                selectRef={countryRef}
+                options={countryOptions}
+                titleColor='black'
+                titleMarginLeft='8px'
+              />
+            </div>
+          </div>
+          <div className='task-container'>
+            {(!filteredOffers || filteredOffers.length === 0) && (
+              <div
+                className='history-card'
+                style={{
+                  boxShadow: 'none',
+                  border: 'none',
+                  paddingLeft: '18px',
+                }}
+              >
+                <p style={{ margin: 'auto' }}>No Public Offers yet</p>
+              </div>
+            )}
+            <div
+              className='history-card'
+              style={{ boxShadow: 'none', border: 'none' }}
+            ></div>
+            {filteredOffers.map((option) => (
+              <MarketingCard
+                key={option.id}
+                id={option.id}
+                mainType={option.mainType}
+                secondType={option.secondType}
+                thirdType={option.thirdType}
+                fourthType={option.fourthType}
+                country={option.country}
+                notes={option.notes}
+                profilePicPath={option.profilePicPath}
+                username={option.username}
+                price={option.price}
+                helperId={option.userId}
+                helpeeId={props.helpeeId}
+                helpeeUsername={props.helpeeUsername}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

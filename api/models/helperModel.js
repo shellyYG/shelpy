@@ -33,7 +33,7 @@ async function getAllMarketingOffers(data) {
 async function getHelperAllBookings(data) {
   const { helperUserId } = data;
   const sql = ` 
-  SELECT bookings.*, acc.profilePicPath AS profilePicPath
+  SELECT bookings.id AS bookingId, bookings.*, acc.profilePicPath AS profilePicPath
   FROM bookings bookings
   LEFT JOIN helpee_account acc ON bookings.helpeeId = acc.id
   WHERE helperId = ${helperUserId} ORDER BY id DESC;`;

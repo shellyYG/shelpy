@@ -17,7 +17,7 @@ const HelpeeDashboardPage = (props) => {
   
   const { allOrders, allPotentialHelpers, helpeeDashboardTarget, allBookings } =
     useSelector((state) => state.helpee);
-  console.log('allPotentialHelpers: ', allPotentialHelpers);
+  
   console.log('allBookings: ', allBookings);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const HelpeeDashboardPage = (props) => {
     e.preventDefault(e);
     navigate('/helper-lists', { replace: true });
   }
-
+  console.log('~allPotentialHelpers: ', allPotentialHelpers);
   return (
     <div className='section-left-align'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -105,7 +105,7 @@ const HelpeeDashboardPage = (props) => {
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
             >
-              No booking yet
+              <p style={{ margin: 'auto' }}>No bookings yet</p>
             </div>
           )}
 
@@ -118,7 +118,7 @@ const HelpeeDashboardPage = (props) => {
                 key={option.id}
                 id={option.id}
                 helperId={option.helperId}
-                helpeeId={props.helpeeUserId}
+                helpeeId={option.helpeeId}
                 helpeeUsername={option.helpeeUsername}
                 helperUsername={option.helperUsername}
                 partnerName={
@@ -132,6 +132,7 @@ const HelpeeDashboardPage = (props) => {
                 requestId={option.requestId}
                 offerId={option.offerId}
                 price={option.price}
+                bookingId={option.bookingId}
                 bookingStatus={option.bookingStatus}
                 appointmentDate={option.appointmentDate}
                 appointmentTime={option.appointmentTime}
@@ -182,6 +183,7 @@ const HelpeeDashboardPage = (props) => {
                 requestId={option.requestId}
                 offerId={option.offerId}
                 price={option.price}
+                bookingId={option.bookingId}
                 bookingStatus={option.bookingStatus}
               />
             )

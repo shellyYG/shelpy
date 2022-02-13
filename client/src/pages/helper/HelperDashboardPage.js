@@ -11,7 +11,7 @@ import OfferCard from '../../components/OfferCard';
 import { useNavigate } from 'react-router-dom';
 import HelperDashboardSection from '../../components/HelperDashboardSection';
 import BookingCard from '../../components/BookingCard';
-import { getPotentialHelpers } from '../../store/helpee/helpee-actions';
+
 
 const HelperDashboardPage = (props) => {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const HelperDashboardPage = (props) => {
   const { allOffers, allBookings, allPotentialCustomers, helperDashboardTarget } =
     useSelector((state) => state.helper);
   
+  console.log('allBookings: ', allBookings);
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));
     dispatch(getAllBookings({ helperUserId: props.helperUserId }));
@@ -65,7 +66,7 @@ const HelperDashboardPage = (props) => {
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
             >
-              No booking yet
+              <p style={{ margin: 'auto' }}>No bookings yet</p>
             </div>
           )}
 
@@ -78,7 +79,7 @@ const HelperDashboardPage = (props) => {
                 key={option.id}
                 id={option.id}
                 helperId={option.helperId}
-                helpeeId={props.helpeeUserId}
+                helpeeId={option.helpeeId}
                 helpeeUsername={option.helpeeUsername}
                 helperUsername={option.helperUsername}
                 partnerName={
@@ -92,6 +93,7 @@ const HelperDashboardPage = (props) => {
                 requestId={option.requestId}
                 offerId={option.offerId}
                 price={option.price}
+                bookingId={option.bookingId}
                 bookingStatus={option.bookingStatus}
                 appointmentDate={option.appointmentDate}
                 appointmentTime={option.appointmentTime}
@@ -123,6 +125,7 @@ const HelperDashboardPage = (props) => {
                 requestId={option.requestId}
                 offerId={option.offerId}
                 price={option.price}
+                bookingId={option.bookingId}
                 bookingStatus={option.bookingStatus}
               />
             )

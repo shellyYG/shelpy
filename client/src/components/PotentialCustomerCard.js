@@ -32,13 +32,7 @@ function PotentialCustomerCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helper${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}`
-    );
-  }
-  function handleBookingConfirmation(e) {
-    e.preventDefault(e);
-    navigate(
-      `/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&partnerName=${props.partnerName}`
+      `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
     );
   }
   

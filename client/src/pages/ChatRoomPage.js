@@ -39,6 +39,7 @@ const ChatRoomPage = (props) => {
   const [messageList, setMessageList] = useState([]);
 
   const roomId = searchParams.get('roomId');
+  const bookingId = searchParams.get('bookingId');
   const userId = searchParams.get('userId');
   const partnerName = searchParams.get('partnerName');
   const bookingStatus = searchParams.get('bookingStatus');
@@ -71,14 +72,14 @@ const ChatRoomPage = (props) => {
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/helpee/book-helper?requestId=${requestId}&partnerName=${partnerName}&userId=${userId}&offerId=${offerId}&price=${price}&bookingStatus=${bookingStatus}`,
+      `/helpee/book-helper?requestId=${requestId}&partnerName=${partnerName}&userId=${userId}&offerId=${offerId}&price=${price}&bookingStatus=${bookingStatus}&bookingId=${bookingId}`,
       { replace: true }
     );
   }
   async function handleConfirmBooking(e) {
     e.preventDefault();
     navigate(
-      `/helper/confirm-booking?roomId=${roomId}&userId=${userId}&requestId=${requestId}&offerId=${offerId}&price=${price}&bookingStatus=${bookingStatus}`,
+      `/helper/confirm-booking?bookingId=${bookingId}&roomId=${roomId}&userId=${userId}&requestId=${requestId}&offerId=${offerId}&price=${price}&bookingStatus=${bookingStatus}&bookingId=${bookingId}&partnerName=${partnerName}`,
       { replace: true }
     );
   }
@@ -203,7 +204,8 @@ const ChatRoomPage = (props) => {
               {!props.isHelpee &&
                 allPotentialCustomers.map((option) => (
                   <ChatRoomCard
-                    roomId={`${option.requestId}-${option.offerId}`}
+                    pageRoomId={roomId}
+                    roomId={`${option.helperId}-${option.helpeeId}`}
                     isHelpee={false}
                     helperAnonymous={option.helperAnonymous}
                     helpeeAnonymous={option.helpeeAnonymous}
@@ -212,7 +214,7 @@ const ChatRoomPage = (props) => {
                     price={option.price}
                     key={
                       option.bookingId ||
-                      `${option.requestId}-${option.offerId}`
+                      `${option.helperId}-${option.helpeeId}-${option.offerId}`
                     }
                     partnerName={option.helpeeUsername}
                     secondType={option.secondType}
@@ -220,13 +222,16 @@ const ChatRoomPage = (props) => {
                     profilePicPath={option.profilePicPath}
                     requestId={option.requestId}
                     offerId={option.offerId}
+                    pageOfferId={offerId}
+                    bookingId={option.bookingId}
                     bookingStatus={option.bookingStatus}
                   />
                 ))}
               {props.isHelpee &&
                 allPotentialHelpers.map((option) => (
                   <ChatRoomCard
-                    roomId={`${option.requestId}-${option.offerId}`}
+                    pageRoomId={roomId}
+                    roomId={`${option.helperId}-${option.helpeeId}`}
                     helperAnonymous={option.helperAnonymous}
                     helpeeAnonymous={option.helpeeAnonymous}
                     isHelpee={true}
@@ -235,7 +240,7 @@ const ChatRoomPage = (props) => {
                     price={option.price}
                     key={
                       option.bookingId ||
-                      `${option.requestId}-${option.offerId}`
+                      `${option.helperId}-${option.helpeeId}-${option.offerId}`
                     }
                     partnerName={option.helperUsername}
                     secondType={option.secondType}
@@ -243,6 +248,8 @@ const ChatRoomPage = (props) => {
                     profilePicPath={option.profilePicPath}
                     requestId={option.requestId}
                     offerId={option.offerId}
+                    pageOfferId={offerId}
+                    bookingId={option.bookingId}
                     bookingStatus={option.bookingStatus}
                   />
                 ))}
@@ -253,8 +260,13 @@ const ChatRoomPage = (props) => {
           <div className='chat-box-title-container'>
             <div className='chat-box-title-container-text-wrapper'>
               <div className='chatBoxTitleInnerWrapper'>
-                <div className='chatBoxTitle'>
-                  {roomId && <h3> Your chat with {partnerName} </h3>}
+                <div className='chatBoxTitle' style={{ display: 'flex' }}>
+                  {roomId && (
+                    <h3 style={{ margin: 'auto' }}>
+                      {' '}
+                      Your chat with {partnerName}{' '}
+                    </h3>
+                  )}
                 </div>
                 <div>
                   {props.isHelpee && bookingStatus === 'null' && (
@@ -264,7 +276,7 @@ const ChatRoomPage = (props) => {
                   )}
                   {props.isHelpee && bookingStatus === 'helperAskChange' && (
                     <button className='btn-contact' onClick={handleBookHelper}>
-                      Change Booking Time
+                      Propose new booking time to {partnerName}
                     </button>
                   )}
                   {!props.isHelpee && bookingStatus === 'created' && (

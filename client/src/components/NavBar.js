@@ -15,6 +15,7 @@ import ShopIcon from './Icons/ShopIcon';
 import HelpIcon from './Icons/HelpIcon';
 import AboutIcon from './Icons/AboutIcon';
 import ProfileIcon from './Icons/ProfileIcon';
+import OfferIcon from './Icons/OfferIcon';
 
 
 const NavBar = (props) => {
@@ -53,7 +54,7 @@ const NavBar = (props) => {
     cursor: 'pointer',
     border: '1px solid #fff995',
     backgroundColor: '#fff995',
-    borderRadius: '1px',
+    borderRadius: '8px',
     margin: '3px',
     fontWeight: 'bold',
   };
@@ -84,6 +85,15 @@ const NavBar = (props) => {
               color={({ isActive }) => (isActive ? 'black' : 'white')}
             />
             <div className='navBarText'>Book Helper</div>
+          </NavLink>
+          <NavLink
+            style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
+            to='/marketing/offers'
+          >
+            <OfferIcon
+              color={({ isActive }) => (isActive ? 'black' : 'white')}
+            />
+            <div className='navBarText'>Sales</div>
           </NavLink>
           {!props.isHelperAuthenticated && (
             <NavLink

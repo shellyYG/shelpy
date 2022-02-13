@@ -56,7 +56,13 @@ function App() {
         <Route path='/about' element={<AboutPage />} />
         <Route
           path='/marketing/offers'
-          element={<MarketingPage />}
+          element={
+            <MarketingPage
+              helpeeId={helpeeUserId}
+              helpeeUsername={helpeeName}
+              isHelpeeAuthenticated={isHelpeeAuthenticated}
+            />
+          }
         />
         <Route path='/' element={<Navigate replace to='/home' />} />
         <Route

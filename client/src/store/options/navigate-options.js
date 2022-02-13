@@ -60,7 +60,7 @@ export const jobUniOptionsHelper = [
 ];
 
 export const jobUniMarketingOptions = [
-  { value: 'default', label: 'Select Main Type' },
+  { value: 'default', label: 'Please Select' },
   {
     value: 'university',
     label: 'University',
