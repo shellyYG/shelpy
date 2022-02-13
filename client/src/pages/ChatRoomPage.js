@@ -46,6 +46,16 @@ const ChatRoomPage = (props) => {
   const requestId = parseInt(searchParams.get('requestId'));
   const offerId = parseInt(searchParams.get('offerId'));
   const price = searchParams.get('price');
+
+  const helpeeId = parseInt(searchParams.get('helpeeId'));
+  const helperId = parseInt(searchParams.get('helperId'));
+  const helpeeUsername = searchParams.get('helpeeUsername');
+  const helperUsername = searchParams.get('helperUsername');
+  const country = searchParams.get('country');
+  const mainType = searchParams.get('mainType');
+  const secondType = searchParams.get('secondType');
+  const thirdType = searchParams.get('thirdType');
+  const fourthType = searchParams.get('fourthType');
   
   const { allPotentialCustomers } = useSelector((state) => state.helper);
   const { allPotentialHelpers } = useSelector((state) => state.helpee);
@@ -72,7 +82,13 @@ const ChatRoomPage = (props) => {
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/helpee/book-helper?requestId=${requestId}&partnerName=${partnerName}&userId=${userId}&offerId=${offerId}&price=${price}&bookingStatus=${bookingStatus}&bookingId=${bookingId}`,
+      `/helpee/book-helper?requestId=${requestId}&partnerName=${partnerName}` +
+        `&userId=${userId}&offerId=${offerId}&price=${price}` +
+        `&bookingStatus=&bookingId=` +
+        `&helpeeId=${helpeeId}&helperId=${helperId}` +
+        `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
+        `&country=${country}&mainType=${mainType}&secondType=${secondType}` +
+        `&thirdType=${thirdType}&fourthType=${fourthType}`,
       { replace: true }
     );
   }
@@ -211,6 +227,9 @@ const ChatRoomPage = (props) => {
                     helpeeAnonymous={option.helpeeAnonymous}
                     helperId={helperUserId}
                     helpeeId={option.helpeeId}
+                    helperUsername={option.helperUsername}
+                    helpeeUsername={option.helpeeUsername}
+                    country={option.country}
                     price={option.price}
                     key={
                       option.bookingId ||
@@ -219,6 +238,7 @@ const ChatRoomPage = (props) => {
                     partnerName={option.helpeeUsername}
                     secondType={option.secondType}
                     thirdType={option.thirdType}
+                    fourthType={option.fourthType}
                     profilePicPath={option.profilePicPath}
                     requestId={option.requestId}
                     offerId={option.offerId}
@@ -237,6 +257,9 @@ const ChatRoomPage = (props) => {
                     isHelpee={true}
                     helperId={option.helperId}
                     helpeeId={helpeeUserId}
+                    helperUsername={option.helperUsername}
+                    helpeeUsername={option.helpeeUsername}
+                    country={option.country}
                     price={option.price}
                     key={
                       option.bookingId ||
@@ -245,6 +268,7 @@ const ChatRoomPage = (props) => {
                     partnerName={option.helperUsername}
                     secondType={option.secondType}
                     thirdType={option.thirdType}
+                    fourthType={option.fourthType}
                     profilePicPath={option.profilePicPath}
                     requestId={option.requestId}
                     offerId={option.offerId}

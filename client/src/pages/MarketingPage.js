@@ -163,9 +163,10 @@ const HelpeeDashboardPage = (props) => {
                 profilePicPath={option.profilePicPath}
                 username={option.username}
                 price={option.price}
-                helperId={option.userId}
                 helpeeId={props.helpeeId}
+                helperId={option.userId}
                 helpeeUsername={props.helpeeUsername}
+                helperUsername={option.username}
               />
             ))}
           </div>

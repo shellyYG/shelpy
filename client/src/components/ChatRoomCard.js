@@ -27,11 +27,25 @@ function ChatRoomCard(props) {
     e.preventDefault();
     if (!props.isHelpee) {
       navigate(
-        `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
+        `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}`+
+        `&userId=helper_${props.helperId}&partnerName=${props.partnerName}`+
+        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}`+
+        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`+
+        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`+
+        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}`+
+        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}`+
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
       );
     } else {
       navigate(
-        `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helpee_${props.helpeeId}&partnerName=${props.partnerName}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
+        `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}`+
+        `&userId=helpee_${props.helpeeId}&partnerName=${props.partnerName}`+
+        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}`+
+        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
+        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`+
+        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}`+
+        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}`+
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
       );
     }
     const data = {

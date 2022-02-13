@@ -80,7 +80,12 @@ const BookingConfirmPage = (props) => {
   async function handleChangeBooking(e) {
     e.preventDefault();
     navigate(
-      `/helper/chatroom?roomId=${roomId}&userId=helper_${userIdNumber}&partnerName=${partnerName}&requestId=${requestId}&offerId=${offerId}&bookingStatus=${bookingStatus}&bookingId=${bookingId}`
+      `/helper/chatroom?roomId=${roomId}&userId=helper_${userIdNumber}&partnerName=${partnerName}` +
+        `&requestId=${requestId}&offerId=${offerId}&bookingStatus=${bookingStatus}&bookingId=${bookingId}` +
+        `&helpeeId=${helpeeId}&helperId=${helperId}` +
+        `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
+        `&country=${country}&mainType=${mainType}&secondType=${secondType}` +
+        `&thirdType=${thirdType}&fourthType=${fourthType}`
     );
   }
   async function handleConfirm(e) {
@@ -120,8 +125,7 @@ const BookingConfirmPage = (props) => {
         appointmentTime: meetTimeRef.current.value,
         appointmentTimestamp: unixTime,
         notes: notesRef.current.value,
-        bookingStatus: 'created',
-        bookingId,
+        bookingStatus: 'created', // should NOT have bookingId here as inserted data
         requestId,
         offerId,
         helpeeId,
@@ -135,7 +139,6 @@ const BookingConfirmPage = (props) => {
         thirdType,
         fourthType,
       };
-      console.log('@BookingCOnfirmPage create booking ->data: ', data);
       dispatch(postBookingStatus(data));
     } else {
       const data = {

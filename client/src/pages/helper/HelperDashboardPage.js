@@ -116,10 +116,13 @@ const HelperDashboardPage = (props) => {
                 helpeeAnonymous={option.helpeeAnonymous}
                 helperId={props.helperUserId}
                 helpeeId={option.helpeeId}
+                helpeeUsername={option.helpeeUsername}
+                helperUsername={option.helperUsername}
                 partnerName={option.helpeeUsername}
                 mainType={option.mainType}
                 secondType={option.secondType}
                 thirdType={option.thirdType}
+                fourthType={option.fourthType}
                 profilePicPath={option.profilePicPath}
                 country={option.country}
                 requestId={option.requestId}

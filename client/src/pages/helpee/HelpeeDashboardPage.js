@@ -169,8 +169,8 @@ const HelpeeDashboardPage = (props) => {
                 }
                 helperAnonymous={option.helperAnonymous}
                 helpeeAnonymous={option.helpeeAnonymous}
-                helperId={option.helperId}
                 helpeeId={props.helpeeUserId}
+                helperId={option.helperId}
                 helpeeUsername={option.helpeeUsername}
                 helperUsername={option.helperUsername}
                 partnerName={option.helperUsername}

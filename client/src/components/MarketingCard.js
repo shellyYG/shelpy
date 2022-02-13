@@ -52,7 +52,13 @@ function MarketingCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}&userId=helpee_${props.helpeeId}&partnerName=${props.username}&requestId=&offerId=${props.offerId}&price=${props.price}&bookingStatus=&bookingId=`
+      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+        `&userId=helpee_${props.helpeeId}&partnerName=${props.username}` +
+        `&requestId=&offerId=${props.offerId}&price=${props.price}&bookingStatus=&bookingId=` +
+        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
+        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
+        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
     );
   }
 
