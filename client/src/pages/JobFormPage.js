@@ -48,6 +48,13 @@ const JobFormPage = (props) => {
   const { offerStatus, offerStatusTitle, offerStatusMessage } = useSelector(
     (state) => state.helperNotification
   );
+  function isInt(value) {
+    return (
+      !isNaN(value) &&
+      parseInt(Number(value)) == value &&
+      !isNaN(parseInt(value, 10))
+    );
+  }
 
   if (loading) {
     MySwal.fire({
@@ -67,6 +74,14 @@ const JobFormPage = (props) => {
   const [companySize, setCompanySize] = useState('default');
   const [years, setYears] = useState('default');
   const [enableBtn, setEnableBtn] = useState(false);
+  const [typingPrice, setTypingPrice] = useState('');
+
+  function handlePriceTyping(e) {
+    console.log('handlePriceTyping...');
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setTypingPrice(typingInput);
+  }
 
   async function handleConfirm(e) {
     e.preventDefault();
@@ -206,9 +221,11 @@ const JobFormPage = (props) => {
         country !== 'default' &&
         WFH !== 'default' &&
         companySize !== 'default' &&
-        years !== 'default'
+        years !== 'default' &&
+        typingPrice !== '' &&
+        isInt(typingPrice)
     );
-  }, [industry, job, country, WFH, companySize, years]);
+  }, [industry, job, country, WFH, companySize, years, typingPrice]);
   return (
     <div
       className='main-content-wrapper'
@@ -262,20 +279,24 @@ const JobFormPage = (props) => {
                   selectRef={companySizeRef}
                   options={companySizeOptions}
                 />
-                {!props.isHelpee &&<DropDown
-                  selected={years}
-                  handleSelect={setYears}
-                  title={'Year of Experience on that job *'}
-                  selectRef={yearsRef}
-                  options={yearsOptions}
-                />}
-                {props.isHelpee && <DropDown
-                  selected={years}
-                  handleSelect={setYears}
-                  title={'Year of experiences you have on similar jobs *'}
-                  selectRef={yearsRef}
-                  options={yearsOptions}
-                />}
+                {!props.isHelpee && (
+                  <DropDown
+                    selected={years}
+                    handleSelect={setYears}
+                    title={'Year of Experience on that job *'}
+                    selectRef={yearsRef}
+                    options={yearsOptions}
+                  />
+                )}
+                {props.isHelpee && (
+                  <DropDown
+                    selected={years}
+                    handleSelect={setYears}
+                    title={'Year of experiences you have on similar jobs *'}
+                    selectRef={yearsRef}
+                    options={yearsOptions}
+                  />
+                )}
               </div>
               {props.isHelpee && (
                 <FullLineTextBox
@@ -296,16 +317,27 @@ const JobFormPage = (props) => {
                 />
               )}
               {!props.isHelpee && (
-                <FullLineTextBox
-                  title={'Price (per 30 minutes)'}
-                  placeholder={'(In Euro €)'}
-                  inputRef={priceRef}
-                />
+                <>
+                  <FullLineTextBox
+                    title={'Price (per 30 minutes)'}
+                    placeholder={'(In Euro €, only integer is allowed)'}
+                    inputRef={priceRef}
+                    onChange={handlePriceTyping}
+                    marginBottom='0px'
+                  />
+                  {!isInt(typingPrice) && (
+                    <p style={{ color: 'red' }}>
+                      Price need to be an integer e.g. 20 is allowed. 20.1 is
+                      not allowed
+                    </p>
+                  )}
+                </>
               )}
               <FullLineTextBox
                 title={'Notes'}
                 placeholder={'Leave any additional details'}
                 inputRef={notesRef}
+                marginTop='10px'
               />
 
               <ConfirmBtn

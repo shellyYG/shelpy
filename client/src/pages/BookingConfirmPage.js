@@ -71,11 +71,7 @@ const BookingConfirmPage = (props) => {
   const [meetDate, setMeetDate] = useState(today); // display will be 2021/11/12 though
   const [meetTime, setMeetTime] = useState('8am-9am');
 
-  useEffect(() => {
-    dispatch(
-      getBookingStatus({ isHelpee: props.isHelpee, requestId, offerId })
-    );
-  }, [dispatch, offerId, props.isHelpee, requestId]);
+  
  
   async function handleChangeBooking(e) {
     e.preventDefault();

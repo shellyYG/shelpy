@@ -1,4 +1,5 @@
 require('dotenv').config();
+const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET_KEY);
 const jwt = require('jsonwebtoken');
 const helpeeModel = require('../models/helpeeModel');
 const bookingModel = require('../models/bookingModel');
@@ -182,15 +183,38 @@ const sendHelpeePasswordResetLink = async (req, res) => {
 };
 
 const payHelper = async (req, res) => {
+  console.log('satrt payHelper@helpeeController...');
   const { data } = req.body;
   console.log('payHelper->data: ', data);
-  try {
-    await bookingModel.updateBookingStatus(data);
-    res.status(200).json({ status: 'success' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-  }
+  const { product, token } = data;
+  console.log(
+    '........start strip session, product: ',
+    product,
+    'price: ',
+    product.price
+  );
+  return stripe.customers
+    .create({
+      email: token.email,
+      source: token.id,
+    })
+    .then((customer) => {
+      console.log('stripe created customer: ', customer)
+      stripe.charges.create(
+        {
+          amount: product.price * 100, // everything comes in cents in stripe
+          currency: 'eur', // usd
+          customer: customer.id,
+          receipt_email: token.email,
+          description: `${product.mainType}-${product.secondType}-${product.offerId}`,
+        },
+      );
+    })
+    .then(async (result) => {
+      await bookingModel.updateBookingStatus(data);
+      res.status(200).json(result)
+    })
+    .catch((err) => console.error(err));
 };
 
 

@@ -19,9 +19,10 @@ async function getHelpeeAllOrders(data) {
 }
 
 async function getHelpeeAllBookings(data) {
-  const sqlSimplified = ` SELECT bookings.id AS bookingId, bookings.*, acc.profilePicPath AS profilePicPath
+  const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail, bookings.*, acc.profilePicPath AS profilePicPath
   FROM bookings bookings
   LEFT JOIN helper_account acc ON bookings.helperId = acc.id
+  LEFT JOIN helpee_account helpee ON bookings.helpeeId = helpee.id
   WHERE helpeeId=${data.helpeeUserId} ORDER BY id DESC;`;
   const allBookings = await query(sqlSimplified);
   return { data: { allBookings } };

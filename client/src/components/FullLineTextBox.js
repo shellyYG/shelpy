@@ -1,6 +1,6 @@
 function FullLineTextBox(props) {
     return (
-      <div className='form-row' style={{ marginTop: props.marginTop }}>
+      <div className='form-row' style={{ marginTop: props.marginTop, marginBottom: props.marginBottom }}>
         <div className='form-wrapper-full'>
           <label>{props.title}</label>
           <input
@@ -10,6 +10,7 @@ function FullLineTextBox(props) {
             placeholder={props.placeholder}
             ref={props.inputRef}
             maxLength='100'
+            onChange={props.onChange}
           />
         </div>
       </div>

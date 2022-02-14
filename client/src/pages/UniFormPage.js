@@ -34,9 +34,22 @@ const UniFormPage = (props) => {
   const countryRef = useRef();
   const degreeRef = useRef();
   const notesRef = useRef();
-  
+   const [typingPrice, setTypingPrice] = useState('');
   const [loading, setIsLoading] = useState(false);
-
+  
+  function isInt(value) {
+    return (
+      !isNaN(value) &&
+      parseInt(Number(value)) == value &&
+      !isNaN(parseInt(value, 10))
+    );
+  }
+  function handlePriceTyping(e) {
+    console.log('handlePriceTyping...');
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setTypingPrice(typingInput);
+  }
   if (loading) {
     MySwal.fire({
       title: 'Loading...',
@@ -197,9 +210,10 @@ const UniFormPage = (props) => {
       country !== 'default' &&
         school !== 'default' &&
         department !== 'default' &&
-        degree !== 'default'
+        degree !== 'default' &&
+        isInt(typingPrice)
     );
-  }, [school, department, country, degree]);
+  }, [school, department, country, degree, typingPrice]);
   useEffect(() => {
     if (school) {
       const departments = departmentOptions[school];
@@ -273,11 +287,21 @@ const UniFormPage = (props) => {
                 />
               )}
               {!props.isHelpee && (
-                <FullLineTextBox
-                  title={'Price (per 30 minutes)'}
-                  placeholder={'(In Euro €)'}
-                  inputRef={priceRef}
-                />
+                <>
+                  <FullLineTextBox
+                    title={'Price (per 30 minutes)'}
+                    placeholder={'(In Euro €)'}
+                    inputRef={priceRef}
+                    onChange={handlePriceTyping}
+                    marginBottom='0px'
+                  />
+                  {!isInt(typingPrice) && (
+                    <p style={{ color: 'red' }}>
+                      Price need to be an integer e.g. 20 is allowed. 20.1 is
+                      not allowed
+                    </p>
+                  )}
+                </>
               )}
               <FullLineTextBox
                 title={'Notes'}

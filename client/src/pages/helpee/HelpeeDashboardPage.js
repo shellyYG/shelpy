@@ -33,7 +33,7 @@ const HelpeeDashboardPage = (props) => {
 
   function handleSearchHelpers(e) {
     e.preventDefault(e);
-    navigate('/helper-lists', { replace: true });
+    navigate('/marketing/offers', { replace: true });
   }
   console.log('~allPotentialHelpers: ', allPotentialHelpers);
   return (
@@ -117,6 +117,7 @@ const HelpeeDashboardPage = (props) => {
                 isHelpee={true}
                 key={option.id}
                 id={option.id}
+                helpeeEmail={option.helpeeEmail}
                 helperId={option.helperId}
                 helpeeId={option.helpeeId}
                 helpeeUsername={option.helpeeUsername}

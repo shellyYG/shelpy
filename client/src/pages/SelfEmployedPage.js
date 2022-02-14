@@ -41,6 +41,7 @@ const SelfEmployedPage = (props) => {
   const [country, setCountry] = useState('default');
   const [years, setYears] = useState('default');
   const [enableBtn, setEnableBtn] = useState(false);
+  const [typingPrice, setTypingPrice] = useState('');
   const [loading, setIsLoading] = useState(false);
 
   const { requestStatus, requestStatusTitle, requestStatusMessage } =
@@ -188,15 +189,29 @@ const SelfEmployedPage = (props) => {
       sweetAlertAndNavigate(offerStatus, offerStatusMessage);
     }
   }, [offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
-
+  function isInt(value) {
+    return (
+      !isNaN(value) &&
+      parseInt(Number(value)) == value &&
+      !isNaN(parseInt(value, 10))
+    );
+  }
+  function handlePriceTyping(e) {
+    console.log('handlePriceTyping...');
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setTypingPrice(typingInput);
+  }
   useEffect(() => {
     setEnableBtn(
       country !== 'default' &&
         type !== 'default' &&
         profession !== 'default' &&
-        years !== 'default'
+        years !== 'default' &&
+        typingPrice !== '' &&
+        isInt(typingPrice)
     );
-  }, [type, profession, country, years]);
+  }, [type, profession, country, years, typingPrice]);
   return (
     <div
       className='main-content-wrapper'
@@ -275,16 +290,27 @@ const SelfEmployedPage = (props) => {
                 />
               )}
               {!props.isHelpee && (
-                <FullLineTextBox
-                  title={'Price (per 30 minutes)'}
-                  placeholder={'(In Euro €)'}
-                  inputRef={priceRef}
-                />
+                <>
+                  <FullLineTextBox
+                    title={'Price (per 30 minutes)'}
+                    placeholder={'(In Euro €)'}
+                    inputRef={priceRef}
+                    onChange={handlePriceTyping}
+                    marginBottom='0px'
+                  />
+                  {!isInt(typingPrice) && (
+                    <p style={{ color: 'red' }}>
+                      Price need to be an integer e.g. 20 is allowed. 20.1 is
+                      not allowed
+                    </p>
+                  )}
+                </>
               )}
               <FullLineTextBox
                 title={'Notes'}
                 placeholder={'Leave any additional details'}
                 inputRef={notesRef}
+                marginTop='10px'
               />
               <ConfirmBtn
                 cta='Confirm'

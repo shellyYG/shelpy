@@ -41,7 +41,7 @@ const NavBar = (props) => {
     display: "flex",
     alignItems: "center",
     textDecoration: "none",
-    padding: "5px 10px",
+    padding: "5px 3px",
     cursor: "pointer",
     margin: "3px",
   };
@@ -50,7 +50,7 @@ const NavBar = (props) => {
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none',
-    padding: '5px 10px',
+    padding: '5px 3px',
     cursor: 'pointer',
     border: '1px solid #fff995',
     backgroundColor: '#fff995',

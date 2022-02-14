@@ -2,6 +2,8 @@ import './App.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
+
 import NavBar from './components/NavBar';
 import AboutPage from './pages/AboutPage';
 import Footer from './components/Footer';
@@ -77,7 +79,6 @@ function App() {
             <HelperHomePage isHelperAuthenticated={isHelperAuthenticated} />
           }
         />
-        <Route path='/helper-lists' element={<MarketingPage />} />
 
         <Route
           path='/helpee/sign-up-final-step'
@@ -105,11 +106,11 @@ function App() {
           element={<PasswordResetPrePage isHelpee={false} />}
         />
         <Route
-          path={`/helpee/password/reset/${process.env.PASS_RESET_URL}`}
+          path={`/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
           element={<PasswordResetPage isHelpee={true} />}
         />
         <Route
-          path={`/helper/password/reset/${process.env.PASS_RESET_URL}`}
+          path={`/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
           element={<PasswordResetPage isHelpee={false} />}
         />
         <Route path='/helper/sign-in' element={<HelperSignInPage />} />
@@ -228,7 +229,7 @@ function App() {
             isHelpeeAuthenticated ? (
               <ChatRoomPage isHelpee={true} helpeeUserId={helpeeUserId} />
             ) : (
-              <PreSignInPage isHelpee={true}/>
+              <PreSignInPage isHelpee={true} />
             )
           }
         />
@@ -252,7 +253,7 @@ function App() {
           path={'/helper/chatroom'}
           element={
             isHelperAuthenticated ? (
-              <ChatRoomPage isHelpee={false} helperUserId={helperUserId}/>
+              <ChatRoomPage isHelpee={false} helperUserId={helperUserId} />
             ) : (
               <PreSignInPage isHelpee={false} />
             )

@@ -733,15 +733,9 @@ export const onClickDeleteRequest = (data) => {
 };
 
 export const postPayHelper = (data) => {
-  console.log('postBookingStatus->data: ', data);
-
+  console.log('@helpee-actions->postPayHelper->data: ', data);
   return async (dispatch) => {
-    let generalToken;
-    if (data.isHelpee) {
-      generalToken = localStorage.getItem('shelpy-token');
-    } else {
-      generalToken = localStorage.getItem('shelper-token');
-    }
+    const generalToken = localStorage.getItem('shelpy-token');
     try {
       if (!generalToken) {
         throw Error('Access denied. Please log in to continue.');
@@ -750,13 +744,14 @@ export const postPayHelper = (data) => {
         const headers = {
           Authorization: 'Bearer ' + generalToken,
         };
-        await axios.post(
+        const response = await axios.post(
           payHelperPath,
           { data },
           {
             headers,
           }
         );
+        console.log('response from pay helpee route: ', response);
         dispatch(
           generalActions.setBookingStatus({
             bookingStatus: data.bookingStatus,

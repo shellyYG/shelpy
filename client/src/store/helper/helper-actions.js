@@ -614,7 +614,7 @@ export const changeHelperPassword = (data) => {
       const response = await axios.post(helperSignUpPasswordPath, {
         data,
       });
-      window.localStorage.setItem('shelpy-token', response.data.accessToken);
+      window.localStorage.setItem('shelper-token', response.data.accessToken);
       dispatch(
         helperActions.updateHelperInfoAfterInsertPassword({
           password: data.password,

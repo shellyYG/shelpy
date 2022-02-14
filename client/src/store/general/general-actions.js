@@ -5,11 +5,9 @@ const bookingStatusPath = '/api/booking-status';
 const getAllMarketingOffersPath = '/api/marketing-offers';
 
 export const postBookingStatus = (data) => {
-  console.log('postBookingStatus->data: ', data);
-  
   return async (dispatch) => {
     let generalToken;
-    if (data.isHelpee) {
+    if (data.helpeeId) { // is first time created rather than updated
       generalToken = localStorage.getItem('shelpy-token');
     } else {
       generalToken = localStorage.getItem('shelper-token');

@@ -10,13 +10,11 @@ const checkBookingExisted = async (data) => {
 
 const updateBookingStatus = async (req, res) => {
   const { data } = req.body;
-  console.log('updateBookingStatus->data: ', data);
+  console.log('data.requestId? ', data.requestId);
   try {
     if (data.requestId) {
       const booking = await checkBookingExisted(data);
       if (booking) {
-        console.log('booking exists!');
-        console.log('bookingId: ', booking.id);
         await bookingModel.updateBookingStatus(data);
         res.status(200).json({ status: 'success' });
       } else {

@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const signUpModel = require('../models/signUpModel');
@@ -70,6 +71,9 @@ const createUserObject = async (data, encryptedpass, ivString) => {
     if (isUserEmailExisted) {
       throw Error('Email existed! Please use another email.');
     }
+
+    // Create new user account
+    console.log('start creating user account');
     const id = await signUpModel.insertUserAndGetUserId({
       email,
       status,

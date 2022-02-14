@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import StripeCheckout from 'react-stripe-checkout';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import { postPayHelper, clearPayHelperStatus } from '../store/helpee/helpee-actions';
+
+console.log(
+  'process.env.REACT_APP_STRIPE_TEST_PUBLISHABLE_KEY: ',
+  process.env.REACT_APP_STRIPE_TEST_PUBLISHABLE_KEY
+);
 
 const MySwal = withReactContent(Swal);
 
@@ -18,6 +24,13 @@ function BookingCard(props) {
   const [helperFilteredBookingStatus, setHelperFilteredBookingStatus] =
     useState('');
   const [loading, setIsLoading] = useState(false);
+  const [product] = useState({
+    mainType: props.mainType,
+    secondType: props.secondType,
+    offerId: props.offerId,
+    price: props.price,
+  })
+
   const { payHelperStatus, payHelperStatusTitle, payHelperStatusMessage } =
     useSelector((state) => state.helpee);
   console.log('payHelperStatus: ', payHelperStatus);
@@ -118,13 +131,14 @@ function BookingCard(props) {
     );
   }
   
-  function handlePayHeper(e) {
-    e.preventDefault(e);
-    console.log('handlePayHelper...');
+  function handlePayHeper(token) {
+    console.log('handlePayHelper..., token: ', token);
     try {
       const data = {
         bookingStatus: 'paid',
         bookingId: props.bookingId,
+        token,
+        product,
       };
       dispatch(postPayHelper(data));
       setIsLoading(true);
@@ -251,41 +265,49 @@ function BookingCard(props) {
             <p style={{ fontWeight: '12px', padding: '6px' }}>
               Booking ID: {props.id}
             </p>
-            <button onClick={handlePayHeper} className='btn-next'>
-              Pay {props.partnerName} ({props.price}€)
-            </button>
+            <StripeCheckout
+              stripeKey={process.env.REACT_APP_STRIPE_TEST_PUBLISHABLE_KEY}
+              token={handlePayHeper}
+              currency='eur'
+              name={`Pay ${props.partnerName}`}
+              amount={props.price * 100}
+              email={props.helpeeEmail}
+            >
+              <button className='btn-next'>
+                Pay {props.partnerName} ({props.price}€)
+              </button>
+            </StripeCheckout>
           </div>
         </div>
       )}
-      {props.isHelpee &&
-        (props.bookingStatus === 'created') && (
-          <div className='bookingStatusWidth'>
-            <div className='contentBx'>
-              <p style={{ fontWeight: '12px', padding: '6px' }}>
-                Booking ID: {props.id}
-              </p>
-              <p style={{ fontWeight: '12px', padding: '6px' }}>
-                Booking Status: {helpeeFilteredBookingStatus}
-              </p>
-            </div>
-            <button className='btn-contact' onClick={handleBookHelper}>
-              Propose new booking time to {props.partnerName}
-            </button>
+
+      {props.isHelpee && props.bookingStatus === 'created' && (
+        <div className='bookingStatusWidth'>
+          <div className='contentBx'>
+            <p style={{ fontWeight: '12px', padding: '6px' }}>
+              Booking ID: {props.id}
+            </p>
+            <p style={{ fontWeight: '12px', padding: '6px' }}>
+              Booking Status: {helpeeFilteredBookingStatus}
+            </p>
           </div>
-        )}
-      {props.isHelpee &&
-        (props.bookingStatus === 'paid') && (
-          <div className='bookingStatusWidth'>
-            <div className='contentBx'>
-              <p style={{ fontWeight: '12px', padding: '6px' }}>
-                Booking ID: {props.id}
-              </p>
-              <p style={{ fontWeight: '12px', padding: '6px' }}>
-                Booking Status: {helpeeFilteredBookingStatus}
-              </p>
-            </div>
+          <button className='btn-contact' onClick={handleBookHelper}>
+            Propose new booking time to {props.partnerName}
+          </button>
+        </div>
+      )}
+      {props.isHelpee && props.bookingStatus === 'paid' && (
+        <div className='bookingStatusWidth'>
+          <div className='contentBx'>
+            <p style={{ fontWeight: '12px', padding: '6px' }}>
+              Booking ID: {props.id}
+            </p>
+            <p style={{ fontWeight: '12px', padding: '6px' }}>
+              Booking Status: {helpeeFilteredBookingStatus}
+            </p>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 }
