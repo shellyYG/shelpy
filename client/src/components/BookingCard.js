@@ -78,7 +78,7 @@ function BookingCard(props) {
         break;
       case 'paid':
         setHelpeeFilteredBookingStatus(
-          `Meet ${props.helperUsername} on ${props.appointmentDate} at ${props.appointmentTime}. We will send you a zoom link to your email 10 min before the meeting.`
+          `Meet ${props.helperUsername} on ${props.appointmentDate} at ${props.appointmentTime}. We will send you a zoom link to your email 1 day before the meeting.`
         );
         break;
       case 'fulfilled':
@@ -103,7 +103,7 @@ function BookingCard(props) {
         break;
       case 'paid':
         setHelperFilteredBookingStatus(
-          `Meet ${props.helperUsername} on ${props.appointmentDate} at ${props.appointmentTime}. We will send you a zoom link 10 min before the meeting.`
+          `Meet ${props.helperUsername} on ${props.appointmentDate} at ${props.appointmentTime}. We will send you a zoom link 1 day before the meeting.`
         );
         break;
       case 'fulfilled':

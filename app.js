@@ -3,11 +3,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // const path = __dirname + '/views/';
 const app = express();
+const server = require('http').createServer(app);
 const cors = require('cors');
 const { Server } = require('socket.io');
 const socketChat = require('./api/controllers/chatController');
-
-const server = require('http').createServer(app);
 
 const io = new Server(server, {
   cors: {

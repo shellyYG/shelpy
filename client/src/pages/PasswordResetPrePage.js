@@ -96,7 +96,7 @@ const PasswordResetPrePage = (props) => {
           });
           console.log('...should navigate');
           navigate(
-            `/helpee/password/reset/28099a64d7454485ab06a8b1c0080d43738b85dce1d82f13e7a620255?email=${filteredEmail}`,
+            `/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}`,
             { replace: true }
           );
         }

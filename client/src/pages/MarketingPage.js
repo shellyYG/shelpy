@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DropDown from '../components/Dropdown';
 import { jobUniMarketingOptions } from '../store/options/navigate-options';
@@ -11,6 +12,7 @@ import DangerIcon from '../components/Icons/DangerIcon';
 
 const HelpeeDashboardPage = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const mainTypeRef = useRef();
   const secondTypeRef = useRef();
   const countryRef = useRef();
@@ -22,18 +24,6 @@ const HelpeeDashboardPage = (props) => {
   const [matchedSecondTypes, setMatchedSecondTypes] = useState([]);
 
   const { allMKTOffers } = useSelector((state) => state.general);
-
-  console.log(
-    'mainType: ',
-    mainType,
-    'secondType: ',
-    secondType,
-    'allMKTOffers: ', allMKTOffers,
-    'filteredOffers: ',
-    filteredOffers,
-    'country: ',
-    country
-  );
 
   useEffect(() => {
     if (mainType === 'default') {
@@ -80,17 +70,36 @@ const HelpeeDashboardPage = (props) => {
       setCountry('default');
     }
   }, [secondType]);
+  function handleToHomepage(e) {
+    e.preventDefault();
+    navigate('/home', { replace: true });
+  }
 
   return (
     <div className='section-left-align'>
       {!props.isHelpeeAuthenticated && (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            textAlign: 'center',
+          }}
+        >
           <div style={{ margin: '50px auto' }}>
             <DangerIcon />
+            <h2 style={{ margin: 'auto' }}>
+              Please <Link to='/helpee/sign-in'>sign in</Link> as Helpee to view
+              our top offers.
+            </h2>
+            <h2 style={{ margin: '10px auto' }}>Don't have account yet?</h2>
+            <button
+              className='btn-next'
+              style={{ width: '180px' }}
+              onClick={handleToHomepage}
+            >
+              Sign Up here
+            </button>
           </div>
-          <h2 style={{ margin: 'auto' }}>
-            Please sign in as Helpee to view our top offers.
-          </h2>
         </div>
       )}
       {props.isHelpeeAuthenticated && (

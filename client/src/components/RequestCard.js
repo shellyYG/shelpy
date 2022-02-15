@@ -39,31 +39,6 @@ function RequestCard(props) {
         setImg('/offer_help');
     }
   }, [props.mainType]);
-  // useEffect(() => {
-  //   switch (props.bookingStatus) {
-  //     case 'helperConfirmed':
-  //       setFilteredStatus(
-  //         `Meet Helper ${props.helperName} at ${props.appointmentDate} ${props.appointmentTime}.\n
-  //         A zoom link will be sent to your email 10 min before the meeting.`
-  //       );
-  //       break;
-  //     case 'created':
-  //       setFilteredStatus(`Waiting for ${props.helperName} to reply.`);
-  //       break;
-  //     case '' || null:
-  //       setFilteredStatus('You have not book any helper yet.');
-  //       break;
-  //     default:
-  //       setFilteredStatus('Sorry! We do not find a helper yet. You can help us find more helpers by following us on Youtube.');
-  //   }
-  // }, [
-  //   props.bookingStatus,
-  //   props.appointmentDate,
-  //   props.appointmentTime,
-  //   props.helperName,
-  // ]);
-
-  console.log(props);
 
   return (
     <div className='history-card'>
