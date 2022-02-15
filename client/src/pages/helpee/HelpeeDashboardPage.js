@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PotentialHelperCard from '../../components/PotentialHelperCard';
 import {
@@ -43,12 +43,14 @@ const HelpeeDashboardPage = (props) => {
     e.preventDefault(e);
     window.location.reload();
   }
-
+  
   return (
     <div className='section-left-align'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {props.helpeeName && (
-          <h2 style={{ margin: 'auto' }}>Welcome, {props.helpeeName}!</h2>
+          <h2 style={{ margin: 'auto' }}>
+            {props.i18n.t('welcome_name', {name: props.helpeeName})}!
+          </h2>
         )}
         {!props.helpeeName && (
           <h2 style={{ margin: 'auto' }}>Welcome to Shelpy</h2>
@@ -70,11 +72,9 @@ const HelpeeDashboardPage = (props) => {
           value='potentialHelpers'
           title='Potential Helpers'
         />
-        <div
-          style={{ margin: 'auto', display: 'flex', flexDirection: 'row' }}
-        >
-          <div style={{ margin: 'auto'}}>Refresh to get latest status</div>
-          <RefreshIcon onClick={handleRrefreshPage}/>
+        <div style={{ margin: 'auto', display: 'flex', flexDirection: 'row' }}>
+          <div style={{ margin: 'auto' }}>Refresh to get latest status</div>
+          <RefreshIcon onClick={handleRrefreshPage} />
         </div>
       </div>
       <div className='task-container'></div>

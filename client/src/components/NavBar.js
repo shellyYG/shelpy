@@ -1,40 +1,17 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import GlobalIcon from './Icons/GlobalIcon';
-import {
-  getHelpeeAuthStatus,
-  getPotentialHelpers,
-} from '../store/helpee/helpee-actions';
-import {
-  getHelperAuthStatus,
-  getPotentialCustomers,
-} from '../store/helper/helper-actions';
 import ShopIcon from './Icons/ShopIcon';
 import HelpIcon from './Icons/HelpIcon';
 import AboutIcon from './Icons/AboutIcon';
 import ProfileIcon from './Icons/ProfileIcon';
 import OfferIcon from './Icons/OfferIcon';
+import i18n from '../store/i18nSetup';
 
 
 const NavBar = (props) => {
-  const dispatch = useDispatch();
-  
-  const { helpeeUserId } =
-    useSelector((state) => state.helpee);
-  const { helperUserId } =
-    useSelector((state) => state.helper);
   const { dropDownNavTarget } = useSelector((state) => state.general);
-
-  useEffect(() => {
-    if (helpeeUserId) dispatch(getPotentialHelpers({ helpeeUserId }));
-  }, [helpeeUserId, dispatch]);
-
-   useEffect(() => {
-     if (helperUserId) dispatch(getPotentialHelpers({ helperUserId }));
-   }, [helperUserId, dispatch]);
-
   
   const nonActiveStyle = {
     color: "white",
@@ -125,7 +102,7 @@ const NavBar = (props) => {
             isHelpeeAuthenticated={props.isHelpeeAuthenticated}
             isHelperAuthenticated={props.isHelperAuthenticated}
           />
-          <GlobalIcon dropDownNavTarget={dropDownNavTarget} />
+          <GlobalIcon dropDownNavTarget={dropDownNavTarget} i18n={i18n}/>
         </div>
       </nav>
     </>

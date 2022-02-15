@@ -4,7 +4,6 @@ import { IconContext } from 'react-icons';
 import { CgGlobeAlt } from 'react-icons/cg';
 import { onClickUpdateActiveIconTarget } from '../../store/general/general-actions';
 
-
 const GlobalIcon = (props) => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
@@ -20,6 +19,14 @@ const GlobalIcon = (props) => {
     }
     setActive(!active);
   }
+  function onENClick(e) {
+    e.preventDefault();
+    props.i18n.changeLanguage('en');
+  }
+  function onZhClick(e) {
+    e.preventDefault();
+    props.i18n.changeLanguage('zh-TW');
+  }
   useEffect(() => {
     if (props.dropDownNavTarget !== 'language') {
       setActive(false);
@@ -31,9 +38,9 @@ const GlobalIcon = (props) => {
         {active && (
           <div className='navPopUpWrapper'>
             <div className='navDropDownContentLanguage'>
-              <div>English</div>
-              <div>繁體中文</div>
-              <div>简体中文</div>
+              <div onClick={onENClick}>English</div>
+              <div onClick={onZhClick}>繁體中文</div>
+              {/* <div>简体中文</div> */}
             </div>
           </div>
         )}

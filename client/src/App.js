@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-
 import NavBar from './components/NavBar';
 import AboutPage from './pages/AboutPage';
 import Footer from './components/Footer';
@@ -37,6 +36,8 @@ import PasswordResetPage from './pages/PasswordResetPage';
 import PasswordResetPrePage from './pages/PasswordResetPrePage';
 import HelperForgetPasswordPage from './pages/helper/HelperForgetPasswordPage';
 import MarketingPage from './pages/MarketingPage';
+import i18n from './store/i18nSetup';
+
 
 
 function App() {
@@ -203,6 +204,7 @@ function App() {
                 isHelpee={true}
                 helpeeUserId={helpeeUserId}
                 helpeeName={helpeeName}
+                i18n={i18n}
               />
             ) : (
               <PreSignInPage isHelpee={true} />
