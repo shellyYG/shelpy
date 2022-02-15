@@ -218,6 +218,27 @@ const payHelper = async (req, res) => {
 };
 
 
+const getAllChattedHelpers = async (req, res) => {
+  try {
+    const { helpeeUserId } = req.query;
+    let response;
+    if (helpeeUserId) {
+      response = await helpeeModel.getAllChattedHelpers({
+        helpeeUserId,
+      });
+    }
+    if (response && response.data) {
+      res.status(200).json({
+        allChattedHelpers: response.data.allChattedHelpers,
+      });
+    } else {
+      throw Error('No potential chatted helpers response from server.');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
 
 module.exports = {
   allowHelpeePrivateRoute,
@@ -232,4 +253,5 @@ module.exports = {
   sendHelpeePasswordResetLink,
   getHelpeeAllBookings,
   payHelper,
+  getAllChattedHelpers,
 };

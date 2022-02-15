@@ -19,8 +19,6 @@ const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; /
 
 
 const ChatRoomPage = (props) => {
-  console.log('ChatRoomPage props: ', props);
-  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -37,6 +35,7 @@ const ChatRoomPage = (props) => {
   const [searchParams] = useSearchParams();
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
+  const [allChatPartners, setAllChatPartners] = useState([]);
 
   const roomId = searchParams.get('roomId');
   const bookingId = searchParams.get('bookingId');
@@ -46,6 +45,8 @@ const ChatRoomPage = (props) => {
   const requestId = parseInt(searchParams.get('requestId'));
   const offerId = parseInt(searchParams.get('offerId'));
   const price = searchParams.get('price');
+
+  const profilePicPath = searchParams.get('profilePicPath');
 
   const helpeeId = parseInt(searchParams.get('helpeeId'));
   const helperId = parseInt(searchParams.get('helperId'));
@@ -59,8 +60,70 @@ const ChatRoomPage = (props) => {
   
   const { allPotentialCustomers } = useSelector((state) => state.helper);
   const { allPotentialHelpers } = useSelector((state) => state.helpee);
-  console.log('allPotentialHelpers: ', allPotentialHelpers);
+ 
   
+  useEffect(() => {
+    const partners = [];
+    const currentPartner = {
+      offerId,
+      requestId,
+      bookingId: null,
+      bookingStatus: null,
+      country,
+      price,
+      profilePicPath,
+      helpeeId,
+      helperId,
+      helpeeUsername,
+      helperUsername,
+      mainType,
+      secondType,
+      thirdType,
+      fourthType,
+    };
+
+    if (props.isHelpee) {
+      allPotentialHelpers.forEach((p) => {
+        partners.push(p);
+      });
+      const partnerIds = allPotentialHelpers.map((p) => p.helperId);
+
+      if (currentPartner.helperId && partnerIds.indexOf(currentPartner.helperId) === -1) {
+        partners.push(currentPartner);
+      }
+
+      setAllChatPartners(partners);
+    } else {
+      allPotentialCustomers.forEach((p) => {
+        partners.push(p);
+      });
+      const partnerIds = allPotentialCustomers.map((p) => p.helpeeId);
+      if (currentPartner.helpeeId && partnerIds.indexOf(currentPartner.helpeeId) === -1) {
+        partners.push(currentPartner);
+      }
+      setAllChatPartners(partners);
+    }
+  }, [
+    allPotentialCustomers,
+    allPotentialHelpers,
+    props.isHelpee,
+    offerId,
+    requestId,
+    bookingId,
+    bookingStatus,
+    country,
+    price,
+    profilePicPath,
+    helpeeId,
+    helperId,
+    helpeeUsername,
+    helperUsername,
+    mainType,
+    secondType,
+    thirdType,
+    fourthType,
+  ]);
+
   const [showTaskSection, setShowTaskSection] = useState(true);
   const onBackButtonEvent = (e) => {
     e.preventDefault();
@@ -92,13 +155,6 @@ const ChatRoomPage = (props) => {
       { replace: true }
     );
   }
-  async function handleConfirmBooking(e) {
-    e.preventDefault();
-    navigate(
-      `/helper/confirm-booking?bookingId=${bookingId}&roomId=${roomId}&userId=${userId}&requestId=${requestId}&offerId=${offerId}&price=${price}&bookingStatus=${bookingStatus}&bookingId=${bookingId}&partnerName=${partnerName}`,
-      { replace: true }
-    );
-  }
   async function handleYoutubeClick(e) {
     e.preventDefault();
     const newWindow = window.open(youtubeURL, '_blank', 'noopener,noreferrer');
@@ -111,8 +167,11 @@ const ChatRoomPage = (props) => {
       const messageData = {
         room: roomId,
         author: userId,
+        helperId: parseInt(roomId.split('-')[0]),
+        helpeeId: parseInt(roomId.split('-')[1]),
         message: currentMessage,
-        message_time:
+        offerId: parseInt(offerId),
+        messageTime:
           new Intl.DateTimeFormat('en-US', { month: 'short' }).format(
             new Date(Date.now())
           ) +
@@ -151,7 +210,7 @@ const ChatRoomPage = (props) => {
     if (helpeeUserId && props.isHelpee)
       dispatch(getPotentialHelpers({ helpeeUserId }));
   }, [helpeeUserId, props.isHelpee, dispatch]);
-  // console.log('allPotentialCustomers: ', allPotentialCustomers);
+
 
   return (
     <>
@@ -173,8 +232,7 @@ const ChatRoomPage = (props) => {
 
             <div className='task-container'>
               {!props.isHelpee &&
-                (!allPotentialCustomers ||
-                  allPotentialCustomers.length === 0) && (
+                (!allChatPartners || allChatPartners.length === 0) && (
                   <div className={'task-card'}>
                     <div className='chatRoomContent'>
                       <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
@@ -196,7 +254,7 @@ const ChatRoomPage = (props) => {
                   </div>
                 )}
               {props.isHelpee &&
-                (!allPotentialHelpers || allPotentialHelpers.length === 0) && (
+                (!allChatPartners || allChatPartners.length === 0) && (
                   <div className={'task-card'}>
                     <div className='chatRoomContent'>
                       <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
@@ -218,7 +276,7 @@ const ChatRoomPage = (props) => {
                   </div>
                 )}
               {!props.isHelpee &&
-                allPotentialCustomers.map((option) => (
+                allChatPartners.map((option) => (
                   <ChatRoomCard
                     pageRoomId={roomId}
                     roomId={`${option.helperId}-${option.helpeeId}`}
@@ -248,7 +306,7 @@ const ChatRoomPage = (props) => {
                   />
                 ))}
               {props.isHelpee &&
-                allPotentialHelpers.map((option) => (
+                allChatPartners.map((option) => (
                   <ChatRoomCard
                     pageRoomId={roomId}
                     roomId={`${option.helperId}-${option.helpeeId}`}
@@ -288,29 +346,27 @@ const ChatRoomPage = (props) => {
                   {roomId && (
                     <h3 style={{ margin: 'auto' }}>
                       {' '}
-                      Your chat with {partnerName}{' '}
+                      My chat with {partnerName}{' '}
                     </h3>
                   )}
                 </div>
                 <div>
-                  {props.isHelpee && bookingStatus === 'null' && (
-                    <button className='btn-contact' onClick={handleBookHelper}>
-                      Book {partnerName}{' '}
-                    </button>
-                  )}
+                  {props.isHelpee &&
+                    (bookingStatus === 'null' || !bookingStatus || bookingStatus === 'undefined') &&
+                    partnerName && (
+                      <button
+                        className='btn-contact'
+                        onClick={handleBookHelper}
+                      >
+                        Book {partnerName}{' '}
+                      </button>
+                    )}
                   {props.isHelpee && bookingStatus === 'helperAskChange' && (
                     <button className='btn-contact' onClick={handleBookHelper}>
                       Propose new booking time to {partnerName}
                     </button>
                   )}
-                  {!props.isHelpee && bookingStatus === 'created' && (
-                    <button
-                      className='btn-contact'
-                      onClick={handleConfirmBooking}
-                    >
-                      Confirm {partnerName}'s Booking
-                    </button>
-                  )}
+                  
                 </div>
               </div>
             </div>
@@ -346,14 +402,14 @@ const ChatRoomPage = (props) => {
                 <ChatMessageSelf
                   key={messageContent.id}
                   message={messageContent.message}
-                  message_time={messageContent.message_time}
+                  messageTime={messageContent.messageTime}
                 />
               ) : (
                 <ChatMessageOther
                   key={messageContent.id}
                   message={messageContent.message}
-                  message_time={messageContent.message_time}
-                  author={messageContent.author}
+                  messageTime={messageContent.messageTime}
+                  author={partnerName}
                 />
               );
             })}

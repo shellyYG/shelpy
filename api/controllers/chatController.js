@@ -8,10 +8,10 @@ const socketChat = async (socket) => {
     const history = data.map((d) => {
       const newObj = {
         id: d.id,
-        room: d.room_id,
-        author: d.sender_id,
+        room: d.roomId,
+        author: d.senderId,
         message: d.message,
-        message_time: d.message_time,
+        messageTime: d.messageTime,
       };
       return newObj;
     });
@@ -21,10 +21,13 @@ const socketChat = async (socket) => {
     socket.to(data.room).emit('server_send_message', data); // emit to others except self
     // save to DB
     const messageObj = {
-      room_id: data.room,
-      sender_id: data.author,
+      roomId: data.room,
+      senderId: data.author,
+      helperId: data.helperId,
+      helpeeId: data.helpeeId,
+      offerId: data.offerId,
       message: data.message,
-      message_time: data.message_time,
+      messageTime: data.messageTime,
     };
     chatModel.saveMsg(messageObj);
   });

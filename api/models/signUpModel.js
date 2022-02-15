@@ -15,6 +15,7 @@ async function insertUserAndGetUserId(data) {
     encryptedpass: data.password,
     ivString: data.ivString,
     confirmed: false,
+    score: 0,
   };
   const table = data.isHelpee ? 'helpee_account' : 'helper_account';
   const sql = `INSERT INTO ${table} SET ?`;

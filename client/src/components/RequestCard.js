@@ -9,7 +9,6 @@ const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; /
 function RequestCard(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [img, setImg] = useState('');
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
   const [filteredStatus, setFilteredStatus] = useState('');
@@ -21,37 +20,50 @@ function RequestCard(props) {
   useEffect(() => {
     switch (props.mainType) {
       case 'university':
-        setImg('/university');
         setTitle('University');
         setDetails('Degree: ');
         break;
       case 'job':
-        setImg('/job');
         setTitle('Job');
         setDetails('Work from home status: ');
         break;
       case 'selfEmployed':
-        setImg('/mom');
         setTitle('Self-Employed');
         setDetails('Years of experience you have: ');
         break;
       default:
-        setImg('/offer_help');
+        setDetails('');
     }
   }, [props.mainType]);
-
+  console.log('props.profilePicPath: ', props.profilePicPath);
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
         <div className='helper-ImgBx'>
-          {img && <img src={`${img}.jpeg`} alt={'visa'}></img>}
+          {!props.isAnonymous && !!props.profilePicPath && (
+            <img src={`/images/${props.profilePicPath}`} alt={'avatar'}></img>
+          )}
+          {(props.isAnonymous || !props.profilePicPath) && (
+            <a
+              href='https://www.vecteezy.com/free-vector/default-avatar'
+              target='_blank'
+              rel='noreferrer'
+            >
+              <img
+                src={`/images/assets/defaultAvatar.jpg`}
+                alt={
+                  'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
+                }
+              ></img>
+            </a>
+          )}
         </div>
       </div>
       <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '16px', margin: '8px' }}>
-              {title}
+              {props.helpeeName}
             </h3>
           </div>
         </div>
@@ -97,6 +109,9 @@ function RequestCard(props) {
             {details} {props.fourthType}
           </p>
         </div>
+        <p style={{ fontWeight: '12px', padding: '6px' }}>
+          Speaks: {props.languages}
+        </p>
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>

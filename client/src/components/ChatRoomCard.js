@@ -9,7 +9,7 @@ function ChatRoomCard(props) {
   const buttonRef = useRef();
   const [active, setActive] = useState(false);
   const { targetChatroomId } = useSelector((state) => state.general);
-
+  
   useEffect(() => {
     if (props.roomId === props.pageRoomId && props.offerId === props.pageOfferId) {
       setActive(true);
@@ -65,36 +65,71 @@ function ChatRoomCard(props) {
       ref={buttonRef}
     >
       <div className='chatRoomContent'>
-        {props.isHelpee && !props.helperAnonymous && (
-          <div className='helper-ImgBx'>
-            <img
-              src={`/images/${props.profilePicPath}`}
-              alt={props.partnerName}
-            ></img>
-          </div>
-        )}
-        {!props.isHelpee && !props.helpeeAnonymous && (
-          <div className='helper-ImgBx'>
-            <img
-              src={`/images/${props.profilePicPath}`}
-              alt={props.partnerName}
-            ></img>
-          </div>
-        )}
-        {props.isHelpee && !!props.helperAnonymous && (
-          <div className='smallBlankProfileImageBx'>
-            <div style={{ margin: 'auto' }}>
-              <p style={{ color: 'black', fontSize: '10px' }}>Anonymous</p>
+        {props.isHelpee &&
+          !props.helperAnonymous &&
+          props.profilePicPath !== null &&
+          props.profilePicPath !== 'null' && (
+            <div className='helper-ImgBx'>
+              {!!props.profilePicPath && (
+                <img
+                  src={`/images/${props.profilePicPath}`}
+                  alt={props.partnerName}
+                ></img>
+              )}
             </div>
-          </div>
-        )}
-        {!props.isHelpee && !!props.helpeeAnonymous && (
-          <div className='smallBlankProfileImageBx'>
-            <div style={{ margin: 'auto' }}>
-              <p style={{ color: 'black', fontSize: '10px' }}>Anonymous</p>
+          )}
+        {!props.isHelpee &&
+          !props.helpeeAnonymous &&
+          !!props.profilePicPath &&
+          props.profilePicPath !== null &&
+          props.profilePicPath !== 'null' && (
+            <div className='helper-ImgBx'>
+              <img
+                src={`/images/${props.profilePicPath}`}
+                alt={props.partnerName}
+              ></img>
             </div>
-          </div>
-        )}
+          )}
+        {props.isHelpee &&
+          (!!props.helperAnonymous ||
+            !props.profilePicPath ||
+            props.profilePicPath === null ||
+            props.profilePicPath === 'null') && (
+            <div className='helper-ImgBx'>
+              <a
+                href='https://www.vecteezy.com/free-vector/default-avatar'
+                target='_blank'
+                rel='noreferrer'
+              >
+                <img
+                  src={`/images/assets/defaultAvatar.jpg`}
+                  alt={
+                    'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
+                  }
+                ></img>
+              </a>
+            </div>
+          )}
+        {!props.isHelpee &&
+          (!!props.helpeeAnonymous ||
+            !props.profilePicPath ||
+            props.profilePicPath === null ||
+            props.profilePicPath === 'null') && (
+            <div className='helper-ImgBx'>
+              <a
+                href='https://www.vecteezy.com/free-vector/default-avatar'
+                target='_blank'
+                rel='noreferrer'
+              >
+                <img
+                  src={`/images/assets/defaultAvatar.jpg`}
+                  alt={
+                    'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
+                  }
+                ></img>
+              </a>
+            </div>
+          )}
 
         <div className='nameBx'>
           <h5 style={{ lineBreak: 'anywhere' }}>{props.partnerName}</h5>

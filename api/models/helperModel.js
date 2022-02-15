@@ -15,17 +15,21 @@ async function getHelperAllMatchedRequests(data) {
 
 async function getHelperAllOffers(data) {
   const { helperUserId } = data;
-  const sql = ` SELECT * FROM offers WHERE userId = ${helperUserId} AND NOT status='deleted' ORDER BY id DESC;`;
+  const sql = ` SELECT helper.profilePicPath, helper.languages, helper.username AS helperName, helper.isAnonymous, ofs.* 
+  FROM offers ofs
+  INNER JOIN helper_account helper ON ofs.userId = helper.id
+  WHERE ofs.userId = ${helperUserId} AND NOT ofs.status='deleted' ORDER BY id DESC;`;
   const allOffers = await query(sql);
+  console.log('allOffers: ', allOffers)
   return { data: { allOffers } };
 }
 
 async function getAllMarketingOffers(data) {
   const sql = `
-  SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction 
+  SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.languages, acc.isAnonymous
   FROM offers ofs 
   INNER JOIN helper_account acc ON ofs.userId = acc.id
-  WHERE acc.isMarketing = true ORDER BY id, acc.score DESC;`;
+  WHERE acc.isMarketing = true ORDER BY score, id DESC;`;
   const allMKTOffers = await query(sql);
   return { data: { allMKTOffers } };
 }
@@ -33,7 +37,7 @@ async function getAllMarketingOffers(data) {
 async function getHelperAllBookings(data) {
   const { helperUserId } = data;
   const sql = ` 
-  SELECT bookings.id AS bookingId, bookings.*, acc.profilePicPath AS profilePicPath
+  SELECT bookings.id AS bookingId,acc.languages, bookings.*, acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helpeeAnonymous
   FROM bookings bookings
   LEFT JOIN helpee_account acc ON bookings.helpeeId = acc.id
   WHERE helperId = ${helperUserId} ORDER BY id DESC;`;
@@ -101,6 +105,8 @@ async function updateHelperCertificatePath(data) {
     hasArabic,
     hasOthers,
 
+    languages,
+
     notes,
     status,
   } = data;
@@ -111,7 +117,7 @@ async function updateHelperCertificatePath(data) {
       ,hasEnglish=${hasEnglish}, hasGerman=${hasGerman}, hasFrench=${hasFrench}, hasItalien=${hasItalien}
       ,hasChinese=${hasChinese}, hasCantonese=${hasCantonese}, hasVietnamese=${hasVietnamese}
       ,hasKorean=${hasKorean}, hasJapanese=${hasJapanese}, hasTurkish=${hasTurkish}, hasUkrainian=${hasUkrainian}
-      ,hasArabic=${hasArabic}, hasOthers=${hasOthers}
+      ,hasArabic=${hasArabic}, hasOthers=${hasOthers}, languages='${languages}'
     WHERE id = ${userId}`;
   const sqlquery = await query(sql);
   return sqlquery;
@@ -132,6 +138,18 @@ async function confirmHelperEmail(data) {
   return { data: { status: 'success' } };
 }
 
+async function getAllChattedCustomers(data) {
+  const { helperUserId } = data;
+  // Find customers who once chatted with you
+  const sql = `SELECT DISTINCT chat.helperId AS helperId, helpee.username AS helpeeUsername, helpee.id AS helpeeId, helpee.profilePicPath, chat.offerId, ofs.*
+FROM shelpydb.offers ofs
+INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId
+INNER JOIN shelpydb.helpee_account helpee ON chat.helpeeId = helpee.id
+WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helperId = ${helperUserId});`;
+  const allChattedCustomers = await query(sql);
+  return { data: { allChattedCustomers } };
+}
+
 module.exports = {
   insertHelperOffer,
   getHelperAllMatchedRequests,
@@ -143,4 +161,5 @@ module.exports = {
   confirmHelperEmail,
   getHelperAllBookings,
   getAllMarketingOffers,
+  getAllChattedCustomers,
 };

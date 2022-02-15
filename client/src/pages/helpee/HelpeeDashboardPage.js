@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import RequestCard from '../../components/RequestCard';
 import HelpeeDashboardSection from '../../components/HelpeeDashboardSection';
 import BookingCard from '../../components/BookingCard';
+import RefreshIcon from '../../components/Icons/RefreshIcon';
 
 const HelpeeDashboardPage = (props) => {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ const HelpeeDashboardPage = (props) => {
     useSelector((state) => state.helpee);
   
   console.log('allBookings: ', allBookings);
+  // console.log('allOrders: ', allOrders);
+  console.log('allPotentialHelpers: ', allPotentialHelpers);
 
   useEffect(() => {
     dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
@@ -35,7 +38,12 @@ const HelpeeDashboardPage = (props) => {
     e.preventDefault(e);
     navigate('/marketing/offers', { replace: true });
   }
-  console.log('~allPotentialHelpers: ', allPotentialHelpers);
+
+  function handleRrefreshPage(e) {
+    e.preventDefault(e);
+    window.location.reload();
+  }
+
   return (
     <div className='section-left-align'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -43,7 +51,7 @@ const HelpeeDashboardPage = (props) => {
           <h2 style={{ margin: 'auto' }}>Welcome, {props.helpeeName}!</h2>
         )}
         {!props.helpeeName && (
-          <h2 style={{ margin: 'auto' }}>Welcome to Shelpy!</h2>
+          <h2 style={{ margin: 'auto' }}>Welcome to Shelpy</h2>
         )}
       </div>
       <div className='orderHistoryBtnWrapper'>
@@ -62,6 +70,12 @@ const HelpeeDashboardPage = (props) => {
           value='potentialHelpers'
           title='Potential Helpers'
         />
+        <div
+          style={{ margin: 'auto', display: 'flex', flexDirection: 'row' }}
+        >
+          <div style={{ margin: 'auto'}}>Refresh to get latest status</div>
+          <RefreshIcon onClick={handleRrefreshPage}/>
+        </div>
       </div>
       <div className='task-container'></div>
 
@@ -72,16 +86,20 @@ const HelpeeDashboardPage = (props) => {
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
             >
-              No Requests yet
+              <p style={{ margin: 'auto' }}>
+                You haven't created any requests yet
+              </p>
             </div>
           )}
           <div
             className='history-card'
             style={{ boxShadow: 'none', border: 'none' }}
           >
-            <button className='btn-contact' onClick={handleAddRequest}>
-              Add a Request
-            </button>
+            <div style={{ margin: 'auto' }}>
+              <button className='btn-contact' onClick={handleAddRequest}>
+                Add a Request
+              </button>
+            </div>
           </div>
           {allOrders.map((option) => (
             <RequestCard
@@ -93,7 +111,11 @@ const HelpeeDashboardPage = (props) => {
               fourthType={option.fourthType}
               country={option.country}
               helpeeId={props.helpeeUserId}
+              helpeeName={option.helpeeName}
               notes={option.notes}
+              profilePicPath={option.profilePicPath}
+              languages={option.languages}
+              isAnonymous={option.isAnonymous}
             />
           ))}
         </div>
@@ -101,12 +123,23 @@ const HelpeeDashboardPage = (props) => {
       {helpeeDashboardTarget === 'allBookings' && allBookings && (
         <div className='task-container'>
           {(!allBookings || allBookings.length === 0) && (
-            <div
-              className='history-card'
-              style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
-            >
-              <p style={{ margin: 'auto' }}>No bookings yet</p>
-            </div>
+            <>
+              <div
+                className='history-card'
+                style={{
+                  boxShadow: 'none',
+                  border: 'none',
+                  paddingLeft: '18px',
+                }}
+              >
+                <p style={{ margin: 'auto' }}>No bookings yet</p>
+              </div>
+              <div style={{ margin: 'auto' }}>
+                <button className='btn-contact' onClick={handleSearchHelpers}>
+                  Book a Helper
+                </button>
+              </div>
+            </>
           )}
 
           {allBookings.map(
@@ -137,6 +170,8 @@ const HelpeeDashboardPage = (props) => {
                 bookingStatus={option.bookingStatus}
                 appointmentDate={option.appointmentDate}
                 appointmentTime={option.appointmentTime}
+                languages={option.languages}
+                isAnonymous={option.helperAnonymous}
               />
             )
           )}
@@ -149,46 +184,57 @@ const HelpeeDashboardPage = (props) => {
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
             >
-              No matched helpers yet
+              <p style={{ margin: 'auto' }}>No matched helpers yet</p>
             </div>
           )}
+          {!allPotentialHelpers ||
+            (allPotentialHelpers.length === 0 && (
+              <div
+                className='history-card'
+                style={{
+                  boxShadow: 'none',
+                  border: 'none',
+                  paddingLeft: '18px',
+                  display: 'flex',
+                }}
+              >
+                <p style={{ margin: 'auto' }}>No matched helpers yet</p>
+              </div>
+            ))}
           <div
             className='history-card'
             style={{ boxShadow: 'none', border: 'none' }}
           >
-            <button className='btn-contact' onClick={handleSearchHelpers}>
-              Search Helpers
-            </button>
+            <div style={{ margin: 'auto' }}>
+              <button className='btn-contact' onClick={handleSearchHelpers}>
+                Search Helpers
+              </button>
+            </div>
           </div>
-          {allPotentialHelpers.map(
-            (
-              option // TODO: changed to orders
-            ) => (
-              <PotentialHelperCard
-                key={
-                  option.bookingId || `${option.requestId}-${option.offerId}`
-                }
-                helperAnonymous={option.helperAnonymous}
-                helpeeAnonymous={option.helpeeAnonymous}
-                helpeeId={props.helpeeUserId}
-                helperId={option.helperId}
-                helpeeUsername={option.helpeeUsername}
-                helperUsername={option.helperUsername}
-                partnerName={option.helperUsername}
-                mainType={option.mainType}
-                secondType={option.secondType}
-                thirdType={option.thirdType}
-                fourthType={option.fourthType}
-                profilePicPath={option.profilePicPath}
-                country={option.country}
-                requestId={option.requestId}
-                offerId={option.offerId}
-                price={option.price}
-                bookingId={option.bookingId}
-                bookingStatus={option.bookingStatus}
-              />
-            )
-          )}
+
+          {allPotentialHelpers.map((option) => (
+            <PotentialHelperCard
+              key={option.bookingId || `${option.requestId}-${option.offerId}`}
+              helperAnonymous={option.helperAnonymous}
+              helpeeAnonymous={option.helpeeAnonymous}
+              helpeeId={props.helpeeUserId}
+              helperId={option.helperId}
+              helpeeUsername={option.helpeeUsername}
+              helperUsername={option.helperUsername}
+              partnerName={option.helperUsername}
+              mainType={option.mainType}
+              secondType={option.secondType}
+              thirdType={option.thirdType}
+              fourthType={option.fourthType}
+              profilePicPath={option.profilePicPath}
+              country={option.country}
+              requestId={option.requestId}
+              offerId={option.offerId}
+              price={option.price}
+              bookingId={option.bookingId}
+              bookingStatus={option.bookingStatus}
+            />
+          ))}
         </div>
       )}
     </div>

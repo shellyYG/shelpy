@@ -37,13 +37,15 @@ const helpeeSlice = createSlice({
     payHelperStatus: 'initial',
     payHelperStatusTitle: '',
     payHelperStatusMessage: '',
+
+    allChattedHelpers: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
       const { payload } = action;
       state.isHelpeeAuthenticated = payload.isHelpeeAuthenticated;
       state.helpeeUserId = payload.helpeeUserId;
-      state.helpeeName = payload.username;
+      state.helpeeName = payload.helpeeName;
     },
     updateActiveAndPastOrders(state, action) {
       const { payload } = action;
@@ -143,6 +145,10 @@ const helpeeSlice = createSlice({
         payload.helpeePasswordResetStatusTitle;
       state.helpeePasswordResetStatusMessage =
         payload.helpeePasswordResetStatusMessage;
+    },
+    updateChattedHelpers(state, action) {
+      const { payload } = action;
+      state.allChattedHelpers = payload.allChattedHelpers;
     },
   },
 });

@@ -122,7 +122,7 @@ const HelpeeSignInPage = () => {
             <Link to='/helpee/forget-password' style={{ marginRight: '10px' }}>
               Forget Password
             </Link>
-            <Link to='/home'>Don't have account yet? Sign Up here!</Link>
+            <Link to='/home'>Don't have account yet? SIGN UP here!</Link>
           </div>
 
           <ConfirmBtn cta='Sign In ❯' handleConfirm={handleConfirm} />

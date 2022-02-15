@@ -215,17 +215,29 @@ const JobFormPage = (props) => {
   }, [offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
 
   useEffect(() => {
-    setEnableBtn(
-      industry !== 'default' &&
-        job !== 'default' &&
-        country !== 'default' &&
-        WFH !== 'default' &&
-        companySize !== 'default' &&
-        years !== 'default' &&
-        typingPrice !== '' &&
-        isInt(typingPrice)
-    );
-  }, [industry, job, country, WFH, companySize, years, typingPrice]);
+    if (props.isHelpee) {
+      setEnableBtn(
+        industry !== 'default' &&
+          job !== 'default' &&
+          country !== 'default' &&
+          WFH !== 'default' &&
+          companySize !== 'default' &&
+          years !== 'default'
+      );
+    } else {
+      setEnableBtn(
+        industry !== 'default' &&
+          job !== 'default' &&
+          country !== 'default' &&
+          WFH !== 'default' &&
+          companySize !== 'default' &&
+          years !== 'default' &&
+          typingPrice !== '' &&
+          isInt(typingPrice)
+      );
+    }
+    
+  }, [props.isHelpee, industry, job, country, WFH, companySize, years, typingPrice]);
   return (
     <div
       className='main-content-wrapper'
@@ -310,7 +322,7 @@ const JobFormPage = (props) => {
               {!props.isHelpee && (
                 <FullLineTextBox
                   title={
-                    'What companies you work fits this experience? (if more than one, you can seperate by comma) *'
+                    'What companies you work fits this experience? (if more than one, you can seperate by comma) '
                   }
                   placeholder={'Google, Facebook'}
                   inputRef={organizationRef}

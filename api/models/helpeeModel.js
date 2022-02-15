@@ -13,13 +13,16 @@ async function insertHelpeeRequest(data) { // new.
 }
 
 async function getHelpeeAllOrders(data) {
-  const sqlSimplified = ` SELECT * FROM requests WHERE userId=${data.helpeeUserId} ORDER BY id DESC;`;
+  const sqlSimplified = ` SELECT helpee.profilePicPath, helpee.languages, helpee.username AS helpeeName, helpee.isAnonymous, req.*
+  FROM requests req
+  INNER JOIN helpee_account helpee ON req.userId = helpee.id
+  WHERE userId=${data.helpeeUserId} ORDER BY id DESC;`;
   const allRequests = await query(sqlSimplified);
   return { data: { allOrders: allRequests } };
 }
 
 async function getHelpeeAllBookings(data) {
-  const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail, bookings.*, acc.profilePicPath AS profilePicPath
+  const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail, helpee.languages, bookings.*, acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous
   FROM bookings bookings
   LEFT JOIN helper_account acc ON bookings.helperId = acc.id
   LEFT JOIN helpee_account helpee ON bookings.helpeeId = helpee.id
@@ -47,6 +50,7 @@ LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id
 WHERE helpee.id = ${helpeeUserId} AND NOT ofs.userId IS NULL
 ORDER BY req.id, acc.score DESC;`;
   const allPotentialHelpers = await query(sql);
+
   return { data: { allPotentialHelpers } };
 }
 
@@ -94,6 +98,7 @@ async function updateHelpeeBasicInfo(data) {
     hasUkrainian,
     hasArabic,
     hasOthers,
+    languages,
     notes,
     status,
   } = data;
@@ -103,7 +108,7 @@ async function updateHelpeeBasicInfo(data) {
       ,hasEnglish=${hasEnglish}, hasGerman=${hasGerman}, hasFrench=${hasFrench}, hasItalien=${hasItalien}
       ,hasChinese=${hasChinese}, hasCantonese=${hasCantonese}, hasVietnamese=${hasVietnamese}
       ,hasKorean=${hasKorean}, hasJapanese=${hasJapanese}, hasTurkish=${hasTurkish}, hasUkrainian=${hasUkrainian}
-      ,hasArabic=${hasArabic}, hasOthers=${hasOthers}
+      ,hasArabic=${hasArabic}, hasOthers=${hasOthers}, languages='${languages}'
     WHERE id = ${userId}`;
   const sqlquery = await query(sql);
   return sqlquery;
@@ -123,6 +128,19 @@ async function confirmHelpeeEmail(data) {
   return { data: { status: 'success' } };
 }
 
+async function getAllChattedHelpers(data) {
+  const { helpeeUserId } = data;
+  const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername, helper.profilePicPath, helper.isAnonymous AS helperAnonymous, chat.offerId, ofs.*
+FROM shelpydb.offers ofs
+INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId
+INNER JOIN shelpydb.helper_account helper ON chat.helperId = helper.id
+WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helpeeId = ${helpeeUserId});`;
+  
+  console.log('sql@getAllChattedHelpers: ', sql);
+  const allChattedHelpers = await query(sql);
+  return { data: { allChattedHelpers } };
+}
+
 module.exports = {
   insertHelpeeRequestFormAndGetId,
   insertHelpeeRequest,
@@ -134,4 +152,5 @@ module.exports = {
   deleteHelpeeRequest,
   confirmHelpeeEmail,
   getHelpeeAllBookings,
+  getAllChattedHelpers,
 };

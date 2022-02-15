@@ -48,7 +48,7 @@ const HelperLoggedInHomePage = () => {
               title='HELP people'
               details1='Were you once hesitating?'
               details2='Help people who are now standing on the crossroad and wonders.'
-              imagePath='/crossroad.jpeg'
+              imagePath='/helpPeople.jpg'
               lastChild={false}
             />
             <MktRow

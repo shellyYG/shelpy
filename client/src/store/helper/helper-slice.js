@@ -36,13 +36,15 @@ const helperSlice = createSlice({
     helperPasswordResetStatus: '',
     helperPasswordResetStatusTitle: '',
     helperPasswordResetStatusMessage: '',
+
+    allChattedCustomers: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
       const { payload } = action;
       state.isHelperAuthenticated = payload.isHelperAuthenticated;
       state.helperUserId = payload.helperUserId;
-      state.helperName = payload.username;
+      state.helperName = payload.helperName;
     },
     updateActiveAndPastOrders(state, action) {
       const { payload } = action;
@@ -108,6 +110,10 @@ const helperSlice = createSlice({
         payload.helperPasswordResetStatusTitle;
       state.helperPasswordResetStatusMessage =
         payload.helperPasswordResetStatusMessage;
+    },
+    updateChattedCustomers(state, action) {
+      const { payload } = action;
+      state.allChattedCustomers = payload.allChattedCustomers;
     },
   },
 });

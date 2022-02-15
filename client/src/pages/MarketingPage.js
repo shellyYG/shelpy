@@ -52,6 +52,7 @@ const HelpeeDashboardPage = (props) => {
       setFilteredOffers(filteredOffers);
     }
   }, [allMKTOffers, mainType, secondType, country]);
+  console.log('filteredOffers: ', filteredOffers);
 
   useEffect(() => {
     dispatch(getAllMarketingOffers());
@@ -97,7 +98,7 @@ const HelpeeDashboardPage = (props) => {
               style={{ width: '180px' }}
               onClick={handleToHomepage}
             >
-              Sign Up here
+              Sign Up Here
             </button>
           </div>
         </div>
@@ -163,12 +164,14 @@ const HelpeeDashboardPage = (props) => {
               <MarketingCard
                 key={option.id}
                 id={option.id}
+                offerId={option.id}
                 mainType={option.mainType}
                 secondType={option.secondType}
                 thirdType={option.thirdType}
                 fourthType={option.fourthType}
                 country={option.country}
                 notes={option.notes}
+                introduction={option.introduction}
                 profilePicPath={option.profilePicPath}
                 username={option.username}
                 price={option.price}
@@ -176,6 +179,8 @@ const HelpeeDashboardPage = (props) => {
                 helperId={option.userId}
                 helpeeUsername={props.helpeeUsername}
                 helperUsername={option.username}
+                languages={option.languages}
+                isAnonymous={option.isAnonymous}
               />
             ))}
           </div>

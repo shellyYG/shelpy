@@ -16,6 +16,8 @@ const helperConfirmEmailPath = '/api/helper/email/confirmation';
 const helperBasicFormWithoutCertificatePath = '/api/helper/basic-form';
 const helperCanChangePasswordPath = '/api/helper/password/allow-change';
 const helperSendPasswordResetEmailPath = '/api/helper/password/reset';
+const helperChattedCustomersPath = '/api/helper/chat/partners';
+
 
 export const getHelperAuthStatus = () => {
   return async (dispatch) => {
@@ -34,12 +36,12 @@ export const getHelperAuthStatus = () => {
           {},
           { headers }
         );
-
+          console.log('response.data@helper action: ', response.data);
         dispatch(
           helperActions.updateAuthStatus({
             isHelperAuthenticated: response.data.isHelperAuthenticated,
             helperUserId: response.data.helperUserId,
-            username: response.data.username,
+            helperName: response.data.username,
           })
         );
       }
@@ -116,17 +118,34 @@ export const getPotentialCustomers = (data) => {
         const bookingsRes = await axios.get(getAllBookingsPath, {
           params: { helperUserId: data.helperUserId },
         });
+        const chattedCustomerRes = await axios.get(helperChattedCustomersPath, {
+          params: { helperUserId: data.helperUserId },
+        });
         if (matchedCustomerRes && matchedCustomerRes.data) {
           const matchedCustomers = matchedCustomerRes.data.allPotentialCustomers;
           matchedCustomers.forEach((h) => {
             allPotentialCustomers.push(h);
           });
-          const matchedHelperIds = matchedCustomers.map((p) => p.helperId);
+          console.log('matchedCustomers: ', matchedCustomers);
+          const matchedCustomerIds = matchedCustomers.map((p) => p.helpeeId);
           if (bookingsRes && bookingsRes.data) {
             const bookings = bookingsRes.data.allBookings || [];
             for (let i = 0; i < bookings.length; i++) {
-              if (matchedHelperIds.indexOf(bookings[i].helpeeId) === -1) {
+              if (matchedCustomerIds.indexOf(bookings[i].helpeeId) === -1) {
+                console.log('bookings[i]: ', bookings[i]);
                 allPotentialCustomers.push(bookings[i]);
+              }
+            }
+            if (chattedCustomerRes && chattedCustomerRes.data) {
+              const chatting =
+                chattedCustomerRes.data.allChattedCustomers || [];
+              for (let i = 0; i < chatting.length; i++) {
+                console.log('chatting[i]外: ', chatting[i]);
+                if (matchedCustomerIds.indexOf(chatting[i].helpeeId) === -1) {
+                  console.log('chatting[i]: ', chatting[i]);
+                  console.log('chatting[i].helpeeId: ', chatting[i].helpeeId);
+                  allPotentialCustomers.push(chatting[i]);
+                }
               }
             }
           }
@@ -636,6 +655,30 @@ export const changeHelperPassword = (data) => {
             helperPasswordResetStatus: 'error',
             helperPasswordResetStatusTitle: 'Oops!',
             helperPasswordResetStatusMessage: error.response.data,
+          })
+        );
+      }
+    }
+  };
+};
+
+export const getAllHelperChattedCustomers = (data) => {
+  return async (dispatch) => {
+    if (data && data.helperUserId) {
+      try {
+        const response = await axios.get(helperChattedCustomersPath, {
+          params: { helperUserId: data.helperUserId },
+        });
+        dispatch(
+          helperActions.updateChattedCustomers({
+            allChattedCustomers: response.data.allChattedCustomers,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helperActions.updateChattedCustomers({
+            allChattedCustomers: [],
           })
         );
       }

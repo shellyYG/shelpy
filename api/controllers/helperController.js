@@ -204,6 +204,28 @@ const sendHelperPasswordResetLink = async (req, res) => {
   }
 };
 
+const getAllChattedCustomers = async (req, res) => {
+  try {
+    const { helperUserId } = req.query;
+    let response;
+    if (helperUserId) {
+      response = await helperModel.getAllChattedCustomers({
+        helperUserId,
+      });
+    }
+    if (response && response.data) {
+      res.status(200).json({
+        allChattedCustomers: response.data.allChattedCustomers,
+      });
+    } else {
+      throw Error('No potential chatted customers response from server.');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   allowHelperPrivateRoute,
   postHelperOffer,
@@ -217,4 +239,5 @@ module.exports = {
   sendHelperPasswordResetLink,
   getHelperAllBookings,
   getAllMarketingOffers,
+  getAllChattedCustomers,
 };

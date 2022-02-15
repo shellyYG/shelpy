@@ -38,6 +38,7 @@ const {
   sendHelpeePasswordResetLink,
   getHelpeeAllBookings,
   payHelper,
+  getAllChattedHelpers,
 } = require('../controllers/helpeeController');
 
 const {
@@ -53,6 +54,7 @@ const {
   sendHelperPasswordResetLink,
   getHelperAllBookings,
   getAllMarketingOffers,
+  getAllChattedCustomers,
 } = require('../controllers/helperController');
 
 const {
@@ -189,6 +191,8 @@ router.post(
       hasArabic,
       hasOthers,
 
+      languages,
+
       notes,
       status,
     } = req.body;
@@ -220,6 +224,8 @@ router.post(
         hasUkrainian,
         hasArabic,
         hasOthers,
+
+        languages,
 
         notes,
         path: 'no_certificate_uploaded',
@@ -267,6 +273,8 @@ router.post(
       hasArabic,
       hasOthers,
 
+      languages,
+
       status,
     } = req.body;
     try {
@@ -299,6 +307,9 @@ router.post(
         hasUkrainian,
         hasArabic,
         hasOthers,
+
+        languages,
+
         path: result.Key,
 
         status,
@@ -339,6 +350,8 @@ router.post('/api/helpee/basic-form', async (req, res) => {
     hasArabic,
     hasOthers,
 
+    languages,
+
     notes,
     status,
   } = req.body;
@@ -367,6 +380,9 @@ router.post('/api/helpee/basic-form', async (req, res) => {
       hasUkrainian,
       hasArabic,
       hasOthers,
+
+      languages,
+
       notes,
       status,
     });
@@ -384,5 +400,9 @@ router.route('/api/helpee/pay').post(wrapAsync(payHelper));
 router.route('/api/booking-status').get(wrapAsync(getBookingStatus));
 
 router.route('/api/marketing-offers').get(wrapAsync(getAllMarketingOffers));
+
+router.route('/api/helpee/chat/partners').get(wrapAsync(getAllChattedHelpers));
+
+router.route('/api/helper/chat/partners').get(wrapAsync(getAllChattedCustomers));
 
 module.exports = router;

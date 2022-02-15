@@ -6,55 +6,50 @@ import { onClickDeleteOffer } from '../store/helper/helper-actions';
 
 function OfferCard(props) {
   const dispatch = useDispatch();
-  const [img, setImg] = useState('');
   const [title, setTitle] = useState('');
-  console.log('mainType: ',  props.mainType);
   
   useEffect(() => {
     switch (props.mainType) {
       case 'university':
-        setImg('/university');
         setTitle('University');
         break;
       case 'job':
-        setImg('/job');
         setTitle('Job');
         break;
       case 'selfEmployed':
-        setImg('/mom');
         setTitle('Self-Employed');
         break;
       default:
-        setImg('/offer_help');
         setTitle('');
     }
   }, [props.mainType]);
-
-  function handleDeleteOffer(e) {
-    e.preventDefault();
-    const data = {
-      offerId: props.offerId,
-      helperUserId: props.helperUserId,
-    };
-    try {
-      dispatch(onClickDeleteOffer(data));
-    } catch (err) {
-      console.error(err);
-    }
-  }
 
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
         <div className='helper-ImgBx'>
-          <img src={`${img}.jpeg`} alt={'visa'}></img>
+          {!props.isAnonymous && props.profilePicPath && <img src={`/images/${props.profilePicPath}`} alt={'visa'}></img>}
+          {(props.isAnonymous || !props.profilePicPath)  && (
+            <a
+              href='https://www.vecteezy.com/free-vector/default-avatar'
+              target='_blank'
+              rel='noreferrer'
+            >
+              <img
+                src={`/images/assets/defaultAvatar.jpg`}
+                alt={
+                  'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
+                }
+              ></img>
+            </a>
+          )}
         </div>
       </div>
       <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
-              {props.type}
+              {props.helperName}
             </h3>
           </div>
         </div>
@@ -96,6 +91,9 @@ function OfferCard(props) {
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
             Price: {props.price} € / 30 minutes
+          </p>
+          <p style={{ fontWeight: '12px', padding: '6px' }}>
+            Speaks: {props.languages}
           </p>
         </div>
       </div>

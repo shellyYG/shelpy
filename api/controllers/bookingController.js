@@ -12,7 +12,7 @@ const updateBookingStatus = async (req, res) => {
   const { data } = req.body;
   console.log('data.requestId? ', data.requestId);
   try {
-    if (data.requestId) {
+    if (data.requestId && data.requestId !== 'NaN') {
       const booking = await checkBookingExisted(data);
       if (booking) {
         await bookingModel.updateBookingStatus(data);

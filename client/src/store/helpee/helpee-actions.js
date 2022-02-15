@@ -18,6 +18,7 @@ const helpeeConfirmEmailPath = '/api/helpee/email/confirmation';
 const helpeeCanChangePasswordPath = '/api/helpee/password/allow-change';
 const helpeeSendPasswordResetEmailPath = '/api/helpee/password/reset';
 const payHelperPath = '/api/helpee/pay';
+const helpeeChattedHelpersPath = '/api/helpee/chat/partners';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
@@ -40,7 +41,7 @@ export const getHelpeeAuthStatus = () => {
           helpeeActions.updateAuthStatus({
             isHelpeeAuthenticated: response.data.isHelpeeAuthenticated,
             helpeeUserId: response.data.helpeeUserId,
-            username: response.data.username,
+            helpeeName: response.data.username,
           })
         );
       }
@@ -180,6 +181,10 @@ export const getPotentialHelpers = (data) => {
         const bookingsRes = await axios.get(getAllBookingsPath, {
           params: { helpeeUserId: data.helpeeUserId },
         });
+        const chattedHelpersRes = await axios.get(helpeeChattedHelpersPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        console.log('chattedHelpersRes: ', chattedHelpersRes);
         if (matchedHelpersRes && matchedHelpersRes.data) {
           const matchedHelpers = matchedHelpersRes.data.allPotentialHelpers;
           matchedHelpers.forEach((h)=>{
@@ -190,12 +195,25 @@ export const getPotentialHelpers = (data) => {
             const bookings = bookingsRes.data.allBookings || [];
             for (let i = 0; i < bookings.length; i++) {
               if (matchedHelperIds.indexOf(bookings[i].helperId) === -1) { // not exist in matchedHelperIds
+                console.log('bookings[i]: ', bookings[i]);
                 allPotentialHelpers.push(bookings[i]);
+                matchedHelperIds.push(bookings[i].helperId);
+              }
+            }
+            if (chattedHelpersRes && chattedHelpersRes.data) {
+              const chattings = chattedHelpersRes.data.allChattedHelpers || [];
+              for (let i = 0; i < chattings.length; i++) {
+                if (matchedHelperIds.indexOf(chattings[i].helperId) === -1) {
+                  // not exist in matchedHelperIds
+                  console.log('chattings[i]: ', chattings[i]);
+                  allPotentialHelpers.push(chattings[i]);
+                  matchedHelperIds.push(chattings[i].helperId);
+                }
               }
             }
           }
         }
-        console.log('allPotentialHelpers: ', allPotentialHelpers);
+
         if (
           allPotentialHelpers
         ) {
@@ -774,6 +792,30 @@ export const postPayHelper = (data) => {
             payHelperStatus: 'error',
             payHelperStatusTitle: 'Oops!',
             payHelperStatusMessage: error.response.data,
+          })
+        );
+      }
+    }
+  };
+};
+
+export const getAllHelpeeChattedHelpers = (data) => {
+  return async (dispatch) => {
+    if (data && data.helpeeUserId) {
+      try {
+        const response = await axios.get(helpeeChattedHelpersPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        dispatch(
+          helpeeActions.updateChattedHelpers({
+            allChattedHelpers: response.data.allChattedHelpers,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateChattedHelpers({
+            allChattedHelpers: [],
           })
         );
       }

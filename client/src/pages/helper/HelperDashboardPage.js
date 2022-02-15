@@ -11,6 +11,7 @@ import OfferCard from '../../components/OfferCard';
 import { useNavigate } from 'react-router-dom';
 import HelperDashboardSection from '../../components/HelperDashboardSection';
 import BookingCard from '../../components/BookingCard';
+import RefreshIcon from '../../components/Icons/RefreshIcon';
 
 
 const HelperDashboardPage = (props) => {
@@ -21,6 +22,7 @@ const HelperDashboardPage = (props) => {
     useSelector((state) => state.helper);
   
   console.log('allBookings: ', allBookings);
+  // console.log('allPotentialCustomers: ', allPotentialCustomers);
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));
     dispatch(getAllBookings({ helperUserId: props.helperUserId }));
@@ -32,6 +34,11 @@ const HelperDashboardPage = (props) => {
     navigate('/helper/service-types', { replace: true });
   }
 
+  function handleRrefreshPage(e) {
+    e.preventDefault(e);
+    window.location.reload();
+  }
+
   return (
     <div className='section-left-align'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -39,7 +46,7 @@ const HelperDashboardPage = (props) => {
           <h2 style={{ margin: 'auto' }}>Welcome, {props.helperName}!</h2>
         )}
         {!props.helperName && (
-          <h2 style={{ margin: 'auto' }}>Welcome to Shelpy!</h2>
+          <h2 style={{ margin: 'auto' }}>Welcome to Shelpy</h2>
         )}
       </div>
       <div className='orderHistoryBtnWrapper'>
@@ -58,6 +65,10 @@ const HelperDashboardPage = (props) => {
           value='potentialCustomers'
           title='Potential Customers'
         />
+        <div style={{ margin: 'auto', display: 'flex', flexDirection: 'row' }}>
+          <div style={{ margin: 'auto' }}>Refresh to get latest status</div>
+          <RefreshIcon onClick={handleRrefreshPage} />
+        </div>
       </div>
       {helperDashboardTarget === 'allBookings' && allBookings && (
         <div className='task-container'>
@@ -97,6 +108,9 @@ const HelperDashboardPage = (props) => {
                 bookingStatus={option.bookingStatus}
                 appointmentDate={option.appointmentDate}
                 appointmentTime={option.appointmentTime}
+                languages={option.languages}
+                isAnonymous={option.helpeeAnonymous}
+                notes={option.notes}
               />
             )
           )}
@@ -104,6 +118,20 @@ const HelperDashboardPage = (props) => {
       )}
       {helperDashboardTarget === 'potentialCustomers' && allPotentialCustomers && (
         <div className='task-container'>
+          {!allPotentialCustomers ||
+            (allPotentialCustomers.length === 0 && (
+              <div
+                className='history-card'
+                style={{
+                  boxShadow: 'none',
+                  border: 'none',
+                  paddingLeft: '18px',
+                  display: 'flex',
+                }}
+              >
+                <p style={{ margin: 'auto' }}>No matched customers yet</p>
+              </div>
+            ))}
           {allPotentialCustomers.map(
             (
               option // TODO: changed to orders
@@ -137,13 +165,30 @@ const HelperDashboardPage = (props) => {
       )}
       {helperDashboardTarget === 'allOffers' && allOffers && (
         <div className='task-container'>
+          {(!allOffers || allOffers.length === 0) && (
+            <div
+              className='history-card'
+              style={{
+                boxShadow: 'none',
+                border: 'none',
+                paddingLeft: '18px',
+                display: 'flex',
+              }}
+            >
+              <p style={{ margin: 'auto' }}>
+                You haven't create any offers yet
+              </p>
+            </div>
+          )}
           <div
             className='history-card'
             style={{ boxShadow: 'none', border: 'none' }}
           >
-            <button className='btn-contact' onClick={handleAddOffer}>
-              Add a Offer
-            </button>
+            <div style={{ margin: 'auto' }}>
+              <button className='btn-contact' onClick={handleAddOffer}>
+                Add a Offer
+              </button>
+            </div>
           </div>
           {allOffers.map((option) => (
             <OfferCard
@@ -158,6 +203,10 @@ const HelperDashboardPage = (props) => {
               country={option.country}
               price={option.price}
               helperUserId={props.helperUserId}
+              profilePicPath={option.profilePicPath}
+              helperName={option.helperName}
+              languages={option.languages}
+              isAnonymous={option.isAnonymous}
             />
           ))}
         </div>

@@ -47,7 +47,7 @@ function App() {
   }, [dispatch]);
   const { helpeeUserId, helpeeName, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
   const { helperUserId, helperName, isHelperAuthenticated } = useSelector((state) => state.helper);
-
+  console.log('@App.js helpeeName: ', helpeeName, 'helperName: ', helperName);
   return (
     <Router>
       <NavBar

@@ -3,7 +3,7 @@ function ChatMessageOther(props) {
     <div>
       <div className='left-chat-container'>{props.message}</div>
       <div className='left-chat-meta'>
-        {props.message_time} {props.author}
+        {props.messageTime} {props.author}
       </div>
     </div>
   );

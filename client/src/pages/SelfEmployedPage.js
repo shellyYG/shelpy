@@ -203,15 +203,25 @@ const SelfEmployedPage = (props) => {
     setTypingPrice(typingInput);
   }
   useEffect(() => {
-    setEnableBtn(
-      country !== 'default' &&
-        type !== 'default' &&
-        profession !== 'default' &&
-        years !== 'default' &&
-        typingPrice !== '' &&
-        isInt(typingPrice)
-    );
-  }, [type, profession, country, years, typingPrice]);
+    if (props.isHelpee) {
+      setEnableBtn(
+        country !== 'default' &&
+          type !== 'default' &&
+          profession !== 'default' &&
+          years !== 'default'
+      );
+    } else {
+      setEnableBtn(
+        country !== 'default' &&
+          type !== 'default' &&
+          profession !== 'default' &&
+          years !== 'default' &&
+          typingPrice !== '' &&
+          isInt(typingPrice)
+      );
+    }
+    
+  }, [props.isHelpee, type, profession, country, years, typingPrice]);
   return (
     <div
       className='main-content-wrapper'
@@ -283,7 +293,7 @@ const SelfEmployedPage = (props) => {
               {!props.isHelpee && (
                 <FullLineTextBox
                   title={
-                    'What companies did you set up (if any)? (if more than one, you can seperate by comma) *'
+                    'What companies did you set up (if any)? (if more than one, you can seperate by comma) '
                   }
                   placeholder={'Google, Facebook'}
                   inputRef={organizationRef}

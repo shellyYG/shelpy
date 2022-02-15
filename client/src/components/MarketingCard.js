@@ -9,6 +9,7 @@ import ChatIcon from './Icons/ChatIcon';
 const MySwal = withReactContent(Swal);
 
 function MarketingCard(props) {
+  console.log('props.isAnonymous: ', props);
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
@@ -58,7 +59,7 @@ function MarketingCard(props) {
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&profilePicPath=${props.profilePicPath}`
     );
   }
 
@@ -66,10 +67,26 @@ function MarketingCard(props) {
     <div className='history-card'>
       <div className='profilePicWidth'>
         <div className='helper-ImgBx'>
-          <img
-            src={`/images/${props.profilePicPath}`}
-            alt={props.username}
-          ></img>
+          {!props.isAnonymous && props.profilePicPath && (
+            <img
+              src={`/images/${props.profilePicPath}`}
+              alt={props.username}
+            ></img>
+          )}
+          {(props.isAnonymous || !props.profilePicPath) && (
+            <a
+              href='https://www.vecteezy.com/free-vector/default-avatar'
+              target='_blank'
+              rel='noreferrer'
+            >
+              <img
+                src={`/images/assets/defaultAvatar.jpg`}
+                alt={
+                  'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
+                }
+              ></img>
+            </a>
+          )}
         </div>
       </div>
       <div className='smallWidth'>
@@ -123,6 +140,18 @@ function MarketingCard(props) {
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
+          <p style={{ fontWeight: '12px', padding: '6px' }}>
+            Speaks: {props.languages}
+          </p>
+          <p
+            style={{
+              fontWeight: '12px',
+              padding: '6px',
+              lineBreak: 'anywhere',
+            }}
+          >
+            Introduction: {props.introduction || 'N/A'}
+          </p>
           <p
             style={{
               fontWeight: '12px',

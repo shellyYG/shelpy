@@ -206,14 +206,24 @@ const UniFormPage = (props) => {
   }, [offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
 
   useEffect(() => {
-    setEnableBtn(
-      country !== 'default' &&
-        school !== 'default' &&
-        department !== 'default' &&
-        degree !== 'default' &&
-        isInt(typingPrice)
-    );
-  }, [school, department, country, degree, typingPrice]);
+    if (props.isHelpee) {
+      setEnableBtn(
+        country !== 'default' &&
+          school !== 'default' &&
+          department !== 'default' &&
+          degree !== 'default'
+      );
+    } else {
+      setEnableBtn(
+        country !== 'default' &&
+          school !== 'default' &&
+          department !== 'default' &&
+          degree !== 'default' &&
+          typingPrice !== '' &&
+          isInt(typingPrice)
+      );
+    }
+  }, [props.isHelpee, school, department, country, degree, typingPrice]);
   useEffect(() => {
     if (school) {
       const departments = departmentOptions[school];

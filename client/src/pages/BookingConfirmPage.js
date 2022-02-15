@@ -48,12 +48,12 @@ const BookingConfirmPage = (props) => {
   const secondType = searchParams.get('secondType');
   const thirdType = searchParams.get('thirdType');
   const fourthType = searchParams.get('fourthType');
+  const bookingDate = searchParams.get('bookingDate');
+  const bookingTime = searchParams.get('bookingTime');
+  const bookingNotes = searchParams.get('bookingNotes');
 
   const {
     bookingStatus,
-    bookingTime,
-    bookingDate,
-    bookingNotes,
     bookingNotificationStatus,
     bookingNotificationStatusTitle,
     bookingNotificationStatusMessage,
@@ -86,7 +86,9 @@ const BookingConfirmPage = (props) => {
   }
   async function handleConfirm(e) {
     e.preventDefault();
+    console.log('handleConfirm...');
     if (props.isHelpee) {
+      console.log('props.isHelpee...');
       const meetTimeRange = meetTimeRef.current.value; // 8am-9am;
       const endMeetTime = meetTimeRange.split('-')[1]; // 9am;
       const timeAMPM =

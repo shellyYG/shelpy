@@ -7,25 +7,21 @@ import EarthIcon from './Icons/EarthIcon';
 function PotentialCustomerCard(props) {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
-  const [img, setImg] = useState('');
   console.log('props @potentialCustomerCard: ', props);
 
   useEffect(() => {
     switch (props.mainType) {
       case 'university':
-        setImg('/university');
         setTitle('University');
         break;
       case 'job':
-        setImg('/job');
         setTitle('Job');
         break;
       case 'selfEmployed':
-        setImg('/mom');
         setTitle('Self Employed');
         break;
       default:
-        setImg('/university');
+        setTitle('');
     }
   }, [props.mainType]);
   
@@ -46,7 +42,7 @@ function PotentialCustomerCard(props) {
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
-        {!props.helpeeAnonymous && (
+        {!props.helpeeAnonymous && !!props.profilePicPath && (
           <div className='helper-ImgBx'>
             <img
               src={`/images/${props.profilePicPath}`}
@@ -54,9 +50,20 @@ function PotentialCustomerCard(props) {
             ></img>
           </div>
         )}
-        {!!props.helpeeAnonymous && (
+        {(!!props.helpeeAnonymous || !props.profilePicPath) && (
           <div className='smallBlankProfileImageBx'>
-            <div style={{ margin: 'auto', fontSize: '10px' }}>Anonymous</div>
+            <a
+              href='https://www.vecteezy.com/free-vector/default-avatar'
+              target='_blank'
+              rel='noreferrer'
+            >
+              <img
+                src={`/images/assets/defaultAvatar.jpg`}
+                alt={
+                  'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
+                }
+              ></img>
+            </a>
           </div>
         )}
       </div>

@@ -65,6 +65,8 @@ const BasicFormPage = (props) => {
   const [hasArabic, setHasArabic] = useState(false);
   const [hasOthers, setHasOthers] = useState(false);
 
+  const [languages, setLanguages] = useState('');
+
   const { helpeeProfilePicPath } = useSelector((state) => state.helpee);
   const { helperProfilePicPath } = useSelector((state) => state.helper);
 
@@ -79,6 +81,37 @@ const BasicFormPage = (props) => {
     applyHelperStatusTitle,
     applyHelperStatusMessage,
   } = useSelector((state) => state.helperNotification);
+
+  useEffect(() => {
+    let languagesString = '';
+    if (hasEnglish) languagesString = languagesString.concat('English');
+    if (hasGerman) languagesString = languagesString.concat(' German');
+    if (hasFrench) languagesString = languagesString.concat(' French');
+    if (hasItalien) languagesString = languagesString.concat(' Italien');
+    if (hasChinese) languagesString = languagesString.concat(' Chinese');
+    if (hasCantonese) languagesString = languagesString.concat(' Cantonese');
+    if (hasVietnamese) languagesString = languagesString.concat(' Vietnamese');
+    if (hasKorean) languagesString = languagesString.concat(' Korean');
+    if (hasJapanese) languagesString = languagesString.concat(' Japanese');
+    if (hasTurkish) languagesString = languagesString.concat(' Turkish');
+    if (hasUkrainian) languagesString = languagesString.concat(' Ukrainian');
+    if (hasArabic) languagesString = languagesString.concat(' Arabic');
+    console.log('languagesString: ', languagesString);
+    setLanguages(languagesString);
+  }, [
+    hasEnglish,
+    hasGerman,
+    hasFrench,
+    hasItalien,
+    hasChinese,
+    hasCantonese,
+    hasVietnamese,
+    hasKorean,
+    hasJapanese,
+    hasTurkish,
+    hasUkrainian,
+    hasArabic,
+  ]);
 
   if (loading) {
     MySwal.fire({
@@ -230,6 +263,9 @@ const BasicFormPage = (props) => {
       data.append('hasUkrainian', hasUkrainian);
       data.append('hasArabic', hasArabic);
       data.append('hasOthers', hasOthers);
+      data.append('languages', languages);
+
+
       data.append('notes', notes);
       data.append('status', 'basic_info_updated');
 
@@ -263,6 +299,8 @@ const BasicFormPage = (props) => {
           hasArabic,
           hasOthers,
 
+          languages,
+
           notes,
           status: 'basic_info_updated',
         };
@@ -294,6 +332,8 @@ const BasicFormPage = (props) => {
           hasUkrainian,
           hasArabic,
           hasOthers,
+
+          languages,
 
           notes,
           status: 'basic_info_updated',
@@ -510,7 +550,10 @@ const BasicFormPage = (props) => {
                     inputRef={linkedInUrlRef}
                   />
                   <div className='form-wrapper' style={{ margin: 'auto' }}>
-                    <label>Resume/files (or linkedin link, this will not be shown publicly)</label>
+                    <label>
+                      Resume/files (or linkedin link, this will not be shown
+                      publicly)
+                    </label>
                     {!certificate && (
                       <>
                         <label className='uploadLabel' for='resume'>
@@ -538,8 +581,8 @@ const BasicFormPage = (props) => {
                   handleCheck={setIsAnonymous}
                   details={
                     props.isHelpee
-                      ? 'Ask question anonymously (your profile picture will be hide).'
-                      : 'Answer question anonymously (your profile picture will be hide).'
+                      ? 'Ask question anonymously (your profile picture will be hide, but username will be shown).'
+                      : 'Answer question anonymously (your profile picture will be hide, but username will be shown).'
                   }
                   paddingRight='10px'
                   marginBottom='5px'

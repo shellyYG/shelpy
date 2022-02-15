@@ -18,7 +18,7 @@ const AboutPage = () => {
           <h3>
             By connecting professions and students, <br />
             <br />
-            Shelpy aims at helping people to change their lives.
+            Shelpy aims at mitigating information gaps and helping people change their lives.
           </h3>
           <br />
           <h2>Impressum</h2>
