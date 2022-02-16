@@ -196,7 +196,7 @@ const BookingConfirmPage = (props) => {
           icon: 'success',
         });
         const path = props.isHelpee ? '/helpee/dashboard' : '/helper/dashboard';
-        navigate(path, { replace: true });
+        navigate(path);
       }
       dispatch(clearBookingNotificationStatus());
       sweetAlertAndNavigate(bookingStatus, bookingNotificationStatusMessage);

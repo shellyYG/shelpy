@@ -385,7 +385,7 @@ const BasicFormPage = (props) => {
           html: <p>{message}</p>,
           icon: 'success',
         });
-        navigate('/helper/service-types', { replace: true });
+        navigate('/helper/service-types');
       }
       dispatch(clearApplyHelperStatus());
       sweetAlertAndNavigate(applyHelperStatus, applyHelperStatusMessage);
@@ -422,7 +422,7 @@ const BasicFormPage = (props) => {
           html: <p>{message}</p>,
           icon: 'success',
         });
-        navigate('/helpee/service-types', { replace: true });
+        navigate('/helpee/service-types');
       }
       dispatch(clearApplyHelpeeStatus());
       sweetAlertAndNavigate(applyHelpeeStatus, applyHelpeeStatusMessage);

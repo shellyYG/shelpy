@@ -20,7 +20,7 @@ const HelperAddServicePage = () => {
       default:
         path = '/helper/service-types';
     }
-    navigate(path, { replace: true });
+    navigate(path);
   }
   return (
     <div className='main-content-wrapper-no-background'>

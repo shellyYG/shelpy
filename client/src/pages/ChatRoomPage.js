@@ -125,11 +125,7 @@ const ChatRoomPage = (props) => {
   ]);
 
   const [showTaskSection, setShowTaskSection] = useState(true);
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate('/home', { replace: true });
-  };
-  window.addEventListener('popstate', onBackButtonEvent, { once: true });
+  
   function handleSchrink(e) {
     e.preventDefault();
     setShowTaskSection(false);
@@ -152,7 +148,6 @@ const ChatRoomPage = (props) => {
         `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
         `&country=${country}&mainType=${mainType}&secondType=${secondType}` +
         `&thirdType=${thirdType}&fourthType=${fourthType}`,
-      { replace: true }
     );
   }
   async function handleYoutubeClick(e) {

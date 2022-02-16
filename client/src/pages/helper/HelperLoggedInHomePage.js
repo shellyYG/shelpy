@@ -6,7 +6,7 @@ const HelperLoggedInHomePage = () => {
   const navigate = useNavigate();
   function handleCreateOfferClick(e) {
     e.preventDefault();
-    navigate('/helper/service-types', { replace: true });
+    navigate('/helper/service-types');
   }
   
   return (

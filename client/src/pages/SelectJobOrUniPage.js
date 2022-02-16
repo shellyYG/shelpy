@@ -28,7 +28,7 @@ const SelectJobOrUniPage = (props) => {
       default:
         path = `/${userType}/job-form`;
     }
-    navigate(path, { replace: true });
+    navigate(path); // do not have {replace: true} so user can click backward btn to go back to this page
   }
   return (
     <div className='main-content-wrapper-no-background'>

@@ -325,7 +325,7 @@ export const departmentOptions = {
     { value: 'Computer Engineering', label: 'Computer Engineering' },
     { value: 'Others', label: othersText },
   ],
-  Others: [{ value: 'Others', label: othersText }],
+  Others: [{ value: 'default', label: 'Please Select' }, { value: 'Others', label: othersText }],
 };
 
 export const degreeOptions = [

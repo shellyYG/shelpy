@@ -46,7 +46,6 @@ function MarketingCard(props) {
           `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.username}` +
           `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
           `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`,
-        { replace: true }
       );
     }
   }

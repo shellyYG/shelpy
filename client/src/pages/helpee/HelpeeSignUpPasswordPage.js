@@ -29,11 +29,6 @@ const HelpeeSignUpPasswordPage = () => {
     signUpPasswordStatusMessage,
   } = useSelector((state) => state.helpeeNotification);
 
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate('/home', { replace: true });
-  };
-  window.addEventListener('popstate', onBackButtonEvent, { once: true });
   if (loading) {
     MySwal.fire({
       title: 'Loading...',

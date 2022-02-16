@@ -1,11 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 const AboutPage = () => {
-  const navigate = useNavigate();
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate("/home", { replace: true });
-  };
-  window.addEventListener("popstate", onBackButtonEvent, { once: true });
   return (
     <div className='main-content-wrapper-homepage'>
       <div className='section-center-align-landing'>

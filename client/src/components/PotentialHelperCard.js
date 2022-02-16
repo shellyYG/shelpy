@@ -49,7 +49,6 @@ function PotentialHelperCard(props) {
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.partnerName}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
         `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`,
-      { replace: true }
     );
   }
 

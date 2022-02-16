@@ -8,18 +8,12 @@ import '../App.css';
 
 const ServiceOptionPage = () => {
   const { globalServiceType }= useSelector((state) => state.helpee);
-  const { DBHelpeeEmail } = useSelector((state) => state.helpee);
-  const [email, setEmail] = useState(DBHelpeeEmail);
   const navigate = useNavigate();
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate("/home", { replace: true });
-  };
-  window.addEventListener("popstate", onBackButtonEvent, { once: true });
+  
   function handleNext(e) {
     e.preventDefault();
     let path = '/book-appointment-form';
-    navigate(path, { replace: true });
+    navigate(path);
   }
   return (
     <div className='main-content-wrapper-no-background'>

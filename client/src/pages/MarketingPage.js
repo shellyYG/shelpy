@@ -73,7 +73,7 @@ const HelpeeDashboardPage = (props) => {
   }, [secondType]);
   function handleToHomepage(e) {
     e.preventDefault();
-    navigate('/home', { replace: true });
+    navigate('/home');
   }
 
   return (

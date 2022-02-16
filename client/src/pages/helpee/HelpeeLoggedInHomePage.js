@@ -6,7 +6,7 @@ const HelpeeLoggedInHomePage = () => {
   const navigate = useNavigate();
   function handleBookHelperClick(e) {
     e.preventDefault();
-    navigate('/helpee/service-types', { replace: true });
+    navigate('/helpee/service-types');
   }
   return (
     <div className='main-content-wrapper-no-height'>

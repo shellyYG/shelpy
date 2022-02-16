@@ -31,12 +31,12 @@ const HelpeeDashboardPage = (props) => {
 
   function handleAddRequest(e) {
     e.preventDefault(e);
-    navigate('/helpee/service-types', { replace: true });
+    navigate('/helpee/service-types');
   }
 
   function handleSearchHelpers(e) {
     e.preventDefault(e);
-    navigate('/marketing/offers', { replace: true });
+    navigate('/marketing/offers');
   }
 
   function handleRrefreshPage(e) {

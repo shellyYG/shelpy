@@ -130,7 +130,7 @@ const navigate = useNavigate();
           icon: 'success',
         });
         let path = '/helpee/dashboard';
-        navigate(path, { replace: true });
+        navigate(path);
       }
       dispatch(clearRequestFormStatus());
       sweetAlertAndNavigate(requestFormStatus, requestFormStatusMessage);

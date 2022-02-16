@@ -55,35 +55,35 @@ const ProfileIcon = (props) => {
   }
   function handleToHelpeeDashboard(e) {
     e.preventDefault();
-    navigate('/helpee/dashboard', { replace: true });
+    navigate('/helpee/dashboard');
   }
   function handleToHelperDashboard(e) {
     e.preventDefault();
-    navigate('/helper/dashboard', { replace: true });
+    navigate('/helper/dashboard');
   }
   function handleHelpeeSignIn(e) {
     e.preventDefault();
-    navigate('/helpee/sign-in', { replace: true });
+    navigate('/helpee/sign-in');
   }
   function handleHelperSignIn(e) {
     e.preventDefault();
-    navigate('/helper/sign-in', { replace: true });
+    navigate('/helper/sign-in');
   }
   function handleToHelpeeChatroom(e) {
     e.preventDefault();
-    navigate('/helpee/chatroom', { replace: true });
+    navigate('/helpee/chatroom');
   }
   function handleToHelperChatroom(e) {
     e.preventDefault();
-    navigate('/helper/chatroom', { replace: true });
+    navigate('/helper/chatroom');
   }
   function handleToHelpeeUpdateProfile(e) {
     e.preventDefault();
-    navigate('/helpee/basic-form', { replace: true });
+    navigate('/helpee/basic-form');
   }
   function handleToHelperUpdateProfile(e) {
     e.preventDefault();
-    navigate('/helper/basic-form', { replace: true });
+    navigate('/helper/basic-form');
   }
 
   useEffect(() => {

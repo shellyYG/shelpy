@@ -27,11 +27,7 @@ const SignUpPageHelper = () => {
   } = useSelector((state) => state.helperNotification);
   const emailRef = useRef();
   const [email, setEmail] = useState('');
-  const onBackButtonEvent = (e) => {
-    e.preventDefault();
-    navigate('/helper/home', { replace: true });
-  };
-  window.addEventListener('popstate', onBackButtonEvent, { once: true });
+
   async function handleConfirm(e) {
     e.preventDefault();
     if (emailRef && emailRef.current && emailRef.current.value) {

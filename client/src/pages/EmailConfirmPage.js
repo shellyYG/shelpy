@@ -66,7 +66,7 @@ const EmailConfirmPage = (props) => {
             ),
             icon: 'error',
           });
-          navigate('/helpee/home', { replace: true });
+          navigate('/helpee/home', { replace: true }); // replace: true: do not want to let user come back to this page
         }
         sweetAlertAndClearStatus(
           confirmHelpeeEmailStatus,

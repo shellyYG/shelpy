@@ -31,7 +31,7 @@ const HelperDashboardPage = (props) => {
 
   function handleAddOffer(e) {
     e.preventDefault(e);
-    navigate('/helper/service-types', { replace: true });
+    navigate('/helper/service-types');
   }
 
   function handleRrefreshPage(e) {

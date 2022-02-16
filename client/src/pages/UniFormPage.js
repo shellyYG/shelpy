@@ -40,10 +40,11 @@ const UniFormPage = (props) => {
   function isInt(value) {
     return (
       !isNaN(value) &&
-      parseInt(Number(value)) == value &&
+      parseInt(Number(value)) === value &&
       !isNaN(parseInt(value, 10))
     );
   }
+
   function handlePriceTyping(e) {
     console.log('handlePriceTyping...');
     e.preventDefault();
@@ -227,11 +228,10 @@ const UniFormPage = (props) => {
   useEffect(() => {
     if (school) {
       const departments = departmentOptions[school];
+      console.log('departments: ', departments);
       setMatchedDepartments(departments);
     }
   }, [school]);
-
-  console.log('matchedDepartments: ', matchedDepartments);
 
   return (
     <div
