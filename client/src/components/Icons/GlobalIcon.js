@@ -3,8 +3,10 @@ import { useDispatch } from 'react-redux';
 import { IconContext } from 'react-icons';
 import { CgGlobeAlt } from 'react-icons/cg';
 import { onClickUpdateActiveIconTarget } from '../../store/general/general-actions';
+import { useTranslation } from 'react-i18next';
 
-const GlobalIcon = (props) => {
+function GlobalIcon (props) {
+  const { i18n } = useTranslation();
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   function handleLanguageClick(e) {
@@ -21,11 +23,11 @@ const GlobalIcon = (props) => {
   }
   function onENClick(e) {
     e.preventDefault();
-    props.i18n.changeLanguage('en');
+    i18n.changeLanguage('en');
   }
   function onZhClick(e) {
     e.preventDefault();
-    props.i18n.changeLanguage('zh-TW');
+    i18n.changeLanguage('zh-TW');
   }
   useEffect(() => {
     if (props.dropDownNavTarget !== 'language') {

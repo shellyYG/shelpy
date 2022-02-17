@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import StripeCheckout from 'react-stripe-checkout';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import { postPayHelper, clearPayHelperStatus } from '../store/helpee/helpee-actions';
+import { useRef } from 'react';
+
 
 const MySwal = withReactContent(Swal);
 
 function BookingCard(props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const paypal = useRef();
   const [title, setTitle] = useState('');
   const [helpeeFilteredBookingStatus, setHelpeeFilteredBookingStatus] = useState('');
   const [helperFilteredBookingStatus, setHelperFilteredBookingStatus] =
@@ -31,8 +36,8 @@ function BookingCard(props) {
 
   if (loading) {
     MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
+      title: t('loading'),
+      html: t('do_not_close_window'),
       allowOutsIdeClick: false,
       showConfirmButton: false,
       willOpen: () => {
@@ -61,7 +66,11 @@ function BookingCard(props) {
     switch (props.bookingStatus) {
       case 'created':
         setHelpeeFilteredBookingStatus(
-          `Waiting for ${props.helperUsername} to confirm meeting time on ${props.appointmentDate} at ${props.appointmentTime}.`
+          t('booking_card_waiting_helper_confirm', {
+            helperUsername: props.helperUsername,
+            appointmentDate: props.appointmentDate,
+            appointmentTime: props.appointmentTime,
+          })
         );
         break;
       case 'helperConfirmed':
@@ -84,7 +93,11 @@ function BookingCard(props) {
     switch (props.bookingStatus) {
       case 'created':
         setHelperFilteredBookingStatus(
-          `Waiting for ${props.helperUsername} to confirm meeting time on ${props.appointmentDate} at ${props.appointmentTime}.`
+          t('booking_card_waiting_helper_confirm', {
+            helperUsername: props.helperUsername,
+            appointmentDate: props.appointmentDate,
+            appointmentTime: props.appointmentTime,
+          })
         );
         break;
       case 'helperConfirmed':
@@ -120,19 +133,45 @@ function BookingCard(props) {
     );
   }
   
-  function handlePayHeper(token) {
+  function handlePayHelper(token) {
     try {
-      const data = {
-        bookingStatus: 'paid',
-        bookingId: props.bookingId,
-        token,
-        product,
-      };
-      dispatch(postPayHelper(data));
-      setIsLoading(true);
+      // const data = {
+      //   bookingStatus: 'paid',
+      //   bookingId: props.bookingId,
+      //   token,
+      //   product,
+      // };
+      // dispatch(postPayHelper(data));
+      // setIsLoading(true);
+      // Test Paypal:
+      // window.paypal
+      //   .Buttons({
+      //     createOrder: function (data, actions) {
+      //       // Set up the transaction
+      //       return actions.order.create({
+      //         purchase_units: [
+      //           {
+      //             description: 'Paying Helper',
+      //             amount: {
+      //               currency_code: 'EUR',
+      //               value: '0.01',
+      //             },
+      //           },
+      //         ],
+      //       });
+      //     },
+      //     onApprove: async (data, actions) => {
+      //       const order = await actions.order.capture();
+      //       console.log('order: ', order);
+      //     },
+      //     onError: (err) => {
+      //       console.log('err: ', err);
+      //     },
+      //   })
+      //   .render(paypal.current);
     } catch (err) {
       console.error(err);
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   }
 
@@ -239,7 +278,7 @@ function BookingCard(props) {
         <div className='bookingStatusWidth'>
           <div className='contentBx'>
             <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking ID: {props.id}
+              {t('booking_id')}: {props.id}
             </p>
             <button onClick={handleBookingConfirmation} className='btn-next'>
               Confirm {props.partnerName}'s booking
@@ -256,10 +295,10 @@ function BookingCard(props) {
           <div className='bookingStatusWidth'>
             <div className='contentBx'>
               <p style={{ fontWeight: '12px', padding: '6px' }}>
-                Booking ID: {props.id}
+                {t('booking_id')}: {props.id}
               </p>
               <p style={{ fontWeight: '12px', padding: '6px' }}>
-                Booking Status: {helperFilteredBookingStatus}
+                {t('booking_status')}: {helperFilteredBookingStatus}
               </p>
             </div>
           </div>
@@ -268,11 +307,11 @@ function BookingCard(props) {
         <div className='bookingStatusWidth'>
           <div className='contentBx'>
             <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking ID: {props.id}
+              {t('booking_id')}: {props.id}
             </p>
-            <StripeCheckout
+            {/* <StripeCheckout
               stripeKey={process.env.REACT_APP_STRIPE_TEST_PUBLISHABLE_KEY}
-              token={handlePayHeper}
+              token={handlePayHelper}
               currency='eur'
               name={`Pay ${props.partnerName}`}
               amount={props.price * 100}
@@ -281,7 +320,11 @@ function BookingCard(props) {
               <button className='btn-next'>
                 Pay {props.partnerName} ({props.price}€)
               </button>
-            </StripeCheckout>
+            </StripeCheckout> */}
+            <button className='btn-contact' onClick={handlePayHelper}>
+              {t('pay_name', {name: props.partnerName, price: props.price})}
+            </button>
+            <div ref={paypal}> </div>
           </div>
         </div>
       )}
@@ -290,14 +333,14 @@ function BookingCard(props) {
         <div className='bookingStatusWidth'>
           <div className='contentBx'>
             <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking ID: {props.id}
+              {t('booking_id')}: {props.id}
             </p>
             <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking Status: {helpeeFilteredBookingStatus}
+              {t('booking_status')}: {helpeeFilteredBookingStatus}
             </p>
           </div>
           <button className='btn-contact' onClick={handleBookHelper}>
-            Propose new booking time to {props.partnerName}
+            {t('propose_new_time_to_helper', { name: props.partnerName })}
           </button>
         </div>
       )}
@@ -305,10 +348,10 @@ function BookingCard(props) {
         <div className='bookingStatusWidth'>
           <div className='contentBx'>
             <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking ID: {props.id}
+              {t('booking_id')}: {props.id}
             </p>
             <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking Status: {helpeeFilteredBookingStatus}
+              {t('booking_status')}: {helpeeFilteredBookingStatus}
             </p>
           </div>
         </div>

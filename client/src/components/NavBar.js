@@ -7,12 +7,11 @@ import HelpIcon from './Icons/HelpIcon';
 import AboutIcon from './Icons/AboutIcon';
 import ProfileIcon from './Icons/ProfileIcon';
 import OfferIcon from './Icons/OfferIcon';
-import i18n from '../store/i18nSetup';
-
+import { useTranslation } from 'react-i18next';
 
 const NavBar = (props) => {
   const { dropDownNavTarget } = useSelector((state) => state.general);
-  
+  const { t } = useTranslation();
   const nonActiveStyle = {
     color: "white",
     display: "flex",
@@ -51,7 +50,7 @@ const NavBar = (props) => {
               color={({ isActive }) => (isActive ? 'black' : 'white')}
             />
             <div className='navBarText' style={{ marginLeft: '5px' }}>
-              About
+              {t('nav_about')}
             </div>
           </NavLink>
           <NavLink
@@ -61,7 +60,7 @@ const NavBar = (props) => {
             <ShopIcon
               color={({ isActive }) => (isActive ? 'black' : 'white')}
             />
-            <div className='navBarText'>Book Helper</div>
+            <div className='navBarText'>{t('nav_book_helper')}</div>
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
@@ -70,7 +69,7 @@ const NavBar = (props) => {
             <OfferIcon
               color={({ isActive }) => (isActive ? 'black' : 'white')}
             />
-            <div className='navBarText'>Sales</div>
+            <div className='navBarText'>{t('nav_top_helper')}</div>
           </NavLink>
           {!props.isHelperAuthenticated && (
             <NavLink
@@ -82,7 +81,7 @@ const NavBar = (props) => {
               <HelpIcon
                 color={({ isActive }) => (isActive ? 'black' : 'white')}
               />
-              <div className='navBarText'>Become Helper</div>
+              <div className='navBarText'>{t('nav_become_helper')}</div>
             </NavLink>
           )}
           {props.isHelperAuthenticated && (
@@ -102,7 +101,7 @@ const NavBar = (props) => {
             isHelpeeAuthenticated={props.isHelpeeAuthenticated}
             isHelperAuthenticated={props.isHelperAuthenticated}
           />
-          <GlobalIcon dropDownNavTarget={dropDownNavTarget} i18n={i18n}/>
+          <GlobalIcon dropDownNavTarget={dropDownNavTarget} />
         </div>
       </nav>
     </>

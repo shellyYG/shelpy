@@ -26,75 +26,39 @@ export const helperAddServiceOptions = [
 export const jobUniOptions = [
   {
     value: 'university',
-    label: 'Apply for University',
+    label: 'service_types_uni',
     imgPath: '/university.jpeg',
   },
   {
     value: 'job',
-    label: 'Apply / Change Job',
-    imgPath: '/job.jpeg',
+    label: 'service_types_job',
+    imgPath: '/business.jpeg',
   },
   {
     value: 'selfEmployed',
-    label: 'Self Employed / Freelancer',
+    label: 'service_types_self_employed',
     imgPath: '/mom.jpeg',
   },
 ];
 
-export const jobUniOptionsHelper = [
-  {
-    value: 'university',
-    label: 'Experiences on University',
-    imgPath: '/university.jpeg',
-  },
-  {
-    value: 'job',
-    label: 'Experiences on Job',
-    imgPath: '/job.jpeg',
-  },
-  {
-    value: 'selfEmployed',
-    label: 'Experiences on Self Employed / Freelancer',
-    imgPath: '/mom.jpeg',
-  },
-];
-
-export const jobUniMarketingOptions = [
-  { value: 'default', label: 'Please Select' },
-  {
-    value: 'university',
-    label: 'University',
-    imgPath: '/university.jpeg',
-  },
-  {
-    value: 'job',
-    label: 'Job',
-    imgPath: '/job.jpeg',
-  },
-  {
-    value: 'selfEmployed',
-    label: 'Self-Employed',
-    imgPath: '/mom.jpeg',
-  },
-];
 
 export const secondTypeOptions = {
-  default: [{ value: 'default', label: 'Please Select' }],
+  default: [{ value: 'default', label: 'please_select_option' }],
   university: [
-    { value: 'default', label: 'Please Select' },
-    { value: 'Business', label: 'Business' },
-    { value: 'Science', label: 'Science' },
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Business', label: 'uni_form_school_business' },
+    { value: 'Science', label: 'uni_form_school_science' },
   ],
   job: [
-    { value: 'default', label: 'Please Select' },
-    { value: 'Medical', label: 'Medical' },
-    { value: 'Software', label: 'Software' },
-    { value: 'Blockchain', label: 'Blockchain' },
-    { value: 'Finance', label: 'Finance' },
-    { value: 'Consulting', label: 'Consulting' },
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Medical', label: 'job_form_industry_medical' },
+    { value: 'Software', label: 'job_form_industry_software' },
+    { value: 'Blockchain', label: 'job_form_industry_blockchain' },
+    { value: 'Finance', label: 'job_form_industry_finance' },
+    { value: 'Consulting', label: 'job_form_industry_consulting' },
   ],
   selfEmployed: [
-    { value: 'default', label: 'Please Select' },
+    { value: 'default', label: 'please_select_option' },
     { value: 'Entreprenuer', label: 'Entreprenuer' },
     { value: 'House Wife', label: 'House Wife' },
     { value: 'House Husband', label: 'House Husband' },

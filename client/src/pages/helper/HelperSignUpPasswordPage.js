@@ -10,10 +10,12 @@ import {
   clearSignUpPasswordStatus,
   postHelperSignUpPassword,
 } from '../../store/helper/helper-actions';
+import { useTranslation } from 'react-i18next';
 
 const MySwal = withReactContent(Swal);
 
 const HelperSignUpPasswordPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const emailRef = useRef();
@@ -31,8 +33,8 @@ const HelperSignUpPasswordPage = () => {
 
   if (loading) {
     MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
+      title: t('loading'),
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {

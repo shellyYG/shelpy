@@ -23,11 +23,13 @@ import {
 
 import LeftHalfLineTextBox from '../components/LeftHalfLineTextBox';
 import CheckBox from '../components/CheckBox';
+import { useTranslation } from 'react-i18next';
 
 const MySwal = withReactContent(Swal);
 
 const BasicFormPage = (props) => {
   console.log('helpeeId: ', props.helpeeUserId, 'helperId: ', props.helperUserId);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -115,8 +117,8 @@ const BasicFormPage = (props) => {
 
   if (loading) {
     MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
+      title: t('loading'),
+      html: t('do_not_close_window'),
       allowOutsIdeClick: false,
       showConfirmButton: false,
       willOpen: () => {
@@ -482,7 +484,7 @@ const BasicFormPage = (props) => {
                       helperProfilePicPath.length < 1) && (
                       <div className='blankProfileImageBx'>
                         <div style={{ margin: 'auto' }}>
-                          <p style={{ color: 'black' }}>Loading...</p>
+                          <p style={{ color: 'black' }}>{t('loading')}</p>
                         </div>
                       </div>
                     )}
@@ -502,7 +504,7 @@ const BasicFormPage = (props) => {
                       helpeeProfilePicPath.length < 1) && (
                       <div className='blankProfileImageBx'>
                         <div style={{ margin: 'auto' }}>
-                          <p style={{ color: 'black' }}>Loading...</p>
+                          <p style={{ color: 'black' }}>{t('loading')}</p>
                         </div>
                       </div>
                     )}

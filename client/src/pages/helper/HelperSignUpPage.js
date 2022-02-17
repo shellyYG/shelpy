@@ -10,6 +10,8 @@ import {
   postHelpeeSignUpEmail,
 } from '../../store/helpee/helpee-actions';
 import MktRow from '../../components/MktRow';
+import HelperMarketingSection from '../../components/HelperMarketingSection';
+import { useTranslation } from 'react-i18next';
 
 const MySwal = withReactContent(Swal);
 
@@ -17,6 +19,7 @@ const regex =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 const SignUpPageHelper = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
@@ -88,7 +91,12 @@ const SignUpPageHelper = () => {
           <div className='coverLeft'>
             <div>
               <h1 style={{ textAlign: 'center', color: 'white' }}>
-                Help people while earning money!
+                {t('helper_home_banner_title1')}
+              </h1>
+            </div>
+            <div>
+              <h1 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helper_home_banner_title2')}
               </h1>
             </div>
             <div>
@@ -100,8 +108,8 @@ const SignUpPageHelper = () => {
                   color: 'white',
                 }}
               >
-                Become a helper <br />
-                and make extra revenue stream!
+                {t('helper_home_banner_subtitle1')} <br />
+                {t('helper_home_banner_subtitle2')}
               </h2>
             </div>
           </div>
@@ -114,19 +122,22 @@ const SignUpPageHelper = () => {
                   marginBottom: '10px',
                 }}
               >
-                Create an account to be a helper.
+                {t('helper_home_create_an_account_helpee')}
               </h3>
 
               <form action='' className='centerbox-landing'>
                 <input
                   type='email'
                   className='form-control-landing'
-                  placeholder='Enter Email Address'
+                  placeholder={t('home_enter_email_placeholder')}
                   value={email}
                   onChange={handleEmailTyping}
                   ref={emailRef}
                 />
-                <ConfirmBtn cta='Sign Up ❯' handleConfirm={handleConfirm} />
+                <ConfirmBtn
+                  cta={t('home_free_sign_up')}
+                  handleConfirm={handleConfirm}
+                />
               </form>
               <p
                 style={{
@@ -137,58 +148,26 @@ const SignUpPageHelper = () => {
                   padding: '5px 30px',
                 }}
               >
-                By providing your email address, you agree to receive offers
-                from Shelpy, according to our{' '}
+                {t('home_terms_and_condition_introduction')}{' '}
                 <a href='/privacy-policy' target='_blank'>
-                  privacy policy
+                  {t('home_privacy_policy')}
                 </a>
-                . <br />
-                You can{' '}
+                {t('home_ending')} <br />
+                {t('home_you_can')}{' '}
                 <a href='/unsubscribe' target='_blank'>
-                  unsubscribe
+                  {t('home_unsubscribe')}{' '}
                 </a>{' '}
-                at any time.
+                {t('home_at_any_time')}
               </p>
               <div style={{ textAlign: 'center' }}>
                 <Link to='/helper/sign-in'>
-                  Alreave have an account? Sign In here!
+                  {t('home_have_account_sign_in')}
                 </Link>
               </div>
             </div>
           </div>
         </div>
-        <div className='centerWrapperMkt'>
-          <div className='mktWrapper'>
-            <MktRow
-              title='HELP people'
-              details1='Were you once hesitating?'
-              details2='Help people who are now standing on the crossroad and wonders.'
-              imagePath='/helpPeople.jpg'
-              lastChild={false}
-            />
-            <MktRow
-              title='GENERATE extra revenue'
-              details1='Thinking about having a side business?'
-              details2='Join us and create extra safenet to reach your financial freedom.'
-              imagePath='/sidebusiness.jpeg'
-              lastChild={false}
-            />
-            <MktRow
-              title='FREE marketing listing'
-              details1='Are you already a career/study counselor?'
-              details2='Get extra exposure with us and meet your potential customers.'
-              imagePath='/counselor.jpeg'
-              lastChild={true}
-            />
-            <MktRow
-              title='CONTROL your own privacy'
-              details1='Want to share some private but important insights?'
-              details2='You decide if you want to stay anonymously and how much you want to share.'
-              imagePath='/oneToOne.jpeg'
-              lastChild={false}
-            />
-          </div>
-        </div>
+        <HelperMarketingSection />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
@@ -36,9 +36,6 @@ import PasswordResetPage from './pages/PasswordResetPage';
 import PasswordResetPrePage from './pages/PasswordResetPrePage';
 import HelperForgetPasswordPage from './pages/helper/HelperForgetPasswordPage';
 import MarketingPage from './pages/MarketingPage';
-import i18n from './store/i18nSetup';
-
-
 
 function App() {
   const dispatch = useDispatch();
@@ -48,245 +45,251 @@ function App() {
   }, [dispatch]);
   const { helpeeUserId, helpeeName, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
   const { helperUserId, helperName, isHelperAuthenticated } = useSelector((state) => state.helper);
-  console.log('@App.js helpeeName: ', helpeeName, 'helperName: ', helperName);
+  // console.log('@App.js helpeeName: ', helpeeName, 'helperName: ', helperName);
   return (
-    <Router>
-      <NavBar
-        isHelpeeAuthenticated={isHelpeeAuthenticated}
-        isHelperAuthenticated={isHelperAuthenticated}
-      />
-      <Routes>
-        <Route path='/about' element={<AboutPage />} />
-        <Route
-          path='/marketing/offers'
-          element={
-            <MarketingPage
-              helpeeId={helpeeUserId}
-              helpeeUsername={helpeeName}
-              isHelpeeAuthenticated={isHelpeeAuthenticated}
-            />
-          }
+    <Suspense fallback={null}>
+      <Router>
+        <NavBar
+          isHelpeeAuthenticated={isHelpeeAuthenticated}
+          isHelperAuthenticated={isHelperAuthenticated}
         />
-        <Route path='/' element={<Navigate replace to='/home' />} />
-        <Route
-          path='/home'
-          element={
-            <HelpeeHomePage isHelpeeAuthenticated={isHelpeeAuthenticated} />
-          }
-        />
-        <Route
-          path='/helper/home'
-          element={
-            <HelperHomePage isHelperAuthenticated={isHelperAuthenticated} />
-          }
-        />
-
-        <Route
-          path='/helpee/sign-up-final-step'
-          element={<HelpeeSignUpPasswordPage />}
-        />
-        <Route
-          path='/helper/sign-up-final-step'
-          element={<HelperSignUpPasswordPage />}
-        />
-        <Route path='/helpee/sign-in' element={<HelpeeSignInPage />} />
-        <Route
-          path='/helpee/forget-password'
-          element={<HelpeeForgetPasswordPage />}
-        />
-        <Route
-          path='/helper/forget-password'
-          element={<HelperForgetPasswordPage />}
-        />
-        <Route
-          path='/helpee/password/pre/reset'
-          element={<PasswordResetPrePage isHelpee={true} />}
-        />
-        <Route
-          path='/helper/password/pre/reset'
-          element={<PasswordResetPrePage isHelpee={false} />}
-        />
-        <Route
-          path={`/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
-          element={<PasswordResetPage isHelpee={true} />}
-        />
-        <Route
-          path={`/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
-          element={<PasswordResetPage isHelpee={false} />}
-        />
-        <Route path='/helper/sign-in' element={<HelperSignInPage />} />
-
-        <Route
-          path='/helpee/service-types'
-          element={
-            isHelpeeAuthenticated ? (
-              <SelectJobOrUniPage isHelpee={true} />
-            ) : (
-              <PreSignInPage isHelpee={true} />
-            )
-          }
-        />
-        <Route
-          path='/helper/service-types'
-          element={
-            isHelperAuthenticated ? (
-              <SelectJobOrUniPage isHelpee={false} />
-            ) : (
-              <PreSignInPage isHelpee={false} />
-            )
-          }
-        />
-        <Route
-          path='/helpee/job-form'
-          element={
-            isHelpeeAuthenticated ? (
-              <JobFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
-            ) : (
-              <PreSignInPage isHelpee={true} />
-            )
-          }
-        />
-        <Route
-          path='/helper/job-form'
-          element={
-            isHelperAuthenticated ? (
-              <JobFormPage isHelpee={false} helperUserId={helperUserId} />
-            ) : (
-              <PreSignInPage isHelpee={false} />
-            )
-          }
-        />
-        <Route
-          path='/helpee/uni-form'
-          element={
-            isHelpeeAuthenticated ? (
-              <UniFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
-            ) : (
-              <PreSignInPage isHelpee={true} />
-            )
-          }
-        />
-        <Route
-          path='/helper/uni-form'
-          element={
-            isHelperAuthenticated ? (
-              <UniFormPage isHelpee={false} helperUserId={helperUserId} />
-            ) : (
-              <PreSignInPage isHelpee={false} />
-            )
-          }
-        />
-        <Route
-          path='/helpee/self-employed-form'
-          element={
-            isHelpeeAuthenticated ? (
-              <SelfEmployedPage isHelpee={true} helpeeUserId={helpeeUserId} />
-            ) : (
-              <PreSignInPage isHelpee={true} />
-            )
-          }
-        />
-        <Route
-          path='/helper/self-employed-form'
-          element={
-            isHelperAuthenticated ? (
-              <SelfEmployedPage isHelpee={false} helperUserId={helperUserId} />
-            ) : (
-              <PreSignInPage isHelpee={false} />
-            )
-          }
-        />
-        <Route
-          path={'/helpee/dashboard'}
-          element={
-            isHelpeeAuthenticated ? (
-              <HelpeeDashboardPage
-                isHelpee={true}
-                helpeeUserId={helpeeUserId}
-                helpeeName={helpeeName}
-                i18n={i18n}
+        <Routes>
+          <Route path='/about' element={<AboutPage />} />
+          <Route
+            path='/marketing/offers'
+            element={
+              <MarketingPage
+                helpeeId={helpeeUserId}
+                helpeeUsername={helpeeName}
+                isHelpeeAuthenticated={isHelpeeAuthenticated}
               />
-            ) : (
-              <PreSignInPage isHelpee={true} />
-            )
-          }
-        />
-        <Route
-          path={'/helper/dashboard'}
-          element={
-            isHelperAuthenticated ? (
-              <HelperDashboardPage
-                isHelpee={false}
-                helperUserId={helperUserId}
-                helperName={helperName}
+            }
+          />
+          <Route path='/' element={<Navigate replace to='/home' />} />
+          <Route
+            path='/home'
+            element={
+              <HelpeeHomePage
+                isHelpeeAuthenticated={isHelpeeAuthenticated}
               />
-            ) : (
-              <PreSignInPage isHelpee={false} />
-            )
-          }
-        />
-        <Route
-          path={'/helpee/chatroom'}
-          element={
-            isHelpeeAuthenticated ? (
-              <ChatRoomPage isHelpee={true} helpeeUserId={helpeeUserId} />
-            ) : (
-              <PreSignInPage isHelpee={true} />
-            )
-          }
-        />
-        <Route
-          path={'/helpee/book-helper'}
-          element={<BookingConfirmPage isHelpee={true} />}
-        />
-        <Route
-          path={'/helper/confirm-booking'}
-          element={<BookingConfirmPage isHelpee={false} />}
-        />
-        <Route
-          path={'/helpee/email/confirmation'}
-          element={<EmailConfirmPage isHelpee={true} />}
-        />
-        <Route
-          path={'/helper/email/confirmation'}
-          element={<EmailConfirmPage isHelpee={false} />}
-        />
-        <Route
-          path={'/helper/chatroom'}
-          element={
-            isHelperAuthenticated ? (
-              <ChatRoomPage isHelpee={false} helperUserId={helperUserId} />
-            ) : (
-              <PreSignInPage isHelpee={false} />
-            )
-          }
-        />
-        <Route
-          path={'/helper/basic-form'}
-          element={
-            <BasicFormPage isHelpee={false} helperUserId={helperUserId} />
-          }
-        />
-        <Route
-          path={'/helpee/basic-form'}
-          element={
-            <BasicFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
-          }
-        />
-        <Route
-          path={'/helper/add-service'}
-          element={
-            isHelperAuthenticated ? (
-              <HelperAddServicePage />
-            ) : (
-              <PreSignInPage isHelpee={false} />
-            )
-          }
-        />
-        <Route path='*' element={<ErrorPage />} />
-      </Routes>
-      <Footer />
-    </Router>
+            }
+          />
+          <Route
+            path='/helper/home'
+            element={
+              <HelperHomePage isHelperAuthenticated={isHelperAuthenticated} />
+            }
+          />
+
+          <Route
+            path='/helpee/sign-up-final-step'
+            element={<HelpeeSignUpPasswordPage />}
+          />
+          <Route
+            path='/helper/sign-up-final-step'
+            element={<HelperSignUpPasswordPage />}
+          />
+          <Route path='/helpee/sign-in' element={<HelpeeSignInPage />} />
+          <Route
+            path='/helpee/forget-password'
+            element={<HelpeeForgetPasswordPage />}
+          />
+          <Route
+            path='/helper/forget-password'
+            element={<HelperForgetPasswordPage />}
+          />
+          <Route
+            path='/helpee/password/pre/reset'
+            element={<PasswordResetPrePage isHelpee={true} />}
+          />
+          <Route
+            path='/helper/password/pre/reset'
+            element={<PasswordResetPrePage isHelpee={false} />}
+          />
+          <Route
+            path={`/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
+            element={<PasswordResetPage isHelpee={true} />}
+          />
+          <Route
+            path={`/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
+            element={<PasswordResetPage isHelpee={false} />}
+          />
+          <Route path='/helper/sign-in' element={<HelperSignInPage />} />
+
+          <Route
+            path='/helpee/service-types'
+            element={
+              isHelpeeAuthenticated ? (
+                <SelectJobOrUniPage isHelpee={true} />
+              ) : (
+                <PreSignInPage isHelpee={true} />
+              )
+            }
+          />
+          <Route
+            path='/helper/service-types'
+            element={
+              isHelperAuthenticated ? (
+                <SelectJobOrUniPage isHelpee={false} />
+              ) : (
+                <PreSignInPage isHelpee={false} />
+              )
+            }
+          />
+          <Route
+            path='/helpee/job-form'
+            element={
+              isHelpeeAuthenticated ? (
+                <JobFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
+              ) : (
+                <PreSignInPage isHelpee={true} />
+              )
+            }
+          />
+          <Route
+            path='/helper/job-form'
+            element={
+              isHelperAuthenticated ? (
+                <JobFormPage isHelpee={false} helperUserId={helperUserId} />
+              ) : (
+                <PreSignInPage isHelpee={false} />
+              )
+            }
+          />
+          <Route
+            path='/helpee/uni-form'
+            element={
+              isHelpeeAuthenticated ? (
+                <UniFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
+              ) : (
+                <PreSignInPage isHelpee={true} />
+              )
+            }
+          />
+          <Route
+            path='/helper/uni-form'
+            element={
+              isHelperAuthenticated ? (
+                <UniFormPage isHelpee={false} helperUserId={helperUserId} />
+              ) : (
+                <PreSignInPage isHelpee={false} />
+              )
+            }
+          />
+          <Route
+            path='/helpee/self-employed-form'
+            element={
+              isHelpeeAuthenticated ? (
+                <SelfEmployedPage isHelpee={true} helpeeUserId={helpeeUserId} />
+              ) : (
+                <PreSignInPage isHelpee={true} />
+              )
+            }
+          />
+          <Route
+            path='/helper/self-employed-form'
+            element={
+              isHelperAuthenticated ? (
+                <SelfEmployedPage
+                  isHelpee={false}
+                  helperUserId={helperUserId}
+                />
+              ) : (
+                <PreSignInPage isHelpee={false} />
+              )
+            }
+          />
+          <Route
+            path={'/helpee/dashboard'}
+            element={
+              isHelpeeAuthenticated ? (
+                <HelpeeDashboardPage
+                  isHelpee={true}
+                  helpeeUserId={helpeeUserId}
+                  helpeeName={helpeeName}
+                />
+              ) : (
+                <PreSignInPage isHelpee={true} />
+              )
+            }
+          />
+          <Route
+            path={'/helper/dashboard'}
+            element={
+              isHelperAuthenticated ? (
+                <HelperDashboardPage
+                  isHelpee={false}
+                  helperUserId={helperUserId}
+                  helperName={helperName}
+                />
+              ) : (
+                <PreSignInPage isHelpee={false} />
+              )
+            }
+          />
+          <Route
+            path={'/helpee/chatroom'}
+            element={
+              isHelpeeAuthenticated ? (
+                <ChatRoomPage isHelpee={true} helpeeUserId={helpeeUserId} />
+              ) : (
+                <PreSignInPage isHelpee={true} />
+              )
+            }
+          />
+          <Route
+            path={'/helpee/book-helper'}
+            element={<BookingConfirmPage isHelpee={true} />}
+          />
+          <Route
+            path={'/helper/confirm-booking'}
+            element={<BookingConfirmPage isHelpee={false} />}
+          />
+          <Route
+            path={'/helpee/email/confirmation'}
+            element={<EmailConfirmPage isHelpee={true} />}
+          />
+          <Route
+            path={'/helper/email/confirmation'}
+            element={<EmailConfirmPage isHelpee={false} />}
+          />
+          <Route
+            path={'/helper/chatroom'}
+            element={
+              isHelperAuthenticated ? (
+                <ChatRoomPage isHelpee={false} helperUserId={helperUserId} />
+              ) : (
+                <PreSignInPage isHelpee={false} />
+              )
+            }
+          />
+          <Route
+            path={'/helper/basic-form'}
+            element={
+              <BasicFormPage isHelpee={false} helperUserId={helperUserId} />
+            }
+          />
+          <Route
+            path={'/helpee/basic-form'}
+            element={
+              <BasicFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
+            }
+          />
+          <Route
+            path={'/helper/add-service'}
+            element={
+              isHelperAuthenticated ? (
+                <HelperAddServicePage />
+              ) : (
+                <PreSignInPage isHelpee={false} />
+              )
+            }
+          />
+          <Route path='*' element={<ErrorPage />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </Suspense>
   );
 }
 

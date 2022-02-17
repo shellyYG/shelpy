@@ -1,10 +1,11 @@
-import ConfirmBtn from "../../components/ConfirmBtn";
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../../App.css";
+import ConfirmBtn from '../../components/ConfirmBtn';
 import {
   clearSignInStatus,
   postHelpeeSignInData,
@@ -13,6 +14,7 @@ import {
 const MySwal = withReactContent(Swal);
 
 const HelpeeSignInPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -28,8 +30,8 @@ const HelpeeSignInPage = () => {
 
   if (loading) {
     MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
+      title: t('loading'),
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {
@@ -92,7 +94,7 @@ const HelpeeSignInPage = () => {
     <div className='main-content-wrapper-homepage'>
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          Welcome back!
+          {t('helpee_sign_in_welcome')}
         </h1>
         <h2
           style={{
@@ -102,30 +104,30 @@ const HelpeeSignInPage = () => {
             color: 'white',
           }}
         >
-          Please insert your username and password to sign in.
+          {t('helpee_sign_in_introduction')}
         </h2>
 
         <form action='' className='centerbox-landing'>
           <input
             type='email'
             className='form-control-password'
-            placeholder='Enter Email Address'
+            placeholder={t('home_enter_email_placeholder')}
             ref={emailRef}
           />
           <input
             type='text'
             className='form-control-password'
-            placeholder='Enter Password'
+            placeholder={t('enter_password_placeholder')}
             ref={passwordRef}
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
             <Link to='/helpee/forget-password' style={{ marginRight: '10px' }}>
-              Forget Password
+              {t('forget_password')}
             </Link>
-            <Link to='/home'>Don't have account yet? SIGN UP here!</Link>
+            <Link to='/home'>{t('dont_have_account_sign_up')}</Link>
           </div>
 
-          <ConfirmBtn cta='Sign In ❯' handleConfirm={handleConfirm} />
+          <ConfirmBtn cta={t('sign_in')} handleConfirm={handleConfirm} />
         </form>
       </div>
     </div>

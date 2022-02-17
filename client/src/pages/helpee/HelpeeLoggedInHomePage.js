@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import '../../App.css';
-import MktRow from '../../components/MktRow';
+import HelpeeMarketingSection from '../../components/HelpeeMarketingSection';
 
 const HelpeeLoggedInHomePage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   function handleBookHelperClick(e) {
     e.preventDefault();
@@ -15,7 +17,12 @@ const HelpeeLoggedInHomePage = () => {
           <div className='coverLeft'>
             <div>
               <h1 style={{ textAlign: 'center', color: 'white' }}>
-                Thinking about your next step?
+                {t('helpee_home_banner_title1')}
+              </h1>
+            </div>
+            <div>
+              <h1 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helpee_home_banner_title2')}
               </h1>
             </div>
             <div>
@@ -27,42 +34,21 @@ const HelpeeLoggedInHomePage = () => {
                   color: 'white',
                 }}
               >
-                Talk to an insider <br />
-                before you make your decision!
+                {t('helpee_home_banner_subtitle1')} <br />
+                {t('helpee_home_banner_subtitle2')}
               </h2>
             </div>
           </div>
           <div className='coverButtonWrapper'>
             <div style={{ margin: 'auto' }}>
-              <button class='btn-next' onClick={handleBookHelperClick}> BOOK HELPER NOW</button>
+              <button class='btn-next' onClick={handleBookHelperClick}>
+                {' '}
+                {t('helpee_home_book_helper_now')}
+              </button>
             </div>
           </div>
         </div>
-        <div className='centerWrapperMkt'>
-          <div className='mktWrapper'>
-            <MktRow
-              title='MINIMIZE your risk'
-              details1='Afraid of taking that big leap?'
-              details2='Invest only 30 min and on average 20 Euro before you make the final decision.'
-              imagePath='/dinner.jpeg'
-              lastChild={true}
-            />
-            <MktRow
-              title='MEET role models'
-              details1='Do not have the network?'
-              details2='Come talk to people who have successfully gone through your dream path.'
-              imagePath='/friends.jpeg'
-              lastChild={false}
-            />
-            <MktRow
-              title="GET answers that you can't find on GOOGLE"
-              details1='Your questions are too personal or too specific?'
-              details2='Ask insiders and get first-hand information.'
-              imagePath='/oneToOne.jpeg'
-              lastChild={false}
-            />
-          </div>
-        </div>
+        <HelpeeMarketingSection />
       </div>
     </div>
   );

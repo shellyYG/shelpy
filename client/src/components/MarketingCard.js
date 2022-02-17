@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useNavigate } from 'react-router-dom';
@@ -6,10 +7,11 @@ import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import ChatIcon from './Icons/ChatIcon';
 
+
 const MySwal = withReactContent(Swal);
 
 function MarketingCard(props) {
-  console.log('props.isAnonymous: ', props);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
@@ -25,16 +27,16 @@ function MarketingCard(props) {
         setTitle('Self Employed');
         break;
       default:
-        setTitle('N/A');
+        setTitle(t('na'));
     }
-  }, [props.mainType]);
+  }, [props.mainType, t]);
 
   async function handleBookHelperMarketingClick(e) {
     e.preventDefault();
     if (!props.helpeeId) {
       await MySwal.fire({
         title: <strong>Oops</strong>,
-        html: <p>Please sign-in first.</p>,
+        html: <p>{t('please_sign_in_firce')}</p>,
         icon: 'error',
       });
     } else {
@@ -130,17 +132,17 @@ function MarketingCard(props) {
       <div className='checkBoxWidth'>
         <div className='contentBx'>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Offer ID: {props.id}
+            {t('offer_id')}: {props.id}
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Price: {props.price} € / 30 minutes
+            {t('price_per_45_min', { price: props.price })}
           </p>
         </div>
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Speaks: {props.languages}
+            {t('speaks')}: {props.languages}
           </p>
           <p
             style={{
@@ -149,7 +151,7 @@ function MarketingCard(props) {
               lineBreak: 'anywhere',
             }}
           >
-            Introduction: {props.introduction || 'N/A'}
+            {t('introduction')}: {props.introduction || t('na')}
           </p>
           <p
             style={{
@@ -158,13 +160,13 @@ function MarketingCard(props) {
               lineBreak: 'anywhere',
             }}
           >
-            Notes: {props.notes || 'N/A'}
+            {t('notes')}: {props.notes || t('na')}
           </p>
         </div>
       </div>
       <div className='fullWidth'>
         <button className='btn-next' onClick={handleBookHelperMarketingClick}>
-          Book {props.username}
+          {t('book_name', { name: props.username })}
         </button>
       </div>
       <div className='fullWidth'>

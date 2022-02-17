@@ -15,10 +15,12 @@ import { getHelpeeAuthStatus, getPotentialHelpers } from '../store/helpee/helpee
 import LeftCloseIcon from '../components/Icons/LeftCloseIcon';
 import RightOpenIcon from '../components/Icons/RightOpenIcon';
 import DownPointIcon from '../components/Icons/DownPointIcon';
+import { useTranslation } from 'react-i18next';
 const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; // TODO
 
 
 const ChatRoomPage = (props) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -341,27 +343,30 @@ const ChatRoomPage = (props) => {
                   {roomId && (
                     <h3 style={{ margin: 'auto' }}>
                       {' '}
-                      My chat with {partnerName}{' '}
+                      {t('my_chat_with', { name: partnerName })}
                     </h3>
                   )}
                 </div>
                 <div>
                   {props.isHelpee &&
-                    (bookingStatus === 'null' || !bookingStatus || bookingStatus === 'undefined') &&
+                    (bookingStatus === 'null' ||
+                      !bookingStatus ||
+                      bookingStatus === 'undefined') &&
                     partnerName && (
                       <button
                         className='btn-contact'
                         onClick={handleBookHelper}
                       >
-                        Book {partnerName}{' '}
+                        {t('book_name', { name: partnerName })}
                       </button>
                     )}
                   {props.isHelpee && bookingStatus === 'helperAskChange' && (
                     <button className='btn-contact' onClick={handleBookHelper}>
-                      Propose new booking time to {partnerName}
+                      {t('propose_new_time_to_helper', {
+                        name: partnerName,
+                      })}
                     </button>
                   )}
-                  
                 </div>
               </div>
             </div>

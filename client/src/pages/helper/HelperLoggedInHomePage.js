@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import '../../App.css';
-import MktRow from '../../components/MktRow';
+import HelperMarketingSection from '../../components/HelperMarketingSection';
 
 const HelperLoggedInHomePage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   function handleCreateOfferClick(e) {
     e.preventDefault();
@@ -16,7 +18,12 @@ const HelperLoggedInHomePage = () => {
           <div className='coverLeft'>
             <div>
               <h1 style={{ textAlign: 'center', color: 'white' }}>
-                Help people while earning money!
+                {t('helper_home_banner_title1')}
+              </h1>
+            </div>
+            <div>
+              <h1 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helper_home_banner_title2')}
               </h1>
             </div>
             <div>
@@ -28,8 +35,8 @@ const HelperLoggedInHomePage = () => {
                   color: 'white',
                 }}
               >
-                Become a helper <br />
-                and make extra revenue stream!
+                {t('helper_home_banner_subtitle1')} <br />
+                {t('helper_home_banner_subtitle2')}
               </h2>
             </div>
           </div>
@@ -42,38 +49,7 @@ const HelperLoggedInHomePage = () => {
             </div>
           </div>
         </div>
-        <div className='centerWrapperMkt'>
-          <div className='mktWrapper'>
-            <MktRow
-              title='HELP people'
-              details1='Were you once hesitating?'
-              details2='Help people who are now standing on the crossroad and wonders.'
-              imagePath='/helpPeople.jpg'
-              lastChild={false}
-            />
-            <MktRow
-              title='GENERATE extra revenue'
-              details1='Thinking about having a side business?'
-              details2='Join us and create extra safenet to reach your financial freedom.'
-              imagePath='/sidebusiness.jpeg'
-              lastChild={false}
-            />
-            <MktRow
-              title='FREE marketing listing'
-              details1='Are you already a career/study counselor?'
-              details2='Get extra exposure with us and meet your potential customers.'
-              imagePath='/counselor.jpeg'
-              lastChild={true}
-            />
-            <MktRow
-              title='CONTROL your own privacy'
-              details1='Want to share some private but important insights?'
-              details2='You decide if you want to stay anonymously and how much you want to share.'
-              imagePath='/oneToOne.jpeg'
-              lastChild={false}
-            />
-          </div>
-        </div>
+        <HelperMarketingSection />
       </div>
     </div>
   );

@@ -9,13 +9,15 @@ import {
   clearSignUpEmailStatus,
   postHelpeeSignUpEmail,
 } from '../../store/helpee/helpee-actions';
-import MktRow from '../../components/MktRow';
+import { useTranslation } from 'react-i18next';
+import HelpeeMarketingSection from '../../components/HelpeeMarketingSection';
 
 const MySwal = withReactContent(Swal);
 const regex =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-const HelpeeSignUpPage = () => {
+function HelpeeSignUpPage(props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
@@ -25,18 +27,18 @@ const HelpeeSignUpPage = () => {
     signUpEmailStatusMessage,
   } = useSelector((state) => state.helpeeNotification);
   const emailRef = useRef();
-  const [email, setEmail] = useState("");
-  
+  const [email, setEmail] = useState('');
+
   async function handleConfirm(e) {
     e.preventDefault();
     if (emailRef && emailRef.current && emailRef.current.value) {
       if (!regex.test(emailRef.current.value)) {
-         await MySwal.fire({
-           title: <strong>Invalid Email Form</strong>,
-           html: <p>Please input a valid email.</p>,
-           icon: 'error',
-         });
-         return;
+        await MySwal.fire({
+          title: <strong>Invalid Email Form</strong>,
+          html: <p>Please input a valid email.</p>,
+          icon: 'error',
+        });
+        return;
       }
     }
     const data = {
@@ -45,7 +47,7 @@ const HelpeeSignUpPage = () => {
       status: 'only_email_signed_up',
     };
     dispatch(postHelpeeSignUpEmail(data));
-  } 
+  }
   function handleEmailTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
@@ -87,7 +89,12 @@ const HelpeeSignUpPage = () => {
           <div className='coverLeft'>
             <div>
               <h1 style={{ textAlign: 'center', color: 'white' }}>
-                Thinking about your next step?
+                {t('helpee_home_banner_title1')}
+              </h1>
+            </div>
+            <div>
+              <h1 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helpee_home_banner_title2')}
               </h1>
             </div>
             <div>
@@ -99,8 +106,8 @@ const HelpeeSignUpPage = () => {
                   color: 'white',
                 }}
               >
-                Talk to an insider <br />
-                before you make your decision!
+                {t('helpee_home_banner_subtitle1')} <br />
+                {t('helpee_home_banner_subtitle2')}
               </h2>
             </div>
           </div>
@@ -113,19 +120,22 @@ const HelpeeSignUpPage = () => {
                   marginBottom: '10px',
                 }}
               >
-                Create an account to find an insider.
+                {t('helpee_home_create_an_account')}
               </h3>
 
               <form action='' className='centerbox-landing'>
                 <input
                   type='email'
                   className='form-control-landing'
-                  placeholder='Enter Email Address'
+                  placeholder={t('home_enter_email_placeholder')}
                   value={email}
                   onChange={handleEmailTyping}
                   ref={emailRef}
                 />
-                <ConfirmBtn cta='Sign Up ❯' handleConfirm={handleConfirm} />
+                <ConfirmBtn
+                  cta={t('home_free_sign_up')}
+                  handleConfirm={handleConfirm}
+                />
               </form>
               <p
                 style={{
@@ -136,51 +146,26 @@ const HelpeeSignUpPage = () => {
                   padding: '5px 30px',
                 }}
               >
-                By providing your email address, you agree to receive offers
-                from Shelpy, according to our{' '}
+                {t('home_terms_and_condition_introduction')}{' '}
                 <a href='/privacy-policy' target='_blank'>
-                  privacy policy
+                  {t('home_privacy_policy')}
                 </a>
-                . <br />
-                You can{' '}
+                {t('home_ending')} <br />
+                {t('home_you_can')}{' '}
                 <a href='/unsubscribe' target='_blank'>
-                  unsubscribe
+                  {t('home_unsubscribe')}{' '}
                 </a>{' '}
-                at any time.
+                {t('home_at_any_time')}
               </p>
               <div style={{ textAlign: 'center' }}>
                 <Link to='/helpee/sign-in'>
-                  Alreave have an account? Sign In here!
+                  {t('home_have_account_sign_in')}
                 </Link>
               </div>
             </div>
           </div>
         </div>
-        <div className='centerWrapperMkt'>
-          <div className='mktWrapper'>
-            <MktRow
-              title='MINIMIZE your risk'
-              details1='Afraid of taking that big leap?'
-              details2='Invest only 30 min and on average 20 Euro before you make the final decision.'
-              imagePath='/dinner.jpeg'
-              lastChild={true}
-            />
-            <MktRow
-              title='MEET role models'
-              details1='Do not have the network?'
-              details2='Come talk to people who have successfully gone through your dream path.'
-              imagePath='/friends.jpeg'
-              lastChild={false}
-            />
-            <MktRow
-              title="GET answers that you can't find on GOOGLE"
-              details1='Your questions are too personal or too specific?'
-              details2='Ask insiders and get first-hand information.'
-              imagePath='/oneToOne.jpeg'
-              lastChild={false}
-            />
-          </div>
-        </div>
+        <HelpeeMarketingSection />
       </div>
     </div>
   );

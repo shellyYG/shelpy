@@ -1,10 +1,21 @@
+import { useTranslation } from 'react-i18next';
+
 function DropDown(props) {
+  const { t } = useTranslation();
   const handleSelect = (e) => {
     props.handleSelect(e.target.value);
   };
   return (
     <div className='form-wrapper'>
-      <label style={{ color: props.titleColor || '', fontSize: props.titleSize || '', marginLeft: props.titleMarginLeft || '' }}>{props.title}</label>
+      <label
+        style={{
+          color: props.titleColor || '',
+          fontSize: props.titleSize || '',
+          marginLeft: props.titleMarginLeft || '',
+        }}
+      >
+        {props.title}
+      </label>
       <select
         ref={props.selectRef}
         onChange={handleSelect}
@@ -14,7 +25,7 @@ function DropDown(props) {
       >
         {props.options.map((option) => (
           <option value={option.value} key={option.value}>
-            {option.label}
+            {t(`${option.label}`)}
           </option>
         ))}
       </select>

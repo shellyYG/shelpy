@@ -1,10 +1,10 @@
 import { IconContext } from 'react-icons';
-import { MdLocalOffer } from 'react-icons/md';
+import { BsFillTrophyFill } from 'react-icons/bs';
 const OfferIcon = () => {
   return (
     <IconContext.Provider value={{ color: 'white', size: '20' }}>
       <div>
-        <MdLocalOffer color='#f47174' />
+        <BsFillTrophyFill color='#f47174' />
       </div>
     </IconContext.Provider>
   );

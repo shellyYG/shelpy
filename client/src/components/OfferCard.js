@@ -3,8 +3,10 @@ import { useDispatch } from 'react-redux';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import { onClickDeleteOffer } from '../store/helper/helper-actions';
+import { useTranslation } from 'react-i18next';
 
 function OfferCard(props) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   
@@ -28,8 +30,10 @@ function OfferCard(props) {
     <div className='history-card'>
       <div className='profilePicWidth'>
         <div className='helper-ImgBx'>
-          {!props.isAnonymous && props.profilePicPath && <img src={`/images/${props.profilePicPath}`} alt={'visa'}></img>}
-          {(props.isAnonymous || !props.profilePicPath)  && (
+          {!props.isAnonymous && props.profilePicPath && (
+            <img src={`/images/${props.profilePicPath}`} alt={'visa'}></img>
+          )}
+          {(props.isAnonymous || !props.profilePicPath) && (
             <a
               href='https://www.vecteezy.com/free-vector/default-avatar'
               target='_blank'
@@ -87,13 +91,13 @@ function OfferCard(props) {
       <div className='checkBoxWidth'>
         <div className='contentBx'>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Offer ID: {props.offerId}
+            {t('offer_id')}: {props.offerId}
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
             Price: {props.price} € / 30 minutes
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Speaks: {props.languages}
+            {t('speaks')}: {props.languages}
           </p>
         </div>
       </div>
@@ -106,7 +110,7 @@ function OfferCard(props) {
               lineBreak: 'anywhere',
             }}
           >
-            Notes: {props.notes || 'N/A'}
+            {t('notes')}: {props.notes || t('na')}
           </p>
         </div>
       </div>

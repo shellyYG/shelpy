@@ -2,6 +2,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import DropDown from '../components/Dropdown';
 import FullLineTextBox from '../components/FullLineTextBox';
@@ -27,6 +28,7 @@ import {
 const MySwal = withReactContent(Swal);
 
 const JobFormPage = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -58,8 +60,8 @@ const JobFormPage = (props) => {
 
   if (loading) {
     MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
+      title: t('loading'),
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {
@@ -244,7 +246,7 @@ const JobFormPage = (props) => {
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        {props.isHelpee && 'What kind of job are you searching?'}
+        {props.isHelpee && t('helpee_job_form_title')}
         {!props.isHelpee && 'What kind of job did you have?'}
       </h1>
       <div className='form-center-wrapper'>
@@ -255,14 +257,14 @@ const JobFormPage = (props) => {
                 <DropDown
                   selected={industry}
                   handleSelect={setIndustry}
-                  title={'Industry *'}
+                  title={t('job_form_industry')}
                   selectRef={industryRef}
                   options={industryOptions}
                 />
                 <DropDown
                   selected={job}
                   handleSelect={setJob}
-                  title={'Job *'}
+                  title={t('job_form_job')}
                   selectRef={jobRef}
                   options={jobOptions}
                 />
@@ -271,14 +273,14 @@ const JobFormPage = (props) => {
                 <DropDown
                   selected={country}
                   handleSelect={setCountry}
-                  title={'Working Country *'}
+                  title={t('form_country')}
                   selectRef={countryRef}
                   options={countryOptions}
                 />
                 <DropDown
                   selected={WFH}
                   handleSelect={setWFH}
-                  title={'Working from home? *'}
+                  title={t('job_form_wfh')}
                   selectRef={WFHRef}
                   options={WFHOptions}
                 />
@@ -287,7 +289,7 @@ const JobFormPage = (props) => {
                 <DropDown
                   selected={companySize}
                   handleSelect={setCompanySize}
-                  title={'Company Size *'}
+                  title={t('job_form_company_size')}
                   selectRef={companySizeRef}
                   options={companySizeOptions}
                 />
@@ -295,7 +297,7 @@ const JobFormPage = (props) => {
                   <DropDown
                     selected={years}
                     handleSelect={setYears}
-                    title={'Year of Experience on that job *'}
+                    title={t('job_form_experience_years')}
                     selectRef={yearsRef}
                     options={yearsOptions}
                   />
@@ -304,7 +306,7 @@ const JobFormPage = (props) => {
                   <DropDown
                     selected={years}
                     handleSelect={setYears}
-                    title={'Year of experiences you have on similar jobs *'}
+                    title={t('job_form_experience_years')}
                     selectRef={yearsRef}
                     options={yearsOptions}
                   />
@@ -312,48 +314,41 @@ const JobFormPage = (props) => {
               </div>
               {props.isHelpee && (
                 <FullLineTextBox
-                  title={
-                    'What is your desired company (if more than one, you can seperate by comma)? *'
-                  }
-                  placeholder={'Google, Facebook'}
+                  title={t('job_form_desired_company')}
+                  placeholder={t('job_form_desired_company_placeholder')}
                   inputRef={organizationRef}
                 />
               )}
               {!props.isHelpee && (
                 <FullLineTextBox
-                  title={
-                    'What companies you work fits this experience? (if more than one, you can seperate by comma) '
-                  }
-                  placeholder={'Google, Facebook'}
+                  title={t('job_form_worked_company')}
+                  placeholder={t('job_form_desired_company_placeholder')}
                   inputRef={organizationRef}
                 />
               )}
               {!props.isHelpee && (
                 <>
                   <FullLineTextBox
-                    title={'Price (per 30 minutes)'}
-                    placeholder={'(In Euro €, only integer is allowed)'}
+                    title={t('form_price')}
+                    placeholder={t('form_price_unit')}
                     inputRef={priceRef}
                     onChange={handlePriceTyping}
                     marginBottom='0px'
                   />
                   {!isInt(typingPrice) && (
-                    <p style={{ color: 'red' }}>
-                      Price need to be an integer e.g. 20 is allowed. 20.1 is
-                      not allowed
-                    </p>
+                    <p style={{ color: 'red' }}>{t('form_price_warning')}</p>
                   )}
                 </>
               )}
               <FullLineTextBox
-                title={'Notes'}
-                placeholder={'Leave any additional details'}
+                title={t('notes')}
+                placeholder={t('notes_placeholder')}
                 inputRef={notesRef}
                 marginTop='10px'
               />
 
               <ConfirmBtn
-                cta='Confirm'
+                cta={t('confirm')}
                 disable={!enableBtn}
                 handleConfirm={handleConfirm}
               />

@@ -1,12 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { jobUniOptions, jobUniOptionsHelper } from '../store/options/navigate-options';
+import { useTranslation } from 'react-i18next';
+import { jobUniOptions } from '../store/options/navigate-options';
 import '../App.css';
 import JobOrUniCard from '../components/JobOrUniCard';
+
 const SelectJobOrUniPage = (props) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const { globalHelpeeJobOrUniTarget } = useSelector((state) => state.helpee);
   const { globalHelperJobOrUniTarget } = useSelector((state) => state.helper);
-  const navigate = useNavigate();
   
   function handleNext(e) {
     e.preventDefault();
@@ -33,7 +36,9 @@ const SelectJobOrUniPage = (props) => {
   return (
     <div className='main-content-wrapper-no-background'>
       <div className='section-center-align'>
-        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>Welcome!</h1>
+        <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+          {t('welcome')}
+        </h1>
         <h2
           style={{
             textAlign: 'center',
@@ -41,15 +46,15 @@ const SelectJobOrUniPage = (props) => {
             marginBottom: '30px',
           }}
         >
-          {props.isHelpee && 'What is your next step?'}
-          {!props.isHelpee && 'What experiences do you want to offer?'}
+          {props.isHelpee && t('helpee_service_types_next_step')}
+          {!props.isHelpee && t('helper_service_types_next_step')}
         </h2>
         <div className='container'>
           {props.isHelpee &&
             jobUniOptions.map((option) => (
               <JobOrUniCard
                 imageSrc={option.imgPath}
-                title={option.label}
+                title={t(`${option.label}`)}
                 value={option.value}
                 isHelpee={props.isHelpee}
                 globalHelpeeJobOrUniTarget={globalHelpeeJobOrUniTarget}
@@ -58,7 +63,7 @@ const SelectJobOrUniPage = (props) => {
               />
             ))}
           {!props.isHelpee &&
-            jobUniOptionsHelper.map((option) => (
+            jobUniOptions.map((option) => (
               <JobOrUniCard
                 imageSrc={option.imgPath}
                 title={option.label}
@@ -72,7 +77,7 @@ const SelectJobOrUniPage = (props) => {
         </div>
         <div style={{ textAlign: 'center' }}>
           <button className='btn-next' onClick={handleNext}>
-            Next ❯
+            {t('next')}
           </button>
         </div>
       </div>

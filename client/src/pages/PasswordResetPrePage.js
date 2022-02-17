@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -15,6 +16,7 @@ const MySwal = withReactContent(Swal);
 
 const PasswordResetPrePage = (props) => {
   console.log('props.isHelpee@PasswordResetPage: ', props.isHelpee);
+  const { t } = useTranslation();
   const [loading, setIsLoading] =
     useState(true);
   const navigate = useNavigate();
@@ -53,8 +55,8 @@ const PasswordResetPrePage = (props) => {
 
   if (loading) {
     MySwal.fire({
-      title: 'Verifying your email...',
-      html: 'Please do not close the window.',
+      title: t('verify_email'),
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {
@@ -163,7 +165,7 @@ const PasswordResetPrePage = (props) => {
     <div className={props.isHelpee? 'main-content-wrapper-homepage':'main-content-wrapper-homepage-helper'}>
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          Verifying...
+          {t('verifying')}
         </h1>
       </div>
     </div>

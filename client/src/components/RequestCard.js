@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
-import { onClickDeleteRequest } from '../store/helpee/helpee-actions';
+import { useTranslation } from 'react-i18next';
 const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; // TODO
 
 function RequestCard(props) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
   const [filteredStatus, setFilteredStatus] = useState('');
@@ -101,7 +98,7 @@ function RequestCard(props) {
       <div className='checkBoxWidth'>
         <div className='contentBx'>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            Request ID: {props.id || 'N/A'}
+            {t('request_id')}: {props.id || t('na')}
           </p>
         </div>
         <div className='contentBx'>
@@ -110,7 +107,7 @@ function RequestCard(props) {
           </p>
         </div>
         <p style={{ fontWeight: '12px', padding: '6px' }}>
-          Speaks: {props.languages}
+          {t('speaks')}: {props.languages}
         </p>
       </div>
       <div className='checkBoxWidth'>
@@ -122,7 +119,7 @@ function RequestCard(props) {
               lineBreak: 'anywhere',
             }}
           >
-            Notes: {props.notes || 'N/A'}
+            {t('notes')}: {props.notes || t('na')}
           </p>
         </div>
       </div>

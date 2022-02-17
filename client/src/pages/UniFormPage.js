@@ -1,3 +1,5 @@
+
+import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useState, useRef, useEffect } from 'react';
@@ -25,6 +27,7 @@ import {
 const MySwal = withReactContent(Swal);
 
 const UniFormPage = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const priceRef = useRef();
@@ -53,8 +56,8 @@ const UniFormPage = (props) => {
   }
   if (loading) {
     MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
+      title: t('loading'),
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {
@@ -239,8 +242,8 @@ const UniFormPage = (props) => {
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        {props.isHelpee && 'What do you want to study?'}
-        {!props.isHelpee && 'What did you study?'}
+        {props.isHelpee && t('helpee_uni_form_title')}
+        {!props.isHelpee && t('helper_uni_form_title')}
       </h1>
       <div className='form-center-wrapper'>
         <div className='container'>
@@ -250,14 +253,14 @@ const UniFormPage = (props) => {
                 <DropDown
                   selected={school}
                   handleSelect={setSchool}
-                  title={'School *'}
+                  title={t('uni_form_school')}
                   selectRef={schoolRef}
                   options={schoolOptions}
                 />
                 <DropDown
                   selected={department}
                   handleSelect={setDepartment}
-                  title={'Department *'}
+                  title={t('uni_form_department')}
                   selectRef={departmentRef}
                   options={matchedDepartments}
                 />
@@ -266,60 +269,53 @@ const UniFormPage = (props) => {
                 <DropDown
                   selected={country}
                   handleSelect={setCountry}
-                  title={'Country *'}
+                  title={t('form_country')}
                   selectRef={countryRef}
                   options={countryOptions}
                 />
                 <DropDown
                   selected={degree}
                   handleSelect={setDegree}
-                  title={'Degree *'}
+                  title={t('uni_form_degree')}
                   selectRef={degreeRef}
                   options={degreeOptions}
                 />
               </div>
               {props.isHelpee && (
                 <FullLineTextBox
-                  title={
-                    'What is your desired university (if more than one, you can seperate by comma)? *'
-                  }
-                  placeholder={
-                    'London Business School, WHU Otto Beisheim School of Management'
-                  }
+                  title={t('helpee_uni_form_organization')}
+                  placeholder={t('helpee_uni_form_organization_placeholder')}
                   inputRef={organizationRef}
                 />
               )}
               {!props.isHelpee && (
                 <FullLineTextBox
-                  title={'What universities did you study the degree? *'}
-                  placeholder={'London Business School'}
+                  title={t('helper_uni_form_organization')}
+                  placeholder={t('helper_uni_form_organization_placeholder')}
                   inputRef={organizationRef}
                 />
               )}
               {!props.isHelpee && (
                 <>
                   <FullLineTextBox
-                    title={'Price (per 30 minutes)'}
-                    placeholder={'(In Euro €)'}
+                    title={t('form_price')}
+                    placeholder={t('form_price_unit')}
                     inputRef={priceRef}
                     onChange={handlePriceTyping}
                     marginBottom='0px'
                   />
                   {!isInt(typingPrice) && (
-                    <p style={{ color: 'red' }}>
-                      Price need to be an integer e.g. 20 is allowed. 20.1 is
-                      not allowed
-                    </p>
+                    <p style={{ color: 'red' }}>{t('form_price_warning')}</p>
                   )}
                 </>
               )}
               <FullLineTextBox
-                title={'Notes'}
-                placeholder={'Leave any additional details'}
+                title={t('notes')}
+                placeholder={t('notes_placeholder')}
                 inputRef={notesRef}
               />
               <ConfirmBtn
-                cta='Confirm'
+                cta={t('confirm')}
                 disable={!enableBtn}
                 handleConfirm={handleConfirm}
               />

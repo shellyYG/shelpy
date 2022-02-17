@@ -21,10 +21,12 @@ import {
   clearOfferStatus,
   postHelperOfferForm,
 } from '../store/helper/helper-actions';
+import { useTranslation } from 'react-i18next';
 
 const MySwal = withReactContent(Swal);
 
 const SelfEmployedPage = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,8 +55,8 @@ const SelfEmployedPage = (props) => {
 
   if (loading) {
     MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
+      title: t('loading'),
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {
@@ -228,8 +230,8 @@ const SelfEmployedPage = (props) => {
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        {props.isHelpee && 'What kind of experiences do you want to know?'}
-        {!props.isHelpee && 'What experiences did you have?'}
+        {props.isHelpee && t('helpee_self_employed_title')}
+        {!props.isHelpee && t('helper_self_employed_title')}
       </h1>
       <div className='form-center-wrapper'>
         <div className='container'>
@@ -239,14 +241,14 @@ const SelfEmployedPage = (props) => {
                 <DropDown
                   selected={type}
                   handleSelect={setType}
-                  title={'Type *'}
+                  title={t('self_employed_type')}
                   selectRef={typeRef}
                   options={typeOptions}
                 />
                 <DropDown
                   selected={profession}
                   handleSelect={setProfession}
-                  title={'Profession *'}
+                  title={t('self_employed_profession')}
                   selectRef={professionRef}
                   options={professionOptions}
                 />
@@ -255,7 +257,7 @@ const SelfEmployedPage = (props) => {
                 <DropDown
                   selected={country}
                   handleSelect={setCountry}
-                  title={'Country *'}
+                  title={t('form_country')}
                   selectRef={countryRef}
                   options={countryOptions}
                 />
@@ -264,7 +266,7 @@ const SelfEmployedPage = (props) => {
                   <DropDown
                     selected={years}
                     handleSelect={setYears}
-                    title={'Year of Experience on that profession *'}
+                    title={t('self_employed_experience_years')}
                     selectRef={yearsRef}
                     options={yearsOptions}
                   />
@@ -273,9 +275,7 @@ const SelfEmployedPage = (props) => {
                   <DropDown
                     selected={years}
                     handleSelect={setYears}
-                    title={
-                      'Year of experiences you have on similar profession *'
-                    }
+                    title={t('self_employed_experience_years')}
                     selectRef={yearsRef}
                     options={yearsOptions}
                   />
@@ -283,47 +283,40 @@ const SelfEmployedPage = (props) => {
               </div>
               {props.isHelpee && (
                 <FullLineTextBox
-                  title={
-                    'What is your goal to be self-employed (if more than one, you can seperate by comma)? *'
-                  }
-                  placeholder={'Financial freedom, become rich'}
+                  title={t('self_employed_goal')}
+                  placeholder={t('self_employed_goal_placeholder')}
                   inputRef={organizationRef}
                 />
               )}
               {!props.isHelpee && (
                 <FullLineTextBox
-                  title={
-                    'What companies did you set up (if any)? (if more than one, you can seperate by comma) '
-                  }
-                  placeholder={'Google, Facebook'}
+                  title={t('self_employed_organization')}
+                  placeholder={t('self_employed_organization_placeholder')}
                   inputRef={organizationRef}
                 />
               )}
               {!props.isHelpee && (
                 <>
                   <FullLineTextBox
-                    title={'Price (per 30 minutes)'}
-                    placeholder={'(In Euro €)'}
+                    title={t('form_price')}
+                    placeholder={t('form_price_unit')}
                     inputRef={priceRef}
                     onChange={handlePriceTyping}
                     marginBottom='0px'
                   />
                   {!isInt(typingPrice) && (
-                    <p style={{ color: 'red' }}>
-                      Price need to be an integer e.g. 20 is allowed. 20.1 is
-                      not allowed
-                    </p>
+                    <p style={{ color: 'red' }}>{t('form_price_warning')}</p>
                   )}
                 </>
               )}
               <FullLineTextBox
-                title={'Notes'}
-                placeholder={'Leave any additional details'}
+                title={t('notes')}
+                placeholder={t('notes_placeholder')}
                 inputRef={notesRef}
                 marginTop='10px'
               />
               <ConfirmBtn
-                cta='Confirm'
+                cta={t('confirm')}
                 disable={!enableBtn}
                 handleConfirm={handleConfirm}
               />

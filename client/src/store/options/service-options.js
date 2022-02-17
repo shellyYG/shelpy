@@ -1,4 +1,4 @@
-const othersText = 'Others (Please specify in the Notes below)';
+const othersText = 'others_option';
 export const serviceOptions = [
   {
     value: 'visa',
@@ -149,146 +149,142 @@ export const timeRangeOptions = [
 ];
 
 export const companySizeOptions = [
-  { value: 'default', label: 'Please Select' },
-  { value: '0-100 employees', label: '0-100 employees' },
-  { value: '100-1000 employees', label: '100-1000 employees' },
-  { value: '1000-5000 employees', label: '1000-5000 employees' },
-  { value: 'more than 5000 employees', label: '5000+ employees' },
+  { value: 'default', label: 'please_select_option' },
+  { value: '0-100 employees', label: 'job_form_company_size_0_100' },
+  { value: '100-1000 employees', label: 'job_form_company_size_100_1000' },
+  { value: '1000-5000 employees', label: 'job_form_company_size_1000_5000' },
+  {
+    value: 'more than 5000 employees',
+    label: 'job_form_company_size_more_than_5000',
+  },
   { value: 'Others', label: othersText },
 ];
 
 export const doYouSpeakEnglishOptions = [
-  { value: 'default', label: 'Please Select' },
+  { value: 'default', label: 'please_select_option' },
   { value: 'yes', label: 'Yes, I speak English.' },
   { value: 'no', label: 'No, I do not speak English.' },
 ];
 export const industryOptions = [
   {
     value: 'default',
-    label: 'Please Select',
+    label: 'please_select_option',
   },
   {
     value: 'Medical',
-    label: 'Medical',
+    label: 'job_form_industry_medical',
   },
   {
     value: 'Software',
-    label: 'Software',
+    label: 'job_form_industry_software',
   },
   {
     value: 'Blockchain',
-    label: 'Blockchain',
+    label: 'job_form_industry_blockchain',
   },
   {
     value: 'Finance',
-    label: 'Finance',
+    label: 'job_form_industry_finance',
   },
   {
     value: 'Consulting',
-    label: 'Consulting',
+    label: 'job_form_industry_consulting',
   },
   { value: 'Others', label: othersText },
 ];
 
 export const countryOptions = [
-  { value: 'default', label: 'Please Select' },
-  { value: 'Taiwan', label: 'Taiwan' },
-  { value: 'USA', label: 'USA' },
-  { value: 'UK', label: 'UK' },
-  { value: 'Germany', label: 'Germany' },
-  { value: 'Austria', label: 'Austria' },
-  { value: 'Swiss', label: 'Swiss' },
-  { value: 'France', label: 'France' },
-  { value: 'Italy', label: 'Italy' },
-  { value: 'HK', label: 'HK' },
-  { value: 'Singapore', label: 'Singapore' },
-  { value: 'Thailand', label: 'Thailand' },
+  { value: 'default', label: 'please_select_option' },
+  { value: 'Taiwan', label: 'country_taiwan' },
+  { value: 'USA', label: 'country_usa' },
+  { value: 'UK', label: 'country_uk' },
+  { value: 'Germany', label: 'country_germany' },
+  { value: 'Austria', label: 'country_austria' },
+  { value: 'Swiss', label: 'country_swiss' },
+  { value: 'France', label: 'country_france' },
+  { value: 'Italy', label: 'country_italy' },
+  { value: 'HK', label: 'country_hk' },
+  { value: 'Singapore', label: 'country_singapore' },
+  { value: 'Thailand', label: 'country_thailand' },
   { value: 'Others', label: othersText },
 ];
 
 export const WFHOptions = [
-  { value: 'default', label: 'Please Select' },
-  { value: 'Yes, completely WFH', label: 'Yes, completely WFH' },
+  { value: 'default', label: 'please_select_option' },
+  { value: 'Yes, completely WFH', label: 'job_form_wfh_100_wfh' },
   {
     value: 'No, need to go to office everyday',
-    label: 'No, need to go to office everyday',
+    label: 'job_form_wfh_0_wfh',
   },
   {
     value: 'Mostly WFH, sometimes need to go to office',
-    label: 'Mostly WFH, sometimes need to go to office',
+    label: 'job_form_wfh_most_wfh',
   },
   {
     value: 'Mostly on site, sometimes can WFH',
-    label: 'Mostly on site, sometimes can WFH',
+    label: 'job_form_wfh_most_office',
   },
   { value: 'Others', label: othersText },
 ];
 
 export const jobOptions = [
-  { value: 'default', label: 'Please Select' },
+  { value: 'default', label: 'please_select_option' },
   {
     value: 'Front-End Developer',
-    label: 'Front-End Developer',
+    label: 'job_form_job_front_end_dev',
   },
   {
     value: 'Back-End Developer',
-    label: 'Back-End Developer',
-  },
-  {
-    value: 'UI/UX Designer',
-    label: 'UI/UX Designer',
+    label: 'job_form_job_back_end_dev',
   },
   {
     value: 'Full-Stack Developer',
-    label: 'Full-Stack Developer',
+    label: 'job_form_job_full_stack_dev',
   },
   {
+    value: 'UI/UX Designer',
+    label: 'job_form_job_ui_designer',
+  },
+
+  {
     value: 'Data Analyst',
-    label: 'Data Analyst',
+    label: 'job_form_job_data_analyst',
   },
   {
     value: 'Data Science',
-    label: 'Data Science',
+    label: 'job_form_job_data_science',
   },
   {
     value: 'Blockchain Developer',
-    label: 'Blockchain Developer',
+    label: 'job_form_job_block_chain_dev',
   },
   {
-    value: 'Business Developer',
-    label: 'Business Developer',
-  },
-  {
-    value: 'Sales',
-    label: 'Sales',
+    value: 'Business Developer / Sales',
+    label: 'job_form_job_bd_sales',
   },
   {
     value: 'Marketing',
-    label: 'Marketing',
+    label: 'job_form_job_marketing',
   },
   {
     value: 'Doctor',
-    label: 'Doctor',
+    label: 'job_form_job_doctor',
   },
   {
     value: 'Nurse',
-    label: 'Nurse',
+    label: 'job_form_job_nurse',
   },
   {
     value: 'Investment Banker',
-    label: 'Investment Banker',
+    label: 'job_form_job_investment_banker',
   },
   {
-    value: 'Accountant',
-    label: 'Accountant',
+    value: 'Accountant / Auditor',
+    label: 'job_form_job_biz_accountant',
   },
   {
-    value: 'Auditor',
-    label: 'Auditor',
-  },
-  {
-    value: 'Consultant',
-    label: 'Consultant',
+    value: 'Business Consultant',
+    label: 'job_form_job_biz_consultant',
   },
   {
     value: 'Others',
@@ -297,47 +293,56 @@ export const jobOptions = [
 ];
 
 export const schoolOptions = [
-  { value: 'default', label: 'Please Select' },
+  { value: 'default', label: 'please_select_option' },
   {
     value: 'Business',
-    label: 'Business',
+    label: 'uni_form_school_business',
   },
   {
     value: 'Science',
-    label: 'Science',
+    label: 'uni_form_school_science',
   },
   { value: 'Others', label: othersText },
 ];
 
 export const departmentOptions = {
-  default: [{ value: 'default', label: 'Please Select' }],
+  default: [{ value: 'default', label: 'please_select_option' }],
   Business: [
-    { value: 'default', label: 'Please Select' },
-    { value: 'Accounting', label: 'Accounting' },
-    { value: 'Finance', label: 'Finance' },
-    { value: 'Marketing', label: 'Marketing' },
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Accounting', label: 'uni_form_department_accounting' },
+    { value: 'Finance', label: 'uni_form_department_finance' },
+    { value: 'Marketing', label: 'uni_form_department_marketing' },
     { value: 'Others', label: othersText },
   ],
   Science: [
-    { value: 'default', label: 'Please Select' },
-    { value: 'Chemistry', label: 'Chemistry' },
-    { value: 'Computer Science', label: 'Computer Science' },
-    { value: 'Computer Engineering', label: 'Computer Engineering' },
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Chemistry', label: 'uni_form_department_chemistry' },
+    {
+      value: 'Computer Science',
+      label: 'uni_form_department_computer_science',
+    },
+    {
+      value: 'Computer Engineering',
+      label: 'uni_form_department_computer_engineering',
+    },
     { value: 'Others', label: othersText },
   ],
-  Others: [{ value: 'default', label: 'Please Select' }, { value: 'Others', label: othersText }],
+  Others: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Others', label: othersText },
+  ],
 };
 
 export const degreeOptions = [
-  { value: 'default', label: 'Please Select' },
-  { value: 'Bechelor', label: 'Bechelor (Undergraduate)' },
-  { value: 'Master', label: 'Master (Post-Graduate)' },
-  { value: 'PhD', label: 'PhD (Doctor)' },
+  { value: 'default', label: 'please_select_option' },
+  { value: 'Bechelor', label: 'uni_form_bachelor' },
+  { value: 'Master', label: 'uni_form_master' },
+  { value: 'PhD', label: 'uni_form_phd' },
   { value: 'Others', label: othersText },
 ];
 
 export const typeOptions = [
-  { value: 'default', label: 'Please Select' },
+  { value: 'default', label: 'please_select_option' },
   {
     value: 'Entreprenuer',
     label: 'Entreprenuer (Has other people working for you)',
@@ -352,7 +357,7 @@ export const typeOptions = [
 ];
 
 export const professionOptions = [
-  { value: 'default', label: 'Please Select' },
+  { value: 'default', label: 'please_select_option' },
   { value: 'House Wife', label: 'House Wife' },
   { value: 'Content Creator', label: 'Content Creator (Youtuber, IG...etc.)' },
   { value: 'UI/UX Designer', label: 'UI/UX Designer' },
@@ -372,17 +377,17 @@ export const professionOptions = [
 ];
 
 export const yearsOptions = [
-  { value: 'default', label: 'Please Select' },
-  { value: '0-1 year', label: '0-1 Year' },
-  { value: '1-3 years', label: '1-3 Years' },
-  { value: '3-6 years', label: '3-6 Years' },
-  { value: '6-10 years', label: '6-10 Years' },
-  { value: '10 years plus', label: '> 10 Years' },
+  { value: 'default', label: 'please_select_option' },
+  { value: '0-1 year', label: 'job_form_experience_years_0_1' },
+  { value: '1-3 years', label: 'job_form_experience_years_1_3' },
+  { value: '4-6 years', label: 'job_form_experience_years_4_6' },
+  { value: '7-10 years', label: 'job_form_experience_years_7_10' },
+  { value: '10 years plus', label: 'job_form_experience_years_more_than_10' },
   { value: 'Others', label: othersText },
 ];
 
 export const ageOptions = [
-  { value: 'default', label: 'Please Select' },
+  { value: 'default', label: 'please_select_option' },
   {
     value: 'below 18 years old',
     label: 'below 18 years old',

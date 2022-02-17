@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const AboutPage = () => {
+  const { t } = useTranslation();
   return (
     <div className='main-content-wrapper-homepage'>
       <div className='section-center-align-landing'>
@@ -8,12 +9,12 @@ const AboutPage = () => {
           className='centerWrapper'
           style={{ textAlign: 'center', paddingTop: '28px' }}
         >
-          <h2>Mission Statement</h2>
+          <h2>{t('mission_statement')}</h2>
           <br />
           <h3>
-            By connecting professions and students, <br />
+            {t('mission_statement_part1')} <br />
             <br />
-            Shelpy aims at mitigating information gaps and helping people change their lives.
+            {t('mission_statement_part2')}
           </h3>
           <br />
           <h2>Impressum</h2>

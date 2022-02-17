@@ -19,7 +19,6 @@
     "mysql": "^2.18.1",
     "nodemailer": "^6.7.2",
     "qs": "^6.10.3",
-    "react-i18next": "^11.15.4",
     "react-stripe-checkout": "^2.6.3",
     "socket.io": "^4.4.0",
     "stripe": "^8.202.0",

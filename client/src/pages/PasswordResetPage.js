@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -16,6 +17,7 @@ const MySwal = withReactContent(Swal);
 
 const PasswordResetPage = (props) => {
     console.log('props.isHelpee@PasswordResetPage: ', props.isHelpee);
+  const { t } = useTranslation();
   const passwordRef = useRef();
   const [loading, setIsLoading] =
     useState(false);
@@ -45,8 +47,8 @@ const PasswordResetPage = (props) => {
 
   if (loading) {
     MySwal.fire({
-      title: 'Verifying your email...',
-      html: 'Please do not close the window.',
+      title: t('verify_email'),
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {
@@ -85,12 +87,7 @@ const PasswordResetPage = (props) => {
         async function sweetAlertAndClearStatus(title, message) {
           await MySwal.fire({
             title: <strong>{title}</strong>,
-            html: (
-              <p>
-                Please contact our customer service for help:
-                shelpyofficial@gmail.com
-              </p>
-            ),
+            html: <p>{t('error_contact_us')}</p>,
             icon: 'error',
           });
         }
@@ -100,7 +97,6 @@ const PasswordResetPage = (props) => {
         );
         return;
       } else if (helpeePasswordResetStatus === 'success') {
-        console.log('SUCCESS!');
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
@@ -138,7 +134,6 @@ const PasswordResetPage = (props) => {
         );
         return;
       } else if (helperPasswordResetStatus === 'success') {
-        console.log('SUCCESS!');
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
@@ -166,12 +161,19 @@ const PasswordResetPage = (props) => {
     helperPasswordResetStatusMessage,
     navigate,
     dispatch,
+    t,
   ]);
   return (
-    <div className={props.isHelpee? 'main-content-wrapper-homepage': 'main-content-wrapper-homepage-helper'}>
+    <div
+      className={
+        props.isHelpee
+          ? 'main-content-wrapper-homepage'
+          : 'main-content-wrapper-homepage-helper'
+      }
+    >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          Email verified!
+          {t('email_verified')}
         </h1>
         <h2
           style={{
@@ -181,7 +183,7 @@ const PasswordResetPage = (props) => {
             color: 'white',
           }}
         >
-          Please enter a new password.
+          {t('enter_new_password')}
         </h2>
 
         <form action='' className='centerbox-landing'>
@@ -191,7 +193,10 @@ const PasswordResetPage = (props) => {
             placeholder='Enter New Password'
             ref={passwordRef}
           />
-          <ConfirmBtn cta='Change Password ❯' handleConfirm={handleConfirm} />
+          <ConfirmBtn
+            cta={t('change_password_cta')}
+            handleConfirm={handleConfirm}
+          />
         </form>
       </div>
     </div>

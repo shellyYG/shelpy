@@ -16,10 +16,12 @@ import {
   clearBookingNotificationStatus,
   getBookingStatus,
 } from '../store/general/general-actions';
+import { useTranslation } from 'react-i18next';
 const MySwal = withReactContent(Swal);
 
 const BookingConfirmPage = (props) => {
   console.log('@BookingConfirmPage props: ', props);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const meetDateRef = useRef();
@@ -160,8 +162,8 @@ const BookingConfirmPage = (props) => {
   };
   if (loading) {
     MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
+      title: t('loading'),
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {

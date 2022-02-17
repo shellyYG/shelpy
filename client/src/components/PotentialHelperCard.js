@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import ChatIcon from './Icons/ChatIcon';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 
 function PotentialHelperCard(props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   console.log('props: ', props);
@@ -124,7 +126,7 @@ function PotentialHelperCard(props) {
         <div className='checkBoxWidth'>
           <div className='bookWrapper'>
             <button className='btn-contact' onClick={handleBookHelper}>
-              Book {props.partnerName}
+              {t('book_name', { name: props.partnerName })}
             </button>
           </div>
         </div>
@@ -132,8 +134,7 @@ function PotentialHelperCard(props) {
       {props.bookingStatus && (
         <div className='checkBoxWidth'>
           <div className='bookWrapper'>
-            You are in booking process with {props.partnerName}. Please check
-            "My Bookings" Tab.
+            {t('in_booking_process_with_name', {name: props.partnerName})}
           </div>
         </div>
       )}

@@ -11,8 +11,10 @@ import RequestCard from '../../components/RequestCard';
 import HelpeeDashboardSection from '../../components/HelpeeDashboardSection';
 import BookingCard from '../../components/BookingCard';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
+import { useTranslation } from 'react-i18next';
 
 const HelpeeDashboardPage = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
@@ -49,7 +51,7 @@ const HelpeeDashboardPage = (props) => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {props.helpeeName && (
           <h2 style={{ margin: 'auto' }}>
-            {props.i18n.t('welcome_name', {name: props.helpeeName})}!
+            {t('welcome_name', { name: props.helpeeName })}!
           </h2>
         )}
         {!props.helpeeName && (
@@ -60,20 +62,20 @@ const HelpeeDashboardPage = (props) => {
         <HelpeeDashboardSection
           helpeeDashboardTarget={helpeeDashboardTarget}
           value='allRequests'
-          title='My Requests'
+          title={t('my_requests')}
         />
         <HelpeeDashboardSection
           helpeeDashboardTarget={helpeeDashboardTarget}
           value='allBookings'
-          title='My Bookings'
+          title={t('my_bookings')}
         />
         <HelpeeDashboardSection
           helpeeDashboardTarget={helpeeDashboardTarget}
           value='potentialHelpers'
-          title='Potential Helpers'
+          title={t('potential_helpers')}
         />
         <div style={{ margin: 'auto', display: 'flex', flexDirection: 'row' }}>
-          <div style={{ margin: 'auto' }}>Refresh to get latest status</div>
+          <div style={{ margin: 'auto' }}>{t('refresh')}</div>
           <RefreshIcon onClick={handleRrefreshPage} />
         </div>
       </div>
@@ -86,9 +88,7 @@ const HelpeeDashboardPage = (props) => {
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
             >
-              <p style={{ margin: 'auto' }}>
-                You haven't created any requests yet
-              </p>
+              <p style={{ margin: 'auto' }}>{t('no_requests')}</p>
             </div>
           )}
           <div
@@ -97,7 +97,7 @@ const HelpeeDashboardPage = (props) => {
           >
             <div style={{ margin: 'auto' }}>
               <button className='btn-contact' onClick={handleAddRequest}>
-                Add a Request
+                {t('add_request_cta')}
               </button>
             </div>
           </div>
@@ -132,11 +132,11 @@ const HelpeeDashboardPage = (props) => {
                   paddingLeft: '18px',
                 }}
               >
-                <p style={{ margin: 'auto' }}>No bookings yet</p>
+                <p style={{ margin: 'auto' }}>{t('no_bookings')}</p>
               </div>
               <div style={{ margin: 'auto' }}>
                 <button className='btn-contact' onClick={handleSearchHelpers}>
-                  Book a Helper
+                  {t('book_helper_cta')}
                 </button>
               </div>
             </>
@@ -184,7 +184,7 @@ const HelpeeDashboardPage = (props) => {
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
             >
-              <p style={{ margin: 'auto' }}>No matched helpers yet</p>
+              <p style={{ margin: 'auto' }}>{t('no_matched_helpers')}</p>
             </div>
           )}
           {!allPotentialHelpers ||
@@ -198,7 +198,7 @@ const HelpeeDashboardPage = (props) => {
                   display: 'flex',
                 }}
               >
-                <p style={{ margin: 'auto' }}>No matched helpers yet</p>
+                <p style={{ margin: 'auto' }}>{t('no_matched_helpers')}</p>
               </div>
             ))}
           <div
@@ -207,7 +207,7 @@ const HelpeeDashboardPage = (props) => {
           >
             <div style={{ margin: 'auto' }}>
               <button className='btn-contact' onClick={handleSearchHelpers}>
-                Search Helpers
+                {t('search_helper_cta')}
               </button>
             </div>
           </div>

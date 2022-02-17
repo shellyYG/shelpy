@@ -19,6 +19,7 @@ import {
   doYouSpeakEnglishOptions,
 } from '../store/options/service-options';
 import { clearRequestFormStatus, postHelpeeServiceRequestForm } from '../store/helpee/helpee-actions'
+import { useTranslation } from 'react-i18next';
 const MySwal = withReactContent(Swal);
 
 const AppointmentForm = (props) => {
@@ -42,6 +43,7 @@ const notesRef = useRef();
 const [loading, setIsLoading] = useState(false);
 
 const navigate = useNavigate();
+const { t } = useTranslation();
   async function handleConfirm(e) {
     e.preventDefault();
     // change DB & global state
@@ -97,8 +99,8 @@ const navigate = useNavigate();
   };
   if (loading) {
     MySwal.fire({
-      title: 'Loading...',
-      html: 'Please do not close the window.',
+      title: t('loading'),
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {

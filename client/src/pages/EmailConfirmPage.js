@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -13,6 +14,7 @@ import {
 const MySwal = withReactContent(Swal);
 
 const EmailConfirmPage = (props) => {
+  const { t } = useTranslation();
   const [loading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,7 +39,7 @@ const EmailConfirmPage = (props) => {
   if (loading) {
     MySwal.fire({
       title: 'Confirming your email...',
-      html: 'Please do not close the window.',
+      html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,
       willOpen: () => {

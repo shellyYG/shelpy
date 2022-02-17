@@ -2,15 +2,17 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DropDown from '../components/Dropdown';
-import { jobUniMarketingOptions } from '../store/options/navigate-options';
+import { jobUniOptions } from '../store/options/navigate-options';
 import { getAllMarketingOffers } from '../store/general/general-actions';
 import MarketingCard from '../components/MarketingCard';
 
 import { secondTypeOptions } from '../store/options/navigate-options';
 import { countryOptions } from '../store/options/service-options';
 import DangerIcon from '../components/Icons/DangerIcon';
+import { useTranslation } from 'react-i18next';
 
 const HelpeeDashboardPage = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const mainTypeRef = useRef();
@@ -89,16 +91,18 @@ const HelpeeDashboardPage = (props) => {
           <div style={{ margin: '50px auto' }}>
             <DangerIcon />
             <h2 style={{ margin: 'auto' }}>
-              Please <Link to='/helpee/sign-in'>sign in</Link> as Helpee to view
-              our top offers.
+              {t('please')} <Link to='/helpee/sign-in'>{t('sign_in')}</Link>{' '}
+              {t('mkt_offer_sign_in_as_helpee')}
             </h2>
-            <h2 style={{ margin: '10px auto' }}>Don't have account yet?</h2>
+            <h2 style={{ margin: '10px auto' }}>
+              {t('dont_have_helpee_account')}
+            </h2>
             <button
               className='btn-next'
               style={{ width: '180px' }}
               onClick={handleToHomepage}
             >
-              Sign Up Here
+              {t('sign_up_here')}
             </button>
           </div>
         </div>
@@ -113,9 +117,9 @@ const HelpeeDashboardPage = (props) => {
               <DropDown
                 selected={mainType}
                 handleSelect={setMainType}
-                title='Select Main-Category'
+                title={t('mkt_select_main_category')}
                 selectRef={mainTypeRef}
-                options={jobUniMarketingOptions}
+                options={jobUniOptions}
                 titleColor='black'
                 titleMarginLeft='8px'
               />
@@ -124,7 +128,7 @@ const HelpeeDashboardPage = (props) => {
               <DropDown
                 selected={secondType}
                 handleSelect={setSecondType}
-                title='Select Sub-Category'
+                title={t('mkt_select_sub_category')}
                 selectRef={secondTypeRef}
                 options={matchedSecondTypes}
                 titleColor='black'
@@ -135,7 +139,7 @@ const HelpeeDashboardPage = (props) => {
               <DropDown
                 selected={country}
                 handleSelect={setCountry}
-                title='Select Country'
+                title={t('mkt_select_country')}
                 selectRef={countryRef}
                 options={countryOptions}
                 titleColor='black'
@@ -153,7 +157,7 @@ const HelpeeDashboardPage = (props) => {
                   paddingLeft: '18px',
                 }}
               >
-                <p style={{ margin: 'auto' }}>No Public Offers yet</p>
+                <p style={{ margin: 'auto' }}>{t('no_offers')}</p>
               </div>
             )}
             <div

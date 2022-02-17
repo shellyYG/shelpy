@@ -25,7 +25,7 @@ export const getHelpeeAuthStatus = () => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        return;
       }
       if (generalToken) {
         const headers = {
