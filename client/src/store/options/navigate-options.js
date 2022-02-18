@@ -59,9 +59,7 @@ export const secondTypeOptions = {
   ],
   selfEmployed: [
     { value: 'default', label: 'please_select_option' },
-    { value: 'Entreprenuer', label: 'Entreprenuer' },
-    { value: 'House Wife', label: 'House Wife' },
-    { value: 'House Husband', label: 'House Husband' },
-    { value: 'Freelancer', label: 'Freelancer' },
+    { value: 'Entreprenuer', label: 'self_employed_type_entreprenuer' },
+    { value: 'Freelancer', label: 'self_employed_type_freelancer' },
   ],
 };

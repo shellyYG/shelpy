@@ -101,20 +101,18 @@ export const meetCityOptions = [
   { value: 'Others', label: othersText },
 ];
 export const nativeLanguageOptions = [
-  { value: 'chinese', label: 'Chinese' },
-  { value: 'vietnamese', label: 'Vietnamese' },
-  { value: 'ukrainian', label: 'Ukrainian' },
-  { value: 'russian', label: 'Russian' },
-  { value: 'turkish', label: 'Turkish' },
-  { value: 'french', label: 'French' },
-  { value: 'arabic', label: 'Arabic' },
-  { value: 'kurdish', label: 'Kurdish' },
-  { value: 'romani', label: 'Romani' },
-  { value: 'danish', label: 'Danish' },
-  { value: 'italian', label: 'Italian' },
-  { value: 'spanish', label: 'Spanish' },
-  { value: 'korean', label: 'Korean' },
-  { value: 'japanese', label: 'Japanese' },
+  { value: 'English', label: 'languages_english' },
+  { value: 'German', label: 'languages_german' },
+  { value: 'French', label: 'languages_french' },
+  { value: 'Italien', label: 'languages_italien' },
+  { value: 'Chinese', label: 'languages_chinese' },
+  { value: 'Cantonese', label: 'languages_cantonese' },
+  { value: 'Vietnamese', label: 'languages_vietnamese' },
+  { value: 'Korean', label: 'languages_korean' },
+  { value: 'Japanese', label: 'languages_japanese' },
+  { value: 'Turkish', label: 'languages_turkish' },
+  { value: 'Ukrainian', label: 'languages_ukrainian' },
+  { value: 'Arabic', label: 'languages_arabic' },
   { value: 'Others', label: othersText },
 ];
 
@@ -345,34 +343,74 @@ export const typeOptions = [
   { value: 'default', label: 'please_select_option' },
   {
     value: 'Entreprenuer',
-    label: 'Entreprenuer (Has other people working for you)',
+    label: 'self_employed_type_entreprenuer',
   },
-  { value: 'House Wife', label: 'House Wife' },
-  { value: 'House Husband', label: 'House Husband' },
   {
     value: 'Freelancer',
-    label: 'Freelancer (Only you are working for yourself)',
+    label: 'self_employed_type_freelancer',
   },
   { value: 'Others', label: othersText },
 ];
 
 export const professionOptions = [
   { value: 'default', label: 'please_select_option' },
-  { value: 'House Wife', label: 'House Wife' },
-  { value: 'Content Creator', label: 'Content Creator (Youtuber, IG...etc.)' },
-  { value: 'UI/UX Designer', label: 'UI/UX Designer' },
-  { value: 'Online Shops', label: 'Online Shops' },
-  { value: 'Software Developer', label: 'Software Developer' },
-  { value: 'Artist', label: 'Artist' },
-  { value: 'Musician', label: 'Musician' },
-  { value: 'Hair Salon', label: 'Hair Salon' },
-  { value: 'Nail Salon', label: 'Nail Salon' },
-  { value: 'Body Salon', label: 'Body Salon' },
-  { value: 'Baby Sitter', label: 'Babysitter' },
-  { value: 'Massage', label: 'Massage' },
-  { value: 'Teacher', label: 'Teacher' },
-  { value: 'Trainer', label: 'Trainer' },
-  { value: 'Consultant', label: 'Consultant' },
+  { value: 'House Wife', label: 'self_employed_profession_housewife' },
+  { value: 'House Husband', label: 'self_employed_profession_househusband' },
+  {
+    value: 'Content Creator',
+    label: 'self_employed_profession_content_creator',
+  },
+  { value: 'UI/UX Designer', label: 'self_employed_profession_ui_designer' },
+  { value: 'Online Shops', label: 'self_employed_profession_ui_ecommerce' },
+  {
+    value: 'Front-End Developer',
+    label: 'self_employed_profession_frontend_dev',
+  },
+  {
+    value: 'Back-End Developer',
+    label: 'self_employed_profession_backend_dev',
+  },
+  {
+    value: 'Full-Stack Developer',
+    label: 'self_employed_profession_fullstack_dev',
+  },
+  {
+    value: 'Blockchain Developer',
+    label: 'self_employed_profession_blockchain_dev',
+  },
+  { value: 'Artist', label: 'self_employed_profession_artist' },
+  { value: 'Musician', label: 'self_employed_profession_musician' },
+  { value: 'Hair Salon', label: 'self_employed_profession_hair_salon' },
+  { value: 'Nail Salon', label: 'self_employed_profession_nail_salon' },
+  { value: 'Body Salon', label: 'self_employed_profession_body_salon' },
+  { value: 'Massage', label: 'self_employed_profession_massage' },
+  {
+    value: 'Bubble Tea Shop',
+    label: 'self_employed_profession_bubble_tea_shop',
+  },
+  { value: 'Cafe', label: 'self_employed_profession_cafe' },
+  {
+    value: 'Baby Sitter',
+    label: 'self_employed_profession_baby_sitter',
+  },
+  { value: 'Teacher', label: 'self_employed_profession_teacher' },
+  { value: 'Trainer', label: 'self_employed_profession_trainer' },
+  {
+    value: 'Business Consultant',
+    label: 'self_employed_profession_consultant',
+  },
+  {
+    value: 'Study Counselor',
+    label: 'self_employed_profession_study_counselor',
+  },
+  {
+    value: 'Career Counselor"',
+    label: 'self_employed_profession_career_counselor',
+  },
+  {
+    value: 'Psychological counselor',
+    label: 'self_employed_profession_mental_counselor',
+  },
   { value: 'Others', label: othersText },
 ];
 
@@ -390,31 +428,31 @@ export const ageOptions = [
   { value: 'default', label: 'please_select_option' },
   {
     value: 'below 18 years old',
-    label: 'below 18 years old',
+    label: 'age_under_18',
   },
   {
     value: '18-20 years old',
-    label: '18-20 years old',
+    label: 'age_18_to_20',
   },
   {
     value: '21-25 years old',
-    label: '21-25 years old',
+    label: 'age_21_to_25',
   },
   {
     value: '26-30 years old',
-    label: '26-30 years old',
+    label: 'age_26_to_30',
   },
   {
     value: '31-35 years old',
-    label: '31-35 years old',
+    label: 'age_31_to_35',
   },
   {
     value: '36-40 years old',
-    label: '36-40 years old',
+    label: 'age_36_to_40',
   },
   {
     value: 'over 40 years old',
-    label: 'over 40 years old',
+    label: 'over_40',
   },
   { value: 'Others', label: othersText },
 ];

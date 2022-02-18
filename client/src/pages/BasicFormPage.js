@@ -444,8 +444,7 @@ const BasicFormPage = (props) => {
       style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        {props.isHelpee && 'Update Basic Information'}
-        {!props.isHelpee && 'Apply to be Helper'}
+        {t('update_basic_information')}
       </h1>
 
       <div className='form-center-wrapper'>
@@ -466,11 +465,11 @@ const BasicFormPage = (props) => {
                           for='profilePic'
                           style={{ fontSize: '12px' }}
                         >
-                          Upload Picture (Optional)
+                          {t('upload_profile_pic')}
                         </label>
                         <input
                           type='file'
-                          Id='profilePic'
+                          id='profilePic'
                           onChange={handleProfilePicUpload}
                           hidden={true}
                         />
@@ -528,14 +527,14 @@ const BasicFormPage = (props) => {
               </div>
               <div className='form-row'>
                 <LeftHalfLineTextBox
-                  title={'Username (This will be shown publicly) *'}
-                  placeholder={'Enter Username (e.g. Angela)'}
+                  title={t('username_title')}
+                  placeholder={t('username_placeholder')}
                   inputRef={usernameRef}
                 />
                 <DropDown
                   selected={age}
                   handleSelect={setAge}
-                  title={'Age (This will not be shown publicly)*'}
+                  title={t('age_title')}
                   selectRef={ageRef}
                   options={ageOptions}
                 />
@@ -563,7 +562,7 @@ const BasicFormPage = (props) => {
                         </label>
                         <input
                           type='file'
-                          Id='resume'
+                          id='resume'
                           onChange={handleResumeUpload}
                           hidden={true}
                         />
@@ -582,9 +581,7 @@ const BasicFormPage = (props) => {
                   checked={isAnonymous}
                   handleCheck={setIsAnonymous}
                   details={
-                    props.isHelpee
-                      ? 'Ask question anonymously (your profile picture will be hide, but username will be shown).'
-                      : 'Answer question anonymously (your profile picture will be hide, but username will be shown).'
+                    props.isHelpee ? t('ask_anonymous') : t('answer_anonymous')
                   }
                   paddingRight='10px'
                   marginBottom='5px'
@@ -605,7 +602,7 @@ const BasicFormPage = (props) => {
               )}
 
               <p className='fontSize17Title' style={{ marginTop: '16px' }}>
-                What days are you available? (Can choose multiple)
+                {t('appointment_date_title')}
               </p>
               <div
                 style={{
@@ -617,21 +614,19 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasMonToFri}
                   handleCheck={setHasMonToFri}
-                  details='Monday - Friday'
+                  details={t('monday_to_friday')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
                 <CheckBox
                   checked={hasWeekend}
                   handleCheck={setHasWeekend}
-                  details='Saturday - Sunday'
+                  details={t('saturday_to_sunday')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
               </div>
-              <p className='fontSize17Title'>
-                What time are you available? (Can choose multiple)
-              </p>
+              <p className='fontSize17Title'>{t('appointment_time_title')}</p>
               <div
                 style={{
                   display: 'flex',
@@ -642,27 +637,27 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasBefore12}
                   handleCheck={setHasBefore12}
-                  details='Before 12:00pm (noon)'
+                  details={t('before12noon')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
                 <CheckBox
                   checked={has12To18}
                   handleCheck={setHas12To18}
-                  details='12:00pm (noon) - 18:00'
+                  details={t('12to18')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
                 <CheckBox
                   checked={hasAfter18}
                   handleCheck={setHasAfter18}
-                  details='After 18:00'
+                  details={t('after18')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
               </div>
 
-              <p className='fontSize17Title'>What languages do you speak?</p>
+              <p className='fontSize17Title'>{t('what_languages_you_speak')}</p>
               <div
                 style={{
                   display: 'flex',
@@ -673,7 +668,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasEnglish}
                   handleCheck={setHasEnglish}
-                  details='English'
+                  details={t('languages_english')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -681,14 +676,14 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasGerman}
                   handleCheck={setHasGerman}
-                  details='German'
+                  details={t('languages_german')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
                 />
                 <CheckBox
                   checked={hasFrench}
-                  handleCheck={setHasFrench}
+                  handleCheck={t('languages_french')}
                   details='French'
                   paddingRight='10px'
                   marginBottom='5px'
@@ -696,7 +691,7 @@ const BasicFormPage = (props) => {
                 />
                 <CheckBox
                   checked={hasItalien}
-                  handleCheck={setHasItalien}
+                  handleCheck={t('languages_italien')}
                   details='Italian'
                   paddingRight='10px'
                   marginBottom='5px'
@@ -713,7 +708,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasChinese}
                   handleCheck={setHasChinese}
-                  details='Chinese'
+                  details={t('languages_chinese')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -721,7 +716,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasCantonese}
                   handleCheck={setHasCantonese}
-                  details='Cantonese'
+                  details={t('languages_cantonese')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -729,7 +724,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasVietnamese}
                   handleCheck={setHasVietnamese}
-                  details='Vietnamese'
+                  details={t('languages_vietnamese')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -737,7 +732,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasKorean}
                   handleCheck={setHasKorean}
-                  details='Korean'
+                  details={t('languages_korean')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -745,7 +740,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasJapanese}
                   handleCheck={setHasJapanese}
-                  details='Japanese'
+                  details={t('languages_japanese')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -761,7 +756,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasTurkish}
                   handleCheck={setHasTurkish}
-                  details='Turkish'
+                  details={t('languages_turkish')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -769,7 +764,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasUkrainian}
                   handleCheck={setHasUkrainian}
-                  details='Ukrainian'
+                  details={t('languages_ukrainian')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -777,7 +772,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasArabic}
                   handleCheck={setHasArabic}
-                  details='Arabic'
+                  details={t('languages_arabic')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -785,7 +780,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasOthers}
                   handleCheck={setHasOthers}
-                  details='Others (Please specify in Notes below)'
+                  details={t('others_option')}
                   paddingRight='10px'
                   marginBottom='25px'
                   fontSize='14px'
@@ -799,20 +794,18 @@ const BasicFormPage = (props) => {
                 />
               )} */}
               <FullLineTextBox
-                title={'Introduction'}
-                placeholder={'Introduce yourself in one sentence!'}
+                title={t('introduction')}
+                placeholder={t('introduction_placeholder')}
                 inputRef={introductionRef}
                 marginTop='15px'
               />
               <FullLineTextBox
-                title={'Notes'}
-                placeholder={
-                  'Please specify languages you speak (if you selected others above).'
-                }
+                title={t('notes')}
+                placeholder={t('other_languages_specify_note_placeholder')}
                 inputRef={notesRef}
               />
               <ConfirmBtn
-                cta='Confirm'
+                cta={t('confirm')}
                 disable={!enableBtn}
                 handleConfirm={handleConfirm}
               />

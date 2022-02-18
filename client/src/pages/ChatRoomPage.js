@@ -378,8 +378,14 @@ const ChatRoomPage = (props) => {
                 <div style={{ textAlign: 'center' }}>
                   <LeftPointIcon />
                   <div style={{ fontSize: '30px' }}>
-                    Click on the left side to select a{' '}
-                    {props.isHelpee ? 'helper' : 'customer'} to chat.
+                    {props.isHelpee &&
+                      t('chatroom_click_on_left_to_select', {
+                        target: t('helper'),
+                      })}
+                    {!props.isHelpee &&
+                      t('chatroom_click_on_left_to_select', {
+                        target: t('customer'),
+                      })}
                   </div>
                 </div>
               </>
@@ -420,7 +426,7 @@ const ChatRoomPage = (props) => {
                 type='text'
                 value={currentMessage}
                 className='form-control-chat'
-                placeholder='Send some message here'
+                placeholder={t('chatroom_chat_placeholder')}
                 onChange={handleMessageInput}
                 onKeyPress={(e) => {
                   e.key === 'Enter' && handleSend(e);

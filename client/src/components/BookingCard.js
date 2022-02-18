@@ -9,6 +9,7 @@ import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import { postPayHelper, clearPayHelperStatus } from '../store/helpee/helpee-actions';
 import { useRef } from 'react';
+import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, typeOptions } from '../store/options/service-options';
 
 
 const MySwal = withReactContent(Swal);
@@ -19,6 +20,9 @@ function BookingCard(props) {
   const dispatch = useDispatch();
   const paypal = useRef();
   const [title, setTitle] = useState('');
+  const [translatedSecondType, setTranslatedSecondType] = useState('');
+  const [translatedThirdType, setTranslatedThirdType] = useState('');
+  const [translatedCountry, setTranslatedCountry] = useState('');
   const [helpeeFilteredBookingStatus, setHelpeeFilteredBookingStatus] = useState('');
   const [helperFilteredBookingStatus, setHelperFilteredBookingStatus] =
     useState('');
@@ -47,20 +51,93 @@ function BookingCard(props) {
   }
 
   useEffect(() => {
+    let secondTypeTranslationObj;
+    let thirdTypeTranslationObj;
+    let fourthTypeTranslationObj;
+    const countryTranslationObj = countryOptions.filter(
+      (o) => o.value === props.country
+    );
+    setTranslatedCountry(t(countryTranslationObj[0].label));
     switch (props.mainType) {
       case 'university':
-        setTitle('University');
+        setTitle(t('service_types_uni'));
+        secondTypeTranslationObj = schoolOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = departmentOptions[props.secondType].filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       case 'job':
-        setTitle('Job');
+        setTitle(t('service_types_job'));
+        secondTypeTranslationObj = industryOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = jobOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       case 'selfEmployed':
-        setTitle('Self Employed');
+        setTitle(t('service_types_self_employed'));
+        secondTypeTranslationObj = typeOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = professionOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       default:
-        setTitle('Job');
+        setTitle(t('service_types_job'));
     }
-  }, [props.mainType]);
+  }, [
+    t,
+    props.mainType,
+    props.secondType,
+    props.thirdType,
+    props.country,
+  ]);
 
   useEffect(() => {
     switch (props.bookingStatus) {
@@ -257,19 +334,19 @@ function BookingCard(props) {
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.secondType}</div>
+              <div className='textDateTime'>{translatedSecondType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.thirdType}</div>
+              <div className='textDateTime'>{translatedThirdType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <EarthIcon color='#95a0ff' />
               </div>
-              <div className='textDateTime'>{props.country}</div>
+              <div className='textDateTime'>{translatedCountry}</div>
             </div>
           </div>
         </div>
@@ -281,10 +358,11 @@ function BookingCard(props) {
               {t('booking_id')}: {props.id}
             </p>
             <button onClick={handleBookingConfirmation} className='btn-next'>
-              Confirm {props.partnerName}'s booking
+              {t('accept_name_booking', { name: props.partnerName })}
             </button>
             <p style={{ fontWeight: '12px', padding: '6px' }}>
-              Booking time: {props.appointmentDate} at ${props.appointmentTime}
+              {t('booking_time')}: {props.appointmentDate} {t('at')} {' '}
+              {props.appointmentTime}
             </p>
           </div>
         </div>
@@ -322,7 +400,7 @@ function BookingCard(props) {
               </button>
             </StripeCheckout> */}
             <button className='btn-contact' onClick={handlePayHelper}>
-              {t('pay_name', {name: props.partnerName, price: props.price})}
+              {t('pay_name', { name: props.partnerName, price: props.price })}
             </button>
             <div ref={paypal}> </div>
           </div>

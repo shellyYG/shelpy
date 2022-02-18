@@ -91,7 +91,7 @@ const HelperSignInPage = () => {
     <div className='main-content-wrapper-homepage-helper'>
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          Welcome back!
+          {t('sign_in_welcome')}
         </h1>
         <h2
           style={{
@@ -101,30 +101,30 @@ const HelperSignInPage = () => {
             color: 'white',
           }}
         >
-          Please insert your username and password to sign in.
+          {t('sign_in_introduction')}
         </h2>
 
         <form action='' className='centerbox-landing'>
           <input
             type='text'
             className='form-control-password'
-            placeholder='Enter Email Address'
+            placeholder={t('home_enter_email_placeholder')}
             ref={emailRef}
           />
           <input
             type='text'
             className='form-control-password'
-            placeholder='Enter Password'
+            placeholder={t('enter_password_placeholder')}
             ref={passwordRef}
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
             <Link to='/helper/forget-password' style={{ marginRight: '10px' }}>
-              Forget Password
+              {t('forget_password')}
             </Link>
-            <Link to='/helper/home'>Don't have account yet? SIGN UP here!</Link>
+            <Link to='/helper/home'>{t('dont_have_account_sign_up')}</Link>
           </div>
 
-          <ConfirmBtn cta='Sign In ❯' handleConfirm={handleConfirm} />
+          <ConfirmBtn cta={t('sign_in')} handleConfirm={handleConfirm} />
         </form>
       </div>
     </div>

@@ -13,18 +13,18 @@ function OfferCard(props) {
   useEffect(() => {
     switch (props.mainType) {
       case 'university':
-        setTitle('University');
+        setTitle(t('service_types_uni'));
         break;
       case 'job':
-        setTitle('Job');
+        setTitle(t('service_types_job'));
         break;
       case 'selfEmployed':
-        setTitle('Self-Employed');
+        setTitle(t('service_types_self_employed'));
         break;
       default:
-        setTitle('');
+        setTitle(t('service_types_job'));
     }
-  }, [props.mainType]);
+  }, [props.mainType, t]);
 
   return (
     <div className='history-card'>

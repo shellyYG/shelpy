@@ -4,28 +4,115 @@ import { useNavigate } from 'react-router-dom';
 import ChatIcon from './Icons/ChatIcon';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
+import {
+  countryOptions,
+  departmentOptions,
+  industryOptions,
+  jobOptions,
+  professionOptions,
+  schoolOptions,
+  typeOptions,
+  nativeLanguageOptions,
+  degreeOptions,
+  WFHOptions,
+  yearsOptions,
+} from '../store/options/service-options';
 
 function PotentialHelperCard(props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
-  console.log('props: ', props);
+  const [translatedSecondType, setTranslatedSecondType] = useState('');
+  const [translatedThirdType, setTranslatedThirdType] = useState('');
+  const [translatedCountry, setTranslatedCountry] = useState('');
   
   useEffect(() => {
+    let secondTypeTranslationObj;
+    let thirdTypeTranslationObj;
+    const countryTranslationObj = countryOptions.filter(
+      (o) => o.value === props.country
+    );
+    setTranslatedCountry(t(countryTranslationObj[0].label));
     switch (props.mainType) {
       case 'university':
-        setTitle('University');
+        setTitle(t('service_types_uni'));
+        secondTypeTranslationObj = schoolOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = departmentOptions[props.secondType].filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       case 'job':
-        setTitle('Job');
+        setTitle(t('service_types_job'));
+        secondTypeTranslationObj = industryOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = jobOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       case 'selfEmployed':
-        setTitle('Self Employed');
+        setTitle(t('service_types_self_employed'));
+        secondTypeTranslationObj = typeOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = professionOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       default:
-        setTitle('Job');
+        setTitle(t('service_types_job'));
     }
-  }, [props.mainType]);
+  }, [
+    t,
+    props.mainType,
+    props.secondType,
+    props.thirdType,
+    props.country,
+  ]);
 
   function handleChat(e) {
     e.preventDefault(e);
@@ -104,19 +191,19 @@ function PotentialHelperCard(props) {
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.secondType}</div>
+              <div className='textDateTime'>{translatedSecondType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.thirdType}</div>
+              <div className='textDateTime'>{translatedThirdType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <EarthIcon color='#95a0ff' />
               </div>
-              <div className='textDateTime'>{props.country}</div>
+              <div className='textDateTime'>{translatedCountry}</div>
             </div>
           </div>
         </div>
@@ -134,7 +221,7 @@ function PotentialHelperCard(props) {
       {props.bookingStatus && (
         <div className='checkBoxWidth'>
           <div className='bookWrapper'>
-            {t('in_booking_process_with_name', {name: props.partnerName})}
+            {t('in_booking_process_with_name', { name: props.partnerName })}
           </div>
         </div>
       )}

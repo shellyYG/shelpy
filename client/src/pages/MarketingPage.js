@@ -54,7 +54,6 @@ const HelpeeDashboardPage = (props) => {
       setFilteredOffers(filteredOffers);
     }
   }, [allMKTOffers, mainType, secondType, country]);
-  console.log('filteredOffers: ', filteredOffers);
 
   useEffect(() => {
     dispatch(getAllMarketingOffers());
@@ -110,7 +109,7 @@ const HelpeeDashboardPage = (props) => {
       {props.isHelpeeAuthenticated && (
         <>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <h2 style={{ margin: 'auto' }}>Top Offers</h2>
+            <h2 style={{ margin: 'auto' }}>{t('top_offers')}</h2>
           </div>
           <div className='orderHistoryBtnWrapper'>
             <div className='mktFilterWrapper'>

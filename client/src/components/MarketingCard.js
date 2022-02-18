@@ -6,6 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import ChatIcon from './Icons/ChatIcon';
+import {
+  schoolOptions,
+  industryOptions,
+  typeOptions,
+  countryOptions,
+  departmentOptions,
+  jobOptions,
+  professionOptions,
+  nativeLanguageOptions,
+} from '../store/options/service-options';
 
 
 const MySwal = withReactContent(Swal);
@@ -13,23 +23,121 @@ const MySwal = withReactContent(Swal);
 function MarketingCard(props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
+  const [translatedSecondType, setTranslatedSecondType] = useState('');
+  const [translatedThirdType, setTranslatedThirdType] = useState('');
+  const [translatedCountry, setTranslatedCountry] = useState('');
+  const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
+    useState('');
   const [title, setTitle] = useState('');
+
+  useEffect(()=>{
+    const matchedTranslation = schoolOptions.filter(
+      (o) => o.value === props.secondType
+    );
+    if (props.secondType && matchedTranslation && matchedTranslation[0]) {
+      setTranslatedSecondType(t(matchedTranslation[0].label));
+    }
+  },[props.secondType, t, translatedSecondType]);
+  
+  
   useEffect(() => {
+    let secondTypeTranslationObj;
+    let thirdTypeTranslationObj;
+    const countryTranslationObj = countryOptions.filter(
+      (o) => o.value === props.country
+    );
+    setTranslatedCountry(t(countryTranslationObj[0].label));
     switch (props.mainType) {
       case 'university':
-        setTitle('University');
+        setTitle(t('service_types_uni'));
+        secondTypeTranslationObj = schoolOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = departmentOptions[props.secondType].filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       case 'job':
-        setTitle('Job');
+        setTitle(t('service_types_job'));
+        secondTypeTranslationObj = industryOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = jobOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       case 'selfEmployed':
-        setTitle('Self Employed');
+        setTitle(t('service_types_self_employed'));
+        secondTypeTranslationObj = typeOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = professionOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       default:
         setTitle(t('na'));
     }
-  }, [props.mainType, t]);
+  }, [t, props.mainType, props.secondType, props.thirdType, props.country]);
+
+  useEffect(()=>{
+    let translatedSpeakingLanguagesString = '';
+    const speakingLanguages = props.languages.split(' ');
+    speakingLanguages.forEach((speakingLanguage) => {
+      const speakingLanguageTranslationObj = nativeLanguageOptions.filter(
+        (o) => o.value === speakingLanguage
+      );
+      if (speakingLanguageTranslationObj && speakingLanguageTranslationObj[0]) {
+        translatedSpeakingLanguagesString =
+          translatedSpeakingLanguagesString.concat(
+            t(speakingLanguageTranslationObj[0].label) + ' '
+          );
+      }
+    });
+    setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
+  },[t, props.languages])
 
   async function handleBookHelperMarketingClick(e) {
     e.preventDefault();
@@ -112,19 +220,19 @@ function MarketingCard(props) {
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.secondType}</div>
+              <div className='textDateTime'>{translatedSecondType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.thirdType}</div>
+              <div className='textDateTime'>{translatedThirdType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <EarthIcon color='#95a0ff' />
               </div>
-              <div className='textDateTime'>{props.country}</div>
+              <div className='textDateTime'>{translatedCountry}</div>
             </div>
           </div>
         </div>
@@ -142,7 +250,7 @@ function MarketingCard(props) {
       <div className='checkBoxWidth'>
         <div className='contentBx'>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            {t('speaks')}: {props.languages}
+            {t('speaks')}: {translatedSpeakingLanguages}
           </p>
           <p
             style={{

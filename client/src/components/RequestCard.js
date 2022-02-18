@@ -2,36 +2,165 @@ import { useState, useEffect } from 'react';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import { useTranslation } from 'react-i18next';
+import {
+  countryOptions,
+  departmentOptions,
+  industryOptions,
+  jobOptions,
+  professionOptions,
+  schoolOptions,
+  typeOptions,
+  nativeLanguageOptions,
+  degreeOptions,
+  WFHOptions,
+  yearsOptions,
+} from '../store/options/service-options';
 const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; // TODO
 
 function RequestCard(props) {
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
+  const [translatedSecondType, setTranslatedSecondType] = useState('');
+  const [translatedThirdType, setTranslatedThirdType] = useState('');
+  const [translatedFourthType, setTranslatedFourthType] = useState('');
+  const [translatedCountry, setTranslatedCountry] = useState('');
+  const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
+    useState('');
   const [details, setDetails] = useState('');
   const [filteredStatus, setFilteredStatus] = useState('');
-  async function handleYoutubeClick(e) {
-    e.preventDefault();
-    const newWindow = window.open(youtubeURL, '_blank', 'noopener,noreferrer');
-    if (newWindow) newWindow.opener = null;
-  }
+
   useEffect(() => {
+    let secondTypeTranslationObj;
+    let thirdTypeTranslationObj;
+    let fourthTypeTranslationObj;
+    const countryTranslationObj = countryOptions.filter(
+      (o) => o.value === props.country
+    );
+    setTranslatedCountry(t(countryTranslationObj[0].label));
     switch (props.mainType) {
       case 'university':
-        setTitle('University');
-        setDetails('Degree: ');
+        setTitle(t('service_types_uni'));
+        secondTypeTranslationObj = schoolOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = departmentOptions[props.secondType].filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
+        fourthTypeTranslationObj = degreeOptions.filter(
+          (o) => o.value === props.fourthType
+        );
+        if (
+          props.fourthType &&
+          fourthTypeTranslationObj &&
+          fourthTypeTranslationObj[0]
+        ) {
+          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
+        }
+        setDetails(t('degree')+': ');
         break;
       case 'job':
-        setTitle('Job');
-        setDetails('Work from home status: ');
+        setTitle(t('service_types_job'));
+        secondTypeTranslationObj = industryOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = jobOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
+        fourthTypeTranslationObj = WFHOptions.filter(
+          (o) => o.value === props.fourthType
+        );
+        if (
+          props.fourthType &&
+          fourthTypeTranslationObj &&
+          fourthTypeTranslationObj[0]
+        ) {
+          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
+        }
+        setDetails(t('wfh_status') + ': ');
         break;
       case 'selfEmployed':
-        setTitle('Self-Employed');
+        setTitle(t('service_types_self_employed'));
         setDetails('Years of experience you have: ');
         break;
       default:
+        setTitle(t('service_types_job'));
+        secondTypeTranslationObj = typeOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = professionOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
+        fourthTypeTranslationObj = yearsOptions.filter(
+          (o) => o.value === props.fourthType
+        );
+        if (
+          props.fourthType &&
+          fourthTypeTranslationObj &&
+          fourthTypeTranslationObj[0]
+        ) {
+          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
+        }
         setDetails('');
     }
-  }, [props.mainType]);
+  }, [t, props.mainType, props.secondType, props.thirdType, props.fourthType, props.country]);
+  useEffect(() => {
+    let translatedSpeakingLanguagesString = '';
+    const speakingLanguages = props.languages.split(' ');
+    speakingLanguages.forEach((speakingLanguage) => {
+      const speakingLanguageTranslationObj = nativeLanguageOptions.filter(
+        (o) => o.value === speakingLanguage
+      );
+      if (speakingLanguageTranslationObj && speakingLanguageTranslationObj[0]) {
+        translatedSpeakingLanguagesString =
+          translatedSpeakingLanguagesString.concat(
+            t(speakingLanguageTranslationObj[0].label) + ' '
+          );
+      }
+    });
+    setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
+  }, [t, props.languages]);
   console.log('props.profilePicPath: ', props.profilePicPath);
   return (
     <div className='history-card'>
@@ -78,19 +207,19 @@ function RequestCard(props) {
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.secondType}</div>
+              <div className='textDateTime'>{translatedSecondType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.thirdType}</div>
+              <div className='textDateTime'>{translatedThirdType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <EarthIcon color='#95a0ff' />
               </div>
-              <div className='textDateTime'>{props.country}</div>
+              <div className='textDateTime'>{translatedCountry}</div>
             </div>
           </div>
         </div>
@@ -103,11 +232,11 @@ function RequestCard(props) {
         </div>
         <div className='contentBx'>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            {details} {props.fourthType}
+            {details} {translatedFourthType}
           </p>
         </div>
         <p style={{ fontWeight: '12px', padding: '6px' }}>
-          {t('speaks')}: {props.languages}
+          {t('speaks')}: {translatedSpeakingLanguages}
         </p>
       </div>
       <div className='checkBoxWidth'>
