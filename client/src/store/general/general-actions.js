@@ -15,7 +15,7 @@ export const postBookingStatus = (data) => {
     }
     try {
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken) {
         const headers = {
@@ -26,14 +26,14 @@ export const postBookingStatus = (data) => {
         });
         dispatch(
           generalActions.setBookingStatus({
-            bookingStatus: data.bookingStatus,
+            bookingStatus: 'success',
           })
         )
         dispatch(
           generalActions.setBookingNotificationStatus({
             bookingNotificationStatus: 'success',
-            bookingNotificationStatusTitle: 'Successfully submitted the booking.',
-            bookingNotificationStatusMessage: 'Successfully submitted the booking.',
+            bookingNotificationStatusTitle: 'successfully_submit_booking',
+            bookingNotificationStatusMessage: 'successfully_submit_booking',
           })
         );
       }
@@ -74,7 +74,7 @@ export const getBookingStatus = (data) => {
     }
     try {
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken) {
         const headers = {

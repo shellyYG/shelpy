@@ -47,7 +47,7 @@ const getHelpeeAllOrders = async (req, res) => {
         allOrders: response.data.allOrders,
       });
     } else {
-      throw Error('No order response from server.');
+      throw Error('no_request_error');
     }
   } catch (error) {
     console.error(error);
@@ -64,7 +64,7 @@ const getHelpeeAllBookings = async (req, res) => {
         allBookings: response.data.allBookings,
       });
     } else {
-      throw Error('No bookings response from server.');
+      throw Error('no_booking_found_error');
     }
   } catch (error) {
     console.error(error);
@@ -86,7 +86,7 @@ const getPotentialHelpers = async (req, res) => {
         allPotentialHelpers: response.data.allPotentialHelpers,
       });
     } else {
-      throw Error('No potential helpers response from server.');
+      throw Error('no_potential_helper_error');
     }
   } catch (error) {
     console.error(error);
@@ -103,7 +103,7 @@ const getHelpeeOrderHelperList = async (req, res) => {
         helpers: response.data.helpers,
       });
     } else {
-      throw Error('No helper list response from server.');
+      throw Error('no_potential_helper_error');
     }
   } catch (error) {
     console.error(error);
@@ -122,7 +122,7 @@ const deleteHelpeeRequest = async (req, res) => {
         status: 'success',
       });
     } else {
-      throw Error('Server encounter error when deleting requests.');
+      throw Error('delete_request_error');
     }
   } catch (error) {
     console.error(error);
@@ -232,7 +232,7 @@ const getAllChattedHelpers = async (req, res) => {
         allChattedHelpers: response.data.allChattedHelpers,
       });
     } else {
-      throw Error('No potential chatted helpers response from server.');
+      throw Error('no_potential_chatted_helper_response');
     }
   } catch (error) {
     console.error(error);

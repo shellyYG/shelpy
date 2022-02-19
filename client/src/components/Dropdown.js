@@ -23,11 +23,18 @@ function DropDown(props) {
         className='form-control'
         style={{ cursor: 'pointer' }}
       >
-        {props.options.map((option) => (
-          <option value={option.value} key={option.value}>
-            {t(`${option.label}`)}
-          </option>
-        ))}
+        {!props.isTime &&
+          props.options.map((option) => (
+            <option value={option.value} key={option.value}>
+              {t(`${option.label}`)}
+            </option>
+          ))}
+        {props.isTime &&
+          props.options.map((option) => (
+            <option value={option.value} key={option.value}>
+              {option.label}
+            </option>
+          ))}
       </select>
     </div>
   );

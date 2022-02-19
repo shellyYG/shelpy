@@ -10,7 +10,6 @@ const checkBookingExisted = async (data) => {
 
 const updateBookingStatus = async (req, res) => {
   const { data } = req.body;
-  console.log('data.requestId? ', data.requestId);
   try {
     if (data.requestId && data.requestId !== 'NaN') {
       const booking = await checkBookingExisted(data);
@@ -36,10 +35,8 @@ const getBookingStatus = async (req, res) => {
   const data = {
     requestId, offerId, isHelpee
   }
-  console.log('api getBookingStatus->data: ', data);
   try {
     const booking = await checkBookingExisted(data);
-    console.log('booking: ', booking);
     if (booking) {
         res.status(200).json({ booking });
     }

@@ -223,7 +223,7 @@ export const onClickUpdateActiveHelperLists = (data) => {
       notificationActions.setNotification({
         signUpEmailStatus: 'error',
         signUpEmailStatusTitle: 'oops',
-        signUpEmailStatusMessage: `Error: ${err}`,
+        signUpEmailStatusMessage: err,
       });
     }
   };
@@ -241,8 +241,8 @@ export const postHelperSignUpEmail = (data) => {
       dispatch(
         notificationActions.setNotification({
           signUpEmailStatus: 'success',
-          signUpEmailStatusTitle: 'Email successfully submitted.',
-          signUpEmailStatusMessage: 'Create password to complete Sign-Up.',
+          signUpEmailStatusTitle: 'email_successfully_submitted',
+          signUpEmailStatusMessage: 'create_password_to_complete_sign_up',
         })
       );
     } catch (error) {
@@ -273,9 +273,8 @@ export const postHelperSignUpPassword = (data) => {
       dispatch(
         notificationActions.setNotification({
           signUpPasswordStatus: 'success',
-          signUpPasswordStatusTitle:
-            'A confirmation email has been sent!',
-          signUpPasswordStatusMessage: 'Please confirm your email.',
+          signUpPasswordStatusTitle: 'a_confirm_email_has_been_sent',
+          signUpPasswordStatusMessage: 'please_confirm_email',
         })
       );
     } catch (error) {
@@ -334,7 +333,7 @@ export const postHelperOfferForm = (data) => {
     try {
       const generalToken = localStorage.getItem('shelper-token');
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken) {
         const headers = {
@@ -438,7 +437,7 @@ export const onUploadHelperProfilePicture = (data) => {
     try {
       const generalToken = localStorage.getItem('shelper-token');
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken) {
         const headers = {
@@ -469,7 +468,7 @@ export const onSubmitUploadHelperData = (data) => {
     try {
       const generalToken = localStorage.getItem('shelper-token');
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken) {
         const headers = {
@@ -482,10 +481,8 @@ export const onSubmitUploadHelperData = (data) => {
         dispatch(
           notificationActions.setNotification({
             applyHelperStatus: 'success',
-            applyHelperStatusTitle:
-              'You are almost there!',
-            applyHelperStatusMessage:
-              'Last step: select the experiences you want to share.',
+            applyHelperStatusTitle: 'success',
+            applyHelperStatusMessage: 'select_experience_you_want_to_share',
           })
         );
       }
@@ -542,12 +539,12 @@ export const confirmHelperEmail = (data) => {
         dispatch(
           notificationActions.setNotification({
             confirmHelperEmailStatus: 'success',
-            confirmHelperEmailStatusTitle: 'Email confirmed successfully.',
-            confirmHelperEmailStatusMessage: 'Please sign in to continue.',
+            confirmHelperEmailStatusTitle: 'email_confirm_successfully',
+            confirmHelperEmailStatusMessage: 'please_sign_in_to_continue',
           })
         );
       } else {
-        throw Error('Error occur when confirming email.');
+        throw Error('error_occur_when_confirm_email');
       }
     } catch (error) {
       console.error(error);
@@ -555,7 +552,7 @@ export const confirmHelperEmail = (data) => {
         notificationActions.setNotification({
           confirmHelperEmailStatus: 'error',
           confirmHelperEmailStatusTitle: 'oops',
-          confirmHelperEmailStatusMessage: `Error: ${error}`,
+          confirmHelperEmailStatusMessage: error,
         })
       );
     }
@@ -578,7 +575,7 @@ export const confirmHelperCanChangePassword = (data) => {
           })
         );
       } else {
-        throw Error('Error occur when verifying your identity.');
+        throw Error('error_occur_when_verifying_identity');
       }
     } catch (error) {
       console.error(error);
@@ -586,7 +583,7 @@ export const confirmHelperCanChangePassword = (data) => {
         notificationActions.setNotification({
           confirmHelperCanChangePasswordStatus: 'error',
           confirmHelperCanChangePasswordStatusTitle: 'oops',
-          confirmHelperCanChangePasswordStatusMessage: `Error: ${error}`,
+          confirmHelperCanChangePasswordStatusMessage: error,
         })
       );
     }
@@ -594,7 +591,6 @@ export const confirmHelperCanChangePassword = (data) => {
 };
 
 export const sendHelperPasswordResetLink = (data) => {
-  console.log('sendHelperPasswordResetLink...data: ', data);
   return async (dispatch) => {
     try {
       const response = await axios.post(helperSendPasswordResetEmailPath, {
@@ -605,12 +601,12 @@ export const sendHelperPasswordResetLink = (data) => {
         dispatch(
           helperActions.setSendPasswordResetEmailStatus({
             sendPasswordResetEmailStatus: 'success',
-            sendPasswordResetEmailStatusTitle: 'Email confirmed successfully.',
-            sendPasswordResetEmailStatusMessage: 'Please sign in to continue.',
+            sendPasswordResetEmailStatusTitle: 'email_confirm_successfully',
+            sendPasswordResetEmailStatusMessage: 'please_sign_in_to_continue',
           })
         );
       } else {
-        throw Error('Error occur when sending password reset email.');
+        throw Error('error_occur_when_sending_password_reset_email');
       }
     } catch (error) {
       console.error(error);
@@ -618,7 +614,7 @@ export const sendHelperPasswordResetLink = (data) => {
         helperActions.setSendPasswordResetEmailStatus({
           sendPasswordResetEmailStatus: 'error',
           sendPasswordResetEmailStatusTitle: 'oops',
-          sendPasswordResetEmailStatusMessage: `Error: ${error}`,
+          sendPasswordResetEmailStatusMessage: error,
         })
       );
     }

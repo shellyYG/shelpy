@@ -37,10 +37,10 @@ const postUserSignInData = async (req, res) => {
       );
       
       if (LoginUserResult.length === 0) {
-        throw Error('Account does not exist.');
+        throw Error('account_does_not_exist');
       } else {
         if (!LoginUserResult[0].confirmed) {
-          throw Error('Please go to your mailbox to confirm your email first.')
+          throw Error('please_confirm_email_first');
         }
         const DataBasePass = LoginUserResult[0].encryptedpass;
         const userInsertedEncryptedPass = await getUserEncryptedPass();
@@ -48,7 +48,6 @@ const postUserSignInData = async (req, res) => {
         if (userInsertedEncryptedPass === DataBasePass) {
           const userObject = {};
           const { id, provider, username, email } = LoginUserResult[0];
-          console.log('comparepass->username: ', username);
           const dataObject = {
             user: {
               id,
@@ -84,7 +83,7 @@ const postUserSignInData = async (req, res) => {
             process.env.ACCESS_TOKEN_SECRET,
             (err, payload) => {
               // eslint-disable-line no-shadow
-              if (err) throw Error('Log in session expired.');
+              if (err) throw Error('log_in_session_expired');
               dataObject.accessExpired = payload.exp - payload.iat;
             }
           );
@@ -94,7 +93,7 @@ const postUserSignInData = async (req, res) => {
           };
           res.send(resObject);
         } else {
-          throw Error('Wrong password');
+          throw Error('wrong_password');
         }
       }
     } catch (error) {

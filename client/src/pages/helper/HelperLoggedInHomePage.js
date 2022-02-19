@@ -44,7 +44,7 @@ const HelperLoggedInHomePage = () => {
             <div style={{ margin: 'auto' }}>
               <button class='btn-next' onClick={handleCreateOfferClick}>
                 {' '}
-                CREATE OFFER NOW
+                {t('helper_home_cta')}
               </button>
             </div>
           </div>

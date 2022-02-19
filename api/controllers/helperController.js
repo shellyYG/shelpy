@@ -32,7 +32,7 @@ const deleteHelperOffer = async (req, res) => {
         status: 'success',
       });
     } else {
-      throw Error('Server encounters error when deleting offers.');
+      throw Error('delete_offer_error');
     }
   } catch (error) {
     console.error(error);
@@ -53,7 +53,7 @@ const getPotentialCustomers = async (req, res) => {
           allPotentialCustomers: response.data.allPotentialCustomers,
         });
       } else {
-        throw Error('No potential customer response from server.');
+        throw Error('no_potential_customer_error');
       }
     }
   } catch (error) {
@@ -73,7 +73,7 @@ const getHelperAllMatchedRequests = async (req, res) => {
         allOrders: response.data.allOrders,
       });
     } else {
-      throw Error('No offer response from server');
+      throw Error('no_offer_error');
     }
   } catch (error) {
     console.error(error);
@@ -108,7 +108,7 @@ const getHelperAllOffers = async (req, res) => {
         allOffers: response.data.allOffers,
       });
     } else {
-      throw Error('No offers found from server.');
+      throw Error('no_offer_error');
     }
   } catch (error) {
     console.error(error);
@@ -117,7 +117,6 @@ const getHelperAllOffers = async (req, res) => {
 };
 
 const getAllMarketingOffers = async (req, res) => {
-  console.log('@controllers getAllMarketingOffers...');
   try {
     const response = await helperModel.getAllMarketingOffers();
     if (response && response.data) {
@@ -125,7 +124,7 @@ const getAllMarketingOffers = async (req, res) => {
         allMKTOffers: response.data.allMKTOffers,
       });
     } else {
-      throw Error('No marketing offers found from server.');
+      throw Error('no_marketing_offer_error');
     }
   } catch (error) {
     console.error(error);
@@ -142,7 +141,7 @@ const getHelperAllBookings = async (req, res) => {
         allBookings: response.data.allBookings,
       });
     } else {
-      throw Error('No bookings found from server.');
+      throw Error('no_booking_found_error');
     }
   } catch (error) {
     console.error(error);
@@ -218,7 +217,7 @@ const getAllChattedCustomers = async (req, res) => {
         allChattedCustomers: response.data.allChattedCustomers,
       });
     } else {
-      throw Error('No potential chatted customers response from server.');
+      throw Error('no_potential_chatted_customer_response');
     }
   } catch (error) {
     console.error(error);

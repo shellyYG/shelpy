@@ -168,19 +168,19 @@ function PotentialCustomerCard(props) {
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.secondType}</div>
+              <div className='textDateTime'>{translatedSecondType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='#ffdf95' />
               </div>
-              <div className='textDateTime'>{props.thirdType}</div>
+              <div className='textDateTime'>{translatedThirdType}</div>
             </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <EarthIcon color='#95a0ff' />
               </div>
-              <div className='textDateTime'>{props.country}</div>
+              <div className='textDateTime'>{translatedCountry}</div>
             </div>
           </div>
         </div>

@@ -133,26 +133,20 @@ const BasicFormPage = (props) => {
     if (file && file.size > 1000000) {
       await MySwal.fire({
         title: <strong>{t('oops')}!</strong>,
-        html: (
-          <p>Max. File size is 1MB. Please choose a smaller file to upload.</p>
-        ),
+        html: <p>{t('error_file_too_big')}</p>,
         icon: 'error',
       });
       return;
     }
     if (
+      file &&
       file.type !== 'image/jpeg' &&
       file.type !== 'image/png' &&
       file.type !== 'image/jpg'
     ) {
       await MySwal.fire({
         title: <strong>{t('oops')}!</strong>,
-        html: (
-          <p>
-            Only accepts .jpg, .jpeg or .png file. Please choose another file to
-            upload.
-          </p>
-        ),
+        html: <p>{t('error_only_accept_picture_format')}</p>,
         icon: 'error',
       });
       return;
@@ -183,9 +177,7 @@ const BasicFormPage = (props) => {
     if (file && file.size > 1000000) {
       await MySwal.fire({
         title: <strong>{t('oops')}!</strong>,
-        html: (
-          <p>Max. File size is 1MB. Please choose a smaller file to upload.</p>
-        ),
+        html: <p>{t('error_file_too_big')}</p>,
         icon: 'error',
       });
       return;
@@ -204,12 +196,7 @@ const BasicFormPage = (props) => {
     ) {
       await MySwal.fire({
         title: <strong>{t('oops')}!</strong>,
-        html: (
-          <p>
-            Only accepts .docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg or .png
-            file. Please choose another file to upload.
-          </p>
-        ),
+        html: <p>{t('error_only_accept_file_format')}</p>,
         icon: 'error',
       });
       return;
@@ -450,8 +437,8 @@ const BasicFormPage = (props) => {
       </h1>
 
       <div className='form-center-wrapper'>
-        <div className='container'>
-          <div className='form-inner'>
+        <div className='container' style={{ width: '100%' }}>
+          <div className='form-inner' style={{ display: 'flex'}}>
             <form action='' method='post' encType='multipart/form-data'>
               <div className='form-row'>
                 <div
@@ -544,23 +531,20 @@ const BasicFormPage = (props) => {
               {!props.isHelpee && (
                 <div className='form-row'>
                   <LeftHalfLineTextBox
-                    title={
-                      'LinkedIn Link (or upload Resume) (This will not be shown publicly)'
-                    }
+                    title={t('linkedin_link_title')}
                     placeholder={
                       'https://www.linkedin.com/in/your-linkedin-profile'
                     }
                     inputRef={linkedInUrlRef}
                   />
                   <div className='form-wrapper' style={{ margin: 'auto' }}>
-                    <label>
-                      Resume/files (or linkedin link, this will not be shown
-                      publicly)
-                    </label>
+                    <div >
+                      <label>{t('resume_title')}</label>
+                    </div>
                     {!certificate && (
                       <>
                         <label className='uploadLabel' for='resume'>
-                          Upload a file
+                          {t('upload_a_file')}
                         </label>
                         <input
                           type='file'
@@ -595,7 +579,7 @@ const BasicFormPage = (props) => {
                   <CheckBox
                     checked={isMarketing}
                     handleCheck={setIsMarketing}
-                    details='Promote your offer on our marketing page (this will increase your chance to get hired!).'
+                    details={t('promote_your_offer')}
                     paddingRight='10px'
                     marginBottom='5px'
                     fontSize='14px'

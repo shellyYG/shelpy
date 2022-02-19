@@ -65,12 +65,12 @@ export const confirmHelpeeEmail = (data) => {
         dispatch(
           notificationActions.setNotification({
             confirmHelpeeEmailStatus: 'success',
-            confirmHelpeeEmailStatusTitle: 'Email confirmed successfully.',
-            confirmHelpeeEmailStatusMessage: 'Please sign in to continue.',
+            confirmHelpeeEmailStatusTitle: 'email_confirm_successfully',
+            confirmHelpeeEmailStatusMessage: 'please_sign_in_to_continue',
           })
         );
       } else {
-        throw Error('Error occur when confirming email.')
+        throw Error('error_occur_when_confirm_email');
       }
       
     } catch (error) {
@@ -79,7 +79,7 @@ export const confirmHelpeeEmail = (data) => {
         notificationActions.setNotification({
           confirmHelpeeEmailStatus: 'error',
           confirmHelpeeEmailStatusTitle: 'oops',
-          confirmHelpeeEmailStatusMessage: `Error: ${error}`,
+          confirmHelpeeEmailStatusMessage: error,
         })
       );
     }
@@ -97,11 +97,11 @@ export const confirmHelpeeCanChangePassword = (data) => {
             confirmHelpeeCanChangePasswordStatusTitle:
               'your_identification_is_verified',
             confirmHelpeeCanChangePasswordStatusMessage:
-              'Please enter new password to continue.',
+              'please_create_new_password_to_continue',
           })
         );
       } else {
-        throw Error('Error occur when verifying your identity.');
+        throw Error('error_occur_when_verifying_identity');
       }
     } catch (error) {
       console.error(error);
@@ -109,7 +109,7 @@ export const confirmHelpeeCanChangePassword = (data) => {
         notificationActions.setNotification({
           confirmHelpeeCanChangePasswordStatus: 'error',
           confirmHelpeeCanChangePasswordStatusTitle: 'oops',
-          confirmHelpeeCanChangePasswordStatusMessage: `Error: ${error}`,
+          confirmHelpeeCanChangePasswordStatusMessage: error,
         })
       );
     }
@@ -126,12 +126,12 @@ export const sendHelpeePasswordResetLink = (data) => {
         dispatch(
           helpeeActions.setSendPasswordResetEmailStatus({
             sendPasswordResetEmailStatus: 'success',
-            sendPasswordResetEmailStatusTitle: 'Email confirmed successfully.',
-            sendPasswordResetEmailStatusMessage: 'Please sign in to continue.',
+            sendPasswordResetEmailStatusTitle: 'email_confirm_successfully',
+            sendPasswordResetEmailStatusMessage: 'please_sign_in_to_continue',
           })
         );
       } else {
-        throw Error('Error occur when sending password reset email.')
+        throw Error('error_occur_when_sending_password_reset_email');
       }
       
     } catch (error) {
@@ -140,7 +140,7 @@ export const sendHelpeePasswordResetLink = (data) => {
         helpeeActions.setSendPasswordResetEmailStatus({
           sendPasswordResetEmailStatus: 'error',
           sendPasswordResetEmailStatusTitle: 'oops',
-          sendPasswordResetEmailStatusMessage: `Error: ${error}`,
+          sendPasswordResetEmailStatusMessage: error,
         })
       );
     }
@@ -334,7 +334,7 @@ export const onClickUpdateActiveHelperLists = (data) => {
       notificationActions.setNotification({
         signUpEmailStatus: 'error',
         signUpEmailStatusTitle: 'oops',
-        signUpEmailStatusMessage: `Error: ${err}`,
+        signUpEmailStatusMessage: err,
       });
     }
   };
@@ -352,8 +352,8 @@ export const postHelpeeSignUpEmail = (data) => {
       dispatch(
         notificationActions.setNotification({
           signUpEmailStatus: 'success',
-          signUpEmailStatusTitle: 'Email successfully submitted.',
-          signUpEmailStatusMessage: 'Create password to complete Sign-Up.',
+          signUpEmailStatusTitle: 'email_successfully_submitted',
+          signUpEmailStatusMessage: 'create_password_to_complete_sign_up',
         })
       );
     } catch (error) {
@@ -384,8 +384,8 @@ export const postHelpeeSignUpPassword = (data) => {
       dispatch(
         notificationActions.setNotification({
           signUpPasswordStatus: 'success',
-          signUpPasswordStatusTitle: 'A confirmation email has been sent to your inbox.',
-          signUpPasswordStatusMessage: 'Please confirm your email.',
+          signUpPasswordStatusTitle: 'a_confirm_email_has_been_sent',
+          signUpPasswordStatusMessage: 'please_confirm_email',
         })
       );
     } catch (error) {
@@ -479,7 +479,7 @@ export const postHelpeeServiceRequestForm = (data) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken){
         const headers = {
@@ -502,9 +502,8 @@ export const postHelpeeServiceRequestForm = (data) => {
         dispatch(
           notificationActions.setNotification({
             requestFormStatus: 'success',
-            requestFormStatusTitle: 'You are all set!',
-            requestFormStatusMessage:
-              'We will inform you via email as soon as we find a helper!',
+            requestFormStatusTitle: 'success',
+            requestFormStatusMessage: 'helpee_form_submit_successful',
           })
         );
       }
@@ -530,7 +529,7 @@ export const onUploadHelpeeProfilePicture = (data) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken) {
         const headers = {
@@ -559,7 +558,7 @@ export const onSubmitUploadHelpeeData = (data) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken) {
         const headers = {
@@ -572,9 +571,8 @@ export const onSubmitUploadHelpeeData = (data) => {
         dispatch(
           notificationActions.setNotification({
             applyHelpeeStatus: 'success',
-            applyHelpeeStatusTitle: 'You are almost there!',
-            applyHelpeeStatusMessage:
-              'NOW: select the experiences you want to know.',
+            applyHelpeeStatusTitle: 'success',
+            applyHelpeeStatusMessage: 'select_experience_you_want_to_know',
           })
         );
       }
@@ -601,7 +599,7 @@ export const postHelpeeRequestForm = (data) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken) {
         const headers = {
@@ -619,9 +617,8 @@ export const postHelpeeRequestForm = (data) => {
         dispatch(
           notificationActions.setNotification({
             requestStatus: 'success',
-            requestStatusTitle: 'You are all set!',
-            requestStatusMessage:
-              'We will inform you via email as soon as we find a helper!',
+            requestStatusTitle: 'success',
+            requestStatusMessage: 'helpee_form_submit_successful',
           })
         );
       }
@@ -758,7 +755,7 @@ export const postPayHelper = (data) => {
     const generalToken = localStorage.getItem('shelpy-token');
     try {
       if (!generalToken) {
-        throw Error('Access denied. Please log in to continue.');
+        throw Error('access_denied_please_log_in_error');
       }
       if (generalToken) {
         const headers = {

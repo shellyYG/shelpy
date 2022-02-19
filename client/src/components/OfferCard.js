@@ -11,9 +11,6 @@ import {
   schoolOptions,
   typeOptions,
   nativeLanguageOptions,
-  degreeOptions,
-  WFHOptions,
-  yearsOptions,
 } from '../store/options/service-options';
 
 function OfferCard(props) {
@@ -21,7 +18,6 @@ function OfferCard(props) {
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
-  const [translatedFourthType, setTranslatedFourthType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
   const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
     useState('');
@@ -29,7 +25,6 @@ function OfferCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    let fourthTypeTranslationObj;
     const countryTranslationObj = countryOptions.filter(
       (o) => o.value === props.country
     );
@@ -57,16 +52,6 @@ function OfferCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
-        fourthTypeTranslationObj = degreeOptions.filter(
-          (o) => o.value === props.fourthType
-        );
-        if (
-          props.fourthType &&
-          fourthTypeTranslationObj &&
-          fourthTypeTranslationObj[0]
-        ) {
-          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
-        }
         setDetails(t('degree') + ': ');
         break;
       case 'job':
@@ -91,20 +76,30 @@ function OfferCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
-        fourthTypeTranslationObj = WFHOptions.filter(
-          (o) => o.value === props.fourthType
-        );
-        if (
-          props.fourthType &&
-          fourthTypeTranslationObj &&
-          fourthTypeTranslationObj[0]
-        ) {
-          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
-        }
         setDetails(t('wfh_status') + ': ');
         break;
       case 'selfEmployed':
         setTitle(t('service_types_self_employed'));
+        secondTypeTranslationObj = typeOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = professionOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         setDetails('Years of experience you have: ');
         break;
       default:
@@ -129,16 +124,6 @@ function OfferCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
-        fourthTypeTranslationObj = yearsOptions.filter(
-          (o) => o.value === props.fourthType
-        );
-        if (
-          props.fourthType &&
-          fourthTypeTranslationObj &&
-          fourthTypeTranslationObj[0]
-        ) {
-          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
-        }
         setDetails('');
     }
   }, [
@@ -146,7 +131,6 @@ function OfferCard(props) {
     props.mainType,
     props.secondType,
     props.thirdType,
-    props.fourthType,
     props.country,
   ]);
   useEffect(() => {

@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { helperAddServiceOptions } from '../../store/options/navigate-options';
 import '../../App.css';
 import HelperAddServiceCard from '../../components/HelperAddServiceCard';
 import { useState } from 'react';
 
 const HelperAddServicePage = () => {
+  const { t } = useTranslation();
   const { offerTarget } = useSelector((state) => state.helper);
   const [enableBtn, setEnableBtn] = useState(false);
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ const HelperAddServicePage = () => {
     <div className='main-content-wrapper-no-background'>
       <div className='section-center-align'>
         <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-          Add an offer!
+          {t('add_a_offer')}
         </h1>
         <div className='container'>
           {helperAddServiceOptions.map((option) => (

@@ -194,7 +194,7 @@ const HelperDashboardPage = (props) => {
           >
             <div style={{ margin: 'auto' }}>
               <button className='btn-contact' onClick={handleAddOffer}>
-                Add a Offer
+                {t('add_a_offer')}
               </button>
             </div>
           </div>

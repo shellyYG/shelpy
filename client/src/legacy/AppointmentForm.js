@@ -113,8 +113,8 @@ const { t } = useTranslation();
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearRequestFormStatus());
@@ -125,10 +125,10 @@ const { t } = useTranslation();
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWidth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         let path = '/helpee/dashboard';
@@ -138,6 +138,7 @@ const { t } = useTranslation();
       sweetAlertAndNavigate(requestFormStatus, requestFormStatusMessage);
     }
   }, [
+    t,
     requestFormStatus,
     requestFormStatusTitle,
     requestFormStatusMessage,
@@ -192,6 +193,7 @@ const { t } = useTranslation();
             title={'Appointment Time *'}
             selectRef={meetTimeRef}
             options={meetTimeOptions}
+            isTime={true}
           />
         </div>
 

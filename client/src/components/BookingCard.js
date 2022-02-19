@@ -154,7 +154,11 @@ function BookingCard(props) {
         break;
       case 'paid':
         setHelpeeFilteredBookingStatus(
-          `Meet ${props.helperUsername} on ${props.appointmentDate} at ${props.appointmentTime}. We will send you a zoom link to your email 1 day before the meeting.`
+          t('booking_status_meet_at_when', {
+            name: props.helperUsername,
+            date: props.appointmentDate,
+            time: props.appointmentTime,
+          })
         );
         break;
       case 'fulfilled':
@@ -163,7 +167,7 @@ function BookingCard(props) {
       default:
         setHelpeeFilteredBookingStatus('');
     }
-  }, [props.bookingStatus, props.helperUsername, props.appointmentDate, props.appointmentTime]);
+  }, [t, props.bookingStatus, props.helperUsername, props.appointmentDate, props.appointmentTime]);
 
   useEffect(() => {
     switch (props.bookingStatus) {
@@ -178,12 +182,18 @@ function BookingCard(props) {
         break;
       case 'helperConfirmed':
         setHelperFilteredBookingStatus(
-          `Waiting for ${props.helpeeUsername} to pay`
+          t('waiting_name_to_pay', {
+            name: props.helpeeUsername,
+          })
         );
         break;
       case 'paid':
         setHelperFilteredBookingStatus(
-          `Meet ${props.helperUsername} on ${props.appointmentDate} at ${props.appointmentTime}. We will send you a zoom link 1 day before the meeting.`
+          t('booking_status_meet_at_when', {
+            name: props.helperUsername,
+            date: props.appointmentDate,
+            time: props.appointmentTime,
+          })
         );
         break;
       case 'fulfilled':
@@ -192,7 +202,7 @@ function BookingCard(props) {
       default:
         setHelperFilteredBookingStatus('');
     }
-  }, [props.bookingStatus, props.helperUsername, props.appointmentDate, props.appointmentTime, props.helpeeUsername]);
+  }, [t, props.bookingStatus, props.helperUsername, props.appointmentDate, props.appointmentTime, props.helpeeUsername]);
 
   async function handleBookHelper(e) {
     e.preventDefault();

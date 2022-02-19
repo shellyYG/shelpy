@@ -61,7 +61,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
         accessToken,
         process.env.ACCESS_TOKEN_SECRET,
         (err, payload) => {
-          if (err) throw Error('Log in session expired.');
+          if (err) throw Error('log_in_session_expired');
           dataObject.accessExpired = payload.exp - payload.iat;
         }
       );
@@ -69,11 +69,10 @@ const createUserObject = async (data, encryptedpass, ivString) => {
     }
     const isUserEmailExisted = await userEmailExisted(data);
     if (isUserEmailExisted) {
-      throw Error('Email existed! Please use another email.');
+      throw Error('email_exist_please_use_another');
     }
 
     // Create new user account
-    console.log('start creating user account');
     const id = await signUpModel.insertUserAndGetUserId({
       email,
       status,
@@ -109,7 +108,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
     dataObject.accessToken = accessToken;
     // Verify token to get lifetime for token
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
-      if (err) throw Error('Log in session expired.');
+      if (err) throw Error('log_in_session_expired');
       dataObject.accessExpired = payload.exp - payload.iat;
     });
     if (data.isHelpee) {

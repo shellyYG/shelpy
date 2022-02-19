@@ -219,18 +219,25 @@ const BookingConfirmPage = (props) => {
         className='container'
         style={{ display: 'flex', flexDirection: 'column' }}
       >
-        <div style={{ margin: '10px' }}>
+        <div style={{ margin: '10px', textAlign: 'center' }}>
           {props.isHelpee && (
             <>
-              <h3>The order is only confirmed when helper accept it.</h3>
-              <h3>We will refund you if the helper reject the order.</h3>
+              <h3>
+                {t(
+                  'helpee_booking_confirm_the_order_is_only_confirmed_condition'
+                )}
+              </h3>
             </>
           )}
           {!props.isHelpee && (
             <>
-              <h3>The order is only confirmed when you accept it.</h3>
-              <h3>If you do not agree with the time, </h3>
-              <h3>please chat with the Helpee to set up a time.</h3>
+              <h3>
+                {t(
+                  'helper_booking_confirm_the_order_is_only_confirmed_condition'
+                )}
+              </h3>
+              <h3>{t('helper_dont_agree_with_time')} </h3>
+              <h3>{t('helper_please_chat_with_helpee_to_change_time')}</h3>
             </>
           )}
         </div>
@@ -240,7 +247,7 @@ const BookingConfirmPage = (props) => {
               <>
                 <div className='form-row'>
                   <DateForm
-                    title={'Appointment Date *'}
+                    title={`${t('appointment_date')} *`}
                     handleInput={handleDateInput}
                     value={meetDate}
                     dateFormRef={meetDateRef}
@@ -248,17 +255,20 @@ const BookingConfirmPage = (props) => {
                   <DropDown
                     selected={meetTime}
                     handleSelect={setMeetTime}
-                    title={'Appointment Time *'}
+                    title={`${t('appointment_time')} *`}
                     selectRef={meetTimeRef}
                     options={meetTimeOptions}
+                    isTime={true}
                   />
                 </div>
                 <FullLineTextBox
-                  title={'Notes'}
-                  placeholder={'Feel free to leave some notes for the helper.'}
+                  title={t('notes')}
+                  placeholder={t('leave_notes_to_helper')}
                   inputRef={notesRef}
                 />
-                <div className='form-row'>Price: {price} € (30 minutes)</div>
+                <div className='form-row'>
+                  {t('price_per_45_min', { price })}
+                </div>
               </>
             )}
 
@@ -266,34 +276,41 @@ const BookingConfirmPage = (props) => {
               <>
                 <div className='form-wrapper'>
                   <label style={{ fontWeight: 'bold' }}>
-                    Appointment Date (YYYY-MM-DD)
+                    {t('appointment_date')} (YYYY-MM-DD)
                   </label>
                   <div style={{ fontSize: '14px' }}> {bookingDate} </div>
                 </div>
-                <div className='form-wrapper'>
-                  <label style={{ fontWeight: 'bold' }}>Appointment Time</label>
+                <div className='form-wrapper' style={{ marginTop: '15px' }}>
+                  <label style={{ fontWeight: 'bold' }}>
+                    {t('appointment_time')}
+                  </label>
                   <div style={{ fontSize: '14px' }}> {bookingTime} </div>
                 </div>
-                <div className='form-wrapper'>
-                  <label style={{ fontWeight: 'bold' }}>Customer Notes</label>
+                <div className='form-wrapper' style={{ marginTop: '15px' }}>
+                  <label style={{ fontWeight: 'bold' }}>{`${t('customer')}${t(
+                    'notes'
+                  )}`}</label>
                   <div style={{ fontSize: '14px' }}> {bookingNotes} </div>
                 </div>
               </>
             )}
-
-            <ConfirmBtn
-              cta={props.isHelpee ? 'Book Appointment' : 'Confirm Booking'}
-              disable={!enableBtn}
-              handleConfirm={handleConfirm}
-            />
-            {!props.isHelpee && (
+            <div style={{ marginTop: '20px' }}>
               <ConfirmBtn
-                cta='Chat to change booking'
+                cta={
+                  props.isHelpee ? t('book_appointment') : t('confirm_booking')
+                }
                 disable={!enableBtn}
-                backgroundColor={'#f47174'}
-                handleConfirm={handleChangeBooking}
+                handleConfirm={handleConfirm}
               />
-            )}
+              {!props.isHelpee && (
+                <ConfirmBtn
+                  cta={t('chat_to_change_booking')}
+                  disable={!enableBtn}
+                  backgroundColor={'#f47174'}
+                  handleConfirm={handleChangeBooking}
+                />
+              )}
+            </div>
           </form>
         </div>
       </div>
