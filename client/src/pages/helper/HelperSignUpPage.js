@@ -62,8 +62,8 @@ const SignUpPageHelper = () => {
     if (signUpEmailStatus === 'error') {
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearSignUpEmailStatus());
@@ -78,6 +78,7 @@ const SignUpPageHelper = () => {
       dispatch(clearSignUpEmailStatus());
     }
   }, [
+    t,
     signUpEmailStatus,
     signUpEmailStatusMessage,
     signUpEmailStatusTitle,

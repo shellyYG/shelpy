@@ -12,10 +12,6 @@ import {
   professionOptions,
   schoolOptions,
   typeOptions,
-  nativeLanguageOptions,
-  degreeOptions,
-  WFHOptions,
-  yearsOptions,
 } from '../store/options/service-options';
 
 function PotentialHelperCard(props) {

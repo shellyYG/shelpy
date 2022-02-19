@@ -32,6 +32,7 @@ function HelpeeDashboardSection(props) {
           active ? 'activeSelectedOrderBtn' : 'nonActiveSelectedOrderBtn'
         }
         onClick={handleOnClick}
+        style={{ color: props.color || ''}}
       >
         {props.title}
       </button>

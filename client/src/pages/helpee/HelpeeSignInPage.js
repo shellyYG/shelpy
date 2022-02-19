@@ -55,8 +55,8 @@ const HelpeeSignInPage = () => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearSignInStatus());
@@ -67,8 +67,8 @@ const HelpeeSignInPage = () => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         dispatch(getHelpeeAuthStatus());
@@ -82,6 +82,7 @@ const HelpeeSignInPage = () => {
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
   }, [
+    t,
     helpeeAccountStatus,
     signInStatus,
     signInStatusMessage,
@@ -94,7 +95,7 @@ const HelpeeSignInPage = () => {
     <div className='main-content-wrapper-homepage'>
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          {t('helpee_sign_in_welcome')}
+          {t('sign_in_welcome')}
         </h1>
         <h2
           style={{
@@ -104,7 +105,7 @@ const HelpeeSignInPage = () => {
             color: 'white',
           }}
         >
-          {t('helpee_sign_in_introduction')}
+          {t('sign_in_introduction')}
         </h2>
 
         <form action='' className='centerbox-landing'>

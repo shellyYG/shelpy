@@ -1,13 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onClickUpdateChatroomRoom } from '../store/general/general-actions';
+import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, typeOptions } from '../store/options/service-options';
 
 function ChatRoomCard(props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const buttonRef = useRef();
   const [active, setActive] = useState(false);
+  const [title, setTitle] = useState('');
+  const [translatedSecondType, setTranslatedSecondType] = useState('');
+  const [translatedThirdType, setTranslatedThirdType] = useState('');
+  const [translatedCountry, setTranslatedCountry] = useState('');
   const { targetChatroomId } = useSelector((state) => state.general);
   
   useEffect(() => {
@@ -22,6 +29,87 @@ function ChatRoomCard(props) {
       setActive(false);
     }
   }, [targetChatroomId, props.roomId]);
+  useEffect(() => {
+    let secondTypeTranslationObj;
+    let thirdTypeTranslationObj;
+    const countryTranslationObj = countryOptions.filter(
+      (o) => o.value === props.country
+    );
+    setTranslatedCountry(t(countryTranslationObj[0].label));
+    switch (props.mainType) {
+      case 'university':
+        setTitle(t('service_types_uni'));
+        secondTypeTranslationObj = schoolOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = departmentOptions[props.secondType].filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
+        break;
+      case 'job':
+        setTitle(t('service_types_job'));
+        secondTypeTranslationObj = industryOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = jobOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
+        break;
+      case 'selfEmployed':
+        setTitle(t('service_types_self_employed'));
+        secondTypeTranslationObj = typeOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = professionOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
+        break;
+      default:
+        setTitle(t('service_types_job'));
+    }
+  }, [t, props.mainType, props.secondType, props.thirdType, props.country]);
   
   function handleOnClick(e) {
     e.preventDefault();
@@ -134,11 +222,11 @@ function ChatRoomCard(props) {
         <div className='nameBx'>
           <h5 style={{ lineBreak: 'anywhere' }}>{props.partnerName}</h5>
           <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
-            {props.secondType}
+            {translatedSecondType}
           </span>
           <br />
           <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
-            {props.thirdType}
+            {translatedThirdType}
           </span>
         </div>
       </div>

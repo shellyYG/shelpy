@@ -71,13 +71,8 @@ const PasswordResetPrePage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndClearStatus(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
-            html: (
-              <p>
-                Please contact our customer service for help:
-                shelpyofficial@gmail.com
-              </p>
-            ),
+            title: <strong>{t(title)}</strong>,
+            html: <p>{t('please_email_us_for_help')}</p>,
             icon: 'error',
           });
         }
@@ -90,10 +85,10 @@ const PasswordResetPrePage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
+            title: <strong>{t(title)}</strong>,
             imageWIdth: 442,
             imageHeight: 293,
-            html: <p>{message}</p>,
+            html: <p>{t(message)}</p>,
             icon: 'success',
           });
           console.log('...should navigate');
@@ -112,32 +107,26 @@ const PasswordResetPrePage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndClearStatus(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
-            html: (
-              <p>
-                Please contact our customer service for help:
-                shelpyofficial@gmail.com
-              </p>
-            ),
+            title: <strong>{t(title)}</strong>,
+            html: <p>{t('please_email_us_for_help')}</p>,
             icon: 'error',
           });
         }
         sweetAlertAndClearStatus(
-          confirmHelperCanChangePasswordStatusTitle,
-          confirmHelperCanChangePasswordStatusMessage
+          t(confirmHelperCanChangePasswordStatusTitle),
+          t(confirmHelperCanChangePasswordStatusMessage)
         );
         return;
       } else if (confirmHelperCanChangePasswordStatus === 'success') {
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
+            title: <strong>{t(title)}</strong>,
             imageWIdth: 442,
             imageHeight: 293,
-            html: <p>{message}</p>,
+            html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          console.log('...should navigate');
           navigate(
             `/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}`,
             { replace: true }
@@ -150,6 +139,7 @@ const PasswordResetPrePage = (props) => {
       }
     }
   }, [
+    t,
     props.isHelpee,
     filteredEmail,
     confirmHelpeeCanChangePasswordStatus,

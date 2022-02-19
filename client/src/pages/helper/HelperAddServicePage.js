@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux';
 import { helperAddServiceOptions } from '../../store/options/navigate-options';
 import '../../App.css';
 import HelperAddServiceCard from '../../components/HelperAddServiceCard';
+import { useState } from 'react';
 
 const HelperAddServicePage = () => {
   const { offerTarget } = useSelector((state) => state.helper);
+  const [enableBtn, setEnableBtn] = useState(false);
   const navigate = useNavigate();
   function handleNext(e) {
     e.preventDefault();
@@ -39,7 +41,11 @@ const HelperAddServicePage = () => {
           ))}
         </div>
         <div style={{ textAlign: 'center' }}>
-          <button className='btn-next' onClick={handleNext}>
+          <button
+            className='btn-next'
+            disable={!enableBtn}
+            onClick={handleNext}
+          >
             Next ❯
           </button>
         </div>

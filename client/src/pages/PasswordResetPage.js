@@ -86,7 +86,7 @@ const PasswordResetPage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndClearStatus(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
+            title: <strong>{t(title)}</strong>,
             html: <p>{t('error_contact_us')}</p>,
             icon: 'error',
           });
@@ -100,10 +100,10 @@ const PasswordResetPage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
+            title: <strong>{t(title)}</strong>,
             imageWIdth: 442,
             imageHeight: 293,
-            html: <p>{message}</p>,
+            html: <p>{t(message)}</p>,
             icon: 'success',
           });
           navigate('/helpee/sign-in');
@@ -118,13 +118,8 @@ const PasswordResetPage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndClearStatus(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
-            html: (
-              <p>
-                Please contact our customer service for help:
-                shelpyofficial@gmail.com
-              </p>
-            ),
+            title: <strong>{t('title')}</strong>,
+            html: <p>{t('error_contact_us')}</p>,
             icon: 'error',
           });
         }
@@ -137,10 +132,10 @@ const PasswordResetPage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
+            title: <strong>{t(title)}</strong>,
             imageWIdth: 442,
             imageHeight: 293,
-            html: <p>{message}</p>,
+            html: <p>{t(message)}</p>,
             icon: 'success',
           });
           navigate('/helper/sign-in');
@@ -190,7 +185,7 @@ const PasswordResetPage = (props) => {
           <input
             type='text'
             className='form-control-password'
-            placeholder='Enter New Password'
+            placeholder={t('enter_new_password')}
             ref={passwordRef}
           />
           <ConfirmBtn

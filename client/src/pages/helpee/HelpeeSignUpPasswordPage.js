@@ -76,8 +76,8 @@ const HelpeeSignUpPasswordPage = () => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearSignUpPasswordStatus());
@@ -92,8 +92,8 @@ const HelpeeSignUpPasswordPage = () => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         dispatch(getHelpeeAuthStatus());
@@ -105,6 +105,7 @@ const HelpeeSignUpPasswordPage = () => {
       );
     }
   }, [
+    t,
     signUpPasswordStatus,
     signUpPasswordStatusMessage,
     signUpPasswordStatusTitle,

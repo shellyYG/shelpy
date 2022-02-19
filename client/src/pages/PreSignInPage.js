@@ -25,7 +25,8 @@ const PreSignInPage = (props) => {
             marginBottom: '30px',
           }}
         >
-          {t('oops_helpee_not_sign_in')}
+          {props.isHelpee && t('oops_helpee_not_sign_in')}
+          {!props.isHelpee && t('oops_helper_not_sign_in')}
         </h1>
         <div style={{ textAlign: 'center' }}>
           <button className='btn-next' onClick={handleNext}>

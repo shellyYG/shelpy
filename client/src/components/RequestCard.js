@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
-import { useTranslation } from 'react-i18next';
 import {
   countryOptions,
   departmentOptions,
@@ -15,7 +15,6 @@ import {
   WFHOptions,
   yearsOptions,
 } from '../store/options/service-options';
-const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; // TODO
 
 function RequestCard(props) {
   const { t } = useTranslation();

@@ -222,7 +222,7 @@ export const onClickUpdateActiveHelperLists = (data) => {
       console.error(err);
       notificationActions.setNotification({
         signUpEmailStatus: 'error',
-        signUpEmailStatusTitle: 'Oops!',
+        signUpEmailStatusTitle: 'oops',
         signUpEmailStatusMessage: `Error: ${err}`,
       });
     }
@@ -251,7 +251,7 @@ export const postHelperSignUpEmail = (data) => {
         dispatch(
           notificationActions.setNotification({
             signUpEmailStatus: 'error',
-            signUpEmailStatusTitle: 'Oops!',
+            signUpEmailStatusTitle: 'oops',
             signUpEmailStatusMessage: error.response.data,
           })
         );
@@ -284,7 +284,7 @@ export const postHelperSignUpPassword = (data) => {
         dispatch(
           notificationActions.setNotification({
             signUpPasswordStatus: 'error',
-            signUpPasswordStatusTitle: 'Oops!',
+            signUpPasswordStatusTitle: 'oops',
             signUpPasswordStatusMessage: error.response.data,
           })
         );
@@ -310,8 +310,8 @@ export const postHelperSignInData = (data) => {
       dispatch(
         notificationActions.setNotification({
           signInStatus: 'success',
-          signInStatusTitle: 'Successfully Signed-In.',
-          signInStatusMessage: 'Successfully Signed-In.',
+          signInStatusTitle: 'success',
+          signInStatusMessage: 'successfully_sign_in',
         })
       );
     } catch (error) {
@@ -320,7 +320,7 @@ export const postHelperSignInData = (data) => {
         dispatch(
           notificationActions.setNotification({
             signInStatus: 'error',
-            signInStatusTitle: 'Oops!',
+            signInStatusTitle: 'oops',
             signInStatusMessage: error.response.data,
           })
         );
@@ -352,9 +352,8 @@ export const postHelperOfferForm = (data) => {
         dispatch(
           notificationActions.setNotification({
             offerStatus: 'success',
-            offerStatusTitle: 'You are all set!',
-            offerStatusMessage:
-              'We will inform you via email as soon as someone wants your help!',
+            offerStatusTitle: 'success',
+            offerStatusMessage: 'helper_form_submit_successful',
           })
         );
       }
@@ -365,7 +364,7 @@ export const postHelperOfferForm = (data) => {
         dispatch(
           notificationActions.setNotification({
             offerStatus: 'error',
-            offerStatusTitle: 'Oops!',
+            offerStatusTitle: 'oops',
             offerStatusMessage: errorMessage,
           })
         );
@@ -498,7 +497,7 @@ export const onSubmitUploadHelperData = (data) => {
         dispatch(
           notificationActions.setNotification({
             applyHelperStatus: 'error',
-            applyHelperStatusTitle: 'Oops!',
+            applyHelperStatusTitle: 'oops',
             applyHelperStatusMessage: errorMessage,
           })
         );
@@ -555,7 +554,7 @@ export const confirmHelperEmail = (data) => {
       dispatch(
         notificationActions.setNotification({
           confirmHelperEmailStatus: 'error',
-          confirmHelperEmailStatusTitle: 'Oops!',
+          confirmHelperEmailStatusTitle: 'oops',
           confirmHelperEmailStatusMessage: `Error: ${error}`,
         })
       );
@@ -573,9 +572,9 @@ export const confirmHelperCanChangePassword = (data) => {
           notificationActions.setNotification({
             confirmHelperCanChangePasswordStatus: 'success',
             confirmHelperCanChangePasswordStatusTitle:
-              'Your identity is verified.',
+              'your_identification_is_verified',
             confirmHelperCanChangePasswordStatusMessage:
-              'Please enter new password to continue.',
+              'please_create_new_password_to_continue',
           })
         );
       } else {
@@ -586,7 +585,7 @@ export const confirmHelperCanChangePassword = (data) => {
       dispatch(
         notificationActions.setNotification({
           confirmHelperCanChangePasswordStatus: 'error',
-          confirmHelperCanChangePasswordStatusTitle: 'Oops!',
+          confirmHelperCanChangePasswordStatusTitle: 'oops',
           confirmHelperCanChangePasswordStatusMessage: `Error: ${error}`,
         })
       );
@@ -618,7 +617,7 @@ export const sendHelperPasswordResetLink = (data) => {
       dispatch(
         helperActions.setSendPasswordResetEmailStatus({
           sendPasswordResetEmailStatus: 'error',
-          sendPasswordResetEmailStatusTitle: 'Oops!',
+          sendPasswordResetEmailStatusTitle: 'oops',
           sendPasswordResetEmailStatusMessage: `Error: ${error}`,
         })
       );
@@ -642,9 +641,9 @@ export const changeHelperPassword = (data) => {
       dispatch(
         helperActions.updateHelperResetPasswordStatus({
           helperPasswordResetStatus: 'success',
-          helperPasswordResetStatusTitle: 'Password changed successfully!',
+          helperPasswordResetStatusTitle: 'password_change_successfully',
           helperPasswordResetStatusMessage:
-            'You may now sign in with new password.',
+            'you_may_now_sign_in_with_new_password',
         })
       );
     } catch (error) {
@@ -653,7 +652,7 @@ export const changeHelperPassword = (data) => {
         dispatch(
           helperActions.updateHelperResetPasswordStatus({
             helperPasswordResetStatus: 'error',
-            helperPasswordResetStatusTitle: 'Oops!',
+            helperPasswordResetStatusTitle: 'oops',
             helperPasswordResetStatusMessage: error.response.data,
           })
         );

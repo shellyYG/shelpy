@@ -109,7 +109,7 @@ const HelpeeDashboardPage = (props) => {
       {props.isHelpeeAuthenticated && (
         <>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <h2 style={{ margin: 'auto' }}>{t('top_offers')}</h2>
+            <h2 style={{ margin: '15px auto 0px' }}>{t('top_offers')}</h2>
           </div>
           <div className='orderHistoryBtnWrapper'>
             <div className='mktFilterWrapper'>

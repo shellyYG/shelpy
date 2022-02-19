@@ -53,7 +53,6 @@ function BookingCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    let fourthTypeTranslationObj;
     const countryTranslationObj = countryOptions.filter(
       (o) => o.value === props.country
     );
@@ -257,8 +256,8 @@ function BookingCard(props) {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearPayHelperStatus());
@@ -269,10 +268,10 @@ function BookingCard(props) {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWIdth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
       }
@@ -280,6 +279,7 @@ function BookingCard(props) {
       sweetAlertAndNavigate(payHelperStatusTitle, payHelperStatusMessage);
     }
   }, [
+    t,
     payHelperStatus,
     payHelperStatusTitle,
     payHelperStatusMessage,

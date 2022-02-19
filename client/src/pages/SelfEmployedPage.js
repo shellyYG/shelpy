@@ -129,8 +129,8 @@ const SelfEmployedPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearRequestStatus());
@@ -141,10 +141,10 @@ const SelfEmployedPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWidth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         let path = '/helpee/dashboard';
@@ -154,6 +154,7 @@ const SelfEmployedPage = (props) => {
       sweetAlertAndNavigate(requestStatus, requestStatusMessage);
     }
   }, [
+    t,
     requestStatus,
     requestStatusTitle,
     requestStatusMessage,
@@ -166,8 +167,8 @@ const SelfEmployedPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearOfferStatus());
@@ -178,10 +179,10 @@ const SelfEmployedPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWidth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         let path = '/helper/dashboard';
@@ -190,11 +191,11 @@ const SelfEmployedPage = (props) => {
       dispatch(clearOfferStatus());
       sweetAlertAndNavigate(offerStatus, offerStatusMessage);
     }
-  }, [offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
+  }, [t, offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
   function isInt(value) {
     return (
       !isNaN(value) &&
-      parseInt(Number(value)) == value &&
+      parseInt(Number(value)) == value && // can not use ===
       !isNaN(parseInt(value, 10))
     );
   }

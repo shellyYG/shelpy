@@ -37,13 +37,19 @@ const UniFormPage = (props) => {
   const countryRef = useRef();
   const degreeRef = useRef();
   const notesRef = useRef();
-   const [typingPrice, setTypingPrice] = useState('');
+  const [typingPrice, setTypingPrice] = useState('');
+  console.log(
+    'typingPrice: ',
+    typingPrice,
+    'isInt(typingPrice): ',
+    isInt(typingPrice)
+  );
   const [loading, setIsLoading] = useState(false);
   
   function isInt(value) {
     return (
       !isNaN(value) &&
-      parseInt(Number(value)) === value &&
+      parseInt(Number(value)) == value && // can not use ===
       !isNaN(parseInt(value, 10))
     );
   }
@@ -96,7 +102,6 @@ const UniFormPage = (props) => {
       organization = organizationRef.current.value;
     }
     if (props.isHelpee) {
-      console.log('isHelpee!');
       const data = {
         userId: props.helpeeUserId,
         mainType: 'university',
@@ -146,8 +151,8 @@ const UniFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearRequestStatus());
@@ -158,10 +163,10 @@ const UniFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWidth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         let path = '/helpee/dashboard';
@@ -171,6 +176,7 @@ const UniFormPage = (props) => {
       sweetAlertAndNavigate(requestStatus, requestStatusMessage);
     }
   }, [
+    t,
     requestStatus,
     requestStatusTitle,
     requestStatusMessage,
@@ -183,7 +189,7 @@ const UniFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           html: <p>{message}</p>,
           icon: 'error',
         });
@@ -195,10 +201,10 @@ const UniFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWidth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         let path = '/helper/dashboard';
@@ -207,7 +213,7 @@ const UniFormPage = (props) => {
       dispatch(clearOfferStatus());
       sweetAlertAndNavigate(offerStatus, offerStatusMessage);
     }
-  }, [offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
+  }, [t, offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
 
   useEffect(() => {
     if (props.isHelpee) {

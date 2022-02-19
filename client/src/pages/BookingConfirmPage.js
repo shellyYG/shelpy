@@ -176,8 +176,8 @@ const BookingConfirmPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearBookingNotificationStatus());
@@ -191,10 +191,10 @@ const BookingConfirmPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWidth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         const path = props.isHelpee ? '/helpee/dashboard' : '/helper/dashboard';
@@ -204,6 +204,7 @@ const BookingConfirmPage = (props) => {
       sweetAlertAndNavigate(bookingStatus, bookingNotificationStatusMessage);
     }
   }, [
+    t,
     navigate,
     props.isHelpee,
     bookingStatus,

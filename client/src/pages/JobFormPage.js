@@ -53,7 +53,7 @@ const JobFormPage = (props) => {
   function isInt(value) {
     return (
       !isNaN(value) &&
-      parseInt(Number(value)) == value &&
+      parseInt(Number(value)) == value && // can not use ===
       !isNaN(parseInt(value, 10))
     );
   }
@@ -152,8 +152,8 @@ const JobFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearRequestStatus());
@@ -164,10 +164,10 @@ const JobFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWidth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         let path = '/helpee/dashboard';
@@ -177,6 +177,7 @@ const JobFormPage = (props) => {
       sweetAlertAndNavigate(requestStatus, requestStatusMessage);
     }
   }, [
+    t,
     requestStatus,
     requestStatusTitle,
     requestStatusMessage,
@@ -190,8 +191,8 @@ const JobFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearOfferStatus());
@@ -202,10 +203,10 @@ const JobFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWidth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         let path = '/helper/dashboard';
@@ -214,7 +215,7 @@ const JobFormPage = (props) => {
       dispatch(clearOfferStatus());
       sweetAlertAndNavigate(offerStatus, offerStatusMessage);
     }
-  }, [offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
+  }, [t, offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
 
   useEffect(() => {
     if (props.isHelpee) {
@@ -247,7 +248,7 @@ const JobFormPage = (props) => {
     >
       <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
         {props.isHelpee && t('helpee_job_form_title')}
-        {!props.isHelpee && 'What kind of job did you have?'}
+        {!props.isHelpee && t('helper_job_form_title')}
       </h1>
       <div className='form-center-wrapper'>
         <div className='container'>

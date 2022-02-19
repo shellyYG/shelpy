@@ -132,7 +132,7 @@ const BasicFormPage = (props) => {
 
     if (file && file.size > 1000000) {
       await MySwal.fire({
-        title: <strong>Oops!</strong>,
+        title: <strong>{t('oops')}!</strong>,
         html: (
           <p>Max. File size is 1MB. Please choose a smaller file to upload.</p>
         ),
@@ -146,7 +146,7 @@ const BasicFormPage = (props) => {
       file.type !== 'image/jpg'
     ) {
       await MySwal.fire({
-        title: <strong>Oops!</strong>,
+        title: <strong>{t('oops')}!</strong>,
         html: (
           <p>
             Only accepts .jpg, .jpeg or .png file. Please choose another file to
@@ -182,7 +182,7 @@ const BasicFormPage = (props) => {
     const file = e.target.files[0] || '';
     if (file && file.size > 1000000) {
       await MySwal.fire({
-        title: <strong>Oops!</strong>,
+        title: <strong>{t('oops')}!</strong>,
         html: (
           <p>Max. File size is 1MB. Please choose a smaller file to upload.</p>
         ),
@@ -203,7 +203,7 @@ const BasicFormPage = (props) => {
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' // .pptx
     ) {
       await MySwal.fire({
-        title: <strong>Oops!</strong>,
+        title: <strong>{t('oops')}!</strong>,
         html: (
           <p>
             Only accepts .docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg or .png
@@ -369,8 +369,8 @@ const BasicFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearApplyHelperStatus());
@@ -381,10 +381,10 @@ const BasicFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWIdth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         navigate('/helper/service-types');
@@ -393,6 +393,7 @@ const BasicFormPage = (props) => {
       sweetAlertAndNavigate(applyHelperStatus, applyHelperStatusMessage);
     }
   }, [
+    t,
     applyHelperStatus,
     applyHelperStatusTitle,
     applyHelperStatusMessage,
@@ -406,8 +407,8 @@ const BasicFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearApplyHelpeeStatus());
@@ -418,10 +419,10 @@ const BasicFormPage = (props) => {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
+          title: <strong>{t(title)}</strong>,
           imageWIdth: 442,
           imageHeight: 293,
-          html: <p>{message}</p>,
+          html: <p>{t(message)}</p>,
           icon: 'success',
         });
         navigate('/helpee/service-types');
@@ -430,6 +431,7 @@ const BasicFormPage = (props) => {
       sweetAlertAndNavigate(applyHelpeeStatus, applyHelpeeStatusMessage);
     }
   }, [
+    t,
     applyHelpeeStatus,
     applyHelpeeStatusTitle,
     applyHelpeeStatusMessage,

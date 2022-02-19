@@ -50,13 +50,16 @@ const HelpeeDashboardPage = (props) => {
     <div className='section-left-align'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {props.helpeeName && (
-          <h2 style={{ margin: 'auto' }}>
+          <h2 style={{ margin: '15px auto 0px' }}>
             {t('welcome_name', { name: props.helpeeName })}!
           </h2>
         )}
         {!props.helpeeName && (
-          <h2 style={{ margin: 'auto' }}>Welcome to Shelpy</h2>
+          <h2 style={{ margin: '15px auto 0px' }}>{t('welcome')}</h2>
         )}
+        <h2 style={{ margin: '15px auto 0px' }}>
+          {t('please_click_below_to_show_section')}
+        </h2>
       </div>
       <div className='orderHistoryBtnWrapper'>
         <HelpeeDashboardSection
@@ -68,6 +71,7 @@ const HelpeeDashboardPage = (props) => {
           helpeeDashboardTarget={helpeeDashboardTarget}
           value='allBookings'
           title={t('my_bookings')}
+          color='#f47174'
         />
         <HelpeeDashboardSection
           helpeeDashboardTarget={helpeeDashboardTarget}

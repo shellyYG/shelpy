@@ -4,28 +4,105 @@ import { useNavigate } from 'react-router-dom';
 import ChatIcon from './Icons/ChatIcon';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
+import {
+  countryOptions,
+  departmentOptions,
+  industryOptions,
+  jobOptions,
+  professionOptions,
+  schoolOptions,
+  typeOptions,
+} from '../store/options/service-options';
 
 function PotentialCustomerCard(props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
-  console.log('props @potentialCustomerCard: ', props);
+  const [translatedSecondType, setTranslatedSecondType] = useState('');
+  const [translatedThirdType, setTranslatedThirdType] = useState('');
+  const [translatedCountry, setTranslatedCountry] = useState('');
 
   useEffect(() => {
+    let secondTypeTranslationObj;
+    let thirdTypeTranslationObj;
+    const countryTranslationObj = countryOptions.filter(
+      (o) => o.value === props.country
+    );
+    setTranslatedCountry(t(countryTranslationObj[0].label));
     switch (props.mainType) {
       case 'university':
         setTitle(t('service_types_uni'));
+        secondTypeTranslationObj = schoolOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = departmentOptions[props.secondType].filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       case 'job':
         setTitle(t('service_types_job'));
+        secondTypeTranslationObj = industryOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = jobOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       case 'selfEmployed':
         setTitle(t('service_types_self_employed'));
+        secondTypeTranslationObj = typeOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        thirdTypeTranslationObj = professionOptions.filter(
+          (o) => o.value === props.thirdType
+        );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       default:
         setTitle(t('service_types_job'));
     }
-  }, [props.mainType,t]);
+  }, [t, props.mainType, props.secondType, props.thirdType, props.country]);
   
   function handleChat(e) {
     e.preventDefault(e);

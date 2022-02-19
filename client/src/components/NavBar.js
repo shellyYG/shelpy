@@ -91,7 +91,8 @@ const NavBar = (props) => {
               }
               to='/helper/home'
             >
-              <HelpIcon /> <div className='navBarText'>Helper HomePage</div>
+              <HelpIcon />{' '}
+              <div className='navBarText'>{t('helper_home_page')}</div>
             </NavLink>
           )}
         </div>

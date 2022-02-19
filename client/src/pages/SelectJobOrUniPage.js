@@ -4,12 +4,30 @@ import { useTranslation } from 'react-i18next';
 import { jobUniOptions } from '../store/options/navigate-options';
 import '../App.css';
 import JobOrUniCard from '../components/JobOrUniCard';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import ConfirmBtn from '../components/ConfirmBtn';
 
 const SelectJobOrUniPage = (props) => {
   const { t } = useTranslation();
+  const [enableBtn, setEnableBtn] = useState(false);
   const navigate = useNavigate();
   const { globalHelpeeJobOrUniTarget } = useSelector((state) => state.helpee);
   const { globalHelperJobOrUniTarget } = useSelector((state) => state.helper);
+  console.log(
+    'props.isHelpee: ',
+    'helpeeT: ',
+    globalHelpeeJobOrUniTarget,
+    'helperT: ',
+    globalHelperJobOrUniTarget
+  );
+  useEffect(()=>{
+    if (props.isHelpee && globalHelpeeJobOrUniTarget) {
+      setEnableBtn(true);
+    } else if (!props.isHelpee && globalHelperJobOrUniTarget){
+      setEnableBtn(true);
+    }
+  }, [props.isHelpee, globalHelpeeJobOrUniTarget, globalHelperJobOrUniTarget])
   
   function handleNext(e) {
     e.preventDefault();
@@ -66,7 +84,7 @@ const SelectJobOrUniPage = (props) => {
             jobUniOptions.map((option) => (
               <JobOrUniCard
                 imageSrc={option.imgPath}
-                title={option.label}
+                title={t(`${option.label}`)}
                 value={option.value}
                 isHelpee={props.isHelpee}
                 globalHelpeeJobOrUniTarget={globalHelpeeJobOrUniTarget}
@@ -76,9 +94,11 @@ const SelectJobOrUniPage = (props) => {
             ))}
         </div>
         <div style={{ textAlign: 'center' }}>
-          <button className='btn-next' onClick={handleNext}>
-            {t('next')}
-          </button>
+          <ConfirmBtn
+            cta={t('next')}
+            disable={!enableBtn}
+            handleConfirm={handleNext}
+          />
         </div>
       </div>
     </div>

@@ -59,13 +59,8 @@ const EmailConfirmPage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndClearStatus(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
-            html: (
-              <p>
-                Please contact our customer service for help:
-                shelpyofficial@gmail.com
-              </p>
-            ),
+            title: <strong>{t(title)}</strong>,
+            html: <p>{t('please_email_us_for_help')}</p>,
             icon: 'error',
           });
           navigate('/helpee/home', { replace: true }); // replace: true: do not want to let user come back to this page
@@ -80,10 +75,10 @@ const EmailConfirmPage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
+            title: <strong>{t(title)}</strong>,
             imageWIdth: 442,
             imageHeight: 293,
-            html: <p>{message}</p>,
+            html: <p>{t(message)}</p>,
             icon: 'success',
           });
           navigate('/helpee/sign-in', { replace: true });
@@ -98,13 +93,8 @@ const EmailConfirmPage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndClearStatus(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
-            html: (
-              <p>
-                Please contact our customer service for help:
-                shelpyofficial@gmail.com
-              </p>
-            ),
+            title: <strong>{t(title)}</strong>,
+            html: <p>{t('please_email_us_for_help')}</p>,
             icon: 'error',
           });
           navigate('/helper/home', { replace: true });
@@ -118,10 +108,10 @@ const EmailConfirmPage = (props) => {
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
-            title: <strong>{title}</strong>,
+            title: <strong>{t(title)}</strong>,
             imageWIdth: 442,
             imageHeight: 293,
-            html: <p>{message}</p>,
+            html: <p>{t(message)}</p>,
             icon: 'success',
           });
           navigate('/helper/sign-in', { replace: true });
@@ -133,6 +123,7 @@ const EmailConfirmPage = (props) => {
       }
     }
   }, [
+    t,
     props.isHelpee,
     confirmHelpeeEmailStatus,
     confirmHelpeeEmailStatusTitle,
@@ -144,13 +135,19 @@ const EmailConfirmPage = (props) => {
     dispatch,
   ]);
   return (
-    <div className={props.isHelpee? 'main-content-wrapper-homepage':'main-content-wrapper-homepage-helper'}>
+    <div
+      className={
+        props.isHelpee
+          ? 'main-content-wrapper-homepage'
+          : 'main-content-wrapper-homepage-helper'
+      }
+    >
       <div className='section-center-align-landing'>
         <div
           className='centerWrapper'
           style={{ textAlign: 'center', paddingTop: '28px' }}
         >
-          <h2>Please wait...</h2>
+          <h2>{t('please_wait')}</h2>
         </div>
       </div>
     </div>

@@ -233,9 +233,9 @@ const ChatRoomPage = (props) => {
                   <div className={'task-card'}>
                     <div className='chatRoomContent'>
                       <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
-                        <div
-                          style={{ whiteSpace: 'pre-line' }}
-                        >{`Oops!\n We haven't found \n any customers yet.\n Help us grow by \n following us on \n`}</div>
+                        <div style={{ whiteSpace: 'pre-line' }}>{`${t(
+                          'oops'
+                        )}!\n We haven't found \n any customers yet.\n Help us grow by \n following us on \n`}</div>
                         <button
                           className='btn-next'
                           style={{ margin: '10px 0px' }}
@@ -255,9 +255,9 @@ const ChatRoomPage = (props) => {
                   <div className={'task-card'}>
                     <div className='chatRoomContent'>
                       <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
-                        <div
-                          style={{ whiteSpace: 'pre-line' }}
-                        >{`Oops!\n We have not found \n any helpers yet. \n Help us grow by \n following us on \n`}</div>
+                        <div style={{ whiteSpace: 'pre-line' }}>{`${t(
+                          'oops'
+                        )}!${t('no_chat_partners_found')}`}</div>
                         <button
                           className='btn-next'
                           style={{ margin: '10px 0px' }}
@@ -265,9 +265,9 @@ const ChatRoomPage = (props) => {
                         >
                           Youtube
                         </button>
-                        <div
-                          style={{ whiteSpace: 'pre-line' }}
-                        >{`So we can\n find you a \n helper sooner!`}</div>
+                        <div style={{ whiteSpace: 'pre-line' }}>
+                          {t('so_we_can_find_partners')}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -291,6 +291,7 @@ const ChatRoomPage = (props) => {
                       `${option.helperId}-${option.helpeeId}-${option.offerId}`
                     }
                     partnerName={option.helpeeUsername}
+                    mainType={option.mainType}
                     secondType={option.secondType}
                     thirdType={option.thirdType}
                     fourthType={option.fourthType}
@@ -321,6 +322,7 @@ const ChatRoomPage = (props) => {
                       `${option.helperId}-${option.helpeeId}-${option.offerId}`
                     }
                     partnerName={option.helperUsername}
+                    mainType={option.mainType}
                     secondType={option.secondType}
                     thirdType={option.thirdType}
                     fourthType={option.fourthType}

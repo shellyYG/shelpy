@@ -78,7 +78,7 @@ export const confirmHelpeeEmail = (data) => {
       dispatch(
         notificationActions.setNotification({
           confirmHelpeeEmailStatus: 'error',
-          confirmHelpeeEmailStatusTitle: 'Oops!',
+          confirmHelpeeEmailStatusTitle: 'oops',
           confirmHelpeeEmailStatusMessage: `Error: ${error}`,
         })
       );
@@ -95,8 +95,9 @@ export const confirmHelpeeCanChangePassword = (data) => {
           notificationActions.setNotification({
             confirmHelpeeCanChangePasswordStatus: 'success',
             confirmHelpeeCanChangePasswordStatusTitle:
-              'Your identity is verified.',
-            confirmHelpeeCanChangePasswordStatusMessage: 'Please enter new password to continue.',
+              'your_identification_is_verified',
+            confirmHelpeeCanChangePasswordStatusMessage:
+              'Please enter new password to continue.',
           })
         );
       } else {
@@ -107,7 +108,7 @@ export const confirmHelpeeCanChangePassword = (data) => {
       dispatch(
         notificationActions.setNotification({
           confirmHelpeeCanChangePasswordStatus: 'error',
-          confirmHelpeeCanChangePasswordStatusTitle: 'Oops!',
+          confirmHelpeeCanChangePasswordStatusTitle: 'oops',
           confirmHelpeeCanChangePasswordStatusMessage: `Error: ${error}`,
         })
       );
@@ -138,7 +139,7 @@ export const sendHelpeePasswordResetLink = (data) => {
       dispatch(
         helpeeActions.setSendPasswordResetEmailStatus({
           sendPasswordResetEmailStatus: 'error',
-          sendPasswordResetEmailStatusTitle: 'Oops!',
+          sendPasswordResetEmailStatusTitle: 'oops',
           sendPasswordResetEmailStatusMessage: `Error: ${error}`,
         })
       );
@@ -332,7 +333,7 @@ export const onClickUpdateActiveHelperLists = (data) => {
       console.error(err);
       notificationActions.setNotification({
         signUpEmailStatus: 'error',
-        signUpEmailStatusTitle: 'Oops!',
+        signUpEmailStatusTitle: 'oops',
         signUpEmailStatusMessage: `Error: ${err}`,
       });
     }
@@ -361,7 +362,7 @@ export const postHelpeeSignUpEmail = (data) => {
         dispatch(
           notificationActions.setNotification({
             signUpEmailStatus: 'error',
-            signUpEmailStatusTitle: 'Oops!',
+            signUpEmailStatusTitle: 'oops',
             signUpEmailStatusMessage: error.response.data,
           })
         );
@@ -393,7 +394,7 @@ export const postHelpeeSignUpPassword = (data) => {
         dispatch(
           notificationActions.setNotification({
             signUpPasswordStatus: 'error',
-            signUpPasswordStatusTitle: 'Oops!',
+            signUpPasswordStatusTitle: 'oops',
             signUpPasswordStatusMessage: error.response.data,
           })
         );
@@ -417,8 +418,9 @@ export const changeHelpeePassword = (data) => {
       dispatch(
         helpeeActions.updateHelpeeResetPasswordStatus({
           helpeePasswordResetStatus: 'success',
-          helpeePasswordResetStatusTitle: 'Password changed successfully!',
-          helpeePasswordResetStatusMessage: 'You may now sign in with new password.',
+          helpeePasswordResetStatusTitle: 'password_change_successfully',
+          helpeePasswordResetStatusMessage:
+            'you_may_now_sign_in_with_new_password',
         })
       );
     } catch (error) {
@@ -427,7 +429,7 @@ export const changeHelpeePassword = (data) => {
         dispatch(
           helpeeActions.updateHelpeeResetPasswordStatus({
             helpeePasswordResetStatus: 'error',
-            helpeePasswordResetStatusTitle: 'Oops!',
+            helpeePasswordResetStatusTitle: 'oops',
             helpeePasswordResetStatusMessage: error.response.data,
           })
         );
@@ -452,8 +454,8 @@ export const postHelpeeSignInData = (data) => {
       dispatch(
         notificationActions.setNotification({
           signInStatus: 'success',
-          signInStatusTitle: 'Successfully Signed-In.',
-          signInStatusMessage: 'Successfully Signed-In.',
+          signInStatusTitle: 'success',
+          signInStatusMessage: 'successfully_sign_in',
         })
       );
     } catch (error) {
@@ -462,7 +464,7 @@ export const postHelpeeSignInData = (data) => {
         dispatch(
           notificationActions.setNotification({
             signInStatus: 'error',
-            signInStatusTitle: 'Oops!',
+            signInStatusTitle: 'oops',
             signInStatusMessage: error.response.data,
           })
         );
@@ -513,7 +515,7 @@ export const postHelpeeServiceRequestForm = (data) => {
         dispatch(
           notificationActions.setNotification({
             requestFormStatus: 'error',
-            requestFormStatusTitle: 'Oops!',
+            requestFormStatusTitle: 'oops',
             requestFormStatusMessage: errorMessage,
           })
         );
@@ -584,7 +586,7 @@ export const onSubmitUploadHelpeeData = (data) => {
         dispatch(
           notificationActions.setNotification({
             applyHelpeeStatus: 'error',
-            applyHelpeeStatusTitle: 'Oops!',
+            applyHelpeeStatusTitle: 'oops',
             applyHelpeeStatusMessage: errorMessage,
           })
         );
@@ -630,7 +632,7 @@ export const postHelpeeRequestForm = (data) => {
         dispatch(
           notificationActions.setNotification({
             requestStatus: 'error',
-            requestStatusTitle: 'Oops!',
+            requestStatusTitle: 'oops',
             requestStatusMessage: errorMessage,
           })
         );
@@ -778,8 +780,8 @@ export const postPayHelper = (data) => {
         dispatch(
           helpeeActions.updatePayHelperStatus({
             payHelperStatus: 'success',
-            payHelperStatusTitle: 'Thank you!',
-            payHelperStatusMessage: 'Successfully paid the booking.',
+            payHelperStatusTitle: 'thank_you',
+            payHelperStatusMessage: 'successfully_paid',
           })
         );
         
@@ -790,7 +792,7 @@ export const postPayHelper = (data) => {
         dispatch(
           helpeeActions.updatePayHelperStatus({
             payHelperStatus: 'error',
-            payHelperStatusTitle: 'Oops!',
+            payHelperStatusTitle: 'oops',
             payHelperStatusMessage: error.response.data,
           })
         );

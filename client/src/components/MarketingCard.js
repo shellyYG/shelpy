@@ -143,7 +143,7 @@ function MarketingCard(props) {
     e.preventDefault();
     if (!props.helpeeId) {
       await MySwal.fire({
-        title: <strong>Oops</strong>,
+        title: <strong>{t('oops')}</strong>,
         html: <p>{t('please_sign_in_firce')}</p>,
         icon: 'error',
       });

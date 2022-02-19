@@ -44,7 +44,7 @@ export const postBookingStatus = (data) => {
         dispatch(
           generalActions.setBookingNotificationStatus({
             bookingNotificationStatus: 'error',
-            bookingNotificationStatusTitle: 'Oops!',
+            bookingNotificationStatusTitle: 'oops',
             bookingNotificationStatusMessage: error.response.data,
           })
         );
@@ -137,7 +137,6 @@ export const getAllMarketingOffers = (data) => {
         })
       );
     } catch (error) {
-      console.log('Ooopsssss ');
       console.error(error);
       dispatch(
         generalActions.updateAllMarketingOffers({

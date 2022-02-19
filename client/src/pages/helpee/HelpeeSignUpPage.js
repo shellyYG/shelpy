@@ -60,8 +60,8 @@ function HelpeeSignUpPage(props) {
     if (signUpEmailStatus === 'error') {
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
-          title: <strong>{title}</strong>,
-          html: <p>{message}</p>,
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
           icon: 'error',
         });
         dispatch(clearSignUpEmailStatus());
@@ -76,6 +76,7 @@ function HelpeeSignUpPage(props) {
       dispatch(clearSignUpEmailStatus());
     }
   }, [
+    t,
     signUpEmailStatus,
     signUpEmailStatusMessage,
     signUpEmailStatusTitle,

@@ -12,9 +12,11 @@ import { useNavigate } from 'react-router-dom';
 import HelperDashboardSection from '../../components/HelperDashboardSection';
 import BookingCard from '../../components/BookingCard';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
+import { useTranslation } from 'react-i18next';
 
 
 const HelperDashboardPage = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -43,30 +45,36 @@ const HelperDashboardPage = (props) => {
     <div className='section-left-align'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {props.helperName && (
-          <h2 style={{ margin: 'auto' }}>Welcome, {props.helperName}!</h2>
+          <h2 style={{ margin: '15px auto 0px' }}>
+            {t('welcome_name', { name: props.helperName })}!
+          </h2>
         )}
         {!props.helperName && (
-          <h2 style={{ margin: 'auto' }}>Welcome to Shelpy</h2>
+          <h2 style={{ margin: '15px auto 0px' }}>{t('welcome')}</h2>
         )}
+        <h2 style={{ margin: '15px auto 0px' }}>
+          {t('please_click_below_to_show_section')}
+        </h2>
       </div>
       <div className='orderHistoryBtnWrapper'>
         <HelperDashboardSection
           helperDashboardTarget={helperDashboardTarget}
           value='allOffers'
-          title='My Offers'
+          title={t('my_offers')}
         />
         <HelperDashboardSection
           helperDashboardTarget={helperDashboardTarget}
           value='allBookings'
-          title='My Bookings'
+          title={t('my_bookings')}
+          color='#f47174'
         />
         <HelperDashboardSection
           helperDashboardTarget={helperDashboardTarget}
           value='potentialCustomers'
-          title='Potential Customers'
+          title={t('potential_customers')}
         />
         <div style={{ margin: 'auto', display: 'flex', flexDirection: 'row' }}>
-          <div style={{ margin: 'auto' }}>Refresh to get latest status</div>
+          <div style={{ margin: 'auto' }}>{t('refresh')}</div>
           <RefreshIcon onClick={handleRrefreshPage} />
         </div>
       </div>
