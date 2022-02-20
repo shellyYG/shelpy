@@ -243,6 +243,9 @@ function MarketingCard(props) {
             {t('offer_id')}: {props.id}
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
+            {t('helper_organization')}: {props.organization || t('na')}
+          </p>
+          <p style={{ fontWeight: '12px', padding: '6px' }}>
             {t('price_per_45_min', { price: props.price })}
           </p>
         </div>

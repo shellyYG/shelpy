@@ -186,6 +186,9 @@ function PotentialCustomerCard(props) {
         </div>
       </div>
       <div className='checkBoxWidth'>
+        {t('helpee_organization')} : {props.organization || t('na')}
+      </div>
+      <div className='checkBoxWidth'>
         <div className='contentBx'>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <div>

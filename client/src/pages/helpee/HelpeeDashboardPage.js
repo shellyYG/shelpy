@@ -183,14 +183,6 @@ const HelpeeDashboardPage = (props) => {
       )}
       {helpeeDashboardTarget === 'potentialHelpers' && allPotentialHelpers && (
         <div className='task-container'>
-          {(!allOrders || allOrders.length === 0) && (
-            <div
-              className='history-card'
-              style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
-            >
-              <p style={{ margin: 'auto' }}>{t('no_matched_helpers')}</p>
-            </div>
-          )}
           {!allPotentialHelpers ||
             (allPotentialHelpers.length === 0 && (
               <div
@@ -237,6 +229,7 @@ const HelpeeDashboardPage = (props) => {
               price={option.price}
               bookingId={option.bookingId}
               bookingStatus={option.bookingStatus}
+              organization={option.organization}
             />
           ))}
         </div>

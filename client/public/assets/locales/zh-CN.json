@@ -95,6 +95,9 @@
   "home_ending": "。",
   "home_you_can": "你可以随时",
   "home_unsubscribe": "取消订阅",
+  "unsubscribe_cta": "取消订阅",
+  "helpee_organization": "想去的地方",
+  "helper_organization": "待过的地方",
   "home_at_any_time": "。",
   "home_have_account_sign_in": "已经有帐号了吗？按此登入",
 
@@ -380,6 +383,7 @@
   "confirm_booking": "确认预约",
   "chat_to_change_booking": "与新鲜人聊聊以更改时间",
   "successfully_submit_booking": "成功更改预约状态",
+  "successfully_unsub_email": "成功退订了你的电子邮件",
   "waiting_name_to_pay": "等待 {{name}} 付款",
   "helper_home_cta": "新增一个服务",
   "leave_notes_to_helper": "有想对过来人说的话吗？留言在此",

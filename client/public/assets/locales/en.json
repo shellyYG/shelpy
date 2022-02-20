@@ -95,6 +95,9 @@
   "home_ending": ".",
   "home_you_can": "You can",
   "home_unsubscribe": "unsubscribe",
+  "unsubscribe_cta": "Unsubscribe My Email",
+  "helpee_organization": "Target Organization",
+  "helper_organization": "Worked/Studied Organization",
   "home_at_any_time": "at any time.",
   "home_have_account_sign_in": "Alreave have an account? Sign In here!",
 
@@ -380,6 +383,7 @@
   "confirm_booking": "Confirm Booking",
   "chat_to_change_booking": "Chat to change booking",
   "successfully_submit_booking": "Successfully updated the booking status",
+  "successfully_unsub_email": "Successfully unsubscribed your email",
   "waiting_name_to_pay": "Waiting for {{name}} to pay",
   "helper_home_cta": "CREATE OFFER NOW",
   "leave_notes_to_helper": "Feel free to leave some notes for the helper.",

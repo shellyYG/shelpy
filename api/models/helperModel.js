@@ -37,7 +37,8 @@ async function getAllMarketingOffers(data) {
 async function getHelperAllBookings(data) {
   const { helperUserId } = data;
   const sql = ` 
-  SELECT bookings.id AS bookingId,acc.languages, bookings.*, acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helpeeAnonymous
+  SELECT bookings.id AS bookingId,acc.languages, bookings.*, acc.profilePicPath AS profilePicPath
+  , acc.isAnonymous AS helpeeAnonymous
   FROM bookings bookings
   LEFT JOIN helpee_account acc ON bookings.helpeeId = acc.id
   WHERE helperId = ${helperUserId} ORDER BY id DESC;`;
@@ -48,6 +49,7 @@ async function getHelperAllBookings(data) {
 async function getPotentialCustomers(data) {
   const { helperUserId } = data;
   const sql = ` SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus
+    , req.organization AS organization
     , req.id AS requestId, ofs.id AS offerId
     , ofs.price AS price, req.country AS country
     , acc.id AS helperId, acc.username AS helperUserName, acc.isAnonymous AS helperAnonymous

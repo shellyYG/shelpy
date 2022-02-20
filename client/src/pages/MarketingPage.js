@@ -184,6 +184,7 @@ const HelpeeDashboardPage = (props) => {
                 helperUsername={option.username}
                 languages={option.languages}
                 isAnonymous={option.isAnonymous}
+                organization={option.organization}
               />
             ))}
           </div>

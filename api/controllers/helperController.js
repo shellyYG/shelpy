@@ -41,7 +41,6 @@ const deleteHelperOffer = async (req, res) => {
 };
 
 const getPotentialCustomers = async (req, res) => {
-  console.log('@controller getPotentialCustomers: ', req.query.helperUserId);
   try {
     const { helperUserId } = req.query;
     if (helperUserId) {

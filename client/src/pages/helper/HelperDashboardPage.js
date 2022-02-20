@@ -166,6 +166,7 @@ const HelperDashboardPage = (props) => {
                 price={option.price}
                 bookingId={option.bookingId}
                 bookingStatus={option.bookingStatus}
+                organization={option.organization}
               />
             )
           )}

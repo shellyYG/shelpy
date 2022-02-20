@@ -95,6 +95,9 @@
   "home_ending": "。",
   "home_you_can": "你可以隨時",
   "home_unsubscribe": "取消訂閱",
+  "unsubscribe_cta": "取消訂閱",
+  "helpee_organization": "想去的地方",
+  "helper_organization": "待過的地方",
   "home_at_any_time": "。",
   "home_have_account_sign_in": "已經有帳號了嗎？按此登入",
 
@@ -381,6 +384,7 @@
   "chat_to_change_booking": "與新鮮人聊聊以更改時間",
   "successfully_submit_booking": "成功更改預約狀態",
   "waiting_name_to_pay": "等待 {{name}} 付款",
+  "successfully_unsub_email": "成功退訂了你的電子郵件",
   "helper_home_cta": "新增一個服務",
   "leave_notes_to_helper": "有想對過來人說的話嗎？留言在此",
   "linkedin_link_title": "LinkedIn 連結 (或是於下一欄上傳履歷) （不公開，僅用於審閱資格）",

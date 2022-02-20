@@ -208,6 +208,7 @@ function PotentialHelperCard(props) {
       {!props.bookingStatus && (
         <div className='checkBoxWidth'>
           <div className='bookWrapper'>
+            {t('helper_organization')} : {props.organization || t('na')}
             <button className='btn-contact' onClick={handleBookHelper}>
               {t('book_name', { name: props.partnerName })}
             </button>
@@ -217,6 +218,7 @@ function PotentialHelperCard(props) {
       {props.bookingStatus && (
         <div className='checkBoxWidth'>
           <div className='bookWrapper'>
+            {t('helper_organization')} : {props.organization || t('na')} <br />
             {t('in_booking_process_with_name', { name: props.partnerName })}
           </div>
         </div>

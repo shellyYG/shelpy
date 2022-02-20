@@ -22,7 +22,8 @@ async function getHelpeeAllOrders(data) {
 }
 
 async function getHelpeeAllBookings(data) {
-  const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail, helpee.languages, bookings.*, acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous
+  const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail, helpee.languages, bookings.*
+  , acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous
   FROM bookings bookings
   LEFT JOIN helper_account acc ON bookings.helperId = acc.id
   LEFT JOIN helpee_account helpee ON bookings.helpeeId = helpee.id
@@ -37,6 +38,7 @@ async function getPotentialHelpers(data) {
     , req.country AS country
     , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, acc.isAnonymous AS helperAnonymous
     , helpee.id AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous
+    , ofs.organization AS organization
     , acc.id AS helperId, acc.username AS helperUsername, acc.profilePicPath AS profilePicPath
 		, req.mainType AS mainType, req.secondType AS secondType
     , req.thirdType AS thirdType, req.fourthType AS fourthType
