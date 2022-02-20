@@ -29,8 +29,6 @@ const BookingConfirmPage = (props) => {
   const notesRef = useRef();
 
   const [searchParams] = useSearchParams();
-
-
   const bookingId = searchParams.get('bookingId');
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');

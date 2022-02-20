@@ -18,7 +18,7 @@ const userEmailExisted = async (data) => {
 };
 
 const createUserObject = async (data, encryptedpass, ivString) => {
-  const { provider, username, email, status } = data;
+  const { provider, username, email, status, refId, subscribed } = data;
   // insert to DB
   try {
     const { isHelpee, isPasswordUpdated } = data;
@@ -79,6 +79,8 @@ const createUserObject = async (data, encryptedpass, ivString) => {
       isHelpee,
       password: encryptedpass,
       ivString,
+      refId,
+      subscribed,
     });
     const dataObject = {
       user: {

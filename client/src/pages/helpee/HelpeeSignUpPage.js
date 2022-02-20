@@ -1,7 +1,7 @@
 import ConfirmBtn from '../../components/ConfirmBtn';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import '../../App.css';
@@ -28,6 +28,8 @@ function HelpeeSignUpPage(props) {
   } = useSelector((state) => state.helpeeNotification);
   const emailRef = useRef();
   const [email, setEmail] = useState('');
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
 
   async function handleConfirm(e) {
     e.preventDefault();
@@ -72,11 +74,12 @@ function HelpeeSignUpPage(props) {
       );
       return;
     } else if (signUpEmailStatus === 'success') {
-      navigate('/helpee/sign-up-final-step', { replace: true });
+      navigate(`/helpee/sign-up-final-step?refId=${refId}`, { replace: true });
       dispatch(clearSignUpEmailStatus());
     }
   }, [
     t,
+    refId,
     signUpEmailStatus,
     signUpEmailStatusMessage,
     signUpEmailStatusTitle,
@@ -86,7 +89,11 @@ function HelpeeSignUpPage(props) {
   return (
     <div className='main-content-wrapper-no-height'>
       <div className='home-page-container'>
-        <div className='centerWrapperWithBackground'>
+        <div
+          className='centerWrapperWithBackground'
+          style={{ backgroundImage: 'url(/images/assets/helpee-home.jpeg)' }}
+          title='Photo by Windows on Unsplash'
+        >
           <div className='coverLeft'>
             <div>
               <h1 style={{ textAlign: 'center', color: 'white' }}>

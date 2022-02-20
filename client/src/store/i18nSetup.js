@@ -8,7 +8,7 @@ i18n
   .use(Backend)
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
-    supportedLngs: ['en', 'zh-TW'],
+    supportedLngs: ['en', 'zh-TW', 'zh-CN'],
     fallbackLng: 'en',
     detection: {
       order: ['cookie', 'htmlTag', 'localStorage', 'path', 'subdomain'],

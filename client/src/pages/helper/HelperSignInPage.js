@@ -79,6 +79,7 @@ const HelperSignInPage = () => {
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
   }, [
+    t,
     helperAccountStatus,
     signInStatus,
     signInStatusMessage,
@@ -88,7 +89,11 @@ const HelperSignInPage = () => {
   ]);
 
   return (
-    <div className='main-content-wrapper-homepage-helper'>
+    <div
+      className='main-content-wrapper-homepage-helper'
+      style={{ backgroundImage: 'url(/images/assets/helper-home.jpeg)' }}
+      title='Photo by Humphrey Muleba on Unsplash'
+    >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           {t('sign_in_welcome')}

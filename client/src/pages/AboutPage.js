@@ -3,12 +3,20 @@ import { useTranslation } from "react-i18next";
 const AboutPage = () => {
   const { t } = useTranslation();
   return (
-    <div className='main-content-wrapper-homepage'>
+    <div
+      className='main-content-wrapper-homepage'
+      style={{ backgroundImage: 'url(/images/assets/helpee-home.jpeg)' }}
+    >
       <div className='section-center-align-landing'>
         <div
           className='centerWrapper'
-          style={{ textAlign: 'center', paddingTop: '28px' }}
+          style={{ textAlign: 'center' }}
         >
+          <img
+            src={'/images/assets/pinterest.png'}
+            alt={'shelpy'}
+            style={{ width: '150px', height: '150px' }}
+          />
           <h2>{t('mission_statement')}</h2>
           <br />
           <h3>

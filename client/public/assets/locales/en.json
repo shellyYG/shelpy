@@ -59,12 +59,13 @@
   "please_create_new_password_to_continue": "Please create new password to continue",
   "email_successfully_submitted": "Email successfully submitted",
   "create_password_to_complete_sign_up": "Create password to complete Sign-Up",
+  "take_less_than_a_minute": "Take less than a minute!",
   "a_confirm_email_has_been_sent": "A confirmation email has been sent to your inbox.",
   "please_confirm_email": "Please confirm your email",
   "select_experience_you_want_to_know": "NOW: select the experiences you want to know.",
   "select_experience_you_want_to_share": "NOW: select the experiences you want to share.",
 
-  "mission_statement": "Mission Statement",
+  "mission_statement": "Shelpy Mission Statement",
   "mission_statement_part1": "By connecting professions and students,",
   "mission_statement_part2": "Shelpy aims at mitigating information gaps and helping people change their lives.",
 
@@ -351,6 +352,8 @@
   "age_31_to_35": "31-35 years old",
   "age_36_to_40": "36-40 years old",
   "over_40": "over 40 years old",
+  "nationality_title": "Nationality (This will not be shown publicly. We only use this to verify your identity)*",
+  "residence_country_title": "Residence Country/Region (This will not be shown publicly. We only use this to verify your identity)*",
 
   "ask_anonymous": "Ask question anonymously (show username and service types, but hide your profile picture and your resume organizations)",
   "answer_anonymous": "Answer question anonymously (show username and service types, but hide your profile picture and your resume organizations) (not recommended)",

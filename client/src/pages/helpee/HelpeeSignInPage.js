@@ -92,7 +92,11 @@ const HelpeeSignInPage = () => {
   ]);
 
   return (
-    <div className='main-content-wrapper-homepage'>
+    <div
+      className='main-content-wrapper-homepage'
+      style={{ backgroundImage: 'url(/images/assets/helpee-home.jpeg)' }}
+      title='Photo by Windows on Unsplash'
+    >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           {t('sign_in_welcome')}

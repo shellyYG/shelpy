@@ -14,7 +14,11 @@ const HelperLoggedInHomePage = () => {
   return (
     <div className='main-content-wrapper-no-height'>
       <div className='home-page-container'>
-        <div className='centerWrapperWithBackgroundHelper'>
+        <div
+          className='centerWrapperWithBackgroundHelper'
+          style={{ backgroundImage: 'url(/images/assets/helper-home.jpeg)' }}
+          title='Photo by Humphrey Muleba on Unsplash'
+        >
           <div className='coverLeft'>
             <div>
               <h1 style={{ textAlign: 'center', color: 'white' }}>

@@ -7,7 +7,7 @@ import DropDown from '../components/Dropdown';
 import FullLineTextBox from '../components/FullLineTextBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import {
-  ageOptions,
+  ageOptions, countryOptions,
 } from '../store/options/service-options';
 import {
   onUploadHelpeeProfilePicture,
@@ -38,11 +38,15 @@ const BasicFormPage = (props) => {
   const notesRef = useRef();
   const usernameRef = useRef();
   const linkedInUrlRef = useRef();
+  const nationalityRef = useRef();
+  const residenceCountryRef = useRef();
 
   const [loading, setIsLoading] = useState(false);
   const [age, setAge] = useState('default');
   const [profilePic, setProfilePic] = useState();
   const [certificate, setCertificate] = useState();
+  const [nationality, setNationality] = useState('default');
+  const [residenceCountry, setResidenceCountry] = useState('default');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(false);
   const [enableBtn, setEnableBtn] = useState(false);
@@ -230,6 +234,8 @@ const BasicFormPage = (props) => {
       data.append('isAnonymous', isAnonymous);
       data.append('isMarketing', isMarketing);
       data.append('age', age);
+      data.append('nationality', nationality);
+      data.append('residenceCountry', residenceCountry);
       data.append('linkedInUrl', linkedInUrl);
       data.append('introduction', introduction);
       
@@ -267,6 +273,8 @@ const BasicFormPage = (props) => {
           isAnonymous,
           username,
           age,
+          nationality,
+          residenceCountry,
           introduction,
 
           hasMonToFri,
@@ -300,6 +308,8 @@ const BasicFormPage = (props) => {
           isMarketing,
           username,
           age,
+          nationality,
+          residenceCountry,
           linkedInUrl,
           introduction,
 
@@ -346,9 +356,13 @@ const BasicFormPage = (props) => {
 
   useEffect(() => {
     setEnableBtn(
-      usernameRef && age !== 'default' && (linkedInUrlRef || certificate)
+      usernameRef &&
+        age !== 'default' &&
+        nationality !== 'default' &&
+        residenceCountry !== 'default' &&
+        (linkedInUrlRef || certificate)
     );
-  }, [usernameRef, linkedInUrlRef, age, certificate]);
+  }, [usernameRef, linkedInUrlRef, age, nationality, residenceCountry, certificate]);
   console.log('applyHelperStatus: ', applyHelperStatus);
   // is Helper:
   useEffect(() => {
@@ -438,7 +452,7 @@ const BasicFormPage = (props) => {
 
       <div className='form-center-wrapper'>
         <div className='container' style={{ width: '100%' }}>
-          <div className='form-inner' style={{ display: 'flex'}}>
+          <div className='form-inner' style={{ display: 'flex' }}>
             <form action='' method='post' encType='multipart/form-data'>
               <div className='form-row'>
                 <div
@@ -528,6 +542,22 @@ const BasicFormPage = (props) => {
                   options={ageOptions}
                 />
               </div>
+              <div className='form-row'>
+                <DropDown
+                  selected={nationality}
+                  handleSelect={setNationality}
+                  title={t('nationality_title')}
+                  selectRef={nationalityRef}
+                  options={countryOptions}
+                />
+                <DropDown
+                  selected={residenceCountry}
+                  handleSelect={setResidenceCountry}
+                  title={t('residence_country_title')}
+                  selectRef={residenceCountryRef}
+                  options={countryOptions}
+                />
+              </div>
               {!props.isHelpee && (
                 <div className='form-row'>
                   <LeftHalfLineTextBox
@@ -538,7 +568,7 @@ const BasicFormPage = (props) => {
                     inputRef={linkedInUrlRef}
                   />
                   <div className='form-wrapper' style={{ margin: 'auto' }}>
-                    <div >
+                    <div>
                       <label>{t('resume_title')}</label>
                     </div>
                     {!certificate && (
@@ -669,16 +699,16 @@ const BasicFormPage = (props) => {
                 />
                 <CheckBox
                   checked={hasFrench}
-                  handleCheck={t('languages_french')}
-                  details='French'
+                  handleCheck={setHasFrench}
+                  details={t('languages_french')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
                 />
                 <CheckBox
                   checked={hasItalien}
-                  handleCheck={t('languages_italien')}
-                  details='Italian'
+                  handleCheck={setHasItalien}
+                  details={t('languages_italien')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'

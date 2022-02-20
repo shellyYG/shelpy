@@ -23,7 +23,8 @@ function BookingCard(props) {
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
-  const [helpeeFilteredBookingStatus, setHelpeeFilteredBookingStatus] = useState('');
+  const [helpeeFilteredBookingStatus, setHelpeeFilteredBookingStatus] =
+    useState('');
   const [helperFilteredBookingStatus, setHelperFilteredBookingStatus] =
     useState('');
   const [loading, setIsLoading] = useState(false);
@@ -32,7 +33,7 @@ function BookingCard(props) {
     secondType: props.secondType,
     offerId: props.offerId,
     price: props.price,
-  })
+  });
 
   const { payHelperStatus, payHelperStatusTitle, payHelperStatusMessage } =
     useSelector((state) => state.helpee);
@@ -130,13 +131,7 @@ function BookingCard(props) {
       default:
         setTitle(t('service_types_job'));
     }
-  }, [
-    t,
-    props.mainType,
-    props.secondType,
-    props.thirdType,
-    props.country,
-  ]);
+  }, [t, props.mainType, props.secondType, props.thirdType, props.country]);
 
   useEffect(() => {
     switch (props.bookingStatus) {
@@ -167,7 +162,13 @@ function BookingCard(props) {
       default:
         setHelpeeFilteredBookingStatus('');
     }
-  }, [t, props.bookingStatus, props.helperUsername, props.appointmentDate, props.appointmentTime]);
+  }, [
+    t,
+    props.bookingStatus,
+    props.helperUsername,
+    props.appointmentDate,
+    props.appointmentTime,
+  ]);
 
   useEffect(() => {
     switch (props.bookingStatus) {
@@ -202,12 +203,19 @@ function BookingCard(props) {
       default:
         setHelperFilteredBookingStatus('');
     }
-  }, [t, props.bookingStatus, props.helperUsername, props.appointmentDate, props.appointmentTime, props.helpeeUsername]);
+  }, [
+    t,
+    props.bookingStatus,
+    props.helperUsername,
+    props.appointmentDate,
+    props.appointmentTime,
+    props.helpeeUsername,
+  ]);
 
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`,
+      `/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
     );
   }
   function handleBookingConfirmation(e) {
@@ -215,10 +223,10 @@ function BookingCard(props) {
     navigate(
       `/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&partnerName=${props.partnerName}&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
-        `&bookingNotes=${props.notes}`,
+        `&bookingNotes=${props.notes}`
     );
   }
-  
+
   function handlePayHelper(token) {
     try {
       // const data = {
@@ -296,6 +304,7 @@ function BookingCard(props) {
     navigate,
     dispatch,
   ]);
+  // <img src="/images/helper-profile-pictures/1644921329445-markus.jpeg" alt="Markus">
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
@@ -371,7 +380,7 @@ function BookingCard(props) {
               {t('accept_name_booking', { name: props.partnerName })}
             </button>
             <p style={{ fontWeight: '12px', padding: '6px' }}>
-              {t('booking_time')}: {props.appointmentDate} {t('at')} {' '}
+              {t('booking_time')}: {props.appointmentDate} {t('at')}{' '}
               {props.appointmentTime}
             </p>
           </div>

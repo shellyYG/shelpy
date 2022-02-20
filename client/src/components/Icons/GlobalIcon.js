@@ -25,9 +25,13 @@ function GlobalIcon (props) {
     e.preventDefault();
     i18n.changeLanguage('en');
   }
-  function onZhClick(e) {
+  function onZhTWClick(e) {
     e.preventDefault();
     i18n.changeLanguage('zh-TW');
+  }
+  function onZhCNClick(e) {
+    e.preventDefault();
+    i18n.changeLanguage('zh-CN');
   }
   useEffect(() => {
     if (props.dropDownNavTarget !== 'language') {
@@ -41,8 +45,8 @@ function GlobalIcon (props) {
           <div className='navPopUpWrapper'>
             <div className='navDropDownContentLanguage'>
               <div onClick={onENClick}>English</div>
-              <div onClick={onZhClick}>繁體中文</div>
-              {/* <div>简体中文</div> */}
+              <div onClick={onZhTWClick}>繁體中文</div>
+              <div onClick={onZhCNClick}>简体中文</div>
             </div>
           </div>
         )}

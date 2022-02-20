@@ -1,7 +1,7 @@
 import ConfirmBtn from '../../components/ConfirmBtn';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import '../../App.css';
@@ -30,6 +30,9 @@ const HelpeeSignUpPasswordPage = () => {
     signUpPasswordStatusTitle,
     signUpPasswordStatusMessage,
   } = useSelector((state) => state.helpeeNotification);
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+  console.log('@HelpeeHome password: ', refId);
 
   if (loading) {
     MySwal.fire({
@@ -57,6 +60,8 @@ const HelpeeSignUpPasswordPage = () => {
       email: email || emailRef.current.value,
       isHelpee: true,
       password: passwordRef.current.value,
+      refId: refId,
+      subscribed: true,
       status: 'password_created',
     };
     dispatch(postHelpeeSignUpPassword(data));
@@ -114,10 +119,14 @@ const HelpeeSignUpPasswordPage = () => {
   ]);
 
   return (
-    <div className='main-content-wrapper-homepage'>
+    <div
+      className='main-content-wrapper-homepage'
+      style={{ backgroundImage: 'url(/images/assets/helpee-home.jpeg)' }}
+      title='Photo by Windows on Unsplash'
+    >
       <div className='section-center-align'>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          Create password to finish signing up
+          {t('create_password_to_complete_sign_up')}
         </h1>
         <h2
           style={{
@@ -127,14 +136,14 @@ const HelpeeSignUpPasswordPage = () => {
             color: 'white',
           }}
         >
-          Take less than a minute!
+          {t('take_less_than_a_minute')}
         </h2>
 
         <form action='' className='centerbox-landing'>
           <input
             type='text'
             className='form-control-password'
-            placeholder='Enter Email'
+            placeholder={t('home_enter_email_placeholder')}
             value={email}
             ref={emailRef}
             disabled
@@ -142,7 +151,7 @@ const HelpeeSignUpPasswordPage = () => {
           <input
             type='text'
             className='form-control-password'
-            placeholder='Enter Password'
+            placeholder={t('enter_password_placeholder')}
             value={password}
             onChange={handlePasswordTyping}
             ref={passwordRef}
@@ -155,19 +164,30 @@ const HelpeeSignUpPasswordPage = () => {
               style={{ marginRight: '20px', cursor: 'pointer' }}
             />
             <div className='checkbox-text-password-page'>
-              You agree to Shelpy's{' '}
-              <a href='/privacy-policy' target='_blank'>
-                privacy policy
-              </a>{' '}
-              and{' '}
-              <a href='/terms-and-conditions' target='_blank'>
-                terms and conditions
-              </a>
-              .
+              <p
+                style={{
+                  textAlign: 'center',
+                  marginTop: '5px',
+                  marginBottom: '10px',
+                  fontSize: '10px',
+                  padding: '5px 30px',
+                }}
+              >
+                {t('home_terms_and_condition_introduction')}{' '}
+                <a href='/privacy-policy' target='_blank'>
+                  {t('home_privacy_policy')}
+                </a>
+                {t('home_ending')} <br />
+                {t('home_you_can')}{' '}
+                <a href='/unsubscribe' target='_blank'>
+                  {t('home_unsubscribe')}{' '}
+                </a>{' '}
+                {t('home_at_any_time')}
+              </p>
             </div>
           </div>
           <ConfirmBtn
-            cta='Sign Up ❯'
+            cta={t('home_free_sign_up')}
             disable={!hasGiveConsent || password.length === 0}
             handleConfirm={handleConfirm}
           />

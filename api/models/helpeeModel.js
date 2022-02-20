@@ -80,6 +80,8 @@ async function updateHelpeeBasicInfo(data) {
     username,
     isAnonymous,
     age,
+    nationality,
+    residenceCountry,
     hasMonToFri,
     hasWeekend,
     hasBefore12,
@@ -103,7 +105,9 @@ async function updateHelpeeBasicInfo(data) {
     status,
   } = data;
   const sql = `
-    UPDATE helpee_account SET username = '${username}', introduction='${introduction}', isAnonymous=${isAnonymous}, age = '${age}', notes = '${notes}', status='${status}' 
+    UPDATE helpee_account SET username = '${username}', introduction='${introduction}'
+      ,nationality='${nationality}', residenceCountry='${residenceCountry}'
+      ,isAnonymous=${isAnonymous}, age = '${age}', notes = '${notes}', status='${status}' 
       ,hasMonToFri=${hasMonToFri}, hasWeekend=${hasWeekend}, hasBefore12=${hasBefore12}, has12To18=${has12To18}, hasAfter18=${hasAfter18}
       ,hasEnglish=${hasEnglish}, hasGerman=${hasGerman}, hasFrench=${hasFrench}, hasItalien=${hasItalien}
       ,hasChinese=${hasChinese}, hasCantonese=${hasCantonese}, hasVietnamese=${hasVietnamese}

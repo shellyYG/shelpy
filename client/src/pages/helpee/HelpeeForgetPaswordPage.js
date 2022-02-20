@@ -52,7 +52,11 @@ const HelpeeForgetPasswordPage = () => {
   }
 
   return (
-    <div className='main-content-wrapper-homepage'>
+    <div
+      className='main-content-wrapper-homepage'
+      style={{ backgroundImage: 'url(/images/assets/helpee-home.jpeg)' }}
+      title='Photo by Windows on Unsplash'
+    >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           {t('forget_password_title')}
@@ -77,7 +81,9 @@ const HelpeeForgetPasswordPage = () => {
             onChange={handleEmailTyping}
           />
           {isEmailInvalid && (
-            <p style={{ color: 'red', marginBottom: '10px' }}>{t('form_email_warning')}</p>
+            <p style={{ color: 'red', marginBottom: '10px' }}>
+              {t('form_email_warning')}
+            </p>
           )}
           <ConfirmBtn
             cta={t('get_password_cta')}

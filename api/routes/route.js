@@ -130,7 +130,7 @@ router.post(
     try {
       const result = await uploadFile(file, 'helper-profile-pictures');
       await helperModel.updateHelperProfilePicPath({ userId: helperUserId, path: result.Key});
-      await unlinkFile(file.path);
+      if (file) await unlinkFile(file.path);
       res.status(200).send({ imagePath: `/images/${result.Key}` });
     } catch (error) {
       console.error(error);
@@ -151,7 +151,7 @@ router.post(
         userId: helpeeUserId,
         path: result.Key,
       });
-      await unlinkFile(file.path);
+      if (file) await unlinkFile(file.path);
       res.status(200).send({ imagePath: `/images/${result.Key}` });
     } catch (error) {
       console.error(error);
@@ -170,6 +170,8 @@ router.post(
       isAnonymous,
       isMarketing,
       age,
+      nationality,
+      residenceCountry,
       linkedInUrl,
 
       hasMonToFri,
@@ -204,6 +206,8 @@ router.post(
         isAnonymous,
         isMarketing,
         age,
+        nationality,
+        residenceCountry,
         linkedInUrl,
 
         hasMonToFri,
@@ -251,6 +255,8 @@ router.post(
       isAnonymous,
       isMarketing,
       age,
+      nationality,
+      residenceCountry,
       linkedInUrl,
       notes,
 
@@ -285,6 +291,8 @@ router.post(
         isAnonymous,
         isMarketing,
         age,
+        nationality,
+        residenceCountry,
         introduction,
         linkedInUrl,
         notes,
@@ -330,6 +338,8 @@ router.post('/api/helpee/basic-form', async (req, res) => {
     username,
     isAnonymous,
     age,
+    nationality,
+    residenceCountry,
 
     hasMonToFri,
     hasWeekend,
@@ -362,6 +372,8 @@ router.post('/api/helpee/basic-form', async (req, res) => {
       username,
       isAnonymous,
       age,
+      nationality,
+      residenceCountry,
       hasMonToFri,
       hasWeekend,
       hasBefore12,

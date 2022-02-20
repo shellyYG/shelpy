@@ -13,7 +13,11 @@ const HelpeeLoggedInHomePage = () => {
   return (
     <div className='main-content-wrapper-no-height'>
       <div className='home-page-container'>
-        <div className='centerWrapperWithBackground'>
+        <div
+          className='centerWrapperWithBackground'
+          style={{ backgroundImage: 'url(/images/assets/helpee-home.jpeg)' }}
+          title='Photo by Windows on Unsplash'
+        >
           <div className='coverLeft'>
             <div>
               <h1 style={{ textAlign: 'center', color: 'white' }}>

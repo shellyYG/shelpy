@@ -15,7 +15,7 @@ function MktRow(props) {
         </div>
         <div className='mktPictureRight'>
           <div className='rectangleImageBxRight'>
-            <img src={props.imagePath} alt='connection'></img>
+            <img src={props.imagePath} alt={props.alt}></img>
           </div>
         </div>
       </div>

@@ -84,6 +84,8 @@ async function updateHelperCertificatePath(data) {
     isMarketing,
     path,
     age,
+    nationality,
+    residenceCountry,
     linkedInUrl,
 
     hasMonToFri,
@@ -111,7 +113,9 @@ async function updateHelperCertificatePath(data) {
     status,
   } = data;
   const sql = `
-    UPDATE helper_account SET username = '${username}', introduction='${introduction}', isAnonymous=${isAnonymous}, isMarketing=${isMarketing}
+    UPDATE helper_account SET username = '${username}', introduction='${introduction}'
+    , nationality='${nationality}', residenceCountry='${residenceCountry}'
+    , isAnonymous=${isAnonymous}, isMarketing=${isMarketing}
     ,certificatePath = '${path}', age = '${age}', linkedInUrl = '${linkedInUrl}', notes = '${notes}', status='${status}'
     ,hasMonToFri=${hasMonToFri}, hasWeekend=${hasWeekend}, hasBefore12=${hasBefore12}, has12To18=${has12To18}, hasAfter18=${hasAfter18}
       ,hasEnglish=${hasEnglish}, hasGerman=${hasGerman}, hasFrench=${hasFrench}, hasItalien=${hasItalien}

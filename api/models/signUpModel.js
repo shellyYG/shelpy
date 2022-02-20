@@ -16,6 +16,8 @@ async function insertUserAndGetUserId(data) {
     ivString: data.ivString,
     confirmed: false,
     score: 0,
+    refId: data.refId,
+    subscribed: data.subscribed
   };
   const table = data.isHelpee ? 'helpee_account' : 'helper_account';
   const sql = `INSERT INTO ${table} SET ?`;

@@ -59,14 +59,15 @@
   "please_create_new_password_to_continue": "現在你可以重設密碼了",
   "email_successfully_submitted": "成功提交Email",
   "create_password_to_complete_sign_up": "創建密碼以完成註冊",
+  "take_less_than_a_minute": "只要花你小於一分鐘的時間！",
   "a_confirm_email_has_been_sent": "註冊確認郵件已發送至你的收件夾",
   "please_confirm_email": "請去你的信箱確認你的電子郵件",
   "select_experience_you_want_to_know": "選擇你想知道的經驗",
   "select_experience_you_want_to_share": "選擇你想分享的經驗",
 
-  "mission_statement": "Shelpy 使命宣言",
+  "mission_statement": "Shelpy(過來人) 使命宣言",
   "mission_statement_part1": "透過傳授過來人的經驗給新鮮人，",
-  "mission_statement_part2": "Shelpy 致力於消弭資訊不平等，進而改善人們的生命。",
+  "mission_statement_part2": "Shelpy 致力於消弭資訊不對稱，進而改善人們的生命。",
 
   "please_sign_in_first": "請先登入",
   "sign_in": "登入",
@@ -351,6 +352,8 @@
   "age_31_to_35": "31-35 歲",
   "age_36_to_40": "36-40 歲",
   "over_40": "40歲以上",
+  "nationality_title": "國籍 (不公開，僅用於審閱資格) *",
+  "residence_country_title": "居住國家/地區 (不公開，僅用於審閱資格) *",
 
   "ask_anonymous": "匿名問問題 (顯示暱稱與諮詢項目，但隱藏大頭貼與詳細履歷個資)",
   "answer_anonymous": "匿名回答問題 (顯示暱稱與諮詢項目，但隱藏大頭貼與詳細履歷個資)（不建議）",

@@ -152,7 +152,18 @@ const PasswordResetPrePage = (props) => {
     dispatch,
   ]);
   return (
-    <div className={props.isHelpee? 'main-content-wrapper-homepage':'main-content-wrapper-homepage-helper'}>
+    <div
+      className={
+        props.isHelpee
+          ? 'main-content-wrapper-homepage'
+          : 'main-content-wrapper-homepage-helper'
+      }
+      style={{
+        backgroundImage: props.isHelpee
+          ? 'url(/images/assets/helpee-home.jpeg)'
+          : 'url(/images/assets/helper-home.jpeg)',
+      }}
+    >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
           {t('verifying')}

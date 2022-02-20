@@ -11,29 +11,33 @@ const HelperMarketingSection = () => {
           title={t('helper_mkt_help_people')}
           details1={t('helper_mkt_help_people_subtitle1')}
           details2={t('helper_mkt_help_people_subtitle2')}
-          imagePath='/helpPeople.jpg'
+          imagePath='/images/assets/helpPeople.jpg'
+          alt='Photo by Kelly Sikkema on Unsplash'
           lastChild={false}
         />
         <MktRow
           title={t('helper_mkt_generate_extra_revenue')}
           details1={t('helper_mkt_generate_extra_revenue_subtitle1')}
           details2={t('helper_mkt_generate_extra_revenue_subtitle2')}
-          imagePath='/sidebusiness.jpeg'
+          imagePath='/images/assets/sidebusiness.jpeg'
+          alt='Photo by Cayley Nossiter on Unsplash'
           lastChild={false}
         />
         <MktRow
           title={t('helper_mkt_marketing_listing')}
           details1={t('helper_mkt_marketing_listing_subtitle1')}
           details2={t('helper_mkt_marketing_listing_subtitle2')}
-          imagePath='/counselor.jpeg'
-          lastChild={true}
+          imagePath='/images/assets/counselor.jpeg'
+          alt='Photo by Christina @ wocintechchat.com on Unsplash'
+          lastChild={false}
         />
         <MktRow
           title={t('helper_mkt_control_privacy')}
           details1={t('helper_mkt_control_privacy_subtitle1')}
           details2={t('helper_mkt_control_privacy_subtitle2')}
-          imagePath='/oneToOne.jpeg'
-          lastChild={false}
+          imagePath='/images/assets/oneToOne.jpeg'
+          alt='Photo by Brett Jordan on Unsplash'
+          lastChild={true}
         />
       </div>
     </div>
