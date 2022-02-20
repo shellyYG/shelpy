@@ -300,6 +300,22 @@ export const schoolOptions = [
     value: 'Science',
     label: 'uni_form_school_science',
   },
+  {
+    value: 'SocialScience',
+    label: 'uni_form_school_social_science',
+  },
+  {
+    value: 'Medicine',
+    label: 'uni_form_school_medicine',
+  },
+  {
+    value: 'Engineering',
+    label: 'uni_form_school_engineering',
+  },
+  {
+    value: 'Law',
+    label: 'uni_form_school_law',
+  },
   { value: 'Others', label: othersText },
 ];
 
@@ -310,19 +326,191 @@ export const departmentOptions = {
     { value: 'Accounting', label: 'uni_form_department_accounting' },
     { value: 'Finance', label: 'uni_form_department_finance' },
     { value: 'Marketing', label: 'uni_form_department_marketing' },
+    {
+      value: 'InternationalBusiness',
+      label: 'uni_form_department_international_business',
+    },
+    {
+      value: 'InformationManagement',
+      label: 'uni_form_department_information_management',
+    },
+    {
+      value: 'BusinessAdministration',
+      label: 'uni_form_department_business_administration',
+    },
     { value: 'Others', label: othersText },
   ],
   Science: [
     { value: 'default', label: 'please_select_option' },
+    { value: 'Mathematics', label: 'uni_form_department_mathematics' },
+    { value: 'Physics', label: 'uni_form_department_physics' },
     { value: 'Chemistry', label: 'uni_form_department_chemistry' },
+    { value: 'Geosciences', label: 'uni_form_department_geosciences' },
     {
-      value: 'Computer Science',
-      label: 'uni_form_department_computer_science',
+      value: 'AtmosphericSciences',
+      label: 'uni_form_department_atmospheric_sciences',
     },
     {
-      value: 'Computer Engineering',
-      label: 'uni_form_department_computer_engineering',
+      value: 'Oceanography',
+      label: 'uni_form_department_oceanography',
     },
+    {
+      value: 'Astrophsics',
+      label: 'uni_form_department_Astrophsics',
+    },
+    { value: 'Others', label: othersText },
+  ],
+  SocialScience: [
+    { value: 'default', label: 'please_select_option' },
+    {
+      value: 'PoliticalScience',
+      label: 'uni_form_department_political_science',
+    },
+    {
+      value: 'Economics',
+      label: 'uni_form_department_economics',
+    },
+    {
+      value: 'Socialogy',
+      label: 'uni_form_department_sociology',
+    },
+    { value: 'Others', label: othersText },
+  ],
+  Medicine: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Medicine', label: 'uni_form_department_medicine' },
+    { value: 'Nursing', label: 'uni_form_department_nursing' },
+    {
+      value: 'Clinical Laboratory Science & Medical Biotech',
+      label: 'uni_form_department_clinical_laboratory',
+    },
+    {
+      value: 'Physical Therapy',
+      label: 'uni_form_department_physical_therapy',
+    },
+    {
+      value: 'Occupation Therapy',
+      label: 'uni_form_department_occupation_therapy',
+    },
+    {
+      value: 'Clinical Medicine',
+      label: 'uni_form_department_clinical_medicine',
+    },
+    {
+      value: 'Toxicology',
+      label: 'uni_form_department_clinical_toxicology',
+    },
+    {
+      value: 'Molecular Medicine',
+      label: 'uni_form_department_clinical_molecular_medicine',
+    },
+    {
+      value: 'Immunology',
+      label: 'uni_form_department_clinical_immunology',
+    },
+    {
+      value: 'Oncology',
+      label: 'uni_form_department_clinical_oncology',
+    },
+    {
+      value: 'Medical Genomics & Proteomics',
+      label: 'uni_form_department_clinical_medical_genomics',
+    },
+    {
+      value: 'Brain & Mind Sciences',
+      label: 'uni_form_department_clinical_brain_mind_science',
+    },
+    {
+      value: 'Medical Device & Imaging',
+      label: 'uni_form_department_medical_device_imaging',
+    },
+    {
+      value: 'Anatomy & Cell Biology',
+      label: 'uni_form_department_anotomy_cell_biology',
+    },
+    {
+      value: 'Biochemistry',
+      label: 'uni_form_department_biochemistry',
+    },
+    {
+      value: 'Physiology',
+      label: 'uni_form_department_physiology',
+    },
+    {
+      value: 'Microbiology',
+      label: 'uni_form_department_micobiology',
+    },
+    {
+      value: 'Pharmacology',
+      label: 'uni_form_department_pharmacology',
+    },
+    {
+      value: 'Pathology',
+      label: 'uni_form_department_pathology',
+    },
+    {
+      value: 'Dentistry',
+      label: 'uni_form_department_dentistry',
+    },
+    { value: 'Others', label: othersText },
+  ],
+  Engineering: [
+    { value: 'default', label: 'please_select_option' },
+    {
+      value: 'Electrical Engineering',
+      label: 'uni_form_department_electrical_engineering',
+    },
+    {
+      value: 'Computer Science & Information Engineering',
+      label: 'uni_form_department_computer_science_and_info_engineering',
+    },
+    {
+      value: 'Data Science',
+      label: 'uni_form_department_data_science',
+    },
+    {
+      value: 'Civic Engineering',
+      label: 'uni_form_department_civic_engineering',
+    },
+    {
+      value: 'Mechanical Engineering',
+      label: 'uni_form_department_mechanical_engineering',
+    },
+    {
+      value: 'Chemical Engineering',
+      label: 'uni_form_department_chemical_engineering',
+    },
+    {
+      value: 'Ocean Engineering',
+      label: 'uni_form_department_ocean_engineering',
+    },
+    {
+      value: 'Materials Science & Engineering',
+      label: 'uni_form_department_materials_science',
+    },
+    {
+      value: 'Biomedical Engineering',
+      label: 'uni_form_department_biomedical_engineering',
+    },
+    {
+      value: 'Environmental Engineering',
+      label: 'uni_form_department_environmental_engineering',
+    },
+    {
+      value: 'Photonices & Optoelectronics',
+      label: 'uni_form_department_photonics_opetoelectronics',
+    },
+    { value: 'Others', label: othersText },
+  ],
+  Law: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Civic Law', label: 'uni_form_department_civic_law' },
+    {
+      value: 'Criminal Justice',
+      label: 'uni_form_department_criminal_justice',
+    },
+    { value: 'Commercial Law', label: 'uni_form_department_commercial_law' },
+    { value: 'Public Law', label: 'uni_form_department_public_law' },
     { value: 'Others', label: othersText },
   ],
   Others: [

@@ -48,6 +48,11 @@ export const secondTypeOptions = {
     { value: 'default', label: 'please_select_option' },
     { value: 'Business', label: 'uni_form_school_business' },
     { value: 'Science', label: 'uni_form_school_science' },
+    { value: 'Engineering', label: 'uni_form_school_engineering' },
+    { value: 'SocialScience', label: 'uni_form_school_social_science' },
+    { value: 'LiberalArts', label: 'uni_form_school_liberal_arts' },
+    { value: 'Medicine', label: 'uni_form_school_medicine' },
+    { value: 'Law', label: 'uni_form_school_law' },
   ],
   job: [
     { value: 'default', label: 'please_select_option' },
