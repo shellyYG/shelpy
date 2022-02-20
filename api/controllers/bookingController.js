@@ -1,4 +1,6 @@
 const bookingModel = require('../models/bookingModel');
+const signInModel = require('../models/signInModel');
+
 
 const checkBookingExisted = async (data) => {
   const existingBookings = await bookingModel.checkBookingExisted(data);
@@ -47,7 +49,24 @@ const getBookingStatus = async (req, res) => {
   }
 }
 
+const unsubscibeEmail = async (req, res) => {
+  const { data } = req.body;
+  try {
+    const LoginUserResult = await signInModel.getUserDataByEmail(req.body.data);
+    if (LoginUserResult.length === 0) {
+      throw Error('account_does_not_exist');
+    } else {
+      await bookingModel.unsubscribeEmail(data);
+      res.status(200).json({ status: 'success' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   updateBookingStatus,
   getBookingStatus,
+  unsubscibeEmail,
 };

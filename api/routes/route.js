@@ -58,7 +58,9 @@ const {
 } = require('../controllers/helperController');
 
 const {
-  updateBookingStatus, getBookingStatus
+  updateBookingStatus,
+  getBookingStatus,
+  unsubscibeEmail,
 } = require('../controllers/bookingController');
 
 const { postUserSignInData } = require('../controllers/signInController');
@@ -416,5 +418,7 @@ router.route('/api/marketing-offers').get(wrapAsync(getAllMarketingOffers));
 router.route('/api/helpee/chat/partners').get(wrapAsync(getAllChattedHelpers));
 
 router.route('/api/helper/chat/partners').get(wrapAsync(getAllChattedCustomers));
+
+router.route('/api/unsubscribe/email').post(wrapAsync(unsubscibeEmail));
 
 module.exports = router;

@@ -3,11 +3,11 @@ import { generalActions } from './general-slice';
 
 const bookingStatusPath = '/api/booking-status';
 const getAllMarketingOffersPath = '/api/marketing-offers';
+const unSubEmailPath = '/api/unsubscribe/email'
 
 export const postBookingStatus = (data) => {
   return async (dispatch) => {
     let generalToken;
-    console.log('data: ', data);
     if (data.helpeeId || data.bookingStatus === 'created') { // is first time created or Helpee updating time
       generalToken = localStorage.getItem('shelpy-token');
     } else {
@@ -64,7 +64,6 @@ export const onClickUpdateChatroomRoom = (data) => {
 };
 
 export const getBookingStatus = (data) => {
-  console.log('getBookingStatus->data: ', data);
   return async (dispatch) => {
     let generalToken;
     if (data.isHelpee) {
@@ -146,3 +145,30 @@ export const getAllMarketingOffers = (data) => {
     }
   };
 };
+
+export const unsubEmail = (data) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(unSubEmailPath, { data });
+      dispatch(
+        generalActions.setEmailUnsubStatus({
+          unSubEmailStatus: 'success',
+          unSubEmailStatusTitle: 'success',
+          unSubEmailStatusMessage: 'successfully_unsub_email',
+        })
+      );
+      
+      } catch (error) {
+        console.error(error);
+        if (error.response) {
+          dispatch(
+            generalActions.setEmailUnsubStatus({
+              unSubEmailStatus: 'error',
+              unSubEmailStatusTitle: 'oops',
+              unSubEmailStatusMessage: error.response.data,
+            })
+          );
+        }
+      }
+  }
+}

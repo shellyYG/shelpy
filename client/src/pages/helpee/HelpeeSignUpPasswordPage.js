@@ -179,7 +179,7 @@ const HelpeeSignUpPasswordPage = () => {
                 </a>
                 {t('home_ending')} <br />
                 {t('home_you_can')}{' '}
-                <a href='/unsubscribe' target='_blank'>
+                <a href='/unsubscribe?isHelpee=true' target='_blank'>
                   {t('home_unsubscribe')}{' '}
                 </a>{' '}
                 {t('home_at_any_time')}

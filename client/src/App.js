@@ -36,6 +36,7 @@ import PasswordResetPage from './pages/PasswordResetPage';
 import PasswordResetPrePage from './pages/PasswordResetPrePage';
 import HelperForgetPasswordPage from './pages/helper/HelperForgetPasswordPage';
 import MarketingPage from './pages/MarketingPage';
+import EmailUnSubscriptionPage from './pages/EmailUnSubscriptionPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -69,9 +70,7 @@ function App() {
           <Route
             path='/home'
             element={
-              <HelpeeHomePage
-                isHelpeeAuthenticated={isHelpeeAuthenticated}
-              />
+              <HelpeeHomePage isHelpeeAuthenticated={isHelpeeAuthenticated} />
             }
           />
           <Route
@@ -80,6 +79,7 @@ function App() {
               <HelperHomePage isHelperAuthenticated={isHelperAuthenticated} />
             }
           />
+          <Route path='/unsubscribe' element={<EmailUnSubscriptionPage />} />
 
           <Route
             path='/helpee/sign-up-final-step'

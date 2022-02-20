@@ -12,6 +12,9 @@ const generalSlice = createSlice({
     bookingNotificationStatus: 'Initial',
     bookingNotificationStatusTitle: '',
     bookingNotificationStatusMessage: '',
+    unSubEmailStatus: 'Initial',
+    unSubEmailStatusTitle: '',
+    unSubEmailStatusMessage: '',
     allMKTOffers: [],
   },
   reducers: {
@@ -48,7 +51,17 @@ const generalSlice = createSlice({
     updateAllMarketingOffers(state, action) {
       const { allMKTOffers } = action.payload;
       if (allMKTOffers) state.allMKTOffers = allMKTOffers;
-    }
+    },
+    setEmailUnsubStatus(state, action) {
+      const {
+        unSubEmailStatus,
+        unSubEmailStatusTitle,
+        unSubEmailStatusMessage,
+      } = action.payload;
+      if (unSubEmailStatus) state.unSubEmailStatus = unSubEmailStatus;
+      if (unSubEmailStatusTitle) state.unSubEmailStatusTitle = unSubEmailStatusTitle;
+      if (unSubEmailStatusMessage) state.unSubEmailStatusMessage = unSubEmailStatusMessage;
+    },
   },
 });
 
