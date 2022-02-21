@@ -230,6 +230,7 @@ function BookingCard(props) {
   }
 
   function handlePayHelper(token) {
+    alert('Paid');
     try {
       // const data = {
       //   bookingStatus: 'paid',

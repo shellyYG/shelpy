@@ -8,10 +8,7 @@ const AboutPage = () => {
       style={{ backgroundImage: 'url(/images/assets/helpee-home.jpeg)' }}
     >
       <div className='section-center-align-landing'>
-        <div
-          className='centerWrapper'
-          style={{ textAlign: 'center' }}
-        >
+        <div className='centerWrapper' style={{ textAlign: 'center' }}>
           <img
             src={'/images/assets/pinterest.png'}
             alt={'shelpy'}
@@ -20,8 +17,10 @@ const AboutPage = () => {
           <h2>{t('mission_statement')}</h2>
           <br />
           <h3>
-            {t('mission_statement_part1')} <br />
+            {t('mission_statement_part0')} <br />
             <br />
+            {t('mission_statement_part1')} <br />
+            
             {t('mission_statement_part2')}
           </h3>
           <br />
