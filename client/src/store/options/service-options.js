@@ -269,11 +269,37 @@ export const jobOptions = {
       value: 'Dietitian',
       label: 'job_form_job_dietitian',
     },
+    {
+      value: 'Dentist',
+      label: 'job_form_job_dentist',
+    },
+    {
+      value: 'Occupational Therapist',
+      label: 'job_form_job_occupational_therapist',
+    },
+    {
+      value: 'Physical Therapist',
+      label: 'job_form_job_physical_therapist',
+    },
+    {
+      value: 'Speech Therapist',
+      label: 'job_form_job_speech_therapist',
+    },
+    {
+      value: 'Hearing Therapist',
+      label: 'job_form_job_hearing_therapist',
+    },
+    {
+      value: 'Radiologist',
+      label: 'job_form_job_radiologist',
+    },
     { value: 'Others', label: othersText },
   ],
   Finance: [
     { value: 'default', label: 'please_select_option' },
     { value: 'Investment Banker', label: 'job_form_job_investment_banker' },
+    { value: 'Sales & Trading', label: 'job_form_job_trading' },
+    { value: 'Asset Management', label: 'job_form_job_asset_management' },
     { value: 'Private Equity', label: 'job_form_job_PE' },
     { value: 'Bank Teller', label: 'job_form_job_bank_teller' },
     { value: 'Insurance Sales', label: 'job_form_job_insurance_sales' },
@@ -329,6 +355,18 @@ export const jobOptions = {
     {
       value: 'Mechanical Engineer',
       label: 'job_form_job_mechanical_engineer',
+    },
+    {
+      value: 'Process Engineer',
+      label: 'job_form_job_process_engineer',
+    },
+    {
+      value: 'Equipment Engineer',
+      label: 'job_form_job_equipment_engineer',
+    },
+    {
+      value: 'Field Application Engineer (FAE)',
+      label: 'job_form_job_fae',
     },
     {
       value: 'Nano R&D Engineer',
@@ -464,6 +502,7 @@ export const jobOptions = {
     { value: 'Police', label: 'job_form_job_police' },
     { value: 'Fire Fighter', label: 'job_form_job_fire_fighter' },
     { value: 'Babysitter', label: 'job_form_job_babysitter' },
+    { value: 'Social Worker', label: 'job_form_social_worker' },
     { value: 'Others', label: othersText },
   ],
   'Education/Trainer': [
@@ -829,10 +868,10 @@ export const professionOptions = [
   { value: 'Body Salon', label: 'self_employed_profession_body_salon' },
   { value: 'Massage', label: 'self_employed_profession_massage' },
   {
-    value: 'Bubble Tea Shop',
+    value: 'Bubble Tea Shop Waiter/Waitress',
     label: 'self_employed_profession_bubble_tea_shop',
   },
-  { value: 'Cafe', label: 'self_employed_profession_cafe' },
+  { value: 'Cafe Waiter/Waitress', label: 'self_employed_profession_cafe' },
   {
     value: 'Baby Sitter',
     label: 'self_employed_profession_baby_sitter',
@@ -894,6 +933,38 @@ export const professionOptions = [
   {
     value: 'Birth Consultant',
     label: 'self_employed_profession_birth_consultant',
+  },
+  {
+    value: 'Farmer',
+    label: 'self_employed_profession_farmer',
+  },
+  {
+    value: 'Delivery Man/Woman',
+    label: 'self_employed_profession_delivery_person',
+  },
+  {
+    value: 'Cafe Owner',
+    label: 'self_employed_profession_cafe_owner',
+  },
+  {
+    value: 'Airbnb/Inn/Hostel Owner',
+    label: 'self_employed_profession_bb_owner',
+  },
+  {
+    value: 'Restaurant Owner',
+    label: 'self_employed_profession_restaurant_owner',
+  },
+  {
+    value: 'Caretaker',
+    label: 'self_employed_profession_caretaker',
+  },
+  {
+    value: 'Cleaner',
+    label: 'self_employed_profession_cleaner',
+  },
+  {
+    value: 'Body Guard',
+    label: 'self_employed_profession_body_guard',
   },
   { value: 'Others', label: othersText },
 ];

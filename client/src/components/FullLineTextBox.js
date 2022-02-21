@@ -9,7 +9,7 @@ function FullLineTextBox(props) {
             style={{ fontSize: '12px' }}
             placeholder={props.placeholder}
             ref={props.inputRef}
-            maxLength='100'
+            maxLength={props.maxLength || '100'}
             onChange={props.onChange}
           />
         </div>

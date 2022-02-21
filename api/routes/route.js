@@ -198,6 +198,7 @@ router.post(
       languages,
 
       notes,
+      bankAccount,
       status,
     } = req.body;
     try {
@@ -234,6 +235,7 @@ router.post(
         languages,
 
         notes,
+        bankAccount,
         path: 'no_certificate_uploaded',
         status,
       });
@@ -261,6 +263,7 @@ router.post(
       residenceCountry,
       linkedInUrl,
       notes,
+      bankAccount,
 
       hasMonToFri,
       hasWeekend,
@@ -298,6 +301,7 @@ router.post(
         introduction,
         linkedInUrl,
         notes,
+        bankAccount,
 
         hasMonToFri,
         hasWeekend,

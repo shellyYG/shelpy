@@ -40,6 +40,7 @@ const BasicFormPage = (props) => {
   const linkedInUrlRef = useRef();
   const nationalityRef = useRef();
   const residenceCountryRef = useRef();
+  const bankAccountRef = useRef();
 
   const [loading, setIsLoading] = useState(false);
   const [age, setAge] = useState('default');
@@ -47,6 +48,7 @@ const BasicFormPage = (props) => {
   const [certificate, setCertificate] = useState();
   const [nationality, setNationality] = useState('default');
   const [residenceCountry, setResidenceCountry] = useState('default');
+  const [bankAccountString, setBankAccountString] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(false);
   const [enableBtn, setEnableBtn] = useState(false);
@@ -212,6 +214,7 @@ const BasicFormPage = (props) => {
     e.preventDefault();
     let introduction;
     let notes;
+    let bankAccount;
     let username;
     let linkedInUrl;
     if (introductionRef && introductionRef.current) {
@@ -225,6 +228,9 @@ const BasicFormPage = (props) => {
     }
     if (linkedInUrlRef && linkedInUrlRef.current) {
       linkedInUrl = linkedInUrlRef.current.value;
+    }
+    if (bankAccountRef && bankAccountRef.current) {
+      bankAccount = bankAccountRef.current.value;
     }
     let data;
     if (certificate) { // must be helper
@@ -260,8 +266,8 @@ const BasicFormPage = (props) => {
       data.append('hasOthers', hasOthers);
       data.append('languages', languages);
 
-
       data.append('notes', notes);
+      data.append('bankAccount', bankAccount);
       data.append('status', 'basic_info_updated');
 
       data.append('certificate', certificate); // need to append file as last object
@@ -334,6 +340,7 @@ const BasicFormPage = (props) => {
 
           languages,
 
+          bankAccount,
           notes,
           status: 'basic_info_updated',
         };
@@ -355,15 +362,34 @@ const BasicFormPage = (props) => {
   }
 
   useEffect(() => {
-    setEnableBtn(
-      usernameRef &&
-        age !== 'default' &&
-        nationality !== 'default' &&
-        residenceCountry !== 'default' &&
-        (linkedInUrlRef || certificate)
-    );
-  }, [usernameRef, linkedInUrlRef, age, nationality, residenceCountry, certificate]);
-  console.log('applyHelperStatus: ', applyHelperStatus);
+    if (props.isHelpee) {
+      setEnableBtn(
+        usernameRef &&
+          age !== 'default' &&
+          nationality !== 'default' &&
+          residenceCountry !== 'default'
+      );
+    } else {
+      setEnableBtn(
+        usernameRef &&
+          age !== 'default' &&
+          nationality !== 'default' &&
+          residenceCountry !== 'default' &&
+          (linkedInUrlRef || certificate) &&
+          bankAccountString
+      );
+    }
+  }, [
+    props.isHelpee,
+    usernameRef,
+    linkedInUrlRef,
+    age,
+    nationality,
+    residenceCountry,
+    certificate,
+    bankAccountString,
+  ]);
+
   // is Helper:
   useEffect(() => {
     if (applyHelperStatus === 'error') {
@@ -439,8 +465,11 @@ const BasicFormPage = (props) => {
     navigate,
     dispatch,
   ]);
-  console.log('helpeeProfilePicPath: ', helpeeProfilePicPath);
-  console.log('helperProfilePicPath: ', helperProfilePicPath);
+  function handleBankAccountTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setBankAccountString(typingInput);
+  }
   return (
     <div
       className='main-content-wrapper'
@@ -809,6 +838,13 @@ const BasicFormPage = (props) => {
                   inputRef={priceRef}
                 />
               )} */}
+              <FullLineTextBox
+                title={t('bank_account_title')}
+                placeholder={t('bank_account_placeholder')}
+                maxLength='1000'
+                inputRef={bankAccountRef}
+                onChange={handleBankAccountTyping}
+              />
               <FullLineTextBox
                 title={t('introduction')}
                 placeholder={t('introduction_placeholder')}

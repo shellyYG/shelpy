@@ -112,6 +112,7 @@ async function updateHelperCertificatePath(data) {
     languages,
 
     notes,
+    bankAccount,
     status,
   } = data;
   const sql = `
@@ -124,6 +125,7 @@ async function updateHelperCertificatePath(data) {
       ,hasChinese=${hasChinese}, hasCantonese=${hasCantonese}, hasVietnamese=${hasVietnamese}
       ,hasKorean=${hasKorean}, hasJapanese=${hasJapanese}, hasTurkish=${hasTurkish}, hasUkrainian=${hasUkrainian}
       ,hasArabic=${hasArabic}, hasOthers=${hasOthers}, languages='${languages}'
+      ,bankAccount='${bankAccount}'
     WHERE id = ${userId}`;
   const sqlquery = await query(sql);
   return sqlquery;
