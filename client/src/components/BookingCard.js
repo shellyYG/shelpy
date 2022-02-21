@@ -94,9 +94,11 @@ function BookingCard(props) {
         ) {
           setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
         }
-        thirdTypeTranslationObj = jobOptions.filter(
-          (o) => o.value === props.thirdType
-        );
+        if (jobOptions && jobOptions[props.secondType]) {
+          thirdTypeTranslationObj = jobOptions[props.secondType].filter(
+            (o) => o.value === props.thirdType
+          );
+        }
         if (
           props.thirdType &&
           thirdTypeTranslationObj &&

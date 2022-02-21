@@ -70,6 +70,7 @@ const JobFormPage = (props) => {
     });
   }
   const [industry, setIndustry] = useState('default');
+  const [matchedJobs, setMatchedJobs] = useState([]);
   const [job, setJob] = useState('default');
   const [country, setCountry] = useState('default');
   const [WFH, setWFH] = useState('default');
@@ -77,6 +78,14 @@ const JobFormPage = (props) => {
   const [years, setYears] = useState('default');
   const [enableBtn, setEnableBtn] = useState(false);
   const [typingPrice, setTypingPrice] = useState('');
+
+  useEffect(() => {
+    if (industry) {
+      const jobs = jobOptions[industry];
+      console.log('jobs: ', jobs);
+      setMatchedJobs(jobs);
+    }
+  }, [industry]);
 
   function handlePriceTyping(e) {
     console.log('handlePriceTyping...');
@@ -267,7 +276,7 @@ const JobFormPage = (props) => {
                   handleSelect={setJob}
                   title={t('job_form_job')}
                   selectRef={jobRef}
-                  options={jobOptions}
+                  options={matchedJobs}
                 />
               </div>
               <div className='form-row last'>

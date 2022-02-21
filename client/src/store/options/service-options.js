@@ -173,20 +173,48 @@ export const industryOptions = [
     label: 'job_form_industry_medical',
   },
   {
-    value: 'Software',
-    label: 'job_form_industry_software',
-  },
-  {
-    value: 'Blockchain',
-    label: 'job_form_industry_blockchain',
-  },
-  {
     value: 'Finance',
     label: 'job_form_industry_finance',
   },
   {
+    value: 'Retail',
+    label: 'job_form_industry_retail',
+  },
+  {
+    value: 'Manufacture',
+    label: 'job_form_manufacture',
+  },
+  {
     value: 'Consulting',
     label: 'job_form_industry_consulting',
+  },
+  {
+    value: 'Software/Ecommerce',
+    label: 'job_form_information_technology_ecommerce',
+  },
+  {
+    value: 'Travel/Tourism/Food',
+    label: 'job_form_industry_tourisum',
+  },
+  {
+    value: 'Law',
+    label: 'job_form_industry_law',
+  },
+  {
+    value: 'Social/Public Service',
+    label: 'job_form_industry_social_service',
+  },
+  {
+    value: 'Education/Trainer',
+    label: 'job_form_industry_education',
+  },
+  {
+    value: 'Media/Design/Art',
+    label: 'job_form_industry_media_art',
+  },
+  {
+    value: 'Agency',
+    label: 'job_form_industry_agency',
   },
   { value: 'Others', label: othersText },
 ];
@@ -225,70 +253,298 @@ export const WFHOptions = [
   { value: 'Others', label: othersText },
 ];
 
-export const jobOptions = [
-  { value: 'default', label: 'please_select_option' },
-  {
-    value: 'Front-End Developer',
-    label: 'job_form_job_front_end_dev',
-  },
-  {
-    value: 'Back-End Developer',
-    label: 'job_form_job_back_end_dev',
-  },
-  {
-    value: 'Full-Stack Developer',
-    label: 'job_form_job_full_stack_dev',
-  },
-  {
-    value: 'UI/UX Designer',
-    label: 'job_form_job_ui_designer',
-  },
-
-  {
-    value: 'Data Analyst',
-    label: 'job_form_job_data_analyst',
-  },
-  {
-    value: 'Data Science',
-    label: 'job_form_job_data_science',
-  },
-  {
-    value: 'Blockchain Developer',
-    label: 'job_form_job_block_chain_dev',
-  },
-  {
-    value: 'Business Developer / Sales',
-    label: 'job_form_job_bd_sales',
-  },
-  {
-    value: 'Marketing',
-    label: 'job_form_job_marketing',
-  },
-  {
-    value: 'Doctor',
-    label: 'job_form_job_doctor',
-  },
-  {
-    value: 'Nurse',
-    label: 'job_form_job_nurse',
-  },
-  {
-    value: 'Investment Banker',
-    label: 'job_form_job_investment_banker',
-  },
-  {
-    value: 'Accountant / Auditor',
-    label: 'job_form_job_biz_accountant',
-  },
-  {
-    value: 'Business Consultant',
-    label: 'job_form_job_biz_consultant',
-  },
-  {
-    value: 'Others',
-    label: othersText,
-  },
-];
+export const jobOptions = {
+  default: [{ value: 'default', label: 'please_select_option' }],
+  Medical: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Doctor', label: 'job_form_job_doctor' },
+    { value: 'Nurse', label: 'job_form_job_nurse' },
+    { value: 'Pharmacist', label: 'job_form_job_pharmacist' },
+    { value: 'Veterinary', label: 'job_form_job_veterinary' },
+    {
+      value: 'Psychological counselor',
+      label: 'job_form_job_mental_counselor',
+    },
+    {
+      value: 'Dietitian',
+      label: 'job_form_job_dietitian',
+    },
+    { value: 'Others', label: othersText },
+  ],
+  Finance: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Investment Banker', label: 'job_form_job_investment_banker' },
+    { value: 'Private Equity', label: 'job_form_job_PE' },
+    { value: 'Bank Teller', label: 'job_form_job_bank_teller' },
+    { value: 'Insurance Sales', label: 'job_form_job_insurance_sales' },
+    { value: 'Stock Broker', label: 'job_form_job_stock_broker' },
+    {
+      value: 'Personal Investment Advisor',
+      label: 'job_form_job_investment_advisor',
+    },
+    { value: 'Industry Analyst', label: 'job_form_job_industry_analyst' },
+    { value: 'Accountant', label: 'job_form_job_accountant' },
+    { value: 'Auditor', label: 'job_form_job_auditor' },
+    { value: 'Others', label: othersText },
+  ],
+  Retail: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Cashier', label: 'job_form_job_cashier' },
+    { value: 'Finance Analyst/Manager', label: 'job_form_job_retail_finance' },
+    { value: 'Sales Analyst/Manager', label: 'job_form_job_retail_sales' },
+    { value: 'Marketing Analyst/Manager', label: 'job_form_job_retail_mkt' },
+    { value: 'Purchase', label: 'job_form_job_retail_purchase' },
+    { value: 'Engineer/IT', label: 'job_form_job_retail_IT' },
+    { value: 'Human Resource', label: 'job_form_job_retail_hr' },
+    { value: 'Public Relations', label: 'job_form_job_retail_pr' },
+    { value: 'Others', label: othersText },
+  ],
+  Manufacture: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Labor Worker', label: 'job_form_job_manufacture_worker' },
+    {
+      value: 'Business Development/B2B Sales',
+      label: 'job_form_job_manufacture_bd',
+    },
+    {
+      value: 'Finance Analyst/Manager',
+      label: 'job_form_job_manufacture_finance',
+    },
+    {
+      value: 'Sales Analyst/Manager',
+      label: 'job_form_job_manufacture_sales',
+    },
+    {
+      value: 'Marketing Analyst/Manager',
+      label: 'job_form_job_manufacture_mkt',
+    },
+    {
+      value: 'Purchase',
+      label: 'job_form_job_manufacture_purchase',
+    },
+    {
+      value: 'Engineer/IT',
+      label: 'job_form_job_manufacture_IT',
+    },
+    {
+      value: 'Mechanical Engineer',
+      label: 'job_form_job_mechanical_engineer',
+    },
+    {
+      value: 'Nano R&D Engineer',
+      label: 'job_form_job_nano_engineer',
+    },
+    {
+      value: 'Biotechnology Engineer',
+      label: 'job_form_job_biotechnology_engineer',
+    },
+    {
+      value: 'Material Engineer',
+      label: 'job_form_job_material_engineer',
+    },
+    {
+      value: 'Human Resource',
+      label: 'job_form_job_manufacture_hr',
+    },
+    {
+      value: 'Public Relations',
+      label: 'job_form_job_manufacture_pr',
+    },
+    {
+      value: 'Receptionist',
+      label: 'job_form_job_manufatcure_receptionist',
+    },
+    { value: 'Others', label: othersText },
+  ],
+  Consulting: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Strategy Consultant', label: 'job_form_job_strategy_consultant' },
+    { value: 'IT Consultant', label: 'job_form_job_IT_consultant' },
+    { value: 'Finance Consultant', label: 'job_form_job_finance_consultant' },
+    { value: 'Tax Consultant', label: 'job_form_job_tax_consultant' },
+    { value: 'Human Resource', label: 'job_form_job_hr' },
+    { value: 'Receptionist', label: 'job_form_job_consulting_receptionist' },
+    { value: 'Others', label: othersText },
+  ],
+  'Software/Ecommerce': [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Back-End Developer', label: 'job_form_job_backend_developer' },
+    { value: 'Front-End Developer', label: 'job_form_job_frontend_developer' },
+    {
+      value: 'Full-Stack Developer',
+      label: 'job_form_job_fullstack_developer',
+    },
+    {
+      value: 'DevOps',
+      label: 'job_form_job_dev_ops',
+    },
+    {
+      value: 'QA Developer',
+      label: 'job_form_job_qa_developer',
+    },
+    {
+      value: 'Blockchain Developer',
+      label: 'job_form_job_blockchain_developer',
+    },
+    {
+      value: 'Product Manager',
+      label: 'job_form_job_product_manager',
+    },
+    {
+      value: 'UI/UX Designer',
+      label: 'job_form_job_ui_designer',
+    },
+    {
+      value: 'Data Analyst',
+      label: 'job_form_job_data_analyst',
+    },
+    {
+      value: 'Data Science',
+      label: 'job_form_job_data_science',
+    },
+    {
+      value: 'Business Developer/Sales',
+      label: 'job_form_job_bd_sales',
+    },
+    {
+      value: 'Marketing',
+      label: 'job_form_job_marketing',
+    },
+    {
+      value: 'Graphic Designer',
+      label: 'job_form_job_graphic_designer',
+    },
+    {
+      value: 'Purchase',
+      label: 'job_form_job_ecommerce_purchase',
+    },
+    {
+      value: 'Logistics/Supply Chain',
+      label: 'job_form_job_ecommerce_logistic',
+    },
+    {
+      value: 'Human Resource',
+      label: 'job_form_job_ecommerce_hr',
+    },
+    {
+      value: 'Public Relations',
+      label: 'job_form_job_ecommerce_pr',
+    },
+    {
+      value: 'Copy Writter',
+      label: 'job_form_job_ecommerce_copywritter',
+    },
+    {
+      value: 'Receptionist',
+      label: 'job_form_job_ecommerce_receptionist',
+    },
+    { value: 'Others', label: othersText },
+  ],
+  'Travel/Tourism/Food': [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Tour Guide', label: 'job_form_job_tour_guide' },
+    { value: 'Waiter/Waitress', label: 'job_form_job_waiter' },
+    { value: 'Receptionist', label: 'job_form_job_tourisum_receptionist' },
+    { value: 'Chef/Cooker', label: 'job_form_job_cooker' },
+    { value: 'Bartender', label: 'job_form_job_bartender' },
+    { value: 'Driver', label: 'job_form_job_driver' },
+    { value: 'Pilot', label: 'job_form_job_pilot' },
+    { value: 'Flight attendants', label: 'job_form_job_flight_attendent' },
+    { value: 'Others', label: othersText },
+  ],
+  Law: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Lawyer', label: 'job_form_job_lawyer' },
+    { value: 'Judge', label: 'job_form_job_judge' },
+    { value: 'Prosecutor', label: 'job_form_job_prosecutor' },
+    { value: 'Others', label: othersText },
+  ],
+  'Social/Public Service': [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Police', label: 'job_form_job_police' },
+    { value: 'Fire Fighter', label: 'job_form_job_fire_fighter' },
+    { value: 'Babysitter', label: 'job_form_job_babysitter' },
+    { value: 'Others', label: othersText },
+  ],
+  'Education/Trainer': [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Professor', label: 'job_form_job_professor' },
+    { value: 'Teacher', label: 'job_form_job_teacher' },
+    { value: 'Sport Trainer', label: 'job_form_job_sport_trainer' },
+    {
+      value: 'Career Trainer/Counselor',
+      label: 'job_form_job_career_counselor',
+    },
+    { value: 'Others', label: othersText },
+  ],
+  'Media/Design/Art': [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Actor/Actress', label: 'job_form_job_actor' },
+    {
+      value: 'Content Creator (Youtuber,IG...)',
+      label: 'job_form_job_content_creator',
+    },
+    {
+      value: 'Photographer',
+      label: 'job_form_job_photographer',
+    },
+    {
+      value: 'Wedding Planner/Bride Makeup Artist',
+      label: 'job_form_job_wedding_planner',
+    },
+    {
+      value: 'Apparel Designer',
+      label: 'job_form_job_apparel_designer',
+    },
+    {
+      value: 'Industrial Designer',
+      label: 'job_form_job_industry_designer',
+    },
+    {
+      value: 'Multimedia/ Animation Designer',
+      label: 'job_form_job_multimedia_designer',
+    },
+    {
+      value: 'Graphic Designer',
+      label: 'job_form_job_art_graphic_designer',
+    },
+    {
+      value: 'Interior Designer',
+      label: 'job_form_job_art_interior_designer',
+    },
+    {
+      value: 'Musician',
+      label: 'job_form_job_musician',
+    },
+    {
+      value: 'Painter',
+      label: 'job_form_job_painter',
+    },
+    {
+      value: 'Flower Artist',
+      label: 'job_form_job_flower_artist',
+    },
+    {
+      value: 'Hair Stylist',
+      label: 'job_form_hair_stylist',
+    },
+    {
+      value: 'Massager',
+      label: 'job_form_massager',
+    },
+    { value: 'Others', label: othersText },
+  ],
+  Agency: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Real Estate Agency', label: 'job_form_job_real_estate_agency' },
+    { value: 'Human Resource Agency', label: 'job_form_job_hr_agency' },
+    { value: 'Others', label: othersText },
+  ],
+  Others: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Others', label: othersText },
+  ],
+};
 
 export const schoolOptions = [
   { value: 'default', label: 'please_select_option' },
@@ -598,6 +854,46 @@ export const professionOptions = [
   {
     value: 'Psychological counselor',
     label: 'self_employed_profession_mental_counselor',
+  },
+  {
+    value: 'Tattoo Artist',
+    label: 'self_employed_profession_job_tattoo_artist',
+  },
+  {
+    value: 'Photographer',
+    label: 'self_employed_profession_photographer',
+  },
+  {
+    value: 'Wedding Planner/Bride Makeup Artist',
+    label: 'self_employed_profession_wedding_planner',
+  },
+  {
+    value: 'Apparel Designer',
+    label: 'self_employed_profession_apparel_designer',
+  },
+  {
+    value: 'Industrial Designer',
+    label: 'self_employed_profession_industry_designer',
+  },
+  {
+    value: 'Multimedia/ Animation Designer',
+    label: 'self_employed_profession_multimedia_designer',
+  },
+  {
+    value: 'Graphic Designer',
+    label: 'self_employed_profession_art_graphic_designer',
+  },
+  {
+    value: 'Interior Designer',
+    label: 'self_employed_profession_interior_designer',
+  },
+  {
+    value: 'Flower Artist',
+    label: 'self_employed_profession_flower_artist',
+  },
+  {
+    value: 'Birth Consultant',
+    label: 'self_employed_profession_birth_consultant',
   },
   { value: 'Others', label: othersText },
 ];

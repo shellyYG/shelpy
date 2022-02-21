@@ -38,12 +38,7 @@ const UniFormPage = (props) => {
   const degreeRef = useRef();
   const notesRef = useRef();
   const [typingPrice, setTypingPrice] = useState('');
-  console.log(
-    'typingPrice: ',
-    typingPrice,
-    'isInt(typingPrice): ',
-    isInt(typingPrice)
-  );
+  
   const [loading, setIsLoading] = useState(false);
   
   function isInt(value) {
