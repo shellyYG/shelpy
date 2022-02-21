@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-// const path = __dirname + '/views/';
+const path = __dirname + '/views/';
 const app = express();
 const server = require('http').createServer(app);
 const cors = require('cors');
@@ -21,12 +21,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use([
   require('./api/routes/route'),
-  // express.static(path)
+  express.static(path)
 ]);
 app.use(cors());
-// app.get("/", function (req, res) {
-//   res.sendFile(path + "index.html");
-// });
+app.get("/", function (req, res) {
+  res.sendFile(path + "index.html");
+});
 
 // app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
