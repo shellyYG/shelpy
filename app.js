@@ -24,7 +24,7 @@ app.use([
   express.static(path)
 ]);
 app.use(cors());
-app.get("/", function (req, res) {
+app.get("/*", function (req, res) {
   res.sendFile(path + "index.html");
 });
 
