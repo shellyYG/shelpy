@@ -40,7 +40,7 @@ const NavBar = (props) => {
       <nav>
         <div className='nav-menu'>
           <NavLink className='nav-logo' to='/home'>
-            <img src={'/images/assets/pinterest.png'} alt={'shelpy'} style={{ width: '55px', height: '55px'}}/>
+            <img src={'/pinterest.png'} alt={'shelpy'} style={{ width: '55px', height: '55px'}}/>
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}

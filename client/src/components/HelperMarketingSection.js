@@ -11,7 +11,7 @@ const HelperMarketingSection = () => {
           title={t('helper_mkt_help_people')}
           details1={t('helper_mkt_help_people_subtitle1')}
           details2={t('helper_mkt_help_people_subtitle2')}
-          imagePath='/images/assets/helpPeople.jpg'
+          imagePath='/helpPeople.jpg'
           alt='Photo by Kelly Sikkema on Unsplash'
           lastChild={false}
         />
@@ -19,7 +19,7 @@ const HelperMarketingSection = () => {
           title={t('helper_mkt_generate_extra_revenue')}
           details1={t('helper_mkt_generate_extra_revenue_subtitle1')}
           details2={t('helper_mkt_generate_extra_revenue_subtitle2')}
-          imagePath='/images/assets/sidebusiness.jpeg'
+          imagePath='/sidebusiness.jpeg'
           alt='Photo by Cayley Nossiter on Unsplash'
           lastChild={false}
         />
@@ -27,7 +27,7 @@ const HelperMarketingSection = () => {
           title={t('helper_mkt_marketing_listing')}
           details1={t('helper_mkt_marketing_listing_subtitle1')}
           details2={t('helper_mkt_marketing_listing_subtitle2')}
-          imagePath='/images/assets/counselor.jpeg'
+          imagePath='/counselor.jpeg'
           alt='Photo by Christina @ wocintechchat.com on Unsplash'
           lastChild={false}
         />
@@ -35,7 +35,7 @@ const HelperMarketingSection = () => {
           title={t('helper_mkt_control_privacy')}
           details1={t('helper_mkt_control_privacy_subtitle1')}
           details2={t('helper_mkt_control_privacy_subtitle2')}
-          imagePath='/images/assets/oneToOne.jpeg'
+          imagePath='/oneToOne.jpeg'
           alt='Photo by Brett Jordan on Unsplash'
           lastChild={true}
         />

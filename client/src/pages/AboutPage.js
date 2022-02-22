@@ -5,12 +5,12 @@ const AboutPage = () => {
   return (
     <div
       className='main-content-wrapper-homepage'
-      style={{ backgroundImage: 'url(/images/assets/helpee-home.jpeg)' }}
+      style={{ backgroundImage: 'url(/helpee-home.jpeg)' }}
     >
       <div className='section-center-align-landing'>
         <div className='centerWrapper' style={{ textAlign: 'center' }}>
           <img
-            src={'/images/assets/pinterest.png'}
+            src={'/pinterest.png'}
             alt={'shelpy'}
             style={{ width: '150px', height: '150px' }}
           />

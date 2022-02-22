@@ -113,8 +113,8 @@ const EmailUnSubscriptionPage = () => {
       className='main-content-wrapper-homepage'
       style={{
         backgroundImage: isHelpee
-          ? 'url(/images/assets/helpee-home.jpeg)'
-          : 'url(/images/assets/helper-home.jpeg)',
+          ? 'url(/helpee-home.jpeg)'
+          : 'url(/helper-home.jpeg)',
       }}
       title='Photo by Windows on Unsplash'
     >

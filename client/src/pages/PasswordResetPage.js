@@ -167,8 +167,8 @@ const PasswordResetPage = (props) => {
       }
       style={{
         backgroundImage: props.isHelpee
-          ? 'url(/images/assets/helpee-home.jpeg)'
-          : 'url(/images/assets/helper-home.jpeg)',
+          ? 'url(/helpee-home.jpeg)'
+          : 'url(/helper-home.jpeg)',
       }}
     >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>

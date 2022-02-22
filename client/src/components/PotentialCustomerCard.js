@@ -139,7 +139,7 @@ function PotentialCustomerCard(props) {
               rel='noreferrer'
             >
               <img
-                src={`/images/assets/defaultAvatar.jpg`}
+                src={`/defaultAvatar.jpg`}
                 alt={
                   'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
                 }

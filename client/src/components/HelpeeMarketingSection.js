@@ -11,7 +11,7 @@ const HelpeeMarketingSection = () => {
           title={t('helpee_mkt_minimize_risk')}
           details1={t('helpee_mkt_minimize_risk_subtitle1')}
           details2={t('helpee_mkt_minimize_risk_subtitle2')}
-          imagePath='/images/assets/dinner.jpeg'
+          imagePath='/dinner.jpeg'
           alt='Photo by Vincenzo Landino on Unsplash'
           lastChild={false}
         />
@@ -19,7 +19,7 @@ const HelpeeMarketingSection = () => {
           title={t('helpee_mkt_meet_role_model')}
           details1={t('helpee_mkt_meet_role_model_subtitle1')}
           details2={t('helpee_mkt_meet_role_model_subtitle2')}
-          imagePath='/images/assets/friends.jpeg'
+          imagePath='/friends.jpeg'
           alt='Photo by Naassom Azevedo on Unsplash'
           lastChild={false}
         />
@@ -27,7 +27,7 @@ const HelpeeMarketingSection = () => {
           title={t('helpee_mkt_get_answer')}
           details1={t('helpee_mkt_get_answer_subtitle1')}
           details2={t('helpee_mkt_get_answer_subtitle2')}
-          imagePath='/images/assets/google.jpeg'
+          imagePath='/google.jpeg'
           alt='Photo by Firmbee.com on Unsplash'
           lastChild={false}
         />
@@ -35,7 +35,7 @@ const HelpeeMarketingSection = () => {
           title={t('helpee_mkt_control_privacy')}
           details1={t('helpee_mkt_control_privacy_subtitle1')}
           details2={t('helpee_mkt_control_privacy_subtitle2')}
-          imagePath='/images/assets/oneToOne.jpeg'
+          imagePath='/oneToOne.jpeg'
           alt='Photo by Brett Jordan on Unsplash'
           lastChild={true}
         />
