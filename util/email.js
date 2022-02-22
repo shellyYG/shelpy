@@ -3,16 +3,19 @@ const nodeMailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 
 const testEmailReceiver = process.env.TEST_RECEIPIENT_EMAIL;
-// TODO change localhost:3000
 
 
 const sendHelpeeEmail = (user) => {
   const transporter = nodeMailer.createTransport({
-      service: 'Gmail',
-        auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
+    host: 'www.shelpy.co',
+    name: 'www.shelpy.co',
+    port: 9000,
+    secure: true,
+    service: 'Gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
   });
   return jwt.sign(
     user,
@@ -23,8 +26,8 @@ const sendHelpeeEmail = (user) => {
     (err, emailToken) => {
       const url = `https://shelpy.co/helpee/email/confirmation?emailToken=${emailToken}`;
       transporter.sendMail(
-        {
-          to: user.data.email, // TODO: change to customer email aka user.data.email
+        { from: process.env.EMAIL_USER,
+          to: user.data.email,
           subject: 'Confirm Shelpy Email',
           html: `Please click this link to confirm your email: <a href='${url}'>Confirm My Email</a>`,
         },
@@ -40,7 +43,6 @@ const sendHelpeeEmail = (user) => {
   );
 };
 const sendHelperEmail = (user) => {
-  console.log('sendHelperEmail...');
   const transporter = nodeMailer.createTransport({
     service: 'Gmail',
     auth: {
