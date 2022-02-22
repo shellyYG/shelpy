@@ -7,11 +7,11 @@ const testEmailReceiver = process.env.TEST_RECEIPIENT_EMAIL;
 
 const sendHelpeeEmail = (user) => {
   const transporter = nodeMailer.createTransport({
-    host: 'www.shelpy.co',
-    name: 'www.shelpy.co',
-    port: 9000,
-    secure: true,
+    host: 'shelpy.co',
+    name: 'shelpy.co',
+    secure: false,
     service: 'Gmail',
+    port: 9000,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
@@ -26,7 +26,8 @@ const sendHelpeeEmail = (user) => {
     (err, emailToken) => {
       const url = `https://shelpy.co/helpee/email/confirmation?emailToken=${emailToken}`;
       transporter.sendMail(
-        { from: process.env.EMAIL_USER,
+        {
+          from: '"official shelpy" <shelpyofficial@gmail.com>',
           to: user.data.email,
           subject: 'Confirm Shelpy Email',
           html: `Please click this link to confirm your email: <a href='${url}'>Confirm My Email</a>`,
@@ -44,7 +45,11 @@ const sendHelpeeEmail = (user) => {
 };
 const sendHelperEmail = (user) => {
   const transporter = nodeMailer.createTransport({
+    host: 'shelpy.co',
+    name: 'shelpy.co',
+    secure: false,
     service: 'Gmail',
+    port: 9000,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
@@ -60,6 +65,7 @@ const sendHelperEmail = (user) => {
       const url = `https://shelpy.co/helper/email/confirmation?emailToken=${emailToken}`;
       transporter.sendMail(
         {
+          from: '"official shelpy" <shelpyofficial@gmail.com>',
           to: user.data.email, // TODO: change to customer email aka user.data.email
           subject: 'Confirm Shelpy Email',
           html: `Please click this link to confirm your email: <a href='${url}'>Confirm My Email</a>`,
