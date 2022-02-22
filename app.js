@@ -10,7 +10,7 @@ const socketChat = require('./api/controllers/chatController');
 
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000', // React server
+    origin: 'https://shelpy.co', // Develop: http://localhost:3000
     methods: ['GET', 'POST'],
   },
 });

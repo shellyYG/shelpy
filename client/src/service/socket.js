@@ -2,6 +2,6 @@
 // to avoid multiple connection in React life-cycle
 
 import io from "socket.io-client";
-export const socket = io.connect('http://localhost:9000'); // connect to API
+export const socket = io.connect('https://shelpy.co:9000'); // Develop: http://localhost:9000
 // Standard way:
 // export const socket = io(SOCKET_URL);
