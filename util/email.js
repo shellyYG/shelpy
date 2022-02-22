@@ -21,7 +21,7 @@ const sendHelpeeEmail = (user) => {
       expiresIn: '7d',
     },
     (err, emailToken) => {
-      const url = `http://localhost:3000/helpee/email/confirmation?emailToken=${emailToken}`;
+      const url = `https://shelpy.co/helpee/email/confirmation?emailToken=${emailToken}`;
       transporter.sendMail(
         {
           to: user.data.email, // TODO: change to customer email aka user.data.email
@@ -55,7 +55,7 @@ const sendHelperEmail = (user) => {
       expiresIn: '7d',
     },
     (err, emailToken) => {
-      const url = `http://localhost:3000/helper/email/confirmation?emailToken=${emailToken}`;
+      const url = `https://shelpy.co/helper/email/confirmation?emailToken=${emailToken}`;
       transporter.sendMail(
         {
           to: user.data.email, // TODO: change to customer email aka user.data.email
@@ -91,7 +91,7 @@ const sendHelpeeResetPasswordEmail = (user) => {
     (err, passwordResetToken) => {
       if (user && user.data && user.data.email) {
         const email = user.data.email.replace(/\+/g, '%2B');
-        const url = `http://localhost:3000/helpee/password/pre/reset?email=${email}&passwordResetToken=${passwordResetToken}`;
+        const url = `https://shelpy.co/helpee/password/pre/reset?email=${email}&passwordResetToken=${passwordResetToken}`;
         transporter.sendMail(
           {
             to: user.data.email, // TODO: change to customer email : aka user.data.email
@@ -130,7 +130,7 @@ const sendHelperResetPasswordEmail = (user) => {
     (err, passwordResetToken) => {
       if (user && user.data && user.data.email) {
         const email = user.data.email.replace(/\+/g, '%2B');
-        const url = `http://localhost:3000/helper/password/pre/reset?email=${email}&passwordResetToken=${passwordResetToken}`;
+        const url = `https://shelpy.co/helper/password/pre/reset?email=${email}&passwordResetToken=${passwordResetToken}`;
         transporter.sendMail(
           {
             to: user.data.email, // TODO: change to customer email : aka user.data.email
