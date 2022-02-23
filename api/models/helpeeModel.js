@@ -49,7 +49,7 @@ LEFT JOIN requests req ON
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
 LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id
-WHERE helpee.id = ${helpeeUserId} AND NOT ofs.userId IS NULL
+WHERE helpee.id = ${helpeeUserId} AND NOT ofs.userId IS NULL AND acc.status = 'approved'
 ORDER BY req.id, acc.score DESC;`;
   const allPotentialHelpers = await query(sql);
 
@@ -142,7 +142,6 @@ INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId
 INNER JOIN shelpydb.helper_account helper ON chat.helperId = helper.id
 WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helpeeId = ${helpeeUserId});`;
   
-  console.log('sql@getAllChattedHelpers: ', sql);
   const allChattedHelpers = await query(sql);
   return { data: { allChattedHelpers } };
 }

@@ -482,7 +482,7 @@ export const onSubmitUploadHelperData = (data) => {
           notificationActions.setNotification({
             applyHelperStatus: 'success',
             applyHelperStatusTitle: 'success',
-            applyHelperStatusMessage: 'select_experience_you_want_to_share',
+            applyHelperStatusMessage: 'helper_wait_for_verify',
           })
         );
       }

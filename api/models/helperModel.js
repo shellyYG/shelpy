@@ -20,16 +20,15 @@ async function getHelperAllOffers(data) {
   INNER JOIN helper_account helper ON ofs.userId = helper.id
   WHERE ofs.userId = ${helperUserId} AND NOT ofs.status='deleted' ORDER BY id DESC;`;
   const allOffers = await query(sql);
-  console.log('allOffers: ', allOffers)
   return { data: { allOffers } };
 }
 
-async function getAllMarketingOffers(data) {
+async function getAllMarketingOffers() {
   const sql = `
   SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.languages, acc.isAnonymous
   FROM offers ofs 
   INNER JOIN helper_account acc ON ofs.userId = acc.id
-  WHERE acc.isMarketing = true ORDER BY score, id DESC;`;
+  WHERE acc.isMarketing = true AND acc.status = 'approved' ORDER BY score, id DESC;`;
   const allMKTOffers = await query(sql);
   return { data: { allMKTOffers } };
 }
