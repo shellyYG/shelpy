@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import '../App.css';
+import DangerIcon from '../components/Icons/DangerIcon';
 
 const PreSignInPage = (props) => {
   const { t } = useTranslation();
@@ -16,22 +17,33 @@ const PreSignInPage = (props) => {
     navigate(path, { replace: true });
   }
   return (
-    <div className='main-content-wrapper-homepage-no-background'>
-      <div className='section-center-align' style={{ paddingTop: '5%' }}>
-        <h1
-          style={{
-            textAlign: 'center',
-            marginTop: '30px',
-            marginBottom: '30px',
-          }}
+    <div className='section-left-align'>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          textAlign: 'center',
+        }}
+      >
+        <div
+          style={{ paddingTop: '5%', margin: '50px auto' }}
         >
-          {props.isHelpee && t('oops_helpee_not_sign_in')}
-          {!props.isHelpee && t('oops_helper_not_sign_in')}
-        </h1>
-        <div style={{ textAlign: 'center' }}>
-          <button className='btn-next' onClick={handleNext}>
-            {t('sign_in')}
-          </button>
+          <DangerIcon />
+          <h1
+            style={{
+              textAlign: 'center',
+              marginTop: '30px',
+              marginBottom: '30px',
+            }}
+          >
+            {props.isHelpee && t('oops_helpee_not_sign_in')}
+            {!props.isHelpee && t('oops_helper_not_sign_in')}
+          </h1>
+          <div style={{ textAlign: 'center' }}>
+            <button className='btn-next' onClick={handleNext}>
+              {t('sign_in')}
+            </button>
+          </div>
         </div>
       </div>
     </div>

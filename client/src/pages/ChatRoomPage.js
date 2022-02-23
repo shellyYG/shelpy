@@ -235,7 +235,7 @@ const ChatRoomPage = (props) => {
                       <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
                         <div style={{ whiteSpace: 'pre-line' }}>{`${t(
                           'oops'
-                        )}!\n We haven't found \n any customers yet.\n Help us grow by \n following us on \n`}</div>
+                        )}!\n ${t('we_havent_found')} \n ${t('any_customer_yet')}\n ${t('help_us_grow_by')} \n ${t('following_us_on')} \n`}</div>
                         <button
                           className='btn-next'
                           style={{ margin: '10px 0px' }}
@@ -245,7 +245,7 @@ const ChatRoomPage = (props) => {
                         </button>
                         <div
                           style={{ whiteSpace: 'pre-line' }}
-                        >{`So we can\n find you a \n customer sooner!`}</div>
+                        >{`${t('so_we_can')}\n ${t('find_you_a')} \n ${t('customer_sonner')}`}</div>
                       </div>
                     </div>
                   </div>
@@ -257,7 +257,7 @@ const ChatRoomPage = (props) => {
                       <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
                         <div style={{ whiteSpace: 'pre-line' }}>{`${t(
                           'oops'
-                        )}!${t('no_chat_partners_found')}`}</div>
+                        )}!\n ${t('we_havent_found')} \n ${t('any_helper_yet')}\n ${t('help_us_grow_by')} \n ${t('following_us_on')} \n`}</div>
                         <button
                           className='btn-next'
                           style={{ margin: '10px 0px' }}
@@ -265,9 +265,9 @@ const ChatRoomPage = (props) => {
                         >
                           Youtube
                         </button>
-                        <div style={{ whiteSpace: 'pre-line' }}>
-                          {t('so_we_can_find_partners')}
-                        </div>
+                        <div
+                          style={{ whiteSpace: 'pre-line' }}
+                        >{`${t('so_we_can')}\n ${t('find_you_a')} \n ${t('helper_sonner')}`}</div>
                       </div>
                     </div>
                   </div>
