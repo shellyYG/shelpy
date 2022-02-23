@@ -81,14 +81,17 @@ const getHelperAllMatchedRequests = async (req, res) => {
 };
 
 const getProfilePic = async (req, res) => {
+  console.log('api/controllers/helperController.js...');
   const { key } = req.params;
+  console.log('profilePic key: ', key);
   try {
     const readStream = getFileStream(key);
+    console.log('@api/controllers->getProfilePic->readStrea: ', readStream);
     if (readStream) {
       readStream
         .createReadStream()
         .on('error', (error) => {
-          console.error(error);
+          console.error('getProfilePic error: ', error);
         })
         .pipe(res);
     }

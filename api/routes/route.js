@@ -153,6 +153,7 @@ router.post(
         userId: helpeeUserId,
         path: result.Key,
       });
+      console.log('result from profile pic upload: ', result);
       if (file) await unlinkFile(file.path);
       res.status(200).send({ imagePath: `/images/${result.Key}` });
     } catch (error) {

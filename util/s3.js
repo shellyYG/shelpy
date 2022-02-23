@@ -15,6 +15,7 @@ const s3 = new S3({
 
 // upload a file to s3
 function uploadFile(file, folder) {
+  console.log('@util/s3.js->uploadFile...');
     const fileStream = fs.createReadStream(file.path);
     const mimeType = file.mimetype;
     const uploadParams = {
@@ -23,6 +24,7 @@ function uploadFile(file, folder) {
         ContentType: mimeType,
         Key: `${folder}/${file.filename}`,
     }
+    console.log('@util/s3.js->uploadFile...uploadParams: ', uploadParams);
     return s3.upload(uploadParams).promise()
 }
 exports.uploadFile = uploadFile;
@@ -30,6 +32,7 @@ exports.uploadFile = uploadFile;
 
 // download a file from s3 to get url
 function getFileStream(fileKey) {
+  console.log('@util/s3.js->getFileStream...fileKey: ', fileKey);
     if (!fileKey || fileKey === 'null') {
       throw Error('error_no_matched_aws_s3_file');
     } else {
@@ -37,6 +40,7 @@ function getFileStream(fileKey) {
         Key: fileKey,
         Bucket: bucketName,
       };
+      console.log('@util/s3.js->getFileStream...bucketName: ', bucketName);
       return s3.getObject(downloadParams);
     }
 }
