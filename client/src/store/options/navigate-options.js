@@ -56,11 +56,54 @@ export const secondTypeOptions = {
   ],
   job: [
     { value: 'default', label: 'please_select_option' },
-    { value: 'Medical', label: 'job_form_industry_medical' },
-    { value: 'Software', label: 'job_form_industry_software' },
-    { value: 'Blockchain', label: 'job_form_industry_blockchain' },
-    { value: 'Finance', label: 'job_form_industry_finance' },
-    { value: 'Consulting', label: 'job_form_industry_consulting' },
+    {
+      value: 'Medical',
+      label: 'job_form_industry_medical',
+    },
+    {
+      value: 'Finance',
+      label: 'job_form_industry_finance',
+    },
+    {
+      value: 'Retail',
+      label: 'job_form_industry_retail',
+    },
+    {
+      value: 'Manufacture',
+      label: 'job_form_manufacture',
+    },
+    {
+      value: 'Consulting',
+      label: 'job_form_industry_consulting',
+    },
+    {
+      value: 'Software/Ecommerce',
+      label: 'job_form_information_technology_ecommerce',
+    },
+    {
+      value: 'Travel/Tourism/Food',
+      label: 'job_form_industry_tourisum',
+    },
+    {
+      value: 'Law',
+      label: 'job_form_industry_law',
+    },
+    {
+      value: 'Social/Public Service',
+      label: 'job_form_industry_social_service',
+    },
+    {
+      value: 'Education/Trainer',
+      label: 'job_form_industry_education',
+    },
+    {
+      value: 'Media/Design/Art',
+      label: 'job_form_industry_media_art',
+    },
+    {
+      value: 'Agency',
+      label: 'job_form_industry_agency',
+    },
   ],
   selfEmployed: [
     { value: 'default', label: 'please_select_option' },

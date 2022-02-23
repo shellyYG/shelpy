@@ -26,12 +26,15 @@ const HelperLoggedInHomePage = () => {
               </h1>
             </div>
             <div>
-              <h1 style={{ textAlign: 'center', color: 'white' }}>
+              <h2 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title2')}
-              </h1>
+              </h2>
+              <h2 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helper_home_banner_title3')}
+              </h2>
             </div>
             <div>
-              <h2
+              <h3
                 style={{
                   textAlign: 'center',
                   marginTop: '10px',
@@ -41,7 +44,7 @@ const HelperLoggedInHomePage = () => {
               >
                 {t('helper_home_banner_subtitle1')} <br />
                 {t('helper_home_banner_subtitle2')}
-              </h2>
+              </h3>
             </div>
           </div>
           <div className='coverButtonWrapper'>

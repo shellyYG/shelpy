@@ -174,9 +174,13 @@ const HelperSignUpPasswordPage = () => {
                   padding: '5px 30px',
                 }}
               >
-                {t('home_terms_and_condition_introduction')}{' '}
-                <a href='/privacy-policy' target='_blank'>
-                  {t('home_privacy_policy')}
+                {t('helper_home_terms_and_condition_introduction')}{' '}
+                <a href='/employment-contract' target='_blank'>
+                  {t('helper_home_employee_contract')}
+                </a>
+                {t('comman_and')}{' '}
+                <a href='/helper-privacy-policy' target='_blank'>
+                  {t('helper_home_privacy_policy')}
                 </a>
                 {t('home_ending')} <br />
                 {t('home_you_can')}{' '}

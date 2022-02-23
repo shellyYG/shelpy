@@ -103,12 +103,15 @@ const SignUpPageHelper = () => {
               </h1>
             </div>
             <div>
-              <h1 style={{ textAlign: 'center', color: 'white' }}>
+              <h2 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title2')}
-              </h1>
+              </h2>
+              <h2 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helper_home_banner_title3')}
+              </h2>
             </div>
             <div>
-              <h2
+              <h3
                 style={{
                   textAlign: 'center',
                   marginTop: '10px',
@@ -118,7 +121,7 @@ const SignUpPageHelper = () => {
               >
                 {t('helper_home_banner_subtitle1')} <br />
                 {t('helper_home_banner_subtitle2')}
-              </h2>
+              </h3>
             </div>
           </div>
           <div className='coverRight'>
@@ -156,9 +159,13 @@ const SignUpPageHelper = () => {
                   padding: '5px 30px',
                 }}
               >
-                {t('home_terms_and_condition_introduction')}{' '}
-                <a href='/privacy-policy' target='_blank'>
-                  {t('home_privacy_policy')}
+                {t('helper_home_terms_and_condition_introduction')}{' '}
+                <a href='/employment-contract' target='_blank'>
+                  {t('helper_home_employee_contract')}
+                </a>
+                {t('comman_and')}
+                <a href='/helper-privacy-policy' target='_blank'>
+                  {t('helper_home_privacy_policy')}
                 </a>
                 {t('home_ending')} <br />
                 {t('home_you_can')}{' '}

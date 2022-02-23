@@ -30,7 +30,7 @@ const AboutPage = () => {
             Angaben gemäß § 5 TMG Obertshausen, Germany
             <br />
             <br />
-            E-Mail: team@shelpy.de
+            E-Mail: team@shelpy.co
           </h3>
         </div>
       </div>

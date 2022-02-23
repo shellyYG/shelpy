@@ -346,8 +346,6 @@ const BasicFormPage = (props) => {
         };
       }
     }
-
-    console.log('data to dispatch: ', data);
     try {
       if (props.isHelpee) {
         dispatch(onSubmitUploadHelpeeData(data));
@@ -838,13 +836,13 @@ const BasicFormPage = (props) => {
                   inputRef={priceRef}
                 />
               )} */}
-              <FullLineTextBox
+              {!props.isHelpee && <FullLineTextBox
                 title={t('bank_account_title')}
                 placeholder={t('bank_account_placeholder')}
                 maxLength='1000'
                 inputRef={bankAccountRef}
                 onChange={handleBankAccountTyping}
-              />
+              />}
               <FullLineTextBox
                 title={t('introduction')}
                 placeholder={t('introduction_placeholder')}
