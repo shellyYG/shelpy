@@ -228,7 +228,7 @@ function PotentialHelperCard(props) {
 
       {
         <div className='checkBoxWidth'>
-          <ChatIcon onClick={handleChat} partnerName={props.partnerName} />
+          <ChatIcon onClick={handleChat} partnerName={props.partnerName} isHelpee={true}/>
         </div>
       }
     </div>

@@ -12,7 +12,9 @@ const ChatIcon = (props) => {
         <BsChatDotsFill color='#93ccea' />
         <div style={{ margin: 'auto 0px' }}>
           <p style={{ marginLeft: '5px' }}>
-            {t('chat_with', { name: props.partnerName})}
+            {props.isHelpee
+              ? t('chat_with_helper_name', { name: props.partnerName })
+              : t('chat_with_helpee_name', { name: props.partnerName })}
           </p>
         </div>
       </div>

@@ -194,7 +194,7 @@ function PotentialCustomerCard(props) {
         <div className='contentBx'>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <div>
-              <ChatIcon onClick={handleChat} partnerName={props.partnerName} />
+              <ChatIcon onClick={handleChat} partnerName={props.partnerName} isHelpee={false}/>
             </div>
           </div>
         </div>

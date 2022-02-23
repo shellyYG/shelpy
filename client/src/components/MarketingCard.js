@@ -283,7 +283,7 @@ function MarketingCard(props) {
         </button>
       </div>
       <div className='fullWidth'>
-        <ChatIcon onClick={handleChat} partnerName={props.username} />
+        <ChatIcon onClick={handleChat} partnerName={props.username} isHelpee={false}/>
       </div>
     </div>
   );
