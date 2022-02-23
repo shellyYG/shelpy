@@ -60,7 +60,6 @@ export const confirmHelpeeEmail = (data) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(helpeeConfirmEmailPath, { data });
-      console.log('confirmHelpeeEmail response: ', response);
       if (response && response.data && response.data.status === 'success') {
         dispatch(
           notificationActions.setNotification({
@@ -117,11 +116,9 @@ export const confirmHelpeeCanChangePassword = (data) => {
 };
 
 export const sendHelpeePasswordResetLink = (data) => {
-  console.log('sendHelpeePasswordResetLink...data: ', data);
   return async (dispatch) => {
     try {
       const response = await axios.post(helpeeSendPasswordResetEmailPath, { data });
-      console.log('response from sendHelpeePasswordResetLink: ', response);
       if (response && response.data && response.data.status === 'success') {
         dispatch(
           helpeeActions.setSendPasswordResetEmailStatus({
@@ -185,7 +182,6 @@ export const getPotentialHelpers = (data) => {
         const chattedHelpersRes = await axios.get(helpeeChattedHelpersPath, {
           params: { helpeeUserId: data.helpeeUserId },
         });
-        console.log('chattedHelpersRes: ', chattedHelpersRes);
         if (matchedHelpersRes && matchedHelpersRes.data) {
           const matchedHelpers = matchedHelpersRes.data.allPotentialHelpers;
           matchedHelpers.forEach((h)=>{
@@ -196,7 +192,6 @@ export const getPotentialHelpers = (data) => {
             const bookings = bookingsRes.data.allBookings || [];
             for (let i = 0; i < bookings.length; i++) {
               if (matchedHelperIds.indexOf(bookings[i].helperId) === -1) { // not exist in matchedHelperIds
-                console.log('bookings[i]: ', bookings[i]);
                 allPotentialHelpers.push(bookings[i]);
                 matchedHelperIds.push(bookings[i].helperId);
               }
@@ -205,8 +200,6 @@ export const getPotentialHelpers = (data) => {
               const chattings = chattedHelpersRes.data.allChattedHelpers || [];
               for (let i = 0; i < chattings.length; i++) {
                 if (matchedHelperIds.indexOf(chattings[i].helperId) === -1) {
-                  // not exist in matchedHelperIds
-                  console.log('chattings[i]: ', chattings[i]);
                   allPotentialHelpers.push(chattings[i]);
                   matchedHelperIds.push(chattings[i].helperId);
                 }
@@ -259,7 +252,6 @@ export const onClickUpdateHelpeeDashboardTarget = (data) => {
 
 export const getAllBookings = (data) => {
   return async (dispatch) => {
-    console.log('@helpeE action->getAllBookings..., data: ', data);
     if (data && data.helpeeUserId) {
       try {
         const response = await axios.get(getAllBookingsPath, {
@@ -524,7 +516,6 @@ export const postHelpeeServiceRequestForm = (data) => {
 };
 
 export const onUploadHelpeeProfilePicture = (data) => {
-  console.log('onUploadHelpeeProfilePicture...data: ', data);
   return async (dispatch) => {
     try {
       const generalToken = localStorage.getItem('shelpy-token');
@@ -595,7 +586,6 @@ export const onSubmitUploadHelpeeData = (data) => {
 
 export const postHelpeeRequestForm = (data) => {
   return async (dispatch) => {
-    console.log('postHelpeeRequestForm...');
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {
@@ -750,7 +740,6 @@ export const onClickDeleteRequest = (data) => {
 };
 
 export const postPayHelper = (data) => {
-  console.log('@helpee-actions->postPayHelper->data: ', data);
   return async (dispatch) => {
     const generalToken = localStorage.getItem('shelpy-token');
     try {
@@ -768,7 +757,6 @@ export const postPayHelper = (data) => {
             headers,
           }
         );
-        console.log('response from pay helpee route: ', response);
         dispatch(
           generalActions.setBookingStatus({
             bookingStatus: data.bookingStatus,

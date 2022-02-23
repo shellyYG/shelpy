@@ -16,7 +16,6 @@ import {
 const MySwal = withReactContent(Swal);
 
 const PasswordResetPage = (props) => {
-    console.log('props.isHelpee@PasswordResetPage: ', props.isHelpee);
   const { t } = useTranslation();
   const passwordRef = useRef();
   const [loading, setIsLoading] =
@@ -37,13 +36,6 @@ const PasswordResetPage = (props) => {
     helperPasswordResetStatusTitle,
     helperPasswordResetStatusMessage,
   } = useSelector((state) => state.helper);
-
-  console.log(
-    'email: ',
-    email,
-    'helperPasswordResetStatus: ',
-    helperPasswordResetStatus
-  );
 
   if (loading) {
     MySwal.fire({

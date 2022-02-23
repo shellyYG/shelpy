@@ -20,7 +20,6 @@ import { useTranslation } from 'react-i18next';
 const MySwal = withReactContent(Swal);
 
 const BookingConfirmPage = (props) => {
-  console.log('@BookingConfirmPage props: ', props);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,12 +66,9 @@ const BookingConfirmPage = (props) => {
   var yyyy = today.getFullYear();
 
   today = `${yyyy}-${mm}-${dd}`;
-  console.log('today: ', today);
   const [meetDate, setMeetDate] = useState(today); // display will be 2021/11/12 though
   const [meetTime, setMeetTime] = useState('8am-9am');
 
-  
- 
   async function handleChangeBooking(e) {
     e.preventDefault();
     navigate(
@@ -86,9 +82,7 @@ const BookingConfirmPage = (props) => {
   }
   async function handleConfirm(e) {
     e.preventDefault();
-    console.log('handleConfirm...');
     if (props.isHelpee) {
-      console.log('props.isHelpee...');
       const meetTimeRange = meetTimeRef.current.value; // 8am-9am;
       const endMeetTime = meetTimeRange.split('-')[1]; // 9am;
       const timeAMPM =

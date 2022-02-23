@@ -139,7 +139,6 @@ async function deleteHelperOffer(data) {
 
 async function confirmHelperEmail(data) {
   const { id } = data;
-  console.log('@Model confirmHelperEmail id: ', id);
   const sql = `UPDATE helper_account SET confirmed=${true} WHERE id=${id}`;
   await query(sql);
   return { data: { status: 'success' } };

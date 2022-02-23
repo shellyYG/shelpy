@@ -82,13 +82,11 @@ const JobFormPage = (props) => {
   useEffect(() => {
     if (industry) {
       const jobs = jobOptions[industry];
-      console.log('jobs: ', jobs);
       setMatchedJobs(jobs);
     }
   }, [industry]);
 
   function handlePriceTyping(e) {
-    console.log('handlePriceTyping...');
     e.preventDefault();
     const typingInput = e.target.value;
     setTypingPrice(typingInput);

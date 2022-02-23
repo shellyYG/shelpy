@@ -34,7 +34,7 @@ const sendHelpeeEmail = (user) => {
         },
         (error, info) => {
           if (error) {
-            console.log(error);
+            console.error(error);
           } else {
             console.log(`email successfully sent to ${info.response}`);
           }
@@ -72,7 +72,7 @@ const sendHelperEmail = (user) => {
         },
         (error, info) => {
           if (error) {
-            console.log(error);
+            console.error(error);
           } else {
             console.log(`email successfully sent to ${info.response}`);
           }
@@ -108,7 +108,7 @@ const sendHelpeeResetPasswordEmail = (user) => {
           },
           (error, info) => {
             if (error) {
-              console.log(error);
+              console.error(error);
             } else {
               console.log(
                 `reset password email successfully sent to ${info.response}`
@@ -147,7 +147,7 @@ const sendHelperResetPasswordEmail = (user) => {
           },
           (error, info) => {
             if (error) {
-              console.log(error);
+              console.error(error);
             } else {
               console.log(
                 `reset password email successfully sent to ${info.response}`

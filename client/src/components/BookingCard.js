@@ -37,7 +37,6 @@ function BookingCard(props) {
 
   const { payHelperStatus, payHelperStatusTitle, payHelperStatusMessage } =
     useSelector((state) => state.helpee);
-  console.log('payHelperStatus: ', payHelperStatus);
 
   if (loading) {
     MySwal.fire({

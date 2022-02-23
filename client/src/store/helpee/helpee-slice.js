@@ -64,9 +64,7 @@ const helpeeSlice = createSlice({
       state.DBHelpeePassword = payload.password;
     },
     updateHelpeeInfoAfterSignIn(state, action) {
-      console.log('updateHelpeeInfoAfterSignIn...');
       const { payload } = action;
-      console.log('updateHelpeeInfoAfterSignIn: ', payload);
       state.DBHelpeeEmail = payload.email;
       state.helpeeAccountStatus = payload.helpeeAccountStatus;
     },

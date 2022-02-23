@@ -200,7 +200,6 @@ const SelfEmployedPage = (props) => {
     );
   }
   function handlePriceTyping(e) {
-    console.log('handlePriceTyping...');
     e.preventDefault();
     const typingInput = e.target.value;
     setTypingPrice(typingInput);

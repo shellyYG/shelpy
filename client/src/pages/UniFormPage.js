@@ -50,7 +50,6 @@ const UniFormPage = (props) => {
   }
 
   function handlePriceTyping(e) {
-    console.log('handlePriceTyping...');
     e.preventDefault();
     const typingInput = e.target.value;
     setTypingPrice(typingInput);
@@ -113,7 +112,6 @@ const UniFormPage = (props) => {
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
-      console.log('data to post to postHelpeeRequestForm: ', data);
       dispatch(postHelpeeRequestForm(data));
       setIsLoading(true);
     } else { // helper
@@ -134,7 +132,6 @@ const UniFormPage = (props) => {
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
-      console.log('data: ', data)
       dispatch(postHelperOfferForm(data));
       setIsLoading(true);
     }
@@ -232,7 +229,6 @@ const UniFormPage = (props) => {
   useEffect(() => {
     if (school) {
       const departments = departmentOptions[school];
-      console.log('departments: ', departments);
       setMatchedDepartments(departments);
     }
   }, [school]);

@@ -15,7 +15,6 @@ import {
 const MySwal = withReactContent(Swal);
 
 const PasswordResetPrePage = (props) => {
-  console.log('props.isHelpee@PasswordResetPage: ', props.isHelpee);
   const { t } = useTranslation();
   const [loading, setIsLoading] =
     useState(true);
@@ -40,12 +39,6 @@ const PasswordResetPrePage = (props) => {
     confirmHelperCanChangePasswordStatusMessage,
   } = useSelector((state) => state.helperNotification);
 
-  console.log(
-    'originalEmail: ',
-    originalEmail,
-    'filteredEmail: ',
-    filteredEmail
-  );
   if (props.isHelpee) {
     dispatch(confirmHelpeeCanChangePassword({ passwordResetToken }));
   } else {
@@ -91,7 +84,6 @@ const PasswordResetPrePage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          console.log('...should navigate');
           navigate(
             `/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}`,
             { replace: true }

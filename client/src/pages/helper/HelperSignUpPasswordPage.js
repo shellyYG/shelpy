@@ -32,7 +32,6 @@ const HelperSignUpPasswordPage = () => {
   } = useSelector((state) => state.helperNotification);
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
-  console.log('@HelpeeHome password: ', refId);
 
   if (loading) {
     MySwal.fire({

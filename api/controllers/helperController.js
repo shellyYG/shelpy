@@ -86,7 +86,6 @@ const getProfilePic = async (req, res) => {
   console.log('profilePic key: ', key);
   try {
     const readStream = getFileStream(key);
-    console.log('@api/controllers->getProfilePic->readStrea: ', readStream);
     if (readStream) {
       readStream
         .createReadStream()
@@ -169,7 +168,6 @@ const confirmHelperEmail = async (req, res) => {
 };
 
 const confirmHelperCanChangePassword = async (req, res) => {
-  console.log('@controller confirmHelperCanChangePassword...');
   const { data } = req.body;
   try {
     const user = jwt.verify(
@@ -188,7 +186,6 @@ const confirmHelperCanChangePassword = async (req, res) => {
 };
 
 const sendHelperPasswordResetLink = async (req, res) => {
-  console.log('@controller sendHelperPasswordResetLink...');
   const { data } = req.body;
   try {
     sendHelperResetPasswordEmail({

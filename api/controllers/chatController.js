@@ -1,7 +1,7 @@
 const chatModel = require('../models/chatModel');
 
 const socketChat = async (socket) => {
-  console.log(`User ${socket.id} conneted...`);
+  // console.log(`User ${socket.id} conneted...`);
   socket.on('join_room', async (roomId) => {
     socket.join(roomId);
     const data = await chatModel.searchHistory(roomId);
@@ -32,7 +32,7 @@ const socketChat = async (socket) => {
     chatModel.saveMsg(messageObj);
   });
   socket.on('disconnect', (data) => {
-    console.log(`User ${socket.id} disconnected.`);
+    // console.log(`User ${socket.id} disconnected.`);
   });
 };
 

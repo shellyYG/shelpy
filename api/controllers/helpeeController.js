@@ -27,7 +27,6 @@ const postHelpeeServiceRequestForm = async (req, res) => {
 };
 
 const postHelpeeRequest = async (req, res) => {
-  console.log('postHelpeeRequest->req.body.data: ', req.body.data);
   // new.
   try {
     const id = await helpeeModel.insertHelpeeRequest(req.body.data);
@@ -183,23 +182,14 @@ const sendHelpeePasswordResetLink = async (req, res) => {
 };
 
 const payHelper = async (req, res) => {
-  console.log('satrt payHelper@helpeeController...');
   const { data } = req.body;
-  console.log('payHelper->data: ', data);
   const { product, token } = data;
-  console.log(
-    '........start strip session, product: ',
-    product,
-    'price: ',
-    product.price
-  );
   return stripe.customers
     .create({
       email: token.email,
       source: token.id,
     })
     .then((customer) => {
-      console.log('stripe created customer: ', customer)
       stripe.charges.create(
         {
           amount: product.price * 100, // everything comes in cents in stripe

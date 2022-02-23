@@ -126,10 +126,8 @@ export const onClickUpdateActiveIconTarget = (data) => {
 
 export const getAllMarketingOffers = (data) => {
   return async (dispatch) => {
-    console.log('@general action->getAllMarketingOffers...data: ', data);
     try {
       const response = await axios.get(getAllMarketingOffersPath);
-      console.log('response: ', response);
       dispatch(
         generalActions.updateAllMarketingOffers({
           allMKTOffers: response.data.allMKTOffers,

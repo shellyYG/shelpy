@@ -22,9 +22,7 @@ const HelperDashboardPage = (props) => {
 
   const { allOffers, allBookings, allPotentialCustomers, helperDashboardTarget } =
     useSelector((state) => state.helper);
-  
-  console.log('allBookings: ', allBookings);
-  // console.log('allPotentialCustomers: ', allPotentialCustomers);
+
   useEffect(() => {
     dispatch(getAllOffers({ helperUserId: props.helperUserId }));
     dispatch(getAllBookings({ helperUserId: props.helperUserId }));

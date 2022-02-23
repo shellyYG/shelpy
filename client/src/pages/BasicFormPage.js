@@ -28,7 +28,6 @@ import { useTranslation } from 'react-i18next';
 const MySwal = withReactContent(Swal);
 
 const BasicFormPage = (props) => {
-  console.log('helpeeId: ', props.helpeeUserId, 'helperId: ', props.helperUserId);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -104,7 +103,6 @@ const BasicFormPage = (props) => {
     if (hasTurkish) languagesString = languagesString.concat(' Turkish');
     if (hasUkrainian) languagesString = languagesString.concat(' Ukrainian');
     if (hasArabic) languagesString = languagesString.concat(' Arabic');
-    console.log('languagesString: ', languagesString);
     setLanguages(languagesString);
   }, [
     hasEnglish,
@@ -269,9 +267,8 @@ const BasicFormPage = (props) => {
       data.append('notes', notes);
       data.append('bankAccount', bankAccount);
       data.append('status', 'basic_info_updated');
-
       data.append('certificate', certificate); // need to append file as last object
-      console.log('data to send: ', data); // console.log(data) // browser will be empty
+
     } else { // could be helpee or helper
       if (props.isHelpee) { // helpee
         data = {

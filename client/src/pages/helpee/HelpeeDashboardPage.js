@@ -20,10 +20,6 @@ const HelpeeDashboardPage = (props) => {
   
   const { allOrders, allPotentialHelpers, helpeeDashboardTarget, allBookings } =
     useSelector((state) => state.helpee);
-  
-  console.log('allBookings: ', allBookings);
-  // console.log('allOrders: ', allOrders);
-  console.log('allPotentialHelpers: ', allPotentialHelpers);
 
   useEffect(() => {
     dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));

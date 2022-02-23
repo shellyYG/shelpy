@@ -29,13 +29,6 @@ const EmailConfirmPage = (props) => {
     confirmHelperEmailStatusMessage,
   } = useSelector((state) => state.helperNotification);
 
-  console.log(
-    'emailToken: ',
-    emailToken,
-    'confirmHelperEmailStatus: ',
-    confirmHelperEmailStatus
-  );
-
   if (loading) {
     MySwal.fire({
       title: 'Confirming your email...',
@@ -71,7 +64,6 @@ const EmailConfirmPage = (props) => {
         );
         return;
       } else if (confirmHelpeeEmailStatus === 'success') {
-        console.log('SUCCESS!');
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({

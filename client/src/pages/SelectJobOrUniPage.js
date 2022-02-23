@@ -14,13 +14,7 @@ const SelectJobOrUniPage = (props) => {
   const navigate = useNavigate();
   const { globalHelpeeJobOrUniTarget } = useSelector((state) => state.helpee);
   const { globalHelperJobOrUniTarget } = useSelector((state) => state.helper);
-  console.log(
-    'props.isHelpee: ',
-    'helpeeT: ',
-    globalHelpeeJobOrUniTarget,
-    'helperT: ',
-    globalHelperJobOrUniTarget
-  );
+
   useEffect(()=>{
     if (props.isHelpee && globalHelpeeJobOrUniTarget) {
       setEnableBtn(true);

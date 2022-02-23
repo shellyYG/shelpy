@@ -125,7 +125,6 @@ function PotentialHelperCard(props) {
         `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
     );
   }
-  console.log('props: ', props);
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(

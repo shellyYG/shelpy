@@ -26,7 +26,6 @@ const HelpeeSignInPage = () => {
     signInStatusMessage,
   } = useSelector((state) => state.helpeeNotification);
   const { helpeeAccountStatus } = useSelector((state) => state.helpee);
-  console.log('helpeeAccountStatus: ', helpeeAccountStatus);
 
   if (loading) {
     MySwal.fire({

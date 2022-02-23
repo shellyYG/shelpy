@@ -36,7 +36,6 @@ export const getHelperAuthStatus = () => {
           {},
           { headers }
         );
-          console.log('response.data@helper action: ', response.data);
         dispatch(
           helperActions.updateAuthStatus({
             isHelperAuthenticated: response.data.isHelperAuthenticated,
@@ -83,7 +82,6 @@ export const getAllOffers = (data) => {
 
 export const getAllBookings = (data) => {
   return async (dispatch) => {
-    console.log('@helpeR action->getAllBookings..., data: ', data);
     if (data && data.helperUserId) {
       try {
         const response = await axios.get(getAllBookingsPath, {
@@ -107,7 +105,6 @@ export const getAllBookings = (data) => {
 };
 
 export const getPotentialCustomers = (data) => {
-  console.log('getPotentialCustomers: ', data);
   return async (dispatch) => {
     if (data && data.helperUserId) {
       const allPotentialCustomers = [];
@@ -126,13 +123,11 @@ export const getPotentialCustomers = (data) => {
           matchedCustomers.forEach((h) => {
             allPotentialCustomers.push(h);
           });
-          console.log('matchedCustomers: ', matchedCustomers);
           const matchedCustomerIds = matchedCustomers.map((p) => p.helpeeId);
           if (bookingsRes && bookingsRes.data) {
             const bookings = bookingsRes.data.allBookings || [];
             for (let i = 0; i < bookings.length; i++) {
               if (matchedCustomerIds.indexOf(bookings[i].helpeeId) === -1) {
-                console.log('bookings[i]: ', bookings[i]);
                 allPotentialCustomers.push(bookings[i]);
               }
             }
@@ -140,10 +135,7 @@ export const getPotentialCustomers = (data) => {
               const chatting =
                 chattedCustomerRes.data.allChattedCustomers || [];
               for (let i = 0; i < chatting.length; i++) {
-                console.log('chatting[i]外: ', chatting[i]);
                 if (matchedCustomerIds.indexOf(chatting[i].helpeeId) === -1) {
-                  console.log('chatting[i]: ', chatting[i]);
-                  console.log('chatting[i].helpeeId: ', chatting[i].helpeeId);
                   allPotentialCustomers.push(chatting[i]);
                 }
               }
@@ -293,7 +285,6 @@ export const postHelperSignUpPassword = (data) => {
 };
 
 export const postHelperSignInData = (data) => {
-  console.log('postHelperSignInData');
   return async (dispatch) => {
     try {
       const response = await axios.post(helperSignInPath, {
@@ -534,7 +525,6 @@ export const confirmHelperEmail = (data) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(helperConfirmEmailPath, { data });
-      console.log('confirmHelperEmail response: ', response);
       if (response && response.data && response.data.status === 'success') {
         dispatch(
           notificationActions.setNotification({
@@ -560,7 +550,6 @@ export const confirmHelperEmail = (data) => {
 };
 
 export const confirmHelperCanChangePassword = (data) => {
-  console.log('confirmHelperCanChangePassword...');
   return async (dispatch) => {
     try {
       const response = await axios.post(helperCanChangePasswordPath, { data });
@@ -596,7 +585,6 @@ export const sendHelperPasswordResetLink = (data) => {
       const response = await axios.post(helperSendPasswordResetEmailPath, {
         data,
       });
-      console.log('response from sendHelperPasswordResetLink: ', response);
       if (response && response.data && response.data.status === 'success') {
         dispatch(
           helperActions.setSendPasswordResetEmailStatus({
@@ -622,7 +610,6 @@ export const sendHelperPasswordResetLink = (data) => {
 };
 
 export const changeHelperPassword = (data) => {
-  console.log('changeHelperPassword...');
   return async (dispatch) => {
     try {
       const response = await axios.post(helperSignUpPasswordPath, {

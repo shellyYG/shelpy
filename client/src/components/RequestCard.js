@@ -183,7 +183,6 @@ function RequestCard(props) {
     });
     setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
   }, [t, props.languages]);
-  console.log('props.profilePicPath: ', props.profilePicPath);
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
