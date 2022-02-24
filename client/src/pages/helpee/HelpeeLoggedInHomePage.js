@@ -15,7 +15,7 @@ const HelpeeLoggedInHomePage = () => {
       <div className='home-page-container'>
         <div
           className='centerWrapperWithBackground'
-          style={{ backgroundImage: 'url(/helpee-home.jpeg)' }}
+          style={{ backgroundImage: 'url(/static-imgs/helpee-home.jpeg)' }}
           title='Photo by Windows on Unsplash'
         >
           <div className='coverLeft'>

@@ -5,7 +5,7 @@ const AboutPage = () => {
   return (
     <div
       className='main-content-wrapper-homepage'
-      style={{ backgroundImage: 'url(/helpee-home.jpeg)' }}
+      style={{ backgroundImage: 'url(/static-imgs/helpee-home.jpeg)' }}
     >
       <div className='section-center-align-landing'>
         <div className='centerWrapper' style={{ textAlign: 'center' }}>
