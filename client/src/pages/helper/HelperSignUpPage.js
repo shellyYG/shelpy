@@ -104,13 +104,13 @@ const SignUpPageHelper = () => {
             </div>
             <div>
               <h3 style={{ textAlign: 'center', color: 'white' }}>
-                {t('helper_home_banner_title2_1')}
-              </h3>
-              <h3 style={{ textAlign: 'center', color: 'white' }}>
-                {t('helper_home_banner_title2_2')}
+                {t('helper_home_banner_title2')}
               </h3>
               <h3 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title3')}
+              </h3>
+              <h3 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helper_home_banner_title4')}
               </h3>
             </div>
             <div>

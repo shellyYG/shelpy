@@ -27,13 +27,13 @@ const HelperLoggedInHomePage = () => {
             </div>
             <div>
               <h2 style={{ textAlign: 'center', color: 'white' }}>
-                {t('helper_home_banner_title2_1')}
-              </h2>
-              <h2 style={{ textAlign: 'center', color: 'white' }}>
-                {t('helper_home_banner_title2_2')}
+                {t('helper_home_banner_title2')}
               </h2>
               <h2 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title3')}
+              </h2>
+              <h2 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helper_home_banner_title4')}
               </h2>
             </div>
             <div>
