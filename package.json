@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "cd client/ && npm run start && cd ../ && nodemon app.js",
-    "build": "cd client/ && npm run build && cd ../ && nodemon app.js",
+    "build": "cd client/ && npm run build",
     "lint": "cd api && eslint --fix --ext .js,.jsx ."
   },
   "dependencies": {
