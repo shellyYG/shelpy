@@ -27,17 +27,17 @@ export const jobUniOptions = [
   {
     value: 'university',
     label: 'service_types_uni',
-    imgPath: '/university.jpeg',
+    imgPath: '/static-imgs/university.jpeg',
   },
   {
     value: 'job',
     label: 'service_types_job',
-    imgPath: '/business.jpeg',
+    imgPath: '/static-imgs/business.jpeg',
   },
   {
     value: 'selfEmployed',
     label: 'service_types_self_employed',
-    imgPath: '/mom.jpeg',
+    imgPath: '/static-imgs/mom.jpeg',
   },
 ];
 
