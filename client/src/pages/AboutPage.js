@@ -10,7 +10,7 @@ const AboutPage = () => {
       <div className='section-center-align-landing'>
         <div className='centerWrapper' style={{ textAlign: 'center' }}>
           <img
-            src={'/pinterest.png'}
+            src={'/static-imgs/shelpy_logo.png'}
             alt={'shelpy'}
             style={{ width: '150px', height: '150px' }}
           />
@@ -20,7 +20,6 @@ const AboutPage = () => {
             {t('mission_statement_part0')} <br />
             <br />
             {t('mission_statement_part1')} <br />
-            
             {t('mission_statement_part2')}
           </h3>
           <br />
