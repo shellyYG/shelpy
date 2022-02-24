@@ -157,7 +157,7 @@ function PotentialHelperCard(props) {
               rel='noreferrer'
             >
               <img
-                src={`/defaultAvatar.jpg`}
+                src={`/static-imgs/defaultAvatar.jpg`}
                 alt={
                   'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
                 }
@@ -227,7 +227,11 @@ function PotentialHelperCard(props) {
 
       {
         <div className='checkBoxWidth'>
-          <ChatIcon onClick={handleChat} partnerName={props.partnerName} isHelpee={true}/>
+          <ChatIcon
+            onClick={handleChat}
+            partnerName={props.partnerName}
+            isHelpee={true}
+          />
         </div>
       }
     </div>

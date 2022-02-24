@@ -166,7 +166,7 @@ function OfferCard(props) {
               rel='noreferrer'
             >
               <img
-                src={`/defaultAvatar.jpg`}
+                src={`/static-imgs/defaultAvatar.jpg`}
                 alt={
                   'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
                 }

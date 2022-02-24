@@ -11,7 +11,7 @@ const HelperMarketingSection = () => {
           title={t('helper_mkt_help_people')}
           details1={t('helper_mkt_help_people_subtitle1')}
           details2={t('helper_mkt_help_people_subtitle2')}
-          imagePath='/static-imgs/helpPeople.jpg'
+          imagePath='/static-imgs/helpPeople.jpeg'
           alt='Photo by Kelly Sikkema on Unsplash'
           lastChild={false}
         />
