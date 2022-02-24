@@ -210,15 +210,7 @@ body {
   padding-bottom: 30vh;
   padding-top: 15vh;
 }
-.section-center-align-landing-with-image {
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding-top: 20vh;
-  background-image: url("./assets/helper-home.jpeg");
-  background-size: cover;
-  background-position: center;
-}
+
 .chat-section-center-align {
   padding: 5px;
   padding-top: 20px;
@@ -617,7 +609,6 @@ code {
   padding:0px;
   width: 100%;
   height: 500px;
-  background-image: url("./assets/helper-home.jpeg");
   background-size: cover;
   background-position: center;
 }

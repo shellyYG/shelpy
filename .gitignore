@@ -6,4 +6,4 @@ node_modules
 .jpg
 .jpeg
 /views/static-imgs
-/static-imgs/*
+/public/static-imgs/*

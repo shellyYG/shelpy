@@ -93,7 +93,7 @@ const SignUpPageHelper = () => {
       <div className='home-page-container'>
         <div
           className='centerWrapperWithBackgroundHelper'
-          style={{ backgroundImage: 'url(/helper-home.jpeg)' }}
+          style={{ backgroundImage: 'url(/static-imgs/helper-home.jpeg)' }}
           title='Photo by Humphrey Muleba on Unsplash'
         >
           <div className='coverLeft'>
@@ -103,15 +103,18 @@ const SignUpPageHelper = () => {
               </h1>
             </div>
             <div>
-              <h2 style={{ textAlign: 'center', color: 'white' }}>
-                {t('helper_home_banner_title2')}
-              </h2>
-              <h2 style={{ textAlign: 'center', color: 'white' }}>
+              <h3 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helper_home_banner_title2_1')}
+              </h3>
+              <h3 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helper_home_banner_title2_2')}
+              </h3>
+              <h3 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title3')}
-              </h2>
+              </h3>
             </div>
             <div>
-              <h3
+              <h4
                 style={{
                   textAlign: 'center',
                   marginTop: '10px',
@@ -119,9 +122,9 @@ const SignUpPageHelper = () => {
                   color: 'white',
                 }}
               >
-                {t('helper_home_banner_subtitle1')} <br />
+                {t('helper_home_banner_subtitle1')}
                 {t('helper_home_banner_subtitle2')}
-              </h3>
+              </h4>
             </div>
           </div>
           <div className='coverRight'>

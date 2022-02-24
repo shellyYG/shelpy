@@ -16,7 +16,7 @@ const HelperLoggedInHomePage = () => {
       <div className='home-page-container'>
         <div
           className='centerWrapperWithBackgroundHelper'
-          style={{ backgroundImage: 'url(/helper-home.jpeg)' }}
+          style={{ backgroundImage: 'url(/static-imgs/helper-home.jpeg)' }}
           title='Photo by Humphrey Muleba on Unsplash'
         >
           <div className='coverLeft'>
@@ -27,7 +27,10 @@ const HelperLoggedInHomePage = () => {
             </div>
             <div>
               <h2 style={{ textAlign: 'center', color: 'white' }}>
-                {t('helper_home_banner_title2')}
+                {t('helper_home_banner_title2_1')}
+              </h2>
+              <h2 style={{ textAlign: 'center', color: 'white' }}>
+                {t('helper_home_banner_title2_2')}
               </h2>
               <h2 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title3')}

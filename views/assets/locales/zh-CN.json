@@ -119,8 +119,9 @@
   "home_have_account_sign_in": "已经有帐号了吗？按此登入",
 
   "helper_home_banner_title1": "人人都是过来人",
-  "helper_home_banner_title2": "只要你曾经申请上大学、转职成功、找到工作、或是创业，你就是我们在找的过来人。",
-  "helper_home_banner_title3": "你的一句过来人经验谈，可能会改变别人的一生。",
+  "helper_home_banner_title2_1": "只要你曾经申请上大学、转职成功、找到工作、或是创业，",
+  "helper_home_banner_title2_2": "你就是我们在找的过来人。",
+  "helper_home_banner_title3": "你的一句经验谈，可能会改变别人的一生。",
   "helper_home_banner_subtitle1": "分享你宝贵的人生经验。",
   "helper_home_banner_subtitle2": "创造额外的收入来源！",
   "helper_home_create_an_account_helpee": "免费註册，成为过来人",

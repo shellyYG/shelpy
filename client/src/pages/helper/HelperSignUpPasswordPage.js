@@ -121,7 +121,7 @@ const HelperSignUpPasswordPage = () => {
   return (
     <div
       className='main-content-wrapper-homepage-helper'
-      style={{ backgroundImage: 'url(/helper-home.jpeg)' }}
+      style={{ backgroundImage: 'url(/static-imgs/helper-home.jpeg)' }}
       title='Photo by Humphrey Muleba on Unsplash'
     >
       <div className='section-center-align'>
