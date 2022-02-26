@@ -83,7 +83,7 @@ const HelperDashboardPage = (props) => {
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
             >
-              <p style={{ margin: 'auto' }}>No bookings yet</p>
+              <p style={{ margin: 'auto' }}>{t('no_bookings')}</p>
             </div>
           )}
 
@@ -135,7 +135,7 @@ const HelperDashboardPage = (props) => {
                   display: 'flex',
                 }}
               >
-                <p style={{ margin: 'auto' }}>No matched customers yet</p>
+                <p style={{ margin: 'auto' }}>{t('no_matched_customers')}</p>
               </div>
             ))}
           {allPotentialCustomers.map(
@@ -182,9 +182,7 @@ const HelperDashboardPage = (props) => {
                 display: 'flex',
               }}
             >
-              <p style={{ margin: 'auto' }}>
-                You haven't create any offers yet
-              </p>
+              <p style={{ margin: 'auto' }}>{t('no_created_offers')}</p>
             </div>
           )}
           <div

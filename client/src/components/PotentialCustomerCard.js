@@ -132,7 +132,7 @@ function PotentialCustomerCard(props) {
           </div>
         )}
         {(!!props.helpeeAnonymous || !props.profilePicPath) && (
-          <div className='smallBlankProfileImageBx'>
+          <div className='helper-ImgBx'>
             <a
               href='https://www.vecteezy.com/free-vector/default-avatar'
               target='_blank'

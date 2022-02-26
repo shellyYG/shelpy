@@ -23,6 +23,7 @@ const HelperSignUpPasswordPage = () => {
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
   const [email, setEmail] = useState(DBHelpeeEmail);
   const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
   const [loading, setIsLoading] = useState(false);
   const [hasGiveConsent, setHasGiveConsent] = useState(false);
   const {
@@ -69,6 +70,10 @@ const HelperSignUpPasswordPage = () => {
   function handlePasswordTyping(e) {
     e.preventDefault();
     setPassword(e.target.value);
+  }
+  function handleRepeatPasswordTyping(e) {
+    e.preventDefault();
+    setRepeatPassword(e.target.value);
   }
   function handleHasGiveConsent() {
     setHasGiveConsent(!hasGiveConsent);
@@ -149,28 +154,39 @@ const HelperSignUpPasswordPage = () => {
             disabled
           />
           <input
-            type='text'
+            type='password'
             className='form-control-password'
             placeholder={t('enter_password_placeholder')}
             value={password}
             onChange={handlePasswordTyping}
             ref={passwordRef}
           />
+          <input
+            type='password'
+            className='form-control-password'
+            placeholder={t('repeat_password_placeholder')}
+            value={repeatPassword}
+            onChange={handleRepeatPasswordTyping}
+          />
+          {repeatPassword !== password && (
+            <p style={{ color: 'red', fontSize: '12px', marginBottom: '14px' }}>
+              {t('password_not_aligned_warning')}
+            </p>
+          )}
           <div className='form-row-password' style={{ marginBottom: '20px' }}>
             <input
               type='checkbox'
               checked={hasGiveConsent}
               onChange={handleHasGiveConsent}
-              style={{ marginRight: '20px', cursor: 'pointer' }}
+              style={{ marginRight: '20px', cursor: 'pointer', marginBottom: 'auto' }}
             />
             <div className='checkbox-text-password-page'>
               <p
                 style={{
                   textAlign: 'center',
-                  marginTop: '5px',
                   marginBottom: '10px',
-                  fontSize: '10px',
-                  padding: '5px 30px',
+                  fontSize: '14px',
+                  color: 'white'
                 }}
               >
                 {t('helper_home_terms_and_condition_introduction')}{' '}

@@ -119,7 +119,7 @@ const HelpeeSignInPage = () => {
             ref={emailRef}
           />
           <input
-            type='text'
+            type='password'
             className='form-control-password'
             placeholder={t('enter_password_placeholder')}
             ref={passwordRef}

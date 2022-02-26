@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import '../App.css';
 import DangerIcon from '../components/Icons/DangerIcon';
@@ -6,15 +6,15 @@ import DangerIcon from '../components/Icons/DangerIcon';
 const PreSignInPage = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  function handleNext(e) {
+  function handleToHomepage(e) {
     e.preventDefault();
     let path = '';
     if (props.isHelpee) {
-      path = '/helpee/sign-in';
+      path = '/home';
     } else {
-      path = '/helper/sign-in';
+      path = '/helper/home';
     }
-    navigate(path, { replace: true });
+    navigate(path);
   }
   return (
     <div className='section-left-align'>
@@ -25,25 +25,37 @@ const PreSignInPage = (props) => {
           textAlign: 'center',
         }}
       >
-        <div
-          style={{ paddingTop: '5%', margin: '50px auto' }}
-        >
+        <div style={{ margin: '50px auto' }}>
           <DangerIcon />
-          <h1
-            style={{
-              textAlign: 'center',
-              marginTop: '30px',
-              marginBottom: '30px',
-            }}
+          {props.isHelpee && (
+            <h2 style={{ margin: 'auto' }}>
+              {t('please')} <Link to='/helpee/sign-in'>{t('sign_in')}</Link>{' '}
+              {t('service_types_sign_in_as_helpee')}
+            </h2>
+          )}
+          {!props.isHelpee && (
+            <h2 style={{ margin: 'auto' }}>
+              {t('please')} <Link to='/helper/sign-in'>{t('sign_in')}</Link>{' '}
+              {t('service_types_sign_in_as_helper')}
+            </h2>
+          )}
+          {props.isHelpee && (
+            <h2 style={{ margin: '10px auto' }}>
+              {t('dont_have_helpee_account')}
+            </h2>
+          )}
+          {!props.isHelpee && (
+            <h2 style={{ margin: '10px auto' }}>
+              {t('dont_have_helper_account')}
+            </h2>
+          )}
+          <button
+            className='btn-next'
+            style={{ width: '180px' }}
+            onClick={handleToHomepage}
           >
-            {props.isHelpee && t('oops_helpee_not_sign_in')}
-            {!props.isHelpee && t('oops_helper_not_sign_in')}
-          </h1>
-          <div style={{ textAlign: 'center' }}>
-            <button className='btn-next' onClick={handleNext}>
-              {t('sign_in')}
-            </button>
-          </div>
+            {t('sign_up_here')}
+          </button>
         </div>
       </div>
     </div>

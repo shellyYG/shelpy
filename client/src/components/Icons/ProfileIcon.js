@@ -21,6 +21,7 @@ const ProfileIcon = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
+  console.log('isHelpeeAuthenticated: ', props.isHelpeeAuthenticated);
   
   function handleProfileClick(e) {
     e.preventDefault();
@@ -34,25 +35,25 @@ const ProfileIcon = (props) => {
     }
     setActive(!active);
   }
-  function handleHelpeeSignOut(e) {
+  async function handleHelpeeSignOut(e) {
     e.preventDefault();
     localStorage.removeItem('shelpy-token');
-    MySwal.fire({
+    await MySwal.fire({
       title: <strong>{t('success_sign_out')}</strong>,
       html: <p>{t('you_are_signed_out')}</p>,
       icon: 'success',
     });
-    dispatch(getHelpeeAuthStatus());
+    window.location.reload();
   }
-  function handleHelperSignOut(e) {
+  async function handleHelperSignOut(e) {
     e.preventDefault();
     localStorage.removeItem('shelper-token');
-    MySwal.fire({
+    await MySwal.fire({
       title: <strong>{t('success_sign_out')}</strong>,
       html: <p>{t('you_are_signed_out')}</p>,
       icon: 'success',
     });
-    dispatch(getHelperAuthStatus());
+    window.location.reload();
   }
   function handleToHelpeeDashboard(e) {
     e.preventDefault();
