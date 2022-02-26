@@ -979,6 +979,19 @@ export const yearsOptions = [
   { value: 'Others', label: othersText },
 ];
 
+export const durationOptions = [
+  { value: 'default', label: 'please_select_option' },
+  { value: '25 minutes', label: 'duration_25m' },
+  { value: '30 minutes', label: 'duration_30m' },
+  { value: '35 minutes', label: 'duration_35m' },
+  { value: '40 minutes', label: 'duration_40m' },
+  { value: '45 minutes', label: 'duration_45m' },
+  { value: '50 minutes', label: 'duration_50m' },
+  { value: '55 minutes', label: 'duration_55m' },
+  { value: '60 minutes', label: 'duration_60m' },
+  { value: 'Others', label: othersText },
+];
+
 export const ageOptions = [
   { value: 'default', label: 'please_select_option' },
   {

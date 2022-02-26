@@ -14,6 +14,7 @@ import {
   WFHOptions,
   companySizeOptions,
   yearsOptions,
+  durationOptions,
 } from '../store/options/service-options';
 
 import {
@@ -24,6 +25,7 @@ import {
   clearOfferStatus,
   postHelperOfferForm,
 } from '../store/helper/helper-actions';
+import HalfLineTextBox from '../components/HalfLineTextBox';
 
 const MySwal = withReactContent(Swal);
 
@@ -41,6 +43,7 @@ const JobFormPage = (props) => {
   const companySizeRef = useRef();
   const yearsRef = useRef();
   const notesRef = useRef();
+  const durationRef = useRef();
 
   const [loading, setIsLoading] = useState(false);
 
@@ -76,6 +79,7 @@ const JobFormPage = (props) => {
   const [WFH, setWFH] = useState('default');
   const [companySize, setCompanySize] = useState('default');
   const [years, setYears] = useState('default');
+  const [duration, setDuration] = useState('default');
   const [enableBtn, setEnableBtn] = useState(false);
   const [typingPrice, setTypingPrice] = useState('');
 
@@ -144,6 +148,7 @@ const JobFormPage = (props) => {
         WFH,
         companySize,
         years,
+        duration,
         notes: notes || '',
         step: 'request_submitted',
         status: 'Not Fulfilled',
@@ -242,12 +247,22 @@ const JobFormPage = (props) => {
           WFH !== 'default' &&
           companySize !== 'default' &&
           years !== 'default' &&
+          duration !== 'default' &&
           typingPrice !== '' &&
           isInt(typingPrice)
       );
     }
-    
-  }, [props.isHelpee, industry, job, country, WFH, companySize, years, typingPrice]);
+  }, [
+    props.isHelpee,
+    industry,
+    job,
+    country,
+    WFH,
+    companySize,
+    years,
+    typingPrice,
+    duration,
+  ]);
   return (
     <div
       className='main-content-wrapper'
@@ -335,18 +350,23 @@ const JobFormPage = (props) => {
                 />
               )}
               {!props.isHelpee && (
-                <>
-                  <FullLineTextBox
+                <div className='form-row'>
+                  <DropDown
+                    selected={duration}
+                    handleSelect={setDuration}
+                    title={t('form_duration')}
+                    selectRef={durationRef}
+                    options={durationOptions}
+                  />
+                  <HalfLineTextBox
                     title={t('form_price')}
                     placeholder={t('form_price_unit')}
                     inputRef={priceRef}
                     onChange={handlePriceTyping}
                     marginBottom='0px'
+                    typingPrice={typingPrice}
                   />
-                  {!isInt(typingPrice) && (
-                    <p style={{ color: 'red' }}>{t('form_price_warning')}</p>
-                  )}
-                </>
+                </div>
               )}
               <FullLineTextBox
                 title={t('notes')}

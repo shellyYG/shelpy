@@ -29,6 +29,12 @@ function MarketingCard(props) {
   const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
     useState('');
   const [title, setTitle] = useState('');
+  const [duration, setDuration] = useState('');
+  useEffect(() => {
+    if (props.duration) {
+      setDuration(props.duration.split(' ')[0]);
+    }
+  }, [props.duration]);
 
   useEffect(()=>{
     const matchedTranslation = schoolOptions.filter(
@@ -248,7 +254,7 @@ function MarketingCard(props) {
             {t('helper_organization')}: {props.organization || t('na')}
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            {t('price_per_45_min', { price: props.price })}
+            {t('price_per_duration_min', { price: props.price, duration })}
           </p>
         </div>
       </div>

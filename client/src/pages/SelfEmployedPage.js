@@ -11,7 +11,9 @@ import {
   typeOptions,
   professionOptions,
   yearsOptions,
+  durationOptions,
 } from '../store/options/service-options';
+import HalfLineTextBox from '../components/HalfLineTextBox';
 
 import {
   clearRequestStatus,
@@ -37,6 +39,7 @@ const SelfEmployedPage = (props) => {
   const countryRef = useRef();
   const yearsRef = useRef();
   const notesRef = useRef();
+  const durationRef = useRef();
 
   const [type, setType] = useState('default');
   const [profession, setProfession] = useState('default');
@@ -45,6 +48,7 @@ const SelfEmployedPage = (props) => {
   const [enableBtn, setEnableBtn] = useState(false);
   const [typingPrice, setTypingPrice] = useState('');
   const [loading, setIsLoading] = useState(false);
+  const [duration, setDuration] = useState('default');
 
   const { requestStatus, requestStatusTitle, requestStatusMessage } =
     useSelector((state) => state.helpeeNotification);
@@ -113,6 +117,7 @@ const SelfEmployedPage = (props) => {
         profession,
         country,
         years,
+        duration,
         notes: notes || '',
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
@@ -218,12 +223,13 @@ const SelfEmployedPage = (props) => {
           type !== 'default' &&
           profession !== 'default' &&
           years !== 'default' &&
+          duration !== 'default' &&
           typingPrice !== '' &&
           isInt(typingPrice)
       );
     }
     
-  }, [props.isHelpee, type, profession, country, years, typingPrice]);
+  }, [props.isHelpee, type, profession, country, years, typingPrice, duration]);
   return (
     <div
       className='main-content-wrapper'
@@ -296,18 +302,23 @@ const SelfEmployedPage = (props) => {
                 />
               )}
               {!props.isHelpee && (
-                <>
-                  <FullLineTextBox
+                  <div className='form-row'>
+                  <DropDown
+                    selected={duration}
+                    handleSelect={setDuration}
+                    title={t('form_duration')}
+                    selectRef={durationRef}
+                    options={durationOptions}
+                  />
+                  <HalfLineTextBox
                     title={t('form_price')}
                     placeholder={t('form_price_unit')}
                     inputRef={priceRef}
                     onChange={handlePriceTyping}
                     marginBottom='0px'
+                    typingPrice={typingPrice}
                   />
-                  {!isInt(typingPrice) && (
-                    <p style={{ color: 'red' }}>{t('form_price_warning')}</p>
-                  )}
-                </>
+                </div>
               )}
               <FullLineTextBox
                 title={t('notes')}

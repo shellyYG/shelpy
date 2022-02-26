@@ -860,6 +860,16 @@ footer {
   border-radius: 5px;
 }
 
+.form-wrapper-half {
+  width: 50%;
+}
+  .form-wrapper-half label {
+    display: block;
+    font-family: "system-ui";
+    font-size: 17px;
+    color: rgb(238, 241, 222);
+    margin-bottom: 8px; }
+
 .form-row {
   display: flex;
   margin-bottom: 25px; }
@@ -1541,6 +1551,10 @@ input[type="checkbox" i] {
     flex-wrap: wrap;
   }
   .form-row .form-wrapper {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .form-row .form-wrapper-half {
     width: 100%;
     margin-top: 10px;
   }

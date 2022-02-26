@@ -13,7 +13,9 @@ import {
   departmentOptions,
   countryOptions,
   degreeOptions,
+  durationOptions,
 } from '../store/options/service-options';
+import HalfLineTextBox from '../components/HalfLineTextBox';
 
 import {
   clearRequestStatus,
@@ -37,9 +39,11 @@ const UniFormPage = (props) => {
   const countryRef = useRef();
   const degreeRef = useRef();
   const notesRef = useRef();
+  const durationRef = useRef();
+
   const [typingPrice, setTypingPrice] = useState('');
-  
   const [loading, setIsLoading] = useState(false);
+  const [duration, setDuration] = useState('default');
   
   function isInt(value) {
     return (
@@ -128,6 +132,7 @@ const UniFormPage = (props) => {
         department,
         degree,
         country,
+        duration,
         notes: notes || '',
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
@@ -222,10 +227,11 @@ const UniFormPage = (props) => {
           department !== 'default' &&
           degree !== 'default' &&
           typingPrice !== '' &&
+          duration !== 'default' &&
           isInt(typingPrice)
       );
     }
-  }, [props.isHelpee, school, department, country, degree, typingPrice]);
+  }, [props.isHelpee, school, department, country, degree, typingPrice, duration]);
   useEffect(() => {
     if (school) {
       const departments = departmentOptions[school];
@@ -293,18 +299,23 @@ const UniFormPage = (props) => {
                 />
               )}
               {!props.isHelpee && (
-                <>
-                  <FullLineTextBox
+                <div className='form-row'>
+                  <DropDown
+                    selected={duration}
+                    handleSelect={setDuration}
+                    title={t('form_duration')}
+                    selectRef={durationRef}
+                    options={durationOptions}
+                  />
+                  <HalfLineTextBox
                     title={t('form_price')}
                     placeholder={t('form_price_unit')}
                     inputRef={priceRef}
                     onChange={handlePriceTyping}
                     marginBottom='0px'
+                    typingPrice={typingPrice}
                   />
-                  {!isInt(typingPrice) && (
-                    <p style={{ color: 'red' }}>{t('form_price_warning')}</p>
-                  )}
-                </>
+                </div>
               )}
               <FullLineTextBox
                 title={t('notes')}

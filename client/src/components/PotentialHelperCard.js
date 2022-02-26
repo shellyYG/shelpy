@@ -21,6 +21,12 @@ function PotentialHelperCard(props) {
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
+  const [duration, setDuration] = useState('');
+  useEffect(() => {
+    if (props.duration) {
+      setDuration(props.duration.split(' ')[0]);
+    }
+  }, [props.duration]);
   
   useEffect(() => {
     let secondTypeTranslationObj;
@@ -210,6 +216,8 @@ function PotentialHelperCard(props) {
         <div className='checkBoxWidth'>
           <div className='bookWrapper'>
             {t('helper_organization')} : {props.organization || t('na')}
+            <br />
+            {t('price_per_duration_min', { price: props.price, duration })}
             <button className='btn-contact' onClick={handleBookHelper}>
               {t('book_name', { name: props.partnerName })}
             </button>
@@ -220,6 +228,8 @@ function PotentialHelperCard(props) {
         <div className='checkBoxWidth'>
           <div className='bookWrapper'>
             {t('helper_organization')} : {props.organization || t('na')} <br />
+            {t('price_per_duration_min', { price: props.price, duration })}
+            <br />
             {t('in_booking_process_with_name', { name: props.partnerName })}
           </div>
         </div>

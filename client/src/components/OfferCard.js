@@ -16,12 +16,18 @@ import {
 function OfferCard(props) {
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
+  const [duration, setDuration] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
   const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
     useState('');
   const [details, setDetails] = useState('');
+  useEffect(() => {
+    if (props.duration) {
+      setDuration(props.duration.split(' ')[0])
+    }
+  },[props.duration])
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
@@ -220,7 +226,7 @@ function OfferCard(props) {
             {t('offer_id')}: {props.offerId}
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
-            {t('price_per_45_min', { price: props.price })}
+            {t('price_per_duration_min', { price: props.price, duration })}
           </p>
           <p style={{ fontWeight: '12px', padding: '6px' }}>
             {t('speaks')}: {translatedSpeakingLanguages}

@@ -226,6 +226,7 @@ const HelpeeDashboardPage = (props) => {
               bookingId={option.bookingId}
               bookingStatus={option.bookingStatus}
               organization={option.organization}
+              duration={option.duration}
             />
           ))}
         </div>

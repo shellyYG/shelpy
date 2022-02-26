@@ -184,7 +184,7 @@
   "helpee_uni_form_title": "What do you want to study?",
   "helper_uni_form_title": "What did you study?",
   "form_country": "Desired Country *",
-  "form_price": "Price per 45 minutes (EUR) *",
+  "form_price": "Price (EUR) *",
   "form_price_unit": "In Euro €",
   "form_price_warning": "Price need to be an integer e.g. 20 is allowed. 20.1 is not allowed",
   "form_email_warning": "Need to be valid email form",
@@ -199,6 +199,17 @@
   "country_italy": "Italy",
   "country_austria": "Austria",
   "country_swiss": "Swiss",
+
+  "form_duration": "Desired Meeting Duration *",
+  "duration_25m": "25 minutes",
+  "duration_30m": "30 minutes",
+  "duration_35m": "35 minutes",
+  "duration_40m": "40 minutes",
+  "duration_45m": "45 minutes",
+  "duration_50m": "50 minutes",
+  "duration_55m": "55 minutes",
+  "duration_60m": "60 minutes",
+
   "uni_form_school": "School *",
 
   "uni_form_department": "Department *",
@@ -558,7 +569,7 @@
   "offer_id": "offer_id",
   "no_offers": "No Public Offers yet",
   "price": "Price",
-  "price_per_45_min": "Price: {{price}} € per 45 minutes",
+  "price_per_duration_min": "Price & Duration: {{price}}€ ({{duration}} minutes)",
   "na": "N/A",
 
   "languages_english": "English",

@@ -42,6 +42,7 @@ async function getPotentialHelpers(data) {
     , acc.id AS helperId, acc.username AS helperUsername, acc.profilePicPath AS profilePicPath
 		, req.mainType AS mainType, req.secondType AS secondType
     , req.thirdType AS thirdType, req.fourthType AS fourthType
+    , ofs.duration
     FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
 LEFT JOIN requests req ON 
@@ -50,7 +51,7 @@ LEFT JOIN requests req ON
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
 LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id
 WHERE helpee.id = ${helpeeUserId} AND NOT ofs.userId IS NULL AND acc.status = 'approved'
-ORDER BY req.id, acc.score DESC;`;
+ORDER BY acc.score, ofs.id DESC;`;
   const allPotentialHelpers = await query(sql);
 
   return { data: { allPotentialHelpers } };

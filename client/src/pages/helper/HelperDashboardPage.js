@@ -212,6 +212,7 @@ const HelperDashboardPage = (props) => {
               helperName={option.helperName}
               languages={option.languages}
               isAnonymous={option.isAnonymous}
+              duration={option.duration}
             />
           ))}
         </div>

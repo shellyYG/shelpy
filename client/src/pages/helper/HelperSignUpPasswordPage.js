@@ -151,6 +151,7 @@ const HelperSignUpPasswordPage = () => {
             placeholder={t('home_enter_email_placeholder')}
             value={email}
             ref={emailRef}
+            style={{ color: 'white' }}
             disabled
           />
           <input

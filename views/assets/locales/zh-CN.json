@@ -185,7 +185,7 @@
   "helper_uni_form_title": "你读过什麽类型的大学？",
   "form_country": "想去的国家/地区 *",
   "country_taiwan": "台湾",
-  "form_price": "每45分钟的谘询价格 (欧元) *",
+  "form_price": "谘询价格 (欧元) *",
   "form_price_unit": "单位：欧元",
   "form_price_warning": "价格必须是整数，如：20。像是 20.1 这种格式，是不允许的。",
   "form_email_warning": "邮件信箱必须是有效的 Email 格式",
@@ -199,6 +199,17 @@
   "country_italy": "义大利",
   "country_austria": "奥地利",
   "country_swiss": "瑞士",
+
+  "form_duration": "谘询时间长短 *",
+  "duration_25m": "25 分钟",
+  "duration_30m": "30 分钟",
+  "duration_35m": "35 分钟",
+  "duration_40m": "40 分钟",
+  "duration_45m": "45 分钟",
+  "duration_50m": "50 分钟",
+  "duration_55m": "55 分钟",
+  "duration_60m": "60 分钟",
+
   "uni_form_school": "学院 *",
 
   "uni_form_department": "系所 *",
@@ -558,7 +569,7 @@
   "offer_id": "服务编号",
   "no_offers": "还未有公开服务",
   "price": "报价",
-  "price_per_45_min": "谘询价格: {{price}} 欧元/45 分钟",
+  "price_per_duration_min": "谘询价格与时间长短: {{price}} 欧元 ({{duration}} 分钟)",
   "na": "无",
 
   "languages_english": "英文",
