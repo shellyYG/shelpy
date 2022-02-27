@@ -20,6 +20,7 @@ const HelpeeSignUpPasswordPage = () => {
   const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const consentRef = useRef();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
   const [email, setEmail] = useState(DBHelpeeEmail);
   const [password, setPassword] = useState('');
@@ -77,6 +78,11 @@ const HelpeeSignUpPasswordPage = () => {
   function handleHasGiveConsent() {
     setHasGiveConsent(!hasGiveConsent);
   }
+  useEffect(()=>{
+    if (repeatPassword && repeatPassword === password) {
+      if (consentRef.current) consentRef.current.focus();
+    }
+  },[password, repeatPassword])
   useEffect(() => {
     setEmail(DBHelpeeEmail);
   }, [DBHelpeeEmail]);
@@ -168,14 +174,21 @@ const HelpeeSignUpPasswordPage = () => {
             onChange={handleRepeatPasswordTyping}
           />
           {repeatPassword !== password && (
-            <p style={{ color: 'red', fontSize: '12px', marginBottom: '14px' }}>{t('password_not_aligned_warning')}</p>
+            <p style={{ color: 'red', fontSize: '12px', marginBottom: '14px' }}>
+              {t('password_not_aligned_warning')}
+            </p>
           )}
           <div className='form-row-password' style={{ marginBottom: '20px' }}>
             <input
               type='checkbox'
               checked={hasGiveConsent}
               onChange={handleHasGiveConsent}
-              style={{ marginRight: '20px', cursor: 'pointer', marginBottom: 'auto' }}
+              style={{
+                marginRight: '20px',
+                cursor: 'pointer',
+                marginBottom: 'auto',
+              }}
+              ref={consentRef}
             />
             <div className='checkbox-text-password-page'>
               <p

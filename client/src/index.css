@@ -1376,8 +1376,8 @@ footer {
 }
 
 input[type="checkbox" i] {
-  width: 18px;
-  height: 18px;
+  width: 30px;
+  height: 30px;
 }
 .mktTitleLeft {
   display: flex;
@@ -1644,6 +1644,10 @@ input[type="checkbox" i] {
 }
 
 @media screen and (max-width: 768px) {
+  input[type="checkbox" i] {
+  width: 40px;
+  height: 40px;
+}
   .navBarText {
     display: none
   }
@@ -1663,6 +1667,10 @@ input[type="checkbox" i] {
   }
 }
 @media (max-width: 500px) {
+  input[type="checkbox" i] {
+  width: 80px;
+  height: 80px;
+}
   .main-content-wrapper-no-height {
     height: 112vh;
   }

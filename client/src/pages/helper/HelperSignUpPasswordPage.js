@@ -20,6 +20,7 @@ const HelperSignUpPasswordPage = () => {
   const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const consentRef = useRef();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
   const [email, setEmail] = useState(DBHelpeeEmail);
   const [password, setPassword] = useState('');
@@ -78,6 +79,11 @@ const HelperSignUpPasswordPage = () => {
   function handleHasGiveConsent() {
     setHasGiveConsent(!hasGiveConsent);
   }
+  useEffect(() => {
+    if (repeatPassword && repeatPassword === password) {
+      if (consentRef.current) consentRef.current.focus();
+    }
+  }, [password, repeatPassword]);
   useEffect(() => {
     setEmail(DBHelpeeEmail);
   }, [DBHelpeeEmail]);
@@ -179,7 +185,12 @@ const HelperSignUpPasswordPage = () => {
               type='checkbox'
               checked={hasGiveConsent}
               onChange={handleHasGiveConsent}
-              style={{ marginRight: '20px', cursor: 'pointer', marginBottom: 'auto' }}
+              style={{
+                marginRight: '20px',
+                cursor: 'pointer',
+                marginBottom: 'auto',
+              }}
+              ref={consentRef}
             />
             <div className='checkbox-text-password-page'>
               <p
@@ -187,7 +198,7 @@ const HelperSignUpPasswordPage = () => {
                   textAlign: 'center',
                   marginBottom: '10px',
                   fontSize: '14px',
-                  color: 'white'
+                  color: 'white',
                 }}
               >
                 {t('helper_home_terms_and_condition_introduction')}{' '}
