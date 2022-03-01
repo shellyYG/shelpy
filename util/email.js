@@ -25,12 +25,13 @@ const sendHelpeeEmail = (user) => {
     },
     (err, emailToken) => {
       const url = `https://shelpy.co/helpee/email/confirmation?emailToken=${emailToken}`;
+      console.log('confirm Helpee email url: ', url);
       transporter.sendMail(
         {
           from: '"official shelpy" <shelpyofficial@gmail.com>',
           to: user.data.email,
           subject: 'Confirm Shelpy Email',
-          html: `Please click this link to confirm your email: <a href='${url}'>Confirm My Email</a>`,
+          html: `Please click this link to confirm your email: <a href='${url}'>${url}</a>`,
         },
         (error, info) => {
           if (error) {
@@ -63,12 +64,13 @@ const sendHelperEmail = (user) => {
     },
     (err, emailToken) => {
       const url = `https://shelpy.co/helper/email/confirmation?emailToken=${emailToken}`;
+      console.log('confirm Helper email url: ', url);
       transporter.sendMail(
         {
           from: '"official shelpy" <shelpyofficial@gmail.com>',
-          to: user.data.email, // TODO: change to customer email aka user.data.email
+          to: user.data.email,
           subject: 'Confirm Shelpy Email',
-          html: `Please click this link to confirm your email: <a href='${url}'>Confirm My Email</a>`,
+          html: `Please click this link to confirm your email: <a href='${url}'>${url}</a>`,
         },
         (error, info) => {
           if (error) {
@@ -102,7 +104,7 @@ const sendHelpeeResetPasswordEmail = (user) => {
         const url = `https://shelpy.co/helpee/password/pre/reset?email=${email}&passwordResetToken=${passwordResetToken}`;
         transporter.sendMail(
           {
-            to: user.data.email, // TODO: change to customer email : aka user.data.email
+            to: user.data.email,
             subject: 'Reset Shelpy Password',
             html: `Please click this link to reset your password: <a href='${url}'>Reset Password</a>`,
           },
