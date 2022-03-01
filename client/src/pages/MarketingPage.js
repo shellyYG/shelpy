@@ -15,6 +15,10 @@ const HelpeeDashboardPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const mainTypeRef = useRef();
   const secondTypeRef = useRef();
   const countryRef = useRef();
@@ -74,7 +78,7 @@ const HelpeeDashboardPage = (props) => {
   }, [secondType]);
   function handleToHomepage(e) {
     e.preventDefault();
-    navigate('/home');
+    navigate(`/${currentLanguage}/home`);
   }
 
   return (
@@ -90,7 +94,8 @@ const HelpeeDashboardPage = (props) => {
           <div style={{ margin: '50px auto' }}>
             <DangerIcon />
             <h2 style={{ margin: 'auto' }}>
-              {t('please')} <Link to='/helpee/sign-in'>{t('sign_in')}</Link>{' '}
+              {t('please')}{' '}
+              <Link to={`/${currentLanguage}/helpee/sign-in`}>{t('sign_in')}</Link>{' '}
               {t('mkt_offer_sign_in_as_helpee')}
             </h2>
             <h2 style={{ margin: '10px auto' }}>

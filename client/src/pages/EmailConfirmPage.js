@@ -15,6 +15,10 @@ const MySwal = withReactContent(Swal);
 
 const EmailConfirmPage = (props) => {
   const { t } = useTranslation();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const [loading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -56,7 +60,7 @@ const EmailConfirmPage = (props) => {
             html: <p>{t('please_email_us_for_help')}</p>,
             icon: 'error',
           });
-          navigate('/helpee/home', { replace: true }); // replace: true: do not want to let user come back to this page
+          navigate(`/${currentLanguage}/helpee/home`, { replace: true }); // replace: true: do not want to let user come back to this page
         }
         sweetAlertAndClearStatus(
           confirmHelpeeEmailStatus,
@@ -73,7 +77,7 @@ const EmailConfirmPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate('/helpee/sign-in', { replace: true });
+          navigate(`/${currentLanguage}/helpee/sign-in`, { replace: true });
         }
         sweetAlertAndNavigate(
           confirmHelpeeEmailStatus,
@@ -89,7 +93,7 @@ const EmailConfirmPage = (props) => {
             html: <p>{t('please_email_us_for_help')}</p>,
             icon: 'error',
           });
-          navigate('/helper/home', { replace: true });
+          navigate(`/${currentLanguage}/helper/home`, { replace: true });
         }
         sweetAlertAndClearStatus(
           confirmHelperEmailStatus,
@@ -106,7 +110,7 @@ const EmailConfirmPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate('/helper/sign-in', { replace: true });
+          navigate(`/${currentLanguage}/helper/sign-in`, { replace: true });
         }
         sweetAlertAndNavigate(
           confirmHelperEmailStatus,
@@ -125,6 +129,7 @@ const EmailConfirmPage = (props) => {
     confirmHelperEmailStatusMessage,
     navigate,
     dispatch,
+    currentLanguage
   ]);
   return (
     <div

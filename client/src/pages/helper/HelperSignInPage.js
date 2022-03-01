@@ -24,6 +24,9 @@ const HelperSignInPage = () => {
     (state) => state.helperNotification
   );
   const { helperAccountStatus } = useSelector((state) => state.helper);
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
 
   if (loading) {
     MySwal.fire({
@@ -71,15 +74,16 @@ const HelperSignInPage = () => {
         dispatch(getHelperAuthStatus());
         dispatch(clearSignInStatus());
         if (helperAccountStatus === 'password_created') {
-          navigate('/helper/basic-form', { replace: true });
+          navigate(`/${currentLanguage}/helper/basic-form`, { replace: true });
         } else {
-          navigate('/helper/service-types', { replace: true });
+          navigate(`/${currentLanguage}/helper/service-types`, { replace: true });
         }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
   }, [
     t,
+    currentLanguage,
     helperAccountStatus,
     signInStatus,
     signInStatusMessage,
@@ -123,10 +127,15 @@ const HelperSignInPage = () => {
             ref={passwordRef}
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
-            <Link to='/helper/forget-password' style={{ marginRight: '10px' }}>
+            <Link
+              to={`/${currentLanguage}/helper/forget-password`}
+              style={{ marginRight: '10px' }}
+            >
               {t('forget_password')}
             </Link>
-            <Link to='/helper/home'>{t('dont_have_account_sign_up')}</Link>
+            <Link to={`/${currentLanguage}/helper/home`}>
+              {t('dont_have_account_sign_up')}
+            </Link>
           </div>
 
           <ConfirmBtn cta={t('sign_in')} handleConfirm={handleConfirm} />

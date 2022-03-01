@@ -6,7 +6,7 @@ import { onClickUpdateActiveIconTarget } from '../../store/general/general-actio
 import { useTranslation } from 'react-i18next';
 
 function GlobalIcon (props) {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   function handleLanguageClick(e) {
@@ -24,14 +24,26 @@ function GlobalIcon (props) {
   function onENClick(e) {
     e.preventDefault();
     i18n.changeLanguage('en');
+    const currentPathname = window.location.pathname.replace(/\/+$/, '');
+    const routeParts = currentPathname.split('/');
+    const route = routeParts[routeParts.length - 1];
+    window.location.replace(`/en/${route}`);
   }
   function onZhTWClick(e) {
     e.preventDefault();
     i18n.changeLanguage('zh-TW');
+    const currentPathname = window.location.pathname.replace(/\/+$/, '');
+    const routeParts = currentPathname.split('/');
+    const route = routeParts[routeParts.length - 1];
+    window.location.replace(`/zh-TW/${route}`);
   }
   function onZhCNClick(e) {
     e.preventDefault();
     i18n.changeLanguage('zh-CN');
+    const currentPathname = window.location.pathname.replace(/\/+$/, '');
+    const routeParts = currentPathname.split('/');
+    const route = routeParts[routeParts.length-1];
+    window.location.replace(`/zh-CN/${route}`);
   }
   useEffect(() => {
     if (props.dropDownNavTarget !== 'language') {

@@ -32,6 +32,11 @@ const UniFormPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const priceRef = useRef();
   const organizationRef = useRef();
   const schoolRef = useRef();
@@ -166,7 +171,7 @@ const UniFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = '/helpee/dashboard';
+        let path = `/${currentLanguage}/helpee/dashboard`;
         navigate(path, { replace: true });
       }
       dispatch(clearRequestStatus());
@@ -174,6 +179,7 @@ const UniFormPage = (props) => {
     }
   }, [
     t,
+    currentLanguage,
     requestStatus,
     requestStatusTitle,
     requestStatusMessage,
@@ -204,13 +210,21 @@ const UniFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = '/helper/dashboard';
+        let path = `/${currentLanguage}/helper/dashboard`;
         navigate(path, { replace: true });
       }
       dispatch(clearOfferStatus());
       sweetAlertAndNavigate(offerStatus, offerStatusMessage);
     }
-  }, [t, offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
+  }, [
+    t,
+    currentLanguage,
+    offerStatus,
+    offerStatusTitle,
+    offerStatusMessage,
+    navigate,
+    dispatch,
+  ]);
 
   useEffect(() => {
     if (props.isHelpee) {

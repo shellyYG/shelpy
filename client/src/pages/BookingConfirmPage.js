@@ -23,6 +23,11 @@ const BookingConfirmPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const meetDateRef = useRef();
   const meetTimeRef = useRef();
   const notesRef = useRef();
@@ -72,7 +77,7 @@ const BookingConfirmPage = (props) => {
   async function handleChangeBooking(e) {
     e.preventDefault();
     navigate(
-      `/helper/chatroom?roomId=${roomId}&userId=helper_${userIdNumber}&partnerName=${partnerName}` +
+      `/${currentLanguage}/helper/chatroom?roomId=${roomId}&userId=helper_${userIdNumber}&partnerName=${partnerName}` +
         `&requestId=${requestId}&offerId=${offerId}&bookingStatus=${bookingStatus}&bookingId=${bookingId}` +
         `&helpeeId=${helpeeId}&helperId=${helperId}` +
         `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
@@ -189,7 +194,9 @@ const BookingConfirmPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        const path = props.isHelpee ? '/helpee/dashboard' : '/helper/dashboard';
+        const path = props.isHelpee
+          ? `/${currentLanguage}/helpee/dashboard`
+          : `/${currentLanguage}/helper/dashboard`;
         navigate(path);
       }
       dispatch(clearBookingNotificationStatus());
@@ -204,6 +211,7 @@ const BookingConfirmPage = (props) => {
     bookingNotificationStatusTitle,
     bookingNotificationStatusMessage,
     dispatch,
+    currentLanguage,
   ]);
   return (
     <div className='form-center-wrapper'>

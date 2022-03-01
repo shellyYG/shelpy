@@ -26,6 +26,9 @@ const HelpeeSignInPage = () => {
     signInStatusMessage,
   } = useSelector((state) => state.helpeeNotification);
   const { helpeeAccountStatus } = useSelector((state) => state.helpee);
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
 
   if (loading) {
     MySwal.fire({
@@ -73,15 +76,16 @@ const HelpeeSignInPage = () => {
         dispatch(getHelpeeAuthStatus());
         dispatch(clearSignInStatus());
         if (helpeeAccountStatus === 'password_created') {
-          navigate('/helpee/basic-form', { replace: true });
+          navigate(`/${currentLanguage}/helpee/basic-form`, { replace: true });
         } else {
-          navigate('/helpee/service-types', { replace: true });
+          navigate(`/${currentLanguage}/helpee/service-types`, { replace: true });
         }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
   }, [
     t,
+    currentLanguage,
     helpeeAccountStatus,
     signInStatus,
     signInStatusMessage,
@@ -125,10 +129,13 @@ const HelpeeSignInPage = () => {
             ref={passwordRef}
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
-            <Link to='/helpee/forget-password' style={{ marginRight: '10px' }}>
+            <Link
+              to={`/${currentLanguage}/helpee/forget-password`}
+              style={{ marginRight: '10px' }}
+            >
               {t('forget_password')}
             </Link>
-            <Link to='/home'>{t('dont_have_account_sign_up')}</Link>
+            <Link to={`/${currentLanguage}/home`}>{t('dont_have_account_sign_up')}</Link>
           </div>
 
           <ConfirmBtn cta={t('sign_in')} handleConfirm={handleConfirm} />

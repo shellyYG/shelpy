@@ -27,6 +27,9 @@ function BookingCard(props) {
     useState('');
   const [helperFilteredBookingStatus, setHelperFilteredBookingStatus] =
     useState('');
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   const [loading, setIsLoading] = useState(false);
   const [product] = useState({
     mainType: props.mainType,
@@ -216,13 +219,13 @@ function BookingCard(props) {
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
+      `/${currentLanguage}/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
     );
   }
   function handleBookingConfirmation(e) {
     e.preventDefault(e);
     navigate(
-      `/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
+      `/${currentLanguage}/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&partnerName=${props.partnerName}&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
         `&bookingNotes=${props.notes}`
     );

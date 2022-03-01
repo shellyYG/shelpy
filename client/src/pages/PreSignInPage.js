@@ -6,13 +6,16 @@ import DangerIcon from '../components/Icons/DangerIcon';
 const PreSignInPage = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   function handleToHomepage(e) {
     e.preventDefault();
     let path = '';
     if (props.isHelpee) {
-      path = '/home';
+      path = `/${currentLanguage}/home`;
     } else {
-      path = '/helper/home';
+      path = `/${currentLanguage}/helper/home`;
     }
     navigate(path);
   }
@@ -29,13 +32,19 @@ const PreSignInPage = (props) => {
           <DangerIcon />
           {props.isHelpee && (
             <h2 style={{ margin: 'auto' }}>
-              {t('please')} <Link to='/helpee/sign-in'>{t('sign_in')}</Link>{' '}
+              {t('please')}{' '}
+              <Link to={`/${currentLanguage}/helpee/sign-in`}>
+                {t('sign_in')}
+              </Link>{' '}
               {t('service_types_sign_in_as_helpee')}
             </h2>
           )}
           {!props.isHelpee && (
             <h2 style={{ margin: 'auto' }}>
-              {t('please')} <Link to='/helper/sign-in'>{t('sign_in')}</Link>{' '}
+              {t('please')}{' '}
+              <Link to={`/${currentLanguage}/helper/sign-in`}>
+                {t('sign_in')}
+              </Link>{' '}
               {t('service_types_sign_in_as_helper')}
             </h2>
           )}

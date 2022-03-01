@@ -32,6 +32,10 @@ const BasicFormPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const ageRef = useRef();
   const introductionRef = useRef();
   const notesRef = useRef();
@@ -409,7 +413,7 @@ const BasicFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        navigate('/helper/service-types');
+        navigate(`/${currentLanguage}/helper/service-types`);
       }
       dispatch(clearApplyHelperStatus());
       sweetAlertAndNavigate(applyHelperStatus, applyHelperStatusMessage);
@@ -421,6 +425,7 @@ const BasicFormPage = (props) => {
     applyHelperStatusMessage,
     navigate,
     dispatch,
+    currentLanguage,
   ]);
 
   // is Helpee:
@@ -447,13 +452,14 @@ const BasicFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        navigate('/helpee/service-types');
+        navigate(`/${currentLanguage}/helpee/service-types`);
       }
       dispatch(clearApplyHelpeeStatus());
       sweetAlertAndNavigate(applyHelpeeStatus, applyHelpeeStatusMessage);
     }
   }, [
     t,
+    currentLanguage,
     applyHelpeeStatus,
     applyHelpeeStatusTitle,
     applyHelpeeStatusMessage,

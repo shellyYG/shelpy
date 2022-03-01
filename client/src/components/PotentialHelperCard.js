@@ -17,6 +17,9 @@ import {
 function PotentialHelperCard(props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -121,10 +124,10 @@ function PotentialHelperCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+      `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
         `&userId=helpee_${props.helpeeId}&partnerName=${props.partnerName}` +
         `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}` +
-        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`+
+        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
@@ -134,13 +137,13 @@ function PotentialHelperCard(props) {
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}` +
+      `/${currentLanguage}/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}` +
         `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}` +
         `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.partnerName}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`,
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
     );
   }
 

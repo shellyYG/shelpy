@@ -32,6 +32,9 @@ const SignUpPageHelper = () => {
   const [email, setEmail] = useState('');
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
 
   async function handleConfirm(e) {
     e.preventDefault();
@@ -76,11 +79,14 @@ const SignUpPageHelper = () => {
       );
       return;
     } else if (signUpEmailStatus === 'success') {
-      navigate(`/helper/sign-up-final-step?refId=${refId}`, { replace: true });
+      navigate(`/${currentLanguage}/helper/sign-up-final-step?refId=${refId}`, {
+        replace: true,
+      });
       dispatch(clearSignUpEmailStatus());
     }
   }, [
     t,
+    currentLanguage,
     refId,
     signUpEmailStatus,
     signUpEmailStatusMessage,
@@ -178,7 +184,7 @@ const SignUpPageHelper = () => {
                 {t('home_at_any_time')}
               </p>
               <div style={{ textAlign: 'center' }}>
-                <Link to='/helper/sign-in'>
+                <Link to={`/${currentLanguage}/helper/sign-in`}>
                   {t('home_have_account_sign_in')}
                 </Link>
               </div>

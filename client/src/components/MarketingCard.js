@@ -30,6 +30,10 @@ function MarketingCard(props) {
     useState('');
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   useEffect(() => {
     if (props.duration) {
       setDuration(props.duration.split(' ')[0]);
@@ -157,20 +161,20 @@ function MarketingCard(props) {
       });
     } else {
       navigate(
-        `/helpee/book-helper?requestId=&partnerName=${props.username}` +
+        `/${currentLanguage}/helpee/book-helper?requestId=&partnerName=${props.username}` +
           `&userId=${props.helpeeId}&offerId=${props.id}&price=${props.price}` +
           `&bookingStatus=&bookingId=` +
           `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
           `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.username}` +
           `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`,
+          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
       );
     }
   }
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+      `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
         `&userId=helpee_${props.helpeeId}&partnerName=${props.username}` +
         `&requestId=&offerId=${props.offerId}&price=${props.price}&bookingStatus=&bookingId=` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +

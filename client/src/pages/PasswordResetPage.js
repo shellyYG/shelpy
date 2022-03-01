@@ -18,6 +18,10 @@ const MySwal = withReactContent(Swal);
 const PasswordResetPage = (props) => {
   const { t } = useTranslation();
   const passwordRef = useRef();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const [loading, setIsLoading] =
     useState(false);
   const navigate = useNavigate();
@@ -98,7 +102,7 @@ const PasswordResetPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate('/helpee/sign-in');
+          navigate(`/${currentLanguage}/helpee/sign-in`);
         }
         sweetAlertAndNavigate(
           helpeePasswordResetStatusTitle,
@@ -130,7 +134,7 @@ const PasswordResetPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate('/helper/sign-in');
+          navigate(`/${currentLanguage}/helper/sign-in`);
         }
         sweetAlertAndNavigate(
           helperPasswordResetStatusTitle,
@@ -149,6 +153,7 @@ const PasswordResetPage = (props) => {
     navigate,
     dispatch,
     t,
+    currentLanguage,
   ]);
   return (
     <div

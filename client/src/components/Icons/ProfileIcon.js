@@ -20,8 +20,11 @@ const ProfileIcon = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   const [active, setActive] = useState(false);
-  console.log('isHelpeeAuthenticated: ', props.isHelpeeAuthenticated);
+  
   
   function handleProfileClick(e) {
     e.preventDefault();
@@ -57,35 +60,35 @@ const ProfileIcon = (props) => {
   }
   function handleToHelpeeDashboard(e) {
     e.preventDefault();
-    navigate('/helpee/dashboard');
+    navigate(`/${currentLanguage}/helpee/dashboard`);
   }
   function handleToHelperDashboard(e) {
     e.preventDefault();
-    navigate('/helper/dashboard');
+    navigate(`/${currentLanguage}/helper/dashboard`);
   }
   function handleHelpeeSignIn(e) {
     e.preventDefault();
-    navigate('/helpee/sign-in');
+    navigate(`/${currentLanguage}/helpee/sign-in`);
   }
   function handleHelperSignIn(e) {
     e.preventDefault();
-    navigate('/helper/sign-in');
+    navigate(`/${currentLanguage}/helper/sign-in`);
   }
   function handleToHelpeeChatroom(e) {
     e.preventDefault();
-    navigate('/helpee/chatroom');
+    navigate(`/${currentLanguage}/helpee/chatroom`);
   }
   function handleToHelperChatroom(e) {
     e.preventDefault();
-    navigate('/helper/chatroom');
+    navigate(`/${currentLanguage}/helper/chatroom`);
   }
   function handleToHelpeeUpdateProfile(e) {
     e.preventDefault();
-    navigate('/helpee/basic-form');
+    navigate(`/${currentLanguage}/helpee/basic-form`);
   }
   function handleToHelperUpdateProfile(e) {
     e.preventDefault();
-    navigate('/helper/basic-form');
+    navigate(`/${currentLanguage}/helper/basic-form`);
   }
 
   useEffect(() => {

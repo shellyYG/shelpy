@@ -21,6 +21,9 @@ function PotentialCustomerCard(props) {
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
 
   useEffect(() => {
     let secondTypeTranslationObj;
@@ -109,10 +112,10 @@ function PotentialCustomerCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+      `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
         `&userId=helper_${props.helperId}&partnerName=${props.partnerName}` +
         `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}` +
-        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`+
+        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +

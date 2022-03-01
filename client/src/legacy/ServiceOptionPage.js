@@ -7,12 +7,15 @@ import '../App.css';
 
 
 const ServiceOptionPage = () => {
-  const { globalServiceType }= useSelector((state) => state.helpee);
   const navigate = useNavigate();
+  const { globalServiceType }= useSelector((state) => state.helpee);
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   
   function handleNext(e) {
     e.preventDefault();
-    let path = '/book-appointment-form';
+    let path = `/${currentLanguage}/book-appointment-form`;
     navigate(path);
   }
   return (

@@ -20,6 +20,10 @@ const HelperDashboardPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const { allOffers, allBookings, allPotentialCustomers, helperDashboardTarget } =
     useSelector((state) => state.helper);
 
@@ -31,7 +35,7 @@ const HelperDashboardPage = (props) => {
 
   function handleAddOffer(e) {
     e.preventDefault(e);
-    navigate('/helper/service-types');
+    navigate(`/${currentLanguage}/helper/service-types`);
   }
 
   function handleRrefreshPage(e) {

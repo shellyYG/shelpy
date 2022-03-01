@@ -28,6 +28,9 @@ const AppointmentForm = (props) => {
 const { requestFormStatus, requestFormStatusTitle, requestFormStatusMessage } =
   useSelector((state) => state.helpeeNotification);
 const { globalServiceType } = useSelector((state) => state.helpee);
+const currentPathname = window.location.pathname.replace(/\/+$/, '');
+const routeParts = currentPathname.split('/');
+const currentLanguage = routeParts[1];
 const serviceRef = useRef();
 const genderRef = useRef();
 const meetDateRef = useRef();
@@ -131,7 +134,7 @@ const { t } = useTranslation();
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = '/helpee/dashboard';
+        let path = `/${currentLanguage}/helpee/dashboard`;
         navigate(path);
       }
       dispatch(clearRequestFormStatus());
@@ -144,6 +147,7 @@ const { t } = useTranslation();
     requestFormStatusMessage,
     navigate,
     dispatch,
+    currentLanguage,
   ]);
   return (
     <div className='form-inner'>

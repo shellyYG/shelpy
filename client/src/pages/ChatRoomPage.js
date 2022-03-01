@@ -23,6 +23,11 @@ const ChatRoomPage = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   useEffect(() => {
     dispatch(getHelpeeAuthStatus());
     dispatch(getHelperAuthStatus());
@@ -143,13 +148,13 @@ const ChatRoomPage = (props) => {
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/helpee/book-helper?requestId=${requestId}&partnerName=${partnerName}` +
+      `/${currentLanguage}/helpee/book-helper?requestId=${requestId}&partnerName=${partnerName}` +
         `&userId=${userId}&offerId=${offerId}&price=${price}` +
         `&bookingStatus=&bookingId=` +
         `&helpeeId=${helpeeId}&helperId=${helperId}` +
         `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
         `&country=${country}&mainType=${mainType}&secondType=${secondType}` +
-        `&thirdType=${thirdType}&fourthType=${fourthType}`,
+        `&thirdType=${thirdType}&fourthType=${fourthType}`
     );
   }
   async function handleYoutubeClick(e) {

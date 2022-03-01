@@ -16,7 +16,10 @@ function ChatRoomCard(props) {
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
   const { targetChatroomId } = useSelector((state) => state.general);
-  
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   useEffect(() => {
     if (props.roomId === props.pageRoomId && props.offerId === props.pageOfferId) {
       setActive(true);
@@ -117,25 +120,25 @@ function ChatRoomCard(props) {
     e.preventDefault();
     if (!props.isHelpee) {
       navigate(
-        `/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}`+
-        `&userId=helper_${props.helperId}&partnerName=${props.partnerName}`+
-        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}`+
-        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`+
-        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`+
-        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}`+
-        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}`+
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
+        `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+          `&userId=helper_${props.helperId}&partnerName=${props.partnerName}` +
+          `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}` +
+          `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
+          `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
+          `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
+          `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
       );
     } else {
       navigate(
-        `/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}`+
-        `&userId=helpee_${props.helpeeId}&partnerName=${props.partnerName}`+
-        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}`+
-        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`+
-        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`+
-        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}`+
-        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}`+
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
+        `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+          `&userId=helpee_${props.helpeeId}&partnerName=${props.partnerName}` +
+          `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}` +
+          `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
+          `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
+          `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
+          `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
       );
     }
     const data = {

@@ -20,6 +20,9 @@ function HelpeeSignUpPage(props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
   const {
     signUpEmailStatus,
@@ -74,11 +77,12 @@ function HelpeeSignUpPage(props) {
       );
       return;
     } else if (signUpEmailStatus === 'success') {
-      navigate(`/helpee/sign-up-final-step?refId=${refId}`, { replace: true });
+      navigate(`/${currentLanguage}/helpee/sign-up-final-step?refId=${refId}`, { replace: true });
       dispatch(clearSignUpEmailStatus());
     }
   }, [
     t,
+    currentLanguage,
     refId,
     signUpEmailStatus,
     signUpEmailStatusMessage,
@@ -166,7 +170,7 @@ function HelpeeSignUpPage(props) {
                 {t('home_at_any_time')}
               </p>
               <div style={{ textAlign: 'center' }}>
-                <Link to='/helpee/sign-in'>
+                <Link to={`/${currentLanguage}/helpee/sign-in`}>
                   {t('home_have_account_sign_in')}
                 </Link>
               </div>

@@ -18,6 +18,11 @@ const HelperSignUpPasswordPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const consentRef = useRef();
@@ -102,7 +107,7 @@ const HelperSignUpPasswordPage = () => {
         signUpPasswordStatusTitle,
         signUpPasswordStatusMessage
       );
-      navigate('/helper/home', { replace: true });
+      navigate(`/${currentLanguage}/helper/home`, { replace: true });
       return;
     } else if (signUpPasswordStatus === 'success') {
       setIsLoading(false);
@@ -122,6 +127,7 @@ const HelperSignUpPasswordPage = () => {
     }
   }, [
     t,
+    currentLanguage,
     signUpPasswordStatus,
     signUpPasswordStatusMessage,
     signUpPasswordStatusTitle,

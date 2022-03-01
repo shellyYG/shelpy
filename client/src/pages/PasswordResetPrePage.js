@@ -16,6 +16,9 @@ const MySwal = withReactContent(Swal);
 
 const PasswordResetPrePage = (props) => {
   const { t } = useTranslation();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   const [loading, setIsLoading] =
     useState(true);
   const navigate = useNavigate();
@@ -85,7 +88,7 @@ const PasswordResetPrePage = (props) => {
             icon: 'success',
           });
           navigate(
-            `/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}`,
+            `/${currentLanguage}/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}`,
             { replace: true }
           );
         }
@@ -120,7 +123,7 @@ const PasswordResetPrePage = (props) => {
             icon: 'success',
           });
           navigate(
-            `/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}`,
+            `/${currentLanguage}/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}`,
             { replace: true }
           );
         }
@@ -132,6 +135,7 @@ const PasswordResetPrePage = (props) => {
     }
   }, [
     t,
+    currentLanguage,
     props.isHelpee,
     filteredEmail,
     confirmHelpeeCanChangePasswordStatus,

@@ -17,6 +17,10 @@ const HelpeeDashboardPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   
   const { allOrders, allPotentialHelpers, helpeeDashboardTarget, allBookings } =
     useSelector((state) => state.helpee);
@@ -29,12 +33,12 @@ const HelpeeDashboardPage = (props) => {
 
   function handleAddRequest(e) {
     e.preventDefault(e);
-    navigate('/helpee/service-types');
+    navigate(`/${currentLanguage}/helpee/service-types`);
   }
 
   function handleSearchHelpers(e) {
     e.preventDefault(e);
-    navigate('/marketing/offers');
+    navigate(`/${currentLanguage}/marketing/offers`);
   }
 
   function handleRrefreshPage(e) {

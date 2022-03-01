@@ -8,21 +8,27 @@ import { useState } from 'react';
 
 const HelperAddServicePage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const { offerTarget } = useSelector((state) => state.helper);
   const [enableBtn, setEnableBtn] = useState(false);
-  const navigate = useNavigate();
+  
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   function handleNext(e) {
     e.preventDefault();
     let path;
     switch (offerTarget) {
       case 'addOffer':
-        path = '/helper/service-types';
+        path = `/${currentLanguage}/helper/service-types`;
         break;
       case 'viewDashboard':
-        path = '/helper/dashboard';
+        path = `/${currentLanguage}/helper/dashboard`;
         break;
       default:
-        path = '/helper/service-types';
+        path = `/${currentLanguage}/helper/service-types`;
     }
     navigate(path);
   }

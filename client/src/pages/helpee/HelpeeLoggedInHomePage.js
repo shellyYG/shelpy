@@ -6,9 +6,12 @@ import HelpeeMarketingSection from '../../components/HelpeeMarketingSection';
 const HelpeeLoggedInHomePage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   function handleBookHelperClick(e) {
     e.preventDefault();
-    navigate('/helpee/service-types');
+    navigate(`/${currentLanguage}/helpee/service-types`);
   }
   return (
     <div className='main-content-wrapper-no-height'>

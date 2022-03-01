@@ -32,6 +32,10 @@ const SelfEmployedPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const priceRef = useRef();
   const organizationRef = useRef();
   const typeRef = useRef();
@@ -152,7 +156,7 @@ const SelfEmployedPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = '/helpee/dashboard';
+        let path = `/${currentLanguage}/helpee/dashboard`;
         navigate(path, { replace: true });
       }
       dispatch(clearRequestStatus());
@@ -160,6 +164,7 @@ const SelfEmployedPage = (props) => {
     }
   }, [
     t,
+    currentLanguage,
     requestStatus,
     requestStatusTitle,
     requestStatusMessage,
@@ -190,13 +195,20 @@ const SelfEmployedPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = '/helper/dashboard';
+        let path = `/${currentLanguage}/helper/dashboard`;
         navigate(path, { replace: true });
       }
       dispatch(clearOfferStatus());
       sweetAlertAndNavigate(offerStatus, offerStatusMessage);
     }
-  }, [t, offerStatus, offerStatusTitle, offerStatusMessage, navigate, dispatch]);
+  }, [
+    t,
+    currentLanguage, offerStatus,
+    offerStatusTitle,
+    offerStatusMessage,
+    navigate,
+    dispatch,
+  ]);
   function isInt(value) {
     return (
       !isNaN(value) &&

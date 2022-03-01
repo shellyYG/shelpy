@@ -9,9 +9,13 @@ import { useEffect } from 'react';
 import ConfirmBtn from '../components/ConfirmBtn';
 
 const SelectJobOrUniPage = (props) => {
-  const { t } = useTranslation();
-  const [enableBtn, setEnableBtn] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+  const [enableBtn, setEnableBtn] = useState(false);
+  
   const { globalHelpeeJobOrUniTarget } = useSelector((state) => state.helpee);
   const { globalHelperJobOrUniTarget } = useSelector((state) => state.helper);
 
@@ -32,16 +36,16 @@ const SelectJobOrUniPage = (props) => {
     let path;
     switch (jobOrUniTargetBase) {
       case 'job':
-        path = `/${userType}/job-form`;
+        path = `/${currentLanguage}/${userType}/job-form`;
         break;
       case 'university':
-        path = `/${userType}/uni-form`;
+        path = `/${currentLanguage}/${userType}/uni-form`;
         break;
       case 'selfEmployed':
-        path = `/${userType}/self-employed-form`;
+        path = `/${currentLanguage}/${userType}/self-employed-form`;
         break;
       default:
-        path = `/${userType}/job-form`;
+        path = `/${currentLanguage}/${userType}/job-form`;
     }
     navigate(path); // do not have {replace: true} so user can click backward btn to go back to this page
   }

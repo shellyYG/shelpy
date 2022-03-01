@@ -55,9 +55,9 @@ function App() {
           isHelperAuthenticated={isHelperAuthenticated}
         />
         <Routes>
-          <Route path='/about' element={<AboutPage />} />
+          <Route path={`/:locale/about`} element={<AboutPage />} />
           <Route
-            path='/marketing/offers'
+            path={`/:locale/marketing/offers`}
             element={
               <MarketingPage
                 helpeeId={helpeeUserId}
@@ -66,58 +66,61 @@ function App() {
               />
             }
           />
-          <Route path='/' element={<Navigate replace to='/home' />} />
+          <Route path={`/:locale/`} element={<Navigate replace to={`/:locale/home`} />} />
           <Route
-            path='/home'
+            path={`/:locale/home`}
             element={
               <HelpeeHomePage isHelpeeAuthenticated={isHelpeeAuthenticated} />
             }
           />
           <Route
-            path='/helper/home'
+            path={`/:locale/helper/home`}
             element={
               <HelperHomePage isHelperAuthenticated={isHelperAuthenticated} />
             }
           />
-          <Route path='/unsubscribe' element={<EmailUnSubscriptionPage />} />
+          <Route
+            path={`/:locale/unsubscribe`}
+            element={<EmailUnSubscriptionPage />}
+          />
 
           <Route
-            path='/helpee/sign-up-final-step'
+            path={`/:locale/helpee/sign-up-final-step`}
             element={<HelpeeSignUpPasswordPage />}
           />
           <Route
-            path='/helper/sign-up-final-step'
+            path={`/:locale/helper/sign-up-final-step`}
             element={<HelperSignUpPasswordPage />}
           />
-          <Route path='/helpee/sign-in' element={<HelpeeSignInPage />} />
+          <Route path={`/:locale/helpee/sign-in`} element={<HelpeeSignInPage />} />
           <Route
-            path='/helpee/forget-password'
+            path={`/:locale/helpee/forget-password`}
             element={<HelpeeForgetPasswordPage />}
           />
           <Route
-            path='/helper/forget-password'
+            path={`/:locale/helper/forget-password`}
             element={<HelperForgetPasswordPage />}
           />
           <Route
-            path='/helpee/password/pre/reset'
+            path={`/:locale/helpee/password/pre/reset`}
             element={<PasswordResetPrePage isHelpee={true} />}
           />
           <Route
-            path='/helper/password/pre/reset'
+            path={`/:locale/helper/password/pre/reset`}
             element={<PasswordResetPrePage isHelpee={false} />}
           />
           <Route
-            path={`/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
+            path={`/:locale/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
             element={<PasswordResetPage isHelpee={true} />}
           />
           <Route
-            path={`/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
+            path={`/:locale/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
             element={<PasswordResetPage isHelpee={false} />}
           />
-          <Route path='/helper/sign-in' element={<HelperSignInPage />} />
+          <Route path={`/:locale/helper/sign-in`} element={<HelperSignInPage />} />
 
           <Route
-            path='/helpee/service-types'
+            path={`/:locale/helpee/service-types`}
             element={
               isHelpeeAuthenticated ? (
                 <SelectJobOrUniPage isHelpee={true} />
@@ -127,7 +130,7 @@ function App() {
             }
           />
           <Route
-            path='/helper/service-types'
+            path={`/:locale/helper/service-types`}
             element={
               isHelperAuthenticated ? (
                 <SelectJobOrUniPage isHelpee={false} />
@@ -137,7 +140,7 @@ function App() {
             }
           />
           <Route
-            path='/helpee/job-form'
+            path={`/:locale/helpee/job-form`}
             element={
               isHelpeeAuthenticated ? (
                 <JobFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
@@ -147,7 +150,7 @@ function App() {
             }
           />
           <Route
-            path='/helper/job-form'
+            path={`/:locale/helper/job-form`}
             element={
               isHelperAuthenticated ? (
                 <JobFormPage isHelpee={false} helperUserId={helperUserId} />
@@ -157,7 +160,7 @@ function App() {
             }
           />
           <Route
-            path='/helpee/uni-form'
+            path={`/:locale/helpee/uni-form`}
             element={
               isHelpeeAuthenticated ? (
                 <UniFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
@@ -167,7 +170,7 @@ function App() {
             }
           />
           <Route
-            path='/helper/uni-form'
+            path={`/:locale/helper/uni-form`}
             element={
               isHelperAuthenticated ? (
                 <UniFormPage isHelpee={false} helperUserId={helperUserId} />
@@ -177,7 +180,7 @@ function App() {
             }
           />
           <Route
-            path='/helpee/self-employed-form'
+            path={`/:locale/helpee/self-employed-form`}
             element={
               isHelpeeAuthenticated ? (
                 <SelfEmployedPage isHelpee={true} helpeeUserId={helpeeUserId} />
@@ -187,7 +190,7 @@ function App() {
             }
           />
           <Route
-            path='/helper/self-employed-form'
+            path={`/:locale/helper/self-employed-form`}
             element={
               isHelperAuthenticated ? (
                 <SelfEmployedPage
@@ -200,7 +203,7 @@ function App() {
             }
           />
           <Route
-            path={'/helpee/dashboard'}
+            path={`/:locale/helpee/dashboard`}
             element={
               isHelpeeAuthenticated ? (
                 <HelpeeDashboardPage
@@ -214,7 +217,7 @@ function App() {
             }
           />
           <Route
-            path={'/helper/dashboard'}
+            path={`/:locale/helper/dashboard`}
             element={
               isHelperAuthenticated ? (
                 <HelperDashboardPage
@@ -228,7 +231,7 @@ function App() {
             }
           />
           <Route
-            path={'/helpee/chatroom'}
+            path={`/:locale/helpee/chatroom`}
             element={
               isHelpeeAuthenticated ? (
                 <ChatRoomPage isHelpee={true} helpeeUserId={helpeeUserId} />
@@ -238,23 +241,23 @@ function App() {
             }
           />
           <Route
-            path={'/helpee/book-helper'}
+            path={`/:locale/helpee/book-helper`}
             element={<BookingConfirmPage isHelpee={true} />}
           />
           <Route
-            path={'/helper/confirm-booking'}
+            path={`/:locale/helper/confirm-booking`}
             element={<BookingConfirmPage isHelpee={false} />}
           />
           <Route
-            path={'/helpee/email/confirmation'}
+            path={`/:locale/helpee/email/confirmation`}
             element={<EmailConfirmPage isHelpee={true} />}
           />
           <Route
-            path={'/helper/email/confirmation'}
+            path={`/:locale/helper/email/confirmation`}
             element={<EmailConfirmPage isHelpee={false} />}
           />
           <Route
-            path={'/helper/chatroom'}
+            path={`/:locale/helper/chatroom`}
             element={
               isHelperAuthenticated ? (
                 <ChatRoomPage isHelpee={false} helperUserId={helperUserId} />
@@ -264,19 +267,19 @@ function App() {
             }
           />
           <Route
-            path={'/helper/basic-form'}
+            path={`/:locale/helper/basic-form`}
             element={
               <BasicFormPage isHelpee={false} helperUserId={helperUserId} />
             }
           />
           <Route
-            path={'/helpee/basic-form'}
+            path={`/:locale/helpee/basic-form`}
             element={
               <BasicFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
             }
           />
           <Route
-            path={'/helper/add-service'}
+            path={`/:locale/helper/add-service`}
             element={
               isHelperAuthenticated ? (
                 <HelperAddServicePage />

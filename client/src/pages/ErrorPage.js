@@ -7,10 +7,14 @@ import DangerIcon from '../components/Icons/DangerIcon';
 
 const ErrorPage = () => {
   const { t } = useTranslation();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const navigate = useNavigate();
   function handleToHomepage(e) {
     e.preventDefault();
-    navigate('/home', { replace: true });
+    navigate(`/${currentLanguage}/home`, { replace: true });
   }
   return (
     <div className='section-left-align'>
