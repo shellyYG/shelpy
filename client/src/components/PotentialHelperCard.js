@@ -126,7 +126,7 @@ function PotentialHelperCard(props) {
     navigate(
       `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
         `&userId=helpee_${props.helpeeId}&partnerName=${props.partnerName}` +
-        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}` +
+        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
         `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
@@ -138,7 +138,7 @@ function PotentialHelperCard(props) {
     e.preventDefault();
     navigate(
       `/${currentLanguage}/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}` +
-        `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}` +
+        `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
         `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.partnerName}` +
@@ -187,6 +187,11 @@ function PotentialHelperCard(props) {
       <div className='smallFlexColumn'>
         <div className='content'>
           <div className='contentBx'>
+            <div className='pureFlexRow'>
+              <p style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '10px' }}>
+                {t('helper_offers')}
+              </p>
+            </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />

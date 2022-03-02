@@ -114,6 +114,7 @@ const HelperDashboardPage = (props) => {
                 requestId={option.requestId}
                 offerId={option.offerId}
                 price={option.price}
+                duration={option.duration}
                 bookingId={option.bookingId}
                 bookingStatus={option.bookingStatus}
                 appointmentDate={option.appointmentDate}
@@ -166,6 +167,7 @@ const HelperDashboardPage = (props) => {
                 requestId={option.requestId}
                 offerId={option.offerId}
                 price={option.price}
+                duration={option.duration}
                 bookingId={option.bookingId}
                 bookingStatus={option.bookingStatus}
                 organization={option.organization}

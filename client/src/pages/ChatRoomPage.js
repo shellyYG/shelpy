@@ -52,6 +52,7 @@ const ChatRoomPage = (props) => {
   const requestId = parseInt(searchParams.get('requestId'));
   const offerId = parseInt(searchParams.get('offerId'));
   const price = searchParams.get('price');
+  const duration = searchParams.get('duration');
 
   const profilePicPath = searchParams.get('profilePicPath');
 
@@ -149,7 +150,7 @@ const ChatRoomPage = (props) => {
     e.preventDefault();
     navigate(
       `/${currentLanguage}/helpee/book-helper?requestId=${requestId}&partnerName=${partnerName}` +
-        `&userId=${userId}&offerId=${offerId}&price=${price}` +
+        `&userId=${userId}&offerId=${offerId}&price=${price}&duration=${duration}` +
         `&bookingStatus=&bookingId=` +
         `&helpeeId=${helpeeId}&helperId=${helperId}` +
         `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
@@ -240,7 +241,11 @@ const ChatRoomPage = (props) => {
                       <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
                         <div style={{ whiteSpace: 'pre-line' }}>{`${t(
                           'oops'
-                        )}!\n ${t('we_havent_found')} \n ${t('any_customer_yet')}\n ${t('help_us_grow_by')} \n ${t('following_us_on')} \n`}</div>
+                        )}!\n ${t('we_havent_found')} \n ${t(
+                          'any_customer_yet'
+                        )}\n ${t('help_us_grow_by')} \n ${t(
+                          'following_us_on'
+                        )} \n`}</div>
                         <button
                           className='btn-next'
                           style={{ margin: '10px 0px' }}
@@ -248,9 +253,11 @@ const ChatRoomPage = (props) => {
                         >
                           Youtube
                         </button>
-                        <div
-                          style={{ whiteSpace: 'pre-line' }}
-                        >{`${t('so_we_can')}\n ${t('find_you_a')} \n ${t('customer_sonner')}`}</div>
+                        <div style={{ whiteSpace: 'pre-line' }}>{`${t(
+                          'so_we_can'
+                        )}\n ${t('find_you_a')} \n ${t(
+                          'customer_sonner'
+                        )}`}</div>
                       </div>
                     </div>
                   </div>
@@ -262,7 +269,11 @@ const ChatRoomPage = (props) => {
                       <div style={{ lineBreak: 'anywhere', padding: '5px' }}>
                         <div style={{ whiteSpace: 'pre-line' }}>{`${t(
                           'oops'
-                        )}!\n ${t('we_havent_found')} \n ${t('any_helper_yet')}\n ${t('help_us_grow_by')} \n ${t('following_us_on')} \n`}</div>
+                        )}!\n ${t('we_havent_found')} \n ${t(
+                          'any_helper_yet'
+                        )}\n ${t('help_us_grow_by')} \n ${t(
+                          'following_us_on'
+                        )} \n`}</div>
                         <button
                           className='btn-next'
                           style={{ margin: '10px 0px' }}
@@ -270,9 +281,9 @@ const ChatRoomPage = (props) => {
                         >
                           Youtube
                         </button>
-                        <div
-                          style={{ whiteSpace: 'pre-line' }}
-                        >{`${t('so_we_can')}\n ${t('find_you_a')} \n ${t('helper_sonner')}`}</div>
+                        <div style={{ whiteSpace: 'pre-line' }}>{`${t(
+                          'so_we_can'
+                        )}\n ${t('find_you_a')} \n ${t('helper_sonner')}`}</div>
                       </div>
                     </div>
                   </div>
@@ -291,6 +302,7 @@ const ChatRoomPage = (props) => {
                     helpeeUsername={option.helpeeUsername}
                     country={option.country}
                     price={option.price}
+                    duration={option.duration}
                     key={
                       option.bookingId ||
                       `${option.helperId}-${option.helpeeId}-${option.offerId}`
@@ -322,6 +334,7 @@ const ChatRoomPage = (props) => {
                     helpeeUsername={option.helpeeUsername}
                     country={option.country}
                     price={option.price}
+                    duration={option.duration}
                     key={
                       option.bookingId ||
                       `${option.helperId}-${option.helpeeId}-${option.offerId}`

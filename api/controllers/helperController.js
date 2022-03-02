@@ -81,9 +81,7 @@ const getHelperAllMatchedRequests = async (req, res) => {
 };
 
 const getProfilePic = async (req, res) => {
-  console.log('api/controllers/helperController.js...');
   const { key } = req.params;
-  console.log('profilePic key: ', key);
   try {
     const readStream = getFileStream(key);
     if (readStream) {

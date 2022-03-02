@@ -219,6 +219,11 @@ function RequestCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <div className='pureFlexRow'>
+              <p style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '10px' }}>
+                {t('your_request_is')}
+              </p>
+            </div>
+            <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />
               </div>

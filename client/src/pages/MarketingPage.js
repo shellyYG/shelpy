@@ -95,7 +95,9 @@ const HelpeeDashboardPage = (props) => {
             <DangerIcon />
             <h2 style={{ margin: 'auto' }}>
               {t('please')}{' '}
-              <Link to={`/${currentLanguage}/helpee/sign-in`}>{t('sign_in')}</Link>{' '}
+              <Link to={`/${currentLanguage}/helpee/sign-in`}>
+                {t('sign_in')}
+              </Link>{' '}
               {t('mkt_offer_sign_in_as_helpee')}
             </h2>
             <h2 style={{ margin: '10px auto' }}>
@@ -183,6 +185,7 @@ const HelpeeDashboardPage = (props) => {
                 profilePicPath={option.profilePicPath}
                 username={option.username}
                 price={option.price}
+                duration={option.duration}
                 helpeeId={props.helpeeId}
                 helperId={option.userId}
                 helpeeUsername={props.helpeeUsername}

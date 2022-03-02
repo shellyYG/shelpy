@@ -219,7 +219,14 @@ function BookingCard(props) {
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/${currentLanguage}/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}`
+      `/${currentLanguage}/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}` +
+        `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
+        `&bookingStatus=${props.bookingStatus}` +
+        `&bookingId=${props.bookingId}` +
+        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
+        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
+        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
     );
   }
   function handleBookingConfirmation(e) {
@@ -233,6 +240,7 @@ function BookingCard(props) {
 
   function handlePayHelper(token) {
     alert('Paid');
+    navigate(`/${currentLanguage}/pay?bookingId=${props.bookingId}`);
     try {
       // const data = {
       //   bookingStatus: 'paid',
@@ -339,7 +347,7 @@ function BookingCard(props) {
       <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
-            <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
+            <h3 style={{ fontWeight: 'bold', fontSize: '18px' }}>
               {props.partnerName}
             </h3>
           </div>
@@ -348,6 +356,12 @@ function BookingCard(props) {
       <div className='smallFlexColumn'>
         <div className='content'>
           <div className='contentBx'>
+            <div className='pureFlexRow'>
+              <p style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '10px' }}>
+                {props.isHelpee && t('helper_offers')}
+                {!props.isHelpee && t('helpee_want_to_know')}
+              </p>
+            </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />

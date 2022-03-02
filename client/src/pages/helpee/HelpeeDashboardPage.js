@@ -165,11 +165,13 @@ const HelpeeDashboardPage = (props) => {
                 mainType={option.mainType}
                 secondType={option.secondType}
                 thirdType={option.thirdType}
+                fourthType={option.fourthType}
                 profilePicPath={option.profilePicPath}
                 country={option.country}
                 requestId={option.requestId}
                 offerId={option.offerId}
                 price={option.price}
+                duration={option.duration}
                 bookingId={option.bookingId}
                 bookingStatus={option.bookingStatus}
                 appointmentDate={option.appointmentDate}
@@ -227,10 +229,10 @@ const HelpeeDashboardPage = (props) => {
               requestId={option.requestId}
               offerId={option.offerId}
               price={option.price}
+              duration={option.duration}
               bookingId={option.bookingId}
               bookingStatus={option.bookingStatus}
               organization={option.organization}
-              duration={option.duration}
             />
           ))}
         </div>

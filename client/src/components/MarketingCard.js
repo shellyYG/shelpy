@@ -162,7 +162,7 @@ function MarketingCard(props) {
     } else {
       navigate(
         `/${currentLanguage}/helpee/book-helper?requestId=&partnerName=${props.username}` +
-          `&userId=${props.helpeeId}&offerId=${props.id}&price=${props.price}` +
+          `&userId=${props.helpeeId}&offerId=${props.id}&price=${props.price}&duration=${props.duration}` +
           `&bookingStatus=&bookingId=` +
           `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
           `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.username}` +
@@ -176,7 +176,7 @@ function MarketingCard(props) {
     navigate(
       `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
         `&userId=helpee_${props.helpeeId}&partnerName=${props.username}` +
-        `&requestId=&offerId=${props.offerId}&price=${props.price}&bookingStatus=&bookingId=` +
+        `&requestId=&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}&bookingStatus=&bookingId=` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
@@ -222,6 +222,17 @@ function MarketingCard(props) {
       <div className='smallFlexColumn'>
         <div className='content'>
           <div className='contentBx'>
+            <div className='pureFlexRow'>
+              <p
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                }}
+              >
+                {t('helper_offers')}
+              </p>
+            </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />

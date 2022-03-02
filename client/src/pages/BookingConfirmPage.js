@@ -14,7 +14,6 @@ import {
 import {
   postBookingStatus,
   clearBookingNotificationStatus,
-  getBookingStatus,
 } from '../store/general/general-actions';
 import { useTranslation } from 'react-i18next';
 const MySwal = withReactContent(Swal);
@@ -42,6 +41,7 @@ const BookingConfirmPage = (props) => {
   const requestId = searchParams.get('requestId');
   const offerId = searchParams.get('offerId');
   const price = parseInt(searchParams.get('price'));
+  const duration = parseInt(searchParams.get('duration'));
 
   const helpeeId = parseInt(searchParams.get('helpeeId'));
   const helperId = parseInt(searchParams.get('helperId'));
@@ -65,6 +65,7 @@ const BookingConfirmPage = (props) => {
 
   const [enableBtn, setEnableBtn] = useState(false);
   const [loading, setIsLoading] = useState(false);
+
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -79,7 +80,7 @@ const BookingConfirmPage = (props) => {
     navigate(
       `/${currentLanguage}/helper/chatroom?roomId=${roomId}&userId=helper_${userIdNumber}&partnerName=${partnerName}` +
         `&requestId=${requestId}&offerId=${offerId}&bookingStatus=${bookingStatus}&bookingId=${bookingId}` +
-        `&helpeeId=${helpeeId}&helperId=${helperId}` +
+        `&helpeeId=${helpeeId}&helperId=${helperId}&price=${price}&duration=${duration}` +
         `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
         `&country=${country}&mainType=${mainType}&secondType=${secondType}` +
         `&thirdType=${thirdType}&fourthType=${fourthType}`
@@ -131,6 +132,7 @@ const BookingConfirmPage = (props) => {
         helperUsername,
         country,
         price,
+        duration,
         mainType,
         secondType,
         thirdType,
@@ -213,6 +215,7 @@ const BookingConfirmPage = (props) => {
     dispatch,
     currentLanguage,
   ]);
+
   return (
     <div className='form-center-wrapper'>
       <div
@@ -267,7 +270,10 @@ const BookingConfirmPage = (props) => {
                   inputRef={notesRef}
                 />
                 <div className='form-row'>
-                  {t('price_per_45_min', { price })}
+                  {t('price_per_duration_min', {
+                    price,
+                    duration,
+                  })}
                 </div>
               </>
             )}

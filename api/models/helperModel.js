@@ -50,11 +50,11 @@ async function getPotentialCustomers(data) {
   const sql = ` SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus
     , req.organization AS organization
     , req.id AS requestId, ofs.id AS offerId
-    , ofs.price AS price, req.country AS country
+    , ofs.price AS price, ofs.duration AS duration, req.country AS country
     , acc.id AS helperId, acc.username AS helperUserName, acc.isAnonymous AS helperAnonymous
     , req.userId AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.profilePicPath AS profilePicPath
-    , req.mainType AS mainType, req.secondType AS secondType
-    , req.thirdType AS thirdType, req.fourthType AS fourthType
+    , ofs.mainType AS mainType, ofs.secondType AS secondType
+    , ofs.thirdType AS thirdType, ofs.fourthType AS fourthType
     FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
 LEFT JOIN requests req ON 

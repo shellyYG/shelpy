@@ -122,7 +122,7 @@ function ChatRoomCard(props) {
       navigate(
         `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
           `&userId=helper_${props.helperId}&partnerName=${props.partnerName}` +
-          `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}` +
+          `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
           `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
           `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
           `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +

@@ -114,7 +114,7 @@ function PotentialCustomerCard(props) {
     navigate(
       `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
         `&userId=helper_${props.helperId}&partnerName=${props.partnerName}` +
-        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}` +
+        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
         `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
@@ -163,6 +163,17 @@ function PotentialCustomerCard(props) {
       <div className='smallFlexColumn'>
         <div className='content'>
           <div className='contentBx'>
+            <div className='pureFlexRow'>
+              <p
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                }}
+              >
+                {t('helpee_want_to_know')}
+              </p>
+            </div>
             <div className='pureFlexRow'>
               <div className='flexItemVerticalCenter'>
                 <DiamondIcon color='orange' />
