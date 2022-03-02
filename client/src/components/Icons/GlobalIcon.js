@@ -23,27 +23,36 @@ function GlobalIcon (props) {
   }
   function onENClick(e) {
     e.preventDefault();
+    let route = '';
     i18n.changeLanguage('en');
     const currentPathname = window.location.pathname.replace(/\/+$/, '');
     const routeParts = currentPathname.split('/');
-    const route = routeParts[routeParts.length - 1];
-    window.location.replace(`/en/${route}`);
+    for (let i = 2; i < routeParts.length; i++) {
+      route += `/${routeParts[i]}`;
+    }
+    window.location.replace(`/en${route}`);
   }
   function onZhTWClick(e) {
     e.preventDefault();
+    let route = '';
     i18n.changeLanguage('zh-TW');
     const currentPathname = window.location.pathname.replace(/\/+$/, '');
     const routeParts = currentPathname.split('/');
-    const route = routeParts[routeParts.length - 1];
-    window.location.replace(`/zh-TW/${route}`);
+    for (let i = 2; i < routeParts.length; i++) {
+      route += `/${routeParts[i]}`;
+    }
+    window.location.replace(`/zh-TW${route}`);
   }
   function onZhCNClick(e) {
     e.preventDefault();
+    let route = '';
     i18n.changeLanguage('zh-CN');
     const currentPathname = window.location.pathname.replace(/\/+$/, '');
     const routeParts = currentPathname.split('/');
-    const route = routeParts[routeParts.length-1];
-    window.location.replace(`/zh-CN/${route}`);
+    for (let i = 2; i < routeParts.length; i++) {
+      route += `/${routeParts[i]}`;
+    }
+    window.location.replace(`/zh-CN${route}`);
   }
   useEffect(() => {
     if (props.dropDownNavTarget !== 'language') {
