@@ -30,6 +30,7 @@ function GlobalIcon (props) {
     for (let i = 2; i < routeParts.length; i++) {
       route += `/${routeParts[i]}`;
     }
+    if (window.location.search) route += window.location.search;
     window.location.replace(`/en${route}`);
   }
   function onZhTWClick(e) {
@@ -41,6 +42,7 @@ function GlobalIcon (props) {
     for (let i = 2; i < routeParts.length; i++) {
       route += `/${routeParts[i]}`;
     }
+    if (window.location.search) route += window.location.search;
     window.location.replace(`/zh-TW${route}`);
   }
   function onZhCNClick(e) {
@@ -52,6 +54,7 @@ function GlobalIcon (props) {
     for (let i = 2; i < routeParts.length; i++) {
       route += `/${routeParts[i]}`;
     }
+    if(window.location.search) route += window.location.search;
     window.location.replace(`/zh-CN${route}`);
   }
   useEffect(() => {
