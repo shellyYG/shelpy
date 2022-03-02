@@ -239,8 +239,13 @@ function BookingCard(props) {
   }
 
   function handlePayHelper(token) {
-    alert('Paid');
-    navigate(`/${currentLanguage}/pay?bookingId=${props.bookingId}`);
+    navigate(
+      `/${currentLanguage}/pay?bookingId=${props.bookingId}&price=${props.price}&duration=${props.duration}` +
+        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+        `&thirdType=${props.thirdType}` +
+        `&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
+        `&helperUsername=${props.helperUsername}`
+    );
     try {
       // const data = {
       //   bookingStatus: 'paid',

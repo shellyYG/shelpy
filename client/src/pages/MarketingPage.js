@@ -193,7 +193,6 @@ const HelpeeDashboardPage = (props) => {
                 languages={option.languages}
                 isAnonymous={option.isAnonymous}
                 organization={option.organization}
-                duration={option.duration}
               />
             ))}
           </div>

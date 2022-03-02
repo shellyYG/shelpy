@@ -37,6 +37,7 @@ import PasswordResetPrePage from './pages/PasswordResetPrePage';
 import HelperForgetPasswordPage from './pages/helper/HelperForgetPasswordPage';
 import MarketingPage from './pages/MarketingPage';
 import EmailUnSubscriptionPage from './pages/EmailUnSubscriptionPage';
+import PayPage from './pages/PayPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -305,6 +306,7 @@ function App() {
                 )
               }
             />
+            <Route path={`/:locale/pay`} element={<PayPage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
           <Footer />

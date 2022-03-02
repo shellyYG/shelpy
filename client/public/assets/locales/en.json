@@ -645,5 +645,14 @@
   "error_file_too_big": "Max. File size is 1MB. Please choose a smaller file to upload.",
   "error_only_accept_picture_format": "Only accepts .jpg, .jpeg or .png file. Please choose another file to upload.",
   "error_only_accept_file_format": "Only accepts .docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg or .png file. Please choose another file to upload.",
-  "booking_status_meet_at_when": "Meet {{name}} on {{date}} at {{time}}. We will send you a zoom link to your email 1 day before the meeting."
+  "booking_status_meet_at_when": "Meet {{name}} on {{date}} at {{time}}. We will send you a zoom link to your email 1 day before the meeting.",
+
+  "payment": "Payment",
+  "type": "Type",
+  "service_start_time": "Service Start Time",
+  "duration": "Service Duration",
+  "card_number": "Card Number",
+  "expiration_date": "Expire Date",
+  "CVV": "CVV",
+  "pay": "Pay"
 }

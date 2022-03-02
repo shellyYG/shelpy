@@ -645,5 +645,14 @@
   "error_file_too_big": "最大文件大小為1MB，請選擇一個小一點的文件",
   "error_only_accept_picture_format": "只接受以下這幾種文件類型：.jpg, .jpeg 或是 .png 檔案，請選擇相符的文件類型上傳",
   "error_only_accept_file_format": "只接受以下這幾種文件類型：.docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg 或是 .png 檔案，請選擇相符的文件類型上傳",
-  "booking_status_meet_at_when": "與{{name}}於{{date}}日{{time}}時開始線上諮詢，我們會在會議開始前一天寄 Zoom 連結至你的信箱中"
+  "booking_status_meet_at_when": "與{{name}}於{{date}}日{{time}}時開始線上諮詢，我們會在會議開始前一天寄 Zoom 連結至你的信箱中",
+
+  "payment": "付款頁面",
+  "type": "服務類別",
+  "service_start_time": "服務開始時間",
+  "duration": "服務時間長短",
+  "card_number": "信用卡卡號",
+  "expiration_date": "有效期限",
+  "CVV": "卡片後三碼",
+  "pay": "付款"
 }
