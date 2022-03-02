@@ -16,8 +16,13 @@ const generalSlice = createSlice({
     unSubEmailStatusTitle: '',
     unSubEmailStatusMessage: '',
     allMKTOffers: [],
+    userRole: '',
   },
   reducers: {
+    setUserRole(state,action){
+      const { userRole } = action.payload;
+      if (userRole) state.userRole = userRole;
+    },
     setDropDownNavTarget(state, action) {
       const { dropDownNavTarget } = action.payload;
       if (dropDownNavTarget) state.dropDownNavTarget = dropDownNavTarget;

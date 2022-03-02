@@ -123,31 +123,26 @@ const PayPage = () => {
       style={{ backgroundImage: 'url(/static-imgs/helpee-home.jpeg)' }}
     >
       <div className='section-center-align-landing'>
-        <div
-          className='centerWrapper'
-          style={{ flexDirection: 'column', textAlign: 'start' }}
-        >
+        <div className='centerWrapper' style={{ flexDirection: 'column' }}>
           <div>
-            <h2>{t('payment')}</h2>
-            <p style={{ marginTop: '10px' }}>
+            <h2 style={{ textAlign: 'center' }}>{t('payment')}</h2>
+            <p style={{ marginTop: '5px', textAlign: 'center' }}>
               {t('booking_id')}: {bookingId}
             </p>
             <br />
-            <h3>
+            <h3 style={{ textAlign: 'center' }}>
               {t('helper')}: {helperName} <br />
             </h3>
-            <p>
+            <p style={{ textAlign: 'center' }}>
               {t('type')}: {title} | {translatedSecondType} |{' '}
               {translatedThirdType}
             </p>
-            <p>
+            <p style={{ textAlign: 'center' }}>
               {t('service_start_time')}: {bookingDate} {bookingTime}
             </p>
-            <div>
-              <p>
+              <p style={{ textAlign: 'center' }}>
                 {t('duration')}: {duration}
               </p>
-            </div>
           </div>
           <div
             style={{

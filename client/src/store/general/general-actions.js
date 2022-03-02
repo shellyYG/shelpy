@@ -114,6 +114,16 @@ export const clearBookingNotificationStatus = (data) => {
   };
 };
 
+export const updateUserRole = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      generalActions.setUserRole({
+        userRole: data.userRole,
+      })
+    );
+  };
+};
+
 export const onClickUpdateActiveIconTarget = (data) => {
   return async (dispatch) => {
     dispatch(

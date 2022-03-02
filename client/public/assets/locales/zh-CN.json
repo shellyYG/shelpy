@@ -75,7 +75,7 @@
   "sign_in": "登入",
   "sign_out": "登出",
   "view_dashboard": "查看我的总览",
-  "update_profile": "更新帐户资料",
+  "update_profile": "更新帐号资料",
   "chat_with_helper": "与过来人免费聊聊",
   "chat_with_helpee": "与新鲜人聊聊",
   "we_havent_found": "我们还没找到",
@@ -122,7 +122,7 @@
   "helper_home_banner_title2": "只要你曾经申请上大学、转职成功、找到工作、或是创业，",
   "helper_home_banner_title3": "你就是我们在找的过来人。",
   "helper_home_banner_title4": "你的一句经验谈，可能会改变别人的一生。",
-  "helper_home_banner_subtitle1": "分享你宝贵的人生经验。",
+  "helper_home_banner_subtitle1": "分享你宝贵的人生经验、",
   "helper_home_banner_subtitle2": "创造额外的收入来源！",
   "helper_home_create_an_account_helpee": "免费註册，成为过来人",
 
@@ -162,7 +162,7 @@
   "repeat_password_placeholder": "请再重複输入密码一次",
   "password_not_aligned_warning": "请输入与上栏一样的密码",
   "forget_password": "忘记密码",
-  "dont_have_account_sign_up": "还没有帐户吗？按此註册",
+  "dont_have_account_sign_up": "还没有帐号吗？按此註册",
 
   "service_types_uni": "申请大学",
   "service_types_job": "找工作 / 转职",
@@ -173,7 +173,7 @@
   "confirm": "确认送出 ❯",
   "notes": "註记",
   "notes_placeholder": "有任何想添加的资讯，请在此添加",
-  "bank_account_title": "银行账户（我们将根据你的收入按月支付给你） *",
+  "bank_account_title": "银行帐号（我们将根据你的收入按月支付给你） *",
   "bank_account_placeholder": "帐号: 12300000, 受款人名字: XXX, 银行代码: 812",
 
   "helper_form_submit_successful": "当我们找到匹配的新鲜人时，我们会寄Email通知你！",
@@ -200,7 +200,7 @@
   "country_austria": "奥地利",
   "country_swiss": "瑞士",
 
-  "form_duration": "谘询时间长短 *",
+  "form_duration": "分享时间长短 *",
   "duration_25m": "25 分钟",
   "duration_30m": "30 分钟",
   "duration_35m": "35 分钟",
@@ -528,8 +528,8 @@
   "mkt_select_main_category": "选择主项目",
   "mkt_select_sub_category": "选择次项目",
   "mkt_select_country": "选择想去的国家",
-  "dont_have_helpee_account": "没有新鲜人帐户吗？",
-  "dont_have_helper_account": "没有过来人帐户吗？",
+  "dont_have_helpee_account": "没有新鲜人帐号吗？",
+  "dont_have_helper_account": "没有过来人帐号吗？",
   "sign_up_here": "按此註册",
   "oops_helpee_not_sign_in": "抱歉！请先登入为新鲜人。",
   "oops_helper_not_sign_in": "抱歉！请先登入为过来人。",
@@ -573,7 +573,7 @@
   "offer_id": "服务编号",
   "no_offers": "还未有公开服务",
   "price": "报价",
-  "price_per_duration_min": "谘询价格与时间长短: {{price}} 欧元 ({{duration}} 分钟)",
+  "price_per_duration_min": "分享价格与时间长短: {{price}} 欧元 ({{duration}} 分钟)",
   "na": "无",
 
   "languages_english": "英文",
@@ -591,10 +591,11 @@
 
   "chatroom_click_on_left_to_select": "请在左列选择一位{{target}}聊聊",
   "chatroom_chat_placeholder": "请在此输入讯息...",
+  "helpee": "新鲜人",
   "helper": "过来人",
   "customer": "新鲜人",
 
-  "update_basic_information": "新增/更新帐户资料",
+  "update_basic_information": "新增/更新帐号资料",
   "upload_profile_pic": "上传大头贴 (可略)",
   "username_title": "暱称 (公开) *",
   "username_placeholder": "输入暱称 (如： Peter)",
@@ -609,8 +610,8 @@
   "nationality_title": "国籍 (不公开，仅用于审阅资格) *",
   "residence_country_title": "居住国家/地区 (不公开，仅用于审阅资格) *",
 
-  "ask_anonymous": "匿名问问题 (显示暱称与谘询项目，但隐藏大头贴与详细履历个资)",
-  "answer_anonymous": "匿名回答问题 (显示暱称与谘询项目，但隐藏大头贴与详细履历个资)（不建议）",
+  "ask_anonymous": "匿名问问题 (显示暱称与服务项目，但隐藏大头贴与详细履历个资)",
+  "answer_anonymous": "匿名回答问题 (显示暱称与服务项目，但隐藏大头贴与详细履历个资)（不建议）",
   "appointment_date_title": "一週的哪一天你有空？ （可複选）",
   "appointment_time_title": "一天内的哪个时段你有空？ （可複选）",
   "monday_to_friday": "週一至週五",
@@ -641,11 +642,11 @@
   "linkedin_link_title": "LinkedIn 连结 (或是于下一栏上传履历) （不公开，仅用于审阅资格）",
   "resume_title": "履历上传 (或是于上一栏输入 LinkedIn 连结) （不公开，仅用于审阅资格）",
   "upload_a_file": "上传文件",
-  "promote_your_offer": "把我公开放在热门过来人中（这会增加你被谘询的机会！）（建议）",
+  "promote_your_offer": "把我公开放在热门过来人中（这会增加你拿到订单的机会！）（建议）",
   "error_file_too_big": "最大文件大小为1MB，请选择一个小一点的文件",
   "error_only_accept_picture_format": "只接受以下这几种文件类型：.jpg, .jpeg 或是 .png 档案，请选择相符的文件类型上传",
   "error_only_accept_file_format": "只接受以下这几种文件类型：.docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg 或是 .png 档案，请选择相符的文件类型上传",
-  "booking_status_meet_at_when": "与{{name}}于{{date}}日{{time}}时开始线上谘询，我们会在会议开始前一天寄 Zoom 连结至你的信箱中",
+  "booking_status_meet_at_when": "与{{name}}于{{date}}日{{time}}时开始线上分享，我们会在会议开始前一天寄 Meet 连结至你的信箱中",
 
   "payment": "付款页面",
   "type": "服务类别",
@@ -654,5 +655,6 @@
   "card_number": "信用卡卡号",
   "expiration_date": "有效期限",
   "CVV": "卡片后三码",
-  "pay": "付款"
+  "pay": "付款",
+  "i_am": "我是"
 }

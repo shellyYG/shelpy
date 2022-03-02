@@ -8,10 +8,12 @@ import AboutIcon from './Icons/AboutIcon';
 import ProfileIcon from './Icons/ProfileIcon';
 import OfferIcon from './Icons/OfferIcon';
 import { useTranslation } from 'react-i18next';
+import UserRoleBtn from './UserRoleBtn';
 
 const NavBar = (props) => {
-  const { dropDownNavTarget } = useSelector((state) => state.general);
   const { t } = useTranslation();
+  const { dropDownNavTarget } = useSelector((state) => state.general);
+
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -37,6 +39,8 @@ const NavBar = (props) => {
     margin: '3px',
     fontWeight: 'bold',
   };
+  
+  
 
   return (
     <>
@@ -104,6 +108,8 @@ const NavBar = (props) => {
           )}
         </div>
         <div className='nav-button'>
+          <UserRoleBtn role='helpee' />
+          <UserRoleBtn role='helper' />
           <ProfileIcon
             dropDownNavTarget={dropDownNavTarget}
             isHelpeeAuthenticated={props.isHelpeeAuthenticated}

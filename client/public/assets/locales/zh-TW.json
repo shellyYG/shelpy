@@ -200,7 +200,7 @@
   "country_austria": "奧地利",
   "country_swiss": "瑞士",
 
-  "form_duration": "諮詢時間長短 *",
+  "form_duration": "分享時間長短 *",
   "duration_25m": "25 分鐘",
   "duration_30m": "30 分鐘",
   "duration_35m": "35 分鐘",
@@ -573,7 +573,7 @@
   "offer_id": "服務編號",
   "no_offers": "還未有公開服務",
   "price": "報價",
-  "price_per_duration_min": "諮詢價格與時間長短: {{price}} 歐元 ({{duration}} 分鐘)",
+  "price_per_duration_min": "分享價格與時間長短: {{price}} 歐元 ({{duration}} 分鐘)",
   "na": "無",
 
   "languages_english": "英文",
@@ -591,6 +591,7 @@
 
   "chatroom_click_on_left_to_select": "請在左列選擇一位{{target}}聊聊",
   "chatroom_chat_placeholder": "請在此輸入訊息...",
+  "helpee": "新鮮人",
   "helper": "過來人",
   "customer": "新鮮人",
 
@@ -609,8 +610,8 @@
   "nationality_title": "國籍 (不公開，僅用於審閱資格) *",
   "residence_country_title": "居住國家/地區 (不公開，僅用於審閱資格) *",
 
-  "ask_anonymous": "匿名問問題 (顯示暱稱與諮詢項目，但隱藏大頭貼與詳細履歷個資)",
-  "answer_anonymous": "匿名回答問題 (顯示暱稱與諮詢項目，但隱藏大頭貼與詳細履歷個資)（不建議）",
+  "ask_anonymous": "匿名問問題 (顯示暱稱與服務項目，但隱藏大頭貼與詳細履歷個資)",
+  "answer_anonymous": "匿名回答問題 (顯示暱稱與服務項目，但隱藏大頭貼與詳細履歷個資)（不建議）",
   "appointment_date_title": "一週的哪一天你有空？ （可複選）",
   "appointment_time_title": "一天內的哪個時段你有空？ （可複選）",
   "monday_to_friday": "週一至週五",
@@ -641,11 +642,11 @@
   "linkedin_link_title": "LinkedIn 連結 (或是於下一欄上傳履歷) （不公開，僅用於審閱資格）",
   "resume_title": "履歷上傳 (或是於上一欄輸入 LinkedIn 連結) （不公開，僅用於審閱資格）",
   "upload_a_file": "上傳文件",
-  "promote_your_offer": "把我公開放在熱門過來人中（這會增加你被諮詢的機會！）（建議）",
+  "promote_your_offer": "把我公開放在熱門過來人中（這會增加你拿到訂單的機會！）（建議）",
   "error_file_too_big": "最大文件大小為1MB，請選擇一個小一點的文件",
   "error_only_accept_picture_format": "只接受以下這幾種文件類型：.jpg, .jpeg 或是 .png 檔案，請選擇相符的文件類型上傳",
   "error_only_accept_file_format": "只接受以下這幾種文件類型：.docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg 或是 .png 檔案，請選擇相符的文件類型上傳",
-  "booking_status_meet_at_when": "與{{name}}於{{date}}日{{time}}時開始線上諮詢，我們會在會議開始前一天寄 Zoom 連結至你的信箱中",
+  "booking_status_meet_at_when": "與{{name}}於{{date}}日{{time}}時開始線上分享，我們會在會議開始前一天寄 Meet 連結至你的信箱中",
 
   "payment": "付款頁面",
   "type": "服務類別",
@@ -654,5 +655,6 @@
   "card_number": "信用卡卡號",
   "expiration_date": "有效期限",
   "CVV": "卡片後三碼",
-  "pay": "付款"
+  "pay": "付款",
+  "i_am": "我是"
 }

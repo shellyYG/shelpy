@@ -449,6 +449,50 @@ body {
   object-fit: cover;
 }
 
+.leftHalfBtn {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom: 1px solid #fff995;
+  cursor: pointer;
+  text-align: center;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+
+.leftHalfBtnActive {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  background-color: #fff995;
+  border-bottom: 1px solid #fff995;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+
+.rightHalfBtn {
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom: 1px solid #fff995;
+  cursor: pointer;
+  text-align: center;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+
+.rightHalfBtnActive {
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom: 1px solid #fff995;
+  background-color: #fff995;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+
 .chatRoomContent img {
   position: absolute;
   top: 0;
@@ -1478,6 +1522,7 @@ input[type="checkbox" i] {
   }
 
 @media all and (max-width: 1200px) {
+  
   .chatBoxTitleInnerWrapper {
     text-align: center;
     background-color: #231f20;
@@ -1645,9 +1690,28 @@ input[type="checkbox" i] {
 
 @media screen and (max-width: 768px) {
   input[type="checkbox" i] {
-  width: 40px;
-  height: 40px;
-}
+    width: 40px;
+    height: 40px;
+  }
+  .leftHalfBtn {
+    padding: 5px 5px;
+    font-size: 10px;
+  }
+
+  .leftHalfBtnActive {
+    padding: 5px 5px;
+    font-size: 10px;
+  }
+
+  .rightHalfBtn {
+    padding: 5px 5px;
+    font-size: 10px;
+  }
+
+  .rightHalfBtnActive {
+    padding: 5px 5px;
+    font-size: 10px;
+  }
   .navBarText {
     display: none
   }
