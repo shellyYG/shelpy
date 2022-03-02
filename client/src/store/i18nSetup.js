@@ -19,7 +19,7 @@ i18n
     },
     react: {
       bindI18n: 'loaded languageChanged',
-      useSuspense: false,
+      useSuspense: true,
       wait: true,
     },
   });
