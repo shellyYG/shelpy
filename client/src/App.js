@@ -44,6 +44,9 @@ function App() {
     dispatch(getHelpeeAuthStatus());
     dispatch(getHelperAuthStatus());
   }, [dispatch]);
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   const { helpeeUserId, helpeeName, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
   const { helperUserId, helperName, isHelperAuthenticated } = useSelector((state) => state.helper);
 
@@ -66,7 +69,10 @@ function App() {
               />
             }
           />
-          <Route path={`/:locale/`} element={<Navigate replace to={`/:locale/home`} />} />
+          <Route
+            path={`/:locale/`}
+            element={<Navigate replace to={`/${currentLanguage}/home`} />}
+          />
           <Route
             path={`/:locale/home`}
             element={
@@ -92,7 +98,10 @@ function App() {
             path={`/:locale/helper/sign-up-final-step`}
             element={<HelperSignUpPasswordPage />}
           />
-          <Route path={`/:locale/helpee/sign-in`} element={<HelpeeSignInPage />} />
+          <Route
+            path={`/:locale/helpee/sign-in`}
+            element={<HelpeeSignInPage />}
+          />
           <Route
             path={`/:locale/helpee/forget-password`}
             element={<HelpeeForgetPasswordPage />}
@@ -117,7 +126,10 @@ function App() {
             path={`/:locale/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
             element={<PasswordResetPage isHelpee={false} />}
           />
-          <Route path={`/:locale/helper/sign-in`} element={<HelperSignInPage />} />
+          <Route
+            path={`/:locale/helper/sign-in`}
+            element={<HelperSignInPage />}
+          />
 
           <Route
             path={`/:locale/helpee/service-types`}

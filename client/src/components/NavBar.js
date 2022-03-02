@@ -12,6 +12,9 @@ import { useTranslation } from 'react-i18next';
 const NavBar = (props) => {
   const { dropDownNavTarget } = useSelector((state) => state.general);
   const { t } = useTranslation();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
   const nonActiveStyle = {
     color: "white",
     display: "flex",
@@ -39,12 +42,16 @@ const NavBar = (props) => {
     <>
       <nav>
         <div className='nav-menu'>
-          <NavLink className='nav-logo' to='/home'>
-            <img src={'/static-imgs/shelpy_logo.png'} alt={'shelpy'} style={{ width: '55px', height: '55px'}}/>
+          <NavLink className='nav-logo' to={`/${currentLanguage}/home`}>
+            <img
+              src={'/static-imgs/shelpy_logo.png'}
+              alt={'shelpy'}
+              style={{ width: '55px', height: '55px' }}
+            />
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to='/about'
+            to={`/${currentLanguage}/about`}
           >
             <AboutIcon
               color={({ isActive }) => (isActive ? 'black' : 'white')}
@@ -55,7 +62,7 @@ const NavBar = (props) => {
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to='/helpee/service-types'
+            to={`/${currentLanguage}/helpee/service-types`}
           >
             <ShopIcon
               color={({ isActive }) => (isActive ? 'black' : 'white')}
@@ -64,7 +71,7 @@ const NavBar = (props) => {
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to='/marketing/offers'
+            to={`/${currentLanguage}/marketing/offers`}
           >
             <OfferIcon
               color={({ isActive }) => (isActive ? 'black' : 'white')}
@@ -76,7 +83,7 @@ const NavBar = (props) => {
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to='/helper/home'
+              to={`/${currentLanguage}/helper/home`}
             >
               <HelpIcon
                 color={({ isActive }) => (isActive ? 'black' : 'white')}
@@ -89,7 +96,7 @@ const NavBar = (props) => {
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to='/helper/home'
+              to={`/${currentLanguage}/helper/home`}
             >
               <HelpIcon />{' '}
               <div className='navBarText'>{t('helper_home_page')}</div>
