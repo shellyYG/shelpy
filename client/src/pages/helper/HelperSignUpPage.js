@@ -170,7 +170,7 @@ const SignUpPageHelper = () => {
               >
                 {t('helper_home_terms_and_condition_introduction')}{' '}
                 <a
-                  href={`/employment-contract?refId=${refId}`}
+                  href={`/${currentLanguage}/helper-terms?refId=${refId}`}
                   target='_blank'
                   rel='noreferrer'
                 >
@@ -178,7 +178,7 @@ const SignUpPageHelper = () => {
                 </a>
                 {t('comman_and')}
                 <a
-                  href={`/helper-privacy-policy?refId=${refId}`}
+                  href={`/${currentLanguage}/helper-privacy-policy?refId=${refId}`}
                   target='_blank'
                   rel='noreferrer'
                 >
@@ -187,7 +187,7 @@ const SignUpPageHelper = () => {
                 {t('home_ending')} <br />
                 {t('home_you_can')}{' '}
                 <a
-                  href={`/unsubscribe?isHelpee=false&refId=${refId}`}
+                  href={`/${currentLanguage}/unsubscribe?isHelpee=false&refId=${refId}`}
                   target='_blank'
                   rel='noreferrer'
                 >

@@ -38,6 +38,11 @@ import HelperForgetPasswordPage from './pages/helper/HelperForgetPasswordPage';
 import MarketingPage from './pages/MarketingPage';
 import EmailUnSubscriptionPage from './pages/EmailUnSubscriptionPage';
 import PayPage from './pages/PayPage';
+import ImpressumPage from './pages/ImpressumPage';
+import ContactPage from './pages/ContactPage';
+import HelperContractPage from './pages/HelperContractPags';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsConditionaPage from './pages/TermsConditionPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -62,6 +67,14 @@ function App() {
           />
           <Routes>
             <Route path={`/:locale/about`} element={<AboutPage />} />
+            <Route path={`/:locale/impressum`} element={<ImpressumPage />} />
+            <Route path={`/:locale/contact`} element={<ContactPage />} />
+            <Route
+              path={`/:locale/helper-terms`}
+              element={<HelperContractPage />}
+            />
+            <Route path={`/:locale/privacy`} element={<PrivacyPolicyPage />} />
+            <Route path={`/:locale/terms`} element={<TermsConditionaPage />} />
             <Route
               path={`/:locale/marketing/offers`}
               element={

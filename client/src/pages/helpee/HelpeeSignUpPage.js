@@ -160,7 +160,7 @@ function HelpeeSignUpPage(props) {
               >
                 {t('home_terms_and_condition_introduction')}{' '}
                 <a
-                  href={`/privacy-policy?refId=${refId}`}
+                  href={`/${currentLanguage}/privacy?refId=${refId}`}
                   target='_blank'
                   rel='noreferrer'
                 >
@@ -169,7 +169,7 @@ function HelpeeSignUpPage(props) {
                 {t('home_ending')} <br />
                 {t('home_you_can')}{' '}
                 <a
-                  href={`/unsubscribe?isHelpee=true&refId=${refId}`}
+                  href={`/${currentLanguage}/unsubscribe?isHelpee=true&refId=${refId}`}
                   target='_blank'
                   rel='noreferrer'
                 >

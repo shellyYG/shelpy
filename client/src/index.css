@@ -783,6 +783,13 @@ footer {
   text-align: center;
 }
 
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
+  text-align: center;
+}
+
 .footer-column div {
   cursor: pointer;
 }

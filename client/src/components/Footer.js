@@ -1,6 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from 'react-router-dom';
 import FooterElement from "./FooterElement";
+import FacebookIcon from './Icons/FacebookIcon';
+import InstagramIcon from "./Icons/InstagramIcon";
+import YoutubeIcon from './Icons/YoutubeIcon';
 
 function Footer() {
   const { t } = useTranslation();
@@ -29,12 +32,12 @@ function Footer() {
             text={t('contact_us')}
             link={`/${currentLanguage}/contact?&refId=${refId}`}
           />
-          <FooterElement text={t('footer_legal_rights')} />
+          <FooterElement
+            text={t('helper_terms')}
+            link={`/${currentLanguage}/helper-terms?&refId=${refId}`}
+          />
         </div>
-        <div className='footer-column'>
-          <FooterElement text={t('follow_us')} />
-          <div>FB IG Youtube TODO</div>
-        </div>
+
         <div className='footer-column'>
           <FooterElement
             text={t('terms_and_condition')}
@@ -44,6 +47,20 @@ function Footer() {
             text={t('privacy_policy')}
             link={`/${currentLanguage}/privacy?&refId=${refId}`}
           />
+        </div>
+        <div className='footer-social'>
+          <div style={{ display: 'flex', flexDirection: 'row', margin: 'auto' }}>
+            <div style={{ margin: '0 5px' }}>
+              <FacebookIcon />
+            </div>
+            <div style={{ margin: '0 5px' }}>
+              <InstagramIcon />
+            </div>
+            <div style={{ margin: '0 5px' }}>
+              <YoutubeIcon />
+            </div>
+          </div>
+          <FooterElement text={t('footer_legal_rights')} />
         </div>
       </div>
     </footer>

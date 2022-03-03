@@ -1,6 +1,6 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
-const AboutPage = () => {
+const ContactPage = () => {
   const { t } = useTranslation();
   return (
     <div
@@ -14,13 +14,10 @@ const AboutPage = () => {
             alt={'shelpy'}
             style={{ width: '150px', height: '150px' }}
           />
-          <h2>{t('mission_statement')}</h2>
           <br />
           <h3>
-            {t('mission_statement_part0')} <br />
             <br />
-            {t('mission_statement_part1')} <br />
-            {t('mission_statement_part2')}
+            E-Mail: team@shelpy.co
           </h3>
         </div>
       </div>
@@ -28,4 +25,4 @@ const AboutPage = () => {
   );
 };
 
-export default AboutPage;
+export default ContactPage;
