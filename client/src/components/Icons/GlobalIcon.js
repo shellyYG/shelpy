@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IconContext } from 'react-icons';
 import { CgGlobeAlt } from 'react-icons/cg';
 import { onClickUpdateActiveIconTarget } from '../../store/general/general-actions';
 import { useTranslation } from 'react-i18next';
 
 function GlobalIcon (props) {
-  const { i18n, t } = useTranslation();
   const dispatch = useDispatch();
+  const { i18n } = useTranslation();
+  
   const [active, setActive] = useState(false);
   function handleLanguageClick(e) {
     e.preventDefault();

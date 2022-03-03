@@ -1,6 +1,7 @@
 {
   "nav_about": "關於我們",
   "nav_book_helper": "預約過來人",
+  "nav_create_offer": "新增服務",
   "nav_top_helper": "熱門過來人",
   "nav_become_helper": "成為過來人",
   "nav_I_am_helpee": "我是新鮮人",
@@ -94,6 +95,12 @@
 
   "footer_question": "有任何問題，請與我們聯繫: team@shelpy.co",
   "footer_legal_rights": "版權所有©Shelpy",
+
+  "about_us": "關於我們",
+  "contact_us": "聯絡我們",
+  "follow_us": "追蹤我們",
+  "terms_and_condition": "服務條款",
+  "privacy_policy": "隱私條款",
 
   "helpee_home_banner_title1": "人生下一步：",
   "helpee_home_banner_title2": "出國留學、工作、轉職、或是創業?",

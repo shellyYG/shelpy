@@ -10,7 +10,6 @@ function UserRoleBtn(props) {
   const [active, setActive] = useState(false);
 
   const { userRole } = useSelector((state) => state.general);
-  console.log('userRole: ', userRole);
 
   useEffect(() => {
     if (props.role !== userRole) {

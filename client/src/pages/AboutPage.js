@@ -26,7 +26,7 @@ const AboutPage = () => {
           <h2>Impressum</h2>
           <br />
           <h3>
-            Angaben gemäß § 5 TMG Obertshausen, Germany
+            Angaben gemäß § 5 TMG Pingtung, Taiwan
             <br />
             <br />
             E-Mail: team@shelpy.co

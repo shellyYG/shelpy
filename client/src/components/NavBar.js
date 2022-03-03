@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import GlobalIcon from './Icons/GlobalIcon';
 import ShopIcon from './Icons/ShopIcon';
 import HelpIcon from './Icons/HelpIcon';
-import AboutIcon from './Icons/AboutIcon';
 import ProfileIcon from './Icons/ProfileIcon';
 import OfferIcon from './Icons/OfferIcon';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +12,7 @@ import UserRoleBtn from './UserRoleBtn';
 const NavBar = (props) => {
   const { t } = useTranslation();
   const { dropDownNavTarget } = useSelector((state) => state.general);
+  const { userRole } = useSelector((state) => state.general);
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
@@ -40,13 +40,18 @@ const NavBar = (props) => {
     fontWeight: 'bold',
   };
   
-  
-
   return (
     <>
       <nav>
         <div className='nav-menu'>
-          <NavLink className='nav-logo' to={`/${currentLanguage}/home`}>
+          <NavLink
+            className='nav-logo'
+            to={
+              userRole === 'helpee'
+                ? `/${currentLanguage}/home`
+                : `/${currentLanguage}/helper/home`
+            }
+          >
             <img
               src={'/static-imgs/shelpy_logo.png'}
               alt={'shelpy'}
@@ -55,25 +60,23 @@ const NavBar = (props) => {
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to={`/${currentLanguage}/about`}
-          >
-            <AboutIcon
-              color={({ isActive }) => (isActive ? 'black' : 'white')}
-            />
-            <div className='navBarText' style={{ marginLeft: '5px' }}>
-              {t('nav_about')}
-            </div>
-          </NavLink>
-          <NavLink
-            style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to={`/${currentLanguage}/helpee/service-types`}
+            to={
+              userRole === 'helpee'
+                ? `/${currentLanguage}/helpee/service-types`
+                : `/${currentLanguage}/helper/service-types`
+            }
           >
             <ShopIcon
               color={({ isActive }) => (isActive ? 'black' : 'white')}
             />
-            <div className='navBarText'>{t('nav_book_helper')}</div>
+            {userRole === 'helpee' && (
+              <div className='navBarText'>{t('nav_book_helper')}</div>
+            )}
+            {userRole === 'helper' && (
+              <div className='navBarText'>{t('nav_create_offer')}</div>
+            )}
           </NavLink>
-          <NavLink
+          { userRole === 'helpee' && <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to={`/${currentLanguage}/marketing/offers`}
           >
@@ -81,8 +84,8 @@ const NavBar = (props) => {
               color={({ isActive }) => (isActive ? 'black' : 'white')}
             />
             <div className='navBarText'>{t('nav_top_helper')}</div>
-          </NavLink>
-          {!props.isHelperAuthenticated && (
+          </NavLink>}
+          {!props.isHelperAuthenticated && userRole === 'helpee' && (
             <NavLink
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle

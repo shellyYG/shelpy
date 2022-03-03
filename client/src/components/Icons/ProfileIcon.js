@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IconContext } from 'react-icons';
 import { CgProfile } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +20,7 @@ const ProfileIcon = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { userRole } = useSelector((state) => state.general);
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -103,49 +104,57 @@ const ProfileIcon = (props) => {
         {active && (
           <div className='navPopUpWrapper'>
             <div className='navDropDownContentProfiles'>
-              {<NavbarIdentity isHelpee={true} />}
-              {props.isHelpeeAuthenticated && (
-                <div onClick={handleToHelpeeDashboard}>
-                  {t('view_dashboard')}
-                </div>
+              {userRole === 'helpee' && (
+                <>
+                  {/* {<NavbarIdentity isHelpee={true} />} */}
+                  {props.isHelpeeAuthenticated && (
+                    <div onClick={handleToHelpeeDashboard}>
+                      {t('view_dashboard')}
+                    </div>
+                  )}
+                  {props.isHelpeeAuthenticated && (
+                    <div onClick={handleToHelpeeChatroom}>
+                      {t('chat_with_helper')}
+                    </div>
+                  )}
+                  {props.isHelpeeAuthenticated && (
+                    <div onClick={handleToHelpeeUpdateProfile}>
+                      {t('update_profile')}
+                    </div>
+                  )}
+                  {!props.isHelpeeAuthenticated && (
+                    <div onClick={handleHelpeeSignIn}>{t('sign_in')}</div>
+                  )}
+                  {props.isHelpeeAuthenticated && (
+                    <div onClick={handleHelpeeSignOut}>{t('sign_out')}</div>
+                  )}
+                </>
               )}
-              {props.isHelpeeAuthenticated && (
-                <div onClick={handleToHelpeeChatroom}>
-                  {t('chat_with_helper')}
-                </div>
-              )}
-              {props.isHelpeeAuthenticated && (
-                <div onClick={handleToHelpeeUpdateProfile}>
-                  {t('update_profile')}
-                </div>
-              )}
-              {!props.isHelpeeAuthenticated && (
-                <div onClick={handleHelpeeSignIn}>{t('sign_in')}</div>
-              )}
-              {props.isHelpeeAuthenticated && (
-                <div onClick={handleHelpeeSignOut}>{t('sign_out')}</div>
-              )}
-              {<NavbarIdentity isHelpee={false} />}
-              {props.isHelperAuthenticated && (
-                <div onClick={handleToHelperDashboard}>
-                  {t('view_dashboard')}
-                </div>
-              )}
-              {props.isHelperAuthenticated && (
-                <div onClick={handleToHelperChatroom}>
-                  {t('chat_with_helpee')}
-                </div>
-              )}
-              {props.isHelperAuthenticated && (
-                <div onClick={handleToHelperUpdateProfile}>
-                  {t('update_profile')}
-                </div>
-              )}
-              {!props.isHelperAuthenticated && (
-                <div onClick={handleHelperSignIn}>{t('sign_in')}</div>
-              )}
-              {props.isHelperAuthenticated && (
-                <div onClick={handleHelperSignOut}>{t('sign_out')}</div>
+              {userRole === 'helper' && (
+                <>
+                  {/* {<NavbarIdentity isHelpee={false} />} */}
+                  {props.isHelperAuthenticated && (
+                    <div onClick={handleToHelperDashboard}>
+                      {t('view_dashboard')}
+                    </div>
+                  )}
+                  {props.isHelperAuthenticated && (
+                    <div onClick={handleToHelperChatroom}>
+                      {t('chat_with_helpee')}
+                    </div>
+                  )}
+                  {props.isHelperAuthenticated && (
+                    <div onClick={handleToHelperUpdateProfile}>
+                      {t('update_profile')}
+                    </div>
+                  )}
+                  {!props.isHelperAuthenticated && (
+                    <div onClick={handleHelperSignIn}>{t('sign_in')}</div>
+                  )}
+                  {props.isHelperAuthenticated && (
+                    <div onClick={handleHelperSignOut}>{t('sign_out')}</div>
+                  )}
+                </>
               )}
             </div>
           </div>

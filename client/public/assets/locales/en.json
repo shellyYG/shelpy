@@ -1,6 +1,7 @@
 {
   "nav_about": "About",
   "nav_book_helper": "Book Helper",
+  "nav_create_offer": "Create Offer",
   "nav_top_helper": "Top Helpers",
   "nav_become_helper": "Become Helper",
   "nav_I_am_helpee": "I am a Helpee",
@@ -94,6 +95,12 @@
 
   "footer_question": "Question? Contact us: team@shelpy.co",
   "footer_legal_rights": "All Rights Reserved to ©Shelpy",
+
+  "about_us": "About US",
+  "contact_us": "Contact US",
+  "follow_us": "Follow US",
+  "terms_and_condition": "Terms and Condition",
+  "privacy_policy": "Privacy Policy",
 
   "helpee_home_banner_title1": "Next step of your life:",
   "helpee_home_banner_title2": "Applying for university, job, or start your own busiess?",

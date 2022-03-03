@@ -452,10 +452,10 @@ body {
 .leftHalfBtn {
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
-  border-bottom: 1px solid #fff995;
+  border: 1px solid #fff995;
   cursor: pointer;
   text-align: center;
-  padding: 5px 15px;
+  padding: 5px 30px;
   font-size: 14px;
 }
 
@@ -463,34 +463,36 @@ body {
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   background-color: #fff995;
-  border-bottom: 1px solid #fff995;
+  border: 1px solid #fff995;
   color: black;
   cursor: pointer;
   text-align: center;
-  padding: 5px 15px;
+  padding: 5px 30px;
   font-size: 14px;
 }
 
 .rightHalfBtn {
   border-bottom-right-radius: 2px;
   border-top-right-radius: 2px;
-  border-bottom: 1px solid #fff995;
+  border: 1px solid #fff995;
   cursor: pointer;
   text-align: center;
-  padding: 5px 15px;
+  padding: 5px 30px;
   font-size: 14px;
+  margin-right: 10px;
 }
 
 .rightHalfBtnActive {
   border-bottom-right-radius: 2px;
   border-top-right-radius: 2px;
-  border-bottom: 1px solid #fff995;
+  border: 1px solid #fff995;
   background-color: #fff995;
   color: black;
   cursor: pointer;
   text-align: center;
-  padding: 5px 15px;
+  padding: 5px 30px;
   font-size: 14px;
+  margin-right: 10px;
 }
 
 .chatRoomContent img {
@@ -763,12 +765,33 @@ footer {
   position: sticky;
   bottom: 0px;
   padding: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
-.footer-text {
+.footer-row {
+  display: flex;
+  flex-direction: row;
   line-height: 25px;
+  margin: auto;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
   text-align: center;
 }
+
+.footer-column div {
+  cursor: pointer;
+}
+
+.footer-column div:hover {
+  background-color: #fff995;
+  color: black;
+}
+
 
 .btn-next {
   border-radius: 4px;
@@ -1728,6 +1751,12 @@ input[type="checkbox" i] {
   }
   .activeSelectedOrderBtn {
     margin: 5px auto;
+  }
+  .footer-column {
+    margin: 0 3px;
+  }
+  .footer-column div {
+    font-size: 10px;
   }
 }
 @media (max-width: 500px) {
