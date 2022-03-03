@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import GlobalIcon from './Icons/GlobalIcon';
 import ShopIcon from './Icons/ShopIcon';
 import HelpIcon from './Icons/HelpIcon';
@@ -8,15 +10,28 @@ import ProfileIcon from './Icons/ProfileIcon';
 import OfferIcon from './Icons/OfferIcon';
 import { useTranslation } from 'react-i18next';
 import UserRoleBtn from './UserRoleBtn';
+import { updateUserRole } from '../store/general/general-actions';
 
 const NavBar = (props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { dropDownNavTarget } = useSelector((state) => state.general);
   const { userRole } = useSelector((state) => state.general);
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
+
+  useEffect(()=> {
+    const userRole = window.location.pathname.includes('/helper')
+      ? 'helper'
+      : 'helpee';
+    try {
+      dispatch(updateUserRole({ userRole }));
+    } catch (err) {
+      console.error(err);
+    }
+  },[dispatch])
   const nonActiveStyle = {
     color: "white",
     display: "flex",
