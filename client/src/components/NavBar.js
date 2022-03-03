@@ -113,7 +113,7 @@ const NavBar = (props) => {
               <div className='navBarText'>{t('nav_become_helper')}</div>
             </NavLink>
           )}
-          {props.isHelperAuthenticated && (
+          {userRole === 'helper' && (
             <NavLink
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
