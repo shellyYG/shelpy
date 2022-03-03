@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import ChatIcon from './Icons/ChatIcon';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
@@ -17,6 +17,10 @@ import {
 function PotentialHelperCard(props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -131,7 +135,7 @@ function PotentialHelperCard(props) {
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
     );
   }
   async function handleBookHelper(e) {
@@ -143,7 +147,7 @@ function PotentialHelperCard(props) {
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.partnerName}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
     );
   }
 

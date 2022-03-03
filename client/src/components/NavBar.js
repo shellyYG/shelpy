@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,6 +15,10 @@ import { updateUserRole } from '../store/general/general-actions';
 const NavBar = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
   const { dropDownNavTarget } = useSelector((state) => state.general);
   const { userRole } = useSelector((state) => state.general);
 
@@ -63,8 +67,8 @@ const NavBar = (props) => {
             className='nav-logo'
             to={
               userRole === 'helpee'
-                ? `/${currentLanguage}/home`
-                : `/${currentLanguage}/helper/home`
+                ? `/${currentLanguage}/home?refId=${refId}`
+                : `/${currentLanguage}/helper/home?refId=${refId}`
             }
           >
             <img
@@ -77,8 +81,8 @@ const NavBar = (props) => {
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to={
               userRole === 'helpee'
-                ? `/${currentLanguage}/helpee/service-types`
-                : `/${currentLanguage}/helper/service-types`
+                ? `/${currentLanguage}/helpee/service-types?refId=${refId}`
+                : `/${currentLanguage}/helper/service-types?refId=${refId}`
             }
           >
             <ShopIcon
@@ -91,21 +95,25 @@ const NavBar = (props) => {
               <div className='navBarText'>{t('nav_create_offer')}</div>
             )}
           </NavLink>
-          { userRole === 'helpee' && <NavLink
-            style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
-            to={`/${currentLanguage}/marketing/offers`}
-          >
-            <OfferIcon
-              color={({ isActive }) => (isActive ? 'black' : 'white')}
-            />
-            <div className='navBarText'>{t('nav_top_helper')}</div>
-          </NavLink>}
+          {userRole === 'helpee' && (
+            <NavLink
+              style={({ isActive }) =>
+                isActive ? activeStyle : nonActiveStyle
+              }
+              to={`/${currentLanguage}/marketing/offers?refId=${refId}`}
+            >
+              <OfferIcon
+                color={({ isActive }) => (isActive ? 'black' : 'white')}
+              />
+              <div className='navBarText'>{t('nav_top_helper')}</div>
+            </NavLink>
+          )}
           {!props.isHelperAuthenticated && userRole === 'helpee' && (
             <NavLink
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to={`/${currentLanguage}/helper/home`}
+              to={`/${currentLanguage}/helper/home?refId=${refId}`}
             >
               <HelpIcon
                 color={({ isActive }) => (isActive ? 'black' : 'white')}
@@ -118,7 +126,7 @@ const NavBar = (props) => {
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to={`/${currentLanguage}/helper/home`}
+              to={`/${currentLanguage}/helper/home?refId=${refId}`}
             >
               <HelpIcon />{' '}
               <div className='navBarText'>{t('helper_home_page')}</div>

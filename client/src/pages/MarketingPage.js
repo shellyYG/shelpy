@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DropDown from '../components/Dropdown';
 import { jobUniOptions } from '../store/options/navigate-options';
@@ -15,6 +15,10 @@ const HelpeeDashboardPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -95,7 +99,7 @@ const HelpeeDashboardPage = (props) => {
             <DangerIcon />
             <h2 style={{ margin: 'auto' }}>
               {t('please')}{' '}
-              <Link to={`/${currentLanguage}/helpee/sign-in`}>
+              <Link to={`/${currentLanguage}/helpee/sign-in?refId=${refId}`}>
                 {t('sign_in')}
               </Link>{' '}
               {t('mkt_offer_sign_in_as_helpee')}

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { onClickUpdateChatroomRoom } from '../store/general/general-actions';
 import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, typeOptions } from '../store/options/service-options';
 
@@ -10,6 +10,10 @@ function ChatRoomCard(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const buttonRef = useRef();
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
   const [active, setActive] = useState(false);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
@@ -127,7 +131,7 @@ function ChatRoomCard(props) {
           `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
           `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
           `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
+          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
       );
     } else {
       navigate(
@@ -138,7 +142,7 @@ function ChatRoomCard(props) {
           `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
           `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
           `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
+          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
       );
     }
     const data = {

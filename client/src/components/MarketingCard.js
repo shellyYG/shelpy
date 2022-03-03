@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import ChatIcon from './Icons/ChatIcon';
@@ -23,6 +23,10 @@ const MySwal = withReactContent(Swal);
 function MarketingCard(props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
@@ -167,7 +171,7 @@ function MarketingCard(props) {
           `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
           `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.username}` +
           `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
+          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
       );
     }
   }
@@ -180,7 +184,8 @@ function MarketingCard(props) {
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&profilePicPath=${props.profilePicPath}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&profilePicPath=${props.profilePicPath}` +
+        `&refId=${refId}`
     );
   }
 

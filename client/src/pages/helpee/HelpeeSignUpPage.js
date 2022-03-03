@@ -159,18 +159,26 @@ function HelpeeSignUpPage(props) {
                 }}
               >
                 {t('home_terms_and_condition_introduction')}{' '}
-                <a href='/privacy-policy' target='_blank'>
+                <a
+                  href={`/privacy-policy?refId=${refId}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
                   {t('home_privacy_policy')}
                 </a>
                 {t('home_ending')} <br />
                 {t('home_you_can')}{' '}
-                <a href='/unsubscribe?isHelpee=true' target='_blank'>
+                <a
+                  href={`/unsubscribe?isHelpee=true&refId=${refId}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
                   {t('home_unsubscribe')}{' '}
                 </a>{' '}
                 {t('home_at_any_time')}
               </p>
               <div style={{ textAlign: 'center' }}>
-                <Link to={`/${currentLanguage}/helpee/sign-in`}>
+                <Link to={`/${currentLanguage}/helpee/sign-in?refId=${refId}`}>
                   {t('home_have_account_sign_in')}
                 </Link>
               </div>

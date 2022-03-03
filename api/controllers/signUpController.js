@@ -120,6 +120,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
           provider,
           username,
           email,
+          refId,
         },
       });
     } else {
@@ -129,6 +130,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
           provider,
           username,
           email,
+          refId,
         },
       });
     }

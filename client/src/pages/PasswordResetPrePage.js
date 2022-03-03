@@ -24,11 +24,11 @@ const PasswordResetPrePage = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  
   const originalEmail = searchParams.get('email');
-  const filteredEmail = originalEmail.replace(/\+/g, '%2B');
-
+  const refId = searchParams.get('refId');
   const passwordResetToken = searchParams.get('passwordResetToken');
+
+  const filteredEmail = originalEmail.replace(/\+/g, '%2B');
 
   const {
     confirmHelpeeCanChangePasswordStatus,
@@ -88,7 +88,7 @@ const PasswordResetPrePage = (props) => {
             icon: 'success',
           });
           navigate(
-            `/${currentLanguage}/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}`,
+            `/${currentLanguage}/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}&refId=${refId}`,
             { replace: true }
           );
         }
@@ -123,7 +123,7 @@ const PasswordResetPrePage = (props) => {
             icon: 'success',
           });
           navigate(
-            `/${currentLanguage}/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}`,
+            `/${currentLanguage}/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}&refId=${refId}`,
             { replace: true }
           );
         }

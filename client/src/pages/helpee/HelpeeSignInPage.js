@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../../App.css";
@@ -16,6 +16,10 @@ const MySwal = withReactContent(Swal);
 const HelpeeSignInPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
@@ -130,12 +134,14 @@ const HelpeeSignInPage = () => {
           />
           <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
             <Link
-              to={`/${currentLanguage}/helpee/forget-password`}
+              to={`/${currentLanguage}/helpee/forget-password?refId=${refId}`}
               style={{ marginRight: '10px' }}
             >
               {t('forget_password')}
             </Link>
-            <Link to={`/${currentLanguage}/home`}>{t('dont_have_account_sign_up')}</Link>
+            <Link to={`/${currentLanguage}/home?refId=${refId}`}>
+              {t('dont_have_account_sign_up')}
+            </Link>
           </div>
 
           <ConfirmBtn cta={t('sign_in')} handleConfirm={handleConfirm} />

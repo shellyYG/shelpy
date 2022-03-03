@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import '../App.css';
 import DangerIcon from '../components/Icons/DangerIcon';
@@ -6,6 +6,10 @@ import DangerIcon from '../components/Icons/DangerIcon';
 const PreSignInPage = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -33,7 +37,7 @@ const PreSignInPage = (props) => {
           {props.isHelpee && (
             <h2 style={{ margin: 'auto' }}>
               {t('please')}{' '}
-              <Link to={`/${currentLanguage}/helpee/sign-in`}>
+              <Link to={`/${currentLanguage}/helpee/sign-in?refId=${refId}`}>
                 {t('sign_in')}
               </Link>{' '}
               {t('service_types_sign_in_as_helpee')}
@@ -42,7 +46,7 @@ const PreSignInPage = (props) => {
           {!props.isHelpee && (
             <h2 style={{ margin: 'auto' }}>
               {t('please')}{' '}
-              <Link to={`/${currentLanguage}/helper/sign-in`}>
+              <Link to={`/${currentLanguage}/helper/sign-in?refId=${refId}`}>
                 {t('sign_in')}
               </Link>{' '}
               {t('service_types_sign_in_as_helper')}

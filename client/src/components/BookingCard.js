@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import StripeCheckout from 'react-stripe-checkout';
@@ -19,6 +19,10 @@ function BookingCard(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const paypal = useRef();
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -226,7 +230,7 @@ function BookingCard(props) {
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
     );
   }
   function handleBookingConfirmation(e) {
@@ -234,7 +238,7 @@ function BookingCard(props) {
     navigate(
       `/${currentLanguage}/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&partnerName=${props.partnerName}&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
-        `&bookingNotes=${props.notes}`
+        `&bookingNotes=${props.notes}&refId=${refId}`
     );
   }
 
@@ -244,7 +248,7 @@ function BookingCard(props) {
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
         `&thirdType=${props.thirdType}` +
         `&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
-        `&helperUsername=${props.helperUsername}`
+        `&helperUsername=${props.helperUsername}&refId=${refId}`
     );
     try {
       // const data = {

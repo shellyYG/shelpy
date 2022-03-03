@@ -53,6 +53,7 @@ const ChatRoomPage = (props) => {
   const offerId = parseInt(searchParams.get('offerId'));
   const price = searchParams.get('price');
   const duration = searchParams.get('duration');
+  const refId = searchParams.get('refId');
 
   const profilePicPath = searchParams.get('profilePicPath');
 
@@ -155,7 +156,7 @@ const ChatRoomPage = (props) => {
         `&helpeeId=${helpeeId}&helperId=${helperId}` +
         `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
         `&country=${country}&mainType=${mainType}&secondType=${secondType}` +
-        `&thirdType=${thirdType}&fourthType=${fourthType}`
+        `&thirdType=${thirdType}&fourthType=${fourthType}&refId=${refId}`
     );
   }
   async function handleYoutubeClick(e) {

@@ -22,7 +22,7 @@ const BookingConfirmPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -32,6 +32,7 @@ const BookingConfirmPage = (props) => {
   const notesRef = useRef();
 
   const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
   const bookingId = searchParams.get('bookingId');
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
@@ -83,7 +84,7 @@ const BookingConfirmPage = (props) => {
         `&helpeeId=${helpeeId}&helperId=${helperId}&price=${price}&duration=${duration}` +
         `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
         `&country=${country}&mainType=${mainType}&secondType=${secondType}` +
-        `&thirdType=${thirdType}&fourthType=${fourthType}`
+        `&thirdType=${thirdType}&fourthType=${fourthType}&refId=${refId}`
     );
   }
   async function handleConfirm(e) {
@@ -197,8 +198,8 @@ const BookingConfirmPage = (props) => {
           icon: 'success',
         });
         const path = props.isHelpee
-          ? `/${currentLanguage}/helpee/dashboard`
-          : `/${currentLanguage}/helper/dashboard`;
+          ? `/${currentLanguage}/helpee/dashboard?refId=${refId}`
+          : `/${currentLanguage}/helper/dashboard?refId=${refId}`;
         navigate(path);
       }
       dispatch(clearBookingNotificationStatus());
@@ -214,6 +215,7 @@ const BookingConfirmPage = (props) => {
     bookingNotificationStatusMessage,
     dispatch,
     currentLanguage,
+    refId,
   ]);
 
   return (

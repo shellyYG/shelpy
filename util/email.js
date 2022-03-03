@@ -24,7 +24,7 @@ const sendHelpeeEmail = (user) => {
       expiresIn: '7d',
     },
     (err, emailToken) => {
-      const url = `https://shelpy.co/helpee/email/confirmation?emailToken=${emailToken}`;
+      const url = `https://shelpy.co/helpee/email/confirmation?emailToken=${emailToken}&refId=${user.refId}`;
       console.log('confirm Helpee email url: ', url);
       transporter.sendMail(
         {
@@ -63,7 +63,7 @@ const sendHelperEmail = (user) => {
       expiresIn: '7d',
     },
     (err, emailToken) => {
-      const url = `https://shelpy.co/helper/email/confirmation?emailToken=${emailToken}`;
+      const url = `https://shelpy.co/helper/email/confirmation?emailToken=${emailToken}&refId=${user.refId}`;
       console.log('confirm Helper email url: ', url);
       transporter.sendMail(
         {

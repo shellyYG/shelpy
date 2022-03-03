@@ -208,16 +208,28 @@ const HelperSignUpPasswordPage = () => {
                 }}
               >
                 {t('helper_home_terms_and_condition_introduction')}{' '}
-                <a href='/employment-contract' target='_blank'>
+                <a
+                  href={`/employment-contract?refId=${refId}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
                   {t('helper_home_employee_contract')}
                 </a>
                 {t('comman_and')}{' '}
-                <a href='/helper-privacy-policy' target='_blank'>
+                <a
+                  href={`/helper-privacy-policy?refId=${refId}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
                   {t('helper_home_privacy_policy')}
                 </a>
                 {t('home_ending')} <br />
                 {t('home_you_can')}{' '}
-                <a href='/unsubscribe?isHelpee=false' target='_blank'>
+                <a
+                  href={`/unsubscribe?isHelpee=false&refId=${refId}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
                   {t('home_unsubscribe')}{' '}
                 </a>{' '}
                 {t('home_at_any_time')}
