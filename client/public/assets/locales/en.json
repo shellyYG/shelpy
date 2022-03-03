@@ -637,7 +637,7 @@
   "helper_please_chat_with_helpee_to_change_time": "please chat with the Helpee, and ask Helpee to re-submit a meeting time.",
 
   "appointment_date": "Appointment Date",
-  "appointment_time": "Appointment Time",
+  "appointment_time": "Appointment Start Time",
   "book_appointment": "Book Appointment",
   "confirm_booking": "Confirm Booking",
   "chat_to_change_booking": "Chat to change booking",

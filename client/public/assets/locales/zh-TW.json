@@ -636,8 +636,8 @@
   "helper_dont_agree_with_time": "如果你不同意預約時間",
   "helper_please_chat_with_helpee_to_change_time": "請與新鮮人聊聊，請新鮮人重新提交一份時間",
 
-  "appointment_date": "預約日期 *",
-  "appointment_time": "預約時間 *",
+  "appointment_date": "服務日期 *",
+  "appointment_time": "服務開始時間 *",
   "book_appointment": "預約服務",
   "confirm_booking": "確認預約",
   "chat_to_change_booking": "與新鮮人聊聊以更改時間",
