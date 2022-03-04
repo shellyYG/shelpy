@@ -17,7 +17,10 @@ const ImpressumPage = () => {
           <h2>Impressum</h2>
           <br />
           <h3>
-            Angaben gemäß § 5 TMG Pingtung, Taiwan
+            {t('impressum_according_to')} <br />
+            {t('disclose')} : <br />
+            <br />
+            {t('address')}
             <br />
             <br />
             E-Mail: team@shelpy.co

@@ -1763,7 +1763,7 @@ input[type="checkbox" i] {
     margin: 0 3px;
   }
   .footer-column div {
-    font-size: 10px;
+    font-size: 7px;
   }
 }
 @media (max-width: 500px) {

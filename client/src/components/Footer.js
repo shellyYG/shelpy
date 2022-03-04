@@ -33,23 +33,22 @@ function Footer() {
             link={`/${currentLanguage}/contact?&refId=${refId}`}
           />
           <FooterElement
-            text={t('helper_terms')}
-            link={`/${currentLanguage}/helper-terms?&refId=${refId}`}
+            text={t('terms_and_condition')}
+            link={`/${currentLanguage}/terms?&refId=${refId}`}
           />
         </div>
 
         <div className='footer-column'>
           <FooterElement
-            text={t('terms_and_condition')}
-            link={`/${currentLanguage}/terms?&refId=${refId}`}
-          />
-          <FooterElement
             text={t('privacy_policy')}
             link={`/${currentLanguage}/privacy?&refId=${refId}`}
           />
+          <FooterElement text={t('footer_legal_rights')} />
         </div>
         <div className='footer-social'>
-          <div style={{ display: 'flex', flexDirection: 'row', margin: 'auto' }}>
+          <div
+            style={{ display: 'flex', flexDirection: 'row', margin: 'auto' }}
+          >
             <div style={{ margin: '0 5px' }}>
               <FacebookIcon />
             </div>
@@ -60,7 +59,6 @@ function Footer() {
               <YoutubeIcon />
             </div>
           </div>
-          <FooterElement text={t('footer_legal_rights')} />
         </div>
       </div>
     </footer>
