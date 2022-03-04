@@ -178,7 +178,7 @@ const SignUpPageHelper = () => {
                 </a>
                 {t('comman_and')}
                 <a
-                  href={`/${currentLanguage}/helper-privacy-policy?refId=${refId}`}
+                  href={`/${currentLanguage}/privacy?refId=${refId}`}
                   target='_blank'
                   rel='noreferrer'
                 >

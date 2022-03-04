@@ -8,11 +8,19 @@ const HelpeeMarketingSection = () => {
     <div className='centerWrapperMkt'>
       <div className='mktWrapper'>
         <MktRow
-          title={t('helpee_mkt_minimize_risk')}
-          details1={t('helpee_mkt_minimize_risk_subtitle1')}
-          details2={t('helpee_mkt_minimize_risk_subtitle2')}
+          title={t('helpee_mkt_affordable_price')}
+          details1={t('helpee_mkt_affordable_price_subtitle1')}
+          details2={t('helpee_mkt_affordable_price_subtitle2')}
           imagePath='/static-imgs/dinner.jpeg'
           alt='Photo by Vincenzo Landino on Unsplash'
+          lastChild={false}
+        />
+        <MktRow
+          title={t('helpee_mkt_time_saving')}
+          details1={t('helpee_mkt_time_saving_subtitle1')}
+          details2={t('helpee_mkt_time_saving_subtitle2')}
+          imagePath='/static-imgs/time.jpeg'
+          alt='Photo by Icons8 Team on Unsplash'
           lastChild={false}
         />
         <MktRow
@@ -30,6 +38,14 @@ const HelpeeMarketingSection = () => {
           imagePath='/static-imgs/google.jpeg'
           alt='Photo by Firmbee.com on Unsplash'
           lastChild={false}
+        />
+        <MktRow
+          title={t('helpee_mkt_market_researcher')}
+          details1={t('helpee_mkt_market_researcher_subtitle1')}
+          details2={t('helpee_mkt_market_researcher_subtitle2')}
+          imagePath='/static-imgs/counselor.jpeg'
+          alt='Photo by Christina @ wocintechchat.com on Unsplash'
+          lastChild
         />
         <MktRow
           title={t('helpee_mkt_control_privacy')}

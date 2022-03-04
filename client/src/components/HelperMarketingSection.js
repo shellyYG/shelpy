@@ -24,13 +24,22 @@ const HelperMarketingSection = () => {
           lastChild={false}
         />
         <MktRow
-          title={t('helper_mkt_marketing_listing')}
-          details1={t('helper_mkt_marketing_listing_subtitle1')}
-          details2={t('helper_mkt_marketing_listing_subtitle2')}
-          imagePath='/static-imgs/counselor.jpeg'
-          alt='Photo by Christina @ wocintechchat.com on Unsplash'
+          title={t('helpee_mkt_time_saving')}
+          details1={t('helpee_mkt_time_saving_subtitle1')}
+          details2={t('helper_mkt_time_saving_subtitle2')}
+          imagePath='/static-imgs/time.jpeg'
+          alt='Photo by Icons8 Team on Unsplash'
           lastChild={false}
         />
+        <MktRow
+          title={t('helper_mkt_share_truth_not_perfect')}
+          details1={t('helper_mkt_share_truth_not_perfect_subtitle1')}
+          details2={t('helper_mkt_share_truth_not_perfect_subtitle2')}
+          imagePath='/static-imgs/truth.jpeg'
+          alt='Photo by Alex Shute on Unsplash'
+          lastChild={false}
+        />
+
         <MktRow
           title={t('helper_mkt_control_privacy')}
           details1={t('helper_mkt_control_privacy_subtitle1')}
@@ -38,6 +47,14 @@ const HelperMarketingSection = () => {
           imagePath='/static-imgs/oneToOne.jpeg'
           alt='Photo by Brett Jordan on Unsplash'
           lastChild={true}
+        />
+        <MktRow
+          title={t('helper_mkt_marketing_listing')}
+          details1={t('helper_mkt_marketing_listing_subtitle1')}
+          details2={t('helper_mkt_marketing_listing_subtitle2')}
+          imagePath='/static-imgs/counselor.jpeg'
+          alt='Photo by Christina @ wocintechchat.com on Unsplash'
+          lastChild={false}
         />
       </div>
     </div>

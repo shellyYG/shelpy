@@ -8,6 +8,7 @@ import ShopIcon from './Icons/ShopIcon';
 import HelpIcon from './Icons/HelpIcon';
 import ProfileIcon from './Icons/ProfileIcon';
 import OfferIcon from './Icons/OfferIcon';
+import HomeIcon from './Icons/HomeIcon';
 import { useTranslation } from 'react-i18next';
 import UserRoleBtn from './UserRoleBtn';
 import { updateUserRole } from '../store/general/general-actions';
@@ -77,6 +78,17 @@ const NavBar = (props) => {
               style={{ width: '55px', height: '55px' }}
             />
           </NavLink>
+          {userRole === 'helper' && (
+            <NavLink
+              style={({ isActive }) =>
+                isActive ? activeStyle : nonActiveStyle
+              }
+              to={`/${currentLanguage}/helper/home?refId=${refId}`}
+            >
+              <HomeIcon />{' '}
+              <div className='navBarText'>{t('helper_home_page')}</div>
+            </NavLink>
+          )}
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to={
@@ -95,6 +107,7 @@ const NavBar = (props) => {
               <div className='navBarText'>{t('nav_create_offer')}</div>
             )}
           </NavLink>
+
           {userRole === 'helpee' && (
             <NavLink
               style={({ isActive }) =>
@@ -121,15 +134,16 @@ const NavBar = (props) => {
               <div className='navBarText'>{t('nav_become_helper')}</div>
             </NavLink>
           )}
+
           {userRole === 'helper' && (
             <NavLink
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to={`/${currentLanguage}/helper/home?refId=${refId}`}
+              to={`/${currentLanguage}/home?refId=${refId}`}
             >
               <HelpIcon />{' '}
-              <div className='navBarText'>{t('helper_home_page')}</div>
+              <div className='navBarText'>{t('nav_become_helpee')}</div>
             </NavLink>
           )}
         </div>
