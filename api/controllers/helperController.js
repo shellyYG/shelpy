@@ -189,6 +189,7 @@ const sendHelperPasswordResetLink = async (req, res) => {
     sendHelperResetPasswordEmail({
       data: {
         email: data.email,
+        currentLanguage: data.currentLanguage,
       },
     });
     res.status(200).json({

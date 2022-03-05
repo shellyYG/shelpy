@@ -18,7 +18,16 @@ const userEmailExisted = async (data) => {
 };
 
 const createUserObject = async (data, encryptedpass, ivString) => {
-  const { provider, username, email, status, refId, subscribed } = data;
+  const {
+    provider,
+    username,
+    email,
+    status,
+    refId,
+    subscribed,
+    currentLanguage,
+  } = data;
+  console.log('currentLanguage: ', currentLanguage);
   // insert to DB
   try {
     const { isHelpee, isPasswordUpdated } = data;
@@ -80,6 +89,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
       password: encryptedpass,
       ivString,
       refId,
+      currentLanguage,
       subscribed,
     });
     const dataObject = {
@@ -121,6 +131,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
           username,
           email,
           refId,
+          currentLanguage,
         },
       });
     } else {
@@ -131,6 +142,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
           username,
           email,
           refId,
+          currentLanguage,
         },
       });
     }
@@ -143,6 +155,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
 
 const postUserSignUpData = async (req, res) => {
   const { data } = req.body;
+  console.log('data: ', data);
   const { password } = data;
   const iv = crypto.randomBytes(16); // different everytime
   const ivString = iv.toString('base64');

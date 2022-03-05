@@ -170,6 +170,7 @@ const sendHelpeePasswordResetLink = async (req, res) => {
     sendHelpeeResetPasswordEmail({
       data: {
         email: data.email,
+        currentLanguage: data.currentLanguage,
       }
     });
     res.status(200).json({

@@ -70,6 +70,7 @@ const HelperSignUpPasswordPage = () => {
       refId: refId,
       subscribed: true,
       status: 'password_created',
+      currentLanguage,
     };
     dispatch(postHelperSignUpPassword(data));
   }

@@ -16,9 +16,14 @@ const regex =
 const HelpeeForgetPasswordPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+  
   const [enableBtn, setEnableBtn] = useState(false);
   const [isEmailInvalid, setIsEmailInvalid] = useState(false);
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
   
   const emailRef = useRef();
 
@@ -40,7 +45,12 @@ const HelpeeForgetPasswordPage = () => {
   async function handleConfirm(e) {
     e.preventDefault();
     try {
-        dispatch(sendHelpeePasswordResetLink({ email: emailRef.current.value }));
+        dispatch(
+          sendHelpeePasswordResetLink({
+            email: emailRef.current.value,
+            currentLanguage,
+          })
+        );
         MySwal.fire({
           title: <strong>{t('forget_password_email_has_been_sent')}</strong>,
           html: <p>{t('forget_password_please_click_link')}</p>,

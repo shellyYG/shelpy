@@ -21,6 +21,7 @@ const HelpeeSignUpPasswordPage = () => {
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
+  console.log('currentLanguage: ', currentLanguage);
   const emailRef = useRef();
   const passwordRef = useRef();
   const consentRef = useRef();
@@ -67,6 +68,7 @@ const HelpeeSignUpPasswordPage = () => {
       refId: refId,
       subscribed: true,
       status: 'password_created',
+      currentLanguage,
     };
     dispatch(postHelpeeSignUpPassword(data));
   }
