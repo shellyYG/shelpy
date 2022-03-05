@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
-import FullLineTextBox from '../components/FullLineTextBox';
+import CreditCardTextBox from '../components/CreditCardTextBox';
 import {
   countryOptions,
   departmentOptions,
@@ -33,6 +33,96 @@ const PayPage = () => {
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
+
+  window.TPDirect.setupSDK(
+    123621,
+    'app_vsHw4uRU9DospZCvWWitSYtgfv5xovLG3xh6LWnqcOj2ATuXRx9ilNdcuj8P',
+    'sandbox'
+  );
+  let fields = {
+    number: {
+      // css selector
+      element: '#card-number',
+      placeholder: '**** **** **** ****',
+    },
+    expirationDate: {
+      // DOM object
+      element: document.getElementById('card-expiration-date'),
+      placeholder: 'MM / YY',
+    },
+    ccv: {
+      element: '#card-ccv',
+      placeholder: 'ccv',
+    },
+  };
+  window.TPDirect.card.setup({
+    fields,
+    styles: {
+      // Style all elements
+      input: {
+        color: 'gray',
+      },
+      // Styling ccv field
+      'input.ccv': {
+        'font-size': '16px'
+      },
+      // Styling expiration-date field
+      'input.expiration-date': {
+        'font-size': '16px'
+      },
+      // Styling card-number field
+      'input.card-number': {
+        'font-size': '16px'
+      },
+      // style focus state
+      ':focus': {
+        'color': 'black'
+      },
+      // style valid state
+      '.valid': {
+        color: 'green',
+      },
+      // style invalid state
+      '.invalid': {
+        color: 'red',
+      },
+      // Media queries
+      // Note that these apply to the iframe, not the root window.
+      '@media screen and (max-width: 400px)': {
+        input: {
+          color: 'orange',
+        },
+      },
+    },
+  });
+
+  function onSubmit(e) {
+    e.preventDefault();
+    console.log('onSubmit...');
+    console.log('window.TPDirect: ', window.TPDirect);
+
+    // 取得 TapPay Fields 的 status
+    const tappayStatus = window.TPDirect.card.getTappayFieldsStatus();
+    console.log('tappayStatus: ', tappayStatus);
+
+    // 確認是否可以 getPrime
+    if (tappayStatus.canGetPrime === false) {
+      alert('can not get prime');
+      return;
+    }
+
+    // Get prime
+    window.TPDirect.card.getPrime((result) => {
+      if (result && result.status !== 0) {
+        alert('get prime error ' + result.msg);
+        return;
+      }
+      alert('get prime 成功，prime: ' + result.card.prime);
+
+      // send prime to your server, to pay with Pay by Prime API .
+      // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
+    });
+  }
 
   useEffect(() => {
     let secondTypeTranslationObj;
@@ -140,9 +230,9 @@ const PayPage = () => {
             <p style={{ textAlign: 'center' }}>
               {t('service_start_time')}: {bookingDate} {bookingTime}
             </p>
-              <p style={{ textAlign: 'center' }}>
-                {t('duration')}: {duration}
-              </p>
+            <p style={{ textAlign: 'center' }}>
+              {t('duration')}: {duration}
+            </p>
           </div>
           <div
             style={{
@@ -150,25 +240,32 @@ const PayPage = () => {
             }}
           >
             <div>
-              <FullLineTextBox
+              <CreditCardTextBox
                 title={`${t('card_number')} *`}
                 placeholder={'0000 0000 0000 0000'}
                 labelColor='black'
                 inputRef={cardNumberRef}
+                id='card-number'
               />
-              <FullLineTextBox
+              <CreditCardTextBox
                 title={`${t('expiration_date')} *`}
                 placeholder={'MM/YY'}
                 labelColor='black'
                 inputRef={cardNumberRef}
+                id='card-expiration-date'
               />
-              <FullLineTextBox
+              <CreditCardTextBox
                 title={`${t('CVV')} *`}
                 placeholder={`${t('CVV')}`}
                 labelColor='black'
                 inputRef={cardNumberRef}
+                id='card-ccv'
               />
-              <button className='btn-contact' style={{ width: '100%' }}>
+              <button
+                className='btn-contact'
+                style={{ width: '100%' }}
+                onClick={onSubmit}
+              >
                 {t('pay')} {price}€
               </button>
             </div>
