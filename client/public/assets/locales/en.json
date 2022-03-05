@@ -144,7 +144,7 @@
   "helpee_mkt_affordable_price_subtitle1": "Spend on average only 20-30 Euro before you make your final decision.",
   "helpee_mkt_affordable_price_subtitle2": "Just like treating a friend to a drink for exchanging insights!",
 
-  "helpee_mkt_time_saving": "Spend reasonable time",
+  "helpee_mkt_time_saving": "SPEND reasonable time",
   "helpee_mkt_time_saving_subtitle1": "We know you are busy.",
   "helpee_mkt_time_saving_subtitle2": "Spend only on average 20-45 minutes to get insights.",
   "helper_mkt_time_saving_subtitle2": "Only by spending on average 20-45 minutes, you can help people & earn money.",
@@ -168,7 +168,7 @@
   "helper_mkt_help_people_subtitle2": "Help people who are now standing on the crossroad and wonders.",
   "helper_mkt_generate_extra_revenue": "GENERATE higher revenue",
   "helper_mkt_generate_extra_revenue_subtitle1": "Earn money that's much higher than your hourly rate.",
-  "helper_mkt_generate_extra_revenue_subtitle2": "A strategy consultant in Germany earns on average 3000€ after tax and need to work 12 hours, 20 days a month. That's on average 12.5€ as hourly rate. Here, you earn on average 20-30€ per 20-45 minutes. You do the math.",
+  "helper_mkt_generate_extra_revenue_subtitle2": "Average hourly salary in Germany is around 29€ (before tax). Here, you earn on average 40€ (before tax) per hour. You decide your own price, we will only charge 15% as platform fee. Make your time more worthy.",
 
   "helper_mkt_share_truth_not_perfect": "BE honest, not perfect",
   "helper_mkt_share_truth_not_perfect_subtitle1": "People here want to know the truth, not the perfect or polished experience.",
@@ -176,7 +176,7 @@
 
   "helper_mkt_marketing_listing": "FREE marketing listing",
   "helper_mkt_marketing_listing_subtitle1": "Are you already a career, study counselor or industry expert?",
-  "helper_mkt_marketing_listing_subtitle2": "Get extra exposure with us and meet your potential customers.",
+  "helper_mkt_marketing_listing_subtitle2": "Get extra exposure with us, meet your potential customers, and gain hands-on experience to understand possible customer needs.",
   "helper_mkt_control_privacy": "CONTROL your own privacy",
   "helper_mkt_control_privacy_subtitle1": "Want to share some important but private insights?",
   "helper_mkt_control_privacy_subtitle2": "You decide if you want to stay anonymously when signing up.",
@@ -285,7 +285,8 @@
   "uni_form_department_clinical_brain_mind_science": "Brain & Mind Sciences",
   "uni_form_department_medical_device_imaging": "Medical Device & Imaging",
   "uni_form_department_anotomy_cell_biology": "Anatomy & Cell Biology",
-  "uni_form_department_biochemistry": "Biochemistry",
+  "uni_form_department_neuroscience_pharmacology": "Neuroscience, Pharmacology and Physiology",
+  "uni_form_department_biochemistry": "Biochemistry / Chemical Biology ",
   "uni_form_department_physiology": "Physiology",
   "uni_form_department_micobiology": "Microbiology",
   "uni_form_department_pharmacology": "Pharmacology",
@@ -711,7 +712,19 @@
   "general_conditions_terms": "General Conditions",
   "general_conditions": "If any provision of these Terms and Conditions shall be deemed illegal, invalid or unenforceable in whole or in part under any law, such provision or portion thereof shall be deemed not to be part of these Terms and Conditions and the legality, validity and enforceability of the remaining provisions of these Terms and Conditions shall not be affected. In such event, the parties shall replace such unlawful, invalid or unenforceable provision (or portion) with a lawful, valid and enforceable provision (or portion) that is similar in effect to such unlawful, invalid or unenforceable provision (or portion), to the extent possible, in accordance with the content and purpose of these Terms and Conditions. These Terms and Conditions, including any policies contained herein, constitute the entire agreement and understanding between the parties with respect to the subject matter hereof and supersede and replace all prior or contemporaneous agreements or commitments with respect to such subject matter. Nothing in these Terms limits your rights as a consumer that cannot be excluded under applicable law, including consumer protection laws.",
   "legal_country": "Unless otherwise provided by local laws, this contract shall be governed by the laws of Taiwan.",
+  "because_has_german_user": "Disclose Impressum due to having users in Germany.",
   "impressum_according_to": "According to German Law gemäß § 5 TMG",
   "disclose": "Address",
-  "address": "Pingtung City, Taiwan"
+  "address": "Pingtung City, Taiwan",
+  "school": "University",
+  "job": "Job",
+  "featured_helpers_experts" : "Popular Helpers & Industry Experts",
+  "startup": "Entreprenuer",
+  "mkt_nick_school": "Share master of computer science study experience in USC, USA.",
+  "mkt_chris_school": "Share how elite universities, such as Harvard, score applications and how you can get into the school of your dreams.",
+  "mkt_anya_school": "Share how to get into top schools (University of Rochester) in US with zero background.",
+  "mkt_markus_job": "Share work experience as a strategy consultant in top 10 consulting firm in Germany.",
+  "mkt_shelly_job": "Share work experience as a data analyst in Fortune 500 in Germany."
+  
+  
 }

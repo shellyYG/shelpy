@@ -17,6 +17,7 @@ const ImpressumPage = () => {
           <h2>Impressum</h2>
           <br />
           <h3>
+            {t('because_has_german_user')} <br />
             {t('impressum_according_to')} <br />
             {t('disclose')} : <br />
             <br />

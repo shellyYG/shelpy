@@ -168,7 +168,7 @@
   "helper_mkt_help_people_subtitle2": "帮助另一位曾经的你，做出最明智的决定。",
   "helper_mkt_generate_extra_revenue": "创造更高的收入",
   "helper_mkt_generate_extra_revenue_subtitle1": "赚的钱比你一小时的工资还高。",
-  "helper_mkt_generate_extra_revenue_subtitle2": "在德国，一名高收入战略谘询顾问的平均收入为税后3000欧元，每天需要工作12小时，20天。这是平均每小时12.5欧元的工资。在这里，你平均每20-45分钟就赚20-30欧元。聪明的你，算算看就知道。",
+  "helper_mkt_generate_extra_revenue_subtitle2": "百万年薪的高收入科技新贵，因为高工时，换算下来时薪不到300台币。在这裡，不用出门、只需笔电，平均每20-45分钟就可赚500-1000台币。你自由定价、我们只收15%平台维护费用，聪明的你，算算看就知道该如何选择。",
 
   "helper_mkt_share_truth_not_perfect": "你只需坦诚、不需要包装",
   "helper_mkt_share_truth_not_perfect_subtitle1": "这裡的新鲜人想要知道真实、坦承、而非完美、包装过的资讯。",
@@ -176,7 +176,7 @@
 
   "helper_mkt_marketing_listing": "拓展免费的行销管道",
   "helper_mkt_marketing_listing_subtitle1": "你本身就是留学、职涯顾问、或是行业专家吗？",
-  "helper_mkt_marketing_listing_subtitle2": "获得额外的曝光度、遇见你的潜在客户。",
+  "helper_mkt_marketing_listing_subtitle2": "获得额外的曝光度、遇见你的潜在客户、累积实战经验以理解客户可能的需求。",
   "helper_mkt_control_privacy": "你的隐私你决定",
   "helper_mkt_control_privacy_subtitle1": "想要匿名回答问题、或是你的答案太过隐私？",
   "helper_mkt_control_privacy_subtitle2": "你可以在註册时，自由决定你要不要匿名註册。",
@@ -285,7 +285,8 @@
   "uni_form_department_clinical_brain_mind_science": "脑与心智系",
   "uni_form_department_medical_device_imaging": "医疗器材与影像系",
   "uni_form_department_anotomy_cell_biology": "解剖学与细胞生物系",
-  "uni_form_department_biochemistry": "生物化学与分子生物系",
+  "uni_form_department_neuroscience_pharmacology": "脑神经科学、药理学和生理学",
+  "uni_form_department_biochemistry": "生物化学/分子生物系",
   "uni_form_department_physiology": "生理学系",
   "uni_form_department_micobiology": "微生物系",
   "uni_form_department_pharmacology": "药理学系",
@@ -711,7 +712,17 @@
   "general_conditions_terms": "一般条款",
   "general_conditions": "若本服务条款的任何条款根据任何法律被整体或部分视为非法、无效或不可强制执行，该条款或相关部份应被视为不属于本服务条款，本服务条款剩下的条文的合法性、有效性及可强制执行性应不受影响。在该情况下，双方应根据本服务条款的内容及目的，尽可能以效果类似于该非法、无效或不可强制执行条文（或部分）的合法、有效及可强制执行的条文（或部分）替换该非法、无效或不可强制执行条文（或部分）。本服务条款，包括任何本条款所包含之政策，构成双方有关其主题事项的完整协议及理解，并替换及取代先前或同期所有有关该主题事项的协议或承诺。本条之规定并不限制您作为消费者依适用法律所不得排除之权利，包括消费者保护法。",
   "legal_country": "除当地法律另有其他规定外，本合约应以台湾法律为准据法。",
-  "impressum_according_to": "根据德国法律的 §5 Telemediengesetz（TMG）条款 ",
+  "because_has_german_user": "因为我们有德国用户，",
+  "impressum_according_to": "我们根据德国法律的 §5 Telemediengesetz（TMG）条款 ",
   "disclose": "揭露公司联络地址",
-  "address": "屏东市，台湾"
+  "address": "屏东市，台湾",
+  "school": "大学",
+  "job": "工作",
+  "featured_helpers_experts": "最受欢迎的过来人＆行业内行人",
+  "startup": "创业",
+  "mkt_nick_school": "分享于美国南加州大学就读资讯工程的相关经验",
+  "mkt_chris_school": "分享哈佛等精英大学如何对申请者打分数，以及你如何能进入你的梦想学校",
+  "mkt_anya_school": "分享如何以零背景跨领域进入美国顶尖大学(罗彻斯特大学)",
+  "mkt_markus_job": "分享在德国的全球前十大顾问公司当策略顾问的相关经验",
+  "mkt_shelly_job": "分享在德国的财星500强当资料分析师的相关经验"
 }

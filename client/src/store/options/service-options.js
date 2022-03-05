@@ -724,6 +724,10 @@ export const departmentOptions = {
       label: 'uni_form_department_anotomy_cell_biology',
     },
     {
+      value: 'Neuroscience, Pharmacology and Physiology',
+      label: 'uni_form_department_neuroscience_pharmacology',
+    },
+    {
       value: 'Biochemistry',
       label: 'uni_form_department_biochemistry',
     },

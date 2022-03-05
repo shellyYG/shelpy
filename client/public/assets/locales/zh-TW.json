@@ -168,7 +168,7 @@
   "helper_mkt_help_people_subtitle2": "幫助另一位曾經的你，做出最明智的決定。",
   "helper_mkt_generate_extra_revenue": "創造更高的收入",
   "helper_mkt_generate_extra_revenue_subtitle1": "賺的錢比你一小時的工資還高。",
-  "helper_mkt_generate_extra_revenue_subtitle2": "在德國，一高收入戰略諮詢顧問的平均收入為稅後3000歐元，每天需要工作12小時，20天。這是平均每小時12.5歐元的工資。在這裡，你平均每20-45分鐘就賺20-30歐元。聰明的你，算算看就知道。",
+  "helper_mkt_generate_extra_revenue_subtitle2": "百萬年薪的高收入科技新貴，因為高工時，換算下來時薪不到300台幣。在這裡，不用出門、只需筆電，平均每20-45分鐘就可賺500-1000台幣。你自由定價、我們只收15%平台維護費用，聰明的你，算算看就知道該如何選擇。",
 
   "helper_mkt_share_truth_not_perfect": "你只需坦誠、不需要包裝",
   "helper_mkt_share_truth_not_perfect_subtitle1": "這裡的新鮮人想要知道真實、坦承、而非完美、包裝過的資訊。",
@@ -176,7 +176,7 @@
 
   "helper_mkt_marketing_listing": "拓展免費的行銷管道",
   "helper_mkt_marketing_listing_subtitle1": "你本身就是留學、職涯顧問、或是行業專家嗎？",
-  "helper_mkt_marketing_listing_subtitle2": "獲得額外的曝光度、遇見你的潛在客戶。",
+  "helper_mkt_marketing_listing_subtitle2": "獲得額外的曝光度、遇見你的潛在客戶、累積實戰經驗以理解客戶可能的需求。",
   "helper_mkt_control_privacy": "你的隱私你決定",
   "helper_mkt_control_privacy_subtitle1": "想要匿名回答問題、或是你的答案太過隱私？",
   "helper_mkt_control_privacy_subtitle2": "你可以在註冊時，自由決定你要不要匿名註冊。",
@@ -285,7 +285,8 @@
   "uni_form_department_clinical_brain_mind_science": "腦與心智系",
   "uni_form_department_medical_device_imaging": "醫療器材與影像系",
   "uni_form_department_anotomy_cell_biology": "解剖學與細胞生物系",
-  "uni_form_department_biochemistry": "生物化學與分子生物系",
+  "uni_form_department_neuroscience_pharmacology": "腦神經科學、藥理學和生理學",
+  "uni_form_department_biochemistry": "生物化學/分子生物系",
   "uni_form_department_physiology": "生理學系",
   "uni_form_department_micobiology": "微生物系",
   "uni_form_department_pharmacology": "藥理學系",
@@ -711,7 +712,17 @@
   "general_conditions_terms": "一般條款",
   "general_conditions": "若本服務條款的任何條款根據任何法律被整體或部分視為非法、無效或不可強制執行，該條款或相關部份應被視為不屬於本服務條款，本服務條款剩下的條文的合法性、有效性及可強制執行性應不受影響。在該情況下，雙方應根據本服務條款的內容及目的，盡可能以效果類似於該非法、無效或不可強制執行條文（或部分）的合法、有效及可強制執行的條文（或部分）替換該非法、無效或不可強制執行條文（或部分）。本服務條款，包括任何本條款所包含之政策，構成雙方有關其主題事項的完整協議及理解，並替換及取代先前或同期所有有關該主題事項的協議或承諾。本條之規定並不限制您作為消費者依適用法律所不得排除之權利，包括消費者保護法。",
   "legal_country": "除當地法律另有其他規定外，本合約應以台灣法律為準據法。",
+  "because_has_german_user": "因為我們有德國用戶，",
   "impressum_according_to": "根據德國法律的 §5 Telemediengesetz（TMG）條款 ",
-  "disclose": "揭露公司聯絡地址",
-  "address": "屏東市，台灣"
+  "disclose": "我們揭露公司聯絡地址",
+  "address": "屏東市，台灣",
+  "school": "大學",
+  "job": "工作",
+  "featured_helpers_experts": "最受歡迎的過來人＆行業內行人",
+  "startup": "創業",
+  "mkt_nick_school": "分享於美國南加州大學就讀資訊工程的相關經驗",
+  "mkt_chris_school": "分享哈佛等精英大學如何對申請者打分數，以及你如何能進入你的夢想學校",
+  "mkt_anya_school": "分享如何以零背景跨領域進入美國頂尖大學(羅徹斯特大學)",
+  "mkt_markus_job": "分享在德國的全球前十大顧問公司當策略顧問的相關經驗",
+  "mkt_shelly_job": "分享在德國的財星500強當資料分析師的相關經驗"
 }
