@@ -1,12 +1,11 @@
 require('dotenv').config();
+const axios = require('axios');
 const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET_KEY);
 const jwt = require('jsonwebtoken');
 const helpeeModel = require('../models/helpeeModel');
 const bookingModel = require('../models/bookingModel');
 
-const {
-  sendHelpeeResetPasswordEmail,
-} = require('../../util/email');
+const { sendHelpeeResetPasswordEmail } = require('../../util/email');
 
 const allowHelpeePrivateRoute = async (req, res) => {
   const { userId, username } = res.locals;
@@ -171,11 +170,33 @@ const sendHelpeePasswordResetLink = async (req, res) => {
       data: {
         email: data.email,
         currentLanguage: data.currentLanguage,
-      }
+      },
     });
     res.status(200).json({
       status: 'success',
     });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getAllChattedHelpers = async (req, res) => {
+  try {
+    const { helpeeUserId } = req.query;
+    let response;
+    if (helpeeUserId) {
+      response = await helpeeModel.getAllChattedHelpers({
+        helpeeUserId,
+      });
+    }
+    if (response && response.data) {
+      res.status(200).json({
+        allChattedHelpers: response.data.allChattedHelpers,
+      });
+    } else {
+      throw Error('no_potential_chatted_helper_response');
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -208,22 +229,22 @@ const payHelper = async (req, res) => {
     .catch((err) => console.error(err));
 };
 
-
-const getAllChattedHelpers = async (req, res) => {
+const payTapPay = async (req, res) => {
+  const { data } = req.body;
   try {
-    const { helpeeUserId } = req.query;
-    let response;
-    if (helpeeUserId) {
-      response = await helpeeModel.getAllChattedHelpers({
-        helpeeUserId,
-      });
-    }
-    if (response && response.data) {
-      res.status(200).json({
-        allChattedHelpers: response.data.allChattedHelpers,
-      });
+    const headers = {
+      'Content-Type': 'application/json',
+      'x-api-key': data.partner_key,
+    };
+    const response = await axios.post(
+      'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', // TODO: change to production
+      data,
+      { headers }
+    );
+    if (response && response.data && response.data.status === 0) {
+      res.status(200).json(response.data);
     } else {
-      throw Error('no_potential_chatted_helper_response');
+      res.status(500).json(response.data);
     }
   } catch (error) {
     console.error(error);
@@ -244,5 +265,6 @@ module.exports = {
   sendHelpeePasswordResetLink,
   getHelpeeAllBookings,
   payHelper,
+  payTapPay,
   getAllChattedHelpers,
 };

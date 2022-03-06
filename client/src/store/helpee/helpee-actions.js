@@ -18,6 +18,7 @@ const helpeeConfirmEmailPath = '/api/helpee/email/confirmation';
 const helpeeCanChangePasswordPath = '/api/helpee/password/allow-change';
 const helpeeSendPasswordResetEmailPath = '/api/helpee/password/reset';
 const payHelperPath = '/api/helpee/pay';
+const payTapPayPath = '/api/tappay/pay';
 const helpeeChattedHelpersPath = '/api/helpee/chat/partners';
 
 export const getHelpeeAuthStatus = () => {
@@ -804,6 +805,54 @@ export const getAllHelpeeChattedHelpers = (data) => {
         dispatch(
           helpeeActions.updateChattedHelpers({
             allChattedHelpers: [],
+          })
+        );
+      }
+    }
+  };
+};
+
+export const postPayViaTapPay = (data) => {
+  return async (dispatch) => {
+    const generalToken = localStorage.getItem('shelpy-token');
+    try {
+      if (!generalToken) {
+        throw Error('access_denied_please_log_in_error');
+      }
+      if (generalToken) {
+        const headers = {
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.post(
+          payTapPayPath,
+          { data },
+          {
+            headers,
+          }
+        );
+        console.log('response from Shelpy backend: ', response);
+        dispatch(
+          generalActions.setBookingStatus({
+            bookingStatus: data.bookingStatus,
+          })
+        );
+        dispatch(
+          helpeeActions.updatePayHelperStatus({
+            payHelperStatus: 'success',
+            payHelperStatusTitle: 'thank_you',
+            payHelperStatusMessage: 'successfully_paid',
+          })
+        );
+      }
+    } catch (error) {
+      console.error('eeeee: ', error);
+      console.log('error.response: ', error.response);
+      if (error.response) {
+        dispatch(
+          helpeeActions.updatePayHelperStatus({
+            payHelperStatus: 'error',
+            payHelperStatusTitle: 'oops',
+            payHelperStatusMessage: '' || error.response.data.msg,
           })
         );
       }

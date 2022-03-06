@@ -2,7 +2,7 @@ function CreditCardTextBox(props) {
   return (
     <div
       className='form-row'
-      style={{ marginTop: props.marginTop, marginBottom: props.marginBottom }}
+      style={{ display: 'flex', flexDirection: 'column'}}
     >
       <label style={{ color: props.labelColor || '' }}>{props.title}</label>
       <div className='tpfield' id={props.id}></div>

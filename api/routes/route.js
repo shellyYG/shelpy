@@ -38,6 +38,7 @@ const {
   sendHelpeePasswordResetLink,
   getHelpeeAllBookings,
   payHelper,
+  payTapPay,
   getAllChattedHelpers,
 } = require('../controllers/helpeeController');
 
@@ -415,6 +416,7 @@ router.post('/api/helpee/basic-form', async (req, res) => {
 router.route('/api/booking-status').post(wrapAsync(updateBookingStatus));
 
 router.route('/api/helpee/pay').post(wrapAsync(payHelper));
+router.route('/api/tappay/pay').post(wrapAsync(payTapPay));
 
 router.route('/api/booking-status').get(wrapAsync(getBookingStatus));
 

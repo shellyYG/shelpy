@@ -1,7 +1,9 @@
-import { useRef } from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import CreditCardTextBox from '../components/CreditCardTextBox';
 import {
   countryOptions,
@@ -12,9 +14,18 @@ import {
   schoolOptions,
   typeOptions,
 } from '../store/options/service-options';
+import { clearPayHelperStatus, postPayViaTapPay } from '../store/helpee/helpee-actions';
+const MySwal = withReactContent(Swal);
 
 const PayPage = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
   const [searchParams] = useSearchParams();
   const bookingId = searchParams.get('bookingId');
   const price = searchParams.get('price');
@@ -26,75 +37,95 @@ const PayPage = () => {
   const bookingDate = searchParams.get('bookingDate');
   const bookingTime = searchParams.get('bookingTime');
   const helperName = searchParams.get('helperUsername');
+  const refId = searchParams.get('refId');
 
   const cardNumberRef = useRef();
+
+  const { payHelperStatus, payHelperStatusTitle, payHelperStatusMessage } =
+    useSelector((state) => state.helpee);
 
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
+  const [loading, setIsLoading] = useState(false);
 
-  window.TPDirect.setupSDK(
-    123621,
-    'app_vsHw4uRU9DospZCvWWitSYtgfv5xovLG3xh6LWnqcOj2ATuXRx9ilNdcuj8P',
-    'sandbox'
-  );
-  let fields = {
-    number: {
-      // css selector
-      element: '#card-number',
-      placeholder: '**** **** **** ****',
-    },
-    expirationDate: {
-      // DOM object
-      element: document.getElementById('card-expiration-date'),
-      placeholder: 'MM / YY',
-    },
-    ccv: {
-      element: '#card-ccv',
-      placeholder: 'ccv',
-    },
-  };
-  window.TPDirect.card.setup({
-    fields,
-    styles: {
-      // Style all elements
-      input: {
-        color: 'gray',
+  if (loading) {
+    MySwal.fire({
+      title: t('loading'),
+      html: t('do_not_close_window'),
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        MySwal.showLoading();
       },
-      // Styling ccv field
-      'input.ccv': {
-        'font-size': '16px'
+    });
+  }
+
+  // prevent css re-render
+  useEffect(()=>{
+    window.TPDirect.setupSDK(
+      123621,
+      'app_vsHw4uRU9DospZCvWWitSYtgfv5xovLG3xh6LWnqcOj2ATuXRx9ilNdcuj8P',
+      'sandbox'
+    );
+    let fields = {
+      number: {
+        // css selector
+        element: '#card-number',
+        placeholder: '**** **** **** ****',
       },
-      // Styling expiration-date field
-      'input.expiration-date': {
-        'font-size': '16px'
+      expirationDate: {
+        // DOM object
+        element: document.getElementById('card-expiration-date'),
+        placeholder: 'MM / YY',
       },
-      // Styling card-number field
-      'input.card-number': {
-        'font-size': '16px'
+      ccv: {
+        element: '#card-ccv',
+        placeholder: 'ccv',
       },
-      // style focus state
-      ':focus': {
-        'color': 'black'
-      },
-      // style valid state
-      '.valid': {
-        color: 'green',
-      },
-      // style invalid state
-      '.invalid': {
-        color: 'red',
-      },
-      // Media queries
-      // Note that these apply to the iframe, not the root window.
-      '@media screen and (max-width: 400px)': {
+    };
+    window.TPDirect.card.setup({
+      fields,
+      styles: {
+        // Style all elements
         input: {
-          color: 'orange',
+          color: 'gray',
+        },
+        // Styling ccv field
+        'input.ccv': {
+          'font-size': '16px',
+        },
+        // Styling expiration-date field
+        'input.expiration-date': {
+          'font-size': '16px',
+        },
+        // Styling card-number field
+        'input.card-number': {
+          'font-size': '16px',
+        },
+        // style focus state
+        ':focus': {
+          color: 'black',
+        },
+        // style valid state
+        '.valid': {
+          color: 'green',
+        },
+        // style invalid state
+        '.invalid': {
+          color: 'red',
+        },
+        // Media queries
+        // Note that these apply to the iframe, not the root window.
+        '@media screen and (max-width: 400px)': {
+          input: {
+            color: 'orange',
+          },
         },
       },
-    },
-  });
+    });
+  },[])
 
   function onSubmit(e) {
     e.preventDefault();
@@ -103,7 +134,6 @@ const PayPage = () => {
 
     // 取得 TapPay Fields 的 status
     const tappayStatus = window.TPDirect.card.getTappayFieldsStatus();
-    console.log('tappayStatus: ', tappayStatus);
 
     // 確認是否可以 getPrime
     if (tappayStatus.canGetPrime === false) {
@@ -117,10 +147,27 @@ const PayPage = () => {
         alert('get prime error ' + result.msg);
         return;
       }
-      alert('get prime 成功，prime: ' + result.card.prime);
+      setIsLoading(true);
 
       // send prime to your server, to pay with Pay by Prime API .
       // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
+      const data = {
+        prime: result.card.prime,
+        partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
+        merchant_id: process.env.REACT_APP_TAPPAY_MERCHANT_ID,
+        details: 'TapPay Test',
+        amount: 100,
+        cardholder: {
+          phone_number: '+886923456789',
+          name: '王小明',
+          email: 'LittleMing@Wang.com',
+          zip_code: '100',
+          address: '台北市天龍區芝麻街1號1樓',
+          national_id: 'A123456789',
+        },
+        remember: true,
+      };
+      dispatch(postPayViaTapPay(data));
     });
   }
 
@@ -207,6 +254,46 @@ const PayPage = () => {
         setTitle(t('service_types_job'));
     }
   }, [t, mainType, secondType, thirdType, country]);
+
+  useEffect(() => {
+    if (payHelperStatus === 'error') {
+      setIsLoading(false);
+      async function sweetAlertAndClearStatus(title, message) {
+        await MySwal.fire({
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
+          icon: 'error',
+        });
+        dispatch(clearPayHelperStatus());
+      }
+      sweetAlertAndClearStatus(payHelperStatusTitle, payHelperStatusMessage);
+      return;
+    } else if (payHelperStatus === 'success') {
+      setIsLoading(false);
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{t(title)}</strong>,
+          imageWidth: 442,
+          imageHeight: 293,
+          html: <p>{t(message)}</p>,
+          icon: 'success',
+        });
+        navigate(`/${currentLanguage}/helpee/dashboard?refId=${refId}`);
+      }
+      dispatch(clearPayHelperStatus());
+      sweetAlertAndNavigate(payHelperStatus, payHelperStatusMessage);
+    }
+  }, [
+    t,
+    navigate,
+    payHelperStatus,
+    payHelperStatusTitle,
+    payHelperStatusMessage,
+    dispatch,
+    currentLanguage,
+    refId,
+  ]);
+
   return (
     <div
       className='main-content-wrapper-homepage'
