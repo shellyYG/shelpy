@@ -150,7 +150,7 @@ const ChatRoomPage = (props) => {
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/${currentLanguage}/helpee/book-helper?requestId=${requestId}&partnerName=${partnerName}` +
+      `/${currentLanguage}/helpee/update-booking?requestId=${requestId}&partnerName=${partnerName}` +
         `&userId=${userId}&offerId=${offerId}&price=${price}&duration=${duration}` +
         `&bookingStatus=&bookingId=` +
         `&helpeeId=${helpeeId}&helperId=${helperId}` +

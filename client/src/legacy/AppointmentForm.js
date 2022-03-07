@@ -135,6 +135,7 @@ const { t } = useTranslation();
           icon: 'success',
         });
         let path = `/${currentLanguage}/helpee/dashboard`;
+        if (window.location.search) path += window.location.search;
         navigate(path);
       }
       dispatch(clearRequestFormStatus());
@@ -186,7 +187,7 @@ const { t } = useTranslation();
         </div>
         <div className='form-row'>
           <DateForm
-            title={'Appointment Date *'}
+            title={'Meeting Date *'}
             handleInput={handleDateInput}
             value={meetDate}
             dateFormRef={meetDateRef}
@@ -194,7 +195,7 @@ const { t } = useTranslation();
           <DropDown
             selected={meetTime}
             handleSelect={setMeetTime}
-            title={'Appointment Time *'}
+            title={'Meeting Start Time *'}
             selectRef={meetTimeRef}
             options={meetTimeOptions}
             isTime={true}

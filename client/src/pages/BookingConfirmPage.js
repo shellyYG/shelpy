@@ -16,6 +16,7 @@ import {
   clearBookingNotificationStatus,
 } from '../store/general/general-actions';
 import { useTranslation } from 'react-i18next';
+import LongTextBox from '../components/LongTextBox';
 const MySwal = withReactContent(Swal);
 
 const BookingConfirmPage = (props) => {
@@ -90,26 +91,18 @@ const BookingConfirmPage = (props) => {
   async function handleConfirm(e) {
     e.preventDefault();
     if (props.isHelpee) {
-      const meetTimeRange = meetTimeRef.current.value; // 8am-9am;
-      const endMeetTime = meetTimeRange.split('-')[1]; // 9am;
-      const timeAMPM =
-        endMeetTime[endMeetTime.length - 2] +
-        endMeetTime[endMeetTime.length - 1];
-      let timeHour;
-      if (timeAMPM === 'am') {
-        timeHour = parseInt(
-          endMeetTime.length > 3
-            ? endMeetTime[0] + endMeetTime[1]
-            : endMeetTime[0]
-        );
+      const meetStartTime = meetTimeRef.current.value;
+      const timeAMPM = meetStartTime.includes('am') ? 'am':'pm';
+      console.log('timeAMPM: ', timeAMPM);
+      const timeHourParts = meetStartTime.substring(0, meetStartTime.length-2).split(':');
+      
+      let timeHour = timeHourParts[0];
+      if (timeAMPM === 'pm') {
+        timeHour = parseInt(timeHour);
       } else {
-        timeHour =
-          parseInt(
-            endMeetTime.length > 3
-              ? endMeetTime[0] + endMeetTime[1]
-              : endMeetTime[0]
-          ) + 12;
+        timeHour = parseInt(timeHour) + 12;
       }
+      console.log('timeHour: ', timeHour);
 
       const dates = meetDateRef.current.value.split('-');
       const [year, month, day] = dates;
@@ -266,9 +259,9 @@ const BookingConfirmPage = (props) => {
                     isTime={true}
                   />
                 </div>
-                <FullLineTextBox
-                  title={t('notes')}
-                  placeholder={t('leave_notes_to_helper')}
+                <LongTextBox
+                  title={t('leave_notes_to_helper')}
+                  placeholder={t('leave_notes_to_helper_details')}
                   inputRef={notesRef}
                 />
                 <div className='form-row'>

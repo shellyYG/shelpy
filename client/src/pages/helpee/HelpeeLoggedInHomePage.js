@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import '../../App.css';
+import FeaturedHelperPart from '../../components/FeaturedHelperPart';
 import HelpeeMarketingSection from '../../components/HelpeeMarketingSection';
 
 const HelpeeLoggedInHomePage = () => {
@@ -11,7 +12,9 @@ const HelpeeLoggedInHomePage = () => {
   const currentLanguage = routeParts[1];
   function handleBookHelperClick(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/helpee/service-types`);
+    let path = `/${currentLanguage}/helpee/service-types`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
   return (
     <div className='main-content-wrapper-no-height'>
@@ -56,6 +59,7 @@ const HelpeeLoggedInHomePage = () => {
           </div>
         </div>
         <HelpeeMarketingSection />
+        <FeaturedHelperPart isHelpee={true} />
       </div>
     </div>
   );

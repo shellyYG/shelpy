@@ -18,8 +18,22 @@ const PreSignInPage = (props) => {
     let path = '';
     if (props.isHelpee) {
       path = `/${currentLanguage}/home`;
+      if (window.location.search) path += window.location.search;
     } else {
       path = `/${currentLanguage}/helper/home`;
+      if (window.location.search) path += window.location.search;
+    }
+    navigate(path);
+  }
+  function handleSignIn(e) {
+    e.preventDefault();
+    let path = '';
+    if (props.isHelpee) {
+      path = `/${currentLanguage}/helpee/sign-in?refId=${refId}`;
+      if (window.location.search) path += window.location.search;
+    } else {
+      path = `/${currentLanguage}/helper/sign-in?refId=${refId}`;
+      if (window.location.search) path += window.location.search;
     }
     navigate(path);
   }
@@ -35,22 +49,34 @@ const PreSignInPage = (props) => {
         <div style={{ margin: '50px auto' }}>
           <DangerIcon />
           {props.isHelpee && (
-            <h2 style={{ margin: 'auto' }}>
-              {t('please')}{' '}
-              <Link to={`/${currentLanguage}/helpee/sign-in?refId=${refId}`}>
+            <>
+              <h2 style={{ margin: '10px auto' }}>{t('please')}</h2>
+              <button
+                className='btn-next'
+                style={{ width: '180px' }}
+                onClick={handleSignIn}
+              >
                 {t('sign_in')}
-              </Link>{' '}
-              {t('service_types_sign_in_as_helpee')}
-            </h2>
+              </button>
+              <h2 style={{ margin: '10px auto' }}>
+                {t('service_types_sign_in_as_helpee')}
+              </h2>
+            </>
           )}
           {!props.isHelpee && (
-            <h2 style={{ margin: 'auto' }}>
-              {t('please')}{' '}
-              <Link to={`/${currentLanguage}/helper/sign-in?refId=${refId}`}>
+            <>
+              <h2 style={{ margin: '10px auto' }}>{t('please')}</h2>
+              <button
+                className='btn-next'
+                style={{ width: '180px' }}
+                onClick={handleSignIn}
+              >
                 {t('sign_in')}
-              </Link>{' '}
-              {t('service_types_sign_in_as_helper')}
-            </h2>
+              </button>
+              <h2 style={{ margin: '10px auto' }}>
+                {t('service_types_sign_in_as_helper')}
+              </h2>
+            </>
           )}
           {props.isHelpee && (
             <h2 style={{ margin: '10px auto' }}>

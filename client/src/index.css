@@ -253,7 +253,7 @@ body {
 .mktCard {
   position: relative;
   width: 272px;
-  height: 250px;
+  height: 300px;
   margin: 20px 20px;
   border-radius: 8px;
   display: flex;
@@ -1355,6 +1355,15 @@ footer {
   flex-direction: row;
   width: 100%;
 }
+.mktHomepageText {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 0px 20px ;
+  text-align: center;
+}
 
 .textDateTime {
   margin: auto;
@@ -1627,6 +1636,9 @@ input[type="checkbox" i] {
   }
 
 @media all and (max-width: 1200px) {
+  .nav-button {
+    margin-right: 0px;
+  }
   
   .chatBoxTitleInnerWrapper {
     text-align: center;

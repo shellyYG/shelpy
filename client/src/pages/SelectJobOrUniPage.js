@@ -37,15 +37,19 @@ const SelectJobOrUniPage = (props) => {
     switch (jobOrUniTargetBase) {
       case 'job':
         path = `/${currentLanguage}/${userType}/job-form`;
+        if (window.location.search) path += window.location.search;
         break;
       case 'university':
         path = `/${currentLanguage}/${userType}/uni-form`;
+        if (window.location.search) path += window.location.search;
         break;
       case 'selfEmployed':
         path = `/${currentLanguage}/${userType}/self-employed-form`;
+        if (window.location.search) path += window.location.search;
         break;
       default:
         path = `/${currentLanguage}/${userType}/job-form`;
+        if (window.location.search) path += window.location.search;
     }
     navigate(path); // do not have {replace: true} so user can click backward btn to go back to this page
   }

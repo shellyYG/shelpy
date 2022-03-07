@@ -24,6 +24,8 @@ function HelperDashboardSection(props) {
     useEffect(() => {
       if (props.helperDashboardTarget !== props.value) {
         setActive(false);
+      } else {
+        setActive(true);
       }
     }, [props.helperDashboardTarget, props.value]);
   

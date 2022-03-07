@@ -68,7 +68,7 @@ const NavBar = (props) => {
             className='nav-logo'
             to={
               userRole === 'helpee'
-                ? `/${currentLanguage}/home?refId=${refId}`
+                ? `/${currentLanguage}/helpee/home?refId=${refId}`
                 : `/${currentLanguage}/helper/home?refId=${refId}`
             }
           >
@@ -87,6 +87,17 @@ const NavBar = (props) => {
             >
               <HomeIcon />{' '}
               <div className='navBarText'>{t('helper_home_page')}</div>
+            </NavLink>
+          )}
+          {userRole === 'helpee' && (
+            <NavLink
+              style={({ isActive }) =>
+                isActive ? activeStyle : nonActiveStyle
+              }
+              to={`/${currentLanguage}/home?refId=${refId}`}
+            >
+              <HomeIcon />{' '}
+              <div className='navBarText'>{t('helpee_home_page')}</div>
             </NavLink>
           )}
           <NavLink

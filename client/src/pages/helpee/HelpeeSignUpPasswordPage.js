@@ -106,7 +106,9 @@ const HelpeeSignUpPasswordPage = () => {
         signUpPasswordStatusTitle,
         signUpPasswordStatusMessage
       );
-      navigate(`/${currentLanguage}/home`, { replace: true });
+      let path = `/${currentLanguage}/home`;
+      if (window.location.search) path += window.location.search;
+      navigate(path, { replace: true });
       return;
     } else if (signUpPasswordStatus === 'success') {
       setIsLoading(false);

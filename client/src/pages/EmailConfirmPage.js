@@ -60,7 +60,9 @@ const EmailConfirmPage = (props) => {
             html: <p>{t('please_email_us_for_help')}</p>,
             icon: 'error',
           });
-          navigate(`/${currentLanguage}/helpee/home`, { replace: true }); // replace: true: do not want to let user come back to this page
+          let path = `/${currentLanguage}/helpee/home`
+          if (window.location.search) path += window.location.search;
+          navigate(path, { replace: true }); // replace: true: do not want to let user come back to this page
         }
         sweetAlertAndClearStatus(
           confirmHelpeeEmailStatus,
@@ -77,7 +79,9 @@ const EmailConfirmPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate(`/${currentLanguage}/helpee/sign-in`, { replace: true });
+          let path = `/${currentLanguage}/helpee/sign-in`;
+          if (window.location.search) path += window.location.search;
+          navigate(path, { replace: true });
         }
         sweetAlertAndNavigate(
           confirmHelpeeEmailStatus,
@@ -93,7 +97,9 @@ const EmailConfirmPage = (props) => {
             html: <p>{t('please_email_us_for_help')}</p>,
             icon: 'error',
           });
-          navigate(`/${currentLanguage}/helper/home`, { replace: true });
+          let path = `/${currentLanguage}/helper/home`;
+          if (window.location.search) path += window.location.search;
+          navigate(path, { replace: true });
         }
         sweetAlertAndClearStatus(
           confirmHelperEmailStatus,
@@ -110,7 +116,9 @@ const EmailConfirmPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate(`/${currentLanguage}/helper/sign-in`, { replace: true });
+          let path = `/${currentLanguage}/helper/sign-in`;
+          if (window.location.search) path += window.location.search;
+          navigate(path, { replace: true });
         }
         sweetAlertAndNavigate(
           confirmHelperEmailStatus,

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import '../../App.css';
+import FeaturedHelperPart from '../../components/FeaturedHelperPart';
 import HelperMarketingSection from '../../components/HelperMarketingSection';
 
 const HelperLoggedInHomePage = () => {
@@ -13,7 +14,9 @@ const HelperLoggedInHomePage = () => {
 
   function handleCreateOfferClick(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/helper/service-types`);
+    let path = `/${currentLanguage}/helper/service-types`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
   
   return (
@@ -65,6 +68,7 @@ const HelperLoggedInHomePage = () => {
           </div>
         </div>
         <HelperMarketingSection />
+        <FeaturedHelperPart isHelpee={false}/>
       </div>
     </div>
   );

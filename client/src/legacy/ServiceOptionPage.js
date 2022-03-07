@@ -16,6 +16,7 @@ const ServiceOptionPage = () => {
   function handleNext(e) {
     e.preventDefault();
     let path = `/${currentLanguage}/book-appointment-form`;
+    if (window.location.search) path += window.location.search;
     navigate(path);
   }
   return (

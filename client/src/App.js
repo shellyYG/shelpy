@@ -43,6 +43,7 @@ import ContactPage from './pages/ContactPage';
 import HelperContractPage from './pages/HelperContractPags';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsConditionaPage from './pages/TermsConditionPage';
+import SelectSignInRolePage from './pages/SelectSignInRolePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -87,10 +88,16 @@ function App() {
             />
             <Route
               path={`/`}
-              element={<Navigate replace to={`/${currentLanguage}/home`} />}
+              element={<Navigate replace to={`/${currentLanguage}/helpee/home`} />}
             />
             <Route
               path={`/:locale/home`}
+              element={
+                <HelpeeHomePage isHelpeeAuthenticated={isHelpeeAuthenticated} />
+              }
+            />
+            <Route
+              path={`/:locale/helpee/home`}
               element={
                 <HelpeeHomePage isHelpeeAuthenticated={isHelpeeAuthenticated} />
               }
@@ -113,6 +120,10 @@ function App() {
             <Route
               path={`/:locale/helper/sign-up-final-step`}
               element={<HelperSignUpPasswordPage />}
+            />
+            <Route
+              path={`/:locale/sign-in`}
+              element={<SelectSignInRolePage />}
             />
             <Route
               path={`/:locale/helpee/sign-in`}
@@ -272,7 +283,7 @@ function App() {
               }
             />
             <Route
-              path={`/:locale/helpee/book-helper`}
+              path={`/:locale/helpee/update-booking`}
               element={<BookingConfirmPage isHelpee={true} />}
             />
             <Route

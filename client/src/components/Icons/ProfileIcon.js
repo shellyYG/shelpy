@@ -61,35 +61,46 @@ const ProfileIcon = (props) => {
   }
   function handleToHelpeeDashboard(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/helpee/dashboard`);
+    let path = `/${currentLanguage}/helpee/dashboard`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
   function handleToHelperDashboard(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/helper/dashboard`);
+    let path = `/${currentLanguage}/helper/dashboard`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
-  function handleHelpeeSignIn(e) {
+  function handleSignIn(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/helpee/sign-in`);
+    let path = `/${currentLanguage}/sign-in`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
-  function handleHelperSignIn(e) {
-    e.preventDefault();
-    navigate(`/${currentLanguage}/helper/sign-in`);
-  }
+  
   function handleToHelpeeChatroom(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/helpee/chatroom`);
+    let path = `/${currentLanguage}/helpee/chatroom`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
   function handleToHelperChatroom(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/helper/chatroom`);
+    let path = `/${currentLanguage}/helper/chatroom`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
   function handleToHelpeeUpdateProfile(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/helpee/basic-form`);
+    let path = `/${currentLanguage}/helpee/basic-form`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
   function handleToHelperUpdateProfile(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/helper/basic-form`);
+    let path = `/${currentLanguage}/helper/basic-form`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
 
   useEffect(() => {
@@ -123,7 +134,7 @@ const ProfileIcon = (props) => {
                     </div>
                   )}
                   {!props.isHelpeeAuthenticated && (
-                    <div onClick={handleHelpeeSignIn}>{t('sign_in')}</div>
+                    <div onClick={handleSignIn}>{t('sign_in')}</div>
                   )}
                   {props.isHelpeeAuthenticated && (
                     <div onClick={handleHelpeeSignOut}>{t('sign_out')}</div>
@@ -149,7 +160,7 @@ const ProfileIcon = (props) => {
                     </div>
                   )}
                   {!props.isHelperAuthenticated && (
-                    <div onClick={handleHelperSignIn}>{t('sign_in')}</div>
+                    <div onClick={handleSignIn}>{t('sign_in')}</div>
                   )}
                   {props.isHelperAuthenticated && (
                     <div onClick={handleHelperSignOut}>{t('sign_out')}</div>

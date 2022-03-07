@@ -39,7 +39,14 @@ const HelperMarketingSection = () => {
           alt='Photo by Alex Shute on Unsplash'
           lastChild={false}
         />
-
+        <MktRow
+          title={t('helper_mkt_transparent_fee')}
+          details1={t('helper_mkt_transparent_fee_subtitle1')}
+          details2={t('helper_mkt_transparent_fee_subtitle2')}
+          imagePath='/static-imgs/pieChart.jpg'
+          alt='Photo by Tezos on Unsplash'
+          lastChild={false}
+        />
         <MktRow
           title={t('helper_mkt_control_privacy')}
           details1={t('helper_mkt_control_privacy_subtitle1')}
@@ -47,6 +54,14 @@ const HelperMarketingSection = () => {
           imagePath='/static-imgs/oneToOne.jpeg'
           alt='Photo by Brett Jordan on Unsplash'
           lastChild={true}
+        />
+        <MktRow
+          title={t('helper_mkt_train_leadership')}
+          details1={t('helper_mkt_train_leadership_subtitle1')}
+          details2={t('helper_mkt_train_leadership_subtitle2')}
+          imagePath='/static-imgs/mentor.jpeg'
+          alt='Photo by Amy Hirschi on Unsplash'
+          lastChild={false}
         />
         <MktRow
           title={t('helper_mkt_marketing_listing')}

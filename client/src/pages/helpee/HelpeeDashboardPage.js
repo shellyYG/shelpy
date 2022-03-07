@@ -5,6 +5,7 @@ import {
   getAllOrders,
   getAllBookings,
   getPotentialHelpers,
+  onClickUpdateHelpeeDashboardTarget,
 } from '../../store/helpee/helpee-actions';
 import { useNavigate } from 'react-router-dom';
 import RequestCard from '../../components/RequestCard';
@@ -12,6 +13,7 @@ import HelpeeDashboardSection from '../../components/HelpeeDashboardSection';
 import BookingCard from '../../components/BookingCard';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
 import { useTranslation } from 'react-i18next';
+
 
 const HelpeeDashboardPage = (props) => {
   const { t } = useTranslation();
@@ -33,18 +35,33 @@ const HelpeeDashboardPage = (props) => {
 
   function handleAddRequest(e) {
     e.preventDefault(e);
-    navigate(`/${currentLanguage}/helpee/service-types`);
+    let path = `/${currentLanguage}/helpee/service-types`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
 
   function handleSearchHelpers(e) {
     e.preventDefault(e);
-    navigate(`/${currentLanguage}/marketing/offers`);
+    let path = `/${currentLanguage}/marketing/offers`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
 
   function handleRrefreshPage(e) {
     e.preventDefault(e);
     window.location.reload();
   }
+  
+  useEffect(() => {
+    const data = {
+      helpeeDashboardTarget: 'allBookings',
+    };
+    try {
+      dispatch(onClickUpdateHelpeeDashboardTarget(data));
+    } catch (err) {
+      console.error(err);
+    }
+  }, [dispatch]);
   
   return (
     <div className='section-left-align'>

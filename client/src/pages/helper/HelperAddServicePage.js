@@ -23,12 +23,15 @@ const HelperAddServicePage = () => {
     switch (offerTarget) {
       case 'addOffer':
         path = `/${currentLanguage}/helper/service-types`;
+        if (window.location.search) path += window.location.search;
         break;
       case 'viewDashboard':
         path = `/${currentLanguage}/helper/dashboard`;
+        if (window.location.search) path += window.location.search;
         break;
       default:
         path = `/${currentLanguage}/helper/service-types`;
+        if (window.location.search) path += window.location.search;
     }
     navigate(path);
   }

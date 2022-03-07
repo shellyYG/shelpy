@@ -17,9 +17,10 @@ const generalSlice = createSlice({
     unSubEmailStatusMessage: '',
     allMKTOffers: [],
     userRole: '',
+    signInRole: '',
   },
   reducers: {
-    setUserRole(state,action){
+    setUserRole(state, action) {
       const { userRole } = action.payload;
       if (userRole) state.userRole = userRole;
     },
@@ -53,6 +54,10 @@ const generalSlice = createSlice({
       const { targetChatroomId } = action.payload;
       if (targetChatroomId) state.targetChatroomId = targetChatroomId;
     },
+    onClickUpdateSignInRole(state, action) {
+      const { signInRole } = action.payload;
+      if (signInRole) state.signInRole = signInRole;
+    },
     updateAllMarketingOffers(state, action) {
       const { allMKTOffers } = action.payload;
       if (allMKTOffers) state.allMKTOffers = allMKTOffers;
@@ -64,8 +69,10 @@ const generalSlice = createSlice({
         unSubEmailStatusMessage,
       } = action.payload;
       if (unSubEmailStatus) state.unSubEmailStatus = unSubEmailStatus;
-      if (unSubEmailStatusTitle) state.unSubEmailStatusTitle = unSubEmailStatusTitle;
-      if (unSubEmailStatusMessage) state.unSubEmailStatusMessage = unSubEmailStatusMessage;
+      if (unSubEmailStatusTitle)
+        state.unSubEmailStatusTitle = unSubEmailStatusTitle;
+      if (unSubEmailStatusMessage)
+        state.unSubEmailStatusMessage = unSubEmailStatusMessage;
     },
   },
 });

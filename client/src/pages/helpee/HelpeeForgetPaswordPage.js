@@ -33,13 +33,14 @@ const HelpeeForgetPasswordPage = () => {
      setEmail(typingInput);
    }
   useEffect(() => {
-    if (!email || !regex.test(email)) {
-      setEnableBtn(false);
-      setIsEmailInvalid(true)
-    } else if (email && regex.test(email)){
-      setEnableBtn(true);
-      setIsEmailInvalid(false);
-    }
+   if (!email) {
+     setEnableBtn(false);
+   } else if (email && !regex.test(email)) {
+     setIsEmailInvalid(true);
+   } else if (email && regex.test(email)) {
+     setEnableBtn(true);
+     setIsEmailInvalid(false);
+   }
   },[email])
   
   async function handleConfirm(e) {

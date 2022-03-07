@@ -165,7 +165,7 @@ function MarketingCard(props) {
       });
     } else {
       navigate(
-        `/${currentLanguage}/helpee/book-helper?requestId=&partnerName=${props.username}` +
+        `/${currentLanguage}/helpee/update-booking?requestId=&partnerName=${props.username}` +
           `&userId=${props.helpeeId}&offerId=${props.id}&price=${props.price}&duration=${props.duration}` +
           `&bookingStatus=&bookingId=` +
           `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +

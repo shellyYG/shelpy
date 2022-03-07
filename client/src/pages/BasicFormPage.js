@@ -413,7 +413,9 @@ const BasicFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        navigate(`/${currentLanguage}/helper/service-types`);
+        let path = `/${currentLanguage}/helper/service-types`;
+        if (window.location.search) path += window.location.search;
+        navigate(path);
       }
       dispatch(clearApplyHelperStatus());
       sweetAlertAndNavigate(applyHelperStatus, applyHelperStatusMessage);
@@ -452,7 +454,9 @@ const BasicFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        navigate(`/${currentLanguage}/helpee/service-types`);
+        let path = `/${currentLanguage}/helpee/service-types`;
+        if (window.location.search) path += window.location.search;
+        navigate(path);
       }
       dispatch(clearApplyHelpeeStatus());
       sweetAlertAndNavigate(applyHelpeeStatus, applyHelpeeStatusMessage);

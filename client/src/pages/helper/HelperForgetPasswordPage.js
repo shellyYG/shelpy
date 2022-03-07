@@ -33,8 +33,9 @@ const HelperForgetPasswordPage = () => {
     setEmail(typingInput);
   }
   useEffect(() => {
-    if (!email || !regex.test(email)) {
+    if (!email) {
       setEnableBtn(false);
+    } else if (email && !regex.test(email)) {
       setIsEmailInvalid(true);
     } else if (email && regex.test(email)) {
       setEnableBtn(true);

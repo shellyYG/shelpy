@@ -172,6 +172,7 @@ const UniFormPage = (props) => {
           icon: 'success',
         });
         let path = `/${currentLanguage}/helpee/dashboard`;
+        if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
       dispatch(clearRequestStatus());
@@ -211,6 +212,7 @@ const UniFormPage = (props) => {
           icon: 'success',
         });
         let path = `/${currentLanguage}/helper/dashboard`;
+        if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
       dispatch(clearOfferStatus());
@@ -286,7 +288,11 @@ const UniFormPage = (props) => {
                 <DropDown
                   selected={country}
                   handleSelect={setCountry}
-                  title={t('form_country')}
+                  title={
+                    props.isHelpee
+                      ? t('form_country')
+                      : t('form_helper_country')
+                  }
                   selectRef={countryRef}
                   options={countryOptions}
                 />

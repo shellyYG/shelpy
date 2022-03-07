@@ -77,9 +77,13 @@ const HelperSignInPage = () => {
         dispatch(getHelperAuthStatus());
         dispatch(clearSignInStatus());
         if (helperAccountStatus === 'password_created') {
-          navigate(`/${currentLanguage}/helper/basic-form`, { replace: true });
+          let path = `/${currentLanguage}/helper/basic-form`;
+          if (window.location.search) path += window.location.search;
+          navigate(path, { replace: true });
         } else {
-          navigate(`/${currentLanguage}/helper/service-types`, { replace: true });
+          let path = `/${currentLanguage}/helper/service-types`;
+          if (window.location.search) path += window.location.search;
+          navigate(path, { replace: true });
         }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
@@ -103,7 +107,7 @@ const HelperSignInPage = () => {
     >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          {t('sign_in_welcome')}
+          {t('helper')}, {t('sign_in_welcome')}
         </h1>
         <h2
           style={{
@@ -129,10 +133,23 @@ const HelperSignInPage = () => {
             placeholder={t('enter_password_placeholder')}
             ref={passwordRef}
           />
-          <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
+          <div
+            style={{
+              paddingBottom: '10px',
+              fontSize: '12px',
+              backgroundColor: 'white',
+              borderRadius: '8px',
+              padding: '5px 10px',
+              width: 'fit-content',
+              margin: 'auto',
+              marginBottom: '15px',
+            }}
+          >
             <Link
               to={`/${currentLanguage}/helper/forget-password?refId=${refId}`}
-              style={{ marginRight: '10px' }}
+              style={{
+                marginRight: '10px',
+              }}
             >
               {t('forget_password')}
             </Link>

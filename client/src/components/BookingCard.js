@@ -223,7 +223,7 @@ function BookingCard(props) {
   async function handleBookHelper(e) {
     e.preventDefault();
     navigate(
-      `/${currentLanguage}/helpee/book-helper?requestId=${props.requestId}&partnerName=${props.partnerName}` +
+      `/${currentLanguage}/helpee/update-booking?requestId=${props.requestId}&partnerName=${props.partnerName}` +
         `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
         `&bookingStatus=${props.bookingStatus}` +
         `&bookingId=${props.bookingId}` +

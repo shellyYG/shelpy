@@ -5,6 +5,7 @@ import {
   getAllOffers,
   getAllBookings,
   getPotentialCustomers,
+  onClickUpdateHelperDashboardTarget,
 } from '../../store/helper/helper-actions';
 
 import OfferCard from '../../components/OfferCard';
@@ -35,13 +36,26 @@ const HelperDashboardPage = (props) => {
 
   function handleAddOffer(e) {
     e.preventDefault(e);
-    navigate(`/${currentLanguage}/helper/service-types`);
+    let path = `/${currentLanguage}/helper/service-types`;
+    if (window.location.search) path += window.location.search;
+    navigate(path)
   }
 
   function handleRrefreshPage(e) {
     e.preventDefault(e);
     window.location.reload();
   }
+
+  useEffect(() => {
+    const data = {
+      helperDashboardTarget: 'allBookings',
+    };
+    try {
+      dispatch(onClickUpdateHelperDashboardTarget(data));
+    } catch (err) {
+      console.error(err);
+    }
+  }, [dispatch]);
 
   return (
     <div className='section-left-align'>

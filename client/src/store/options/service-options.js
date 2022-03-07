@@ -225,6 +225,8 @@ export const countryOptions = [
   { value: 'USA', label: 'country_usa' },
   { value: 'UK', label: 'country_uk' },
   { value: 'Germany', label: 'country_germany' },
+  { value: 'Ireland', label: 'country_ireland' },
+  { value: 'Dubai', label: 'country_dubai' },
   { value: 'Austria', label: 'country_austria' },
   { value: 'Swiss', label: 'country_swiss' },
   { value: 'France', label: 'country_france' },
@@ -413,6 +415,10 @@ export const jobOptions = {
       label: 'job_form_job_fullstack_developer',
     },
     {
+      value: 'Mobile Developer',
+      label: 'job_form_job_mobile_developer',
+    },
+    {
       value: 'DevOps',
       label: 'job_form_job_dev_ops',
     },
@@ -427,6 +433,10 @@ export const jobOptions = {
     {
       value: 'Product Manager',
       label: 'job_form_job_product_manager',
+    },
+    {
+      value: 'Project/Program Manager',
+      label: 'job_form_job_project_manager',
     },
     {
       value: 'UI/UX Designer',
@@ -724,8 +734,8 @@ export const departmentOptions = {
       label: 'uni_form_department_anotomy_cell_biology',
     },
     {
-      value: 'Neuroscience, Pharmacology and Physiology',
-      label: 'uni_form_department_neuroscience_pharmacology',
+      value: 'Neuroscience',
+      label: 'uni_form_department_neuroscience',
     },
     {
       value: 'Biochemistry',
@@ -909,6 +919,10 @@ export const professionOptions = [
   {
     value: 'Wedding Planner/Bride Makeup Artist',
     label: 'self_employed_profession_wedding_planner',
+  },
+  {
+    value: 'Makeup Artist',
+    label: 'self_employed_profession_makeup_artist',
   },
   {
     value: 'Apparel Designer',

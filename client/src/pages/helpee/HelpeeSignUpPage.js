@@ -11,6 +11,7 @@ import {
 } from '../../store/helpee/helpee-actions';
 import { useTranslation } from 'react-i18next';
 import HelpeeMarketingSection from '../../components/HelpeeMarketingSection';
+import FeaturedHelperPart from '../../components/FeaturedHelperPart';
 
 const MySwal = withReactContent(Swal);
 const regex =
@@ -186,6 +187,7 @@ function HelpeeSignUpPage(props) {
           </div>
         </div>
         <HelpeeMarketingSection />
+        <FeaturedHelperPart isHelpee={true} />
       </div>
     </div>
   );

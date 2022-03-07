@@ -157,6 +157,7 @@ const SelfEmployedPage = (props) => {
           icon: 'success',
         });
         let path = `/${currentLanguage}/helpee/dashboard`;
+        if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
       dispatch(clearRequestStatus());
@@ -196,6 +197,7 @@ const SelfEmployedPage = (props) => {
           icon: 'success',
         });
         let path = `/${currentLanguage}/helper/dashboard`;
+        if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
       dispatch(clearOfferStatus());
@@ -275,7 +277,11 @@ const SelfEmployedPage = (props) => {
                 <DropDown
                   selected={country}
                   handleSelect={setCountry}
-                  title={t('form_country')}
+                  title={
+                    props.isHelpee
+                      ? t('form_country')
+                      : t('form_helper_country')
+                  }
                   selectRef={countryRef}
                   options={countryOptions}
                 />
@@ -314,7 +320,7 @@ const SelfEmployedPage = (props) => {
                 />
               )}
               {!props.isHelpee && (
-                  <div className='form-row'>
+                <div className='form-row'>
                   <DropDown
                     selected={duration}
                     handleSelect={setDuration}

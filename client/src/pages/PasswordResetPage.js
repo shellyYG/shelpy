@@ -102,7 +102,9 @@ const PasswordResetPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate(`/${currentLanguage}/helpee/sign-in`);
+          let path = `/${currentLanguage}/helpee/sign-in`;
+          if (window.location.search) path += window.location.search;
+          navigate(path);
         }
         sweetAlertAndNavigate(
           helpeePasswordResetStatusTitle,
@@ -134,7 +136,9 @@ const PasswordResetPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate(`/${currentLanguage}/helper/sign-in`);
+          let path = `/${currentLanguage}/helper/sign-in`;
+          if (window.location.search) path += window.location.search;
+          navigate(path);
         }
         sweetAlertAndNavigate(
           helperPasswordResetStatusTitle,

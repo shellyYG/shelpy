@@ -24,6 +24,14 @@ const HelpeeMarketingSection = () => {
           lastChild={false}
         />
         <MktRow
+          title={t('helpee_mkt_value_of_insider_info')}
+          details1={t('helpee_mkt_value_of_insider_info_subtitle1')}
+          details2={t('helpee_mkt_value_of_insider_info_subtitle2')}
+          imagePath='/static-imgs/secret.jpeg'
+          alt='Photo by saeed karimi on Unsplash'
+          lastChild={false}
+        />
+        <MktRow
           title={t('helpee_mkt_meet_role_model')}
           details1={t('helpee_mkt_meet_role_model_subtitle1')}
           details2={t('helpee_mkt_meet_role_model_subtitle2')}

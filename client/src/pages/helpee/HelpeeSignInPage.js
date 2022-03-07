@@ -80,9 +80,13 @@ const HelpeeSignInPage = () => {
         dispatch(getHelpeeAuthStatus());
         dispatch(clearSignInStatus());
         if (helpeeAccountStatus === 'password_created') {
-          navigate(`/${currentLanguage}/helpee/basic-form`, { replace: true });
+          let path = `/${currentLanguage}/helpee/basic-form`;
+          if (window.location.search) path += window.location.search;
+          navigate(path, { replace: true });
         } else {
-          navigate(`/${currentLanguage}/helpee/service-types`, { replace: true });
+          let path = `/${currentLanguage}/helpee/service-types`;
+          if (window.location.search) path += window.location.search;
+          navigate(path, { replace: true });
         }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
@@ -106,7 +110,7 @@ const HelpeeSignInPage = () => {
     >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          {t('sign_in_welcome')}
+          {t('helpee')}, {t('sign_in_welcome')}
         </h1>
         <h2
           style={{
@@ -132,14 +136,29 @@ const HelpeeSignInPage = () => {
             placeholder={t('enter_password_placeholder')}
             ref={passwordRef}
           />
-          <div style={{ paddingBottom: '10px', fontSize: '12px' }}>
+          <div
+            style={{
+              paddingBottom: '10px',
+              fontSize: '12px',
+              backgroundColor: 'white',
+              borderRadius: '8px',
+              padding: '5px 10px',
+              width: 'fit-content',
+              margin: 'auto',
+              marginBottom: '15px'
+            }}
+          >
             <Link
               to={`/${currentLanguage}/helpee/forget-password?refId=${refId}`}
-              style={{ marginRight: '10px' }}
+              style={{
+                marginRight: '10px',
+              }}
             >
               {t('forget_password')}
             </Link>
-            <Link to={`/${currentLanguage}/home?refId=${refId}`}>
+            <Link
+              to={`/${currentLanguage}/home?refId=${refId}`}
+            >
               {t('dont_have_account_sign_up')}
             </Link>
           </div>

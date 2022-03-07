@@ -63,6 +63,16 @@ export const onClickUpdateChatroomRoom = (data) => {
   };
 };
 
+export const onClickUpdateSignInRole = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      generalActions.onClickUpdateSignInRole({
+        signInRole: data.signInRole,
+      })
+    );
+  };
+};
+
 export const getBookingStatus = (data) => {
   return async (dispatch) => {
     let generalToken;

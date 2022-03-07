@@ -12,7 +12,9 @@ const PrivacyPolicyPage = () => {
   const navigate = useNavigate();
   function handleToHomepage(e) {
     e.preventDefault();
-    navigate(`/${currentLanguage}/home`, { replace: true });
+    let path = `/${currentLanguage}/home`;
+    if (window.location.search) path += window.location.search;
+    navigate(path, { replace: true });
   }
   return (
     <div className='section-left-align'>
