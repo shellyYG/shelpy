@@ -10,6 +10,19 @@ const {
 const { sendHelpeeEmail, sendHelperEmail } = require('../../util/email');
 
 const userEmailExisted = async (data) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   const existingEmails = await signUpModel.checkUserEmailExist(data);
   if (existingEmails.length > 0) {
     return true;
@@ -154,8 +167,22 @@ const createUserObject = async (data, encryptedpass, ivString) => {
 };
 
 const postUserSignUpData = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
+
   const { data } = req.body;
-  console.log('data: ', data);
+
   const { password } = data;
   const iv = crypto.randomBytes(16); // different everytime
   const ivString = iv.toString('base64');

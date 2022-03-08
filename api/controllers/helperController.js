@@ -1,8 +1,10 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const redis = require('../../util/redis');
 const { getFileStream } = require('../../util/s3');
 const helperModel = require('../models/helperModel');
 const { sendHelperResetPasswordEmail } = require('../../util/email');
+
 
 const allowHelperPrivateRoute = async (req, res) => {
   const { userId, username } = res.locals;
@@ -12,6 +14,19 @@ const allowHelperPrivateRoute = async (req, res) => {
 };
 
 const postHelperOffer = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   try {
     const id = await helperModel.insertHelperOffer(req.body.data);
     res.status(200).json({ requestId: id, status: 'success' });
@@ -41,8 +56,23 @@ const deleteHelperOffer = async (req, res) => {
 };
 
 const getPotentialCustomers = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
+
   try {
     const { helperUserId } = req.query;
+
     if (helperUserId) {
       const response = await helperModel.getPotentialCustomers({
         helperUserId,
@@ -62,6 +92,19 @@ const getPotentialCustomers = async (req, res) => {
 };
 
 const getProfilePic = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   const { key } = req.params;
   try {
     const readStream = getFileStream(key);
@@ -80,6 +123,19 @@ const getProfilePic = async (req, res) => {
 };
 
 const getHelperAllOffers = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   try {
     const { helperUserId } = req.query;
     const response = await helperModel.getHelperAllOffers({ helperUserId });
@@ -97,6 +153,19 @@ const getHelperAllOffers = async (req, res) => {
 };
 
 const getAllMarketingOffers = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   try {
     const response = await helperModel.getAllMarketingOffers();
     if (response && response.data) {
@@ -113,6 +182,19 @@ const getAllMarketingOffers = async (req, res) => {
 };
 
 const getHelperAllBookings = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   try {
     const { helperUserId } = req.query;
     const response = await helperModel.getHelperAllBookings({ helperUserId });
@@ -130,6 +212,19 @@ const getHelperAllBookings = async (req, res) => {
 };
 
 const confirmHelperEmail = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   const { data } = req.body;
   try {
     const user = jwt.verify(data.emailToken, process.env.EMAIL_SECRET);
@@ -147,6 +242,19 @@ const confirmHelperEmail = async (req, res) => {
 };
 
 const confirmHelperCanChangePassword = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   const { data } = req.body;
   try {
     const user = jwt.verify(
@@ -165,6 +273,19 @@ const confirmHelperCanChangePassword = async (req, res) => {
 };
 
 const sendHelperPasswordResetLink = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   const { data } = req.body;
   try {
     sendHelperResetPasswordEmail({
@@ -183,6 +304,19 @@ const sendHelperPasswordResetLink = async (req, res) => {
 };
 
 const getAllChattedCustomers = async (req, res) => {
+  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
+  const ip = (
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  ).slice(0, 9);
+  const requestCounts = await redis.incr(ip);
+  if (requestCounts === 1) {
+    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
+  }
+  if (requestCounts > 10) {
+    console.log('too many request');
+    res.status(429).send('too_many_requests');
+    return;
+  }
   try {
     const { helperUserId } = req.query;
     let response;

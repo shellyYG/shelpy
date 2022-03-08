@@ -2,6 +2,7 @@ const router = require('express').Router();
 const multer = require('multer');
 const fs = require('fs');
 const util = require('util');
+const rateLimit = require('express-rate-limit');
 
 const { uploadFile } = require('../../util/s3');
 const helperModel = require('../models/helperModel');
@@ -12,6 +13,14 @@ const {
   verifyHelpeeToken,
   verifyHelperToken,
 } = require('../../util/util');
+
+const x = 2;
+const limiter = rateLimit({
+  windowMs: x * 1000, // every x sec
+  max: 1, // 429 error will show if > max requests
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 const storage = multer.diskStorage({
   destination:  (req, file, cb) => {
@@ -97,7 +106,9 @@ router.route('/api/helper/offer').delete(wrapAsync(deleteHelperOffer));
 
 router.route('/api/helpee/all-orders').get(wrapAsync(getHelpeeAllOrders));
 router.route('/api/helpee/all-bookings').get(wrapAsync(getHelpeeAllBookings));
-router.route('/api/helper/all-offers').get(wrapAsync(getHelperAllOffers));
+router
+  .route('/api/helper/all-offers')
+  .get(limiter, wrapAsync(getHelperAllOffers));
 router.route('/api/helper/all-bookings').get(wrapAsync(getHelperAllBookings));
 
 router.route('/api/helper/potential-customers').get(wrapAsync(getPotentialCustomers));

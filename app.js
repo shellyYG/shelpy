@@ -7,6 +7,7 @@ const server = require('http').createServer(app);
 const cors = require('cors');
 const { Server } = require('socket.io');
 const socketChat = require('./api/controllers/chatController');
+const PORT = process.env.PORT || 9000;
 
 const io = new Server(server, {
   cors: {
@@ -16,7 +17,10 @@ const io = new Server(server, {
 });
 io.on('connection', socketChat);
 
-const PORT = process.env.PORT || 9000;
+// Enable if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
+// see https://expressjs.com/en/guide/behind-proxies.html
+// app.set('trust proxy', 1); // This enables IP to show so that we can rate limit individual IP rather than on every IP
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use([
