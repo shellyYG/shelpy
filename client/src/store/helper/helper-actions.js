@@ -478,7 +478,7 @@ export const onSubmitUploadHelperData = (data) => {
         );
       }
     } catch (error) {
-      console.error('upload error: ', error);
+      console.error('upload certificate error: ', error);
       const errorResponse = error.response ? error.response.data : '';
       const errorMessage = errorResponse || error.message;
       if (errorMessage) {

@@ -16,8 +16,8 @@ async function getHelpeeAllOrders(data) {
   const sqlSimplified = ` SELECT helpee.profilePicPath, helpee.languages, helpee.username AS helpeeName, helpee.isAnonymous, req.*
   FROM requests req
   INNER JOIN helpee_account helpee ON req.userId = helpee.id
-  WHERE userId=${data.helpeeUserId} ORDER BY id DESC;`;
-  const allRequests = await query(sqlSimplified);
+  WHERE userId=? ORDER BY id DESC;`;
+  const allRequests = await query(sqlSimplified, data.helpeeUserId);
   return { data: { allOrders: allRequests } };
 }
 
@@ -27,8 +27,8 @@ async function getHelpeeAllBookings(data) {
   FROM bookings bookings
   LEFT JOIN helper_account acc ON bookings.helperId = acc.id
   LEFT JOIN helpee_account helpee ON bookings.helpeeId = helpee.id
-  WHERE helpeeId=${data.helpeeUserId} ORDER BY id DESC;`;
-  const allBookings = await query(sqlSimplified);
+  WHERE helpeeId=? ORDER BY id DESC;`;
+  const allBookings = await query(sqlSimplified, data.helpeeUserId);
   return { data: { allBookings } };
 }
 
@@ -50,9 +50,9 @@ LEFT JOIN requests req ON
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
 LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id
-WHERE helpee.id = ${helpeeUserId} AND NOT ofs.userId IS NULL AND acc.status = 'approved'
+WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.status = 'approved'
 ORDER BY acc.score, ofs.id DESC;`;
-  const allPotentialHelpers = await query(sql);
+  const allPotentialHelpers = await query(sql, helpeeUserId);
 
   return { data: { allPotentialHelpers } };
 }
@@ -63,16 +63,16 @@ async function getHelpeeOrderHelperList(data) {
     SELECT DISTINCT a.id AS helperId, a.username, a.nationality, a.nativeLanguage, a.firstLanguage, a.secondLanguage
     FROM helper_account a
     INNER JOIN helper_accept_request b ON a.id = b.helperId
-    WHERE b.requestId = ${requestId};`;
-  const sqlResult = await query(sql);
+    WHERE b.requestId = ?;`;
+  const sqlResult = await query(sql, requestId);
   return { data: { helpers: sqlResult } };
 }
 
 async function updateHelpeeProfilePicPath(data) {
   const { userId, path } = data;
   const sql = `
-    UPDATE helpee_account SET profilePicPath = '${path}' WHERE id = ${userId}`;
-  const sqlquery = await query(sql);
+    UPDATE helpee_account SET profilePicPath = ? WHERE id = ?`;
+  const sqlquery = await query(sql, [path, userId]);
   return sqlquery;
 }
 
@@ -108,30 +108,59 @@ async function updateHelpeeBasicInfo(data) {
     status,
   } = data;
   const sql = `
-    UPDATE helpee_account SET username = '${username}', introduction='${introduction}'
-      ,nationality='${nationality}', residenceCountry='${residenceCountry}'
-      ,isAnonymous=${isAnonymous}, age = '${age}', notes = '${notes}', status='${status}' 
-      ,hasMonToFri=${hasMonToFri}, hasWeekend=${hasWeekend}, hasBefore12=${hasBefore12}, has12To18=${has12To18}, hasAfter18=${hasAfter18}
-      ,hasEnglish=${hasEnglish}, hasGerman=${hasGerman}, hasFrench=${hasFrench}, hasItalien=${hasItalien}
-      ,hasChinese=${hasChinese}, hasCantonese=${hasCantonese}, hasVietnamese=${hasVietnamese}
-      ,hasKorean=${hasKorean}, hasJapanese=${hasJapanese}, hasTurkish=${hasTurkish}, hasUkrainian=${hasUkrainian}
-      ,hasArabic=${hasArabic}, hasOthers=${hasOthers}, languages='${languages}'
-    WHERE id = ${userId}`;
-  const sqlquery = await query(sql);
+    UPDATE helpee_account SET username =?, introduction=?
+      ,nationality=?, residenceCountry=?
+      ,isAnonymous=?, age =?, notes =?, status=? 
+      ,hasMonToFri=?, hasWeekend=?, hasBefore12=?, has12To18=?, hasAfter18=?
+      ,hasEnglish=?, hasGerman=?, hasFrench=?, hasItalien=?
+      ,hasChinese=?, hasCantonese=?, hasVietnamese=?
+      ,hasKorean=?, hasJapanese=?, hasTurkish=?, hasUkrainian=?
+      ,hasArabic=?, hasOthers=?, languages=?
+    WHERE id = ?`;
+  const sqlquery = await query(sql, [
+    username,
+    introduction,
+    nationality,
+    residenceCountry,
+    isAnonymous,
+    age,
+    notes,
+    status,
+    hasMonToFri,
+    hasWeekend,
+    hasBefore12,
+    has12To18,
+    hasAfter18,
+    hasEnglish,
+    hasGerman,
+    hasFrench,
+    hasItalien,
+    hasChinese,
+    hasCantonese,
+    hasVietnamese,
+    hasKorean,
+    hasJapanese,
+    hasTurkish,
+    hasUkrainian,
+    hasArabic,
+    hasOthers,
+    languages,
+    userId,
+  ]);
   return sqlquery;
 }
 
 async function deleteHelpeeRequest(data) {
   const { requestId } = data;
-  const sql = `UPDATE requests SET status='deleted' WHERE id=${requestId}`;
-  await query(sql);
+  const sql = `UPDATE requests SET status='deleted' WHERE id=?`;
+  await query(sql, requestId);
   return { data: { status: 'success' } };
 }
 
 async function confirmHelpeeEmail(data) {
   const { id } = data;
-  const sql = `UPDATE helpee_account SET confirmed=${true} WHERE id=${id}`;
-  await query(sql);
+  const sql = `UPDATE helpee_account SET confirmed=${true} WHERE id=?`;
+  await query(sql, id);
   return { data: { status: 'success' } };
 }
 
@@ -141,9 +170,9 @@ async function getAllChattedHelpers(data) {
 FROM shelpydb.offers ofs
 INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId
 INNER JOIN shelpydb.helper_account helper ON chat.helperId = helper.id
-WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helpeeId = ${helpeeUserId});`;
+WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helpeeId =?);`;
   
-  const allChattedHelpers = await query(sql);
+  const allChattedHelpers = await query(sql, helpeeUserId);
   return { data: { allChattedHelpers } };
 }
 

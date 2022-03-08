@@ -2,8 +2,8 @@ const { query } = require('./query');
 
 async function checkUserEmailExist(data) {
   const table = data.isHelpee ? 'helpee_account' : 'helper_account';
-  const sql = `SELECT * FROM ${table} WHERE email = '${data.email}'`;
-  const sqlquery = await query(sql);
+  const sql = `SELECT * FROM ${table} WHERE email = ?`;
+  const sqlquery = await query(sql, data.email);
   return sqlquery;
 }
 
@@ -34,8 +34,8 @@ async function resetPassword(data) {
   } else {
     table = 'helper_account';
   }
-  const sql = `UPDATE ${table} SET encryptedpass='${password}', ivString='${ivString}'  WHERE email='${email}'`;
-  await query(sql);
+  const sql = `UPDATE ${table} SET encryptedpass=?, ivString=?  WHERE email=?`;
+  await query(sql, [password, ivString, email]);
   const getIdSql = `SELECT id FROM ${table} WHERE email = '${email}'`;
   const sqlResult = await query(getIdSql);
   return sqlResult[0].id;

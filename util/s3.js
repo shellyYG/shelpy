@@ -15,7 +15,6 @@ const s3 = new S3({
 
 // upload a file to s3
 function uploadFile(file, folder) {
-  console.log('@util/s3.js->uploadFile...');
     const fileStream = fs.createReadStream(file.path);
     const mimeType = file.mimetype;
     const uploadParams = {
@@ -24,7 +23,6 @@ function uploadFile(file, folder) {
         ContentType: mimeType,
         Key: `${folder}/${file.filename}`,
     }
-    console.log('@util/s3.js->uploadFile...uploadParams: ', uploadParams);
     return s3.upload(uploadParams).promise()
 }
 exports.uploadFile = uploadFile;

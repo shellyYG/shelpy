@@ -2,8 +2,8 @@ const { query } = require('./query');
 
 async function checkBookingExisted(data) {
   const { requestId, offerId } = data;
-  const sql = `SELECT * FROM bookings WHERE requestId = ${requestId} AND offerId = ${offerId}`;
-  const sqlquery = await query(sql);
+  const sql = `SELECT * FROM bookings WHERE requestId =? AND offerId =?`;
+  const sqlquery = await query(sql, [requestId, offerId]);
   return sqlquery;
 }
 
@@ -25,24 +25,34 @@ async function updateBookingStatus(data) {
     notes,
     bookingId
   } = data;
+  let sqlquery = '';
   const filteredBookingNotes = notes || '';
     if (
       (appointmentDate && appointmentTime && appointmentTimestamp)
     ) {
       sql = `
-        UPDATE bookings SET bookingStatus = '${bookingStatus}', appointmentDate = '${appointmentDate}', appointmentTime = '${appointmentTime}', appointmentTimeStamp = '${appointmentTimestamp}', notes='${filteredBookingNotes}' WHERE requestId = ${requestId} AND offerId = ${offerId}`;
+        UPDATE bookings SET bookingStatus =? , appointmentDate =?, appointmentTime =?, appointmentTimeStamp =?, notes=? WHERE requestId =? AND offerId =?`;
+        sqlquery = await query(sql, [
+          bookingStatus,
+          appointmentDate,
+          appointmentTime,
+          appointmentTimestamp,
+          filteredBookingNotes,
+          requestId,
+          offerId,
+        ]);
     } else {
       sql = `
-        UPDATE bookings SET bookingStatus = '${bookingStatus}' WHERE id = ${bookingId}`;
+        UPDATE bookings SET bookingStatus =? WHERE id =?`;
+        sqlquery = await query(sql, [bookingStatus, bookingId]);
     }
-    const sqlquery = await query(sql);
     return sqlquery;
 }
 
 async function unsubscribeEmail(data) {
   const table = data.isHelpee ? 'helpee_account' : 'helper_account';
-  const sql = `UPDATE ${table} SET subscribed=${false} WHERE email='${data.email}'`;
-  const sqlquery = await query(sql);
+  const sql = `UPDATE ${table} SET subscribed=${false} WHERE email=?`;
+  const sqlquery = await query(sql, data.email);
   return sqlquery;
 }
 

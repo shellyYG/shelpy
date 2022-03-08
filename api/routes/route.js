@@ -47,7 +47,6 @@ const {
   getPotentialCustomers,
   deleteHelperOffer,
   allowHelperPrivateRoute,
-  getHelperAllMatchedRequests,
   getProfilePic,
   getHelperAllOffers,
   confirmHelperEmail,
@@ -115,9 +114,6 @@ router
   .route('/api/helper/password/reset')
   .post(wrapAsync(sendHelperPasswordResetLink));
 
-router
-  .route('/api/helper/matched-requests')
-  .get(wrapAsync(getHelperAllMatchedRequests));
 router.route('/api/helper/sign-in').post(wrapAsync(postUserSignInData));
 
 router
@@ -154,7 +150,6 @@ router.post(
         userId: helpeeUserId,
         path: result.Key,
       });
-      console.log('result from profile pic upload: ', result);
       if (file) await unlinkFile(file.path);
       res.status(200).send({ imagePath: `/images/${result.Key}` });
     } catch (error) {
@@ -254,40 +249,38 @@ router.post(
   upload.array('certificate', 3), // leverage multer for pdf files. Set max # of files to upload: 3.
   async (req, res) => {
     const file = req.files[0];
+    const isAnonymous = req.body.isAnonymous === 'true' || req.body.isAnonymous === true;
+    const isMarketing = req.body.isMarketing === 'true' || req.body.isMarketing === true;
+    const hasMonToFri = req.body.hasMonToFri === 'true' || req.body.hasMonToFri === true;
+    const hasWeekend = req.body.hasWeekend === 'true' || req.body.hasWeekend === true;
+    const hasBefore12 = req.body.hasBefore12 === 'true' || req.body.hasBefore12 === true;
+    const has12To18 = req.body.has12To18 === 'true' || req.body.has12To18 === true;
+    const hasAfter18 = req.body.hasAfter18 === 'true' || req.body.hasAfter18 === true;
+    const hasEnglish = req.body.hasEnglish === 'true' || req.body.hasEnglish === true;
+    const hasGerman = req.body.hasGerman === 'true' || req.body.hasGerman === true;
+    const hasFrench = req.body.hasFrench === 'true' || req.body.hasFrench === true;
+    const hasItalien = req.body.hasItalien === 'true' || req.body.hasItalien === true;
+    const hasChinese = req.body.hasChinese === 'true' || req.body.hasChinese === true;
+    const hasCantonese = req.body.hasCantonese === 'true' || req.body.hasCantonese === true;
+    const hasVietnamese = req.body.hasVietnamese === 'true' || req.body.hasVietnamese === true;
+    const hasKorean = req.body.hasKorean === 'true' || req.body.hasKorean === true;
+    const hasJapanese = req.body.hasJapanese === 'true' || req.body.hasJapanese === true;
+    const hasTurkish = req.body.hasTurkish === 'true' || req.body.hasTurkish === true;
+    const hasUkrainian = req.body.hasUkrainian === 'true' || req.body.hasUkrainian === true;
+    const hasArabic = req.body.hasArabic === 'true' || req.body.hasArabic === true;
+    const hasOthers = req.body.hasOthers === 'true' || req.body.hasOthers === true;
+
     const {
       userId,
       username,
       introduction,
-      isAnonymous,
-      isMarketing,
       age,
       nationality,
       residenceCountry,
       linkedInUrl,
       notes,
       bankAccount,
-
-      hasMonToFri,
-      hasWeekend,
-      hasBefore12,
-      has12To18,
-      hasAfter18,
-      hasEnglish,
-      hasGerman,
-      hasFrench,
-      hasItalien,
-      hasChinese,
-      hasCantonese,
-      hasVietnamese,
-      hasKorean,
-      hasJapanese,
-      hasTurkish,
-      hasUkrainian,
-      hasArabic,
-      hasOthers,
-
       languages,
-
       status,
     } = req.body;
     try {
@@ -340,36 +333,52 @@ router.post(
 );
 
 router.post('/api/helpee/basic-form', async (req, res) => {
+  const isAnonymous =
+    req.body.isAnonymous === 'true' || req.body.isAnonymous === true;
+  const hasMonToFri =
+    req.body.hasMonToFri === 'true' || req.body.hasMonToFri === true;
+  const hasWeekend =
+    req.body.hasWeekend === 'true' || req.body.hasWeekend === true;
+  const hasBefore12 =
+    req.body.hasBefore12 === 'true' || req.body.hasBefore12 === true;
+  const has12To18 =
+    req.body.has12To18 === 'true' || req.body.has12To18 === true;
+  const hasAfter18 =
+    req.body.hasAfter18 === 'true' || req.body.hasAfter18 === true;
+  const hasEnglish =
+    req.body.hasEnglish === 'true' || req.body.hasEnglish === true;
+  const hasGerman =
+    req.body.hasGerman === 'true' || req.body.hasGerman === true;
+  const hasFrench =
+    req.body.hasFrench === 'true' || req.body.hasFrench === true;
+  const hasItalien =
+    req.body.hasItalien === 'true' || req.body.hasItalien === true;
+  const hasChinese =
+    req.body.hasChinese === 'true' || req.body.hasChinese === true;
+  const hasCantonese =
+    req.body.hasCantonese === 'true' || req.body.hasCantonese === true;
+  const hasVietnamese =
+    req.body.hasVietnamese === 'true' || req.body.hasVietnamese === true;
+  const hasKorean =
+    req.body.hasKorean === 'true' || req.body.hasKorean === true;
+  const hasJapanese =
+    req.body.hasJapanese === 'true' || req.body.hasJapanese === true;
+  const hasTurkish =
+    req.body.hasTurkish === 'true' || req.body.hasTurkish === true;
+  const hasUkrainian =
+    req.body.hasUkrainian === 'true' || req.body.hasUkrainian === true;
+  const hasArabic =
+    req.body.hasArabic === 'true' || req.body.hasArabic === true;
+  const hasOthers =
+    req.body.hasOthers === 'true' || req.body.hasOthers === true;
   const {
     userId,
     introduction,
     username,
-    isAnonymous,
     age,
     nationality,
     residenceCountry,
-
-    hasMonToFri,
-    hasWeekend,
-    hasBefore12,
-    has12To18,
-    hasAfter18,
-    hasEnglish,
-    hasGerman,
-    hasFrench,
-    hasItalien,
-    hasChinese,
-    hasCantonese,
-    hasVietnamese,
-    hasKorean,
-    hasJapanese,
-    hasTurkish,
-    hasUkrainian,
-    hasArabic,
-    hasOthers,
-
     languages,
-
     notes,
     status,
   } = req.body;
