@@ -15,19 +15,6 @@ const allowHelpeePrivateRoute = async (req, res) => {
 };
 
 const postHelpeeServiceRequestForm = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   // old.
   try {
     const id = await helpeeModel.insertHelpeeRequestFormAndGetId(req.body.data);
@@ -39,19 +26,6 @@ const postHelpeeServiceRequestForm = async (req, res) => {
 };
 
 const postHelpeeRequest = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   // new.
   try {
     const id = await helpeeModel.insertHelpeeRequest(req.body.data);
@@ -63,19 +37,6 @@ const postHelpeeRequest = async (req, res) => {
 };
 
 const getHelpeeAllOrders = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   try {
     const { helpeeUserId } = req.query;
     const response = await helpeeModel.getHelpeeAllOrders({ helpeeUserId });
@@ -93,19 +54,6 @@ const getHelpeeAllOrders = async (req, res) => {
 };
 
 const getHelpeeAllBookings = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   try {
     const { helpeeUserId } = req.query;
     const response = await helpeeModel.getHelpeeAllBookings({ helpeeUserId });
@@ -123,19 +71,6 @@ const getHelpeeAllBookings = async (req, res) => {
 };
 
 const getPotentialHelpers = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   try {
     const { helpeeUserId } = req.query;
     let response;
@@ -158,19 +93,6 @@ const getPotentialHelpers = async (req, res) => {
 };
 
 const getHelpeeOrderHelperList = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   try {
     const { requestId } = req.query;
     const response = await helpeeModel.getHelpeeOrderHelperList({ requestId });
@@ -188,19 +110,6 @@ const getHelpeeOrderHelperList = async (req, res) => {
 };
 
 const deleteHelpeeRequest = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   try {
     const { requestId } = req.query;
     const response = await helpeeModel.deleteHelpeeRequest({
@@ -220,19 +129,6 @@ const deleteHelpeeRequest = async (req, res) => {
 };
 
 const confirmHelpeeEmail = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   const { data } = req.body;
   try {
     const user = jwt.verify(data.emailToken, process.env.EMAIL_SECRET);
@@ -250,19 +146,6 @@ const confirmHelpeeEmail = async (req, res) => {
 };
 
 const confirmHelpeeCanChangePassword = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   const { data } = req.body;
   try {
     const user = jwt.verify(
@@ -281,19 +164,6 @@ const confirmHelpeeCanChangePassword = async (req, res) => {
 };
 
 const sendHelpeePasswordResetLink = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   const { data } = req.body;
   try {
     sendHelpeeResetPasswordEmail({
@@ -312,19 +182,6 @@ const sendHelpeePasswordResetLink = async (req, res) => {
 };
 
 const getAllChattedHelpers = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   try {
     const { helpeeUserId } = req.query;
     let response;
@@ -347,19 +204,6 @@ const getAllChattedHelpers = async (req, res) => {
 };
 
 const payHelper = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   const { data } = req.body;
   const { product, token } = data;
   return stripe.customers
@@ -384,19 +228,6 @@ const payHelper = async (req, res) => {
 };
 
 const payTapPay = async (req, res) => {
-  // Rate limiting request: 10 request per 10 second per IP is viewd as an attack
-  const ip = (
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  ).slice(0, 9);
-  const requestCounts = await redis.incr(ip);
-  if (requestCounts === 1) {
-    await redis.expire(ip, 10); // expire every x seconds (e.g. 10 here)
-  }
-  if (requestCounts > 10) {
-    console.log('too many request');
-    res.status(429).send('too_many_requests');
-    return;
-  }
   const { data } = req.body;
   try {
     const headers = {
