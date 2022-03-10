@@ -21,7 +21,6 @@ const HelpeeSignUpPasswordPage = () => {
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
-  console.log('currentLanguage: ', currentLanguage);
   const emailRef = useRef();
   const passwordRef = useRef();
   const consentRef = useRef();
@@ -166,6 +165,28 @@ const HelpeeSignUpPasswordPage = () => {
             ref={emailRef}
             disabled
           />
+          {!email && (
+            <p
+              style={{
+                color: 'red',
+                fontSize: '12px',
+                marginBottom: '14px',
+                backgroundColor: 'white',
+                width: 'fit-content',
+                borderRadius: '8px',
+                margin: 'auto auto 15px',
+                padding: '5px 10px',
+              }}
+            >
+              {t('no_email_warning_helpee')}: {' '}
+              <a
+                href={`/${currentLanguage}/helpee/home?refId=${refId}`}
+                rel='noreferrer'
+              >
+                {t('helpee_home_page')}
+              </a>
+            </p>
+          )}
           <input
             type='password'
             className='form-control-password'

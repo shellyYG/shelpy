@@ -169,6 +169,28 @@ const HelperSignUpPasswordPage = () => {
             style={{ color: 'white' }}
             disabled
           />
+          {!email && (
+            <p
+              style={{
+                color: 'red',
+                fontSize: '12px',
+                marginBottom: '14px',
+                backgroundColor: 'white',
+                width: 'fit-content',
+                borderRadius: '8px',
+                margin: 'auto auto 15px',
+                padding: '5px 10px',
+              }}
+            >
+              {t('no_email_warning_helper')}: {' '}
+              <a
+                href={`/${currentLanguage}/helper/home?refId=${refId}`}
+                rel='noreferrer'
+              >
+                {t('helper_home_page')}
+              </a>
+            </p>
+          )}
           <input
             type='password'
             className='form-control-password'

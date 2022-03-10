@@ -189,7 +189,7 @@ const PasswordResetPage = (props) => {
 
         <form action='' className='centerbox-landing'>
           <input
-            type='text'
+            type='password'
             className='form-control-password'
             placeholder={t('enter_new_password')}
             ref={passwordRef}
