@@ -110,7 +110,7 @@ const HelpeeSignInPage = () => {
     >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          {t('helpee')}, {t('sign_in_welcome')}
+          {t('helpee_big')}, {t('sign_in_welcome')}
         </h1>
         <h2
           style={{

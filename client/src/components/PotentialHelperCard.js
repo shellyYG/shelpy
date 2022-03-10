@@ -13,6 +13,7 @@ import {
   schoolOptions,
   typeOptions,
 } from '../store/options/service-options';
+import AvatarIcon from './Icons/AvatarIcon';
 
 function PotentialHelperCard(props) {
   const { t } = useTranslation();
@@ -163,19 +164,10 @@ function PotentialHelperCard(props) {
           </div>
         )}
         {(!!props.helperAnonymous || !props.profilePicPath) && (
-          <div className='helper-ImgBx'>
-            <a
-              href='https://www.vecteezy.com/free-vector/default-avatar'
-              target='_blank'
-              rel='noreferrer'
-            >
-              <img
-                src={`/static-imgs/defaultAvatar.jpg`}
-                alt={
-                  'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
-                }
-              ></img>
-            </a>
+          <div className='defaultAvatar-ImgBx'>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <AvatarIcon />
+            </div>
           </div>
         )}
       </div>
@@ -192,7 +184,13 @@ function PotentialHelperCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <div className='pureFlexRow'>
-              <p style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '10px' }}>
+              <p
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                }}
+              >
                 {t('helper_offers')}
               </p>
             </div>

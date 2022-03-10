@@ -13,6 +13,7 @@ import {
   schoolOptions,
   typeOptions,
 } from '../store/options/service-options';
+import AvatarIcon from './Icons/AvatarIcon';
 
 function PotentialCustomerCard(props) {
   const { t } = useTranslation();
@@ -139,19 +140,10 @@ function PotentialCustomerCard(props) {
           </div>
         )}
         {(!!props.helpeeAnonymous || !props.profilePicPath) && (
-          <div className='helper-ImgBx'>
-            <a
-              href='https://www.vecteezy.com/free-vector/default-avatar'
-              target='_blank'
-              rel='noreferrer'
-            >
-              <img
-                src={`/static-imgs/defaultAvatar.jpg`}
-                alt={
-                  'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
-                }
-              ></img>
-            </a>
+          <div className='defaultAvatar-ImgBx'>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <AvatarIcon />
+            </div>
           </div>
         )}
       </div>

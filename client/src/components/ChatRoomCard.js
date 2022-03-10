@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { onClickUpdateChatroomRoom } from '../store/general/general-actions';
 import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, typeOptions } from '../store/options/service-options';
+import AvatarIcon from './Icons/AvatarIcon';
 
 function ChatRoomCard(props) {
   const { t } = useTranslation();
@@ -192,19 +193,10 @@ function ChatRoomCard(props) {
             !props.profilePicPath ||
             props.profilePicPath === null ||
             props.profilePicPath === 'null') && (
-            <div className='helper-ImgBx'>
-              <a
-                href='https://www.vecteezy.com/free-vector/default-avatar'
-                target='_blank'
-                rel='noreferrer'
-              >
-                <img
-                  src={`/static-imgs/defaultAvatar.jpg`}
-                  alt={
-                    'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
-                  }
-                ></img>
-              </a>
+            <div className='defaultAvatar-ImgBx'>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <AvatarIcon />
+              </div>
             </div>
           )}
         {!props.isHelpee &&
@@ -212,19 +204,10 @@ function ChatRoomCard(props) {
             !props.profilePicPath ||
             props.profilePicPath === null ||
             props.profilePicPath === 'null') && (
-            <div className='helper-ImgBx'>
-              <a
-                href='https://www.vecteezy.com/free-vector/default-avatar'
-                target='_blank'
-                rel='noreferrer'
-              >
-                <img
-                  src={`/static-imgs/defaultAvatar.jpg`}
-                  alt={
-                    'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
-                  }
-                ></img>
-              </a>
+            <div className='defaultAvatar-ImgBx'>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <AvatarIcon />
+              </div>
             </div>
           )}
 

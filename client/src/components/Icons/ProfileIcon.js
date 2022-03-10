@@ -120,7 +120,7 @@ const ProfileIcon = (props) => {
                   {/* {<NavbarIdentity isHelpee={true} />} */}
                   {props.isHelpeeAuthenticated && (
                     <div onClick={handleToHelpeeDashboard}>
-                      {t('view_dashboard')}
+                      {t('view_helpee_dashboard')}
                     </div>
                   )}
                   {props.isHelpeeAuthenticated && (
@@ -146,7 +146,7 @@ const ProfileIcon = (props) => {
                   {/* {<NavbarIdentity isHelpee={false} />} */}
                   {props.isHelperAuthenticated && (
                     <div onClick={handleToHelperDashboard}>
-                      {t('view_dashboard')}
+                      {t('view_helper_dashboard')}
                     </div>
                   )}
                   {props.isHelperAuthenticated && (

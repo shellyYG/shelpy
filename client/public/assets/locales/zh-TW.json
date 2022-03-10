@@ -80,7 +80,8 @@
   "please_sign_in_first": "請先登入",
   "sign_in": "登入",
   "sign_out": "登出",
-  "view_dashboard": "查看我的總覽",
+  "view_helper_dashboard": "查看過來人總覽",
+  "view_helpee_dashboard": "查看新鮮人總覽",
   "update_profile": "更新帳號資料",
   "chat_with_helper": "與過來人免費聊聊",
   "chat_with_helpee": "與新鮮人聊聊",
@@ -643,6 +644,8 @@
   "chatroom_chat_placeholder": "請在此輸入訊息...",
   "helpee": "新鮮人",
   "helper": "過來人",
+  "helpee_big": "新鮮人",
+  "helper_big": "過來人",
   "customer": "新鮮人",
 
   "update_basic_information": "新增/更新帳號資料",

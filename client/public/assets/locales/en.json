@@ -80,7 +80,8 @@
   "please_sign_in_first": "Please sign in first.",
   "sign_in": "Sign In",
   "sign_out": "Sign Out",
-  "view_dashboard": "View Dashboard",
+  "view_helper_dashboard": "View Helper Dashboard",
+  "view_helpee_dashboard": "View Helpee Dashboard",
   "update_profile": "Update Profile",
   "chat_with_helper": "Chat with Helper",
   "chat_with_helpee": "Chat with Helpee",
@@ -643,6 +644,8 @@
   "chatroom_chat_placeholder": "Send some message here...",
   "helpee": "helpee",
   "helper": "helper",
+  "helpee_big": "Helpee",
+  "helper_big": "Helper",
   "customer": "customer",
 
   "update_basic_information": "Update Basic Information",

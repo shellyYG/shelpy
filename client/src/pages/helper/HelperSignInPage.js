@@ -107,7 +107,7 @@ const HelperSignInPage = () => {
     >
       <div className='section-center-align' style={{ paddingTop: '5%' }}>
         <h1 style={{ textAlign: 'center', marginTop: '30px', color: 'white' }}>
-          {t('helper')}, {t('sign_in_welcome')}
+          {t('helper_big')}, {t('sign_in_welcome')}
         </h1>
         <h2
           style={{

@@ -10,6 +10,7 @@ import EarthIcon from './Icons/EarthIcon';
 import { postPayHelper, clearPayHelperStatus } from '../store/helpee/helpee-actions';
 import { useRef } from 'react';
 import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, typeOptions } from '../store/options/service-options';
+import AvatarIcon from './Icons/AvatarIcon';
 
 
 const MySwal = withReactContent(Swal);
@@ -330,29 +331,23 @@ function BookingCard(props) {
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
-        <div className='helper-ImgBx'>
-          {!props.isAnonymous && props.profilePicPath && (
+        {!props.isAnonymous && props.profilePicPath && (
+          <div className='helper-ImgBx'>
             <img
               src={`/images/${props.profilePicPath}`}
               alt={props.partnerName}
             ></img>
-          )}
-          {(props.isAnonymous || !props.profilePicPath) && (
-            <a
-              href='https://www.vecteezy.com/free-vector/default-avatar'
-              target='_blank'
-              rel='noreferrer'
-            >
-              <img
-                src={`/static-imgs/defaultAvatar.jpg`}
-                alt={
-                  'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
-                }
-              ></img>
-            </a>
-          )}
-        </div>
+          </div>
+        )}
+        {(props.isAnonymous || !props.profilePicPath) && (
+          <div className='defaultAvatar-ImgBx'>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <AvatarIcon />
+            </div>
+          </div>
+        )}
       </div>
+
       <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
@@ -366,7 +361,13 @@ function BookingCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <div className='pureFlexRow'>
-              <p style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '10px' }}>
+              <p
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                }}
+              >
                 {props.isHelpee && t('helper_offers')}
                 {!props.isHelpee && t('helpee_want_to_know')}
               </p>
@@ -464,7 +465,7 @@ function BookingCard(props) {
               {t('booking_status')}: {helpeeFilteredBookingStatus}
             </p>
           </div>
-          <button className='btn-contact' onClick={handleBookHelper}>
+          <button className='btn-green-border' onClick={handleBookHelper}>
             {t('propose_new_time_to_helper', { name: props.partnerName })}
           </button>
         </div>

@@ -16,6 +16,7 @@ import {
   professionOptions,
   nativeLanguageOptions,
 } from '../store/options/service-options';
+import AvatarIcon from './Icons/AvatarIcon';
 
 
 const MySwal = withReactContent(Swal);
@@ -192,29 +193,23 @@ function MarketingCard(props) {
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
-        <div className='helper-ImgBx'>
-          {!props.isAnonymous && props.profilePicPath && (
+        {!props.isAnonymous && props.profilePicPath && (
+          <div className='helper-ImgBx'>
             <img
               src={`/images/${props.profilePicPath}`}
               alt={props.username}
             ></img>
-          )}
-          {(props.isAnonymous || !props.profilePicPath) && (
-            <a
-              href='https://www.vecteezy.com/free-vector/default-avatar'
-              target='_blank'
-              rel='noreferrer'
-            >
-              <img
-                src={`/static-imgs/defaultAvatar.jpg`}
-                alt={
-                  'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
-                }
-              ></img>
-            </a>
-          )}
-        </div>
+          </div>
+        )}
+        {(props.isAnonymous || !props.profilePicPath) && (
+          <div className='defaultAvatar-ImgBx'>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <AvatarIcon />
+            </div>
+          </div>
+        )}
       </div>
+
       <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>

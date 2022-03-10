@@ -923,6 +923,23 @@ footer {
   font-weight: bold;
 }
 
+.btn-green-border {
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #04AA6D;
+  padding: 10px 22px;
+  color: black;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  margin: 3px;
+  height: 40px;
+  font-size: 14px;
+  height: auto;
+  font-weight: bold;
+}
+
 .btn-book-mkt {
   border-radius: 4px;
   background-color: #04AA6D;
@@ -1253,6 +1270,14 @@ footer {
   overflow: hidden;
   margin-right: 8px;
 }
+
+.defaultAvatar-ImgBx {
+  position: relative;
+  width: 80px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
 .nameBx {
   width: 60%;
 }

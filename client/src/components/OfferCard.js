@@ -12,6 +12,7 @@ import {
   typeOptions,
   nativeLanguageOptions,
 } from '../store/options/service-options';
+import AvatarIcon from './Icons/AvatarIcon';
 
 function OfferCard(props) {
   const { t } = useTranslation();
@@ -161,26 +162,20 @@ function OfferCard(props) {
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
-        <div className='helper-ImgBx'>
-          {!props.isAnonymous && props.profilePicPath && (
+        {!props.isAnonymous && props.profilePicPath && (
+          <div className='helper-ImgBx'>
             <img src={`/images/${props.profilePicPath}`} alt={'visa'}></img>
-          )}
-          {(props.isAnonymous || !props.profilePicPath) && (
-            <a
-              href='https://www.vecteezy.com/free-vector/default-avatar'
-              target='_blank'
-              rel='noreferrer'
-            >
-              <img
-                src={`/static-imgs/defaultAvatar.jpg`}
-                alt={
-                  'Default Avatar Vectors by Vecteezy:https://www.vecteezy.com/free-vector/default-avatar'
-                }
-              ></img>
-            </a>
-          )}
-        </div>
+          </div>
+        )}
+        {(props.isAnonymous || !props.profilePicPath) && (
+          <div className='defaultAvatar-ImgBx'>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <AvatarIcon />
+            </div>
+          </div>
+        )}
       </div>
+
       <div className='smallWidth'>
         <div className='content'>
           <div className='contentBx'>
@@ -194,7 +189,13 @@ function OfferCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <div className='pureFlexRow'>
-              <p style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '10px' }}>
+              <p
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                }}
+              >
                 {t('your_offer_is')}
               </p>
             </div>
