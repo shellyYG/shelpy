@@ -11,20 +11,8 @@ const TermsConditionaPage = () => {
 
   return (
     <div className='section-left-align'>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          textAlign: 'center',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            margin: '50px auto',
-          }}
-        >
+      <div className='legalPagesOuterContainer'>
+        <div className='legalPagesInnerContainer'>
           <div>
             <h1>Shelpy {t('terms_and_conditions')}</h1>
           </div>
@@ -34,17 +22,11 @@ const TermsConditionaPage = () => {
               {t('update_time_terms')}
               <br />
               {t('provider_terms')}
-              <br />
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
-                {t('intro_title')}
-              </p>
+              <p className='legalPagesTitle'>{t('intro_title')}</p>
               {t('intro_terms')}
-              <br />
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
+              <p className='legalPagesTitle'>
                 {t('sign_up_sign_in_terms_title')}
-              </p>{' '}
+              </p>
               {t('sign_up_sign_in_terms_1')}
               <br />
               {t('sign_up_sign_in_terms_2')}
@@ -53,59 +35,35 @@ const TermsConditionaPage = () => {
               <br />
               {t('sign_up_sign_in_terms_4')}
               <br />
-              <br />
               {t('sign_up_sign_in_terms_5')}
               <br />
               {t('sign_up_sign_in_terms_6')}
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
-                {t('payment_terms_title')}
-              </p>{' '}
+              <p className='legalPagesTitle'>{t('payment_terms_title')}</p>
               {t('payment_intro')}
-              <br />
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
-                {t('service_terms_title')}
-              </p>{' '}
+              <p className='legalPagesTitle'>{t('service_terms_title')}</p>
               {t('service_terms')}
-              <br />
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
+              <p className='legalPagesTitle'>
                 {t('ownership_terms_title')}
               </p>{' '}
               {t('ownership_terms')}
-              <br />
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
+              <p className='legalPagesTitle'>
                 {t('intellectual_property_rights_title')}
               </p>{' '}
               {t('intellectual_property_rights')}
-              <br />
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
+              <p className='legalPagesTitle'>
                 {t('stop_service_terms_title')}
               </p>{' '}
               {t('stop_service_terms')}
-              <br />
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
-                {t('change_terms_title')}
-              </p>{' '}
+              <p className='legalPagesTitle'>{t('change_terms_title')}</p>{' '}
               {t('change_terms')}
-              <br />
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
+              <p className='legalPagesTitle'>
                 {t('warranty_and_disclaimer_title')}
               </p>{' '}
               {t('warranty_and_disclaimer')}
-              <br />
-              <br />
-              <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
+              <p className='legalPagesTitle'>
                 {t('general_conditions_terms')}
               </p>{' '}
               {t('general_conditions')}
-              <br />
-              <br />
               {t('legal_country')}
             </div>
           </div>

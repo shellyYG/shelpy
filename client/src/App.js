@@ -44,6 +44,7 @@ import HelperContractPage from './pages/HelperContractPags';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsConditionaPage from './pages/TermsConditionPage';
 import SelectSignInRolePage from './pages/SelectSignInRolePage';
+import HelperGuidePage from './pages/HelperGuidePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -88,7 +89,9 @@ function App() {
             />
             <Route
               path={`/`}
-              element={<Navigate replace to={`/${currentLanguage}/helpee/home`} />}
+              element={
+                <Navigate replace to={`/${currentLanguage}/helpee/home`} />
+              }
             />
             <Route
               path={`/:locale/home`}
@@ -331,6 +334,7 @@ function App() {
               }
             />
             <Route path={`/:locale/pay`} element={<PayPage />} />
+            <Route path={`/:locale/helper/guidance`} element={<HelperGuidePage />} />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
           <Footer />

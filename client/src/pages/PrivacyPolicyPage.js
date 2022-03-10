@@ -2,6 +2,7 @@ import '../App.css';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import DangerIcon from '../components/Icons/DangerIcon';
+import BulletPoint from '../components/BulletPoint';
 
 const PrivacyPolicyPage = () => {
   const { t } = useTranslation();
@@ -18,310 +19,156 @@ const PrivacyPolicyPage = () => {
   }
   return (
     <div className='section-left-align'>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          textAlign: 'center',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            margin: '50px auto',
-          }}
-        >
+      <div className='legalPagesOuterContainer'>
+        <div className='legalPagesInnerContainer'>
           <div>
             <h1>Shelpy {t('privacy_policy')}</h1>
           </div>
 
           <div style={{ width: '80%', margin: 'auto', textAlign: 'start' }}>
             <div style={{ margin: '10px auto' }}>
-              <h1>Privacy Policy</h1>
-              <p>Last updated: March 03, 2022</p>
-              <p>
-                This Privacy Policy describes Our policies and procedures on the
-                collection, use and disclosure of Your information when You use
-                the Service and tells You about Your privacy rights and how the
-                law protects You.
+              <p className='legalPagesBigTitle'>{t('privacy_policy')}</p>
+              <p>{t('privacy_policy_last_update')}</p>
+              <p>{t('privacy_policy_preface1')}</p>
+              <p>{t('privacy_policy_preface2')}</p>
+              <br />
+              <p style={{ fontWeight: 'bold' }}>{t('why_CCPA_GDPA')}</p>
+
+              <p className='legalPagesBigTitle'>
+                {t('interpretation_and_definitions')}
               </p>
-              <p>
-                We use Your Personal data to provide and improve the Service. By
-                using the Service, You agree to the collection and use of
-                information in accordance with this Privacy Policy.
-              </p>
-              <h1>Interpretation and Definitions</h1>
-              <h2>Interpretation</h2>
-              <p>
-                The words of which the initial letter is capitalized have
-                meanings defined under the following conditions. The following
-                definitions shall have the same meaning regardless of whether
-                they appear in singular or in plural.
-              </p>
-              <h2>Definitions</h2>
-              <p>For the purposes of this Privacy Policy:</p>
+              <p className='legalPagesTitle'>{t('interpretation')}</p>
+              <p>{t('interpretation_p1')}</p>
+              <p className='legalPagesTitle'>{t('definitions')}</p>
+              <p>{t('for_the_purpose_privacy')}</p>
+
               <ul>
-                <li>
-                  <p>
-                    <strong>Account</strong> means a unique account created for
-                    You to access our Service or parts of our Service.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Business</strong>, for the purpose of the CCPA
-                    (California Consumer Privacy Act), refers to the Company as
-                    the legal entity that collects Consumers' personal
-                    information and determines the purposes and means of the
-                    processing of Consumers' personal information, or on behalf
-                    of which such information is collected and that alone, or
-                    jointly with others, determines the purposes and means of
-                    the processing of consumers' personal information, that does
-                    business in the State of California.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Company</strong> (referred to as either "the
-                    Company", "We", "Us" or "Our" in this Agreement) refers to
-                    Shelpy, No.16, Aly. 17, Ln. 117, Fengnian St., Pingtung
-                    City, Pingtung County 90055.
-                  </p>
-                  <p>
-                    For the purpose of the GDPR, the Company is the Data
-                    Controller.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Consumer</strong>, for the purpose of the CCPA
-                    (California Consumer Privacy Act), means a natural person
-                    who is a California resident. A resident, as defined in the
-                    law, includes (1) every individual who is in the USA for
-                    other than a temporary or transitory purpose, and (2) every
-                    individual who is domiciled in the USA who is outside the
-                    USA for a temporary or transitory purpose.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Cookies</strong> are small files that are placed on
-                    Your computer, mobile device or any other device by a
-                    website, containing the details of Your browsing history on
-                    that website among its many uses.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Country</strong> refers to: Taiwan
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Data Controller</strong>, for the purposes of the
-                    GDPR (General Data Protection Regulation), refers to the
-                    Company as the legal person which alone or jointly with
-                    others determines the purposes and means of the processing
-                    of Personal Data.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Device</strong> means any device that can access the
-                    Service such as a computer, a cellphone or a digital tablet.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Do Not Track</strong> (DNT) is a concept that has
-                    been promoted by US regulatory authorities, in particular
-                    the U.S. Federal Trade Commission (FTC), for the Internet
-                    industry to develop and implement a mechanism for allowing
-                    internet users to control the tracking of their online
-                    activities across websites.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Facebook Fan Page</strong> is a public profile named
-                    Shelpy specifically created by the Company on the Facebook
-                    social network, accessible from{' '}
-                    <a
-                      href='https://www.facebook.com/shelpy.co'
-                      rel='external nofollow noopener'
-                      target='_blank'
-                    >
-                      https://www.facebook.com/shelpy.co
-                    </a>
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Personal Data</strong> is any information that
-                    relates to an identified or identifiable individual.
-                  </p>
-                  <p>
-                    For the purposes of GDPR, Personal Data means any
-                    information relating to You such as a name, an
-                    identification number, location data, online identifier or
-                    to one or more factors specific to the physical,
-                    physiological, genetic, mental, economic, cultural or social
-                    identity.
-                  </p>
-                  <p>
-                    For the purposes of the CCPA, Personal Data means any
-                    information that identifies, relates to, describes or is
-                    capable of being associated with, or could reasonably be
-                    linked, directly or indirectly, with You.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Sale</strong>, for the purpose of the CCPA
-                    (California Consumer Privacy Act), means selling, renting,
-                    releasing, disclosing, disseminating, making available,
-                    transferring, or otherwise communicating orally, in writing,
-                    or by electronic or other means, a Consumer's personal
-                    information to another business or a third party for
-                    monetary or other valuable consideration.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Service</strong> refers to the Website.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Service Provider</strong> means any natural or legal
-                    person who processes the data on behalf of the Company. It
-                    refers to third-party companies or individuals employed by
-                    the Company to facilitate the Service, to provide the
-                    Service on behalf of the Company, to perform services
-                    related to the Service or to assist the Company in analyzing
-                    how the Service is used. For the purpose of the GDPR,
-                    Service Providers are considered Data Processors.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Third-party Social Media Service</strong> refers to
-                    any website or any social network website through which a
-                    User can log in or create an account to use the Service.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Usage Data</strong> refers to data collected
-                    automatically, either generated by the use of the Service or
-                    from the Service infrastructure itself (for example, the
-                    duration of a page visit).
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Website</strong> refers to Shelpy, accessible from{' '}
-                    <a
-                      href='https://shelpy.co/'
-                      rel='external nofollow noopener'
-                      target='_blank'
-                    >
-                      https://shelpy.co
-                    </a>
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>You</strong> means the individual accessing or using
-                    the Service, or the company, or other legal entity on behalf
-                    of which such individual is accessing or using the Service,
-                    as applicable.
-                  </p>
-                  <p>
-                    Under GDPR (General Data Protection Regulation), You can be
-                    referred to as the Data Subject or as the User as you are
-                    the individual using the Service.
-                  </p>
-                </li>
+                <BulletPoint
+                  title={t('accout')}
+                  details1={t('account_meaning')}
+                />
+                <BulletPoint
+                  title={t('business')}
+                  details1={t('business_meaning')}
+                />
+                <BulletPoint
+                  title={t('company')}
+                  details1={t('company_meaning')}
+                  details2={t('company_gdpr')}
+                />
+                <BulletPoint
+                  title={t('consumer')}
+                  details1={t('consumer_meaning')}
+                />
+                <BulletPoint
+                  title={t('cookies')}
+                  details1={t('cookies_meaning')}
+                />
+                <BulletPoint
+                  title={t('country')}
+                  details1={t('country_meaning')}
+                />
+                <BulletPoint
+                  title={t('data_controller')}
+                  details1={t('data_controller_meaning')}
+                />
+                <BulletPoint
+                  title={t('device')}
+                  details1={t('device_meaning')}
+                />
+                <BulletPoint
+                  title={t('do_not_track')}
+                  details1={t('do_not_track_meaning')}
+                />
+
+                <BulletPoint
+                  title={t('fb_fanpage')}
+                  details1={t('fb_fanpage_meaning')}
+                />
+                <p style={{ marginLeft: '1em' }}>
+                  <a
+                    href='https://www.facebook.com/shelpy.co'
+                    rel='external nofollow noopener noreferrer'
+                    target='_blank'
+                  >
+                    https://www.facebook.com/shelpy.co
+                  </a>
+                </p>
+
+                <BulletPoint
+                  title={t('personal_data')}
+                  details1={t('personal_data_meaning')}
+                  details2={t('personal_data_gdpr')}
+                  details3={t('personal_data_ccpa')}
+                />
+                <BulletPoint title={t('sale')} details1={t('sale_meaning')} />
+                <BulletPoint
+                  title={t('service')}
+                  details1={t('service_meaning')}
+                />
+                <BulletPoint
+                  title={t('service_provider')}
+                  details1={t('service_provider_meaning')}
+                />
+                <BulletPoint
+                  title={t('third_party_social_media')}
+                  details1={t('third_party_social_media_meaning')}
+                />
+                <BulletPoint
+                  title={t('usage_data')}
+                  details1={t('usage_data_meaning')}
+                />
+                <BulletPoint
+                  title={t('website')}
+                  details1={t('website_meaning')}
+                />
+                <p style={{ marginLeft: '1em' }}>
+                  <a
+                    href='https://shelpy.co/'
+                    rel='external nofollow noopener noreferrer'
+                    target='_blank'
+                  >
+                    https://shelpy.co
+                  </a>
+                </p>
+
+                <BulletPoint
+                  title={t('you')}
+                  details1={t('you_meaning')}
+                  details2={t('you_gdpr')}
+                />
               </ul>
-              <h1>Collecting and Using Your Personal Data</h1>
-              <h2>Types of Data Collected</h2>
-              <h3>Personal Data</h3>
-              <p>
-                While using Our Service, We may ask You to provide Us with
-                certain personally identifiable information that can be used to
-                contact or identify You. Personally identifiable information may
-                include, but is not limited to:
+              <p className='legalPagesBigTitle'>
+                {t('collect_and_use_personal_data')}
               </p>
+
+              <p className='legalPagesTitle'>{t('types_of_data')}</p>
+              <p className='legalPagesSubtitle'>{t('personal_data')}</p>
+              <p>{t('usage_of_personal_data_intro')}</p>
               <ul>
-                <li>
-                  <p>Email address</p>
-                </li>
-                <li>
-                  <p>First name and last name</p>
-                </li>
-                <li>
-                  <p>Phone number</p>
-                </li>
-                <li>
-                  <p>Address, State, Province, ZIP/Postal code, City</p>
-                </li>
-                <li>
-                  <p>Usage Data</p>
-                </li>
+                <BulletPoint details1={t('email_address')} />
+                <BulletPoint details1={t('first_and_last_name')} />
+                <BulletPoint details1={t('phone_number')} />
+                <BulletPoint details1={t('address_details')} />
+                <BulletPoint details1={t('usage_data')} />
               </ul>
-              <h3>Usage Data</h3>
-              <p>
-                Usage Data is collected automatically when using the Service.
+              <p className='legalPagesSubtitle'>{t('usage_data')}</p>
+              <p>{t('usage_data_collect_automatically')}</p>
+              <p>{t('usage_data_example')}</p>
+              <p>{t('usage_data_when_access')}</p>
+              <p>{t('usage_data_may_also')}</p>
+
+              <p className='legalPagesSubtitle'>
+                {t('info_from_third_social')}
               </p>
-              <p>
-                Usage Data may include information such as Your Device's
-                Internet Protocol address (e.g. IP address), browser type,
-                browser version, the pages of our Service that You visit, the
-                time and date of Your visit, the time spent on those pages,
-                unique device identifiers and other diagnostic data.
-              </p>
-              <p>
-                When You access the Service by or through a mobile device, We
-                may collect certain information automatically, including, but
-                not limited to, the type of mobile device You use, Your mobile
-                device unique ID, the IP address of Your mobile device, Your
-                mobile operating system, the type of mobile Internet browser You
-                use, unique device identifiers and other diagnostic data.
-              </p>
-              <p>
-                We may also collect information that Your browser sends whenever
-                You visit our Service or when You access the Service by or
-                through a mobile device.
-              </p>
-              <h3>Information from Third-Party Social Media Services</h3>
-              <p>
-                The Company allows You to create an account and log in to use
-                the Service through the following Third-party Social Media
-                Services:
-              </p>
+
+              <p>{t('ways_to_register')}</p>
               <ul>
-                <li>Google</li>
-                <li>Facebook</li>
-                <li>Twitter</li>
+                <BulletPoint details1={'Google'} />
+                <BulletPoint details1={'Facebook'} />
               </ul>
-              <p>
-                If You decide to register through or otherwise grant us access
-                to a Third-Party Social Media Service, We may collect Personal
-                data that is already associated with Your Third-Party Social
-                Media Service's account, such as Your name, Your email address,
-                Your activities or Your contact list associated with that
-                account.
-              </p>
-              <p>
-                You may also have the option of sharing additional information
-                with the Company through Your Third-Party Social Media Service's
-                account. If You choose to provide such information and Personal
-                Data, during registration or otherwise, You are giving the
-                Company permission to use, share, and store it in a manner
-                consistent with this Privacy Policy.
-              </p>
+              <p>{t('if_register_with_social')}</p>
+              <p>{t('social_also_others')}</p>
               <h3>Tracking Technologies and Cookies</h3>
               <p>
                 We use Cookies and similar tracking technologies to track the

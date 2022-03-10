@@ -12,7 +12,7 @@ function FeaturedHelperPart(props) {
   const refId = searchParams.get('refId');
 
   return (
-    <>
+    <div style={{ padding: '0px 50px' }}>
       <h1 style={{ textAlign: 'center', marginBottom: '10px' }}>
         {props.isHelpee
           ? t('featured_helpees_experts')
@@ -81,6 +81,17 @@ function FeaturedHelperPart(props) {
           tag3={t('country_usa')}
         />
         <MktCard
+          imageSrc='/static-imgs/Zoe_job.jpg'
+          title='Zoe'
+          key='zoe-job'
+          experience={t('mkt_zoe_job')}
+          language1={t('languages_chinese')}
+          language2={t('languages_english')}
+          tag1={t('job')}
+          tag2={t('job_form_job_process_engineer')}
+          tag3={t('country_taiwan')}
+        />
+        <MktCard
           imageSrc='/static-imgs/Anya_school.jpeg'
           title='Anya'
           key='anya-school'
@@ -125,6 +136,17 @@ function FeaturedHelperPart(props) {
           tag2={t('uni_form_department_computer_science_and_info_engineering')}
           tag3={t('country_usa')}
         />
+        <MktCard
+          imageSrc='/static-imgs/Suzie_job.jpg'
+          title='Suzie'
+          key='suzie-job'
+          experience={t('mkt_suzie_job')}
+          language1={t('languages_chinese')}
+          language2={t('languages_english')}
+          tag1={t('job')}
+          tag2={t('job_form_job_teacher')}
+          tag3={t('country_taiwan')}
+        />
 
         <MktCard
           imageSrc='/static-imgs/Shelly_job.jpg'
@@ -149,7 +171,7 @@ function FeaturedHelperPart(props) {
           tag3={t('country_germany')}
         />
       </div>
-    </>
+    </div>
   );
 }
 
