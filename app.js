@@ -8,10 +8,12 @@ const cors = require('cors');
 const { Server } = require('socket.io');
 const socketChat = require('./api/controllers/chatController');
 const PORT = process.env.PORT || 9000;
+const isDeveloping = 1; // TODO: change based on production/develop
+const originURL = isDeveloping ? 'http://localhost:3000' : 'https://shelpy.co';
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://shelpy.co', // Develop: http://localhost:3000
+    origin: originURL,
     methods: ['GET', 'POST'],
   },
 });

@@ -31,6 +31,15 @@ const socketChat = async (socket) => {
     };
     chatModel.saveMsg(messageObj);
   });
+  socket.on('message_received', (data) => {
+    console.log('message received!'); // received must be others not self
+    // update DB field
+    const messageObj = {
+      roomId: data.room,
+      messageTime: data.messageTime,
+    };
+    chatModel.updateMsg(messageObj);
+  });
   socket.on('disconnect', (data) => {
     // console.log(`User ${socket.id} disconnected.`);
   });

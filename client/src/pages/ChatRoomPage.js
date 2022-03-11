@@ -194,17 +194,29 @@ const ChatRoomPage = (props) => {
 
   // only render once when onload. Rrevent infinite loop
   useEffect(() => {
-    socket.emit('join_room', roomId);
-    socket.on('history', (data) => {
-      setMessageList(data); // add messageList on self
-    });
+    if (roomId) {
+      socket.emit('join_room', roomId);
+      socket.on('history', (data) => {
+        setMessageList(data); // add messageList on self
+      });
+    }
+    
   }, [roomId]);
+
   // listen to changes from socket server
   useEffect(() => {
     socket.on('server_send_message', (data) => {
+      console.log('server_send_message...');
       setMessageList((list) => [...list, data]); // add messageList on other
     });
-  }, []);
+  }, []); // should not have any dependency or the latest message will have duplicates
+
+  useEffect(() => {
+    socket.on('server_send_message', (data) => {
+      console.log('server_send_message...');
+      socket.emit('message_received', data);
+    });
+  }, [userId]);
   useEffect(() => {
     if (helperUserId && !props.isHelpee)
       dispatch(getPotentialCustomers({ helperUserId }));

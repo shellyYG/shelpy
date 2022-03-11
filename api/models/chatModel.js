@@ -15,7 +15,19 @@ async function saveMsg(msgPackage) {
   return sqlquery;
 }
 
+async function updateMsg(msgPackage) {
+  const sql =
+    'UPDATE chat_history SET messageReceived=? WHERE roomId=? AND messageTime=?';
+  const sqlquery = await query(sql, [
+    true,
+    msgPackage.roomId,
+    msgPackage.messageTime,
+  ]);
+  return sqlquery;
+}
+
 module.exports = {
   searchHistory,
   saveMsg,
+  updateMsg,
 };
