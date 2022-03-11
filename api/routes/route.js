@@ -69,6 +69,8 @@ const {
 const { postUserSignInData } = require('../controllers/signInController');
 const { postUserSignUpData } = require('../controllers/signUpController');
 
+const { sendChatMessageReminder } = require('../controllers/generalController');
+
 router
   .route('/api/helpee/get-auth-status')
   .post(verifyHelpeeToken, wrapAsync(allowHelpeePrivateRoute));
@@ -176,6 +178,13 @@ router
   .get(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(getPotentialHelpers)
+  );
+
+router
+  .route('/api/in/email/please-read-message')
+  .get(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(sendChatMessageReminder)
   );
 
 router

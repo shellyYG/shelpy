@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { onClickUpdateChatroomRoom } from '../store/general/general-actions';
 import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, typeOptions } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
+import BellIcon from './Icons/BellIcon';
 
 function ChatRoomCard(props) {
   const { t } = useTranslation();
@@ -16,6 +17,7 @@ function ChatRoomCard(props) {
   const refId = searchParams.get('refId');
 
   const [active, setActive] = useState(false);
+  const [showBell, setShowBell] = useState(false);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -24,6 +26,11 @@ function ChatRoomCard(props) {
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
+  
+  useEffect(() => {
+    if (props.currentRoom === props.roomId)
+      setShowBell(true);
+  }, [props.currentRoom, props.roomId, props.triggerChangeOfShowBell]);
 
   useEffect(() => {
     if (props.roomId === props.pageRoomId && props.offerId === props.pageOfferId) {
@@ -123,6 +130,7 @@ function ChatRoomCard(props) {
   
   function handleOnClick(e) {
     e.preventDefault();
+    setShowBell(false);
     if (!props.isHelpee) {
       navigate(
         `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
@@ -157,72 +165,79 @@ function ChatRoomCard(props) {
   }
   
   return (
-    <div
-      className={active ? 'task-card-active' : 'task-card'}
-      onClick={handleOnClick}
-      ref={buttonRef}
-    >
-      <div className='chatRoomContent'>
-        {props.isHelpee &&
-          !props.helperAnonymous &&
-          props.profilePicPath !== null &&
-          props.profilePicPath !== 'null' && (
-            <div className='helper-ImgBx'>
-              {!!props.profilePicPath && (
+    <>
+      <div className={showBell ? 'bell' : 'noShow'}>
+        <BellIcon color='white' />
+      </div>
+
+      <div
+        className={active ? 'task-card-active' : 'task-card'}
+        style={{ marginBottom: '30px' }}
+        onClick={handleOnClick}
+        ref={buttonRef}
+      >
+        <div className='chatRoomContent'>
+          {props.isHelpee &&
+            !props.helperAnonymous &&
+            props.profilePicPath !== null &&
+            props.profilePicPath !== 'null' && (
+              <div className='helper-ImgBx'>
+                {!!props.profilePicPath && (
+                  <img
+                    src={`/images/${props.profilePicPath}`}
+                    alt={props.partnerName}
+                  ></img>
+                )}
+              </div>
+            )}
+          {!props.isHelpee &&
+            !props.helpeeAnonymous &&
+            !!props.profilePicPath &&
+            props.profilePicPath !== null &&
+            props.profilePicPath !== 'null' && (
+              <div className='helper-ImgBx'>
                 <img
                   src={`/images/${props.profilePicPath}`}
                   alt={props.partnerName}
                 ></img>
-              )}
-            </div>
-          )}
-        {!props.isHelpee &&
-          !props.helpeeAnonymous &&
-          !!props.profilePicPath &&
-          props.profilePicPath !== null &&
-          props.profilePicPath !== 'null' && (
-            <div className='helper-ImgBx'>
-              <img
-                src={`/images/${props.profilePicPath}`}
-                alt={props.partnerName}
-              ></img>
-            </div>
-          )}
-        {props.isHelpee &&
-          (!!props.helperAnonymous ||
-            !props.profilePicPath ||
-            props.profilePicPath === null ||
-            props.profilePicPath === 'null') && (
-            <div className='defaultAvatar-ImgBx'>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <AvatarIcon />
               </div>
-            </div>
-          )}
-        {!props.isHelpee &&
-          (!!props.helpeeAnonymous ||
-            !props.profilePicPath ||
-            props.profilePicPath === null ||
-            props.profilePicPath === 'null') && (
-            <div className='defaultAvatar-ImgBx'>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <AvatarIcon />
+            )}
+          {props.isHelpee &&
+            (!!props.helperAnonymous ||
+              !props.profilePicPath ||
+              props.profilePicPath === null ||
+              props.profilePicPath === 'null') && (
+              <div className='defaultAvatar-ImgBx'>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <AvatarIcon />
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          {!props.isHelpee &&
+            (!!props.helpeeAnonymous ||
+              !props.profilePicPath ||
+              props.profilePicPath === null ||
+              props.profilePicPath === 'null') && (
+              <div className='defaultAvatar-ImgBx'>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <AvatarIcon />
+                </div>
+              </div>
+            )}
 
-        <div className='nameBx'>
-          <h5 style={{ lineBreak: 'anywhere' }}>{props.partnerName}</h5>
-          <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
-            {translatedSecondType}
-          </span>
-          <br />
-          <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
-            {translatedThirdType}
-          </span>
+          <div className='nameBx'>
+            <h5 style={{ lineBreak: 'anywhere' }}>{props.partnerName}</h5>
+            <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
+              {translatedSecondType}
+            </span>
+            <br />
+            <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
+              {translatedThirdType}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 export default ChatRoomCard;

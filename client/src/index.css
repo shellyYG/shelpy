@@ -849,6 +849,7 @@ footer {
   padding: 10px;
   display: flex;
   flex-direction: row;
+  z-index: 30;
 }
 
 .footer-row {
@@ -1269,6 +1270,18 @@ footer {
   border-radius: 50%;
   overflow: hidden;
   margin-right: 8px;
+}
+
+.bell {
+  width: 50px;
+  height: 14px;
+  margin-left: 15%;
+  margin-bottom: -20px;
+  z-index: 5;
+}
+
+.noShow {
+  visibility: hidden;
 }
 
 .defaultAvatar-ImgBx {
@@ -1711,6 +1724,10 @@ input[type="checkbox" i] {
   }
 
 @media all and (max-width: 1200px) {
+  .bell {
+    margin-left: 0px;
+    margin-right: auto;
+  }
   .nav-button {
     margin-right: 0px;
   }

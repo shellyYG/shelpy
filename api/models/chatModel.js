@@ -27,7 +27,6 @@ async function updateMsg(msgPackage) {
 }
 
 async function setLastOthersMsgAsRead(input) {
-  console.log('input: ', input)
   const sql =
     `UPDATE shelpydb.chat_history AS t1
     INNER JOIN (SELECT MAX(id) AS id FROM shelpydb.chat_history WHERE roomId=? AND NOT senderId=?) AS t2 

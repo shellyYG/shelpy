@@ -1,11 +1,13 @@
 require('dotenv').config();
-const sendgridMail = require('@sendgrid/mail');
+const sgMail = require('@sendgrid/mail');
 const nodeMailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const { default: axios } = require('axios');
 
 const testEmailReceiver = process.env.TEST_RECEIPIENT_EMAIL;
+const findUsersToNotifyAboutChatPath = '/api/in/users/to-notify-about-chat';
 
-sendgridMail.setApiKey(process.env.SENDGRID_EMAIL_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_EMAIL_API_KEY);
 
 const sendHelpeeEmail = (user) => {
   return jwt.sign(
@@ -46,7 +48,7 @@ const sendHelpeeEmail = (user) => {
         subject,
         html,
       };
-      sendgridMail
+      sgMail
         .send(message)
         .then((response) =>
           console.log(
@@ -95,7 +97,7 @@ const sendHelperEmail = (user) => {
         subject,
         html,
       };
-      sendgridMail
+      sgMail
         .send(message)
         .then((response) =>
           console.log(
@@ -145,7 +147,7 @@ const sendHelpeeResetPasswordEmail = (user) => {
           subject,
           html,
         };
-        sendgridMail
+        sgMail
           .send(message)
           .then((response) =>
             console.log(
@@ -197,7 +199,7 @@ const sendHelperResetPasswordEmail = (user) => {
           subject,
           html,
         };
-        sendgridMail
+        sgMail
           .send(message)
           .then((response) =>
             console.log(
@@ -211,9 +213,29 @@ const sendHelperResetPasswordEmail = (user) => {
   );
 };
 
+const sendMessageNotReadEmail = (user) => {
+  console.log('sendMessageNotReadEmail...');
+  const isDeveloping = 1; // TODO: change based on production/develop
+
+  const sendChatMessageToReadReminder = async () => {
+    console.log('sending Email...');
+    const response = await axios.get(findUsersToNotifyAboutChatPath);
+    const { booking } = response.data;
+    let userEmails = []; // get emails from chat
+    // try {
+    //   // send email
+    //   // mark email as sent in DB
+    // } catch (error) {
+    //   console.error(error.message);
+    // }
+    
+  };
+}
+
 module.exports = {
   sendHelpeeEmail,
   sendHelperEmail,
   sendHelpeeResetPasswordEmail,
   sendHelperResetPasswordEmail,
+  sendMessageNotReadEmail,
 };

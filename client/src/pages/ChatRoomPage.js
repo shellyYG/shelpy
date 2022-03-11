@@ -43,6 +43,8 @@ const ChatRoomPage = (props) => {
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const [allChatPartners, setAllChatPartners] = useState([]);
+  const [currentRoom, setCurrentRoom] = useState('');
+  const [triggerChangeOfShowBell, setTriggerChangeOfShowBell] = useState(false);
 
   const roomId = searchParams.get('roomId');
   const bookingId = searchParams.get('bookingId');
@@ -192,7 +194,6 @@ const ChatRoomPage = (props) => {
     }
   }
   useEffect(() => {
-    console.log('occur on loading');
     // set last message sent by others as read
     if (roomId) {
       socket.emit('set_last_others_msg_as_read', { roomId, author: userId });
@@ -207,20 +208,23 @@ const ChatRoomPage = (props) => {
         setMessageList(data); // add messageList on self
       });
     }
-  }, [roomId]);
+  }, [roomId, userId]);
 
   // listen to changes from socket server
   useEffect(() => {
     socket.on('server_send_message', (data) => {
       setMessageList((list) => [...list, data]); // add messageList on other
+      setCurrentRoom(data.room);
+      setTriggerChangeOfShowBell(!triggerChangeOfShowBell);
     });
-  }, []); // should not have any dependency or the latest message will have duplicates
+  }, [triggerChangeOfShowBell]); // should not have any dependency or the latest message will have duplicates
 
   useEffect(() => {
     socket.on('server_send_message', (data) => {
       socket.emit('message_received', data);
     });
   }, [userId]);
+
   useEffect(() => {
     if (helperUserId && !props.isHelpee)
       dispatch(getPotentialCustomers({ helperUserId }));
@@ -335,6 +339,8 @@ const ChatRoomPage = (props) => {
                     pageOfferId={offerId}
                     bookingId={option.bookingId}
                     bookingStatus={option.bookingStatus}
+                    currentRoom={currentRoom}
+                    triggerChangeOfShowBell={triggerChangeOfShowBell}
                   />
                 ))}
               {props.isHelpee &&
@@ -367,6 +373,8 @@ const ChatRoomPage = (props) => {
                     pageOfferId={offerId}
                     bookingId={option.bookingId}
                     bookingStatus={option.bookingStatus}
+                    currentRoom={currentRoom}
+                    triggerChangeOfShowBell={triggerChangeOfShowBell}
                   />
                 ))}
             </div>
@@ -457,7 +465,7 @@ const ChatRoomPage = (props) => {
               );
             })}
           </ScrollToBottom>
-          {roomId && 
+          {roomId && (
             <div className='send-msg-container'>
               <form action='' className='centerbox-chat'>
                 <input
@@ -485,7 +493,7 @@ const ChatRoomPage = (props) => {
                 </button>
               </form>
             </div>
-          }
+          )}
         </div>
       </div>
     </>

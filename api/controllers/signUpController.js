@@ -27,7 +27,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
     subscribed,
     currentLanguage,
   } = data;
-  console.log('currentLanguage: ', currentLanguage);
+
   // insert to DB
   try {
     const { isHelpee, isPasswordUpdated } = data;
