@@ -191,6 +191,13 @@ const ChatRoomPage = (props) => {
       setCurrentMessage(''); // clear input message
     }
   }
+  useEffect(() => {
+    console.log('occur on loading');
+    // set last message sent by others as read
+    if (roomId) {
+      socket.emit('set_last_others_msg_as_read', { roomId, author: userId });
+    }
+  }, [roomId, userId]);
 
   // only render once when onload. Rrevent infinite loop
   useEffect(() => {
@@ -200,20 +207,17 @@ const ChatRoomPage = (props) => {
         setMessageList(data); // add messageList on self
       });
     }
-    
   }, [roomId]);
 
   // listen to changes from socket server
   useEffect(() => {
     socket.on('server_send_message', (data) => {
-      console.log('server_send_message...');
       setMessageList((list) => [...list, data]); // add messageList on other
     });
   }, []); // should not have any dependency or the latest message will have duplicates
 
   useEffect(() => {
     socket.on('server_send_message', (data) => {
-      console.log('server_send_message...');
       socket.emit('message_received', data);
     });
   }, [userId]);
@@ -453,33 +457,35 @@ const ChatRoomPage = (props) => {
               );
             })}
           </ScrollToBottom>
-          <div className='send-msg-container'>
-            <form action='' className='centerbox-chat'>
-              <input
-                type='text'
-                value={currentMessage}
-                className='form-control-chat'
-                placeholder={t('chatroom_chat_placeholder')}
-                onChange={handleMessageInput}
-                onKeyPress={(e) => {
-                  e.key === 'Enter' && handleSend(e);
-                }}
-              />
-              <button
-                data-text='Send message'
-                className='btn-send'
-                onClick={handleSend}
-                style={{
-                  borderBottomRightRadius: '8px',
-                  borderTopRightRadius: '8px',
-                }}
-              >
-                <span>
-                  <Icon icon='fa:paper-plane-o' />
-                </span>
-              </button>
-            </form>
-          </div>
+          {roomId && 
+            <div className='send-msg-container'>
+              <form action='' className='centerbox-chat'>
+                <input
+                  type='text'
+                  value={currentMessage}
+                  className='form-control-chat'
+                  placeholder={t('chatroom_chat_placeholder')}
+                  onChange={handleMessageInput}
+                  onKeyPress={(e) => {
+                    e.key === 'Enter' && handleSend(e);
+                  }}
+                />
+                <button
+                  data-text='Send message'
+                  className='btn-send'
+                  onClick={handleSend}
+                  style={{
+                    borderBottomRightRadius: '8px',
+                    borderTopRightRadius: '8px',
+                  }}
+                >
+                  <span>
+                    <Icon icon='fa:paper-plane-o' />
+                  </span>
+                </button>
+              </form>
+            </div>
+          }
         </div>
       </div>
     </>

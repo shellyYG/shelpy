@@ -37,14 +37,17 @@ function UserRoleBtn(props) {
     let newRoute = '';
     const currentPathname = window.location.pathname.replace(/\/+$/, '');
     console.log('currentPathname: ', currentPathname);
+   
     if (currentPathname.includes('helper') && userRole === 'helpee') {
       newRoute = currentPathname.replace('helper', 'helpee');
-      if (window.location.search) newRoute += window.location.search;
+      if (window.location.search && !currentPathname.includes('chatroom')) 
+        newRoute += window.location.search;
       window.location.replace(newRoute);
     }
     if (currentPathname.includes('helpee') && userRole === 'helper') {
       newRoute = currentPathname.replace('helpee', 'helper');
-      if (window.location.search) newRoute += window.location.search;
+      if (window.location.search && !currentPathname.includes('chatroom'))
+        newRoute += window.location.search;
       window.location.replace(newRoute);
     }
   }, [userRole]);

@@ -32,13 +32,21 @@ const socketChat = async (socket) => {
     chatModel.saveMsg(messageObj);
   });
   socket.on('message_received', (data) => {
-    console.log('message received!'); // received must be others not self
-    // update DB field
+    // receiver must be others not self because its mother event 'server_send_message' only emit to others except self
     const messageObj = {
+      messageReceived: true,
       roomId: data.room,
       messageTime: data.messageTime,
     };
     chatModel.updateMsg(messageObj);
+  });
+  socket.on('set_last_others_msg_as_read', (data) => {
+    console.log('set_last_others_msg_as_read');
+    const messageObj = {
+      roomId: data.roomId,
+      author: data.author,
+    };
+    chatModel.setLastOthersMsgAsRead(messageObj);
   });
   socket.on('disconnect', (data) => {
     // console.log(`User ${socket.id} disconnected.`);
