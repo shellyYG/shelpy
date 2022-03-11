@@ -67,6 +67,7 @@ const getPotentialCustomers = async (req, res) => {
 
 const getProfilePic = async (req, res) => {
   const { key } = req.params;
+  res.setHeader('Cache-Control', 'max-age=10800'); // 10800 sec
   try {
     const readStream = getFileStream(key);
     if (readStream) {
