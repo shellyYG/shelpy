@@ -224,9 +224,9 @@ const sendChatMessageReminderEmail = async (user) => {
   } = user; // cant user const {message}...cuz message is defined later
   let messageSender;
   if (role === 'helpee') {
-    messageSender = helpeeUsername;
-  } else {
     messageSender = helperUsername;
+  } else {
+    messageSender = helpeeUsername;
   }
 
   return jwt.sign(
