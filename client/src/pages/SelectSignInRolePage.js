@@ -62,13 +62,13 @@ const SelectSignInRolePage = (props) => {
         <div className='container'>
           <SignInRoleCard
             imageSrc={'/static-imgs/helpee-home.jpeg'}
-            title={t('helpee')}
+            title={t('helpee_big')}
             signInRole='helpee'
             key='helpee'
           />
           <SignInRoleCard
             imageSrc={'/static-imgs/helper-home.jpeg'}
-            title={t('helper')}
+            title={t('helper_big')}
             signInRole='helper'
             key='helper'
           />

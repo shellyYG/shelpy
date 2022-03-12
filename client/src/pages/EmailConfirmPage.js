@@ -44,11 +44,14 @@ const EmailConfirmPage = (props) => {
       },
     });
   }
-  if (props.isHelpee) {
-    dispatch(confirmHelpeeEmail({ emailToken }));
-  } else {
-     dispatch(confirmHelperEmail({ emailToken }));
-  }
+  useEffect(() => {
+    if (props.isHelpee) {
+      dispatch(confirmHelpeeEmail({ emailToken }));
+    } else {
+      dispatch(confirmHelperEmail({ emailToken }));
+    }
+  }, [dispatch, emailToken, props.isHelpee]);
+  
   
   useEffect(() => {
     if (props.isHelpee) {

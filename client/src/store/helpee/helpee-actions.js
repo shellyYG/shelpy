@@ -23,7 +23,6 @@ const helpeeChattedHelpersPath = '/api/helpee/chat/partners';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
-    console.log('getHelpeeAuthStatus...');
     try {
       const generalToken = localStorage.getItem('shelpy-token');
       if (!generalToken) {

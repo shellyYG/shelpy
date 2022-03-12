@@ -45,6 +45,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsConditionaPage from './pages/TermsConditionPage';
 import SelectSignInRolePage from './pages/SelectSignInRolePage';
 import HelperGuidePage from './pages/HelperGuidePage';
+import ChatroomPreLandingPage from './pages/ChatroomPreLandingPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -147,6 +148,14 @@ function App() {
             <Route
               path={`/:locale/helper/password/pre/reset`}
               element={<PasswordResetPrePage isHelpee={false} />}
+            />
+            <Route
+              path={`/:locale/helper/access-chatroom`}
+              element={<ChatroomPreLandingPage isHelpee={false} />}
+            />
+            <Route
+              path={`/:locale/helpee/access-chatroom`}
+              element={<ChatroomPreLandingPage isHelpee={true} />}
             />
             <Route
               path={`/:locale/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}
@@ -334,7 +343,10 @@ function App() {
               }
             />
             <Route path={`/:locale/pay`} element={<PayPage />} />
-            <Route path={`/:locale/helper/guidance`} element={<HelperGuidePage />} />
+            <Route
+              path={`/:locale/helper/guidance`}
+              element={<HelperGuidePage />}
+            />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
           <Footer />

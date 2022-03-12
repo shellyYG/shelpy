@@ -4,6 +4,7 @@ import { generalActions } from './general-slice';
 const bookingStatusPath = '/api/booking-status';
 const getAllMarketingOffersPath = '/api/marketing-offers';
 const unSubEmailPath = '/api/unsubscribe/email'
+const canAccessChatroomPath = '/api/access-chatroom';
 
 export const postBookingStatus = (data) => {
   return async (dispatch) => {
@@ -190,3 +191,32 @@ export const unsubEmail = (data) => {
       }
   }
 }
+
+export const confirmCanAccessChatroom = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(canAccessChatroomPath, { data });
+      if (response && response.data && response.data.status === 'success') {
+        dispatch(
+          generalActions.setCanAccessChatroom({
+            confirmCanAccessChatRoomStatus: 'success',
+            confirmCanAccessChatRoomStatusTitle:
+              'your_identification_is_verified',
+            confirmCanAccessChatRoomStatusMessage: 'you_can_view_chatroom',
+          })
+        );
+      } else {
+        throw Error('error_occur_when_verifying_identity');
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        generalActions.setCanAccessChatroom({
+          confirmCanAccessChatRoomStatus: 'error',
+          confirmCanAccessChatRoomStatusTitle: 'oops',
+          confirmCanAccessChatRoomStatusMessage: error,
+        })
+      );
+    }
+  };
+};

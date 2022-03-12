@@ -1,17 +1,20 @@
 const { query } = require('./query');
 
-async function getUsersToNotifyAboutChat(data) {
-  
+async function getReceiverEmail(data) {
   // Find customers who once chatted with you
-  const sql = `SELECT DISTINCT chat.helperId AS helperId, helpee.username AS helpeeUsername, helpee.id AS helpeeId, helpee.profilePicPath, chat.offerId, ofs.*
-FROM shelpydb.offers ofs
-INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId
-INNER JOIN shelpydb.helpee_account helpee ON chat.helpeeId = helpee.id
-WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helperId =?);`;
-  const users = await query(sql);
-  return { users };
+  const table = data.role === 'helper'? 'helper_account' : 'helpee_account'
+  const sql = `SELECT email FROM ${table} WHERE id=? LIMIT 1;`;
+  const user = await query(sql, data.id);
+  return { email: user[0].email} ;
+}
+
+async function logEmailToDB(data) {
+  const sql = 'INSERT INTO email_notifications SET ?';
+  const sqlResult = await query(sql, data);
+  return sqlResult.insertId;
 }
 
 module.exports = {
-  getUsersToNotifyAboutChat,
+  getReceiverEmail,
+  logEmailToDB,
 };

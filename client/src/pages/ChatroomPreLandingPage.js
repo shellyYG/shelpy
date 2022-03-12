@@ -4,58 +4,37 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import {
-  confirmHelpeeCanChangePassword,
-} from '../store/helpee/helpee-actions';
+import { confirmCanAccessChatroom } from '../store/general/general-actions';
 
-import {
-  confirmHelperCanChangePassword,
-} from '../store/helper/helper-actions';
 
 const MySwal = withReactContent(Swal);
 
-const PasswordResetPrePage = (props) => {
+const ChatroomPreLandingPage = (props) => {
   const { t } = useTranslation();
+  const rawPath = window.location.href;
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
-  const [loading, setIsLoading] =
-    useState(true);
+  const [loading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const originalEmail = searchParams.get('email');
-  const refId = searchParams.get('refId');
-  const passwordResetToken = searchParams.get('passwordResetToken');
-
-  const filteredEmail = originalEmail.replace(/\+/g, '%2B');
+  
+  const accessChatRoomToken = searchParams.get('accessChatRoomToken');
+  
+  const urlForPartner = rawPath.split('urlForPartner=?')[1];
 
   const {
-    confirmHelpeeCanChangePasswordStatus,
-    confirmHelpeeCanChangePasswordStatusTitle,
-    confirmHelpeeCanChangePasswordStatusMessage,
-  } = useSelector((state) => state.helpeeNotification);
+    confirmCanAccessChatRoomStatus,
+    confirmCanAccessChatRoomStatusTitle,
+    confirmCanAccessChatRoomStatusMessage,
+  } = useSelector((state) => state.general);
 
-  const {
-    confirmHelperCanChangePasswordStatus,
-    confirmHelperCanChangePasswordStatusTitle,
-    confirmHelperCanChangePasswordStatusMessage,
-  } = useSelector((state) => state.helperNotification);
-
-  useEffect(() => {
-    if (props.isHelpee) {
-      dispatch(confirmHelpeeCanChangePassword({ passwordResetToken }));
-    } else {
-      dispatch(confirmHelperCanChangePassword({ passwordResetToken }));
-    }
-  }, [
-    props.isHelpee,
-    dispatch,
-    passwordResetToken,
-  ]);
+  useEffect(()=>{
+    dispatch(confirmCanAccessChatroom({ accessChatRoomToken }));
+  },[dispatch, accessChatRoomToken]);
   
-  
-
   if (loading) {
     MySwal.fire({
       title: t('verify_email'),
@@ -70,7 +49,7 @@ const PasswordResetPrePage = (props) => {
 
   useEffect(() => {
     if (props.isHelpee) {
-      if (confirmHelpeeCanChangePasswordStatus === 'error') {
+      if (confirmCanAccessChatRoomStatus === 'error') {
         setIsLoading(false);
         async function sweetAlertAndClearStatus(title, message) {
           await MySwal.fire({
@@ -80,11 +59,11 @@ const PasswordResetPrePage = (props) => {
           });
         }
         sweetAlertAndClearStatus(
-          confirmHelpeeCanChangePasswordStatusTitle,
-          confirmHelpeeCanChangePasswordStatusMessage
+          confirmCanAccessChatRoomStatusTitle,
+          confirmCanAccessChatRoomStatusMessage
         );
         return;
-      } else if (confirmHelpeeCanChangePasswordStatus === 'success') {
+      } else if (confirmCanAccessChatRoomStatus === 'success') {
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
@@ -94,18 +73,17 @@ const PasswordResetPrePage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate(
-            `/${currentLanguage}/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}&refId=${refId}`,
-            { replace: true }
-          );
+          navigate(`/${currentLanguage}/helpee/chatroom?${urlForPartner}`, {
+            replace: true,
+          });
         }
         sweetAlertAndNavigate(
-          confirmHelpeeCanChangePasswordStatusTitle,
-          confirmHelpeeCanChangePasswordStatusMessage
+          confirmCanAccessChatRoomStatusTitle,
+          confirmCanAccessChatRoomStatusMessage
         );
       }
     } else {
-      if (confirmHelperCanChangePasswordStatus === 'error') {
+      if (confirmCanAccessChatRoomStatus === 'error') {
         setIsLoading(false);
         async function sweetAlertAndClearStatus(title, message) {
           await MySwal.fire({
@@ -115,11 +93,11 @@ const PasswordResetPrePage = (props) => {
           });
         }
         sweetAlertAndClearStatus(
-          t(confirmHelperCanChangePasswordStatusTitle),
-          t(confirmHelperCanChangePasswordStatusMessage)
+          t(confirmCanAccessChatRoomStatusTitle),
+          t(confirmCanAccessChatRoomStatusMessage)
         );
         return;
-      } else if (confirmHelperCanChangePasswordStatus === 'success') {
+      } else if (confirmCanAccessChatRoomStatus === 'success') {
         setIsLoading(false);
         async function sweetAlertAndNavigate(title, message) {
           await MySwal.fire({
@@ -129,31 +107,26 @@ const PasswordResetPrePage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate(
-            `/${currentLanguage}/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}&refId=${refId}`,
-            { replace: true }
-          );
+          navigate(`/${currentLanguage}/helper/chatroom?${urlForPartner}`, {
+            replace: true,
+          });
         }
         sweetAlertAndNavigate(
-          confirmHelperCanChangePasswordStatusTitle,
-          confirmHelperCanChangePasswordStatusMessage
+          confirmCanAccessChatRoomStatusTitle,
+          confirmCanAccessChatRoomStatusMessage
         );
       }
     }
   }, [
     t,
+    urlForPartner,
     currentLanguage,
     props.isHelpee,
-    filteredEmail,
-    confirmHelpeeCanChangePasswordStatus,
-    confirmHelpeeCanChangePasswordStatusTitle,
-    confirmHelpeeCanChangePasswordStatusMessage,
-    confirmHelperCanChangePasswordStatus,
-    confirmHelperCanChangePasswordStatusTitle,
-    confirmHelperCanChangePasswordStatusMessage,
+    confirmCanAccessChatRoomStatus,
+    confirmCanAccessChatRoomStatusTitle,
+    confirmCanAccessChatRoomStatusMessage,
     navigate,
     dispatch,
-    refId,
   ]);
   return (
     <div
@@ -177,4 +150,4 @@ const PasswordResetPrePage = (props) => {
   );
 };
 
-export default PasswordResetPrePage;
+export default ChatroomPreLandingPage;

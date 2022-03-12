@@ -19,10 +19,8 @@ const sendHelpeeEmail = (user) => {
     (err, emailToken) => {
       const url = `https://shelpy.co/${user.data.currentLanguage}/helpee/email/confirmation?emailToken=${emailToken}&refId=${user.refId}`;
       console.log('confirm Helpee email url: ', url);
-      
       let subject, html;
-      
-      switch(user.data.currentLanguage) {
+      switch (user.data.currentLanguage) {
         case 'en':
           subject = 'Verify your Shelpy Email';
           html = `Please click this link to confirm your email: <a href='${url}'>${url}</a>`;
@@ -121,6 +119,7 @@ const sendHelpeeResetPasswordEmail = (user) => {
       if (user && user.data && user.data.email) {
         const email = user.data.email.replace(/\+/g, '%2B');
         const url = `https://shelpy.co/${user.data.currentLanguage}/helpee/password/pre/reset?email=${email}&passwordResetToken=${passwordResetToken}`;
+        let subject, html;
         switch (user.data.currentLanguage) {
           case 'en':
             subject = 'Reset Shelpy Password';
@@ -156,7 +155,6 @@ const sendHelpeeResetPasswordEmail = (user) => {
             )
           )
           .catch((error) => console.error(error.message));
-        
       }
     }
   );
@@ -173,6 +171,7 @@ const sendHelperResetPasswordEmail = (user) => {
       if (user && user.data && user.data.email) {
         const email = user.data.email.replace(/\+/g, '%2B');
         const url = `https://shelpy.co/${user.data.currentLanguage}/helper/password/pre/reset?email=${email}&passwordResetToken=${passwordResetToken}`;
+        let subject, html;
         switch (user.data.currentLanguage) {
           case 'en':
             subject = 'Reset Shelpy Password';
@@ -213,29 +212,79 @@ const sendHelperResetPasswordEmail = (user) => {
   );
 };
 
-const sendMessageNotReadEmail = (user) => {
-  console.log('sendMessageNotReadEmail...');
-  const isDeveloping = 1; // TODO: change based on production/develop
+const sendChatMessageReminderEmail = async (user) => {
+  const {
+    role,
+    id,
+    urlForPartner,
+    currentLanguage,
+    receiverEmailAddress,
+    helpeeUsername,
+    helperUsername,
+  } = user; // cant user const {message}...cuz message is defined later
+  let messageSender;
+  if (role === 'helpee') {
+    messageSender = helpeeUsername;
+  } else {
+    messageSender = helperUsername;
+  }
 
-  const sendChatMessageToReadReminder = async () => {
-    console.log('sending Email...');
-    const response = await axios.get(findUsersToNotifyAboutChatPath);
-    const { booking } = response.data;
-    let userEmails = []; // get emails from chat
-    // try {
-    //   // send email
-    //   // mark email as sent in DB
-    // } catch (error) {
-    //   console.error(error.message);
-    // }
-    
-  };
-}
+  return jwt.sign(
+    user,
+    process.env.EMAIL_SECRET,
+    {
+      expiresIn: '7d',
+    },
+    (err, accessChatRoomToken) => {
+      if (receiverEmailAddress) {
+        const email = receiverEmailAddress.replace(/\+/g, '%2B');
+        const url = `http://localhost:3000/${currentLanguage}/${role}/access-chatroom?accessChatRoomToken=${accessChatRoomToken}&urlForPartner=${urlForPartner}`;
+
+        let subject, html;
+        switch (currentLanguage) {
+          case 'en':
+            subject = `${messageSender} sent you a new message!`;
+            html = `Message is: ${user.message} <br/> Reply here: <a href='${url}'>${url}</a>`;
+            break;
+          case 'zh-TW':
+            subject = `${messageSender} 傳給你一則新訊息!`;
+            html = `新訊息為: ${user.message} <br/>請按此回覆訊息: <a href='${url}'>${url}</a>`;
+            break;
+          case 'zh-CN':
+            subject = `${messageSender} 传给你一则新讯息!`;
+            html = `新讯息为: ${user.message} <br/> 请按此回复讯息: <a href='${url}'>${url}</a>`;
+            break;
+          default:
+            subject = `You receive a message in chatroom!`;
+            html = `Message is. Reply here: <a href='${url}'>${url}</a>`;
+        }
+        const message = {
+          to: receiverEmailAddress,
+          from: {
+            name: 'Shelpy',
+            email: 'shelpyofficial@gmail.com',
+          },
+          subject,
+          html,
+        };
+        sgMail
+          .send(message)
+          .then((response) => {
+            console.log(
+              'Check message reminder email sent successfully to this email: ',
+              receiverEmailAddress
+            );
+          })
+          .catch((error) => console.error(error.message));
+      }
+    }
+  );
+};
 
 module.exports = {
   sendHelpeeEmail,
   sendHelperEmail,
   sendHelpeeResetPasswordEmail,
   sendHelperResetPasswordEmail,
-  sendMessageNotReadEmail,
+  sendChatMessageReminderEmail,
 };

@@ -1,13 +1,16 @@
 require('dotenv').config();
-const axios = require('axios');
-const { sendChatMessageToReadReminder } = require('../../util/email');
 const generalModel = require('../models/generalModel');
+const jwt = require('jsonwebtoken');
 
-const sendChatMessageReminder = async (req, res) => {
-  sendChatMessageToReadReminder();
+const confirmCanAccessChatroom = async (req, res) => {
+  const { data } = req.body;
   try {
-    const users = await generalModel.getUsersToNotifyAboutChat();
-    res.status(200).json({ users });
+    const user = jwt.verify(data.accessChatRoomToken, process.env.EMAIL_SECRET);
+    if (user) {
+      res.status(200).json({
+        status: 'success',
+      });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -15,5 +18,5 @@ const sendChatMessageReminder = async (req, res) => {
 };
 
 module.exports = {
-  sendChatMessageReminder,
+  confirmCanAccessChatroom,
 };

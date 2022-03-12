@@ -9,15 +9,22 @@ const generalSlice = createSlice({
     bookingDate: '',
     bookingTime: '',
     bookingNotes: '',
+    
     bookingNotificationStatus: 'Initial',
     bookingNotificationStatusTitle: '',
     bookingNotificationStatusMessage: '',
+    
     unSubEmailStatus: 'Initial',
     unSubEmailStatusTitle: '',
     unSubEmailStatusMessage: '',
+    
     allMKTOffers: [],
     userRole: '',
     signInRole: '',
+
+    confirmCanAccessChatRoomStatus: 'Initial',
+    confirmCanAccessChatRoomStatusTitle: '',
+    confirmCanAccessChatRoomStatusMessage: '',
   },
   reducers: {
     setUserRole(state, action) {
@@ -73,6 +80,21 @@ const generalSlice = createSlice({
         state.unSubEmailStatusTitle = unSubEmailStatusTitle;
       if (unSubEmailStatusMessage)
         state.unSubEmailStatusMessage = unSubEmailStatusMessage;
+    },
+    setCanAccessChatroom(state, action) {
+      const {
+        confirmCanAccessChatRoomStatus,
+        confirmCanAccessChatRoomStatusTitle,
+        confirmCanAccessChatRoomStatusMessage,
+      } = action.payload;
+      if (confirmCanAccessChatRoomStatus)
+        state.confirmCanAccessChatRoomStatus = confirmCanAccessChatRoomStatus;
+      if (confirmCanAccessChatRoomStatusTitle)
+        state.confirmCanAccessChatRoomStatusTitle =
+          confirmCanAccessChatRoomStatusTitle;
+      if (confirmCanAccessChatRoomStatusMessage)
+        state.confirmCanAccessChatRoomStatusMessage =
+          confirmCanAccessChatRoomStatusMessage;
     },
   },
 });

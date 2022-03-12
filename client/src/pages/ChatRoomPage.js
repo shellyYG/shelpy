@@ -57,6 +57,8 @@ const ChatRoomPage = (props) => {
   const duration = searchParams.get('duration');
   const refId = searchParams.get('refId');
 
+  const queryString = window.location.search;
+
   const profilePicPath = searchParams.get('profilePicPath');
 
   const helpeeId = parseInt(searchParams.get('helpeeId'));
@@ -171,10 +173,14 @@ const ChatRoomPage = (props) => {
     e.preventDefault();
     if (currentMessage !== '') {
       const messageData = {
+        currentLanguage,
+        queryString,
         room: roomId,
         author: userId,
         helperId: parseInt(roomId.split('-')[0]),
         helpeeId: parseInt(roomId.split('-')[1]),
+        helpeeUsername,
+        helperUsername,
         message: currentMessage,
         offerId: parseInt(offerId),
         messageTime:

@@ -1,4 +1,6 @@
+const { sendChatMessageReminderEmail } = require('../../util/email');
 const chatModel = require('../models/chatModel');
+const generalModel = require('../models/generalModel');
 const onlineUsers = {};
 
 const socketChat = async (socket) => {
@@ -28,7 +30,7 @@ const socketChat = async (socket) => {
     socket.emit('history', history); // emit history
   });
   
-  socket.on('send_message', (data) => {
+  socket.on('send_message', async (data) => {
     socket.to(data.room).emit('server_send_message', data); // emit to others except self
     // save to DB
     const messageObj = {
@@ -40,7 +42,7 @@ const socketChat = async (socket) => {
       message: data.message,
       messageTime: data.messageTime,
     };
-    chatModel.saveMsg(messageObj);
+    await chatModel.saveMsg(messageObj);
     if (!onlineUsers[data.room]) {
       onlineUsers[data.room] = [];
     }
@@ -52,12 +54,78 @@ const socketChat = async (socket) => {
     }
     if (onlineUsers[data.room] && onlineUsers[data.room].length <= 1) {
       // send email
-      if (data.author.substring(0,6)==='helper') {
-        console.log('send email to helpee: ', data.helpeeId); // TODO
-      } else if (data.author.substring(0, 6) === 'helpee') {
-        console.log('sending email to helper ', data.helperId); // TODO
+      let urlForPartner = '';
+      try {
+        if (data.author.substring(0, 6) === 'helper') {
+          console.log('send email to helpee: ', data.helpeeId); // TODO
+          const res = await generalModel.getReceiverEmail({
+            role: 'helpee',
+            id: data.helpeeId,
+          });
+          urlForPartner = data.queryString.replace(
+            `userId=helper_${data.helperId}`,
+            `userId=helpee_${data.helpeeId}`
+          );
+          urlForPartner = urlForPartner.replace(
+            `&partnerName=${data.helpeeUsername}`,
+            `&partnerName=${data.helperUsername}`
+          );
+          await sendChatMessageReminderEmail({
+            role: 'helpee',
+            id: data.helpeeId,
+            message: data.message,
+            urlForPartner,
+            currentLanguage: data.currentLanguage,
+            receiverEmailAddress: res.email,
+            helpeeUsername: data.helpeeUsername,
+            helperUsername: data.helperUsername,
+          });
+          await generalModel.logEmailToDB({
+            receiverRole: 'helpee',
+            receiverEmail: res.email,
+            emailType: 'chatroom_reminder',
+            chatroomId: data.room,
+            chatMessageContent: data.message,
+            chatMessageTime: data.messageTime,
+            emailSendTimestamp: Date.now(),
+          });
+        } else if (data.author.substring(0, 6) === 'helpee') {
+          console.log('sending email to helper ', data.helperId); // TODO
+          const res = await generalModel.getReceiverEmail({
+            role: 'helper',
+            id: data.helperId,
+          });
+          urlForPartner = data.queryString.replace(
+            `userId=helpee_${data.helpeeId}`,
+            `userId=helper_${data.helperId}`
+          );
+          urlForPartner = urlForPartner.replace(
+            `&partnerName=${data.helperUsername}`,
+            `&partnerName=${data.helpeeUsername}`
+          );
+          await sendChatMessageReminderEmail({
+            role: 'helper',
+            id: data.helperId,
+            message: data.message,
+            urlForPartner,
+            currentLanguage: data.currentLanguage,
+            receiverEmailAddress: res.email,
+            helpeeUsername: data.helpeeUsername,
+            helperUsername: data.helperUsername,
+          });
+          await generalModel.logEmailToDB({
+            receiverRole: 'helper',
+            receiverEmail: res.email,
+            emailType: 'chatroom_reminder',
+            chatroomId: data.room,
+            chatMessageContent: data.message,
+            chatMessageTime: data.messageTime,
+            emailSendTimestamp: Date.now(),
+          });
+        }
+      } catch (error) {
+        console.error(error.message)
       }
-        
     }
   });
   socket.on('message_received', (data) => {
