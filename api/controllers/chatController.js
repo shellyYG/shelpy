@@ -57,8 +57,7 @@ const socketChat = async (socket) => {
       let urlForPartner = '';
       try {
         if (data.author.substring(0, 6) === 'helper') {
-          console.log('send email to helpee: ', data.helpeeId); // TODO
-          const res = await generalModel.getReceiverEmail({
+          const emailRes = await generalModel.getChatroomReceiverEmail({
             role: 'helpee',
             id: data.helpeeId,
           });
@@ -76,13 +75,13 @@ const socketChat = async (socket) => {
             message: data.message,
             urlForPartner,
             currentLanguage: data.currentLanguage,
-            receiverEmailAddress: res.email,
+            receiverEmailAddress: emailRes.email,
             helpeeUsername: data.helpeeUsername,
             helperUsername: data.helperUsername,
           });
           await generalModel.logEmailToDB({
             receiverRole: 'helpee',
-            receiverEmail: res.email,
+            receiverEmail: emailRes.email,
             emailType: 'chatroom_reminder',
             chatroomId: data.room,
             chatMessageContent: data.message,
@@ -91,7 +90,7 @@ const socketChat = async (socket) => {
           });
         } else if (data.author.substring(0, 6) === 'helpee') {
           console.log('sending email to helper ', data.helperId); // TODO
-          const res = await generalModel.getReceiverEmail({
+          const emailRes = await generalModel.getChatroomReceiverEmail({
             role: 'helper',
             id: data.helperId,
           });
@@ -109,13 +108,13 @@ const socketChat = async (socket) => {
             message: data.message,
             urlForPartner,
             currentLanguage: data.currentLanguage,
-            receiverEmailAddress: res.email,
+            receiverEmailAddress: emailRes.email,
             helpeeUsername: data.helpeeUsername,
             helperUsername: data.helperUsername,
           });
           await generalModel.logEmailToDB({
             receiverRole: 'helper',
-            receiverEmail: res.email,
+            receiverEmail: emailRes.email,
             emailType: 'chatroom_reminder',
             chatroomId: data.room,
             chatMessageContent: data.message,

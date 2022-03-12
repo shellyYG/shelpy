@@ -131,6 +131,7 @@ const BookingConfirmPage = (props) => {
         secondType,
         thirdType,
         fourthType,
+        currentLanguage,
       };
       dispatch(postBookingStatus(data));
     } else {
@@ -139,6 +140,7 @@ const BookingConfirmPage = (props) => {
         offerId,
         bookingId,
         bookingStatus: 'helperConfirmed',
+        currentLanguage,
       };
       dispatch(postBookingStatus(data));
     }
@@ -289,7 +291,7 @@ const BookingConfirmPage = (props) => {
                 </div>
                 <div className='form-wrapper' style={{ marginTop: '15px' }}>
                   <label style={{ fontWeight: 'bold' }}>{`${t('customer')}${t(
-                    'notes'
+                    'questions'
                   )}`}</label>
                   <div style={{ fontSize: '14px' }}> {bookingNotes} </div>
                 </div>

@@ -46,6 +46,7 @@ import TermsConditionaPage from './pages/TermsConditionPage';
 import SelectSignInRolePage from './pages/SelectSignInRolePage';
 import HelperGuidePage from './pages/HelperGuidePage';
 import ChatroomPreLandingPage from './pages/ChatroomPreLandingPage';
+import DashboardPreLandingPage from './pages/DashboardPreLandingPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -156,6 +157,14 @@ function App() {
             <Route
               path={`/:locale/helpee/access-chatroom`}
               element={<ChatroomPreLandingPage isHelpee={true} />}
+            />
+            <Route
+              path={`/:locale/helper/access-dashboard`}
+              element={<DashboardPreLandingPage isHelpee={false} />}
+            />
+            <Route
+              path={`/:locale/helpee/access-dashboard`}
+              element={<DashboardPreLandingPage isHelpee={true} />}
             />
             <Route
               path={`/:locale/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}`}

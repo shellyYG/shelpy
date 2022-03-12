@@ -1,6 +1,7 @@
 const bookingModel = require('../models/bookingModel');
 const signInModel = require('../models/signInModel');
-
+const generalModel = require('../models/generalModel');
+const { sendBookingStatusReminderEmail } = require('../../util/email');
 
 const checkBookingExisted = async (data) => {
   const existingBookings = await bookingModel.checkBookingExisted(data);
@@ -12,19 +13,66 @@ const checkBookingExisted = async (data) => {
 
 const updateBookingStatus = async (req, res) => {
   const { data } = req.body;
+  console.log('updateBookingStatus data: ', data);
+  let createdBookingId;
+  const { bookingStatus } = data;
   try {
-    if (data.requestId && data.requestId !== 'NaN') {
-      const booking = await checkBookingExisted(data);
-      if (booking) {
-        await bookingModel.updateBookingStatus(data);
-        res.status(200).json({ status: 'success' });
-      } else {
-        const bookingId = await bookingModel.insertBooking(data);
-        res.status(200).json({ bookingId, status: 'success' });
-      }
+    if (!data.bookingId) { // booking is not created yet
+      // create a booking
+      console.log('no booking yet, create a booking');
+      createdBookingId = await bookingModel.insertBooking(data);
     } else {
-      const bookingId = await bookingModel.insertBooking(data);
-      res.status(200).json({ bookingId, status: 'success' });
+      // update a booking
+      console.log('update a booking');
+      await bookingModel.updateBookingStatus(data);
+    }
+    let emailReceiverRole = '';
+    let initiatorName = '';
+    let offerOrRequestId = '';
+    if (bookingStatus === 'created' || bookingStatus === 'paid') {
+      emailReceiverRole = 'helper';
+      offerOrRequestId = data.offerId;
+      if (data.helpeeUsername) initiatorName = data.helpeeUsername;
+    } else if (bookingStatus === 'helperConfirmed') {
+      emailReceiverRole = 'helpee';
+      offerOrRequestId = data.requestId;
+      if (data.helperUsername) initiatorName = data.helperUsername;
+    }
+    
+    const emailRes = await generalModel.getBookingReceiverEmail({
+      role: emailReceiverRole,
+      offerOrRequestId,
+    });
+    const name = await generalModel.getBookingStatusChangeInitiatorName({
+      role: emailReceiverRole,
+      offerOrRequestId: data.offerId,
+    });
+    
+    
+    if (!initiatorName || initiatorName.length === 0) {
+      initiatorName = name.username;
+    }
+    await sendBookingStatusReminderEmail({
+      currentLanguage: data.currentLanguage,
+      emailReceiverRole,
+      initiatorName: initiatorName,
+      receiverEmailAddress: emailRes.email,
+      bookingStatus: data.bookingStatus, // created, helperConfirmed, paid, fulfilled
+      appointmentDate: data.appointmentDate,
+      appointmentTime: data.appointmentTime,
+    });
+    await generalModel.logEmailToDB({
+      receiverRole: emailReceiverRole,
+      receiverEmail: emailRes.email,
+      emailType: `booking_become_${bookingStatus}_reminder`,
+      emailSendTimestamp: Date.now(),
+    });
+    if (createdBookingId) {
+      // booking created
+      res.status(200).json({ bookingId: createdBookingId, status: 'success' });
+    } else {
+      // booking updated
+      res.status(200).json({ status: 'success' });
     }
   } catch (error) {
     console.error(error);
@@ -48,7 +96,7 @@ const getBookingStatus = async (req, res) => {
     console.error(error);
     res.status(500).send(error.message);
   }
-}
+};
 
 const unsubscibeEmail = async (req, res) => {
   const { data } = req.body;

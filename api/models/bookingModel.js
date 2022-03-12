@@ -2,7 +2,8 @@ const { query } = require('./query');
 
 async function checkBookingExisted(data) {
   const { requestId, offerId } = data;
-  const sql = `SELECT * FROM bookings WHERE requestId =? AND offerId =?`;
+  // what about recurring booking? --> if fulfilled then can have another booking
+  const sql = `SELECT * FROM bookings WHERE requestId =? AND offerId =? AND NOT bookingStatus='fulfilled'`;
   const sqlquery = await query(sql, [requestId, offerId]);
   return sqlquery;
 }
@@ -16,8 +17,6 @@ async function insertBooking(data) {
 async function updateBookingStatus(data) {
   let sql;
   const {
-    requestId,
-    offerId,
     bookingStatus,
     appointmentDate,
     appointmentTime,
@@ -31,15 +30,14 @@ async function updateBookingStatus(data) {
       (appointmentDate && appointmentTime && appointmentTimestamp)
     ) {
       sql = `
-        UPDATE bookings SET bookingStatus =? , appointmentDate =?, appointmentTime =?, appointmentTimeStamp =?, notes=? WHERE requestId =? AND offerId =?`;
+        UPDATE bookings SET bookingStatus =? , appointmentDate =?, appointmentTime =?, appointmentTimeStamp =?, notes=? WHERE id=?`;
         sqlquery = await query(sql, [
           bookingStatus,
           appointmentDate,
           appointmentTime,
           appointmentTimestamp,
           filteredBookingNotes,
-          requestId,
-          offerId,
+          bookingId,
         ]);
     } else {
       sql = `

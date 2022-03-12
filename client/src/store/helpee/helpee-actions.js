@@ -20,6 +20,7 @@ const helpeeSendPasswordResetEmailPath = '/api/helpee/password/reset';
 const payHelperPath = '/api/helpee/pay';
 const payTapPayPath = '/api/tappay/pay';
 const helpeeChattedHelpersPath = '/api/helpee/chat/partners';
+const bookingStatusPath = '/api/booking-status';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
@@ -811,6 +812,7 @@ export const getAllHelpeeChattedHelpers = (data) => {
 };
 
 export const postPayViaTapPay = (data) => {
+  console.log('postPayViaTapPay data->', data);
   return async (dispatch) => {
     const generalToken = localStorage.getItem('shelpy-token');
     try {
@@ -828,6 +830,26 @@ export const postPayViaTapPay = (data) => {
             headers,
           }
         );
+        if (response && response.data && response.data.status === 0) {
+          console.log('paid successfully');
+          // update booking status in DB & send email
+          await axios.post(
+            bookingStatusPath,
+            {
+              data: {
+                bookingId: data.bookingId,
+                offerId: data.offerId,
+                bookingStatus: 'paid',
+                currentLanguage: data.currentLanguage,
+                appointmentDate: data.appointmentDate,
+                appointmentTime: data.appointmentTime,
+              },
+            },
+            {
+              headers,
+            }
+          );
+        }
         dispatch(
           generalActions.setBookingStatus({
             bookingStatus: data.bookingStatus,

@@ -28,6 +28,7 @@ const PayPage = () => {
 
   const [searchParams] = useSearchParams();
   const bookingId = searchParams.get('bookingId');
+  const offerId = searchParams.get('offerId');
   const price = searchParams.get('price');
   const duration = searchParams.get('duration');
   const country = searchParams.get('country');
@@ -156,6 +157,11 @@ const PayPage = () => {
         partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
         merchant_id: process.env.REACT_APP_TAPPAY_MERCHANT_ID,
         details: 'TapPay Test',
+        bookingId,
+        currentLanguage,
+        offerId,
+        appointmentDate: bookingDate,
+        appointmentTime: bookingTime,
         amount: 100,
         cardholder: {
           phone_number: '+886923456789',

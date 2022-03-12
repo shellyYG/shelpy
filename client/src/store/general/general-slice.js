@@ -9,15 +9,15 @@ const generalSlice = createSlice({
     bookingDate: '',
     bookingTime: '',
     bookingNotes: '',
-    
+
     bookingNotificationStatus: 'Initial',
     bookingNotificationStatusTitle: '',
     bookingNotificationStatusMessage: '',
-    
+
     unSubEmailStatus: 'Initial',
     unSubEmailStatusTitle: '',
     unSubEmailStatusMessage: '',
-    
+
     allMKTOffers: [],
     userRole: '',
     signInRole: '',
@@ -25,6 +25,10 @@ const generalSlice = createSlice({
     confirmCanAccessChatRoomStatus: 'Initial',
     confirmCanAccessChatRoomStatusTitle: '',
     confirmCanAccessChatRoomStatusMessage: '',
+
+    confirmCanAccessDashboardStatus: 'Initial',
+    confirmCanAccessDashboardStatusTitle: '',
+    confirmCanAccessDashboardStatusMessage: '',
   },
   reducers: {
     setUserRole(state, action) {
@@ -95,6 +99,21 @@ const generalSlice = createSlice({
       if (confirmCanAccessChatRoomStatusMessage)
         state.confirmCanAccessChatRoomStatusMessage =
           confirmCanAccessChatRoomStatusMessage;
+    },
+    setCanAccessDashboard(state, action) {
+      const {
+        confirmCanAccessDashboardStatus,
+        confirmCanAccessDashboardStatusTitle,
+        confirmCanAccessDashboardStatusMessage,
+      } = action.payload;
+      if (confirmCanAccessDashboardStatus)
+        state.confirmCanAccessDashboardStatus = confirmCanAccessDashboardStatus;
+      if (confirmCanAccessDashboardStatusTitle)
+        state.confirmCanAccessDashboardStatusTitle =
+          confirmCanAccessDashboardStatusTitle;
+      if (confirmCanAccessDashboardStatusMessage)
+        state.confirmCanAccessDashboardStatusMessage =
+          confirmCanAccessDashboardStatusMessage;
     },
   },
 });

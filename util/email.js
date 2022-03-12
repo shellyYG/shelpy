@@ -238,7 +238,7 @@ const sendChatMessageReminderEmail = async (user) => {
     (err, accessChatRoomToken) => {
       if (receiverEmailAddress) {
         const email = receiverEmailAddress.replace(/\+/g, '%2B');
-        const url = `http://localhost:3000/${currentLanguage}/${role}/access-chatroom?accessChatRoomToken=${accessChatRoomToken}&urlForPartner=${urlForPartner}`;
+        const url = `https://shelpy.co/${currentLanguage}/${role}/access-chatroom?accessChatRoomToken=${accessChatRoomToken}&urlForPartner=${urlForPartner}`;
 
         let subject, html;
         switch (currentLanguage) {
@@ -281,10 +281,97 @@ const sendChatMessageReminderEmail = async (user) => {
   );
 };
 
+const sendBookingStatusReminderEmail = async (user) => {
+  const {
+    currentLanguage,
+    emailReceiverRole,
+    initiatorName,
+    receiverEmailAddress,
+    bookingStatus,
+    appointmentDate,
+    appointmentTime,
+  } = user;
+  
+  return jwt.sign(
+    user,
+    process.env.EMAIL_SECRET,
+    {
+      expiresIn: '7d',
+    },
+    (err, accessDashboardToken) => {
+      if (receiverEmailAddress) {
+        const url = `https://shelpy.co/${currentLanguage}/${emailReceiverRole}/access-dashboard?accessDashboardToken=${accessDashboardToken}`;
+
+        let subject, html;
+       switch (bookingStatus) {
+         case 'created':
+           if (currentLanguage === 'zh-TW') {
+             subject = `${initiatorName} 剛剛發出一個諮詢請求!`;
+             html = `請按此連結接受預約或更改時間: <a href='${url}'>${url}</a>`;
+           } else if (currentLanguage === 'zh-CN') {
+             subject = `${initiatorName} 刚刚发出一个谘询请求!`;
+             html = `请按此连结接受预约或更改时间: <a href='${url}'>${url}</a>`;
+           } else {
+             subject = `${initiatorName} just sent you a booking request!`;
+             html = `Please click here to confirm booking or change booking: <a href='${url}'>${url}</a>`;
+           }
+           break;
+         case 'helperConfirmed':
+           if (currentLanguage === 'zh-TW') {
+             subject = `[等待付款]${initiatorName} 剛剛答應了你的諮詢預約時間!`;
+             html = `但是正式預約只有在您付款後才成立。<br/> 請按此連結付款: <a href='${url}'>${url}</a>`;
+           } else if (currentLanguage === 'zh-CN') {
+             subject = `[等待付款]${initiatorName} 刚刚答应了你的谘询预约时间!`;
+             html = `但是正式预约只有在您付款后才成立。<br/> 请按此连结付款: <a href='${url}'>${url}</a>`;
+           } else {
+             subject = `[Payment needed]${initiatorName} just accept your booking request time!`;
+             html = `However, booking is only officially confirmed after payment. Please click here to pay: <a href='${url}'>${url}</a>`;
+           }
+           break;
+         case 'paid':
+           if (currentLanguage === 'zh-TW') {
+             subject = `[請準時出席會議]${initiatorName} 剛剛付款了!`;
+             html = `預約已成立。<br/>您將會在開會前一天收到webex會議連結，請務必準時出席會議。<br/>會議時間為： ${appointmentDate} ${appointmentTime}<br/> 請按此連結查看會議時間與細節: <a href='${url}'>${url}</a>`;
+           } else if (currentLanguage === 'zh-CN') {
+             subject = `[请准时出席会议]${initiatorName} 刚刚付款了!`;
+             html = `预约已成立。<br/>您将会在开会前一天收到webex会议连结，请务必准时出席会议。<br/>会议时间为： ${appointmentDate} ${appointmentTime}<br/> 请按此连结查看会议时间与细节: <a href='${url}'>${url}</a>`;
+           } else {
+             subject = `[Please attend meeting on time]${initiatorName} just paid you!`;
+             html = `The appointment is officially established. Please attend the meeting on time. <br/>  Appointment time is： ${appointmentDate} ${appointmentTime} <br/> Click here to view meeting time & details: <a href='${url}'>${url}</a>`;
+           }
+           break;
+         default:
+           subject = `[Please attend meeting on time]${initiatorName} just paid you!`;
+           html = `The appointment is officially established. Please attend the meeting on time. Click here to view meeting time & details: <a href='${url}'>${url}</a>`;
+       }
+        const message = {
+          to: receiverEmailAddress,
+          from: {
+            name: 'Shelpy',
+            email: 'shelpyofficial@gmail.com',
+          },
+          subject,
+          html,
+        };
+        sgMail
+          .send(message)
+          .then((response) => {
+            console.log(
+              'Booking Status change reminder email sent successfully to this email: ',
+              receiverEmailAddress
+            );
+          })
+          .catch((error) => console.error(error.message));
+      }
+    }
+  );
+};
+
 module.exports = {
   sendHelpeeEmail,
   sendHelperEmail,
   sendHelpeeResetPasswordEmail,
   sendHelperResetPasswordEmail,
   sendChatMessageReminderEmail,
+  sendBookingStatusReminderEmail,
 };

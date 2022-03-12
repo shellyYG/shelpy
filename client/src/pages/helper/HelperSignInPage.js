@@ -77,13 +77,9 @@ const HelperSignInPage = () => {
         dispatch(getHelperAuthStatus());
         dispatch(clearSignInStatus());
         if (helperAccountStatus === 'password_created') {
-          let path = `/${currentLanguage}/helper/basic-form`;
-          if (window.location.search) path += window.location.search;
-          navigate(path, { replace: true });
+          navigate(-1);
         } else {
-          let path = `/${currentLanguage}/helper/service-types`;
-          if (window.location.search) path += window.location.search;
-          navigate(path, { replace: true });
+          navigate(-1);
         }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);

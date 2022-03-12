@@ -80,13 +80,9 @@ const HelpeeSignInPage = () => {
         dispatch(getHelpeeAuthStatus());
         dispatch(clearSignInStatus());
         if (helpeeAccountStatus === 'password_created') {
-          let path = `/${currentLanguage}/helpee/basic-form`;
-          if (window.location.search) path += window.location.search;
-          navigate(path, { replace: true });
+          navigate(-1);
         } else {
-          let path = `/${currentLanguage}/helpee/service-types`;
-          if (window.location.search) path += window.location.search;
-          navigate(path, { replace: true });
+          navigate(-1);
         }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);

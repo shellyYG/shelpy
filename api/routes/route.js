@@ -71,6 +71,7 @@ const { postUserSignUpData } = require('../controllers/signUpController');
 
 const {
   confirmCanAccessChatroom,
+  confirmCanAccessDashboard,
 } = require('../controllers/generalController');
 
 router
@@ -115,6 +116,13 @@ router
   .post(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(confirmCanAccessChatroom)
+  );
+
+router
+  .route('/api/access-dashboard')
+  .post(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(confirmCanAccessDashboard)
   );
 
 router

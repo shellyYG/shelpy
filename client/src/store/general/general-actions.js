@@ -5,8 +5,10 @@ const bookingStatusPath = '/api/booking-status';
 const getAllMarketingOffersPath = '/api/marketing-offers';
 const unSubEmailPath = '/api/unsubscribe/email'
 const canAccessChatroomPath = '/api/access-chatroom';
+const canAccessDashboardPath = '/api/access-dashboard';
 
 export const postBookingStatus = (data) => {
+  console.log('postBookingStatus data: ', data);
   return async (dispatch) => {
     let generalToken;
     if (data.helpeeId || data.bookingStatus === 'created') { // is first time created or Helpee updating time
@@ -215,6 +217,35 @@ export const confirmCanAccessChatroom = (data) => {
           confirmCanAccessChatRoomStatus: 'error',
           confirmCanAccessChatRoomStatusTitle: 'oops',
           confirmCanAccessChatRoomStatusMessage: error,
+        })
+      );
+    }
+  };
+};
+
+export const confirmCanAccessDashboard = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(canAccessDashboardPath, { data });
+      if (response && response.data && response.data.status === 'success') {
+        dispatch(
+          generalActions.setCanAccessDashboard({
+            confirmCanAccessDashboardStatus: 'success',
+            confirmCanAccessDashboardStatusTitle:
+              'your_identification_is_verified',
+            confirmCanAccessDashboardStatusMessage: 'you_can_view_dashboard',
+          })
+        );
+      } else {
+        throw Error('error_occur_when_verifying_identity');
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        generalActions.setCanAccessDashboard({
+          confirmCanAccessDashboardStatus: 'error',
+          confirmCanAccessDashboardStatusTitle: 'oops',
+          confirmCanAccessDashboardStatusMessage: error,
         })
       );
     }

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
+import ChatIcon from './Icons/ChatIcon';
 import { postPayHelper, clearPayHelperStatus } from '../store/helpee/helpee-actions';
 import { useRef } from 'react';
 import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, typeOptions } from '../store/options/service-options';
@@ -36,6 +37,7 @@ function BookingCard(props) {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
   const [loading, setIsLoading] = useState(false);
+
   const [product] = useState({
     mainType: props.mainType,
     secondType: props.secondType,
@@ -56,6 +58,20 @@ function BookingCard(props) {
         MySwal.showLoading();
       },
     });
+  }
+  
+  function handleChat(e) {
+    e.preventDefault(e);
+    navigate(
+      `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+        `&userId=helper_${props.helperId}&partnerName=${props.partnerName}` +
+        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
+        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
+        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
+        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
+        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
+    );
   }
 
   useEffect(() => {
@@ -245,7 +261,7 @@ function BookingCard(props) {
 
   function handlePayHelper(token) {
     navigate(
-      `/${currentLanguage}/pay?bookingId=${props.bookingId}&price=${props.price}&duration=${props.duration}` +
+      `/${currentLanguage}/pay?bookingId=${props.bookingId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
         `&thirdType=${props.thirdType}` +
         `&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
@@ -412,6 +428,14 @@ function BookingCard(props) {
               {t('booking_time')}: {props.appointmentDate} {t('at')}{' '}
               {props.appointmentTime}
             </p>
+            <div>
+              <ChatIcon
+                onClick={handleChat}
+                partnerName={props.partnerName}
+                isHelpee={false}
+                reArrangetime={true}
+              />
+            </div>
           </div>
         </div>
       )}
