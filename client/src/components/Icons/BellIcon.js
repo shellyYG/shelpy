@@ -32,7 +32,7 @@ const BellIcon = (props) => {
             margin: 'auto'
           }}
         >
-          <div style={{ color: 'white', textAlign: 'center', fontSize: '8px', margin: 'auto' }}>New</div>
+          <div style={{ color: 'white', textAlign: 'center', fontSize: '12px', margin: 'auto' }}>1+</div>
         </div>
       </div>
     </IconContext.Provider>

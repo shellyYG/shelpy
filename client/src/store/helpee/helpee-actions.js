@@ -531,7 +531,6 @@ export const onUploadHelpeeProfilePicture = (data) => {
           headers,
         });
         const { imagePath } = response.data;
-        console.log('imagePath: ', imagePath);
         dispatch(
           helpeeActions.updateProfilePicPath({
             helpeeProfilePicPath: imagePath,
@@ -829,7 +828,6 @@ export const postPayViaTapPay = (data) => {
             headers,
           }
         );
-        console.log('response from Shelpy backend: ', response);
         dispatch(
           generalActions.setBookingStatus({
             bookingStatus: data.bookingStatus,

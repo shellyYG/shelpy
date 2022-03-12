@@ -44,7 +44,7 @@ async function getPotentialCustomers(data) {
     , req.organization AS organization
     , req.id AS requestId, ofs.id AS offerId
     , ofs.price AS price, ofs.duration AS duration, req.country AS country
-    , acc.id AS helperId, acc.username AS helperUserName, acc.isAnonymous AS helperAnonymous
+    , acc.id AS helperId, acc.username AS helperUsername, acc.isAnonymous AS helperAnonymous
     , req.userId AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.profilePicPath AS profilePicPath
     , ofs.mainType AS mainType, ofs.secondType AS secondType
     , ofs.thirdType AS thirdType, ofs.fourthType AS fourthType
@@ -170,9 +170,10 @@ async function confirmHelperEmail(data) {
 async function getAllChattedCustomers(data) {
   const { helperUserId } = data;
   // Find customers who once chatted with you
-  const sql = `SELECT DISTINCT chat.helperId AS helperId, helpee.username AS helpeeUsername, helpee.id AS helpeeId, helpee.profilePicPath, chat.offerId, ofs.*
+  const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername, helpee.username AS helpeeUsername, helpee.id AS helpeeId, helpee.profilePicPath, chat.offerId, ofs.*
 FROM shelpydb.offers ofs
 INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId
+INNER JOIN shelpydb.helper_account helper ON chat.helperId = helper.id
 INNER JOIN shelpydb.helpee_account helpee ON chat.helpeeId = helpee.id
 WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helperId =?);`;
   const allChattedCustomers = await query(sql, helperUserId);

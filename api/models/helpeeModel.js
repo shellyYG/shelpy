@@ -166,10 +166,11 @@ async function confirmHelpeeEmail(data) {
 
 async function getAllChattedHelpers(data) {
   const { helpeeUserId } = data;
-  const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername, helper.profilePicPath, helper.isAnonymous AS helperAnonymous, chat.offerId, ofs.*
+  const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername, helpee.username AS helpeeUsername, helper.profilePicPath, helper.isAnonymous AS helperAnonymous, chat.offerId, ofs.*
 FROM shelpydb.offers ofs
 INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId
 INNER JOIN shelpydb.helper_account helper ON chat.helperId = helper.id
+INNER JOIN shelpydb.helpee_account helpee ON chat.helpeeId = helpee.id
 WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helpeeId =?);`;
   
   const allChattedHelpers = await query(sql, helpeeUserId);

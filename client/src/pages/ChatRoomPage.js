@@ -71,9 +71,9 @@ const ChatRoomPage = (props) => {
   const thirdType = searchParams.get('thirdType');
   const fourthType = searchParams.get('fourthType');
   
-  const { allPotentialCustomers } = useSelector((state) => state.helper);
+  const { allPotentialCustomers } = useSelector((state) => state.helper);  
   const { allPotentialHelpers } = useSelector((state) => state.helpee);
- 
+
   
   useEffect(() => {
     const partners = [];
