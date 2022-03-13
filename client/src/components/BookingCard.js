@@ -418,17 +418,17 @@ function BookingCard(props) {
       {!props.isHelpee && props.bookingStatus === 'created' && (
         <div className='bookingStatusWidth'>
           <div className='contentBx'>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_id')}: {props.id}
             </p>
             <button onClick={handleBookingConfirmation} className='btn-next'>
               {t('accept_name_booking', { name: props.partnerName })}
             </button>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_time')}: {props.appointmentDate} {t('at')}{' '}
               {props.appointmentTime}
             </p>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('helpee_questions')}: {props.questions}
             </p>
             <div>
@@ -447,13 +447,13 @@ function BookingCard(props) {
           props.bookingStatus === 'paid') && (
           <div className='bookingStatusWidth'>
             <div className='contentBx'>
-              <p style={{ fontSize: '12px', padding: '6px' }}>
+              <p style={{ fontSize: '14px', padding: '6px' }}>
                 {t('booking_id')}: {props.id}
               </p>
-              <p style={{ fontSize: '12px', padding: '6px' }}>
+              <p style={{ fontSize: '14px', padding: '6px' }}>
                 {t('booking_status')}: {helperFilteredBookingStatus}
               </p>
-              <p style={{ fontSize: '12px', padding: '6px' }}>
+              <p style={{ fontSize: '14px', padding: '6px' }}>
                 {t('helpee_questions')}: {props.questions}
               </p>
             </div>
@@ -462,10 +462,10 @@ function BookingCard(props) {
       {props.isHelpee && props.bookingStatus === 'helperConfirmed' && (
         <div className='bookingStatusWidth'>
           <div className='contentBx'>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_id')}: {props.id}
             </p>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('my_questions')}: {props.questions}
             </p>
             {/* <StripeCheckout
@@ -491,13 +491,13 @@ function BookingCard(props) {
       {props.isHelpee && props.bookingStatus === 'created' && (
         <div className='bookingStatusWidth'>
           <div className='contentBx'>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_id')}: {props.id}
             </p>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_status')}: {helpeeFilteredBookingStatus}
             </p>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('my_questions')}: {props.questions}
             </p>
           </div>
@@ -509,13 +509,13 @@ function BookingCard(props) {
       {props.isHelpee && props.bookingStatus === 'paid' && (
         <div className='bookingStatusWidth'>
           <div className='contentBx'>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_id')}: {props.id}
             </p>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_status')}: {helpeeFilteredBookingStatus}
             </p>
-            <p style={{ fontSize: '12px', padding: '6px' }}>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('my_questions')}: {props.questions}
             </p>
           </div>

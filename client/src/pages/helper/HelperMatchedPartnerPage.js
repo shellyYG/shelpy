@@ -84,6 +84,7 @@ const HelperMatchedPartnerPage = (props) => {
               organization={option.organization}
               notes={option.notes || t('na')}
               introduction={option.introduction || t('na')}
+              languages={option.languages}
             />
           ))}
         </div>

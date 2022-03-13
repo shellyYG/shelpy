@@ -107,6 +107,7 @@ const HelpeeMatchedPartnerPage = (props) => {
               bookingId={option.bookingId}
               bookingStatus={option.bookingStatus}
               organization={option.organization}
+              languages={option.languages}
               notes={option.notes || t('na')}
               introduction={option.introduction || t('na')}
             />

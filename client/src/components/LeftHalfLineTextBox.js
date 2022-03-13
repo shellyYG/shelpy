@@ -8,6 +8,7 @@ function LeftHalfLineTextBox(props) {
           style={{ fontSize: '12px' }}
           placeholder={props.placeholder}
           ref={props.inputRef}
+          onChange={props.onChange}
         />
       </div>
   );

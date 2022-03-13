@@ -208,7 +208,7 @@ body {
   align-items: center;
   left: 0;
   flex: 4;
-  overflow: auto;
+  overflow-y: auto;
   height: 90%;
   padding-bottom: 30vh;
   padding-top: 5vh;
@@ -1061,6 +1061,9 @@ footer {
   padding: 15px; 
   border-radius: 5px;
 }
+.form-most-inner {
+  width: 50vw
+}
 
 .form-wrapper-half {
   width: 50%;
@@ -1314,7 +1317,6 @@ footer {
 }
 .nameWidth {
   width: 170px;
-  line-break: anywhere;
   margin-left: 10px;
 }
 .smallWidth {
@@ -1736,6 +1738,9 @@ input[type="checkbox" i] {
   }
   .nav-button {
     margin-right: 0px;
+  }
+  .form-most-inner {
+    width: 80vw;
   }
   
   .chatBoxTitleInnerWrapper {

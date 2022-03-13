@@ -9,6 +9,8 @@
   "nav_I_am_helper": "I am a Helper",
 
   "what_role_do_you_sign_in": "What role do you want to sign in?",
+  "what_partner_will_see_after_offers": "Data display style will be similar as below when you finish creating offers",
+  "what_partner_will_see_after_requests": "Data display style will be similar as below when you finish creating requests",
 
   "me": "Me",
   "please_click_below_to_show_section": "Select dashboard section",

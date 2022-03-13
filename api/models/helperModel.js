@@ -32,6 +32,7 @@ async function getHelperAllBookings(data) {
   const sql = ` 
   SELECT bookings.id AS bookingId,acc.languages, bookings.*, acc.profilePicPath AS profilePicPath
   , acc.isAnonymous AS helpeeAnonymous, acc.introduction
+  , acc.languages
   FROM bookings bookings
   LEFT JOIN helpee_account acc ON bookings.helpeeId = acc.id
   WHERE helperId = ? ORDER BY id DESC;`;
@@ -48,7 +49,7 @@ async function getPotentialCustomers(data) {
     , acc.id AS helperId, acc.username AS helperUsername, acc.isAnonymous AS helperAnonymous
     , req.userId AS helpeeId
     , helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.introduction
-    , helpee.profilePicPath AS profilePicPath
+    , helpee.profilePicPath AS profilePicPath, helpee.languages
     , ofs.mainType AS mainType, ofs.secondType AS secondType
     , ofs.thirdType AS thirdType, ofs.fourthType AS fourthType
     , req.notes
@@ -174,9 +175,10 @@ async function confirmHelperEmail(data) {
 async function getAllChattedCustomers(data) {
   const { helperUserId } = data;
   // Find customers who once chatted with you
-  const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername, helpee.username AS helpeeUsername
+  const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername
+  , helpee.username AS helpeeUsername
   , helpee.id AS helpeeId, helpee.profilePicPath
-  , helpee.introduction
+  , helpee.introduction, helpee.languages
   , chat.offerId, ofs.*
 FROM shelpydb.offers ofs
 INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId AND chat.offerId = ofs.id

@@ -9,6 +9,7 @@ import {
   departmentOptions,
   industryOptions,
   jobOptions,
+  nativeLanguageOptions,
   professionOptions,
   schoolOptions,
   typeOptions,
@@ -26,6 +27,8 @@ function PotentialCustomerCard(props) {
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
+  const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
+    useState('');
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -127,6 +130,22 @@ function PotentialCustomerCard(props) {
         `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
     );
   }
+  useEffect(() => {
+    let translatedSpeakingLanguagesString = '';
+    const speakingLanguages = props.languages.split(' ');
+    speakingLanguages.forEach((speakingLanguage) => {
+      const speakingLanguageTranslationObj = nativeLanguageOptions.filter(
+        (o) => o.value === speakingLanguage
+      );
+      if (speakingLanguageTranslationObj && speakingLanguageTranslationObj[0]) {
+        translatedSpeakingLanguagesString =
+          translatedSpeakingLanguagesString.concat(
+            t(speakingLanguageTranslationObj[0].label) + ' '
+          );
+      }
+    });
+    setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
+  }, [t, props.languages]);
   
   return (
     <div className='history-card'>
@@ -153,8 +172,8 @@ function PotentialCustomerCard(props) {
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.partnerName}
             </h3>
-            <p style={{ fontSize: '12px' }}>
-              {t('introduction')}:{' '}{props.introduction}
+            <p style={{ fontSize: '14px' }}>
+              {t('introduction')}: {props.introduction}
             </p>
           </div>
         </div>
@@ -201,9 +220,18 @@ function PotentialCustomerCard(props) {
         </div>
       </div>
       <div className='checkBoxWidth'>
-        {t('helpee_organization')} : {props.organization || t('na')}
+        <div className='contentBx'>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
+            {t('speaks')}: {translatedSpeakingLanguages}
+          </p>
+        </div>
+        <div className='contentBx'>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
+            {t('helpee_organization')} : {props.organization || t('na')}
+          </p>
+        </div>
       </div>
-      <div className='checkBoxWidth' style={{ marginLeft: '5px' }}>
+      <div className='checkBoxWidth'>
         <div className='contentBx'>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <div>
@@ -212,7 +240,7 @@ function PotentialCustomerCard(props) {
                 partnerName={props.partnerName}
                 isHelpee={false}
               />
-              <p style={{ fontSize: '12px', marginTop: '10px' }}>
+              <p style={{ fontSize: '14px', marginTop: '10px' }}>
                 {t('requests')} {t('notes')}: {props.notes}
               </p>
             </div>

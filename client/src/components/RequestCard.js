@@ -207,7 +207,7 @@ function RequestCard(props) {
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.helpeeName}
             </h3>
-            <p style={{ fontSize: '12px' }}>
+            <p style={{ fontSize: '14px' }}>
               {t('introduction')}:{' '}{props.introduction}
             </p>
           </div>
@@ -256,16 +256,16 @@ function RequestCard(props) {
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontSize: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('request_id')}: {props.id || t('na')}
           </p>
         </div>
         <div className='contentBx'>
-          <p style={{ fontSize: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
             {details} {translatedFourthType}
           </p>
         </div>
-        <p style={{ fontSize: '12px', padding: '6px' }}>
+        <p style={{ fontSize: '14px', padding: '6px' }}>
           {t('speaks')}: {translatedSpeakingLanguages}
         </p>
       </div>
@@ -273,9 +273,8 @@ function RequestCard(props) {
         <div className='contentBx'>
           <p
             style={{
-              fontSize: '12px',
+              fontSize: '14px',
               padding: '6px',
-              lineBreak: 'anywhere',
             }}
           >
             {t('requests')} {t('notes')}: {props.notes || t('na')}
@@ -284,7 +283,7 @@ function RequestCard(props) {
       </div>
       <div className='statusWidth'>
         <div className='contentBx'>
-          <p style={{ fontSize: '12px', padding: '6px' }}>{filteredStatus}</p>
+          <p style={{ fontSize: '14px', padding: '6px' }}>{filteredStatus}</p>
         </div>
       </div>
       <div className='btnWidth'></div>

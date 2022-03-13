@@ -9,6 +9,7 @@ import {
   departmentOptions,
   industryOptions,
   jobOptions,
+  nativeLanguageOptions,
   professionOptions,
   schoolOptions,
   typeOptions,
@@ -29,6 +30,8 @@ function PotentialHelperCard(props) {
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
+  const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
+    useState('');
   const [duration, setDuration] = useState('');
   useEffect(() => {
     if (props.duration) {
@@ -72,6 +75,7 @@ function PotentialHelperCard(props) {
         secondTypeTranslationObj = industryOptions.filter(
           (o) => o.value === props.secondType
         );
+        console.log('secondTypeTranslationObj: ', secondTypeTranslationObj);
         if (
           props.secondType &&
           secondTypeTranslationObj &&
@@ -151,6 +155,22 @@ function PotentialHelperCard(props) {
         `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
     );
   }
+  useEffect(() => {
+    let translatedSpeakingLanguagesString = '';
+    const speakingLanguages = props.languages.split(' ');
+    speakingLanguages.forEach((speakingLanguage) => {
+      const speakingLanguageTranslationObj = nativeLanguageOptions.filter(
+        (o) => o.value === speakingLanguage
+      );
+      if (speakingLanguageTranslationObj && speakingLanguageTranslationObj[0]) {
+        translatedSpeakingLanguagesString =
+          translatedSpeakingLanguagesString.concat(
+            t(speakingLanguageTranslationObj[0].label) + ' '
+          );
+      }
+    });
+    setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
+  }, [t, props.languages]);
 
   return (
     <div className='history-card'>
@@ -177,8 +197,8 @@ function PotentialHelperCard(props) {
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.partnerName}
             </h3>
-            <p style={{ fontSize: '12px' }}>
-              {t('introduction')}:{' '}{props.introduction}
+            <p style={{ fontSize: '14px' }}>
+              {t('introduction')}: {props.introduction}
             </p>
           </div>
         </div>
@@ -227,10 +247,16 @@ function PotentialHelperCard(props) {
 
       {!props.bookingStatus && (
         <div className='checkBoxWidth'>
-          <div className='bookWrapper'>
-            {t('helper_organization')} : {props.organization || t('na')}
-            <br />
-            {t('price_per_duration_min', { price: props.price, duration })}
+          <div className='contentBx'>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
+              {t('speaks')}: {translatedSpeakingLanguages}
+            </p>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
+              {t('helper_organization')} : {props.organization || t('na')}
+            </p>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
+              {t('price_per_duration_min', { price: props.price, duration })}
+            </p>
             <button className='btn-contact' onClick={handleBookHelper}>
               {t('book_name', { name: props.partnerName })}
             </button>
@@ -239,23 +265,31 @@ function PotentialHelperCard(props) {
       )}
       {props.bookingStatus && (
         <div className='checkBoxWidth'>
-          <div className='bookWrapper'>
-            {t('helper_organization')} : {props.organization || t('na')} <br />
-            {t('price_per_duration_min', { price: props.price, duration })}
-            <br />
-            {t('in_booking_process_with_name', { name: props.partnerName })}
+          <div className='contentBx'>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
+              {t('speaks')}: {translatedSpeakingLanguages}
+            </p>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
+              {t('helper_organization')} : {props.organization || t('na')}
+            </p>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
+              {t('price_per_duration_min', { price: props.price, duration })}
+            </p>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
+              {t('in_booking_process_with_name', { name: props.partnerName })}
+            </p>
           </div>
         </div>
       )}
 
       {
-        <div className='checkBoxWidth' style={{ marginLeft: '5px' }}>
+        <div className='checkBoxWidth'>
           <ChatIcon
             onClick={handleChat}
             partnerName={props.partnerName}
             isHelpee={true}
           />
-          <p style={{ fontSize: '12px', marginTop: '10px' }}>
+          <p style={{ fontSize: '14px', marginTop: '10px' }}>
             {t('offers')} {t('notes')}: {props.notes}
           </p>
         </div>

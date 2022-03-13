@@ -210,12 +210,15 @@ function MarketingCard(props) {
         )}
       </div>
 
-      <div className='smallWidth'>
+      <div className='nameWidth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.username}
             </h3>
+            <p style={{ fontSize: '14px'}}>
+              {t('introduction')}: {props.introduction || t('na')}
+            </p>
           </div>
         </div>
       </div>
@@ -262,39 +265,29 @@ function MarketingCard(props) {
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontSize: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('offer_id')}: {props.id}
           </p>
-          <p style={{ fontSize: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('helper_organization')}: {props.organization || t('na')}
           </p>
-          <p style={{ fontSize: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('price_per_duration_min', { price: props.price, duration })}
           </p>
         </div>
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontSize: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('speaks')}: {translatedSpeakingLanguages}
           </p>
           <p
             style={{
-              fontSize: '12px',
+              fontSize: '14px',
               padding: '6px',
-              lineBreak: 'anywhere',
             }}
           >
-            {t('introduction')}: {props.introduction || t('na')}
-          </p>
-          <p
-            style={{
-              fontSize: '12px',
-              padding: '6px',
-              lineBreak: 'anywhere',
-            }}
-          >
-            {t('notes')}: {props.notes || t('na')}
+            {t('offers')} {t('notes')}: {props.notes || t('na')}
           </p>
         </div>
       </div>

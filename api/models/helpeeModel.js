@@ -24,8 +24,9 @@ async function getHelpeeAllOrders(data) {
 }
 
 async function getHelpeeAllBookings(data) {
-  const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail, helpee.languages
+  const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail
   , acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous, acc.introduction
+  , acc.languages
   , ofs.notes AS notes
   , bookings.*
   FROM bookings bookings
@@ -45,7 +46,7 @@ async function getPotentialHelpers(data) {
     , helpee.id AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous
     , ofs.organization AS organization
     , acc.id AS helperId, acc.username AS helperUsername, acc.introduction
-    , acc.profilePicPath AS profilePicPath
+    , acc.profilePicPath AS profilePicPath, acc.languages
 		, req.mainType AS mainType, req.secondType AS secondType
     , req.thirdType AS thirdType, req.fourthType AS fourthType
     , ofs.duration, ofs.notes
@@ -175,7 +176,7 @@ async function getAllChattedHelpers(data) {
   const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername
   , helpee.id AS helpeeId, helpee.username AS helpeeUsername
   , helper.profilePicPath, helper.isAnonymous AS helperAnonymous, helper.introduction
-  , helper.introduction
+  , helper.introduction, helper.languages
   , chat.offerId, ofs.*
 FROM shelpydb.offers ofs
 INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId AND chat.offerId = ofs.id

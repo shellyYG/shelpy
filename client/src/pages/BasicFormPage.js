@@ -51,11 +51,13 @@ const BasicFormPage = (props) => {
   const [certificate, setCertificate] = useState();
   const [nationality, setNationality] = useState('default');
   const [residenceCountry, setResidenceCountry] = useState('default');
+  const [usernameString, setUsernameString] = useState('');
   const [bankAccountString, setBankAccountString] = useState('');
   const [introductionString, setIntroductionString] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(false);
   const [enableBtn, setEnableBtn] = useState(false);
+  console.log('usernameString: ', usernameString);
   
   const [hasMonToFri, setHasMonToFri] = useState(false);
   const [hasWeekend, setHasWeekend] = useState(false);
@@ -364,7 +366,7 @@ const BasicFormPage = (props) => {
   useEffect(() => {
     if (props.isHelpee) {
       setEnableBtn(
-        usernameRef &&
+        usernameString &&
           age !== 'default' &&
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
@@ -372,7 +374,7 @@ const BasicFormPage = (props) => {
       );
     } else {
       setEnableBtn(
-        usernameRef &&
+        usernameString &&
           age !== 'default' &&
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
@@ -383,7 +385,7 @@ const BasicFormPage = (props) => {
     }
   }, [
     props.isHelpee,
-    usernameRef,
+    usernameString,
     linkedInUrlRef,
     age,
     nationality,
@@ -474,6 +476,11 @@ const BasicFormPage = (props) => {
     navigate,
     dispatch,
   ]);
+  function handleUsernameTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setUsernameString(typingInput);
+  }
   function handleIntroductionTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
@@ -496,7 +503,12 @@ const BasicFormPage = (props) => {
       <div className='form-center-wrapper'>
         <div className='container' style={{ width: '100%' }}>
           <div className='form-inner' style={{ display: 'flex' }}>
-            <form action='' method='post' encType='multipart/form-data' style={{ width: '50vw'}}>
+            <form
+              action=''
+              method='post'
+              encType='multipart/form-data'
+              className='form-most-inner'
+            >
               <div className='form-row'>
                 <div
                   className='form-wrapper'
@@ -576,6 +588,7 @@ const BasicFormPage = (props) => {
                   title={t('username_title')}
                   placeholder={t('username_placeholder')}
                   inputRef={usernameRef}
+                  onChange={handleUsernameTyping}
                 />
                 <DropDown
                   selected={age}
@@ -868,6 +881,7 @@ const BasicFormPage = (props) => {
                 onChange={handleIntroductionTyping}
                 marginTop='15px'
               />
+
               <FullLineTextBox
                 title={t('notes')}
                 placeholder={t('other_languages_specify_note_placeholder')}
@@ -878,6 +892,102 @@ const BasicFormPage = (props) => {
                 disable={!enableBtn}
                 handleConfirm={handleConfirm}
               />
+              <div style={{ marginTop: '10px' }}>
+                <p
+                  style={{
+                    color: 'white',
+                    marginBottom: '5px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {props.isHelpee && t('what_partner_will_see_after_requests')}
+                  {!props.isHelpee && t('what_partner_will_see_after_offers')}
+                </p>
+                {!props.isHelpee && currentLanguage === 'en' && !isAnonymous && (
+                  <div style={{ width: '100%' }}>
+                    <img
+                      src='/static-imgs/Demo_Helper_Card_EN.png'
+                      alt='helper_demo_picture'
+                      style={{ width: '100%' }}
+                    ></img>
+                  </div>
+                )}
+                {!props.isHelpee &&
+                  (currentLanguage === 'zh-TW' ||
+                    currentLanguage === 'zh-CN') &&
+                  !isAnonymous && (
+                    <div style={{ width: '100%' }}>
+                      <img
+                        src='/static-imgs/Demo_Helper_Card_ZH.png'
+                        alt='helper_demo_picture'
+                        style={{ width: '100%' }}
+                      ></img>
+                    </div>
+                  )}
+                {!props.isHelpee && currentLanguage === 'en' && isAnonymous && (
+                  <div style={{ width: '100%' }}>
+                    <img
+                      src='/static-imgs/Demo_Helper_Card_EN_Ano.png'
+                      alt='helper_demo_picture'
+                      style={{ width: '100%' }}
+                    ></img>
+                  </div>
+                )}
+                {!props.isHelpee &&
+                  (currentLanguage === 'zh-TW' ||
+                    currentLanguage === 'zh-CN') &&
+                  isAnonymous && (
+                    <div style={{ width: '100%' }}>
+                      <img
+                        src='/static-imgs/Demo_Helper_Card_ZH_Ano.png'
+                        alt='helper_demo_picture'
+                        style={{ width: '100%' }}
+                      ></img>
+                    </div>
+                  )}
+                {props.isHelpee && currentLanguage === 'en' && !isAnonymous && (
+                  <div style={{ width: '100%' }}>
+                    <img
+                      src='/static-imgs/Demo_Helpee_Card_EN.png'
+                      alt='helper_demo_picture'
+                      style={{ width: '100%' }}
+                    ></img>
+                  </div>
+                )}
+                {props.isHelpee &&
+                  (currentLanguage === 'zh-TW' ||
+                    currentLanguage === 'zh-CN') &&
+                  !isAnonymous && (
+                    <div style={{ width: '100%' }}>
+                      <img
+                        src='/static-imgs/Demo_Helpee_Card_ZH.png'
+                        alt='helper_demo_picture'
+                        style={{ width: '100%' }}
+                      ></img>
+                    </div>
+                  )}
+                {props.isHelpee && currentLanguage === 'en' && isAnonymous && (
+                  <div style={{ width: '100%' }}>
+                    <img
+                      src='/static-imgs/Demo_Helpee_Card_EN_Ano.png'
+                      alt='helper_demo_picture'
+                      style={{ width: '100%' }}
+                    ></img>
+                  </div>
+                )}
+                {props.isHelpee &&
+                  (currentLanguage === 'zh-TW' ||
+                    currentLanguage === 'zh-CN') &&
+                  isAnonymous && (
+                    <div style={{ width: '100%' }}>
+                      <img
+                        src='/static-imgs/Demo_Helpee_Card_ZH_Ano.png'
+                        alt='helper_demo_picture'
+                        style={{ width: '100%' }}
+                      ></img>
+                    </div>
+                  )}
+              </div>
             </form>
           </div>
         </div>
