@@ -41,6 +41,7 @@ const updateBookingStatus = async (req, res) => {
     
     const emailRes = await generalModel.getBookingReceiverEmail({
       role: emailReceiverRole,
+      bookingId: data.bookingId || 0,
       offerOrRequestId,
     });
     const name = await generalModel.getBookingStatusChangeInitiatorName({

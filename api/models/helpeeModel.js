@@ -13,7 +13,9 @@ async function insertHelpeeRequest(data) { // new.
 }
 
 async function getHelpeeAllOrders(data) {
-  const sqlSimplified = ` SELECT helpee.profilePicPath, helpee.languages, helpee.username AS helpeeName, helpee.isAnonymous, req.*
+  const sqlSimplified = ` SELECT helpee.profilePicPath, helpee.languages
+  , helpee.username AS helpeeName, helpee.isAnonymous, helpee.introduction
+  , req.*
   FROM requests req
   INNER JOIN helpee_account helpee ON req.userId = helpee.id
   WHERE userId=? ORDER BY id DESC;`;
@@ -22,9 +24,12 @@ async function getHelpeeAllOrders(data) {
 }
 
 async function getHelpeeAllBookings(data) {
-  const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail, helpee.languages, bookings.*
-  , acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous
+  const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail, helpee.languages
+  , acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous, acc.introduction
+  , ofs.notes AS notes
+  , bookings.*
   FROM bookings bookings
+  LEFT JOIN offers ofs ON bookings.offerId = ofs.id
   LEFT JOIN helper_account acc ON bookings.helperId = acc.id
   LEFT JOIN helpee_account helpee ON bookings.helpeeId = helpee.id
   WHERE helpeeId=? ORDER BY id DESC;`;
@@ -39,10 +44,11 @@ async function getPotentialHelpers(data) {
     , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, acc.isAnonymous AS helperAnonymous
     , helpee.id AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous
     , ofs.organization AS organization
-    , acc.id AS helperId, acc.username AS helperUsername, acc.profilePicPath AS profilePicPath
+    , acc.id AS helperId, acc.username AS helperUsername, acc.introduction
+    , acc.profilePicPath AS profilePicPath
 		, req.mainType AS mainType, req.secondType AS secondType
     , req.thirdType AS thirdType, req.fourthType AS fourthType
-    , ofs.duration
+    , ofs.duration, ofs.notes
     FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
 LEFT JOIN requests req ON 
@@ -168,7 +174,7 @@ async function getAllChattedHelpers(data) {
   const { helpeeUserId } = data;
   const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername
   , helpee.id AS helpeeId, helpee.username AS helpeeUsername
-  , helper.profilePicPath, helper.isAnonymous AS helperAnonymous
+  , helper.profilePicPath, helper.isAnonymous AS helperAnonymous, helper.introduction
   , helper.introduction
   , chat.offerId, ofs.*
 FROM shelpydb.offers ofs

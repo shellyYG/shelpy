@@ -8,7 +8,8 @@ async function insertHelperOffer(data) {
 
 async function getHelperAllOffers(data) {
   const { helperUserId } = data;
-  const sql = `SELECT helper.profilePicPath, helper.languages, helper.username AS helperName, helper.isAnonymous, ofs.* 
+  const sql = `SELECT helper.profilePicPath, helper.languages, helper.username AS helperName
+  , helper.isAnonymous, helper.introduction, ofs.* 
   FROM offers ofs
   INNER JOIN helper_account helper ON ofs.userId = helper.id
   WHERE ofs.userId = ? AND NOT ofs.status='deleted' ORDER BY id DESC;`;
@@ -30,7 +31,7 @@ async function getHelperAllBookings(data) {
   const { helperUserId } = data;
   const sql = ` 
   SELECT bookings.id AS bookingId,acc.languages, bookings.*, acc.profilePicPath AS profilePicPath
-  , acc.isAnonymous AS helpeeAnonymous
+  , acc.isAnonymous AS helpeeAnonymous, acc.introduction
   FROM bookings bookings
   LEFT JOIN helpee_account acc ON bookings.helpeeId = acc.id
   WHERE helperId = ? ORDER BY id DESC;`;
@@ -45,9 +46,12 @@ async function getPotentialCustomers(data) {
     , req.id AS requestId, ofs.id AS offerId
     , ofs.price AS price, ofs.duration AS duration, req.country AS country
     , acc.id AS helperId, acc.username AS helperUsername, acc.isAnonymous AS helperAnonymous
-    , req.userId AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.profilePicPath AS profilePicPath
+    , req.userId AS helpeeId
+    , helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.introduction
+    , helpee.profilePicPath AS profilePicPath
     , ofs.mainType AS mainType, ofs.secondType AS secondType
     , ofs.thirdType AS thirdType, ofs.fourthType AS fourthType
+    , req.notes
     FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
 LEFT JOIN requests req ON 

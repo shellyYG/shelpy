@@ -10,14 +10,28 @@ async function getChatroomReceiverEmail(data) {
 
 async function getBookingReceiverEmail(data) {
   console.log('getBookingReceiverEmail data: ', data);
-  const mainTable = data.role === 'helper' ? 'helper_account' : 'helpee_account';
-  const joinedTable = data.role === 'helper' ? 'offers' : 'requests';
-  const sql = `
+  const mainTable =
+    data.role === 'helper' ? 'helper_account' : 'helpee_account';
+  let sql, user;
+  if (data.bookingId) {
+    const bookingColumnToJoin = data.role === 'helper' ? 'helperId': 'helpeeId';
+    sql = `
+    SELECT email 
+    FROM ${mainTable} a
+    INNER JOIN bookings b ON a.id = b.${bookingColumnToJoin}
+    WHERE b.id=? LIMIT 1;
+    `;
+    user = await query(sql, data.bookingId);
+  } else {
+    const joinedTable = data.role === 'helper' ? 'offers' : 'requests';
+    sql = `
     SELECT email
     FROM ${mainTable} a
     INNER JOIN ${joinedTable} b ON a.id = b.userId
     WHERE b.id=? LIMIT 1;`;
-  const user = await query(sql, data.offerOrRequestId);
+    user = await query(sql, data.offerOrRequestId);
+  }
+  
   return { email: user[0].email };
 }
 
