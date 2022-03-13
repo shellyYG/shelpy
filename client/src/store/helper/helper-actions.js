@@ -104,6 +104,40 @@ export const getAllBookings = (data) => {
   };
 };
 
+export const getAllChattedCustomers = (data) => {
+  return async (dispatch) => {
+    if (data && data.helperUserId) {
+      const allChattedPartners = [];
+      try {
+        const chattedCustomerRes = await axios.get(helperChattedCustomersPath, {
+          params: { helperUserId: data.helperUserId },
+        });
+       if (chattedCustomerRes && chattedCustomerRes.data) {
+         const chatting = chattedCustomerRes.data.allChattedCustomers || [];
+         for (let i = 0; i < chatting.length; i++) {
+          allChattedPartners.push(chatting[i]);
+         }
+       }
+       if (allChattedPartners) {
+         dispatch(
+           helperActions.updateAllChattedCustomers({
+             allChattedCustomers: allChattedPartners,
+           })
+         );
+       }
+        
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helperActions.updateAllChattedCustomers({
+            allChattedCustomers: [],
+          })
+        );
+      }
+    }
+  };
+}
+
 export const getPotentialCustomers = (data) => {
   return async (dispatch) => {
     if (data && data.helperUserId) {
@@ -123,30 +157,34 @@ export const getPotentialCustomers = (data) => {
           matchedCustomers.forEach((h) => {
             allPotentialCustomers.push(h);
           });
-          const matchedCustomerIds = matchedCustomers.map((p) => p.helpeeId);
+          const matchedOfferIds = matchedCustomers.map((p) => p.offerId);
           if (bookingsRes && bookingsRes.data) {
             const bookings = bookingsRes.data.allBookings || [];
             for (let i = 0; i < bookings.length; i++) {
-              if (matchedCustomerIds.indexOf(bookings[i].helpeeId) === -1) {
+              if (matchedOfferIds.indexOf(bookings[i].offerId) === -1) {
                 allPotentialCustomers.push(bookings[i]);
+                matchedOfferIds.push(bookings[i].offerId);
               }
             }
             if (chattedCustomerRes && chattedCustomerRes.data) {
               const chatting =
                 chattedCustomerRes.data.allChattedCustomers || [];
               for (let i = 0; i < chatting.length; i++) {
-                if (matchedCustomerIds.indexOf(chatting[i].helpeeId) === -1) {
+                if (matchedOfferIds.indexOf(chatting[i].offerId) === -1) {
                   allPotentialCustomers.push(chatting[i]);
+                  matchedOfferIds.push(chatting[i].offerId);
                 }
               }
             }
           }
         }
-        dispatch(
-          helperActions.updateAllPotentialCustomers({
-            allPotentialCustomers,
-          })
-        );
+        if (allPotentialCustomers) {
+          dispatch(
+            helperActions.updateAllPotentialCustomers({
+              allPotentialCustomers,
+            })
+          );
+        }
       } catch (error) {
         console.error(error);
         dispatch(
@@ -637,30 +675,6 @@ export const changeHelperPassword = (data) => {
             helperPasswordResetStatus: 'error',
             helperPasswordResetStatusTitle: 'oops',
             helperPasswordResetStatusMessage: error.response.data,
-          })
-        );
-      }
-    }
-  };
-};
-
-export const getAllHelperChattedCustomers = (data) => {
-  return async (dispatch) => {
-    if (data && data.helperUserId) {
-      try {
-        const response = await axios.get(helperChattedCustomersPath, {
-          params: { helperUserId: data.helperUserId },
-        });
-        dispatch(
-          helperActions.updateChattedCustomers({
-            allChattedCustomers: response.data.allChattedCustomers,
-          })
-        );
-      } catch (error) {
-        console.error(error);
-        dispatch(
-          helperActions.updateChattedCustomers({
-            allChattedCustomers: [],
           })
         );
       }

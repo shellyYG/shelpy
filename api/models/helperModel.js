@@ -170,13 +170,16 @@ async function confirmHelperEmail(data) {
 async function getAllChattedCustomers(data) {
   const { helperUserId } = data;
   // Find customers who once chatted with you
-  const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername, helpee.username AS helpeeUsername, helpee.id AS helpeeId, helpee.profilePicPath, chat.offerId, ofs.*
+  const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername, helpee.username AS helpeeUsername
+  , helpee.id AS helpeeId, helpee.profilePicPath
+  , helpee.introduction
+  , chat.offerId, ofs.*
 FROM shelpydb.offers ofs
-INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId
+INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId AND chat.offerId = ofs.id
 INNER JOIN shelpydb.helper_account helper ON chat.helperId = helper.id
 INNER JOIN shelpydb.helpee_account helpee ON chat.helpeeId = helpee.id
-WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helperId =?);`;
-  const allChattedCustomers = await query(sql, helperUserId);
+WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helperId =?) AND helperId=?;`;
+  const allChattedCustomers = await query(sql, [helperUserId, helperUserId]);
   return { data: { allChattedCustomers } };
 }
 

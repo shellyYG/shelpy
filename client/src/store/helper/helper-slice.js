@@ -111,7 +111,7 @@ const helperSlice = createSlice({
       state.helperPasswordResetStatusMessage =
         payload.helperPasswordResetStatusMessage;
     },
-    updateChattedCustomers(state, action) {
+    updateAllChattedCustomers(state, action) {
       const { payload } = action;
       state.allChattedCustomers = payload.allChattedCustomers;
     },

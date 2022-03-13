@@ -144,7 +144,7 @@ const helpeeSlice = createSlice({
       state.helpeePasswordResetStatusMessage =
         payload.helpeePasswordResetStatusMessage;
     },
-    updateChattedHelpers(state, action) {
+    updateAllChattedHelpers(state, action) {
       const { payload } = action;
       state.allChattedHelpers = payload.allChattedHelpers;
     },

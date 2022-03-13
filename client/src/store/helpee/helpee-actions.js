@@ -170,6 +170,39 @@ export const getAllOrders = (data) => {
   };
 };
 
+export const getAllChattedHelpers = (data) => {
+  return async (dispatch) => {
+    if (data && data.helpeeUserId) {
+      const allChattedPartners = [];
+      try {
+        const chattedHelpersRes = await axios.get(helpeeChattedHelpersPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        if (chattedHelpersRes && chattedHelpersRes.data) {
+          const chattings = chattedHelpersRes.data.allChattedHelpers || [];
+          for (let i = 0; i < chattings.length; i++) {
+            allChattedPartners.push(chattings[i]);
+          }
+        }
+        if (allChattedPartners) {
+          dispatch(
+            helpeeActions.updateAllChattedHelpers({
+              allChattedHelpers: allChattedPartners,
+            })
+          );
+        }
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateAllChattedHelpers({
+            allChattedHelpers: [],
+          })
+        );
+      }
+    }
+  };
+};
+
 export const getPotentialHelpers = (data) => {
   return async (dispatch) => {
     if (data && data.helpeeUserId) {
@@ -189,21 +222,21 @@ export const getPotentialHelpers = (data) => {
           matchedHelpers.forEach((h)=>{
             allPotentialHelpers.push(h);
           })
-          const matchedHelperIds = matchedHelpers.map((p) => p.helperId);
+          const matchedOfferIds = matchedHelpers.map((p) => p.offerId);
           if (bookingsRes && bookingsRes.data) {
             const bookings = bookingsRes.data.allBookings || [];
             for (let i = 0; i < bookings.length; i++) {
-              if (matchedHelperIds.indexOf(bookings[i].helperId) === -1) { // not exist in matchedHelperIds
+              if (matchedOfferIds.indexOf(bookings[i].offerId) === -1) {
                 allPotentialHelpers.push(bookings[i]);
-                matchedHelperIds.push(bookings[i].helperId);
+                matchedOfferIds.push(bookings[i].offerId);
               }
             }
             if (chattedHelpersRes && chattedHelpersRes.data) {
               const chattings = chattedHelpersRes.data.allChattedHelpers || [];
               for (let i = 0; i < chattings.length; i++) {
-                if (matchedHelperIds.indexOf(chattings[i].helperId) === -1) {
+                if (matchedOfferIds.indexOf(chattings[i].offerId) === -1) {
                   allPotentialHelpers.push(chattings[i]);
-                  matchedHelperIds.push(chattings[i].helperId);
+                  matchedOfferIds.push(chattings[i].offerId);
                 }
               }
             }
@@ -780,30 +813,6 @@ export const postPayHelper = (data) => {
             payHelperStatus: 'error',
             payHelperStatusTitle: 'oops',
             payHelperStatusMessage: error.response.data,
-          })
-        );
-      }
-    }
-  };
-};
-
-export const getAllHelpeeChattedHelpers = (data) => {
-  return async (dispatch) => {
-    if (data && data.helpeeUserId) {
-      try {
-        const response = await axios.get(helpeeChattedHelpersPath, {
-          params: { helpeeUserId: data.helpeeUserId },
-        });
-        dispatch(
-          helpeeActions.updateChattedHelpers({
-            allChattedHelpers: response.data.allChattedHelpers,
-          })
-        );
-      } catch (error) {
-        console.error(error);
-        dispatch(
-          helpeeActions.updateChattedHelpers({
-            allChattedHelpers: [],
           })
         );
       }

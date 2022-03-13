@@ -10,8 +10,14 @@ import {socket} from '../service/socket';
 import { Icon } from '@iconify/react';
 import LeftPointIcon from '../components/Icons/LeftPointIcon'
 import '../App.css';
-import { getHelperAuthStatus, getPotentialCustomers } from '../store/helper/helper-actions';
-import { getHelpeeAuthStatus, getPotentialHelpers } from '../store/helpee/helpee-actions';
+import {
+  getHelperAuthStatus,
+  getAllChattedCustomers,
+} from '../store/helper/helper-actions';
+import {
+  getHelpeeAuthStatus,
+  getAllChattedHelpers,
+} from '../store/helpee/helpee-actions';
 import LeftCloseIcon from '../components/Icons/LeftCloseIcon';
 import RightOpenIcon from '../components/Icons/RightOpenIcon';
 import DownPointIcon from '../components/Icons/DownPointIcon';
@@ -71,8 +77,8 @@ const ChatRoomPage = (props) => {
   const thirdType = searchParams.get('thirdType');
   const fourthType = searchParams.get('fourthType');
   
-  const { allPotentialCustomers } = useSelector((state) => state.helper);  
-  const { allPotentialHelpers } = useSelector((state) => state.helpee);
+  const { allChattedCustomers } = useSelector((state) => state.helper);  
+  const { allChattedHelpers } = useSelector((state) => state.helpee);
 
   
   useEffect(() => {
@@ -96,29 +102,35 @@ const ChatRoomPage = (props) => {
     };
 
     if (props.isHelpee) {
-      allPotentialHelpers.forEach((p) => {
+      allChattedHelpers.forEach((p) => {
         partners.push(p);
       });
-      const partnerIds = allPotentialHelpers.map((p) => p.helperId);
+      const partnerIds = allChattedHelpers.map((p) => p.helperId);
 
-      if (currentPartner.helperId && partnerIds.indexOf(currentPartner.helperId) === -1) {
+      if (
+        currentPartner.helperId &&
+        partnerIds.indexOf(currentPartner.helperId) === -1
+      ) {
         partners.push(currentPartner);
       }
 
       setAllChatPartners(partners);
     } else {
-      allPotentialCustomers.forEach((p) => {
+      allChattedCustomers.forEach((p) => {
         partners.push(p);
       });
-      const partnerIds = allPotentialCustomers.map((p) => p.helpeeId);
-      if (currentPartner.helpeeId && partnerIds.indexOf(currentPartner.helpeeId) === -1) {
+      const partnerIds = allChattedCustomers.map((p) => p.helpeeId);
+      if (
+        currentPartner.helpeeId &&
+        partnerIds.indexOf(currentPartner.helpeeId) === -1
+      ) {
         partners.push(currentPartner);
       }
       setAllChatPartners(partners);
     }
   }, [
-    allPotentialCustomers,
-    allPotentialHelpers,
+    allChattedCustomers,
+    allChattedHelpers,
     props.isHelpee,
     offerId,
     requestId,
@@ -233,12 +245,12 @@ const ChatRoomPage = (props) => {
 
   useEffect(() => {
     if (helperUserId && !props.isHelpee)
-      dispatch(getPotentialCustomers({ helperUserId }));
+      dispatch(getAllChattedCustomers({ helperUserId }));
   }, [helperUserId, props.isHelpee, dispatch]);
 
   useEffect(() => {
     if (helpeeUserId && props.isHelpee)
-      dispatch(getPotentialHelpers({ helpeeUserId }));
+      dispatch(getAllChattedHelpers({ helpeeUserId }));
   }, [helpeeUserId, props.isHelpee, dispatch]);
 
 
