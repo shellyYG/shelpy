@@ -11,7 +11,7 @@ import HelpeeSignUpPasswordPage from './pages/helpee/HelpeeSignUpPasswordPage';
 import HelperSignUpPasswordPage from './pages/helper/HelperSignUpPasswordPage';
 import ChatRoomPage from './pages/ChatRoomPage';
 import HelpeeHomePage from './pages/helpee/HelpeeHomePage';
-import HelpeeDashboardPage from './pages/helpee/HelpeeDashboardPage';
+import HelpeeBookingsPage from './pages/helpee/HelpeeBookingsPage';
 import HelpeeSignInPage from './pages/helpee/HelpeeSignInPage';
 import ErrorPage from './pages/ErrorPage';
 import PreSignInPage from './pages/PreSignInPage';
@@ -28,7 +28,7 @@ import { getHelpeeAuthStatus } from './store/helpee/helpee-actions';
 import { getHelperAuthStatus } from './store/helper/helper-actions';
 import BasicFormPage from './pages/BasicFormPage';
 import HelperAddServicePage from './pages/helper/HelperAddServicePage';
-import HelperDashboardPage from './pages/helper/HelperDashboardPage';
+import HelperBookingsPage from './pages/helper/HelperBookingsPage';
 import BookingConfirmPage from './pages/BookingConfirmPage';
 import EmailConfirmPage from './pages/EmailConfirmPage';
 import HelpeeForgetPasswordPage from './pages/helpee/HelpeeForgetPaswordPage';
@@ -47,6 +47,10 @@ import SelectSignInRolePage from './pages/SelectSignInRolePage';
 import HelperGuidePage from './pages/HelperGuidePage';
 import ChatroomPreLandingPage from './pages/ChatroomPreLandingPage';
 import DashboardPreLandingPage from './pages/DashboardPreLandingPage';
+import HelpeeMatchedPartnerPage from './pages/helpee/HelpeeMatchedPartnerPage';
+import HelperMatchedPartnerPage from './pages/helper/HelperMatchedPartnerPage';
+import HelpeeRequestsPage from './pages/helpee/HelpeeRequestsPage';
+import HelperOffersPage from './pages/helper/HelperOffersPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -266,10 +270,10 @@ function App() {
               }
             />
             <Route
-              path={`/:locale/helpee/dashboard`}
+              path={`/:locale/helpee/bookings`}
               element={
                 isHelpeeAuthenticated ? (
-                  <HelpeeDashboardPage
+                  <HelpeeBookingsPage
                     isHelpee={true}
                     helpeeUserId={helpeeUserId}
                     helpeeName={helpeeName}
@@ -280,10 +284,10 @@ function App() {
               }
             />
             <Route
-              path={`/:locale/helper/dashboard`}
+              path={`/:locale/helper/bookings`}
               element={
                 isHelperAuthenticated ? (
-                  <HelperDashboardPage
+                  <HelperBookingsPage
                     isHelpee={false}
                     helperUserId={helperUserId}
                     helperName={helperName}
@@ -293,6 +297,63 @@ function App() {
                 )
               }
             />
+            <Route
+              path={`/:locale/helpee/partners`}
+              element={
+                isHelpeeAuthenticated ? (
+                  <HelpeeMatchedPartnerPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                    helpeeName={helpeeName}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helper/partners`}
+              element={
+                isHelperAuthenticated ? (
+                  <HelperMatchedPartnerPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                    helperName={helperName}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helpee/requests`}
+              element={
+                isHelpeeAuthenticated ? (
+                  <HelpeeRequestsPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                    helpeeName={helpeeName}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helper/offers`}
+              element={
+                isHelperAuthenticated ? (
+                  <HelperOffersPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                    helperName={helperName}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
+              }
+            />
+
             <Route
               path={`/:locale/helpee/chatroom`}
               element={

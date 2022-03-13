@@ -52,6 +52,7 @@ const BasicFormPage = (props) => {
   const [nationality, setNationality] = useState('default');
   const [residenceCountry, setResidenceCountry] = useState('default');
   const [bankAccountString, setBankAccountString] = useState('');
+  const [introductionString, setIntroductionString] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(false);
   const [enableBtn, setEnableBtn] = useState(false);
@@ -366,7 +367,8 @@ const BasicFormPage = (props) => {
         usernameRef &&
           age !== 'default' &&
           nationality !== 'default' &&
-          residenceCountry !== 'default'
+          residenceCountry !== 'default' &&
+          introductionString
       );
     } else {
       setEnableBtn(
@@ -375,7 +377,8 @@ const BasicFormPage = (props) => {
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
           (linkedInUrlRef || certificate) &&
-          bankAccountString
+          bankAccountString &&
+          introductionString
       );
     }
   }, [
@@ -387,6 +390,7 @@ const BasicFormPage = (props) => {
     residenceCountry,
     certificate,
     bankAccountString,
+    introductionString,
   ]);
 
   // is Helper:
@@ -470,6 +474,11 @@ const BasicFormPage = (props) => {
     navigate,
     dispatch,
   ]);
+  function handleIntroductionTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setIntroductionString(typingInput);
+  }
   function handleBankAccountTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
@@ -843,17 +852,20 @@ const BasicFormPage = (props) => {
                   inputRef={priceRef}
                 />
               )} */}
-              {!props.isHelpee && <FullLineTextBox
-                title={t('bank_account_title')}
-                placeholder={t('bank_account_placeholder')}
-                maxLength='1000'
-                inputRef={bankAccountRef}
-                onChange={handleBankAccountTyping}
-              />}
+              {!props.isHelpee && (
+                <FullLineTextBox
+                  title={t('bank_account_title')}
+                  placeholder={t('bank_account_placeholder')}
+                  maxLength='1000'
+                  inputRef={bankAccountRef}
+                  onChange={handleBankAccountTyping}
+                />
+              )}
               <FullLineTextBox
-                title={t('introduction')}
+                title={t('introduction_title')}
                 placeholder={t('introduction_placeholder')}
                 inputRef={introductionRef}
+                onChange={handleIntroductionTyping}
                 marginTop='15px'
               />
               <FullLineTextBox

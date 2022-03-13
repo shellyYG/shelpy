@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconContext } from 'react-icons';
 import { CgProfile } from 'react-icons/cg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { onClickUpdateActiveIconTarget } from '../../store/general/general-actions';
@@ -25,6 +25,9 @@ const ProfileIcon = (props) => {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
   const [active, setActive] = useState(false);
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
   
   
   function handleProfileClick(e) {
@@ -59,18 +62,44 @@ const ProfileIcon = (props) => {
     });
     window.location.reload();
   }
-  function handleToHelpeeDashboard(e) {
+  
+  function handleToHelpeePartner(e) {
     e.preventDefault();
-    let path = `/${currentLanguage}/helpee/dashboard`;
+    let path = `/${currentLanguage}/helpee/partners`;
     if (window.location.search) path += window.location.search;
     navigate(path);
   }
-  function handleToHelperDashboard(e) {
+  function handleToHelperPartner(e) {
     e.preventDefault();
-    let path = `/${currentLanguage}/helper/dashboard`;
+    let path = `/${currentLanguage}/helper/partners`;
     if (window.location.search) path += window.location.search;
     navigate(path);
   }
+  function handleToHelpeeBookings(e) {
+    e.preventDefault();
+    let path = `/${currentLanguage}/helpee/bookings`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
+  function handleToHelperBookings(e) {
+    e.preventDefault();
+    let path = `/${currentLanguage}/helper/bookings`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
+  function handleToHelpeeRequests(e) {
+    e.preventDefault();
+    let path = `/${currentLanguage}/helpee/requests`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
+  function handleToHelperOffers(e) {
+    e.preventDefault();
+    let path = `/${currentLanguage}/helper/offers`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
+  
   function handleSignIn(e) {
     e.preventDefault();
     let path = `/${currentLanguage}/sign-in`;
@@ -81,13 +110,13 @@ const ProfileIcon = (props) => {
   function handleToHelpeeChatroom(e) {
     e.preventDefault();
     let path = `/${currentLanguage}/helpee/chatroom`;
-    if (window.location.search) path += window.location.search;
+    if (refId) path += `?refId=${refId}`;
     navigate(path);
   }
   function handleToHelperChatroom(e) {
     e.preventDefault();
     let path = `/${currentLanguage}/helper/chatroom`;
-    if (window.location.search) path += window.location.search;
+    if (refId) path += `?refId=${refId}`;
     navigate(path);
   }
   function handleToHelpeeUpdateProfile(e) {
@@ -119,8 +148,18 @@ const ProfileIcon = (props) => {
                 <>
                   {/* {<NavbarIdentity isHelpee={true} />} */}
                   {props.isHelpeeAuthenticated && (
-                    <div onClick={handleToHelpeeDashboard}>
-                      {t('view_helpee_dashboard')}
+                    <div onClick={handleToHelpeePartner}>
+                      {t('view_helpee_partners')}
+                    </div>
+                  )}
+                  {props.isHelpeeAuthenticated && (
+                    <div onClick={handleToHelpeeBookings}>
+                      {t('my_bookings')}
+                    </div>
+                  )}
+                  {props.isHelpeeAuthenticated && (
+                    <div onClick={handleToHelpeeRequests}>
+                      {t('my_requests')}
                     </div>
                   )}
                   {props.isHelpeeAuthenticated && (
@@ -144,9 +183,20 @@ const ProfileIcon = (props) => {
               {userRole === 'helper' && (
                 <>
                   {/* {<NavbarIdentity isHelpee={false} />} */}
+                  
                   {props.isHelperAuthenticated && (
-                    <div onClick={handleToHelperDashboard}>
-                      {t('view_helper_dashboard')}
+                    <div onClick={handleToHelperPartner}>
+                      {t('view_helper_partners')}
+                    </div>
+                  )}
+                  {props.isHelperAuthenticated && (
+                    <div onClick={handleToHelperBookings}>
+                      {t('my_bookings')}
+                    </div>
+                  )}
+                  {props.isHelperAuthenticated && (
+                    <div onClick={handleToHelperOffers}>
+                      {t('my_offers')}
                     </div>
                   )}
                   {props.isHelperAuthenticated && (

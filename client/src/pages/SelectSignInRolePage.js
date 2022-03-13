@@ -18,7 +18,6 @@ const SelectSignInRolePage = (props) => {
   const [enableBtn, setEnableBtn] = useState(false);
 
   const { signInRole } = useSelector((state) => state.general);
-  console.log('signInRole: ', signInRole);
 
   useEffect(() => {
     if (signInRole) {
