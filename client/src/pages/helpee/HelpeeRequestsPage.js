@@ -91,6 +91,7 @@ const HelpeeRequestsPage = (props) => {
               profilePicPath={option.profilePicPath}
               languages={option.languages}
               isAnonymous={option.isAnonymous}
+              introduction={option.introduction}
             />
           ))}
         </div>

@@ -220,6 +220,7 @@ const HelperSignUpPasswordPage = () => {
                 marginRight: '20px',
                 cursor: 'pointer',
                 marginBottom: 'auto',
+                width: '100px'
               }}
               ref={consentRef}
             />

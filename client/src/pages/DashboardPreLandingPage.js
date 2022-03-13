@@ -71,7 +71,7 @@ const DashboardPreLandingPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate(`/${currentLanguage}/helpee/dashboard`, {
+          navigate(`/${currentLanguage}/helpee/bookings`, {
             replace: true,
           });
         }
@@ -105,7 +105,7 @@ const DashboardPreLandingPage = (props) => {
             html: <p>{t(message)}</p>,
             icon: 'success',
           });
-          navigate(`/${currentLanguage}/helper/dashboard`, {
+          navigate(`/${currentLanguage}/helper/bookings`, {
             replace: true,
           });
         }

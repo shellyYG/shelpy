@@ -132,7 +132,7 @@
   "home_unsubscribe": "取消訂閱",
   "unsubscribe_cta": "取消訂閱",
   "helpee_organization": "目標",
-  "helper_organization": "待過的地方",
+  "helper_organization": "待過的機構",
   "home_at_any_time": "。",
   "home_have_account_sign_in": "已經有帳號了嗎？按此登入",
 
@@ -146,6 +146,9 @@
 
   "welcome": "歡迎使用過來人App",
   "welcome_name": "很高興見到你，{{ name }} ",
+
+  "offers": "服務項目",
+  "requests": "需求",
 
   "top_offers": "熱門過來人",
   "helpee_mkt_affordable_price": "請朋友吃頓飯的價格",
@@ -218,6 +221,8 @@
   "next": "下一步 ❯",
   "confirm": "確認送出 ❯",
   "notes": "註記",
+  "helpee_questions": "新鮮人想問的問題是",
+  "my_questions": "我想問的問題是",
   "questions": "想問的問題",
   "notes_placeholder": "有任何想添加的資訊，請在此添加",
   "bank_account_title": "銀行帳號（我們將根據你的收入按月支付給你） *",
@@ -595,7 +600,7 @@
   "booking_card_waiting_helper_confirm": "還在等待 {{helperUsername}} 同意位於 {{appointmentDate}} {{appointmentTime}} 的會議時間。",
   "my_requests": "我的需求",
   "my_bookings": "我的預約情況",
-  "my_offers": "我的服務",
+  "my_offers": "我的服務項目",
   "potential_customers": "匹配到的新鮮人",
   "potential_helpers": "匹配到的過來人",
   "refresh": "重新整理以更新最新總覽狀況",

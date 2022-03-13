@@ -147,6 +147,9 @@
   "welcome": "Welcome to Shelpy",
   "welcome_name": "Welcome, {{ name }}",
 
+  "offers": "Offers ",
+  "requests": "Requests ",
+
   "top_offers": "Top Offers",
   "helpee_mkt_affordable_price": "Pay reasonable price - just as treating a friend to a meal",
   "helpee_mkt_affordable_price_subtitle1": "Spend on average only 20-30 Euro before you make your final decision.",
@@ -218,6 +221,8 @@
   "next": "Next ❯",
   "confirm": "Confirm ❯",
   "notes": "Notes",
+  "helpee_questions": "Helpee Question is",
+  "my_questions": "My Question is",
   "questions": "questions",
   "bank_account_title": "Bank Account (We will pay you on monthly basis according to your earning) *",
   "bank_account_placeholder": "IBAN: DEXXX, BIC: XXX, Account: XXX, Bank Address: XXX",

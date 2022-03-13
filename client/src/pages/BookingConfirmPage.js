@@ -25,8 +25,12 @@ const BookingConfirmPage = (props) => {
   const navigate = useNavigate();
   
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  console.log('currentPathname: ', currentPathname);
+  
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
+  const currentPage = routeParts[routeParts.length-1];
+
 
   const meetDateRef = useRef();
   const meetTimeRef = useRef();
@@ -67,6 +71,7 @@ const BookingConfirmPage = (props) => {
 
   const [enableBtn, setEnableBtn] = useState(false);
   const [loading, setIsLoading] = useState(false);
+  const [questionsString, setQuestionsString] = useState('');
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -116,7 +121,7 @@ const BookingConfirmPage = (props) => {
         appointmentDate: meetDateRef.current.value,
         appointmentTime: meetTimeRef.current.value,
         appointmentTimestamp: unixTime,
-        notes: notesRef.current.value,
+        questions: notesRef.current.value,
         bookingStatus: 'created', // should NOT have bookingId here as inserted data
         requestId,
         offerId,
@@ -146,10 +151,21 @@ const BookingConfirmPage = (props) => {
     }
     setIsLoading(true);
   }
+  function handleQuestionsTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setQuestionsString(typingInput);
+  }
 
   useEffect(() => {
-    setEnableBtn(meetDateRef && meetTimeRef);
-  }, [meetDateRef, meetTimeRef]);
+    console.log('currentPage: ', currentPage);
+    if (currentPage === 'confirm-booking') {
+      console.log('yes')
+      setEnableBtn(meetDateRef && meetTimeRef);
+    } else if (currentPage === 'update-booking') {
+      setEnableBtn(meetDateRef && meetTimeRef && questionsString);
+    }
+  }, [meetDateRef, meetTimeRef, questionsString, currentPage]);
 
   const handleDateInput = (e) => {
     e.preventDefault();
@@ -193,8 +209,8 @@ const BookingConfirmPage = (props) => {
           icon: 'success',
         });
         const path = props.isHelpee
-          ? `/${currentLanguage}/helpee/dashboard?refId=${refId}`
-          : `/${currentLanguage}/helper/dashboard?refId=${refId}`;
+          ? `/${currentLanguage}/helpee/bookings?refId=${refId}`
+          : `/${currentLanguage}/helper/bookings?refId=${refId}`;
         navigate(path);
       }
       dispatch(clearBookingNotificationStatus());
@@ -242,12 +258,12 @@ const BookingConfirmPage = (props) => {
           )}
         </div>
         <div className='form-inner'>
-          <form action=''>
+          <form action='' style={{ width: '40vw'}}>
             {props.isHelpee && (
               <>
                 <div className='form-row'>
                   <DateForm
-                    title={`${t('appointment_date')} *`}
+                    title={`${t('appointment_date')}`}
                     handleInput={handleDateInput}
                     value={meetDate}
                     dateFormRef={meetDateRef}
@@ -255,16 +271,17 @@ const BookingConfirmPage = (props) => {
                   <DropDown
                     selected={meetTime}
                     handleSelect={setMeetTime}
-                    title={`${t('appointment_time')} *`}
+                    title={`${t('appointment_time')}`}
                     selectRef={meetTimeRef}
                     options={meetTimeOptions}
                     isTime={true}
                   />
                 </div>
                 <LongTextBox
-                  title={t('leave_notes_to_helper')}
+                  title={`${t('leave_notes_to_helper')} *`}
                   placeholder={t('leave_notes_to_helper_details')}
                   inputRef={notesRef}
+                  onChange={handleQuestionsTyping}
                 />
                 <div className='form-row'>
                   {t('price_per_duration_min', {

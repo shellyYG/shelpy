@@ -778,7 +778,7 @@ code {
   align-items: stretch;
   flex-direction: row;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-size: cover;
   background-position: center;
 }
@@ -1312,6 +1312,11 @@ footer {
   width: 100%;
   margin-top: 10px;
 }
+.nameWidth {
+  width: 170px;
+  line-break: anywhere;
+  margin-left: 10px;
+}
 .smallWidth {
   width: 130px;
   line-break: anywhere;
@@ -1717,11 +1722,12 @@ input[type="checkbox" i] {
   object-fit: cover;
 }
 .statusWidth {
-    width: 300px;
+  width: 300px;
 }
 .btnWidth {
-    width: fit-content;
-  }
+  width: fit-content;
+}
+
 
 @media all and (max-width: 1200px) {
   .bell {
@@ -1868,7 +1874,7 @@ input[type="checkbox" i] {
     width: 80%;
   }
   .smallFlexColumn {
-    width: 50%;
+    width: 40%;
     display: flex;
     flex-direction: column;
   }
@@ -1882,6 +1888,9 @@ input[type="checkbox" i] {
   }
   .smallWidth {
     width: 25%;
+  }
+  .nameWidth {
+    width: 35%;
   }
   .checkBoxWidth {
     width: 100%;
@@ -1972,6 +1981,10 @@ input[type="checkbox" i] {
   }
   .smallWidth {
     width: 50%;
+    line-break: anywhere;
+  }
+  .nameWidth {
+    width: 100%;
     line-break: anywhere;
   }
   .mktWrapper {

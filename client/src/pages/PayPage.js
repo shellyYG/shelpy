@@ -284,7 +284,7 @@ const PayPage = () => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        navigate(`/${currentLanguage}/helpee/dashboard?refId=${refId}`);
+        navigate(`/${currentLanguage}/helpee/bookings?refId=${refId}`);
       }
       dispatch(clearPayHelperStatus());
       sweetAlertAndNavigate(payHelperStatus, payHelperStatusMessage);

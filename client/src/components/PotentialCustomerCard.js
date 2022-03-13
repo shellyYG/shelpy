@@ -147,12 +147,15 @@ function PotentialCustomerCard(props) {
           </div>
         )}
       </div>
-      <div className='smallWidth'>
+      <div className='nameWidth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.partnerName}
             </h3>
+            <p style={{ fontSize: '12px' }}>
+              {t('introduction')}:{' '}{props.introduction}
+            </p>
           </div>
         </div>
       </div>
@@ -200,7 +203,7 @@ function PotentialCustomerCard(props) {
       <div className='checkBoxWidth'>
         {t('helpee_organization')} : {props.organization || t('na')}
       </div>
-      <div className='checkBoxWidth'>
+      <div className='checkBoxWidth' style={{ marginLeft: '5px' }}>
         <div className='contentBx'>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <div>
@@ -209,6 +212,9 @@ function PotentialCustomerCard(props) {
                 partnerName={props.partnerName}
                 isHelpee={false}
               />
+              <p style={{ fontSize: '12px', marginTop: '10px' }}>
+                {t('requests')} {t('notes')}: {props.notes}
+              </p>
             </div>
           </div>
         </div>

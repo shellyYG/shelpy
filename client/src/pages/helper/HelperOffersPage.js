@@ -99,6 +99,7 @@ const HelperOffersPage = (props) => {
               languages={option.languages}
               isAnonymous={option.isAnonymous}
               duration={option.duration}
+              introduction={option.introduction}
             />
           ))}
         </div>

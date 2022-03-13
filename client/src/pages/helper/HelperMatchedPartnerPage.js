@@ -82,6 +82,8 @@ const HelperMatchedPartnerPage = (props) => {
               bookingId={option.bookingId}
               bookingStatus={option.bookingStatus}
               organization={option.organization}
+              notes={option.notes || t('na')}
+              introduction={option.introduction || t('na')}
             />
           ))}
         </div>

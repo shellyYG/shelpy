@@ -176,12 +176,13 @@ function OfferCard(props) {
         )}
       </div>
 
-      <div className='smallWidth'>
+      <div className='nameWidth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.helperName}
             </h3>
+            <p style={{ fontSize: '12px' }}>{t('introduction')}:{' '}{props.introduction}</p>
           </div>
         </div>
       </div>
@@ -228,13 +229,13 @@ function OfferCard(props) {
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '12px', padding: '6px' }}>
             {t('offer_id')}: {props.offerId}
           </p>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '12px', padding: '6px' }}>
             {t('price_per_duration_min', { price: props.price, duration })}
           </p>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '12px', padding: '6px' }}>
             {t('speaks')}: {translatedSpeakingLanguages}
           </p>
         </div>
@@ -243,12 +244,12 @@ function OfferCard(props) {
         <div className='contentBx'>
           <p
             style={{
-              fontWeight: '12px',
+              fontSize: '12px',
               padding: '6px',
               lineBreak: 'anywhere',
             }}
           >
-            {t('notes')}: {props.notes || t('na')}
+            {t('offers')}{' '}{t('notes')}: {props.notes || t('na')}
           </p>
         </div>
       </div>

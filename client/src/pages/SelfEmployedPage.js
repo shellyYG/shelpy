@@ -156,7 +156,7 @@ const SelfEmployedPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = `/${currentLanguage}/helpee/dashboard`;
+        let path = `/${currentLanguage}/helpee/items`;
         if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
@@ -196,7 +196,7 @@ const SelfEmployedPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = `/${currentLanguage}/helper/dashboard`;
+        let path = `/${currentLanguage}/helper/items`;
         if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }

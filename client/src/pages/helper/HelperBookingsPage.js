@@ -43,7 +43,6 @@ const HelperBookingsPage = (props) => {
         {!props.helperName && (
           <h2 style={{ margin: '15px auto 0px' }}>{t('welcome')}</h2>
         )}
-        
       </div>
       <div className='orderHistoryBtnWrapper'>
         <div style={{ margin: 'auto', display: 'flex', flexDirection: 'row' }}>
@@ -93,6 +92,7 @@ const HelperBookingsPage = (props) => {
                 languages={option.languages}
                 isAnonymous={option.helpeeAnonymous}
                 notes={option.notes}
+                questions={option.questions}
               />
             )
           )}

@@ -26,7 +26,7 @@ const HelperAddServicePage = () => {
         if (window.location.search) path += window.location.search;
         break;
       case 'viewDashboard':
-        path = `/${currentLanguage}/helper/dashboard`;
+        path = `/${currentLanguage}/helper/bookings`;
         if (window.location.search) path += window.location.search;
         break;
       default:

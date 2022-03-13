@@ -178,7 +178,7 @@ const HelpeeSignUpPasswordPage = () => {
                 padding: '5px 10px',
               }}
             >
-              {t('no_email_warning_helpee')}: {' '}
+              {t('no_email_warning_helpee')}:{' '}
               <a
                 href={`/${currentLanguage}/helpee/home?refId=${refId}`}
                 rel='noreferrer'
@@ -216,6 +216,7 @@ const HelpeeSignUpPasswordPage = () => {
                 marginRight: '20px',
                 cursor: 'pointer',
                 marginBottom: 'auto',
+                width: '100px',
               }}
               ref={consentRef}
             />

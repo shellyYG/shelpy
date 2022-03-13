@@ -496,7 +496,7 @@ const BasicFormPage = (props) => {
       <div className='form-center-wrapper'>
         <div className='container' style={{ width: '100%' }}>
           <div className='form-inner' style={{ display: 'flex' }}>
-            <form action='' method='post' encType='multipart/form-data'>
+            <form action='' method='post' encType='multipart/form-data' style={{ width: '50vw'}}>
               <div className='form-row'>
                 <div
                   className='form-wrapper'

@@ -89,13 +89,13 @@ const ProfileIcon = (props) => {
   }
   function handleToHelpeeRequests(e) {
     e.preventDefault();
-    let path = `/${currentLanguage}/helpee/requests`;
+    let path = `/${currentLanguage}/helpee/items`;
     if (window.location.search) path += window.location.search;
     navigate(path);
   }
   function handleToHelperOffers(e) {
     e.preventDefault();
-    let path = `/${currentLanguage}/helper/offers`;
+    let path = `/${currentLanguage}/helper/items`;
     if (window.location.search) path += window.location.search;
     navigate(path);
   }

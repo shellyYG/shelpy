@@ -111,6 +111,8 @@ const HelpeeBookingsPage = (props) => {
                 appointmentTime={option.appointmentTime}
                 languages={option.languages}
                 isAnonymous={option.helperAnonymous}
+                notes={option.notes}
+                questions={option.questions}
               />
             )
           )}

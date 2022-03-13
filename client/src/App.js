@@ -326,7 +326,7 @@ function App() {
               }
             />
             <Route
-              path={`/:locale/helpee/requests`}
+              path={`/:locale/helpee/items`}
               element={
                 isHelpeeAuthenticated ? (
                   <HelpeeRequestsPage
@@ -340,7 +340,7 @@ function App() {
               }
             />
             <Route
-              path={`/:locale/helper/offers`}
+              path={`/:locale/helper/items`}
               element={
                 isHelperAuthenticated ? (
                   <HelperOffersPage

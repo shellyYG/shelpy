@@ -134,7 +134,7 @@ const { t } = useTranslation();
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = `/${currentLanguage}/helpee/dashboard`;
+        let path = `/${currentLanguage}/helpee/bookings`;
         if (window.location.search) path += window.location.search;
         navigate(path);
       }

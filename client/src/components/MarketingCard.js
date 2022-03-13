@@ -262,25 +262,25 @@ function MarketingCard(props) {
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '12px', padding: '6px' }}>
             {t('offer_id')}: {props.id}
           </p>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '12px', padding: '6px' }}>
             {t('helper_organization')}: {props.organization || t('na')}
           </p>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '12px', padding: '6px' }}>
             {t('price_per_duration_min', { price: props.price, duration })}
           </p>
         </div>
       </div>
       <div className='checkBoxWidth'>
         <div className='contentBx'>
-          <p style={{ fontWeight: '12px', padding: '6px' }}>
+          <p style={{ fontSize: '12px', padding: '6px' }}>
             {t('speaks')}: {translatedSpeakingLanguages}
           </p>
           <p
             style={{
-              fontWeight: '12px',
+              fontSize: '12px',
               padding: '6px',
               lineBreak: 'anywhere',
             }}
@@ -289,7 +289,7 @@ function MarketingCard(props) {
           </p>
           <p
             style={{
-              fontWeight: '12px',
+              fontSize: '12px',
               padding: '6px',
               lineBreak: 'anywhere',
             }}

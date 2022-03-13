@@ -171,12 +171,15 @@ function PotentialHelperCard(props) {
           </div>
         )}
       </div>
-      <div className='smallWidth'>
+      <div className='nameWidth'>
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.partnerName}
             </h3>
+            <p style={{ fontSize: '12px' }}>
+              {t('introduction')}:{' '}{props.introduction}
+            </p>
           </div>
         </div>
       </div>
@@ -246,12 +249,15 @@ function PotentialHelperCard(props) {
       )}
 
       {
-        <div className='checkBoxWidth'>
+        <div className='checkBoxWidth' style={{ marginLeft: '5px' }}>
           <ChatIcon
             onClick={handleChat}
             partnerName={props.partnerName}
             isHelpee={true}
           />
+          <p style={{ fontSize: '12px', marginTop: '10px' }}>
+            {t('offers')} {t('notes')}: {props.notes}
+          </p>
         </div>
       }
     </div>
