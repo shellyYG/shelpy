@@ -258,13 +258,15 @@ const UniFormPage = (props) => {
   return (
     <div
       className='main-content-wrapper'
-      style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
+      style={{ height: 500, backgroundImage: 'none', flexDirection: 'row' }}
     >
-      <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        {props.isHelpee && t('helpee_uni_form_title')}
-        {!props.isHelpee && t('helper_uni_form_title')}
-      </h1>
       <div className='form-center-wrapper'>
+        <div>
+          <h1 style={{ textAlign: 'center', margin: '30px 0' }}>
+            {props.isHelpee && t('helpee_uni_form_title')}
+            {!props.isHelpee && t('helper_uni_form_title')}
+          </h1>
+        </div>
         <div className='container'>
           <div className='form-inner'>
             <form action=''>

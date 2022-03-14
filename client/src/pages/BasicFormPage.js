@@ -514,13 +514,14 @@ const BasicFormPage = (props) => {
   return (
     <div
       className='main-content-wrapper'
-      style={{ height: 500, backgroundImage: 'none', flexDirection: 'column' }}
+      style={{ height: 500, backgroundImage: 'none', flexDirection: 'row' }}
     >
-      <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
-        {t('update_basic_information')}
-      </h1>
-
       <div className='form-center-wrapper'>
+        <div>
+          <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+            {t('update_basic_information')}
+          </h1>
+        </div>
         <div className='container' style={{ width: '100%' }}>
           <div className='form-inner' style={{ display: 'flex' }}>
             <form

@@ -282,6 +282,36 @@ export const bookingStatusOptionsForHelper = [
   },
 ];
 
+export const timeZoneOptions = [
+  { value: 'default', label: 'please_select_option' },
+  { value: 'gmtMinus11', label: 'timeZone_gmt_minus_11' },
+  { value: 'gmtMinus10', label: 'timeZone_gmt_minus_10' },
+  { value: 'gmtMinus9', label: 'timeZone_gmt_minus_9' },
+  { value: 'gmtMinus8', label: 'timeZone_gmt_minus_8' },
+  { value: 'gmtMinus7', label: 'timeZone_gmt_minus_7' },
+  { value: 'gmtMinus6', label: 'timeZone_gmt_minus_6' },
+  { value: 'gmtMinus5', label: 'timeZone_gmt_minus_5' },
+  { value: 'gmtMinus4', label: 'timeZone_gmt_minus_4' },
+  { value: 'gmtMinus3', label: 'timeZone_gmt_minus_3' },
+  { value: 'gmtMinus2', label: 'timeZone_gmt_minus_2' },
+  { value: 'gmtMinus1', label: 'timeZone_gmt_minus_1' },
+  { value: 'gmtPlus0', label: 'timeZone_gmt_plus_0' },
+  { value: 'gmtPlus1', label: 'timeZone_gmt_plus_1' },
+  { value: 'gmtPlus2', label: 'timeZone_gmt_plus_2' },
+  { value: 'gmtPlus3', label: 'timeZone_gmt_plus_3' },
+  { value: 'gmtPlus4', label: 'timeZone_gmt_plus_4' },
+  { value: 'gmtPlus5', label: 'timeZone_gmt_plus_5' },
+  { value: 'gmtPlus6', label: 'timeZone_gmt_plus_6' },
+  { value: 'gmtPlus7', label: 'timeZone_gmt_plus_7' },
+  { value: 'gmtPlus8', label: 'timeZone_gmt_plus_8' },
+  { value: 'gmtPlus9', label: 'timeZone_gmt_plus_9' },
+  { value: 'gmtPlus10', label: 'timeZone_gmt_plus_10' },
+  { value: 'gmtPlus11', label: 'timeZone_gmt_plus_11' },
+  { value: 'gmtPlus12', label: 'timeZone_gmt_plus_12' },
+  { value: 'gmtPlus13', label: 'timeZone_gmt_plus_13' },
+  { value: 'gmtPlus14', label: 'timeZone_gmt_plus_14' },
+];
+
 export const WFHOptions = [
   { value: 'default', label: 'please_select_option' },
   { value: 'Yes, completely WFH', label: 'job_form_wfh_100_wfh' },

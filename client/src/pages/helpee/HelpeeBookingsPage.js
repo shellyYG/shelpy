@@ -137,6 +137,7 @@ const HelpeeBookingsPage = (props) => {
                   bookingStatus={option.bookingStatus}
                   appointmentDate={option.appointmentDate}
                   appointmentTime={option.appointmentTime}
+                  timeZone={option.timeZone}
                   languages={option.languages}
                   isAnonymous={option.helperAnonymous}
                   notes={option.notes}

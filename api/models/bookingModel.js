@@ -20,6 +20,7 @@ async function updateBookingStatus(data) {
     bookingStatus,
     appointmentDate,
     appointmentTime,
+    timeZone,
     appointmentTimestamp,
     questions,
     bookingId
@@ -27,16 +28,17 @@ async function updateBookingStatus(data) {
   let sqlquery = '';
   const filteredBookingQuestions = questions || '';
     if (
-      (appointmentDate && appointmentTime && appointmentTimestamp)
+      (appointmentDate && appointmentTime && appointmentTimestamp && timeZone)
     ) {
       sql = `
-        UPDATE bookings SET bookingStatus =? , appointmentDate =?, appointmentTime =?, appointmentTimeStamp =?, questions=? WHERE id=?`;
+        UPDATE bookings SET bookingStatus =? , appointmentDate =?, appointmentTime =?, appointmentTimeStamp =?, questions=?, timeZone=? WHERE id=?`;
         sqlquery = await query(sql, [
           bookingStatus,
           appointmentDate,
           appointmentTime,
           appointmentTimestamp,
           filteredBookingQuestions,
+          timeZone,
           bookingId,
         ]);
     } else {

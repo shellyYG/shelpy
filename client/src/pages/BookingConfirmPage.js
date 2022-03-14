@@ -6,10 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import DropDown from '../components/Dropdown';
 import DateForm from '../components/DateForm';
-import FullLineTextBox from '../components/FullLineTextBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import {
-  meetTimeOptions,
+  meetTimeOptions, timeZoneOptions,
 } from '../store/options/service-options';
 import {
   postBookingStatus,
@@ -30,10 +29,10 @@ const BookingConfirmPage = (props) => {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
   const currentPage = routeParts[routeParts.length-1];
-
-
+  
   const meetDateRef = useRef();
   const meetTimeRef = useRef();
+  const timeZoneRef = useRef();
   const notesRef = useRef();
 
   const [searchParams] = useSearchParams();
@@ -60,7 +59,9 @@ const BookingConfirmPage = (props) => {
   const fourthType = searchParams.get('fourthType');
   const bookingDate = searchParams.get('bookingDate');
   const bookingTime = searchParams.get('bookingTime');
+  const bookingTimeZone = searchParams.get('timeZone');
   const bookingNotes = searchParams.get('bookingNotes');
+  console.log('query string timezone: ', bookingTimeZone);
 
   const {
     bookingStatus,
@@ -72,6 +73,15 @@ const BookingConfirmPage = (props) => {
   const [enableBtn, setEnableBtn] = useState(false);
   const [loading, setIsLoading] = useState(false);
   const [questionsString, setQuestionsString] = useState('');
+  const [translatedTimeZone, setTranslatedTimeZone] = useState('');
+
+  useEffect(() => {
+    const timeZoneObj = timeZoneOptions.filter(
+      (o) => o.value === bookingTimeZone
+    );
+    if (timeZoneObj && timeZoneObj[0])
+      setTranslatedTimeZone(t(timeZoneObj[0].label));
+  }, [bookingTimeZone, t]);
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -80,7 +90,8 @@ const BookingConfirmPage = (props) => {
 
   today = `${yyyy}-${mm}-${dd}`;
   const [meetDate, setMeetDate] = useState(today); // display will be 2021/11/12 though
-  const [meetTime, setMeetTime] = useState('8am-9am');
+  const [meetTime, setMeetTime] = useState('default');
+  const [timeZone, settimeZone] = useState('default');
 
   async function handleChangeBooking(e) {
     e.preventDefault();
@@ -98,7 +109,6 @@ const BookingConfirmPage = (props) => {
     if (props.isHelpee) {
       const meetStartTime = meetTimeRef.current.value;
       const timeAMPM = meetStartTime.includes('am') ? 'am':'pm';
-      console.log('timeAMPM: ', timeAMPM);
       const timeHourParts = meetStartTime.substring(0, meetStartTime.length-2).split(':');
       
       let timeHour = timeHourParts[0];
@@ -107,7 +117,6 @@ const BookingConfirmPage = (props) => {
       } else {
         timeHour = parseInt(timeHour) + 12;
       }
-      console.log('timeHour: ', timeHour);
 
       const dates = meetDateRef.current.value.split('-');
       const [year, month, day] = dates;
@@ -120,11 +129,13 @@ const BookingConfirmPage = (props) => {
       const data = {
         appointmentDate: meetDateRef.current.value,
         appointmentTime: meetTimeRef.current.value,
+        timeZone: timeZoneRef.current.value,
         appointmentTimestamp: unixTime,
         questions: notesRef.current.value,
         bookingStatus: 'created', // should NOT have bookingId here as inserted data
         requestId,
         offerId,
+        bookingId,
         helpeeId,
         helperId,
         helpeeUsername,
@@ -162,12 +173,14 @@ const BookingConfirmPage = (props) => {
   useEffect(() => {
     console.log('currentPage: ', currentPage);
     if (currentPage === 'confirm-booking') {
-      console.log('yes')
-      setEnableBtn(meetDateRef && meetTimeRef);
+      console.log('yes');
+      setEnableBtn(meetDateRef && meetTimeRef !== 'default');
     } else if (currentPage === 'update-booking') {
-      setEnableBtn(meetDateRef && meetTimeRef && questionsString);
+      setEnableBtn(
+        meetDateRef && meetTimeRef && timeZone !== 'default' && questionsString
+      );
     }
-  }, [meetDateRef, meetTimeRef, questionsString, currentPage]);
+  }, [meetDateRef, meetTime, timeZone, questionsString, currentPage]);
 
   const handleDateInput = (e) => {
     e.preventDefault();
@@ -232,108 +245,133 @@ const BookingConfirmPage = (props) => {
   ]);
 
   return (
-    <div className='form-center-wrapper'>
-      <div
-        className='container'
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
-        <div style={{ margin: '10px', textAlign: 'center' }}>
-          {props.isHelpee && (
-            <>
-              <h3>
-                {t(
-                  'helpee_booking_confirm_the_order_is_only_confirmed_condition'
-                )}
-              </h3>
-            </>
-          )}
-          {!props.isHelpee && (
-            <>
-              <h3>
-                {t(
-                  'helper_booking_confirm_the_order_is_only_confirmed_condition'
-                )}
-              </h3>
-              <h3>{t('helper_dont_agree_with_time')} </h3>
-              <h3>{t('helper_please_chat_with_helpee_to_change_time')}</h3>
-            </>
-          )}
-        </div>
-        <div className='form-inner'>
-          <form action='' style={{ width: '40vw'}}>
+    <div
+      clanssName='main-content-wrapper'
+      style={{ height: '500px', flexDirection: 'row' }}
+    >
+      <div className='form-center-wrapper'>
+        <div
+          className='container'
+          style={{ display: 'flex', flexDirection: 'row' }}
+        >
+          <div style={{ margin: '10px', textAlign: 'center' }}>
             {props.isHelpee && (
               <>
-                <div className='form-row'>
-                  <DateForm
-                    title={`${t('appointment_date')}`}
-                    handleInput={handleDateInput}
-                    value={meetDate}
-                    dateFormRef={meetDateRef}
-                  />
-                  <DropDown
-                    selected={meetTime}
-                    handleSelect={setMeetTime}
-                    title={`${t('appointment_time')}`}
-                    selectRef={meetTimeRef}
-                    options={meetTimeOptions}
-                    isTime={true}
-                  />
-                </div>
-                <LongTextBox
-                  title={`${t('leave_notes_to_helper')} *`}
-                  placeholder={t('leave_notes_to_helper_details')}
-                  inputRef={notesRef}
-                  onChange={handleQuestionsTyping}
-                />
-                <div className='form-row'>
-                  {t('price_per_duration_min', {
-                    price,
-                    duration,
-                  })}
-                </div>
+                <h3>
+                  {t(
+                    'helpee_booking_confirm_the_order_is_only_confirmed_condition'
+                  )}
+                </h3>
               </>
             )}
-
             {!props.isHelpee && (
               <>
-                <div className='form-wrapper'>
-                  <label style={{ fontWeight: 'bold' }}>
-                    {t('appointment_date')} (YYYY-MM-DD)
-                  </label>
-                  <div style={{ fontSize: '14px' }}> {bookingDate} </div>
-                </div>
-                <div className='form-wrapper' style={{ marginTop: '15px' }}>
-                  <label style={{ fontWeight: 'bold' }}>
-                    {t('appointment_time')}
-                  </label>
-                  <div style={{ fontSize: '14px' }}> {bookingTime} </div>
-                </div>
-                <div className='form-wrapper' style={{ marginTop: '15px' }}>
-                  <label style={{ fontWeight: 'bold' }}>{`${t('customer')}${t(
-                    'questions'
-                  )}`}</label>
-                  <div style={{ fontSize: '14px' }}> {bookingNotes} </div>
-                </div>
+                <h3>
+                  {t(
+                    'helper_booking_confirm_the_order_is_only_confirmed_condition'
+                  )}
+                </h3>
+                <h3>{t('helper_dont_agree_with_time')} </h3>
+                <h3>{t('helper_please_chat_with_helpee_to_change_time')}</h3>
               </>
             )}
-            <div style={{ marginTop: '20px' }}>
-              <ConfirmBtn
-                cta={
-                  props.isHelpee ? t('book_appointment') : t('confirm_booking')
-                }
-                disable={!enableBtn}
-                handleConfirm={handleConfirm}
-              />
-              {!props.isHelpee && (
-                <ConfirmBtn
-                  cta={t('chat_to_change_booking')}
-                  disable={!enableBtn}
-                  backgroundColor={'#f47174'}
-                  handleConfirm={handleChangeBooking}
-                />
+          </div>
+          <div className='form-inner'>
+            <form action='' style={{ width: '70vw' }}>
+              {props.isHelpee && (
+                <>
+                  <div className='form-row'>
+                    <DateForm
+                      title={`${t('appointment_date')}`}
+                      handleInput={handleDateInput}
+                      value={meetDate}
+                      dateFormRef={meetDateRef}
+                    />
+                    <DropDown
+                      selected={meetTime}
+                      handleSelect={setMeetTime}
+                      title={`${t('appointment_time')}`}
+                      selectRef={meetTimeRef}
+                      options={meetTimeOptions}
+                      isTime={true}
+                    />
+                  </div>
+                  <div className='form-row'>
+                    <DropDown
+                      selected={timeZone}
+                      handleSelect={settimeZone}
+                      title={`${t('timeZone')}`}
+                      selectRef={timeZoneRef}
+                      options={timeZoneOptions}
+                    />
+                  </div>
+                  <LongTextBox
+                    title={`${t('leave_notes_to_helper')} *`}
+                    placeholder={t('leave_notes_to_helper_details')}
+                    inputRef={notesRef}
+                    onChange={handleQuestionsTyping}
+                  />
+                  <div className='form-row'>
+                    {t('price_per_duration_min', {
+                      price,
+                      duration,
+                    })}
+                  </div>
+                </>
               )}
-            </div>
-          </form>
+
+              {!props.isHelpee && (
+                <>
+                  <div className='form-wrapper'>
+                    <label style={{ fontWeight: 'bold' }}>
+                      {t('appointment_date')} (YYYY-MM-DD)
+                    </label>
+                    <div style={{ fontSize: '14px' }}> {bookingDate} </div>
+                  </div>
+                  <div className='form-wrapper' style={{ marginTop: '15px' }}>
+                    <label style={{ fontWeight: 'bold' }}>
+                      {t('appointment_time')}
+                    </label>
+                    <div style={{ fontSize: '14px' }}> {bookingTime} </div>
+                  </div>
+                  <div className='form-wrapper' style={{ marginTop: '15px' }}>
+                    <label style={{ fontWeight: 'bold' }}>{`${t(
+                      'timeZone'
+                    )}`}</label>
+                    <div style={{ fontSize: '14px' }}>
+                      {' '}
+                      {translatedTimeZone}
+                    </div>
+                  </div>
+                  <div className='form-wrapper' style={{ marginTop: '15px' }}>
+                    <label style={{ fontWeight: 'bold' }}>{`${t(
+                      'customer'
+                    )}${' '}${t('questions')}`}</label>
+                    <div style={{ fontSize: '14px' }}> {bookingNotes} </div>
+                  </div>
+                </>
+              )}
+              <div style={{ marginTop: '20px' }}>
+                <ConfirmBtn
+                  cta={
+                    props.isHelpee
+                      ? t('book_appointment')
+                      : t('confirm_booking')
+                  }
+                  disable={!enableBtn}
+                  handleConfirm={handleConfirm}
+                />
+                {!props.isHelpee && (
+                  <ConfirmBtn
+                    cta={t('chat_to_change_booking')}
+                    disable={!enableBtn}
+                    backgroundColor={'#f47174'}
+                    handleConfirm={handleChangeBooking}
+                  />
+                )}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

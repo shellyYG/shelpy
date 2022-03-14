@@ -10,7 +10,7 @@ import EarthIcon from './Icons/EarthIcon';
 import ChatIcon from './Icons/ChatIcon';
 import { postPayHelper, clearPayHelperStatus } from '../store/helpee/helpee-actions';
 import { useRef } from 'react';
-import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, typeOptions } from '../store/options/service-options';
+import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, timeZoneOptions, typeOptions } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
 
 
@@ -29,6 +29,7 @@ function BookingCard(props) {
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
+  const [translatedTimeZone, setTranslatedTimeZone] = useState('');
   const [helpeeFilteredBookingStatus, setHelpeeFilteredBookingStatus] =
     useState('');
   const [helperFilteredBookingStatus, setHelperFilteredBookingStatus] =
@@ -44,6 +45,8 @@ function BookingCard(props) {
     offerId: props.offerId,
     price: props.price,
   });
+
+  console.log('timeZone: ', props.timeZone)
 
   const { payHelperStatus, payHelperStatusTitle, payHelperStatusMessage } =
     useSelector((state) => state.helpee);
@@ -73,6 +76,13 @@ function BookingCard(props) {
         `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
     );
   }
+  useEffect(()=>{
+    const timeZoneObj = timeZoneOptions.filter(
+      (o) => o.value === props.timeZone
+    );
+    if (timeZoneObj && timeZoneObj[0])
+      setTranslatedTimeZone(t(timeZoneObj[0].label));
+  },[props.timeZone, t])
 
   useEffect(() => {
     let secondTypeTranslationObj;
@@ -255,7 +265,8 @@ function BookingCard(props) {
     navigate(
       `/${currentLanguage}/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&partnerName=${props.partnerName}&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
-        `&bookingNotes=${props.notes}&refId=${refId}`
+        `&timeZone=${props.timeZone}`+
+        `&bookingNotes=${props.questions}&refId=${refId}`
     );
   }
 
@@ -426,11 +437,13 @@ function BookingCard(props) {
             </button>
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_time')}: {props.appointmentDate} {t('at')}{' '}
-              {props.appointmentTime}
+              {props.appointmentTime} <br />
+              {t('timeZone')} : {translatedTimeZone}
             </p>
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('helpee_questions')}: {props.questions}
             </p>
+
             <div>
               <ChatIcon
                 onClick={handleChat}
@@ -452,6 +465,11 @@ function BookingCard(props) {
               </p>
               <p style={{ fontSize: '14px', padding: '6px' }}>
                 {t('booking_status')}: {helperFilteredBookingStatus}
+                <br />
+                {t('booking_time')}: {props.appointmentDate} {t('at')}{' '}
+                {props.appointmentTime}
+                <br />
+                {t('timeZone')} : {translatedTimeZone}
               </p>
               <p style={{ fontSize: '14px', padding: '6px' }}>
                 {t('helpee_questions')}: {props.questions}
@@ -464,6 +482,12 @@ function BookingCard(props) {
           <div className='contentBx'>
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_id')}: {props.id}
+            </p>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
+              {t('booking_time')}: {props.appointmentDate} {t('at')}{' '}
+              {props.appointmentTime}
+              <br />
+              {t('timeZone')} : {translatedTimeZone}
             </p>
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('my_questions')}: {props.questions}
@@ -496,6 +520,8 @@ function BookingCard(props) {
             </p>
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_status')}: {helpeeFilteredBookingStatus}
+              <br />
+              {t('timeZone')} : {translatedTimeZone}
             </p>
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('my_questions')}: {props.questions}
@@ -514,6 +540,9 @@ function BookingCard(props) {
             </p>
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_status')}: {helpeeFilteredBookingStatus}
+            </p>
+            <p style={{ fontSize: '14px', padding: '6px' }}>
+              {t('timeZone')} : {translatedTimeZone}
             </p>
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('my_questions')}: {props.questions}
