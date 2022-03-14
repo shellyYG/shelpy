@@ -24,7 +24,8 @@ const updateBookingStatus = async (req, res) => {
         const { bookingId, ...newData} = data;
         createdBookingId = await bookingModel.insertBooking(newData);
       } else {
-        createdBookingId = await bookingModel.insertBooking(data);
+        const { bookingId, ...newData } = data;
+        createdBookingId = await bookingModel.insertBooking(newData);
       }
         
     } else {
