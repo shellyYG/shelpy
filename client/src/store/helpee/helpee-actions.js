@@ -17,7 +17,7 @@ const helpeeBasicFormWithoutCertificatePath = '/api/helpee/basic-form';
 const helpeeConfirmEmailPath = '/api/helpee/email/confirmation';
 const helpeeCanChangePasswordPath = '/api/helpee/password/allow-change';
 const helpeeSendPasswordResetEmailPath = '/api/helpee/password/reset';
-const payHelperPath = '/api/helpee/pay';
+// const payHelperPath = '/api/helpee/pay';
 const payTapPayPath = '/api/tappay/pay';
 const helpeeChattedHelpersPath = '/api/helpee/chat/partners';
 const bookingStatusPath = '/api/booking-status';
@@ -773,52 +773,52 @@ export const onClickDeleteRequest = (data) => {
   };
 };
 
-export const postPayHelper = (data) => {
-  return async (dispatch) => {
-    const generalToken = localStorage.getItem('shelpy-token');
-    try {
-      if (!generalToken) {
-        throw Error('access_denied_please_log_in_error');
-      }
-      if (generalToken) {
-        const headers = {
-          Authorization: 'Bearer ' + generalToken,
-        };
-        const response = await axios.post(
-          payHelperPath,
-          { data },
-          {
-            headers,
-          }
-        );
-        dispatch(
-          generalActions.setBookingStatus({
-            bookingStatus: data.bookingStatus,
-          })
-        );
-        dispatch(
-          helpeeActions.updatePayHelperStatus({
-            payHelperStatus: 'success',
-            payHelperStatusTitle: 'thank_you',
-            payHelperStatusMessage: 'successfully_paid',
-          })
-        );
+// export const postPayHelper = (data) => {
+//   return async (dispatch) => {
+//     const generalToken = localStorage.getItem('shelpy-token');
+//     try {
+//       if (!generalToken) {
+//         throw Error('access_denied_please_log_in_error');
+//       }
+//       if (generalToken) {
+//         const headers = {
+//           Authorization: 'Bearer ' + generalToken,
+//         };
+//         const response = await axios.post(
+//           payHelperPath,
+//           { data },
+//           {
+//             headers,
+//           }
+//         );
+//         dispatch(
+//           generalActions.setBookingStatus({
+//             bookingStatus: data.bookingStatus,
+//           })
+//         );
+//         dispatch(
+//           helpeeActions.updatePayHelperStatus({
+//             payHelperStatus: 'success',
+//             payHelperStatusTitle: 'thank_you',
+//             payHelperStatusMessage: 'successfully_paid',
+//           })
+//         );
         
-      }
-    } catch (error) {
-      console.error(error);
-      if (error.response) {
-        dispatch(
-          helpeeActions.updatePayHelperStatus({
-            payHelperStatus: 'error',
-            payHelperStatusTitle: 'oops',
-            payHelperStatusMessage: error.response.data,
-          })
-        );
-      }
-    }
-  };
-};
+//       }
+//     } catch (error) {
+//       console.error(error);
+//       if (error.response) {
+//         dispatch(
+//           helpeeActions.updatePayHelperStatus({
+//             payHelperStatus: 'error',
+//             payHelperStatusTitle: 'oops',
+//             payHelperStatusMessage: error.response.data,
+//           })
+//         );
+//       }
+//     }
+//   };
+// };
 
 export const postPayViaTapPay = (data) => {
   console.log('postPayViaTapPay data->', data);

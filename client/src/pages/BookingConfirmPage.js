@@ -252,7 +252,7 @@ const BookingConfirmPage = (props) => {
       <div className='form-center-wrapper'>
         <div
           className='container'
-          style={{ display: 'flex', flexDirection: 'row' }}
+          style={{ display: 'flex', flexDirection: 'column' }}
         >
           <div style={{ margin: '10px', textAlign: 'center' }}>
             {props.isHelpee && (

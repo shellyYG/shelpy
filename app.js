@@ -8,7 +8,7 @@ const cors = require('cors');
 const { Server } = require('socket.io');
 const socketChat = require('./api/controllers/chatController');
 const PORT = process.env.PORT || 9000;
-const isDeveloping = 0; // TODO before push to ec2
+const isDeveloping = 1; // TODO before push to ec2
 const originURL = isDeveloping ? 'http://localhost:3000' : 'https://shelpy.co';
 
 const io = new Server(server, {

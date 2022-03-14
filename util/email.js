@@ -1,6 +1,5 @@
 require('dotenv').config();
 const sgMail = require('@sendgrid/mail');
-const nodeMailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const { default: axios } = require('axios');
 

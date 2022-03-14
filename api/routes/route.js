@@ -2,7 +2,6 @@ const router = require('express').Router();
 const multer = require('multer');
 const fs = require('fs');
 const util = require('util');
-const rateLimit = require('express-rate-limit');
 const customRateLimiter = require('../../util/customRateLimiter');
 
 const { uploadFile } = require('../../util/s3');
@@ -40,7 +39,7 @@ const {
   confirmHelpeeCanChangePassword,
   sendHelpeePasswordResetLink,
   getHelpeeAllBookings,
-  payHelper,
+  // payHelper,
   payTapPay,
   getAllChattedHelpers,
 } = require('../controllers/helpeeController');
@@ -585,12 +584,13 @@ router
     wrapAsync(updateBookingStatus)
   );
 
-router
-  .route('/api/helpee/pay')
-  .post(
-    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
-    wrapAsync(payHelper)
-  );
+// router
+//   .route('/api/helpee/pay')
+//   .post(
+//     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+//     wrapAsync(payHelper)
+//   );
+
 router
   .route('/api/tappay/pay')
   .post(

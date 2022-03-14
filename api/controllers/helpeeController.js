@@ -1,6 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
-const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET_KEY);
+// const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET_KEY);
 const jwt = require('jsonwebtoken');
 const helpeeModel = require('../models/helpeeModel');
 const bookingModel = require('../models/bookingModel');
@@ -203,29 +203,29 @@ const getAllChattedHelpers = async (req, res) => {
   }
 };
 
-const payHelper = async (req, res) => {
-  const { data } = req.body;
-  const { product, token } = data;
-  return stripe.customers
-    .create({
-      email: token.email,
-      source: token.id,
-    })
-    .then((customer) => {
-      stripe.charges.create({
-        amount: product.price * 100, // everything comes in cents in stripe
-        currency: 'eur', // usd
-        customer: customer.id,
-        receipt_email: token.email,
-        description: `${product.mainType}-${product.secondType}-${product.offerId}`,
-      });
-    })
-    .then(async (result) => {
-      await bookingModel.updateBookingStatus(data);
-      res.status(200).json(result);
-    })
-    .catch((err) => console.error(err));
-};
+// const payHelper = async (req, res) => {
+//   const { data } = req.body;
+//   const { product, token } = data;
+//   return stripe.customers
+//     .create({
+//       email: token.email,
+//       source: token.id,
+//     })
+//     .then((customer) => {
+//       stripe.charges.create({
+//         amount: product.price * 100, // everything comes in cents in stripe
+//         currency: 'eur', // usd
+//         customer: customer.id,
+//         receipt_email: token.email,
+//         description: `${product.mainType}-${product.secondType}-${product.offerId}`,
+//       });
+//     })
+//     .then(async (result) => {
+//       await bookingModel.updateBookingStatus(data);
+//       res.status(200).json(result);
+//     })
+//     .catch((err) => console.error(err));
+// };
 
 const payTapPay = async (req, res) => {
   const { data } = req.body;
@@ -262,7 +262,7 @@ module.exports = {
   confirmHelpeeCanChangePassword,
   sendHelpeePasswordResetLink,
   getHelpeeAllBookings,
-  payHelper,
+  // payHelper,
   payTapPay,
   getAllChattedHelpers,
 };

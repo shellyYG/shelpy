@@ -239,8 +239,8 @@ export const countryOptions = [
 
 export const yesOrNoOptions = [
   { value: 'default', label: 'please_select_option' },
-  { value: 1, label: 'yes_option' },
   { value: 0, label: 'no_option' },
+  { value: 1, label: 'yes_option' },
 ];
 
 export const webLanguagesOptions = [

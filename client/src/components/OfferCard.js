@@ -109,7 +109,7 @@ function OfferCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
-        setDetails('Years of experience you have: ');
+        setDetails(t('years_of_experience_you_have'));
         break;
       default:
         setTitle(t('service_types_job'));
