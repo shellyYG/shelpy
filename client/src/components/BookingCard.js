@@ -263,9 +263,11 @@ function BookingCard(props) {
   function handleBookingConfirmation(e) {
     e.preventDefault(e);
     navigate(
-      `/${currentLanguage}/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
+      `/${currentLanguage}/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}`+
+      `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&partnerName=${props.partnerName}&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
         `&timeZone=${props.timeZone}`+
+        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}`+
         `&bookingNotes=${props.questions}&refId=${refId}`
     );
   }

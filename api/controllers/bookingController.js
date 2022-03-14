@@ -17,10 +17,16 @@ const updateBookingStatus = async (req, res) => {
   let createdBookingId;
   const { bookingStatus } = data;
   try {
-    if (!data.bookingId) { // booking is not created yet
+    if (!data.bookingId || data.bookingId === 'null' || data.bookingId === undefined) { // booking is not created yet
       // create a booking
       console.log('no booking yet, create a booking');
-      createdBookingId = await bookingModel.insertBooking(data);
+      if (data.bookingId) {
+        const { bookingId, ...newData} = data;
+        createdBookingId = await bookingModel.insertBooking(newData);
+      } else {
+        createdBookingId = await bookingModel.insertBooking(data);
+      }
+        
     } else {
       // update a booking
       console.log('update a booking');

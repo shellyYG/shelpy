@@ -18,6 +18,7 @@ const HelperSignInPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
+  const emailToken = searchParams.get('emailToken');
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -77,15 +78,27 @@ const HelperSignInPage = () => {
         dispatch(getHelperAuthStatus());
         dispatch(clearSignInStatus());
         if (helperAccountStatus === 'password_created') {
-          navigate(-1);
+          if (emailToken) {
+            navigate(`/${currentLanguage}/helper/basic-form`, {replace: true});
+          } else {
+            navigate(-1);
+          }
+          
         } else {
-          navigate(-1);
+          if (emailToken) {
+            navigate(`/${currentLanguage}/helper/basic-form`, {
+              replace: true,
+            });
+          } else {
+            navigate(-1);
+          }
         }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
   }, [
     t,
+    emailToken,
     currentLanguage,
     helperAccountStatus,
     signInStatus,

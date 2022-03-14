@@ -35,7 +35,7 @@ const EmailConfirmPage = (props) => {
 
   if (loading) {
     MySwal.fire({
-      title: 'Confirming your email...',
+      title: t('verify_email'),
       html: t('do_not_close_window'),
       allowOutsideClick: false,
       showConfirmButton: false,

@@ -16,8 +16,14 @@ async function getBookingReceiverEmail(data) {
   const mainTable =
     data.role === 'helper' ? 'helper_account' : 'helpee_account';
   let sql, user;
-  if (data.bookingId) {
-    const bookingColumnToJoin = data.role === 'helper' ? 'helperId': 'helpeeId';
+  if (
+    data.bookingId &&
+    data.bookingId !== 'null' &&
+    data.bookingId !== undefined &&
+    data.bookingId !== 'undefined'
+  ) {
+    const bookingColumnToJoin =
+      data.role === 'helper' ? 'helperId' : 'helpeeId';
     sql = `
     SELECT email, notificationLanguage
     FROM ${mainTable} a

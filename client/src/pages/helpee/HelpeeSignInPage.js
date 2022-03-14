@@ -19,6 +19,7 @@ const HelpeeSignInPage = () => {
 
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
+  const emailToken = searchParams.get('emailToken');
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -33,6 +34,7 @@ const HelpeeSignInPage = () => {
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
+
 
   if (loading) {
     MySwal.fire({
@@ -80,15 +82,28 @@ const HelpeeSignInPage = () => {
         dispatch(getHelpeeAuthStatus());
         dispatch(clearSignInStatus());
         if (helpeeAccountStatus === 'password_created') {
-          navigate(-1);
+          if (emailToken) {
+            navigate(`/${currentLanguage}/helpee/basic-form`, {
+              replace: true,
+            });
+          } else {
+            navigate(-1);
+          }
         } else {
-          navigate(-1);
+          if (emailToken) {
+            navigate(`/${currentLanguage}/helpee/basic-form`, {
+              replace: true,
+            });
+          } else {
+            navigate(-1);
+          }
         }
       }
       sweetAlertAndNavigate(signInStatus, signInStatusMessage);
     }
   }, [
     t,
+    emailToken,
     currentLanguage,
     helpeeAccountStatus,
     signInStatus,
