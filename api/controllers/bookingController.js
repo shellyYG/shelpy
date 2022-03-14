@@ -54,7 +54,7 @@ const updateBookingStatus = async (req, res) => {
       initiatorName = name.username;
     }
     await sendBookingStatusReminderEmail({
-      currentLanguage: data.currentLanguage,
+      notificationLanguage: emailRes.notificationLanguage,
       emailReceiverRole,
       initiatorName: initiatorName,
       receiverEmailAddress: emailRes.email,

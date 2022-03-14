@@ -74,7 +74,7 @@ const socketChat = async (socket) => {
             id: data.helpeeId,
             message: data.message,
             urlForPartner,
-            currentLanguage: data.currentLanguage,
+            notificationLanguage: emailRes.notificationLanguage,
             receiverEmailAddress: emailRes.email,
             helpeeUsername: data.helpeeUsername,
             helperUsername: data.helperUsername,
@@ -89,7 +89,6 @@ const socketChat = async (socket) => {
             emailSendTimestamp: Date.now(),
           });
         } else if (data.author.substring(0, 6) === 'helpee') {
-          console.log('sending email to helper ', data.helperId); // TODO
           const emailRes = await generalModel.getChatroomReceiverEmail({
             role: 'helper',
             id: data.helperId,
@@ -107,7 +106,7 @@ const socketChat = async (socket) => {
             id: data.helperId,
             message: data.message,
             urlForPartner,
-            currentLanguage: data.currentLanguage,
+            notificationLanguage: emailRes.notificationLanguage,
             receiverEmailAddress: emailRes.email,
             helpeeUsername: data.helpeeUsername,
             helperUsername: data.helperUsername,

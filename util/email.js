@@ -18,7 +18,6 @@ const sendHelpeeEmail = (user) => {
     },
     (err, emailToken) => {
       const url = `https://shelpy.co/${user.data.currentLanguage}/helpee/email/confirmation?emailToken=${emailToken}&refId=${user.refId}`;
-      console.log('confirm Helpee email url: ', url);
       let subject, html;
       switch (user.data.currentLanguage) {
         case 'en':
@@ -215,9 +214,8 @@ const sendHelperResetPasswordEmail = (user) => {
 const sendChatMessageReminderEmail = async (user) => {
   const {
     role,
-    id,
     urlForPartner,
-    currentLanguage,
+    notificationLanguage,
     receiverEmailAddress,
     helpeeUsername,
     helperUsername,
@@ -237,11 +235,16 @@ const sendChatMessageReminderEmail = async (user) => {
     },
     (err, accessChatRoomToken) => {
       if (receiverEmailAddress) {
-        const email = receiverEmailAddress.replace(/\+/g, '%2B');
-        const url = `https://shelpy.co/${currentLanguage}/${role}/access-chatroom?accessChatRoomToken=${accessChatRoomToken}&urlForPartner=${urlForPartner}`;
-
-        let subject, html;
-        switch (currentLanguage) {
+        let subject, html, notificationLanguageValue;
+        if (notificationLanguage === 'English') {
+          notificationLanguageValue='en';
+        } else if (notificationLanguage === '繁體中文') {
+          notificationLanguageValue = 'zh-TW';
+        } else if (notificationLanguage === '简体中文') {
+          notificationLanguageValue = 'zh-CN';
+        }
+        const url = `https://shelpy.co/${notificationLanguageValue}/${role}/access-chatroom?accessChatRoomToken=${accessChatRoomToken}&urlForPartner=${urlForPartner}`;
+        switch (notificationLanguageValue) {
           case 'en':
             subject = `${messageSender} sent you a new message!`;
             html = `Message is: ${user.message} <br/> Reply here: <a href='${url}'>${url}</a>`;
@@ -271,7 +274,7 @@ const sendChatMessageReminderEmail = async (user) => {
           .send(message)
           .then((response) => {
             console.log(
-              'Check message reminder email sent successfully to this email: ',
+              'Chat message reminder email sent successfully to this email: ',
               receiverEmailAddress
             );
           })
@@ -283,7 +286,7 @@ const sendChatMessageReminderEmail = async (user) => {
 
 const sendBookingStatusReminderEmail = async (user) => {
   const {
-    currentLanguage,
+    notificationLanguage,
     emailReceiverRole,
     initiatorName,
     receiverEmailAddress,
@@ -300,15 +303,23 @@ const sendBookingStatusReminderEmail = async (user) => {
     },
     (err, accessDashboardToken) => {
       if (receiverEmailAddress) {
-        const url = `https://shelpy.co/${currentLanguage}/${emailReceiverRole}/access-dashboard?accessDashboardToken=${accessDashboardToken}`;
 
-        let subject, html;
+        let subject, html, notificationLanguageValue;
+
+        if (notificationLanguage === 'English') {
+          notificationLanguageValue = 'en';
+        } else if (notificationLanguage === '繁體中文') {
+          notificationLanguageValue = 'zh-TW';
+        } else if (notificationLanguage === '简体中文') {
+          notificationLanguageValue = 'zh-CN';
+        }
+        const url = `https://shelpy.co/${notificationLanguageValue}/${emailReceiverRole}/access-dashboard?accessDashboardToken=${accessDashboardToken}`;
        switch (bookingStatus) {
          case 'created':
-           if (currentLanguage === 'zh-TW') {
+           if (notificationLanguageValue === 'zh-TW') {
              subject = `${initiatorName} 剛剛發出一個諮詢請求!`;
              html = `請按此連結接受預約或更改時間: <a href='${url}'>${url}</a>`;
-           } else if (currentLanguage === 'zh-CN') {
+           } else if (notificationLanguageValue === 'zh-CN') {
              subject = `${initiatorName} 刚刚发出一个谘询请求!`;
              html = `请按此连结接受预约或更改时间: <a href='${url}'>${url}</a>`;
            } else {
@@ -317,10 +328,10 @@ const sendBookingStatusReminderEmail = async (user) => {
            }
            break;
          case 'helperConfirmed':
-           if (currentLanguage === 'zh-TW') {
+           if (notificationLanguageValue === 'zh-TW') {
              subject = `[等待付款]${initiatorName} 剛剛答應了你的諮詢預約時間!`;
              html = `但是正式預約只有在您付款後才成立。<br/> 請按此連結付款: <a href='${url}'>${url}</a>`;
-           } else if (currentLanguage === 'zh-CN') {
+           } else if (notificationLanguageValue === 'zh-CN') {
              subject = `[等待付款]${initiatorName} 刚刚答应了你的谘询预约时间!`;
              html = `但是正式预约只有在您付款后才成立。<br/> 请按此连结付款: <a href='${url}'>${url}</a>`;
            } else {
@@ -329,10 +340,10 @@ const sendBookingStatusReminderEmail = async (user) => {
            }
            break;
          case 'paid':
-           if (currentLanguage === 'zh-TW') {
+           if (notificationLanguageValue === 'zh-TW') {
              subject = `[請準時出席會議]${initiatorName} 剛剛付款了!`;
              html = `預約已成立。<br/>您將會在開會前一天收到webex會議連結，請務必準時出席會議。<br/>會議時間為： ${appointmentDate} ${appointmentTime}<br/> 請按此連結查看會議時間與細節: <a href='${url}'>${url}</a>`;
-           } else if (currentLanguage === 'zh-CN') {
+           } else if (notificationLanguageValue === 'zh-CN') {
              subject = `[请准时出席会议]${initiatorName} 刚刚付款了!`;
              html = `预约已成立。<br/>您将会在开会前一天收到webex会议连结，请务必准时出席会议。<br/>会议时间为： ${appointmentDate} ${appointmentTime}<br/> 请按此连结查看会议时间与细节: <a href='${url}'>${url}</a>`;
            } else {
@@ -344,6 +355,7 @@ const sendBookingStatusReminderEmail = async (user) => {
            subject = `[Please attend meeting on time]${initiatorName} just paid you!`;
            html = `The appointment is officially established. Please attend the meeting on time. Click here to view meeting time & details: <a href='${url}'>${url}</a>`;
        }
+       
         const message = {
           to: receiverEmailAddress,
           from: {

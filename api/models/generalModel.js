@@ -3,9 +3,12 @@ const { query } = require('./query');
 async function getChatroomReceiverEmail(data) {
   // Find customers who once chatted with you
   const table = data.role === 'helper'? 'helper_account' : 'helpee_account'
-  const sql = `SELECT email FROM ${table} WHERE id=? LIMIT 1;`;
+  const sql = `SELECT email, notificationLanguage FROM ${table} WHERE id=? LIMIT 1;`;
   const user = await query(sql, data.id);
-  return { email: user[0].email} ;
+  return {
+    email: user[0].email,
+    notificationLanguage: user[0].notificationLanguage,
+  };
 }
 
 async function getBookingReceiverEmail(data) {
@@ -16,7 +19,7 @@ async function getBookingReceiverEmail(data) {
   if (data.bookingId) {
     const bookingColumnToJoin = data.role === 'helper' ? 'helperId': 'helpeeId';
     sql = `
-    SELECT email 
+    SELECT email, notificationLanguage
     FROM ${mainTable} a
     INNER JOIN bookings b ON a.id = b.${bookingColumnToJoin}
     WHERE b.id=? LIMIT 1;
@@ -25,14 +28,17 @@ async function getBookingReceiverEmail(data) {
   } else {
     const joinedTable = data.role === 'helper' ? 'offers' : 'requests';
     sql = `
-    SELECT email
+    SELECT email, notificationLanguage
     FROM ${mainTable} a
     INNER JOIN ${joinedTable} b ON a.id = b.userId
     WHERE b.id=? LIMIT 1;`;
     user = await query(sql, data.offerOrRequestId);
   }
   
-  return { email: user[0].email };
+  return {
+    email: user[0].email,
+    notificationLanguage: user[0].notificationLanguage,
+  };
 }
 
 async function getBookingStatusChangeInitiatorName(data) {
