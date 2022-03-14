@@ -113,6 +113,7 @@ async function updateHelpeeBasicInfo(data) {
     languages,
     notes,
     status,
+    notificationLanguage,
   } = data;
   const sql = `
     UPDATE helpee_account SET username =?, introduction=?
@@ -122,7 +123,7 @@ async function updateHelpeeBasicInfo(data) {
       ,hasEnglish=?, hasGerman=?, hasFrench=?, hasItalien=?
       ,hasChinese=?, hasCantonese=?, hasVietnamese=?
       ,hasKorean=?, hasJapanese=?, hasTurkish=?, hasUkrainian=?
-      ,hasArabic=?, hasOthers=?, languages=?
+      ,hasArabic=?, hasOthers=?, languages=?, notificationLanguage=?
     WHERE id = ?`;
   const sqlquery = await query(sql, [
     username,
@@ -152,6 +153,7 @@ async function updateHelpeeBasicInfo(data) {
     hasArabic,
     hasOthers,
     languages,
+    notificationLanguage,
     userId,
   ]);
   return sqlquery;

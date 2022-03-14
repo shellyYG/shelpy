@@ -237,6 +237,19 @@ export const countryOptions = [
   { value: 'Others', label: othersText },
 ];
 
+export const yesOrNoOptions = [
+  { value: 'default', label: 'please_select_option' },
+  { value: 1, label: 'yes_option' },
+  { value: 0, label: 'no_option' },
+];
+
+export const webLanguagesOptions = [
+  { value: 'default', label: 'please_select_option' },
+  { value: 'English', label: 'English' },
+  { value: '繁體中文', label: '繁體中文' },
+  { value: '简体中文', label: '简体中文' },
+];
+
 export const WFHOptions = [
   { value: 'default', label: 'please_select_option' },
   { value: 'Yes, completely WFH', label: 'job_form_wfh_100_wfh' },

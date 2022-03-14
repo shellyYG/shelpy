@@ -108,8 +108,21 @@ async function updateHelperCertificatePath(data) {
     notes,
     bankAccount,
     status,
+    notificationLanguage,
   } = data;
-  const sql = `
+  // get if status is approved
+  let newStatus;
+  const sql1 = `SELECT status FROM helper_account WHERE id =? LIMIT 1`;
+  const sqlquery1 = await query(sql1, userId);
+  console.log('sqlquery1[0].status: ', sqlquery1[0].status, 'useId: ', userId);
+  const existingStatus = sqlquery1[0].status || '';
+  if (existingStatus === 'approved') {
+    newStatus = 'approved';
+  } else {
+    newStatus = status;
+  }
+  // update status
+  const sql2 = `
     UPDATE helper_account SET username =?, introduction=?
     , nationality=?, residenceCountry=?
     , isAnonymous=?, isMarketing=?
@@ -119,9 +132,9 @@ async function updateHelperCertificatePath(data) {
       ,hasChinese=?, hasCantonese=?, hasVietnamese=?
       ,hasKorean=?, hasJapanese=?, hasTurkish=?, hasUkrainian=?
       ,hasArabic=?, hasOthers=?, languages=?
-      ,bankAccount=?
+      ,bankAccount=?, notificationLanguage=?
     WHERE id =?`;
-  const sqlquery = await query(sql, [
+  const sqlquery2 = await query(sql2, [
     username,
     introduction,
     nationality,
@@ -132,7 +145,7 @@ async function updateHelperCertificatePath(data) {
     age,
     linkedInUrl || 'No LinkedinURL',
     notes,
-    status,
+    newStatus,
     hasMonToFri,
     hasWeekend,
     hasBefore12,
@@ -153,9 +166,10 @@ async function updateHelperCertificatePath(data) {
     hasOthers,
     languages,
     bankAccount,
+    notificationLanguage,
     userId,
   ]);
-  return sqlquery;
+  return sqlquery2;
 }
 
 async function deleteHelperOffer(data) {

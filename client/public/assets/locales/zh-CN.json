@@ -581,6 +581,8 @@
 
   "please_select_option": "请选择",
   "others_option": "其他（请在註记中说明）",
+  "yes_option": "是",
+  "no_option": "否",
 
   "please": "请先",
   "mkt_offer_sign_in_as_helpee": "为新鲜人，以查看所有的热门过来人。",
@@ -682,6 +684,7 @@
   "over_40": "40岁以上",
   "nationality_title": "国籍 (不公开，仅用于审阅资格) *",
   "residence_country_title": "居住国家/地区 (不公开，仅用于审阅资格) *",
+  "notification_language_title": "你希望收到哪一种语言的通知（例如: 註册、预订状态改变等的电子邮件提醒）*",
 
   "ask_anonymous": "匿名问问题 (显示暱称与服务项目，但隐藏大头贴与详细履历个资)",
   "answer_anonymous": "匿名回答问题 (显示暱称与服务项目，但隐藏大头贴与详细履历个资)（不建议）",

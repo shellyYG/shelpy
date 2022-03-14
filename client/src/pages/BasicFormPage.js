@@ -7,7 +7,7 @@ import DropDown from '../components/Dropdown';
 import FullLineTextBox from '../components/FullLineTextBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import {
-  ageOptions, countryOptions,
+  ageOptions, countryOptions, webLanguagesOptions, yesOrNoOptions,
 } from '../store/options/service-options';
 import {
   onUploadHelpeeProfilePicture,
@@ -43,6 +43,8 @@ const BasicFormPage = (props) => {
   const linkedInUrlRef = useRef();
   const nationalityRef = useRef();
   const residenceCountryRef = useRef();
+  const notificationLanguageRef = useRef();
+  const isAnonymousRef = useRef();
   const bankAccountRef = useRef();
 
   const [loading, setIsLoading] = useState(false);
@@ -50,14 +52,15 @@ const BasicFormPage = (props) => {
   const [profilePic, setProfilePic] = useState();
   const [certificate, setCertificate] = useState();
   const [nationality, setNationality] = useState('default');
+  const [notificationLanguage, setNotificationLanguage] = useState('default');
   const [residenceCountry, setResidenceCountry] = useState('default');
   const [usernameString, setUsernameString] = useState('');
   const [bankAccountString, setBankAccountString] = useState('');
   const [introductionString, setIntroductionString] = useState('');
+  const [isRawAnonymous, setIsRawAnonymous] = useState('default');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(false);
   const [enableBtn, setEnableBtn] = useState(false);
-  console.log('usernameString: ', usernameString);
   
   const [hasMonToFri, setHasMonToFri] = useState(false);
   const [hasWeekend, setHasWeekend] = useState(false);
@@ -95,6 +98,14 @@ const BasicFormPage = (props) => {
     applyHelperStatusTitle,
     applyHelperStatusMessage,
   } = useSelector((state) => state.helperNotification);
+
+  useEffect(()=>{
+    if (isRawAnonymous === '0') {
+      setIsAnonymous(false);
+    }else if (isRawAnonymous === '1'){
+      setIsAnonymous(true);
+    }
+  },[isRawAnonymous])
 
   useEffect(() => {
     let languagesString = '';
@@ -247,6 +258,7 @@ const BasicFormPage = (props) => {
       data.append('age', age);
       data.append('nationality', nationality);
       data.append('residenceCountry', residenceCountry);
+      data.append('notificationLanguage', notificationLanguage);
       data.append('linkedInUrl', linkedInUrl);
       data.append('introduction', introduction);
       
@@ -284,6 +296,7 @@ const BasicFormPage = (props) => {
           username,
           age,
           nationality,
+          notificationLanguage,
           residenceCountry,
           introduction,
 
@@ -320,6 +333,7 @@ const BasicFormPage = (props) => {
           age,
           nationality,
           residenceCountry,
+          notificationLanguage,
           linkedInUrl,
           introduction,
 
@@ -370,6 +384,8 @@ const BasicFormPage = (props) => {
           age !== 'default' &&
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
+          notificationLanguage !== 'default' &&
+          isRawAnonymous !== 'default' &&
           introductionString
       );
     } else {
@@ -378,7 +394,9 @@ const BasicFormPage = (props) => {
           age !== 'default' &&
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
+          notificationLanguage !== 'default' &&
           (linkedInUrlRef || certificate) &&
+          isRawAnonymous !== 'default' &&
           bankAccountString &&
           introductionString
       );
@@ -393,6 +411,8 @@ const BasicFormPage = (props) => {
     certificate,
     bankAccountString,
     introductionString,
+    notificationLanguage,
+    isRawAnonymous,
   ]);
 
   // is Helper:
@@ -614,6 +634,24 @@ const BasicFormPage = (props) => {
                   options={countryOptions}
                 />
               </div>
+              <div className='form-row'>
+                <DropDown
+                  selected={notificationLanguage}
+                  handleSelect={setNotificationLanguage}
+                  title={t('notification_language_title')}
+                  selectRef={notificationLanguageRef}
+                  options={webLanguagesOptions}
+                />
+                <DropDown
+                  selected={isRawAnonymous}
+                  handleSelect={setIsRawAnonymous}
+                  title={
+                    props.isHelpee ? t('ask_anonymous') : t('answer_anonymous')
+                  }
+                  selectRef={isAnonymousRef}
+                  options={yesOrNoOptions}
+                />
+              </div>
               {!props.isHelpee && (
                 <div className='form-row'>
                   <LeftHalfLineTextBox
@@ -648,18 +686,6 @@ const BasicFormPage = (props) => {
                   </div>
                 </div>
               )}
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <CheckBox
-                  checked={isAnonymous}
-                  handleCheck={setIsAnonymous}
-                  details={
-                    props.isHelpee ? t('ask_anonymous') : t('answer_anonymous')
-                  }
-                  paddingRight='10px'
-                  marginBottom='5px'
-                  fontSize='14px'
-                />
-              </div>
               {!props.isHelpee && (
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <CheckBox

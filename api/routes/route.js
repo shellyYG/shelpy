@@ -322,6 +322,7 @@ router.post(
       notes,
       bankAccount,
       status,
+      notificationLanguage,
     } = req.body;
     try {
       await helperModel.updateHelperCertificatePath({
@@ -360,6 +361,7 @@ router.post(
         bankAccount,
         path: 'no_certificate_uploaded',
         status,
+        notificationLanguage,
       });
       res.status(200).send({ status: 'success' });
     } catch (error) {
@@ -428,6 +430,7 @@ router.post(
       bankAccount,
       languages,
       status,
+      notificationLanguage,
     } = req.body;
     try {
       const result = await uploadFile(file, 'user-certificates');
@@ -468,6 +471,7 @@ router.post(
         path: result.Key,
 
         status,
+        notificationLanguage,
       });
       if (file) await unlinkFile(file.path);
       res.status(200).send({ status: 'success' });
@@ -527,6 +531,7 @@ router.post(
       age,
       nationality,
       residenceCountry,
+      notificationLanguage,
       languages,
       notes,
       status,
@@ -540,6 +545,7 @@ router.post(
         age,
         nationality,
         residenceCountry,
+        notificationLanguage,
         hasMonToFri,
         hasWeekend,
         hasBefore12,

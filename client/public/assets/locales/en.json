@@ -581,6 +581,8 @@
 
   "please_select_option": "Please Select",
   "others_option": "Others (Please specify in the Notes)",
+  "yes_option": "Yes",
+  "no_option": "No",
 
   "please": "Please",
   "mkt_offer_sign_in_as_helpee": "as Helpee to view our top offers.",
@@ -682,6 +684,7 @@
   "over_40": "over 40 years old",
   "nationality_title": "Nationality (This will not be shown publicly. We only use this to verify your identity)*",
   "residence_country_title": "Residence Country/Region (This will not be shown publicly. We only use this to verify your identity)*",
+  "notification_language_title": "Language for notifications (e.g. email reminders for sign up, booking status change...etc.) *",
 
   "ask_anonymous": "Ask question anonymously (show username and service types, but hide your profile picture and your resume organizations)",
   "answer_anonymous": "Answer question anonymously (show username and service types, but hide your profile picture and your resume organizations) (not recommended)",
