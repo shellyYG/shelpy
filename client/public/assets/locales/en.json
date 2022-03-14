@@ -181,6 +181,10 @@
   "helpee_mkt_control_privacy_subtitle1": "Want to ask questions anonymously?",
   "helpee_mkt_control_privacy_subtitle2": "You decide if you want to stay anonymously when signing up.",
 
+  "helpee_mkt_review_helper_eligible": "We make sure that Helpers are eligible",
+  "helpee_mkt_review_helper_eligible_subtitle1": "Afraid of meeting a Helper with fake experience?",
+  "helpee_mkt_review_helper_eligible_subtitle2": "We review every Helper applicant manually & carefully, to make sure you don't meet a fraud.",
+
   "helper_mkt_help_people": "Help & Empower people",
   "helper_mkt_help_people_subtitle1": "Were you once hesitating?",
   "helper_mkt_help_people_subtitle2": "Help people who are now standing on the crossroad and wonders.",
@@ -199,6 +203,11 @@
   "helper_mkt_marketing_listing": "Acquire customers through free sign up",
   "helper_mkt_marketing_listing_subtitle1": "Are you already a career, study counselor or industry expert?",
   "helper_mkt_marketing_listing_subtitle2": "Get extra exposure with us, meet your potential customers, and gain hands-on experience to understand possible customer needs.",
+
+  "helper_mkt_quick_notification": "Never miss a new message or booking status change",
+  "helper_mkt_quick_notification_subtitle1": "We know you have other things to do and can not be always online.",
+  "helper_mkt_quick_notification_subtitle2": "Our automated mail system will notify you via email when you receive new message from helpee or when helpee books/pays you.",
+
   "helper_mkt_control_privacy": "Control your own privacy",
   "helper_mkt_control_privacy_subtitle1": "Want to share some important but private insights?",
   "helper_mkt_control_privacy_subtitle2": "You decide if you want to stay anonymously when signing up.",
@@ -580,6 +589,7 @@
   "self_employed_profession_body_guard": "Body Guard",
 
   "please_select_option": "Please Select",
+  "please_select_booking_status": "Select Bookings based on Status",
   "others_option": "Others (Please specify in the Notes)",
   "yes_option": "Yes",
   "no_option": "No",
@@ -604,6 +614,12 @@
   "booking_card_waiting_helper_confirm": "Waiting for {{helperUsername}} to confirm meeting time on {{appointmentDate}} at {{appointmentTime}}.",
   "my_requests": "My Requests",
   "my_bookings": "My Bookings",
+  "booking_status_created_helpee": "Pending Helper confirmation meetings",
+  "booking_status_helperConfirmed_helpee": "Pending your payment meetings",
+  "booking_status_paid_helpee": "Paid, upcoming meetings",
+  "booking_status_created_helper": "Waiting for you to confirm meetings",
+  "booking_status_helperConfirmed_helper": "Pending Helpee payment meetings",
+  "booking_status_paid_helper": "Paid, upcoming meetings",
   "my_offers": "My Offers",
   "potential_customers": "Potential Customers",
   "potential_helpers": "Potential Helpers",

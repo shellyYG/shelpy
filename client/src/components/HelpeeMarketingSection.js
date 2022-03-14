@@ -63,6 +63,14 @@ const HelpeeMarketingSection = () => {
           alt='Photo by Brett Jordan on Unsplash'
           lastChild={true}
         />
+        <MktRow
+          title={t('helpee_mkt_review_helper_eligible')}
+          details1={t('helpee_mkt_review_helper_eligible_subtitle1')}
+          details2={t('helpee_mkt_review_helper_eligible_subtitle2')}
+          imagePath='/static-imgs/interview.jpeg'
+          alt='Photo by LinkedIn Sales Solutions on Unsplash'
+          lastChild={true}
+        />
       </div>
     </div>
   );

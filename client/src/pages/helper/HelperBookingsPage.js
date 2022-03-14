@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   getAllBookings,
 } from '../../store/helper/helper-actions';
@@ -7,25 +8,40 @@ import {
 import { useNavigate } from 'react-router-dom';
 import BookingCard from '../../components/BookingCard';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
-import { useTranslation } from 'react-i18next';
+
+import DropDown from '../../components/Dropdown';
+import { bookingStatusOptionsForHelper } from '../../store/options/service-options';
 
 
 const HelperBookingsPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const bookingStatusRef = useRef();
+  const { allBookings } = useSelector((state) => state.helper);
+
+  const [filteredBookingStatus, setFilteredBookingStatus] = useState('default');
+  const [filteredBookings, setFilteredBookings] = useState(allBookings);
+  console.log('filteredBookingStatus: ', filteredBookingStatus);
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
-  const {
-    allBookings,
-  } = useSelector((state) => state.helper);
-
   useEffect(() => {
     dispatch(getAllBookings({ helperUserId: props.helperUserId }));
   }, [props.helperUserId, props.helpeeUserId, dispatch]);
+
+  useEffect(() => {
+    if (filteredBookingStatus !== 'default') {
+      const filteredItems = allBookings.filter(
+        (b) => b.bookingStatus === filteredBookingStatus
+      );
+      setFilteredBookings(filteredItems);
+    } else {
+      setFilteredBookings(allBookings);
+    }
+  }, [allBookings, filteredBookingStatus]);
 
   function handleRrefreshPage(e) {
     e.preventDefault(e);
@@ -50,9 +66,21 @@ const HelperBookingsPage = (props) => {
           <RefreshIcon onClick={handleRrefreshPage} />
         </div>
       </div>
-      {allBookings && (
+
+      <div style={{ width: 'fit-content', margin: 'auto' }}>
+        <DropDown
+          selected={filteredBookingStatus}
+          handleSelect={setFilteredBookingStatus}
+          options={bookingStatusOptionsForHelper}
+          selectRef={bookingStatusRef}
+          titleColor='black'
+          titleMarginLeft='8px'
+        />
+      </div>
+
+      {filteredBookings && (
         <div className='task-container'>
-          {(!allBookings || allBookings.length === 0) && (
+          {(!filteredBookings || filteredBookings.length === 0) && (
             <div
               className='history-card'
               style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
@@ -61,7 +89,7 @@ const HelperBookingsPage = (props) => {
             </div>
           )}
 
-          {allBookings.map(
+          {filteredBookings && filteredBookings.map(
             (
               option // TODO: changed to orders
             ) => (

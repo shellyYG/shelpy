@@ -852,6 +852,7 @@ export const postPayViaTapPay = (data) => {
                 currentLanguage: data.currentLanguage,
                 appointmentDate: data.appointmentDate,
                 appointmentTime: data.appointmentTime,
+                priorityScore: 3,
               },
             },
             {

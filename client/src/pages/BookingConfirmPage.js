@@ -137,6 +137,7 @@ const BookingConfirmPage = (props) => {
         thirdType,
         fourthType,
         currentLanguage,
+        priorityScore: 1,
       };
       dispatch(postBookingStatus(data));
     } else {
@@ -146,6 +147,7 @@ const BookingConfirmPage = (props) => {
         bookingId,
         bookingStatus: 'helperConfirmed',
         currentLanguage,
+        priorityScore: 2,
       };
       dispatch(postBookingStatus(data));
     }

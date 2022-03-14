@@ -35,7 +35,7 @@ async function getHelperAllBookings(data) {
   , acc.languages
   FROM bookings bookings
   LEFT JOIN helpee_account acc ON bookings.helpeeId = acc.id
-  WHERE helperId = ? ORDER BY id DESC;`;
+  WHERE helperId = ? ORDER BY priorityScore DESC;`;
   const allBookings = await query(sql, helperUserId);
   return { data: { allBookings } };
 }

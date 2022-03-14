@@ -71,6 +71,14 @@ const HelperMarketingSection = () => {
           alt='Photo by Christina @ wocintechchat.com on Unsplash'
           lastChild={false}
         />
+        <MktRow
+          title={t('helper_mkt_quick_notification')}
+          details1={t('helper_mkt_quick_notification_subtitle1')}
+          details2={t('helper_mkt_quick_notification_subtitle2')}
+          imagePath='/static-imgs/notification.jpeg'
+          alt='Photo by Brett Jordan on Unsplash'
+          lastChild={true}
+        />
       </div>
     </div>
   );

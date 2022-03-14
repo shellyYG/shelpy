@@ -250,6 +250,38 @@ export const webLanguagesOptions = [
   { value: '简体中文', label: '简体中文' },
 ];
 
+export const bookingStatusOptionsForHelpee = [
+  { value: 'default', label: 'please_select_booking_status' },
+  {
+    value: 'created',
+    label: 'booking_status_created_helpee',
+  },
+  {
+    value: 'helperConfirmed',
+    label: 'booking_status_helperConfirmed_helpee',
+  },
+  {
+    value: 'paid',
+    label: 'booking_status_paid_helpee',
+  },
+];
+
+export const bookingStatusOptionsForHelper = [
+  { value: 'default', label: 'please_select_booking_status' },
+  {
+    value: 'created',
+    label: 'booking_status_created_helper',
+  },
+  {
+    value: 'helperConfirmed',
+    label: 'booking_status_helperConfirmed_helper',
+  },
+  {
+    value: 'paid',
+    label: 'booking_status_paid_helper',
+  },
+];
+
 export const WFHOptions = [
   { value: 'default', label: 'please_select_option' },
   { value: 'Yes, completely WFH', label: 'job_form_wfh_100_wfh' },

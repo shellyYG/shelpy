@@ -49,7 +49,7 @@ const updateBookingStatus = async (req, res) => {
       offerOrRequestId: data.offerId,
     });
     
-    
+
     if (!initiatorName || initiatorName.length === 0) {
       initiatorName = name.username;
     }

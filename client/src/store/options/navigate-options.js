@@ -41,7 +41,6 @@ export const jobUniOptions = [
   },
 ];
 
-
 export const secondTypeOptions = {
   default: [{ value: 'default', label: 'please_select_option' }],
   university: [

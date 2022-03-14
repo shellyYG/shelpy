@@ -1,30 +1,46 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   getAllBookings,
 } from '../../store/helpee/helpee-actions';
 import { useNavigate } from 'react-router-dom';
 import BookingCard from '../../components/BookingCard';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
-import { useTranslation } from 'react-i18next';
+
+import DropDown from '../../components/Dropdown';
+import { bookingStatusOptionsForHelpee } from '../../store/options/service-options';
 
 
 const HelpeeBookingsPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const bookingStatusRef = useRef();
+  const { allBookings } = useSelector((state) => state.helpee);
+
+  const [filteredBookingStatus, setFilteredBookingStatus] = useState('default');
+  const [filteredBookings, setFilteredBookings] = useState(allBookings);
+  console.log('filteredBookingStatus: ', filteredBookingStatus);
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
-  const { allBookings } = useSelector(
-    (state) => state.helpee
-  );
-
   useEffect(() => {
     dispatch(getAllBookings({ helpeeUserId: props.helpeeUserId }));
   }, [props.helpeeUserId, dispatch]);
+
+  useEffect(()=>{
+    if (filteredBookingStatus !== 'default') {
+      const filteredItems = allBookings.filter(
+        (b) => b.bookingStatus === filteredBookingStatus
+      );
+      setFilteredBookings(filteredItems);
+    } else {
+      setFilteredBookings(allBookings);
+    }
+  },[allBookings, filteredBookingStatus])
 
   function handleSearchHelpers(e) {
     e.preventDefault(e);
@@ -55,11 +71,20 @@ const HelpeeBookingsPage = (props) => {
           <RefreshIcon onClick={handleRrefreshPage} />
         </div>
       </div>
-      <div className='task-container'></div>
+      <div style={{ width: 'fit-content', margin: 'auto' }}>
+        <DropDown
+          selected={filteredBookingStatus}
+          handleSelect={setFilteredBookingStatus}
+          options={bookingStatusOptionsForHelpee}
+          selectRef={bookingStatusRef}
+          titleColor='black'
+          titleMarginLeft='8px'
+        />
+      </div>
 
-      {allBookings && (
+      {filteredBookings && (
         <div className='task-container'>
-          {(!allBookings || allBookings.length === 0) && (
+          {(!filteredBookings || filteredBookings.length === 0) && (
             <>
               <div
                 className='history-card'
@@ -79,43 +104,46 @@ const HelpeeBookingsPage = (props) => {
             </>
           )}
 
-          {allBookings.map(
-            (
-              option // TODO: changed to orders
-            ) => (
-              <BookingCard
-                isHelpee={true}
-                key={option.id}
-                id={option.id}
-                helpeeEmail={option.helpeeEmail}
-                helperId={option.helperId}
-                helpeeId={option.helpeeId}
-                helpeeUsername={option.helpeeUsername}
-                helperUsername={option.helperUsername}
-                partnerName={
-                  props.isHelpee ? option.helperUsername : option.helpeeUsername
-                }
-                mainType={option.mainType}
-                secondType={option.secondType}
-                thirdType={option.thirdType}
-                fourthType={option.fourthType}
-                profilePicPath={option.profilePicPath}
-                country={option.country}
-                requestId={option.requestId}
-                offerId={option.offerId}
-                price={option.price}
-                duration={option.duration}
-                bookingId={option.bookingId}
-                bookingStatus={option.bookingStatus}
-                appointmentDate={option.appointmentDate}
-                appointmentTime={option.appointmentTime}
-                languages={option.languages}
-                isAnonymous={option.helperAnonymous}
-                notes={option.notes}
-                questions={option.questions}
-              />
-            )
-          )}
+          {filteredBookings &&
+            filteredBookings.map(
+              (
+                option // TODO: changed to orders
+              ) => (
+                <BookingCard
+                  isHelpee={true}
+                  key={option.id}
+                  id={option.id}
+                  helpeeEmail={option.helpeeEmail}
+                  helperId={option.helperId}
+                  helpeeId={option.helpeeId}
+                  helpeeUsername={option.helpeeUsername}
+                  helperUsername={option.helperUsername}
+                  partnerName={
+                    props.isHelpee
+                      ? option.helperUsername
+                      : option.helpeeUsername
+                  }
+                  mainType={option.mainType}
+                  secondType={option.secondType}
+                  thirdType={option.thirdType}
+                  fourthType={option.fourthType}
+                  profilePicPath={option.profilePicPath}
+                  country={option.country}
+                  requestId={option.requestId}
+                  offerId={option.offerId}
+                  price={option.price}
+                  duration={option.duration}
+                  bookingId={option.bookingId}
+                  bookingStatus={option.bookingStatus}
+                  appointmentDate={option.appointmentDate}
+                  appointmentTime={option.appointmentTime}
+                  languages={option.languages}
+                  isAnonymous={option.helperAnonymous}
+                  notes={option.notes}
+                  questions={option.questions}
+                />
+              )
+            )}
         </div>
       )}
     </div>

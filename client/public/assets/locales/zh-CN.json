@@ -181,6 +181,10 @@
   "helpee_mkt_control_privacy_subtitle1": "想要匿名问问题吗？",
   "helpee_mkt_control_privacy_subtitle2": "你可以在註册时，自由决定你要不要匿名註册。",
 
+  "helpee_mkt_review_helper_eligible": "只有通过资格审查的过来人可以分享经验",
+  "helpee_mkt_review_helper_eligible_subtitle1": "怕遇到的过来人经验是假的？",
+  "helpee_mkt_review_helper_eligible_subtitle2": "我们人工严格的审查每一位过来人的资格，确保你遇到的过来人，真的有其相关经验。",
+
   "helper_mkt_help_people": "帮助与激励别人",
   "helper_mkt_help_people_subtitle1": "你也曾经站在人生的十字路口上吗？",
   "helper_mkt_help_people_subtitle2": "帮助另一位曾经的你，做出最明智的决定。",
@@ -199,6 +203,11 @@
   "helper_mkt_marketing_listing": "拓展免费的行销管道",
   "helper_mkt_marketing_listing_subtitle1": "你本身就是留学、职涯顾问、或是行业专家吗？",
   "helper_mkt_marketing_listing_subtitle2": "获得额外的曝光度、遇见你的潜在客户、累积实战经验以理解客户可能的需求。",
+
+  "helper_mkt_quick_notification": "讯息不漏接",
+  "helper_mkt_quick_notification_subtitle1": "我们知道你有其他事情要做，不可能总是在线上。",
+  "helper_mkt_quick_notification_subtitle2": "我们的自动邮件系统会在你收到来自被新鲜人的讯息、或当新鲜人预定、付款时，通过Email通知你。",
+
   "helper_mkt_control_privacy": "你的隐私你决定",
   "helper_mkt_control_privacy_subtitle1": "想要匿名回答问题、或是你的答案太过隐私？",
   "helper_mkt_control_privacy_subtitle2": "你可以在註册时，自由决定你要不要匿名註册。",
@@ -580,6 +589,7 @@
   "self_employed_profession_body_guard": "保镳",
 
   "please_select_option": "请选择",
+  "please_select_booking_status": "依照预约情况选取",
   "others_option": "其他（请在註记中说明）",
   "yes_option": "是",
   "no_option": "否",
@@ -604,6 +614,12 @@
   "booking_card_waiting_helper_confirm": "还在等待 {{helperUsername}} 同意位于 {{appointmentDate}} {{appointmentTime}} 的会议时间。",
   "my_requests": "我的需求",
   "my_bookings": "我的预约情况",
+  "booking_status_created_helpee": "等待过来人同意会议时间的会议",
+  "booking_status_helperConfirmed_helpee": "等待你付款的会议",
+  "booking_status_paid_helpee": "已付款、待出席的会议",
+  "booking_status_created_helper": "等待你同意会议时间的会议",
+  "booking_status_helperConfirmed_helper": "等待新鲜人付款的会议",
+  "booking_status_paid_helper": "已付款、待出席的会议",
   "my_offers": "我的服务项目",
   "potential_customers": "匹配到的新鲜人",
   "potential_helpers": "匹配到的过来人",
@@ -723,7 +739,7 @@
   "error_file_too_big": "最大文件大小为1MB，请选择一个小一点的文件",
   "error_only_accept_picture_format": "只接受以下这几种文件类型：.jpg, .jpeg 或是 .png 档案，请选择相符的文件类型上传",
   "error_only_accept_file_format": "只接受以下这几种文件类型：.docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg 或是 .png 档案，请选择相符的文件类型上传",
-  "booking_status_meet_at_when": "与{{name}}于{{date}}日{{time}}时开始线上分享，我们会在会议开始前一天寄 Webex 连结至你的信箱中",
+  "booking_status_meet_at_when": "已付款。{{name}}与你在{{date}}日{{time}}时，开始线上会议，我们会在会议开始前一天寄 Webex 连结与会议密码，至你的信箱中",
 
   "payment": "付款页面",
   "type": "服务类别",

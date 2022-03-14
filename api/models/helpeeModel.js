@@ -33,7 +33,7 @@ async function getHelpeeAllBookings(data) {
   LEFT JOIN offers ofs ON bookings.offerId = ofs.id
   LEFT JOIN helper_account acc ON bookings.helperId = acc.id
   LEFT JOIN helpee_account helpee ON bookings.helpeeId = helpee.id
-  WHERE helpeeId=? ORDER BY id DESC;`;
+  WHERE helpeeId=? ORDER BY priorityScore DESC;`;
   const allBookings = await query(sqlSimplified, data.helpeeUserId);
   return { data: { allBookings } };
 }
