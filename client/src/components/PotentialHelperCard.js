@@ -35,7 +35,7 @@ function PotentialHelperCard(props) {
   const [duration, setDuration] = useState('');
   useEffect(() => {
     if (props.duration) {
-      setDuration(props.duration.split(' ')[0]);
+      if (props.duration) setDuration(props.duration.split(' ')[0]);
     }
   }, [props.duration]);
   
@@ -156,7 +156,7 @@ function PotentialHelperCard(props) {
   }
   useEffect(() => {
     let translatedSpeakingLanguagesString = '';
-    const speakingLanguages = props.languages.split(' ');
+    const speakingLanguages = props.languages ? props.languages.split(' ') : [];
     speakingLanguages.forEach((speakingLanguage) => {
       const speakingLanguageTranslationObj = nativeLanguageOptions.filter(
         (o) => o.value === speakingLanguage

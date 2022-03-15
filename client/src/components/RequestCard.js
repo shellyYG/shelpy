@@ -170,7 +170,7 @@ function RequestCard(props) {
   }, [t, props.mainType, props.secondType, props.thirdType, props.fourthType, props.country]);
   useEffect(() => {
     let translatedSpeakingLanguagesString = '';
-    const speakingLanguages = props.languages.split(' ');
+    const speakingLanguages = props.languages ? props.languages.split(' ') : [];
     speakingLanguages.forEach((speakingLanguage) => {
       const speakingLanguageTranslationObj = nativeLanguageOptions.filter(
         (o) => o.value === speakingLanguage

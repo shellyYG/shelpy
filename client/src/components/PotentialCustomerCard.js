@@ -32,7 +32,6 @@ function PotentialCustomerCard(props) {
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
-
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
@@ -132,7 +131,7 @@ function PotentialCustomerCard(props) {
   }
   useEffect(() => {
     let translatedSpeakingLanguagesString = '';
-    const speakingLanguages = props.languages.split(' ');
+    const speakingLanguages = props.languages ? props.languages.split(' ') : [];
     speakingLanguages.forEach((speakingLanguage) => {
       const speakingLanguageTranslationObj = nativeLanguageOptions.filter(
         (o) => o.value === speakingLanguage

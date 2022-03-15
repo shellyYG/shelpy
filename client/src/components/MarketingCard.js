@@ -141,7 +141,7 @@ function MarketingCard(props) {
 
   useEffect(()=>{
     let translatedSpeakingLanguagesString = '';
-    const speakingLanguages = props.languages.split(' ');
+    const speakingLanguages = props.languages? props.languages.split(' '): [];
     speakingLanguages.forEach((speakingLanguage) => {
       const speakingLanguageTranslationObj = nativeLanguageOptions.filter(
         (o) => o.value === speakingLanguage
