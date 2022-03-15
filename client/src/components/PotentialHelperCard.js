@@ -139,7 +139,7 @@ function PotentialHelperCard(props) {
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}&profilePicPath=${props.profilePicPath}`
     );
   }
   async function handleBookHelper(e) {
@@ -151,7 +151,7 @@ function PotentialHelperCard(props) {
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.partnerName}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}&profilePicPath=${props.profilePicPath}`
     );
   }
   useEffect(() => {

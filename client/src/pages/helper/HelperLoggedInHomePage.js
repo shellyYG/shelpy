@@ -28,12 +28,12 @@ const HelperLoggedInHomePage = () => {
           title='Photo by Humphrey Muleba on Unsplash'
         >
           <div className='coverLeft'>
-            <div>
+            <div style={{ textShadow: '0 1px 2px #000005' }}>
               <h1 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title1')}
               </h1>
             </div>
-            <div>
+            <div style={{ textShadow: '0 1px 2px #000005' }}>
               <h2 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title2')}
               </h2>
@@ -44,7 +44,7 @@ const HelperLoggedInHomePage = () => {
                 {t('helper_home_banner_title4')}
               </h2>
             </div>
-            <div>
+            <div style={{ textShadow: '0 1px 2px #000005' }}>
               <h3
                 style={{
                   textAlign: 'center',
@@ -68,7 +68,7 @@ const HelperLoggedInHomePage = () => {
           </div>
         </div>
         <HelperMarketingSection />
-        <FeaturedHelperPart isHelpee={false}/>
+        <FeaturedHelperPart isHelpee={false} />
       </div>
     </div>
   );

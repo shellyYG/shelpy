@@ -560,7 +560,6 @@ body {
   text-align: center;
   padding: 5px 30px;
   font-size: 14px;
-  margin-right: 10px;
 }
 
 .rightHalfBtnActive {
@@ -573,7 +572,6 @@ body {
   text-align: center;
   padding: 5px 30px;
   font-size: 14px;
-  margin-right: 10px;
 }
 
 .chatRoomContent img {
@@ -1642,8 +1640,8 @@ input[type="checkbox" i] {
 }
 .guidanceImgContainer {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 50vh;
   margin: 10px auto;
 }
 .rectangleImageBxRight img {
@@ -1659,8 +1657,10 @@ input[type="checkbox" i] {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: cover;
   border-radius: 2px;
 }
@@ -1741,6 +1741,9 @@ input[type="checkbox" i] {
   }
   .form-most-inner {
     width: 80vw;
+  }
+  .guidanceImgContainer {
+    height: 30vh;
   }
   
   .chatBoxTitleInnerWrapper {
@@ -1914,7 +1917,10 @@ input[type="checkbox" i] {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 820px) {
+  .nav-logo {
+    display: none;
+  }
   input[type="checkbox" i] {
     width: 40px;
     height: 40px;

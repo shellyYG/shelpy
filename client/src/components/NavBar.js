@@ -12,6 +12,7 @@ import HomeIcon from './Icons/HomeIcon';
 import { useTranslation } from 'react-i18next';
 import UserRoleBtn from './UserRoleBtn';
 import { updateUserRole } from '../store/general/general-actions';
+import QuestionMarkIcon from './Icons/QuestionMarkIcon';
 
 const NavBar = (props) => {
   const { t } = useTranslation();
@@ -155,6 +156,17 @@ const NavBar = (props) => {
             >
               <HelpIcon />{' '}
               <div className='navBarText'>{t('nav_become_helpee')}</div>
+            </NavLink>
+          )}
+          {(
+            <NavLink
+              style={({ isActive }) =>
+                isActive ? activeStyle : nonActiveStyle
+              }
+              to={`/${currentLanguage}/helpee/guidance?refId=${refId}`}
+            >
+              <QuestionMarkIcon />{' '}
+              <div className='navBarText'>{t('helper_how_to_use')}</div>
             </NavLink>
           )}
         </div>

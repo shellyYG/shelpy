@@ -100,7 +100,7 @@ const ChatRoomPage = (props) => {
       thirdType,
       fourthType,
     };
-
+    console.log('currentPartner: ', currentPartner);
     if (props.isHelpee) {
       allChattedHelpers.forEach((p) => {
         partners.push(p);
@@ -466,7 +466,7 @@ const ChatRoomPage = (props) => {
                 </div>
               </div>
             )}
-            {messageList.map((messageContent) => {
+            {roomId && messageList.map((messageContent) => {
               return messageContent.author === userId ? (
                 <ChatMessageSelf
                   key={messageContent.id}

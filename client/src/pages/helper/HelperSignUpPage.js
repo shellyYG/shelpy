@@ -106,12 +106,12 @@ const SignUpPageHelper = () => {
           title='Photo by Humphrey Muleba on Unsplash'
         >
           <div className='coverLeft'>
-            <div>
+            <div style={{ textShadow: '0 1px 2px #000005' }}>
               <h1 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title1')}
               </h1>
             </div>
-            <div>
+            <div style={{ textShadow: '0 1px 2px #000005' }}>
               <h3 style={{ textAlign: 'center', color: 'white' }}>
                 {t('helper_home_banner_title2')}
               </h3>
@@ -122,7 +122,7 @@ const SignUpPageHelper = () => {
                 {t('helper_home_banner_title4')}
               </h3>
             </div>
-            <div>
+            <div style={{ textShadow: '0 1px 2px #000005' }}>
               <h4
                 style={{
                   textAlign: 'center',

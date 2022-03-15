@@ -1,8 +1,8 @@
-import '../App.css';
+import '../../App.css';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import DangerIcon from '../components/Icons/DangerIcon';
-import GuidanceCard from '../components/GuidanceCard';
+import DangerIcon from '../../components/Icons/DangerIcon';
+import GuidanceCard from '../../components/GuidanceCard';
 
 const HelperGuidePage = () => {
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ const HelperGuidePage = () => {
               free.Go to helper home page and register for free.Go to helper
               home page and register for free.Go to helper home page and
               register for free.`}
-                imgPath={'/static-imgs/helper_register_step.gif'}
+                imgPath={'/static-imgs/gifs/helpee/sign_up_2.gif'}
                 imgAlt={'register'}
               />
               <GuidanceCard
