@@ -24,6 +24,7 @@ const HelperSignUpPasswordPage = () => {
   const currentLanguage = routeParts[1];
 
   const emailRef = useRef();
+  const usernameRef = useRef();
   const passwordRef = useRef();
   const consentRef = useRef();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
@@ -32,6 +33,9 @@ const HelperSignUpPasswordPage = () => {
   const [repeatPassword, setRepeatPassword] = useState('');
   const [loading, setIsLoading] = useState(false);
   const [hasGiveConsent, setHasGiveConsent] = useState(false);
+  const [usernameString, setUsernameString] = useState('');
+  const [enableBtn, setEnableBtn] = useState(false);
+  
   const {
     signUpPasswordStatus,
     signUpPasswordStatusTitle,
@@ -65,6 +69,7 @@ const HelperSignUpPasswordPage = () => {
     // change DB & global state
     const data = {
       email: email || emailRef.current.value,
+      username: usernameRef.current.value,
       isHelpee: false,
       password: passwordRef.current.value,
       refId: refId,
@@ -137,6 +142,14 @@ const HelperSignUpPasswordPage = () => {
     navigate,
     dispatch,
   ]);
+  function handleUsernameTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setUsernameString(typingInput);
+  }
+  useEffect(() => {
+    setEnableBtn(usernameString && hasGiveConsent && password.length !== 0);
+  }, [usernameString, hasGiveConsent, password]);
 
   return (
     <div
@@ -182,7 +195,7 @@ const HelperSignUpPasswordPage = () => {
                 padding: '5px 10px',
               }}
             >
-              {t('no_email_warning_helper')}: {' '}
+              {t('no_email_warning_helper')}:{' '}
               <a
                 href={`/${currentLanguage}/helper/home?refId=${refId}`}
                 rel='noreferrer'
@@ -191,6 +204,14 @@ const HelperSignUpPasswordPage = () => {
               </a>
             </p>
           )}
+          <input
+            type='input'
+            className='form-control-password'
+            title={t('username_title')}
+            placeholder={t('username_placeholder')}
+            ref={usernameRef}
+            onChange={handleUsernameTyping}
+          />
           <input
             type='password'
             className='form-control-password'
@@ -220,7 +241,7 @@ const HelperSignUpPasswordPage = () => {
                 marginRight: '20px',
                 cursor: 'pointer',
                 marginBottom: 'auto',
-                width: '100px'
+                width: '100px',
               }}
               ref={consentRef}
             />
@@ -264,7 +285,7 @@ const HelperSignUpPasswordPage = () => {
           </div>
           <ConfirmBtn
             cta={t('home_free_sign_up')}
-            disable={!hasGiveConsent || password.length === 0}
+            disable={!enableBtn}
             handleConfirm={handleConfirm}
           />
         </form>

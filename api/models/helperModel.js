@@ -78,7 +78,6 @@ async function updateHelperCertificatePath(data) {
   const {
     userId,
     introduction,
-    username,
     isAnonymous,
     isMarketing,
     path,
@@ -123,7 +122,7 @@ async function updateHelperCertificatePath(data) {
   }
   // update status
   const sql2 = `
-    UPDATE helper_account SET username =?, introduction=?
+    UPDATE helper_account SET introduction=?
     , nationality=?, residenceCountry=?
     , isAnonymous=?, isMarketing=?
     , certificatePath = ?, age = ?, linkedInUrl = ?, notes = ?, status= ?
@@ -135,7 +134,6 @@ async function updateHelperCertificatePath(data) {
       ,bankAccount=?, notificationLanguage=?
     WHERE id =?`;
   const sqlquery2 = await query(sql2, [
-    username,
     introduction,
     nationality,
     residenceCountry,

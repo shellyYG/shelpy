@@ -39,12 +39,10 @@ const BasicFormPage = (props) => {
   const ageRef = useRef();
   const introductionRef = useRef();
   const notesRef = useRef();
-  const usernameRef = useRef();
   const linkedInUrlRef = useRef();
   const nationalityRef = useRef();
   const residenceCountryRef = useRef();
   const notificationLanguageRef = useRef();
-  const isAnonymousRef = useRef();
   const bankAccountRef = useRef();
 
   const [loading, setIsLoading] = useState(false);
@@ -54,12 +52,10 @@ const BasicFormPage = (props) => {
   const [nationality, setNationality] = useState('default');
   const [notificationLanguage, setNotificationLanguage] = useState('default');
   const [residenceCountry, setResidenceCountry] = useState('default');
-  const [usernameString, setUsernameString] = useState('');
   const [bankAccountString, setBankAccountString] = useState('');
   const [introductionString, setIntroductionString] = useState('');
-  const [isRawAnonymous, setIsRawAnonymous] = useState('default');
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [isMarketing, setIsMarketing] = useState(false);
+  const [isMarketing, setIsMarketing] = useState(true);
   const [enableBtn, setEnableBtn] = useState(false);
   
   const [hasMonToFri, setHasMonToFri] = useState(false);
@@ -98,14 +94,6 @@ const BasicFormPage = (props) => {
     applyHelperStatusTitle,
     applyHelperStatusMessage,
   } = useSelector((state) => state.helperNotification);
-
-  useEffect(()=>{
-    if (isRawAnonymous === '0') {
-      setIsAnonymous(false);
-    }else if (isRawAnonymous === '1'){
-      setIsAnonymous(true);
-    }
-  },[isRawAnonymous])
 
   useEffect(() => {
     let languagesString = '';
@@ -231,16 +219,12 @@ const BasicFormPage = (props) => {
     let introduction;
     let notes;
     let bankAccount;
-    let username;
     let linkedInUrl;
     if (introductionRef && introductionRef.current) {
       introduction = introductionRef.current.value;
     }
     if (notesRef && notesRef.current) {
       notes = notesRef.current.value;
-    }
-    if (usernameRef && usernameRef.current) {
-      username = usernameRef.current.value;
     }
     if (linkedInUrlRef && linkedInUrlRef.current) {
       linkedInUrl = linkedInUrlRef.current.value;
@@ -252,7 +236,6 @@ const BasicFormPage = (props) => {
     if (certificate) { // must be helper
       data = new FormData();
       data.append('userId', props.helperUserId);
-      data.append('username', username);
       data.append('isAnonymous', isAnonymous);
       data.append('isMarketing', isMarketing);
       data.append('age', age);
@@ -293,7 +276,6 @@ const BasicFormPage = (props) => {
         data = {
           userId: props.helpeeUserId,
           isAnonymous,
-          username,
           age,
           nationality,
           notificationLanguage,
@@ -329,7 +311,6 @@ const BasicFormPage = (props) => {
           userId: props.helperUserId,
           isAnonymous,
           isMarketing,
-          username,
           age,
           nationality,
           residenceCountry,
@@ -380,30 +361,25 @@ const BasicFormPage = (props) => {
   useEffect(() => {
     if (props.isHelpee) {
       setEnableBtn(
-        usernameString &&
           age !== 'default' &&
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
           notificationLanguage !== 'default' &&
-          isRawAnonymous !== 'default' &&
           introductionString
       );
     } else {
       setEnableBtn(
-        usernameString &&
           age !== 'default' &&
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
           notificationLanguage !== 'default' &&
           (linkedInUrlRef || certificate) &&
-          isRawAnonymous !== 'default' &&
           bankAccountString &&
           introductionString
       );
     }
   }, [
     props.isHelpee,
-    usernameString,
     linkedInUrlRef,
     age,
     nationality,
@@ -412,7 +388,6 @@ const BasicFormPage = (props) => {
     bankAccountString,
     introductionString,
     notificationLanguage,
-    isRawAnonymous,
   ]);
 
   // is Helper:
@@ -496,11 +471,6 @@ const BasicFormPage = (props) => {
     navigate,
     dispatch,
   ]);
-  function handleUsernameTyping(e) {
-    e.preventDefault();
-    const typingInput = e.target.value;
-    setUsernameString(typingInput);
-  }
   function handleIntroductionTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
@@ -605,18 +575,19 @@ const BasicFormPage = (props) => {
                 </div>
               </div>
               <div className='form-row'>
-                <LeftHalfLineTextBox
-                  title={t('username_title')}
-                  placeholder={t('username_placeholder')}
-                  inputRef={usernameRef}
-                  onChange={handleUsernameTyping}
-                />
                 <DropDown
                   selected={age}
                   handleSelect={setAge}
                   title={t('age_title')}
                   selectRef={ageRef}
                   options={ageOptions}
+                />
+                <DropDown
+                  selected={notificationLanguage}
+                  handleSelect={setNotificationLanguage}
+                  title={t('notification_language_title')}
+                  selectRef={notificationLanguageRef}
+                  options={webLanguagesOptions}
                 />
               </div>
               <div className='form-row'>
@@ -633,24 +604,6 @@ const BasicFormPage = (props) => {
                   title={t('residence_country_title')}
                   selectRef={residenceCountryRef}
                   options={countryOptions}
-                />
-              </div>
-              <div className='form-row'>
-                <DropDown
-                  selected={notificationLanguage}
-                  handleSelect={setNotificationLanguage}
-                  title={t('notification_language_title')}
-                  selectRef={notificationLanguageRef}
-                  options={webLanguagesOptions}
-                />
-                <DropDown
-                  selected={isRawAnonymous}
-                  handleSelect={setIsRawAnonymous}
-                  title={
-                    props.isHelpee ? t('ask_anonymous') : t('answer_anonymous')
-                  }
-                  selectRef={isAnonymousRef}
-                  options={yesOrNoOptions}
                 />
               </div>
               {!props.isHelpee && (
@@ -687,6 +640,18 @@ const BasicFormPage = (props) => {
                   </div>
                 </div>
               )}
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <CheckBox
+                  checked={isAnonymous}
+                  handleCheck={setIsAnonymous}
+                  details={
+                    props.isHelpee ? t('ask_anonymous') : t('answer_anonymous')
+                  }
+                  paddingRight='10px'
+                  marginBottom='5px'
+                  fontSize='14px'
+                />
+              </div>
               {!props.isHelpee && (
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <CheckBox

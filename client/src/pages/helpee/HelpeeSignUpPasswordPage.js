@@ -22,6 +22,7 @@ const HelpeeSignUpPasswordPage = () => {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
   const emailRef = useRef();
+  const usernameRef = useRef();
   const passwordRef = useRef();
   const consentRef = useRef();
   const { DBHelpeeEmail } = useSelector((state) => state.helpee);
@@ -30,6 +31,9 @@ const HelpeeSignUpPasswordPage = () => {
   const [repeatPassword, setRepeatPassword] = useState('');
   const [loading, setIsLoading] = useState(false);
   const [hasGiveConsent, setHasGiveConsent] = useState(false);
+  const [usernameString, setUsernameString] = useState('');
+  const [enableBtn, setEnableBtn] = useState(false);
+
   const {
     signUpPasswordStatus,
     signUpPasswordStatusTitle,
@@ -62,6 +66,7 @@ const HelpeeSignUpPasswordPage = () => {
     setIsLoading(true);
     const data = {
       email: email || emailRef.current.value,
+      username: usernameRef.current.value,
       isHelpee: true,
       password: passwordRef.current.value,
       refId: refId,
@@ -134,6 +139,14 @@ const HelpeeSignUpPasswordPage = () => {
     navigate,
     dispatch,
   ]);
+  function handleUsernameTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setUsernameString(typingInput);
+  }
+  useEffect(() => {
+    setEnableBtn(usernameString && hasGiveConsent && password.length !== 0);
+  }, [usernameString, hasGiveConsent, password]);
 
   return (
     <div
@@ -187,6 +200,14 @@ const HelpeeSignUpPasswordPage = () => {
               </a>
             </p>
           )}
+          <input
+            type='input'
+            className='form-control-password'
+            title={t('username_title')}
+            placeholder={t('username_placeholder')}
+            ref={usernameRef}
+            onChange={handleUsernameTyping}
+          />
           <input
             type='password'
             className='form-control-password'
@@ -259,7 +280,7 @@ const HelpeeSignUpPasswordPage = () => {
           </div>
           <ConfirmBtn
             cta={t('home_free_sign_up')}
-            disable={!hasGiveConsent || password.length === 0}
+            disable={!enableBtn}
             handleConfirm={handleConfirm}
           />
         </form>

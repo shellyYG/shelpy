@@ -289,7 +289,6 @@ router.post(
     const {
       userId,
       introduction,
-      username,
       isAnonymous,
       isMarketing,
       age,
@@ -327,7 +326,6 @@ router.post(
       await helperModel.updateHelperCertificatePath({
         userId,
         introduction,
-        username,
         isAnonymous,
         isMarketing,
         age,
@@ -419,7 +417,6 @@ router.post(
 
     const {
       userId,
-      username,
       introduction,
       age,
       nationality,
@@ -435,7 +432,6 @@ router.post(
       const result = await uploadFile(file, 'user-certificates');
       await helperModel.updateHelperCertificatePath({
         userId,
-        username,
         isAnonymous,
         isMarketing,
         age,
@@ -526,7 +522,6 @@ router.post(
     const {
       userId,
       introduction,
-      username,
       age,
       nationality,
       residenceCountry,
@@ -539,7 +534,6 @@ router.post(
       await helpeeModel.updateHelpeeBasicInfo({
         userId,
         introduction,
-        username,
         isAnonymous,
         age,
         nationality,

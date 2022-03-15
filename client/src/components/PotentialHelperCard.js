@@ -75,7 +75,6 @@ function PotentialHelperCard(props) {
         secondTypeTranslationObj = industryOptions.filter(
           (o) => o.value === props.secondType
         );
-        console.log('secondTypeTranslationObj: ', secondTypeTranslationObj);
         if (
           props.secondType &&
           secondTypeTranslationObj &&

@@ -84,6 +84,7 @@ const createUserObject = async (data, encryptedpass, ivString) => {
     // Create new user account
     const id = await signUpModel.insertUserAndGetUserId({
       email,
+      username,
       status,
       isHelpee,
       password: encryptedpass,

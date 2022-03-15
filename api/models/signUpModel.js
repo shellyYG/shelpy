@@ -8,16 +8,18 @@ async function checkUserEmailExist(data) {
 }
 
 async function insertUserAndGetUserId(data) {
+  const { username, email, status, password, ivString, refId, subscribed } = data;
   const insertedData = {
     provider: 'native',
-    email: data.email,
-    status: data.status,
-    encryptedpass: data.password,
-    ivString: data.ivString,
+    username,
+    email,
+    status,
+    encryptedpass: password,
+    ivString,
     confirmed: false,
     score: 0,
-    refId: data.refId,
-    subscribed: data.subscribed
+    refId,
+    subscribed,
   };
   const table = data.isHelpee ? 'helpee_account' : 'helper_account';
   const sql = `INSERT INTO ${table} SET ?`;
