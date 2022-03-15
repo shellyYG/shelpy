@@ -40,7 +40,7 @@ const BookingConfirmPage = (props) => {
   const bookingId = searchParams.get('bookingId');
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
-  const userIdNumber = parseInt(userId.split('_')[1]);
+  const userIdNumber = userId? parseInt(userId.split('_')[1]): 0;
   
   const partnerName = searchParams.get('partnerName');
   const requestId = searchParams.get('requestId');
@@ -61,7 +61,6 @@ const BookingConfirmPage = (props) => {
   const bookingTime = searchParams.get('bookingTime');
   const bookingTimeZone = searchParams.get('timeZone');
   const bookingNotes = searchParams.get('bookingNotes');
-  console.log('query string timezone: ', bookingTimeZone);
 
   const {
     bookingStatus,
@@ -91,7 +90,7 @@ const BookingConfirmPage = (props) => {
   today = `${yyyy}-${mm}-${dd}`;
   const [meetDate, setMeetDate] = useState(today); // display will be 2021/11/12 though
   const [meetTime, setMeetTime] = useState('default');
-  const [timeZone, settimeZone] = useState('default');
+  const [timeZone, setTimeZone] = useState('default');
 
   async function handleChangeBooking(e) {
     e.preventDefault();
@@ -112,10 +111,20 @@ const BookingConfirmPage = (props) => {
       const timeHourParts = meetStartTime.substring(0, meetStartTime.length-2).split(':');
       
       let timeHour = timeHourParts[0];
-      if (timeAMPM === 'pm') {
-        timeHour = parseInt(timeHour);
-      } else {
+      const timeMinute = timeHourParts[1];
+      if (timeAMPM === 'pm' && timeHour !== '12') {
         timeHour = parseInt(timeHour) + 12;
+      } else {
+        timeHour = parseInt(timeHour) + 0;
+      }
+      const timeZoneParts = timeZoneRef.current.value.split('_');
+      const timeZonePlusOrMinus = timeZoneParts[1];
+      const timeZoneHoursFromUTC = timeZoneParts[2];
+      
+      if (timeZonePlusOrMinus === 'minus') {
+        timeHour += parseInt(timeZoneHoursFromUTC);
+      } else {
+        timeHour -= parseInt(timeZoneHoursFromUTC);
       }
 
       const dates = meetDateRef.current.value.split('-');
@@ -124,7 +133,8 @@ const BookingConfirmPage = (props) => {
         parseInt(year),
         parseInt(month) - 1,
         parseInt(day),
-        timeHour
+        timeHour,
+        timeMinute,
       );
       const data = {
         appointmentDate: meetDateRef.current.value,
@@ -247,7 +257,7 @@ const BookingConfirmPage = (props) => {
   return (
     <div
       clanssName='main-content-wrapper'
-      style={{ height: '500px', flexDirection: 'row' }}
+      style={{ height: '100vh', flexDirection: 'row' }}
     >
       <div className='form-center-wrapper'>
         <div
@@ -299,7 +309,7 @@ const BookingConfirmPage = (props) => {
                   <div className='form-row'>
                     <DropDown
                       selected={timeZone}
-                      handleSelect={settimeZone}
+                      handleSelect={setTimeZone}
                       title={`${t('timeZone')}`}
                       selectRef={timeZoneRef}
                       options={timeZoneOptions}
