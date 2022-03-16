@@ -664,6 +664,7 @@
   "oops_helper_not_sign_in": "抱歉！请先登入为过来人。",
   "helper_home_page": "过来人首页",
   "helpee_home_page": "新鲜人首页",
+  "homepage": "首页",
 
   "booking_card_waiting_helper_confirm": "还在等待 {{helperUsername}} 同意位于 {{appointmentDate}} {{appointmentTime}} 的会议时间。",
   "my_requests": "我的需求",
@@ -807,7 +808,7 @@
   "years_of_experience_you_have": "相关/类似的经验有多久",
 
   "update_time_terms": "此Shelpy服务条款更新于 2022 年 3 月 3 日。",
-  "provider_terms": "Shelpy 係由『过来人有限公司(Shelpy Inc.)』(下称本公司或是Shelpy) 所运营、建设和提供。",
+  "provider_terms": "Shelpy 係由『过来人有限公司(Shelpy, Ltd.)』(下称本公司或是Shelpy) 所运营、建设和提供。",
   "intro_title": "前言",
   "intro_terms": "本服务条款的目的是为了保护Shelpy的用户和合作商店的利益，并履行公司与用户之间的合约。所有由Shelpy提供的服务（以下简称'Shelpy服务'）都受这些服务条款的约束。任何使用Shelpy服务的用户都应仔细阅读这些服务条款和Shelpy隐私条款，并遵守这些条款。如果您不能遵守这些服务条款，或者您不同意这些服务条款的全部或部分内容，请不要使用Shelpy服务。通过使用Shelpy服务，您承认并同意这些服务条款的所有条款。",
   "sign_up_sign_in_terms_title": "会员註册与登入",
