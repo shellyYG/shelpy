@@ -664,6 +664,7 @@
   "oops_helper_not_sign_in": "抱歉！请先登入为过来人。",
   "helper_home_page": "过来人首页",
   "helpee_home_page": "新鲜人首页",
+  "homepage": "首页",
 
   "booking_card_waiting_helper_confirm": "还在等待 {{helperUsername}} 同意位于 {{appointmentDate}} {{appointmentTime}} 的会议时间。",
   "my_requests": "我的需求",

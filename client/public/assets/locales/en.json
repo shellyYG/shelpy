@@ -1,10 +1,10 @@
 {
   "nav_about": "About",
-  "nav_book_helper": "Create Request",
-  "nav_create_offer": "Create Offer",
+  "nav_book_helper": "Add Request",
+  "nav_create_offer": "Add Offer",
   "nav_top_helper": "Top Helpers",
-  "nav_become_helper": "Become Helper",
-  "nav_become_helpee": "Become Helpee",
+  "nav_become_helper": "Be Helper",
+  "nav_become_helpee": "Be Helpee",
   "nav_I_am_helpee": "I am a Helpee",
   "nav_I_am_helper": "I am a Helper",
 
@@ -664,6 +664,7 @@
   "oops_helper_not_sign_in": "Oops! Please sign in as helper first.",
   "helper_home_page": "Helper Homepage",
   "helpee_home_page": "Helpee Homepage",
+  "homepage": "Home",
 
   "booking_card_waiting_helper_confirm": "Waiting for {{helperUsername}} to confirm meeting time on {{appointmentDate}} at {{appointmentTime}}.",
   "my_requests": "My Requests",
@@ -858,8 +859,8 @@
   "mkt_crystal_selfEmployed": "FB: Makeup Artist Crystal. Share the life of a makeup artist who works and travels around Europe.",
   "mkt_marcus_selfEmployed": "Co-Founder of Easy Cook Asia. Share how to found a successful food E-Commerce startup as a foreigner in Berlin.",
 
-  "helpee_guide": "Helpee User Guide",
-  "helper_how_to_use": "User Guide",
+  "helpee_guide": "Helpee Instruction",
+  "helper_how_to_use": "Helpee Instruction",
   "helpee_guide_step1_title": "Step 1. FREE Sign up",
   "helpee_guide_step_1_list1": "Enter your email on Helpee homepage.",
   "helpee_guide_step_1_list2": "Create username and password, then click on \"Free Sign Up\".",
@@ -878,7 +879,7 @@
   "helpee_guide_step_3_list4": "If you stay anonymous, then the profile picture will not be shown.",
 
   "helpee_guide_step4_title": "Step 4. Create your first request",
-  "helpee_guide_step_4_list1": "Click \"Create Request\" on the Navbar.",
+  "helpee_guide_step_4_list1": "Click \"Add Request\" on the Navbar.",
   "helpee_guide_step_4_list2": "Select a experience that you want to know - study, job, or self-employed?",
   "helpee_guide_step_4_list3": "Enter requests details and submit the requests.",
   "helpee_guide_step_4_list4": "The requests you created will be shown on the \"My Requests\" tab",

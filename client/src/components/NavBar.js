@@ -87,7 +87,6 @@ const NavBar = (props) => {
               to={`/${currentLanguage}/helper/home?refId=${refId}`}
             >
               <HomeIcon />{' '}
-              <div className='navBarText'>{t('helper_home_page')}</div>
             </NavLink>
           )}
           {userRole === 'helpee' && (
@@ -98,9 +97,18 @@ const NavBar = (props) => {
               to={`/${currentLanguage}/home?refId=${refId}`}
             >
               <HomeIcon />{' '}
-              <div className='navBarText'>{t('helpee_home_page')}</div>
             </NavLink>
           )}
+          {
+            <NavLink
+              style={({ isActive }) =>
+                isActive ? activeStyle : nonActiveStyle
+              }
+              to={`/${currentLanguage}/helpee/guidance?refId=${refId}`}
+            >
+              <QuestionMarkIcon />{' '}
+            </NavLink>
+          }
           <NavLink
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to={
@@ -156,17 +164,6 @@ const NavBar = (props) => {
             >
               <HelpIcon />{' '}
               <div className='navBarText'>{t('nav_become_helpee')}</div>
-            </NavLink>
-          )}
-          {(
-            <NavLink
-              style={({ isActive }) =>
-                isActive ? activeStyle : nonActiveStyle
-              }
-              to={`/${currentLanguage}/helpee/guidance?refId=${refId}`}
-            >
-              <QuestionMarkIcon />{' '}
-              <div className='navBarText'>{t('helper_how_to_use')}</div>
             </NavLink>
           )}
         </div>
