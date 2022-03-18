@@ -37,6 +37,10 @@ const helperSlice = createSlice({
     helperPasswordResetStatusTitle: '',
     helperPasswordResetStatusMessage: '',
 
+    deleteOfferStatus: 'initial',
+    deleteOfferStatusTitle: '',
+    deleteOfferStatusMessage: '',
+
     allChattedCustomers: [],
   },
   reducers: {
@@ -115,6 +119,18 @@ const helperSlice = createSlice({
       const { payload } = action;
       state.allChattedCustomers = payload.allChattedCustomers;
     },
+    setDeleteOfferStatus(state,action) {
+      const { payload } = action;
+      state.deleteOfferStatus = payload.deleteOfferStatus;
+       state.deleteOfferStatusTitle = payload.deleteOfferStatusTitle;
+       state.deleteOfferStatusMessage = payload.deleteOfferStatusMessage;
+    },
+    clearDeleteOfferStatus(state, action) {
+       const { payload } = action;
+       state.deleteOfferStatus = payload.deleteOfferStatus;
+       state.deleteOfferStatusTitle = payload.deleteOfferStatusTitle;
+       state.deleteOfferStatusMessage = payload.deleteOfferStatusMessage;
+    }
   },
 });
 

@@ -890,3 +890,58 @@ export const postPayViaTapPay = (data) => {
     }
   };
 };
+
+export const deleteHelpeeRequest = (data) => {
+  return async (dispatch) => {
+    try {
+      const generalToken = localStorage.getItem('shelpy-token');
+      if (!generalToken) {
+        throw Error('access_denied_please_log_in_error');
+      }
+      if (generalToken) {
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.delete(
+          userRequestPath,
+          {
+            data,
+          },
+          { headers }
+        );
+        data.requestId = response.data.requestId;
+        dispatch(
+          helpeeActions.setDeleteRequestStatus({
+            deleteRequestStatus: 'success',
+            deleteRequestStatusTitle: 'success',
+            deleteRequestStatusMessage: 'request_delete_successfully',
+          })
+        );
+      }
+    } catch (error) {
+      const errorResponse = error.response ? error.response.data : '';
+      const errorMessage = errorResponse || error.message;
+      if (errorMessage) {
+        dispatch(
+          helpeeActions.setDeleteRequestStatus({
+            deleteRequestStatus: 'error',
+            deleteRequestStatusTitle: 'oops',
+            deleteRequestStatusMessage: errorMessage,
+          })
+        );
+      }
+    }
+  };
+};
+export const clearDeleteRequestStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.clearDeleteRequestStatus({
+        deleteRequestStatus: 'initial',
+        deleteRequestStatusTitle: '',
+        deleteRequestStatusMessage: '',
+      })
+    );
+  };
+};

@@ -681,3 +681,58 @@ export const changeHelperPassword = (data) => {
     }
   };
 };
+
+export const deleteHelperOffer = (data) => {
+  return async (dispatch) => {
+    try {
+      const generalToken = localStorage.getItem('shelper-token');
+      if (!generalToken) {
+        throw Error('access_denied_please_log_in_error');
+      }
+      if (generalToken) {
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.delete(
+          userOfferPath,
+          {
+            data,
+          },
+          { headers }
+        );
+        data.offerId = response.data.offerId;
+        dispatch(
+          helperActions.setDeleteOfferStatus({
+            deleteOfferStatus: 'success',
+            deleteOfferStatusTitle: 'success',
+            deleteOfferStatusMessage: 'offer_delete_successfully',
+          })
+        );
+      }
+    } catch (error) {
+      const errorResponse = error.response ? error.response.data : '';
+      const errorMessage = errorResponse || error.message;
+      if (errorMessage) {
+        dispatch(
+          helperActions.setDeleteOfferStatus({
+            deleteOfferStatus: 'error',
+            deleteOfferStatusTitle: 'oops',
+            deleteOfferStatusMessage: errorMessage,
+          })
+        );
+      }
+    }
+  };
+};
+export const clearDeleteOfferStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      helperActions.clearDeleteOfferStatus({
+        deleteOfferStatus: 'initial',
+        deleteOfferStatusTitle: '',
+        deleteOfferStatusMessage: '',
+      })
+    );
+  };
+};

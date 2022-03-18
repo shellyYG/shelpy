@@ -710,6 +710,8 @@
   "no_requests": "You haven't created any requests yet",
   "no_created_offers": "You haven't created any offers yet",
   "add_request_cta": "Add a Request",
+  "request_delete_successfully": "Request deleted successfully",
+  "offer_delete_successfully": "Offer deleted successfully",
   "no_bookings": "No bookings yet",
   "book_helper_cta": "Book a Helper",
   "no_matched_customers": "No matched customers yet",

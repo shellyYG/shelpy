@@ -26,7 +26,7 @@ const postHelperOffer = async (req, res) => {
 
 const deleteHelperOffer = async (req, res) => {
   try {
-    const { offerId } = req.query;
+    const { offerId } = req.body;
     const response = await helperModel.deleteHelperOffer({
       offerId,
     });

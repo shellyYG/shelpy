@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import {
@@ -13,9 +15,16 @@ import {
   nativeLanguageOptions,
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
+import { useDispatch, useSelector } from 'react-redux';
+import TrashIcon from './Icons/TrashIcon';
+import { clearDeleteOfferStatus, deleteHelperOffer } from '../store/helper/helper-actions';
+
+const MySwal = withReactContent(Swal);
 
 function OfferCard(props) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const [loading, setIsLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
@@ -24,6 +33,25 @@ function OfferCard(props) {
   const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
     useState('');
   const [details, setDetails] = useState('');
+
+  const {
+    deleteOfferStatus,
+    deleteOfferStatusTitle,
+    deleteOfferStatusMessage,
+  } = useSelector((state) => state.helper);
+
+  if (loading) {
+    MySwal.fire({
+      title: t('loading'),
+      html: t('do_not_close_window'),
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        MySwal.showLoading();
+      },
+    });
+  }
+
   useEffect(() => {
     if (props.duration) {
       setDuration(props.duration.split(' ')[0])
@@ -159,6 +187,52 @@ function OfferCard(props) {
     setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
   }, [t, props.languages]);
 
+  function handleDeleteOffer(e) {
+    e.preventDefault(e);
+    const data = {
+      offerId: props.offerId,
+    };
+    console.log('data to dispatch: ', data);
+    dispatch(deleteHelperOffer(data));
+    setIsLoading(true);
+  }
+  useEffect(() => {
+    if (deleteOfferStatus === 'error') {
+      setIsLoading(false);
+      async function sweetAlertAndClearStatus(title, message) {
+        await MySwal.fire({
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
+          icon: 'error',
+        });
+        dispatch(clearDeleteOfferStatus());
+      }
+      sweetAlertAndClearStatus(deleteOfferStatus, deleteOfferStatusMessage);
+      return;
+    } else if (deleteOfferStatus === 'success') {
+      setIsLoading(false);
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{t(title)}</strong>,
+          imageWidth: 442,
+          imageHeight: 293,
+          html: <p>{t(message)}</p>,
+          icon: 'success',
+        });
+        window.location.reload();
+      }
+      dispatch(clearDeleteOfferStatus());
+      sweetAlertAndNavigate(deleteOfferStatus, deleteOfferStatusMessage);
+      
+    }
+  }, [
+    t,
+    deleteOfferStatus,
+    deleteOfferStatusTitle,
+    deleteOfferStatusMessage,
+    dispatch,
+  ]);
+
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
@@ -261,13 +335,7 @@ function OfferCard(props) {
           </p>
         </div>
       </div>
-      {/* <div className='checkBoxWidth'>
-        <div className='contentBx'>
-          <button className='btn-red' onClick={handleDeleteOffer}>
-            Delete Offer
-          </button>
-        </div>
-      </div> */}
+      <TrashIcon onClick={handleDeleteOffer} />
     </div>
   );
 }

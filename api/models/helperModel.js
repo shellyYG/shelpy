@@ -22,7 +22,7 @@ async function getAllMarketingOffers() {
   SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.languages, acc.isAnonymous
   FROM offers ofs 
   INNER JOIN helper_account acc ON ofs.userId = acc.id
-  WHERE acc.isMarketing = true AND acc.status = 'approved' ORDER BY score, id DESC;`;
+  WHERE acc.isMarketing = true AND acc.status = 'approved' AND NOT ofs.status='deleted' ORDER BY score, id DESC;`;
   const allMKTOffers = await query(sql);
   return { data: { allMKTOffers } };
 }
@@ -58,7 +58,7 @@ LEFT JOIN requests req ON
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
-WHERE acc.id = ? AND NOT req.userId IS NULL
+WHERE acc.id = ? AND NOT req.userId IS NULL AND NOT req.status='deleted'
 ORDER BY req.id DESC;`;
   const allPotentialCustomers = await query(sql, helperUserId);
   return { data: { allPotentialCustomers } };

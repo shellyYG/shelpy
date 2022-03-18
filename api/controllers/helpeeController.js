@@ -111,7 +111,7 @@ const getHelpeeOrderHelperList = async (req, res) => {
 
 const deleteHelpeeRequest = async (req, res) => {
   try {
-    const { requestId } = req.query;
+    const { requestId } = req.body;
     const response = await helpeeModel.deleteHelpeeRequest({
       requestId,
     });

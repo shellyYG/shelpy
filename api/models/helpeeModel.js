@@ -18,7 +18,7 @@ async function getHelpeeAllOrders(data) {
   , req.*
   FROM requests req
   INNER JOIN helpee_account helpee ON req.userId = helpee.id
-  WHERE userId=? ORDER BY id DESC;`;
+  WHERE userId=? AND NOT req.status ='deleted' ORDER BY id DESC;`;
   const allRequests = await query(sqlSimplified, data.helpeeUserId);
   return { data: { allOrders: allRequests } };
 }
@@ -56,7 +56,7 @@ LEFT JOIN requests req ON
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
-WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.status = 'approved'
+WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.status = 'approved' AND NOT ofs.status ='deleted'
 ORDER BY acc.score, ofs.id DESC;`;
   const allPotentialHelpers = await query(sql, helpeeUserId);
 
@@ -158,6 +158,7 @@ async function updateHelpeeBasicInfo(data) {
 
 async function deleteHelpeeRequest(data) {
   const { requestId } = data;
+  console.log('deleteHelpeeRequest->data: ', data);
   const sql = `UPDATE requests SET status='deleted' WHERE id=?`;
   await query(sql, requestId);
   return { data: { status: 'success' } };

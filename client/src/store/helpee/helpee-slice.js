@@ -38,6 +38,10 @@ const helpeeSlice = createSlice({
     payHelperStatusTitle: '',
     payHelperStatusMessage: '',
 
+    deleteRequestStatus: 'initial',
+    deleteRequestStatusTitle: '',
+    deleteRequestStatusMessage: '',
+
     allChattedHelpers: [],
   },
   reducers: {
@@ -146,6 +150,18 @@ const helpeeSlice = createSlice({
       const { payload } = action;
       state.allChattedHelpers = payload.allChattedHelpers;
     },
+    setDeleteRequestStatus(state, action) {
+      const { payload } = action;
+      state.deleteRequestStatus = payload.deleteRequestStatus;
+      state.deleteRequestStatusTitle = payload.deleteRequestStatusTitle;
+      state.deleteRequestStatusMessage = payload.deleteRequestStatusMessage;
+    },
+    clearDeleteRequestStatus(state, action) {
+      const { payload } = action;
+      state.deleteRequestStatus = payload.deleteRequestStatus;
+      state.deleteRequestStatusTitle = payload.deleteRequestStatusTitle;
+      state.deleteRequestStatusMessage = payload.deleteRequestStatusMessage;
+    }
   },
 });
 

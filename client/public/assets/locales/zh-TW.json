@@ -710,6 +710,8 @@
   "no_requests": "你還沒有新增任何需求",
   "no_created_offers": "你還沒有新增任何服務項目",
   "add_request_cta": "新增需求",
+  "request_delete_successfully": "成功刪除了需求",
+  "offer_delete_successfully": "成功刪除了服務項目",
   "no_bookings": "你還沒有任何預約",
   "book_helper_cta": "預約一位過來人",
   "no_matched_customers": "還未找到匹配的新鮮人",

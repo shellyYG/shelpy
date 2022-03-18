@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { useDispatch, useSelector } from 'react-redux';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import {
@@ -16,9 +19,16 @@ import {
   yearsOptions,
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
+import TrashIcon from './Icons/TrashIcon';
+import { clearDeleteRequestStatus, deleteHelpeeRequest } from '../store/helpee/helpee-actions';
+
+const MySwal = withReactContent(Swal);
+
 
 function RequestCard(props) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const [loading, setIsLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -28,6 +38,24 @@ function RequestCard(props) {
     useState('');
   const [details, setDetails] = useState('');
   const [filteredStatus, setFilteredStatus] = useState('');
+
+  const {
+    deleteRequestStatus,
+    deleteRequestStatusTitle,
+    deleteRequestStatusMessage,
+  } = useSelector((state) => state.helpee);
+  
+  if (loading) {
+    MySwal.fire({
+      title: t('loading'),
+      html: t('do_not_close_window'),
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        MySwal.showLoading();
+      },
+    });
+  }
 
   useEffect(() => {
     let secondTypeTranslationObj;
@@ -184,6 +212,53 @@ function RequestCard(props) {
     });
     setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
   }, [t, props.languages]);
+
+  function handleDeleteRequest(e) {
+     e.preventDefault(e);
+     const data = {
+       requestId: props.id,
+     };
+     console.log('data to dispatch deleteHelpeeRequest: ', data);
+     dispatch(deleteHelpeeRequest(data));
+     setIsLoading(true);
+  }
+  useEffect(() => {
+    if (deleteRequestStatus === 'error') {
+      setIsLoading(false);
+      async function sweetAlertAndClearStatus(title, message) {
+        await MySwal.fire({
+          title: <strong>{t(title)}</strong>,
+          html: <p>{t(message)}</p>,
+          icon: 'error',
+        });
+        dispatch(clearDeleteRequestStatus());
+      }
+      sweetAlertAndClearStatus(deleteRequestStatus, deleteRequestStatusMessage);
+      
+      return;
+    } else if (deleteRequestStatus === 'success') {
+      setIsLoading(false);
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{t(title)}</strong>,
+          imageWidth: 442,
+          imageHeight: 293,
+          html: <p>{t(message)}</p>,
+          icon: 'success',
+        });
+        window.location.reload();
+      }
+      dispatch(clearDeleteRequestStatus());
+      sweetAlertAndNavigate(deleteRequestStatus, deleteRequestStatusMessage);
+      return;
+    }
+  }, [
+    t,
+    deleteRequestStatus,
+    deleteRequestStatusTitle,
+    deleteRequestStatusMessage,
+    dispatch,
+  ]);
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
@@ -281,19 +356,12 @@ function RequestCard(props) {
           </p>
         </div>
       </div>
-      <div className='statusWidth'>
+      {filteredStatus && <div className='statusWidth'>
         <div className='contentBx'>
           <p style={{ fontSize: '14px', padding: '6px' }}>{filteredStatus}</p>
         </div>
-      </div>
-      <div className='btnWidth'></div>
-      <div className='checkBoxWidth'>
-        <div className='contentBx'>
-          {/* <button className='btn-red' onClick={handleDeleteRequest}>
-            Delete Request
-          </button> */}
-        </div>
-      </div>
+      </div>}
+      <TrashIcon onClick={handleDeleteRequest}/>
     </div>
   );
 }
