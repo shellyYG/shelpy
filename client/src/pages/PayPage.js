@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import CreditCardTextBox from '../components/CreditCardTextBox';
 import {
-  countryOptions,
+  workingCountryOptions,
   departmentOptions,
   industryOptions,
   jobOptions,
@@ -38,6 +38,8 @@ const PayPage = () => {
   const bookingDate = searchParams.get('bookingDate');
   const bookingTime = searchParams.get('bookingTime');
   const helperName = searchParams.get('helperUsername');
+  const helpeeId = searchParams.get('helpeeId');
+  const helperId = searchParams.get('helperId');
   const refId = searchParams.get('refId');
 
   const cardNumberRef = useRef();
@@ -157,6 +159,8 @@ const PayPage = () => {
         partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
         merchant_id: process.env.REACT_APP_TAPPAY_MERCHANT_ID,
         details: 'TapPay Test',
+        helpeeId,
+        helperId,
         bookingId,
         currentLanguage,
         offerId,
@@ -180,7 +184,7 @@ const PayPage = () => {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    const countryTranslationObj = countryOptions.filter(
+    const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === country
     );
     setTranslatedCountry(t(countryTranslationObj[0].label));
@@ -359,7 +363,7 @@ const PayPage = () => {
                 style={{ width: '100%' }}
                 onClick={onSubmit}
               >
-                {t('pay')} {price}€
+                {t('pay')} {price} {t('usd')}
               </button>
             </div>
           </div>

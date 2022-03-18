@@ -6,7 +6,7 @@ function DropDown(props) {
     props.handleSelect(e.target.value);
   };
   return (
-    <div className='form-wrapper'>
+    <div className='form-wrapper' style={{ marginTop: '5px' }}>
       <label
         style={{
           color: props.titleColor || '',
@@ -16,6 +16,10 @@ function DropDown(props) {
       >
         {props.title}
       </label>
+      {props.details && (
+        <p style={{ fontSize: '9px', marginBottom: '10px' }}>{props.details}</p>
+      )}
+
       <select
         ref={props.selectRef}
         onChange={handleSelect}

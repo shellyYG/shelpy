@@ -40,7 +40,7 @@ async function getHelpeeAllBookings(data) {
 
 async function getPotentialHelpers(data) {
   const { helpeeUserId } = data;
-  const sql = `SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus, req.id AS requestId
+  const sql = `SELECT DISTINCT req.id AS requestId
     , req.country AS country
     , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, acc.isAnonymous AS helperAnonymous
     , helpee.id AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous
@@ -56,7 +56,6 @@ LEFT JOIN requests req ON
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
-LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id
 WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.status = 'approved'
 ORDER BY acc.score, ofs.id DESC;`;
   const allPotentialHelpers = await query(sql, helpeeUserId);

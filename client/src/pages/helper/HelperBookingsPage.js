@@ -22,7 +22,6 @@ const HelperBookingsPage = (props) => {
 
   const [filteredBookingStatus, setFilteredBookingStatus] = useState('default');
   const [filteredBookings, setFilteredBookings] = useState(allBookings);
-  console.log('filteredBookingStatus: ', filteredBookingStatus);
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');

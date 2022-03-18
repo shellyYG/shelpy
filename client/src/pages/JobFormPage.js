@@ -10,7 +10,7 @@ import ConfirmBtn from '../components/ConfirmBtn';
 import {
   industryOptions,
   jobOptions,
-  countryOptions,
+  workingCountryOptions,
   WFHOptions,
   companySizeOptions,
   yearsOptions,
@@ -186,7 +186,7 @@ const JobFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = `/${currentLanguage}/helpee/items`;
+        let path = `/${currentLanguage}/helpee/partners`;
         if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
@@ -227,7 +227,7 @@ const JobFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = `/${currentLanguage}/helper/items`;
+        let path = `/${currentLanguage}/helper/partners`;
         if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
@@ -318,7 +318,7 @@ const JobFormPage = (props) => {
                       : t('form_helper_country')
                   }
                   selectRef={countryRef}
-                  options={countryOptions}
+                  options={workingCountryOptions}
                 />
                 <DropDown
                   selected={WFH}
@@ -389,8 +389,16 @@ const JobFormPage = (props) => {
                 </div>
               )}
               <FullLineTextBox
-                title={t('notes')}
-                placeholder={t('notes_placeholder')}
+                title={
+                  props.isHelpee
+                    ? `${t('topics_you_want_to_know')}${' '}${t(
+                        'if_more_than_one_cut_by_comma'
+                      )}`
+                    : `${t('sharing_topics')}${' '}${t(
+                        'if_more_than_one_cut_by_comma'
+                      )}`
+                }
+                placeholder={t('sharing_topics_placeholder_job')}
                 inputRef={notesRef}
                 marginTop='10px'
               />

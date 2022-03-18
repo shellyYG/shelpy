@@ -11,7 +11,7 @@ import ConfirmBtn from '../components/ConfirmBtn';
 import {
   schoolOptions,
   departmentOptions,
-  countryOptions,
+  workingCountryOptions,
   degreeOptions,
   durationOptions,
 } from '../store/options/service-options';
@@ -171,7 +171,7 @@ const UniFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = `/${currentLanguage}/helpee/items`;
+        let path = `/${currentLanguage}/helpee/partners`;
         if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
@@ -211,7 +211,7 @@ const UniFormPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = `/${currentLanguage}/helper/items`;
+        let path = `/${currentLanguage}/helper/partners`;
         if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
@@ -296,7 +296,7 @@ const UniFormPage = (props) => {
                       : t('form_helper_country')
                   }
                   selectRef={countryRef}
-                  options={countryOptions}
+                  options={workingCountryOptions}
                 />
                 <DropDown
                   selected={degree}
@@ -340,8 +340,16 @@ const UniFormPage = (props) => {
                 </div>
               )}
               <FullLineTextBox
-                title={t('notes')}
-                placeholder={t('notes_placeholder')}
+                title={
+                  props.isHelpee
+                    ? `${t('topics_you_want_to_know')}${' '}${t(
+                        'if_more_than_one_cut_by_comma'
+                      )}`
+                    : `${t('sharing_topics')}${' '}${t(
+                        'if_more_than_one_cut_by_comma'
+                      )}`
+                }
+                placeholder={t('sharing_topics_placeholder_study')}
                 inputRef={notesRef}
               />
               <ConfirmBtn

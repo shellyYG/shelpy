@@ -22,7 +22,7 @@ import LeftCloseIcon from '../components/Icons/LeftCloseIcon';
 import RightOpenIcon from '../components/Icons/RightOpenIcon';
 import DownPointIcon from '../components/Icons/DownPointIcon';
 import { useTranslation } from 'react-i18next';
-const youtubeURL = 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; // TODO
+const youtubeURL = 'https://www.facebook.com/shelpy.co' // 'https://www.youtube.com/channel/UCTqPBBnP2T57kmiPQ87986g'; // TODO
 
 
 const ChatRoomPage = (props) => {
@@ -100,7 +100,6 @@ const ChatRoomPage = (props) => {
       thirdType,
       fourthType,
     };
-    console.log('currentPartner: ', currentPartner);
     if (props.isHelpee) {
       allChattedHelpers.forEach((p) => {
         partners.push(p);
@@ -163,18 +162,7 @@ const ChatRoomPage = (props) => {
     e.preventDefault();
     setCurrentMessage(e.target.value);
   }
-  async function handleBookHelper(e) {
-    e.preventDefault();
-    navigate(
-      `/${currentLanguage}/helpee/update-booking?requestId=${requestId}&partnerName=${partnerName}` +
-        `&userId=${userId}&offerId=${offerId}&price=${price}&duration=${duration}` +
-        `&bookingStatus=&bookingId=` +
-        `&helpeeId=${helpeeId}&helperId=${helperId}` +
-        `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
-        `&country=${country}&mainType=${mainType}&secondType=${secondType}` +
-        `&thirdType=${thirdType}&fourthType=${fourthType}&refId=${refId}`
-    );
-  }
+  
   async function handleYoutubeClick(e) {
     e.preventDefault();
     const newWindow = window.open(youtubeURL, '_blank', 'noopener,noreferrer');
@@ -290,7 +278,7 @@ const ChatRoomPage = (props) => {
                           style={{ margin: '10px 0px' }}
                           onClick={handleYoutubeClick}
                         >
-                          Youtube
+                          Facebook
                         </button>
                         <div style={{ whiteSpace: 'pre-line' }}>{`${t(
                           'so_we_can'
@@ -318,7 +306,7 @@ const ChatRoomPage = (props) => {
                           style={{ margin: '10px 0px' }}
                           onClick={handleYoutubeClick}
                         >
-                          Youtube
+                          Facebook
                         </button>
                         <div style={{ whiteSpace: 'pre-line' }}>{`${t(
                           'so_we_can'
@@ -410,27 +398,7 @@ const ChatRoomPage = (props) => {
                     </h3>
                   )}
                 </div>
-                <div>
-                  {props.isHelpee &&
-                    (bookingStatus === 'null' ||
-                      !bookingStatus ||
-                      bookingStatus === 'undefined') &&
-                    partnerName && (
-                      <button
-                        className='btn-contact'
-                        onClick={handleBookHelper}
-                      >
-                        {t('book_name', { name: partnerName })}
-                      </button>
-                    )}
-                  {props.isHelpee && bookingStatus === 'helperAskChange' && (
-                    <button className='btn-contact' onClick={handleBookHelper}>
-                      {t('propose_new_time_to_helper', {
-                        name: partnerName,
-                      })}
-                    </button>
-                  )}
-                </div>
+                
               </div>
             </div>
           </div>

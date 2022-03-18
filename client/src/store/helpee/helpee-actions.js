@@ -853,6 +853,8 @@ export const postPayViaTapPay = (data) => {
                 appointmentDate: data.appointmentDate,
                 appointmentTime: data.appointmentTime,
                 priorityScore: 3,
+                helpeeId: data.helpeeId,
+                helperId: data.helperId,
               },
             },
             {

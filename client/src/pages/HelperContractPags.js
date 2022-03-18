@@ -28,10 +28,7 @@ const HelperContractPage = () => {
           }}
         >
           <div>
-            <h1>
-              Shelpy {' '}
-              {t('helper_terms')}
-            </h1>
+            <h1>Shelpy {t('helper_terms')}</h1>
           </div>
 
           <div style={{ width: '80%', margin: 'auto', textAlign: 'start' }}>
@@ -78,7 +75,7 @@ const HelperContractPage = () => {
               <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
                 承攬報酬結算
               </p>{' '}
-              1、 報酬內容：依本公司公告現時費率為準，目前為交易金額之85%。
+              1、 報酬內容：依本公司公告現時費率為準，目前為交易金額之83.5%。
               <br />
               2、
               計算方式：依本公司公告費率為主，並扣除二代健保補充保費、扣繳稅款及其他扣項(如法院

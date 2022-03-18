@@ -107,6 +107,7 @@ const NavBar = (props) => {
               to={`/${currentLanguage}/helpee/guidance?refId=${refId}`}
             >
               <QuestionMarkIcon />{' '}
+              <div className='navBarText'>{t('how_shelpy_works')}</div>
             </NavLink>
           }
           <NavLink

@@ -52,6 +52,7 @@ import HelpeeMatchedPartnerPage from './pages/helpee/HelpeeMatchedPartnerPage';
 import HelperMatchedPartnerPage from './pages/helper/HelperMatchedPartnerPage';
 import HelpeeRequestsPage from './pages/helpee/HelpeeRequestsPage';
 import HelperOffersPage from './pages/helper/HelperOffersPage';
+import ReferralPage from './pages/ReferralPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -91,6 +92,28 @@ function App() {
                   helpeeId={helpeeUserId}
                   helpeeUsername={helpeeName}
                   isHelpeeAuthenticated={isHelpeeAuthenticated}
+                />
+              }
+            />
+            <Route
+              path={`/:locale/helpee/referrals`}
+              element={
+                <ReferralPage
+                  isHelpee={true}
+                  helpeeId={helpeeUserId}
+                  helpeeUsername={helpeeName}
+                  isHelpeeAuthenticated={isHelpeeAuthenticated}
+                />
+              }
+            />
+            <Route
+              path={`/:locale/helper/referrals`}
+              element={
+                <ReferralPage
+                  isHelpee={false}
+                  helperId={helperUserId}
+                  helperUsername={helperName}
+                  isHelperAuthenticated={isHelperAuthenticated}
                 />
               }
             />

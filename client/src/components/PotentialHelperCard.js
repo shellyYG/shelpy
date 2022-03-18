@@ -5,7 +5,7 @@ import ChatIcon from './Icons/ChatIcon';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import {
-  countryOptions,
+  workingCountryOptions,
   departmentOptions,
   industryOptions,
   jobOptions,
@@ -42,7 +42,7 @@ function PotentialHelperCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    const countryTranslationObj = countryOptions.filter(
+    const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
     setTranslatedCountry(t(countryTranslationObj[0].label));
@@ -147,7 +147,7 @@ function PotentialHelperCard(props) {
     navigate(
       `/${currentLanguage}/helpee/update-booking?requestId=${props.requestId}&partnerName=${props.partnerName}` +
         `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
-        `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
+        `&bookingStatus=${props.bookingStatus}` + // do not have booking ID
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.partnerName}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
@@ -244,42 +244,29 @@ function PotentialHelperCard(props) {
         </div>
       </div>
 
-      {!props.bookingStatus && (
-        <div className='checkBoxWidth'>
-          <div className='contentBx'>
-            <p style={{ fontSize: '14px', padding: '6px' }}>
-              {t('speaks')}: {translatedSpeakingLanguages}
-            </p>
-            <p style={{ fontSize: '14px', padding: '6px' }}>
-              {t('helper_organization')} : {props.organization || t('na')}
-            </p>
-            <p style={{ fontSize: '14px', padding: '6px' }}>
-              {t('price_per_duration_min', { price: props.price, duration })}
-            </p>
-            <button className='btn-contact' onClick={handleBookHelper}>
-              {t('book_name', { name: props.partnerName })}
-            </button>
-          </div>
+      <div className='checkBoxWidth'>
+        <div className='contentBx'>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
+            {t('speaks')}: {translatedSpeakingLanguages}
+          </p>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
+            {t('helper_organization')} : {props.organization || t('na')}
+          </p>
+          <p
+            style={{
+              fontSize: '14px',
+              padding: '6px',
+              color: '#f47174',
+              fontWeight: 'bold',
+            }}
+          >
+            {t('price_per_duration_min', { price: props.price, duration })}
+          </p>
+          <button className='btn-contact' onClick={handleBookHelper}>
+            {t('book_name', { name: props.partnerName })}
+          </button>
         </div>
-      )}
-      {props.bookingStatus && (
-        <div className='checkBoxWidth'>
-          <div className='contentBx'>
-            <p style={{ fontSize: '14px', padding: '6px' }}>
-              {t('speaks')}: {translatedSpeakingLanguages}
-            </p>
-            <p style={{ fontSize: '14px', padding: '6px' }}>
-              {t('helper_organization')} : {props.organization || t('na')}
-            </p>
-            <p style={{ fontSize: '14px', padding: '6px' }}>
-              {t('price_per_duration_min', { price: props.price, duration })}
-            </p>
-            <p style={{ fontSize: '14px', padding: '6px' }}>
-              {t('in_booking_process_with_name', { name: props.partnerName })}
-            </p>
-          </div>
-        </div>
-      )}
+      </div>
 
       {
         <div className='checkBoxWidth'>
@@ -289,7 +276,7 @@ function PotentialHelperCard(props) {
             isHelpee={true}
           />
           <p style={{ fontSize: '14px', marginTop: '10px' }}>
-            {t('offers')} {t('notes')}: {props.notes}
+            {t('sharing_topics')}: {props.notes}
           </p>
         </div>
       }

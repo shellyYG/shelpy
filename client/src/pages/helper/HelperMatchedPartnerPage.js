@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import PotentialCustomerCard from '../../components/PotentialCustomerCard';
 import {
   getPotentialCustomers,
@@ -10,6 +11,11 @@ import { useTranslation } from 'react-i18next';
 const HelperMatchedPartnerPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
 
   const {
     allPotentialCustomers,
@@ -22,6 +28,13 @@ const HelperMatchedPartnerPage = (props) => {
   function handleRrefreshPage(e) {
     e.preventDefault(e);
     window.location.reload();
+  }
+
+  function handleToHelperReferralPage(e) {
+    e.preventDefault(e);
+    let path = `/${currentLanguage}/helper/referrals`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
 
   return (
@@ -47,17 +60,32 @@ const HelperMatchedPartnerPage = (props) => {
         <div className='task-container'>
           {!allPotentialCustomers ||
             (allPotentialCustomers.length === 0 && (
-              <div
-                className='history-card'
-                style={{
-                  boxShadow: 'none',
-                  border: 'none',
-                  paddingLeft: '18px',
-                  display: 'flex',
-                }}
-              >
-                <p style={{ margin: 'auto' }}>{t('no_matched_customers')}</p>
-              </div>
+              <>
+                <div
+                  className='history-card'
+                  style={{
+                    boxShadow: 'none',
+                    border: 'none',
+                    paddingLeft: '18px',
+                    display: 'flex',
+                  }}
+                >
+                  <p style={{ margin: 'auto' }}>{t('no_matched_customers')}</p>
+                </div>
+                <div
+                  className='history-card'
+                  style={{ boxShadow: 'none', border: 'none' }}
+                >
+                  <div style={{ margin: 'auto' }}>
+                    <button
+                      className='btn-contact'
+                      onClick={handleToHelperReferralPage}
+                    >
+                      {t('help_us_find_helpees')}
+                    </button>
+                  </div>
+                </div>
+              </>
             ))}
           {allPotentialCustomers.map((option) => (
             <PotentialCustomerCard

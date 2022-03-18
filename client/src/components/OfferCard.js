@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import {
-  countryOptions,
+  workingCountryOptions,
   departmentOptions,
   industryOptions,
   jobOptions,
@@ -32,7 +32,7 @@ function OfferCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    const countryTranslationObj = countryOptions.filter(
+    const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
     setTranslatedCountry(t(countryTranslationObj[0].label));
@@ -182,7 +182,9 @@ function OfferCard(props) {
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.helperName}
             </h3>
-            <p style={{ fontSize: '14px' }}>{t('introduction')}:{' '}{props.introduction}</p>
+            <p style={{ fontSize: '14px' }}>
+              {t('introduction')}: {props.introduction}
+            </p>
           </div>
         </div>
       </div>
@@ -232,7 +234,14 @@ function OfferCard(props) {
           <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('offer_id')}: {props.offerId}
           </p>
-          <p style={{ fontSize: '14px', padding: '6px' }}>
+          <p
+            style={{
+              fontSize: '14px',
+              padding: '6px',
+              color: '#f47174',
+              fontWeight: 'bold',
+            }}
+          >
             {t('price_per_duration_min', { price: props.price, duration })}
           </p>
           <p style={{ fontSize: '14px', padding: '6px' }}>
@@ -248,7 +257,7 @@ function OfferCard(props) {
               padding: '6px',
             }}
           >
-            {t('offers')}{' '}{t('notes')}: {props.notes || t('na')}
+            {t('sharing_topics')}: {props.notes || t('na')}
           </p>
         </div>
       </div>

@@ -43,7 +43,6 @@ const BasicFormPage = (props) => {
   const nationalityRef = useRef();
   const residenceCountryRef = useRef();
   const notificationLanguageRef = useRef();
-  const bankAccountRef = useRef();
 
   const [loading, setIsLoading] = useState(false);
   const [age, setAge] = useState('default');
@@ -52,7 +51,7 @@ const BasicFormPage = (props) => {
   const [nationality, setNationality] = useState('default');
   const [notificationLanguage, setNotificationLanguage] = useState('default');
   const [residenceCountry, setResidenceCountry] = useState('default');
-  const [bankAccountString, setBankAccountString] = useState('');
+  
   const [introductionString, setIntroductionString] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(true);
@@ -218,7 +217,6 @@ const BasicFormPage = (props) => {
     e.preventDefault();
     let introduction;
     let notes;
-    let bankAccount;
     let linkedInUrl;
     if (introductionRef && introductionRef.current) {
       introduction = introductionRef.current.value;
@@ -228,9 +226,6 @@ const BasicFormPage = (props) => {
     }
     if (linkedInUrlRef && linkedInUrlRef.current) {
       linkedInUrl = linkedInUrlRef.current.value;
-    }
-    if (bankAccountRef && bankAccountRef.current) {
-      bankAccount = bankAccountRef.current.value;
     }
     let data;
     if (certificate) { // must be helper
@@ -267,7 +262,6 @@ const BasicFormPage = (props) => {
       data.append('languages', languages);
 
       data.append('notes', notes);
-      data.append('bankAccount', bankAccount);
       data.append('status', 'basic_info_updated');
       data.append('certificate', certificate); // need to append file as last object
 
@@ -339,7 +333,6 @@ const BasicFormPage = (props) => {
 
           languages,
 
-          bankAccount,
           notes,
           status: 'basic_info_updated',
         };
@@ -374,7 +367,6 @@ const BasicFormPage = (props) => {
           residenceCountry !== 'default' &&
           notificationLanguage !== 'default' &&
           (linkedInUrlRef || certificate) &&
-          bankAccountString &&
           introductionString
       );
     }
@@ -385,7 +377,6 @@ const BasicFormPage = (props) => {
     nationality,
     residenceCountry,
     certificate,
-    bankAccountString,
     introductionString,
     notificationLanguage,
   ]);
@@ -475,11 +466,6 @@ const BasicFormPage = (props) => {
     e.preventDefault();
     const typingInput = e.target.value;
     setIntroductionString(typingInput);
-  }
-  function handleBankAccountTyping(e) {
-    e.preventDefault();
-    const typingInput = e.target.value;
-    setBankAccountString(typingInput);
   }
   return (
     <div
@@ -579,6 +565,7 @@ const BasicFormPage = (props) => {
                   selected={age}
                   handleSelect={setAge}
                   title={t('age_title')}
+                  details={t('will_not_show_publicly')}
                   selectRef={ageRef}
                   options={ageOptions}
                 />
@@ -586,6 +573,7 @@ const BasicFormPage = (props) => {
                   selected={notificationLanguage}
                   handleSelect={setNotificationLanguage}
                   title={t('notification_language_title')}
+                  details={t('notification_language_details')}
                   selectRef={notificationLanguageRef}
                   options={webLanguagesOptions}
                 />
@@ -595,6 +583,7 @@ const BasicFormPage = (props) => {
                   selected={nationality}
                   handleSelect={setNationality}
                   title={t('nationality_title')}
+                  details={t('will_not_show_publicly')}
                   selectRef={nationalityRef}
                   options={countryOptions}
                 />
@@ -602,6 +591,7 @@ const BasicFormPage = (props) => {
                   selected={residenceCountry}
                   handleSelect={setResidenceCountry}
                   title={t('residence_country_title')}
+                  details={t('will_not_show_publicly')}
                   selectRef={residenceCountryRef}
                   options={countryOptions}
                 />
@@ -610,20 +600,26 @@ const BasicFormPage = (props) => {
                 <div className='form-row'>
                   <LeftHalfLineTextBox
                     title={t('linkedin_link_title')}
+                    details={t('linkedin_link_details')}
                     placeholder={
                       'https://www.linkedin.com/in/your-linkedin-profile'
                     }
                     inputRef={linkedInUrlRef}
+                    marginBottom='10px'
                   />
-                  <div className='form-wrapper' style={{ margin: 'auto' }}>
+                  <div className='form-wrapper' style={{ margin: 'auto', marginBottom:'10px' }}>
                     <div>
-                      <label>{t('resume_title')}</label>
+                      <label>
+                        {t('resume_title')}
+                      </label>
+                      <p style={{ fontSize: '9px', marginBottom: '10px'}}>{t('resume_details')}</p>
                     </div>
                     {!certificate && (
                       <>
                         <label className='uploadLabel' for='resume'>
                           {t('upload_a_file')}
                         </label>
+
                         <input
                           type='file'
                           id='resume'
@@ -640,13 +636,14 @@ const BasicFormPage = (props) => {
                   </div>
                 </div>
               )}
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div style={{ display: 'flex', flexDirection: 'row'}}>
                 <CheckBox
                   checked={isAnonymous}
                   handleCheck={setIsAnonymous}
-                  details={
+                  title={
                     props.isHelpee ? t('ask_anonymous') : t('answer_anonymous')
                   }
+                  details={t('ananymous_details')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -657,7 +654,8 @@ const BasicFormPage = (props) => {
                   <CheckBox
                     checked={isMarketing}
                     handleCheck={setIsMarketing}
-                    details={t('promote_your_offer')}
+                    title={t('promote_your_offer_title')}
+                    details={t('promote_your_offer_details')}
                     paddingRight='10px'
                     marginBottom='5px'
                     fontSize='14px'
@@ -678,14 +676,14 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasMonToFri}
                   handleCheck={setHasMonToFri}
-                  details={t('monday_to_friday')}
+                  title={t('monday_to_friday')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
                 <CheckBox
                   checked={hasWeekend}
                   handleCheck={setHasWeekend}
-                  details={t('saturday_to_sunday')}
+                  title={t('saturday_to_sunday')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
@@ -701,21 +699,21 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasBefore12}
                   handleCheck={setHasBefore12}
-                  details={t('before12noon')}
+                  title={t('before12noon')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
                 <CheckBox
                   checked={has12To18}
                   handleCheck={setHas12To18}
-                  details={t('12to18')}
+                  title={t('12to18')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
                 <CheckBox
                   checked={hasAfter18}
                   handleCheck={setHasAfter18}
-                  details={t('after18')}
+                  title={t('after18')}
                   paddingRight='10px'
                   fontSize='14px'
                 />
@@ -732,7 +730,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasEnglish}
                   handleCheck={setHasEnglish}
-                  details={t('languages_english')}
+                  title={t('languages_english')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -740,7 +738,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasGerman}
                   handleCheck={setHasGerman}
-                  details={t('languages_german')}
+                  title={t('languages_german')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -748,7 +746,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasFrench}
                   handleCheck={setHasFrench}
-                  details={t('languages_french')}
+                  title={t('languages_french')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -756,7 +754,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasItalien}
                   handleCheck={setHasItalien}
-                  details={t('languages_italien')}
+                  title={t('languages_italien')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -772,7 +770,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasChinese}
                   handleCheck={setHasChinese}
-                  details={t('languages_chinese')}
+                  title={t('languages_chinese')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -780,7 +778,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasCantonese}
                   handleCheck={setHasCantonese}
-                  details={t('languages_cantonese')}
+                  title={t('languages_cantonese')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -788,7 +786,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasVietnamese}
                   handleCheck={setHasVietnamese}
-                  details={t('languages_vietnamese')}
+                  title={t('languages_vietnamese')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -796,7 +794,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasKorean}
                   handleCheck={setHasKorean}
-                  details={t('languages_korean')}
+                  title={t('languages_korean')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -804,7 +802,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasJapanese}
                   handleCheck={setHasJapanese}
-                  details={t('languages_japanese')}
+                  title={t('languages_japanese')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -820,7 +818,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasTurkish}
                   handleCheck={setHasTurkish}
-                  details={t('languages_turkish')}
+                  title={t('languages_turkish')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -828,7 +826,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasUkrainian}
                   handleCheck={setHasUkrainian}
-                  details={t('languages_ukrainian')}
+                  title={t('languages_ukrainian')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -836,7 +834,7 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasArabic}
                   handleCheck={setHasArabic}
-                  details={t('languages_arabic')}
+                  title={t('languages_arabic')}
                   paddingRight='10px'
                   marginBottom='5px'
                   fontSize='14px'
@@ -844,31 +842,16 @@ const BasicFormPage = (props) => {
                 <CheckBox
                   checked={hasOthers}
                   handleCheck={setHasOthers}
-                  details={t('others_option')}
+                  title={t('others_option')}
                   paddingRight='10px'
                   marginBottom='25px'
                   fontSize='14px'
                 />
               </div>
-              {/* {!props.isHelpee && (
-                <FullLineTextBox
-                  title={'Price per 30 minute (in EUR)'}
-                  placeholder={'e.g. 20'}
-                  inputRef={priceRef}
-                />
-              )} */}
-              {!props.isHelpee && (
-                <FullLineTextBox
-                  title={t('bank_account_title')}
-                  placeholder={t('bank_account_placeholder')}
-                  maxLength='1000'
-                  inputRef={bankAccountRef}
-                  onChange={handleBankAccountTyping}
-                />
-              )}
               <FullLineTextBox
                 title={t('introduction_title')}
-                placeholder={t('introduction_placeholder')}
+                details={t('introduction_details')}
+                placeholder={`${t('introduction_placeholder')} *`}
                 inputRef={introductionRef}
                 onChange={handleIntroductionTyping}
                 marginTop='15px'

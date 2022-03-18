@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import {
-  countryOptions,
+  workingCountryOptions,
   departmentOptions,
   industryOptions,
   jobOptions,
@@ -33,7 +33,7 @@ function RequestCard(props) {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
     let fourthTypeTranslationObj;
-    const countryTranslationObj = countryOptions.filter(
+    const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
     setTranslatedCountry(t(countryTranslationObj[0].label));
@@ -208,7 +208,7 @@ function RequestCard(props) {
               {props.helpeeName}
             </h3>
             <p style={{ fontSize: '14px' }}>
-              {t('introduction')}:{' '}{props.introduction}
+              {t('introduction')}: {props.introduction}
             </p>
           </div>
         </div>
@@ -277,7 +277,7 @@ function RequestCard(props) {
               padding: '6px',
             }}
           >
-            {t('requests')} {t('notes')}: {props.notes || t('na')}
+            {t('topics_you_want_to_know')}: {props.notes || t('na')}
           </p>
         </div>
       </div>

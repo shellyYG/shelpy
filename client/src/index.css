@@ -112,6 +112,7 @@ nav {
 
 .navBarText {
     margin-left: 5px;
+    font-size: 14px;
  }
 
 
@@ -560,6 +561,7 @@ body {
   text-align: center;
   padding: 5px 30px;
   font-size: 14px;
+  margin-right: 10px;
 }
 
 .rightHalfBtnActive {
@@ -572,6 +574,7 @@ body {
   text-align: center;
   padding: 5px 30px;
   font-size: 14px;
+  margin-right: 10px;
 }
 
 .chatRoomContent img {

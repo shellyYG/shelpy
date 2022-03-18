@@ -58,7 +58,7 @@ function FeaturedHelperPart(props) {
           tag2={t('self_employed_profession_makeup_artist')}
           tag3={t('country_france')}
         />
-        <MktCard
+        {/* <MktCard
           imageSrc='/static-imgs/easyCookAsia_selfEmployed.jpeg'
           title='Marcus'
           key='marcus-selfEmployed'
@@ -68,7 +68,7 @@ function FeaturedHelperPart(props) {
           tag1={t('service_types_self_employed')}
           tag2={t('self_employed_profession_ui_ecommerce')}
           tag3={t('country_germany')}
-        />
+        /> */}
         <MktCard
           imageSrc='/static-imgs/Chris_school.jpg'
           title='Chris'
@@ -147,18 +147,6 @@ function FeaturedHelperPart(props) {
           tag2={t('job_form_job_teacher')}
           tag3={t('country_taiwan')}
         />
-
-        <MktCard
-          imageSrc='/static-imgs/Shelly_job.jpg'
-          title='Shelly'
-          key='shelly-job'
-          experience={t('mkt_shelly_job')}
-          language1={t('languages_chinese')}
-          language2={t('languages_english')}
-          tag1={t('job')}
-          tag2={t('job_form_job_data_analyst')}
-          tag3={t('country_germany')}
-        />
         <MktCard
           imageSrc='/static-imgs/Chloe_job.png'
           title='Chloe'
@@ -168,6 +156,17 @@ function FeaturedHelperPart(props) {
           language2={t('languages_english')}
           tag1={t('job')}
           tag2={t('job_form_job_mobile_developer')}
+          tag3={t('country_germany')}
+        />
+        <MktCard
+          imageSrc='/static-imgs/Shelly_job.jpg'
+          title='Shelly'
+          key='shelly-job'
+          experience={t('mkt_shelly_job')}
+          language1={t('languages_chinese')}
+          language2={t('languages_english')}
+          tag1={t('job')}
+          tag2={t('job_form_job_data_analyst')}
           tag3={t('country_germany')}
         />
       </div>

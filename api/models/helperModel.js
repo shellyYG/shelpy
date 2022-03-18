@@ -42,8 +42,7 @@ async function getHelperAllBookings(data) {
 
 async function getPotentialCustomers(data) {
   const { helperUserId } = data;
-  const sql = ` SELECT DISTINCT bk.id AS bookingId, bk.bookingStatus AS bookingStatus
-    , req.organization AS organization
+  const sql = ` SELECT DISTINCT req.organization AS organization
     , req.id AS requestId, ofs.id AS offerId
     , ofs.price AS price, ofs.duration AS duration, req.country AS country
     , acc.id AS helperId, acc.username AS helperUsername, acc.isAnonymous AS helperAnonymous
@@ -59,7 +58,6 @@ LEFT JOIN requests req ON
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
-LEFT JOIN bookings bk ON bk.requestId = req.id AND bk.offerId = ofs.id
 WHERE acc.id = ? AND NOT req.userId IS NULL
 ORDER BY req.id DESC;`;
   const allPotentialCustomers = await query(sql, helperUserId);
@@ -105,7 +103,6 @@ async function updateHelperCertificatePath(data) {
     hasOthers,
     languages,
     notes,
-    bankAccount,
     status,
     notificationLanguage,
   } = data;
@@ -131,7 +128,7 @@ async function updateHelperCertificatePath(data) {
       ,hasChinese=?, hasCantonese=?, hasVietnamese=?
       ,hasKorean=?, hasJapanese=?, hasTurkish=?, hasUkrainian=?
       ,hasArabic=?, hasOthers=?, languages=?
-      ,bankAccount=?, notificationLanguage=?
+      , notificationLanguage=?
     WHERE id =?`;
   const sqlquery2 = await query(sql2, [
     introduction,
@@ -163,7 +160,6 @@ async function updateHelperCertificatePath(data) {
     hasArabic,
     hasOthers,
     languages,
-    bankAccount,
     notificationLanguage,
     userId,
   ]);

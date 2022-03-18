@@ -10,7 +10,16 @@ import EarthIcon from './Icons/EarthIcon';
 import ChatIcon from './Icons/ChatIcon';
 import { postPayHelper, clearPayHelperStatus } from '../store/helpee/helpee-actions';
 import { useRef } from 'react';
-import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, timeZoneOptions, typeOptions } from '../store/options/service-options';
+import {
+  workingCountryOptions,
+  departmentOptions,
+  industryOptions,
+  jobOptions,
+  professionOptions,
+  schoolOptions,
+  timeZoneOptions,
+  typeOptions,
+} from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
 
 
@@ -45,8 +54,6 @@ function BookingCard(props) {
     offerId: props.offerId,
     price: props.price,
   });
-
-  console.log('timeZone: ', props.timeZone)
 
   const { payHelperStatus, payHelperStatusTitle, payHelperStatusMessage } =
     useSelector((state) => state.helpee);
@@ -87,7 +94,7 @@ function BookingCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    const countryTranslationObj = countryOptions.filter(
+    const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
     setTranslatedCountry(t(countryTranslationObj[0].label));
@@ -268,7 +275,8 @@ function BookingCard(props) {
         `&partnerName=${props.partnerName}&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
         `&timeZone=${props.timeZone}`+
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}`+
-        `&bookingNotes=${props.questions}&refId=${refId}`
+        `&bookingNotes=${props.questions}&refId=${refId}`+
+        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`
     );
   }
 
@@ -278,7 +286,8 @@ function BookingCard(props) {
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
         `&thirdType=${props.thirdType}` +
         `&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
-        `&helperUsername=${props.helperUsername}&refId=${refId}`
+        `&helperUsername=${props.helperUsername}&refId=${refId}`+
+        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`
     );
     try {
       // const data = {
@@ -503,7 +512,7 @@ function BookingCard(props) {
               email={props.helpeeEmail}
             >
               <button className='btn-next'>
-                Pay {props.partnerName} ({props.price}€)
+                Pay {props.partnerName} ({props.price} USD)
               </button>
             </StripeCheckout> */}
             <button className='btn-contact' onClick={handlePayHelper}>

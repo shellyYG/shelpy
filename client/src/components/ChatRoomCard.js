@@ -3,7 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { onClickUpdateChatroomRoom } from '../store/general/general-actions';
-import { countryOptions, departmentOptions, industryOptions, jobOptions, professionOptions, schoolOptions, typeOptions } from '../store/options/service-options';
+import {
+  workingCountryOptions,
+  departmentOptions,
+  industryOptions,
+  jobOptions,
+  professionOptions,
+  schoolOptions,
+  typeOptions,
+} from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
 import BellIcon from './Icons/BellIcon';
 
@@ -47,7 +55,7 @@ function ChatRoomCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    const countryTranslationObj = countryOptions.filter(
+    const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
     setTranslatedCountry(t(countryTranslationObj[0].label));

@@ -165,6 +165,8 @@ const BookingConfirmPage = (props) => {
       const data = {
         requestId,
         offerId,
+        helpeeId,
+        helperId,
         bookingId,
         bookingStatus: 'helperConfirmed',
         currentLanguage,

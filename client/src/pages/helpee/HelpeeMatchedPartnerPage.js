@@ -25,9 +25,9 @@ const HelpeeMatchedPartnerPage = (props) => {
   }, [props.helpeeUserId, dispatch]);
 
 
-  function handleSearchHelpers(e) {
+  function handleToHelpeeReferralPage(e) {
     e.preventDefault(e);
-    let path = `/${currentLanguage}/marketing/offers`;
+    let path = `/${currentLanguage}/helpee/referrals`;
     if (window.location.search) path += window.location.search;
     navigate(path);
   }
@@ -61,28 +61,33 @@ const HelpeeMatchedPartnerPage = (props) => {
         <div className='task-container'>
           {!allPotentialHelpers ||
             (allPotentialHelpers.length === 0 && (
-              <div
-                className='history-card'
-                style={{
-                  boxShadow: 'none',
-                  border: 'none',
-                  paddingLeft: '18px',
-                  display: 'flex',
-                }}
-              >
-                <p style={{ margin: 'auto' }}>{t('no_matched_helpers')}</p>
-              </div>
+              <>
+                <div
+                  className='history-card'
+                  style={{
+                    boxShadow: 'none',
+                    border: 'none',
+                    paddingLeft: '18px',
+                    display: 'flex',
+                  }}
+                >
+                  <p style={{ margin: 'auto' }}>{t('no_matched_helpers')}</p>
+                </div>
+                <div
+                  className='history-card'
+                  style={{ boxShadow: 'none', border: 'none' }}
+                >
+                  <div style={{ margin: 'auto' }}>
+                    <button
+                      className='btn-contact'
+                      onClick={handleToHelpeeReferralPage}
+                    >
+                      {t('help_us_find_helpers')}
+                    </button>
+                  </div>
+                </div>
+              </>
             ))}
-          <div
-            className='history-card'
-            style={{ boxShadow: 'none', border: 'none' }}
-          >
-            <div style={{ margin: 'auto' }}>
-              <button className='btn-contact' onClick={handleSearchHelpers}>
-                {t('search_helper_cta')}
-              </button>
-            </div>
-          </div>
 
           {allPotentialHelpers.map((option) => (
             <PotentialHelperCard

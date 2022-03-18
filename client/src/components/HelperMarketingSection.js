@@ -16,6 +16,14 @@ const HelperMarketingSection = () => {
           lastChild={false}
         />
         <MktRow
+          title={t('helper_mkt_time_is_money')}
+          details1={t('helper_mkt_time_is_money_subtitle1')}
+          details2={t('helper_mkt_time_is_money_subtitle2')}
+          imagePath='/static-imgs/heart.jpeg'
+          alt='Photo by Jeremy Bezanger on Unsplash'
+          lastChild={false}
+        />
+        <MktRow
           title={t('helper_mkt_generate_extra_revenue')}
           details1={t('helper_mkt_generate_extra_revenue_subtitle1')}
           details2={t('helper_mkt_generate_extra_revenue_subtitle2')}
@@ -53,7 +61,7 @@ const HelperMarketingSection = () => {
           details2={t('helper_mkt_control_privacy_subtitle2')}
           imagePath='/static-imgs/oneToOne.jpeg'
           alt='Photo by Brett Jordan on Unsplash'
-          lastChild={true}
+          lastChild={false}
         />
         <MktRow
           title={t('helper_mkt_train_leadership')}

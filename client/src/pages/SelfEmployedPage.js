@@ -7,7 +7,7 @@ import DropDown from '../components/Dropdown';
 import FullLineTextBox from '../components/FullLineTextBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import {
-  countryOptions,
+  workingCountryOptions,
   typeOptions,
   professionOptions,
   yearsOptions,
@@ -156,7 +156,7 @@ const SelfEmployedPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = `/${currentLanguage}/helpee/items`;
+        let path = `/${currentLanguage}/helpee/partners`;
         if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
@@ -196,7 +196,7 @@ const SelfEmployedPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        let path = `/${currentLanguage}/helper/items`;
+        let path = `/${currentLanguage}/helper/partners`;
         if (window.location.search) path += window.location.search;
         navigate(path, { replace: true });
       }
@@ -285,7 +285,7 @@ const SelfEmployedPage = (props) => {
                       : t('form_helper_country')
                   }
                   selectRef={countryRef}
-                  options={countryOptions}
+                  options={workingCountryOptions}
                 />
 
                 {!props.isHelpee && (
@@ -341,8 +341,16 @@ const SelfEmployedPage = (props) => {
                 </div>
               )}
               <FullLineTextBox
-                title={t('notes')}
-                placeholder={t('notes_placeholder')}
+                title={
+                  props.isHelpee
+                    ? `${t('topics_you_want_to_know')}${' '}${t(
+                        'if_more_than_one_cut_by_comma'
+                      )}`
+                    : `${t('sharing_topics')}${' '}${t(
+                        'if_more_than_one_cut_by_comma'
+                      )}`
+                }
+                placeholder={t('sharing_topics_placeholder_selfEmployed')}
                 inputRef={notesRef}
                 marginTop='10px'
               />

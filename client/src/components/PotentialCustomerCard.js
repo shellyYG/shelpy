@@ -5,7 +5,7 @@ import ChatIcon from './Icons/ChatIcon';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import {
-  countryOptions,
+  workingCountryOptions,
   departmentOptions,
   industryOptions,
   jobOptions,
@@ -35,7 +35,7 @@ function PotentialCustomerCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    const countryTranslationObj = countryOptions.filter(
+    const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
     setTranslatedCountry(t(countryTranslationObj[0].label));
@@ -240,7 +240,7 @@ function PotentialCustomerCard(props) {
                 isHelpee={false}
               />
               <p style={{ fontSize: '14px', marginTop: '10px' }}>
-                {t('requests')} {t('notes')}: {props.notes}
+                {t('topics_you_want_to_know')}: {props.notes}
               </p>
             </div>
           </div>

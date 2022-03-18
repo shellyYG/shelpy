@@ -21,8 +21,6 @@ const HelpeeBookingsPage = (props) => {
 
   const [filteredBookingStatus, setFilteredBookingStatus] = useState('default');
   const [filteredBookings, setFilteredBookings] = useState(allBookings);
-  console.log('filteredBookingStatus: ', filteredBookingStatus);
-
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];

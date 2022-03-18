@@ -51,13 +51,12 @@ async function getBookingStatusChangeInitiatorName(data) {
   console.log('getBookingStatusChangeInitiatorName data: ', data);
   const mainTable =
     data.role === 'helper' ? 'helpee_account' : 'helper_account';
-  const joinedTable = data.role === 'helper' ? 'requests' : 'offers';
+  const id = data.role === 'helper' ? data.helpeeId: data.helperId;
   const sql = `
-    SELECT a.username
-    FROM ${mainTable} a
-    INNER JOIN ${joinedTable} b ON a.id = b.userId
-    WHERE b.id=? LIMIT 1;`;
-  const user = await query(sql, data.offerOrRequestId);
+    SELECT username
+    FROM ${mainTable}
+    WHERE id=? LIMIT 1;`;
+  const user = await query(sql, id);
   return { username: user[0].username };
 }
 

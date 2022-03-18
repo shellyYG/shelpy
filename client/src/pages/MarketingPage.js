@@ -7,7 +7,7 @@ import { getAllMarketingOffers } from '../store/general/general-actions';
 import MarketingCard from '../components/MarketingCard';
 
 import { secondTypeOptions } from '../store/options/navigate-options';
-import { countryOptions } from '../store/options/service-options';
+import { workingCountryOptions } from '../store/options/service-options';
 import DangerIcon from '../components/Icons/DangerIcon';
 import { useTranslation } from 'react-i18next';
 
@@ -164,7 +164,7 @@ const HelpeeDashboardPage = (props) => {
                 handleSelect={setCountry}
                 title={t('mkt_select_country')}
                 selectRef={countryRef}
-                options={countryOptions}
+                options={workingCountryOptions}
                 titleColor='black'
                 titleMarginLeft='8px'
               />

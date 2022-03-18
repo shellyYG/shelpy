@@ -10,7 +10,7 @@ import {
   schoolOptions,
   industryOptions,
   typeOptions,
-  countryOptions,
+  workingCountryOptions,
   departmentOptions,
   jobOptions,
   professionOptions,
@@ -58,7 +58,7 @@ function MarketingCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    const countryTranslationObj = countryOptions.filter(
+    const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
     setTranslatedCountry(t(countryTranslationObj[0].label));
@@ -216,7 +216,7 @@ function MarketingCard(props) {
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.username}
             </h3>
-            <p style={{ fontSize: '14px'}}>
+            <p style={{ fontSize: '14px' }}>
               {t('introduction')}: {props.introduction || t('na')}
             </p>
           </div>
@@ -271,7 +271,7 @@ function MarketingCard(props) {
           <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('helper_organization')}: {props.organization || t('na')}
           </p>
-          <p style={{ fontSize: '14px', padding: '6px' }}>
+          <p style={{ fontSize: '14px', padding: '6px', color: '#f47174', fontWeight: 'bold' }}>
             {t('price_per_duration_min', { price: props.price, duration })}
           </p>
         </div>
@@ -287,7 +287,7 @@ function MarketingCard(props) {
               padding: '6px',
             }}
           >
-            {t('offers')} {t('notes')}: {props.notes || t('na')}
+            {t('sharing_topics')}: {props.notes || t('na')}
           </p>
         </div>
       </div>
