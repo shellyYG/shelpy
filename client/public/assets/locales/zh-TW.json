@@ -669,6 +669,8 @@
   "others_option": "其他（請在註記中說明）",
   "yes_option": "是",
   "no_option": "否",
+  "temp_pay_title": "我們正在建立信用卡連結系統，但還未上線",
+  "temp_pay_message": "若你的銀行帳戶在台灣，請匯款至 帳號: 0934940185008 |銀行代碼: 808 | 收款人：過來人有限公司。註明： {{reference}}。若你的銀行不在台灣，可以使用Paypal付款至：https://paypal.me/shelpyltd。 我們會在收到款項後通知你與過來人。",
 
   "please": "請先",
   "mkt_offer_sign_in_as_helpee": "為新鮮人，以查看所有的熱門過來人。",

@@ -19,6 +19,7 @@ const HelperSignInPage = () => {
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
   const emailToken = searchParams.get('emailToken');
+  const passwordResetToken = searchParams.get('passwordResetToken');
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -80,6 +81,10 @@ const HelperSignInPage = () => {
         if (helperAccountStatus === 'password_created') {
           if (emailToken) {
             navigate(`/${currentLanguage}/helper/basic-form`, {replace: true});
+          } else if (passwordResetToken) {
+            navigate(`/${currentLanguage}/helper/home`, {
+              replace: true,
+            });
           } else {
             navigate(-1);
           }
@@ -89,7 +94,11 @@ const HelperSignInPage = () => {
             navigate(`/${currentLanguage}/helper/basic-form`, {
               replace: true,
             });
-          } else {
+          } else if (passwordResetToken) {
+            navigate(`/${currentLanguage}/helper/home`, {
+              replace: true,
+            });
+          }else {
             navigate(-1);
           }
         }
@@ -99,6 +108,7 @@ const HelperSignInPage = () => {
   }, [
     t,
     emailToken,
+    passwordResetToken,
     currentLanguage,
     helperAccountStatus,
     signInStatus,

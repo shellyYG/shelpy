@@ -669,6 +669,8 @@
   "others_option": "Others (Please specify in the Notes)",
   "yes_option": "Yes",
   "no_option": "No",
+  "temp_pay_title": "Credit Card system is working in progress but not available yet.",
+  "temp_pay_message": "If you are not from Taiwan, you can pay through paypal: https://paypal.me/shelpyltd .| Specify the reference as: {{reference}}. If you have a Taiwanese bank account, you can transfer to account: 0934940185008 |bank ID: 808 | Receiver：過來人有限公司 | Reference: {{reference}}. We will inform you and the helper via email once we receive the money.",
 
   "please": "Please",
   "mkt_offer_sign_in_as_helpee": "as Helpee to view our top offers.",

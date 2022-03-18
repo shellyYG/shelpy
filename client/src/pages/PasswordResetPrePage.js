@@ -95,7 +95,7 @@ const PasswordResetPrePage = (props) => {
             icon: 'success',
           });
           navigate(
-            `/${currentLanguage}/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}&refId=${refId}`,
+            `/${currentLanguage}/helpee/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}&refId=${refId}&passwordResetToken=${passwordResetToken}`,
             { replace: true }
           );
         }
@@ -130,7 +130,7 @@ const PasswordResetPrePage = (props) => {
             icon: 'success',
           });
           navigate(
-            `/${currentLanguage}/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}&refId=${refId}`,
+            `/${currentLanguage}/helper/password/reset/${process.env.REACT_APP_PASS_RESET_URL}?email=${filteredEmail}&refId=${refId}&passwordResetToken=${passwordResetToken}`,
             { replace: true }
           );
         }

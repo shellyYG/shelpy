@@ -280,15 +280,26 @@ function BookingCard(props) {
     );
   }
 
-  function handlePayHelper(token) {
-    navigate(
-      `/${currentLanguage}/pay?bookingId=${props.bookingId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
-        `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}` +
-        `&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
-        `&helperUsername=${props.helperUsername}&refId=${refId}`+
-        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`
-    );
+  async function handlePayHelper(token) {
+    // Temp
+    // paypal.me/shelpyltd
+    await MySwal.fire({
+      title: <strong>{t('temp_pay_title')}</strong>,
+      imageWIdth: 442,
+      imageHeight: 293,
+      html: <p>{t('temp_pay_message', {reference: `bookingId${props.bookingId}` })}</p>,
+      // icon: 'success',
+    });
+    // TapPay placeholder
+    // navigate(
+    //   `/${currentLanguage}/pay?bookingId=${props.bookingId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
+    //     `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+    //     `&thirdType=${props.thirdType}` +
+    //     `&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
+    //     `&helperUsername=${props.helperUsername}&refId=${refId}`+
+    //     `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`
+    // );
+    // Paypal
     try {
       // const data = {
       //   bookingStatus: 'paid',

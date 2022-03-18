@@ -669,6 +669,8 @@
   "others_option": "其他（请在註记中说明）",
   "yes_option": "是",
   "no_option": "否",
+  "temp_pay_title": "我们正在建立信用卡连结系统，但还未上线",
+  "temp_pay_message": "若你的银行帐户在台湾，请汇款至 帐号: 0934940185008 |银行代码: 808 | 收款人：过来人有限公司。註明： {{reference}}。若你的银行不在台湾，可以使用Paypal付款至：https://paypal.me/shelpyltd。 我们会在收到款项后通知你与过来人。",
 
   "please": "请先",
   "mkt_offer_sign_in_as_helpee": "为新鲜人，以查看所有的热门过来人。",

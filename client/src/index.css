@@ -1648,6 +1648,8 @@ input[type="checkbox" i] {
   margin: 10px auto;
 }
 .howItWorksImgContainer {
+  display: flex;
+  flex-direction: row;
   position: relative;
   width: 90vw;
   height: 80vh;
@@ -1674,7 +1676,6 @@ input[type="checkbox" i] {
   border-radius: 2px;
 }
 .howItWorksImgContainer img {
-  position: absolute;
   top: 0;
   left: 0;
   width: auto;
@@ -1683,6 +1684,7 @@ input[type="checkbox" i] {
   max-height: 100%;
   object-fit: cover;
   border-radius: 2px;
+  margin: auto;
 }
 
 .uploadInnerDiv {
