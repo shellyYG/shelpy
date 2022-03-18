@@ -44,8 +44,7 @@ import HelperContractPage from './pages/HelperContractPags';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsConditionaPage from './pages/TermsConditionPage';
 import SelectSignInRolePage from './pages/SelectSignInRolePage';
-import HelperGuidePage from './pages/helper/HelperGuidePage';
-import HelpeeGuidePage from './pages/helpee/HelpeeGuidePage';
+import HowItWorksPage from './pages/HowItWorksPage';
 import ChatroomPreLandingPage from './pages/ChatroomPreLandingPage';
 import DashboardPreLandingPage from './pages/DashboardPreLandingPage';
 import HelpeeMatchedPartnerPage from './pages/helpee/HelpeeMatchedPartnerPage';
@@ -439,11 +438,11 @@ function App() {
             <Route path={`/:locale/pay`} element={<PayPage />} />
             <Route
               path={`/:locale/helper/guidance`}
-              element={<HelpeeGuidePage />}
+              element={<HowItWorksPage />}
             />
             <Route
               path={`/:locale/helpee/guidance`}
-              element={<HelpeeGuidePage />}
+              element={<HowItWorksPage />}
             />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
