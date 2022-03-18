@@ -105,7 +105,7 @@ const HelpeeBookingsPage = (props) => {
           {filteredBookings &&
             filteredBookings.map(
               (
-                option // TODO: changed to orders
+                option
               ) => (
                 <BookingCard
                   isHelpee={true}

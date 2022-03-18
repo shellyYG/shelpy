@@ -76,8 +76,6 @@ const helpeeSlice = createSlice({
       const { payload } = action;
       const { requestId } = payload.data;
       state.DBRequestId = requestId;
-      // TODO
-      // state.serviceType = payload.serviceType;
     },
     updatePayHelperStatus(state, action) {
       const { payload } = action;
