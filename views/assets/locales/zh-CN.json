@@ -86,6 +86,14 @@
   "select_experience_you_want_to_share": "选择你想分享的经验",
   "helper_wait_for_verify": "谢谢你!我们正在审核你的资格，必要时，我们将会与你进行很短的视讯会议，确认你的资格。待你的资格通过时，我们会寄电子邮件给你(通常为两个工作天)。",
 
+  "update_payment": "更新收款帐号",
+  "paypal_account_successfully_update": "成功更新了你的PayPal收款帐号",
+  "paypal_receiver_name": "收款人姓名",
+  "paypal_email": "Paypal 电邮(Email)",
+  "payment_receive_account": "PayPal 收款帐号",
+  "payment_payments_notes": "目前我们只接受 PayPay 作为收款帐号，若有不便，烦请见谅。",
+  "apply_paypal_account": "若你还没有PayPal帐号，烦请先至 https://www.paypal.com 申请，再回到此页面输入帐号。",
+
   "mission_statement": "过来人(Shelpy)使命宣言",
   "mission_statement_part0": "Shelpy 代表着 Share(分享)、Help(帮助)、Happy(快乐)。",
   "mission_statement_part1": "透过传授过来人的经验给新鲜人，",
