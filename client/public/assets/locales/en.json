@@ -9,6 +9,8 @@
   "nav_I_am_helper": "I am a Helper",
   "usd": "USD",
   "how_shelpy_works": "How it works",
+  "still_confused": "Still confused?",
+  "view_helpee_user_guide": "Click me to view Helpee User Guide",
 
   "what_role_do_you_sign_in": "What role do you want to sign in?",
   "what_partner_will_see_after_offers": "Data display style will be similar as below when you finish creating offers",
@@ -827,7 +829,7 @@
   "helper_home_cta": "CREATE OFFER NOW",
   "leave_notes_to_helper": "What questions you may want to ask the helper?",
   "leave_notes_to_helper_details": "Write down your question here so the helper can prepare in advance.",
-  "linkedin_link_title": "LinkedIn Link *",
+  "linkedin_link_title": "LinkedIn / Any Link that can prove you *",
   "linkedin_link_details": "(OR, upload Resume in next section) (Not public, only used for eligibility check)",
   "resume_title": "Resume/files *",
   "resume_details": "(OR, insert linkedin link in the last section) (Not public, only used for eligibility check)",

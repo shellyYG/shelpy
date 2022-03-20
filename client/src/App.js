@@ -53,6 +53,7 @@ import HelpeeRequestsPage from './pages/helpee/HelpeeRequestsPage';
 import HelperOffersPage from './pages/helper/HelperOffersPage';
 import ReferralPage from './pages/ReferralPage';
 import HelperSetPayPalPage from './pages/helper/HelperSetPayPalPage';
+import HelpeeGuidePage from './pages/helpee/HelpeeGuidePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -206,7 +207,7 @@ function App() {
               path={`/:locale/helper/sign-in`}
               element={<HelperSignInPage />}
             />
-            <Route 
+            <Route
               path={`/:locale/paypal-account`}
               element={<HelperSetPayPalPage />}
             />
@@ -448,6 +449,14 @@ function App() {
             <Route
               path={`/:locale/helpee/guidance`}
               element={<HowItWorksPage />}
+            />
+            <Route
+              path={`/:locale/helpee/user-guide`}
+              element={<HelpeeGuidePage />}
+            />
+            <Route
+              path={`/:locale/helper/user-guide`}
+              element={<HelpeeGuidePage />}
             />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
