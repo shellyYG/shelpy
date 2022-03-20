@@ -53,6 +53,7 @@ const BasicFormPage = (props) => {
   const [residenceCountry, setResidenceCountry] = useState('default');
   
   const [introductionString, setIntroductionString] = useState('');
+  const [linkedInLinkString, setLinkedInLinkString] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(true);
   const [enableBtn, setEnableBtn] = useState(false);
@@ -362,11 +363,11 @@ const BasicFormPage = (props) => {
       );
     } else {
       setEnableBtn(
-          age !== 'default' &&
+        age !== 'default' &&
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
           notificationLanguage !== 'default' &&
-          (linkedInUrlRef || certificate) &&
+          (linkedInLinkString || certificate) &&
           introductionString
       );
     }
@@ -375,6 +376,7 @@ const BasicFormPage = (props) => {
     linkedInUrlRef,
     age,
     nationality,
+    linkedInLinkString,
     residenceCountry,
     certificate,
     introductionString,
@@ -462,6 +464,11 @@ const BasicFormPage = (props) => {
     navigate,
     dispatch,
   ]);
+  function haneldLinkedInLinkTyping(e){
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setLinkedInLinkString(typingInput);
+  }
   function handleIntroductionTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
@@ -606,13 +613,17 @@ const BasicFormPage = (props) => {
                     }
                     inputRef={linkedInUrlRef}
                     marginBottom='10px'
+                    onChange={haneldLinkedInLinkTyping}
                   />
-                  <div className='form-wrapper' style={{ margin: 'auto', marginBottom:'10px' }}>
+                  <div
+                    className='form-wrapper'
+                    style={{ margin: 'auto', marginBottom: '10px' }}
+                  >
                     <div>
-                      <label>
-                        {t('resume_title')}
-                      </label>
-                      <p style={{ fontSize: '9px', marginBottom: '10px'}}>{t('resume_details')}</p>
+                      <label>{t('resume_title')}</label>
+                      <p style={{ fontSize: '9px', marginBottom: '10px' }}>
+                        {t('resume_details')}
+                      </p>
                     </div>
                     {!certificate && (
                       <>
@@ -636,7 +647,7 @@ const BasicFormPage = (props) => {
                   </div>
                 </div>
               )}
-              <div style={{ display: 'flex', flexDirection: 'row'}}>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <CheckBox
                   checked={isAnonymous}
                   handleCheck={setIsAnonymous}
