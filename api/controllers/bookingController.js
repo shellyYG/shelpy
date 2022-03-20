@@ -19,7 +19,6 @@ const updateBookingStatus = async (req, res) => {
   try {
     if (!data.bookingId || data.bookingId === 'null' || data.bookingId === undefined) { // booking is not created yet
       // create a booking
-      console.log('no booking yet, create a booking');
       if (data.bookingId) {
         const { bookingId, ...newData} = data;
         createdBookingId = await bookingModel.insertBooking(newData);
@@ -30,7 +29,6 @@ const updateBookingStatus = async (req, res) => {
         
     } else {
       // update a booking
-      console.log('update a booking');
       await bookingModel.updateBookingStatus(data);
     }
     let emailReceiverRole = '';

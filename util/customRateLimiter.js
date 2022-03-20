@@ -6,7 +6,7 @@ function customRateLimiter({ secondsWindow, allowedHits }) {
             req.headers['x-forwarded-for'] || req.connection.remoteAddress
         ).slice(0, 9);
         const requestCounts = await redis.incr(ip);
-        console.log('requestCounts: ', requestCounts);
+        // console.log('requestCounts: ', requestCounts);
         if (requestCounts === 1) {
           await redis.expire(ip, secondsWindow); // expire every secondsWindow seconds
         }

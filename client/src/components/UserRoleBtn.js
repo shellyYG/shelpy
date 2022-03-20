@@ -36,7 +36,6 @@ function UserRoleBtn(props) {
   useEffect(() => {
     let newRoute = '';
     const currentPathname = window.location.pathname.replace(/\/+$/, '');
-    console.log('currentPathname: ', currentPathname);
    
     if (currentPathname.includes('helper') && userRole === 'helpee') {
       newRoute = currentPathname.replace('helper', 'helpee');

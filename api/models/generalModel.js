@@ -12,7 +12,6 @@ async function getChatroomReceiverEmail(data) {
 }
 
 async function getBookingReceiverEmail(data) {
-  console.log('getBookingReceiverEmail data: ', data);
   const mainTable =
     data.role === 'helper' ? 'helper_account' : 'helpee_account';
   let sql, user;
@@ -48,7 +47,6 @@ async function getBookingReceiverEmail(data) {
 }
 
 async function getBookingStatusChangeInitiatorName(data) {
-  console.log('getBookingStatusChangeInitiatorName data: ', data);
   const mainTable =
     data.role === 'helper' ? 'helpee_account' : 'helper_account';
   const id = data.role === 'helper' ? data.helpeeId: data.helperId;

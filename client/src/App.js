@@ -52,6 +52,7 @@ import HelperMatchedPartnerPage from './pages/helper/HelperMatchedPartnerPage';
 import HelpeeRequestsPage from './pages/helpee/HelpeeRequestsPage';
 import HelperOffersPage from './pages/helper/HelperOffersPage';
 import ReferralPage from './pages/ReferralPage';
+import HelperSetPayPalPage from './pages/helper/HelperSetPayPalPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -204,6 +205,10 @@ function App() {
             <Route
               path={`/:locale/helper/sign-in`}
               element={<HelperSignInPage />}
+            />
+            <Route 
+              path={`/:locale/paypal-account`}
+              element={<HelperSetPayPalPage />}
             />
 
             <Route

@@ -131,6 +131,12 @@ const ProfileIcon = (props) => {
     if (window.location.search) path += window.location.search;
     navigate(path);
   }
+  function handleToHelperUpdatePayPal(e) {
+     e.preventDefault();
+     let path = `/${currentLanguage}/paypal-account`;
+     if (window.location.search) path += window.location.search;
+     navigate(path);
+  }
 
   useEffect(() => {
     if (props.dropDownNavTarget !== 'profile') {
@@ -183,7 +189,7 @@ const ProfileIcon = (props) => {
               {userRole === 'helper' && (
                 <>
                   {/* {<NavbarIdentity isHelpee={false} />} */}
-                  
+
                   {props.isHelperAuthenticated && (
                     <div onClick={handleToHelperPartner}>
                       {t('view_helper_partners')}
@@ -195,9 +201,7 @@ const ProfileIcon = (props) => {
                     </div>
                   )}
                   {props.isHelperAuthenticated && (
-                    <div onClick={handleToHelperOffers}>
-                      {t('my_offers')}
-                    </div>
+                    <div onClick={handleToHelperOffers}>{t('my_offers')}</div>
                   )}
                   {props.isHelperAuthenticated && (
                     <div onClick={handleToHelperChatroom}>
@@ -207,6 +211,11 @@ const ProfileIcon = (props) => {
                   {props.isHelperAuthenticated && (
                     <div onClick={handleToHelperUpdateProfile}>
                       {t('update_profile')}
+                    </div>
+                  )}
+                  {props.isHelperAuthenticated && (
+                    <div onClick={handleToHelperUpdatePayPal}>
+                      {t('update_payment')}
                     </div>
                   )}
                   {!props.isHelperAuthenticated && (

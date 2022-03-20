@@ -24,7 +24,6 @@ const BookingConfirmPage = (props) => {
   const navigate = useNavigate();
   
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  console.log('currentPathname: ', currentPathname);
   
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -183,9 +182,8 @@ const BookingConfirmPage = (props) => {
   }
 
   useEffect(() => {
-    console.log('currentPage: ', currentPage);
     if (currentPage === 'confirm-booking') {
-      console.log('yes');
+      // HERE
       setEnableBtn(meetDateRef && meetTimeRef !== 'default');
     } else if (currentPage === 'update-booking') {
       setEnableBtn(

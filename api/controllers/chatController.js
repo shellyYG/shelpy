@@ -4,7 +4,7 @@ const generalModel = require('../models/generalModel');
 const onlineUsers = {};
 
 const socketChat = async (socket) => {
-  console.log(`User ${socket.id} conneted...`);
+  // console.log(`User ${socket.id} conneted...`);
   socket.on('join_room', async (roomId) => {
     socket.join(roomId);
     const data = await chatModel.searchHistory(roomId);
@@ -143,7 +143,7 @@ const socketChat = async (socket) => {
     chatModel.setLastOthersMsgAsRead(messageObj);
   });
   socket.on('disconnect', (data) => {
-    console.log(`User ${socket.id} disconnected.`);
+    // console.log(`User ${socket.id} disconnected.`);
     for (const [key, socketIds] of Object.entries(onlineUsers)) {
       if (socketIds.length && socketIds.length > 0) {
         for (let i = 0; i < socketIds.length; i++) {

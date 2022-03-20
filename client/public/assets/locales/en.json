@@ -86,6 +86,14 @@
   "select_experience_you_want_to_share": "NOW: select the experiences you want to share.",
   "helper_wait_for_verify": "Thanks! We are now working on proving your qualification. When neccessary, you will get a quick phone call from us for simple eligibility check. After that, you will get an email from us once you pass the eligibility check.",
 
+  "update_payment": "Update Receive Payment Account",
+  "paypal_account_successfully_update": "Successfully updated your paypal account.",
+  "paypal_receiver_name": "Receiver Name",
+  "paypal_email": "Paypal Email",
+  "payment_receive_account": "Receive Payment Account",
+  "payment_payments_notes": "Currently, helpers can only receive money via paypal. Sorry for any inconvenience.",
+  "apply_paypal_account": "If you don't have PayPal account. Please apply first here: https://www.paypal.com .",
+
   "mission_statement": "Shelpy Mission Statement",
   "mission_statement_part0": "Shelpy stands for Share, Help, Happy.",
   "mission_statement_part1": "By connecting professions and students,",
@@ -271,7 +279,7 @@
   "form_helper_country": "Country of the Experience *",
   "form_price": "Price (USD) *",
   "form_price_unit": "In USD",
-  "form_price_warning": "Price need to be an integer e.g. 20 is allowed. 20.1 is not allowed",
+  "form_price_warning": "Price needs to be an integer e.g. 20 is allowed. 20.1 is not allowed",
   "form_email_warning": "Need to be valid email form",
   "country_fully_remote": "Fully Remote",
   "country_taiwan": "Taiwan",
@@ -439,7 +447,7 @@
 
   "degree": "Degree",
   "uni_form_degree": "Degree *",
-  "uni_form_bachelor": "Bechelor (Undergraduate)",
+  "uni_form_bachelor": "Bachelor (Undergraduate)",
   "uni_form_master": "Master (Post-Graduate)",
   "uni_form_phd": "PhD (Doctor)",
   "helpee_uni_form_organization": "What is your desired university (if more than one, you can seperate by comma)? *",

@@ -17,6 +17,7 @@ const helperBasicFormWithoutCertificatePath = '/api/helper/basic-form';
 const helperCanChangePasswordPath = '/api/helper/password/allow-change';
 const helperSendPasswordResetEmailPath = '/api/helper/password/reset';
 const helperChattedCustomersPath = '/api/helper/chat/partners';
+const setPayPalAccountPath = '/api/helper/paypal-account';
 
 
 export const getHelperAuthStatus = () => {
@@ -732,6 +733,62 @@ export const clearDeleteOfferStatus = (data) => {
         deleteOfferStatus: 'initial',
         deleteOfferStatusTitle: '',
         deleteOfferStatusMessage: '',
+      })
+    );
+  };
+};
+
+export const setPayPalAccount = (data) => {
+  return async (dispatch) => {
+    try {
+      const generalToken = localStorage.getItem('shelper-token');
+      if (!generalToken) {
+        throw Error('access_denied_please_log_in_error');
+      }
+      if (generalToken) {
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + generalToken,
+        };
+        const response = await axios.post(
+          setPayPalAccountPath,
+          {
+            data,
+          },
+          { headers }
+        );
+        data.offerId = response.data.offerId;
+        dispatch(
+          helperActions.setDeleteOfferStatus({
+            setPayPalAccountStatus: 'success',
+            setPayPalAccountStatusTitle: 'success',
+            setPayPalAccountStatusMessage: 'paypal_account_successfully_update',
+          })
+        );
+      }
+    } catch (error) {
+      const errorResponse = error.response ? error.response.data : '';
+      const errorMessage = errorResponse || error.message;
+      if (errorMessage) {
+        dispatch(
+          helperActions.setDeleteOfferStatus({
+            setPayPalAccountStatus: 'error',
+            setPayPalAccountStatusTitle: 'oops',
+            setPayPalAccountStatusMessage: errorMessage,
+          })
+        );
+      }
+    }
+  };
+}
+
+export const clearSetPayPalAccountStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      helperActions.clearDeleteOfferStatus({
+        setPayPalAccountStatus: 'initial',
+        setPayPalAccountStatusTitle: '',
+        setPayPalAccountStatusMessage: '',
       })
     );
   };

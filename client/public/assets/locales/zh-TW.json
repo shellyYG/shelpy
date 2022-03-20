@@ -86,6 +86,14 @@
   "select_experience_you_want_to_share": "選擇你想分享的經驗",
   "helper_wait_for_verify": "謝謝你!我們正在審核你的資格，必要時，我們將會與你進行很短的視訊會議，確認你的資格。待你的資格通過時，我們會寄電子郵件給你(通常為兩個工作天)。",
 
+  "update_payment": "更新收款帳號",
+  "paypal_account_successfully_update": "成功更新了你的PayPal收款帳號",
+  "paypal_receiver_name": "收款人姓名",
+  "paypal_email": "Paypal 電郵(Email)",
+  "payment_receive_account": "PayPal 收款帳號",
+  "payment_payments_notes": "目前我們只接受 PayPay 作為收款帳號，若有不便，煩請見諒。",
+  "apply_paypal_account": "若你還沒有PayPal帳號，煩請先至 https://www.paypal.com 申請，再回到此頁面輸入帳號。",
+
   "mission_statement": "過來人(Shelpy)使命宣言",
   "mission_statement_part0": "Shelpy 代表著 Share(分享)、Help(幫助)、Happy(快樂)。",
   "mission_statement_part1": "透過傳授過來人的經驗給新鮮人，",
