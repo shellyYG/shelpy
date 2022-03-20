@@ -106,9 +106,11 @@ const BookingConfirmPage = (props) => {
     e.preventDefault();
     if (props.isHelpee) {
       const meetStartTime = meetTimeRef.current.value;
-      const timeAMPM = meetStartTime.includes('am') ? 'am':'pm';
-      const timeHourParts = meetStartTime.substring(0, meetStartTime.length-2).split(':');
-      
+      const timeAMPM = meetStartTime.includes('am') ? 'am' : 'pm';
+      const timeHourParts = meetStartTime
+        .substring(0, meetStartTime.length - 2)
+        .split(':');
+
       let timeHour = timeHourParts[0];
       const timeMinute = timeHourParts[1];
       if (timeAMPM === 'pm' && timeHour !== '12') {
@@ -119,7 +121,7 @@ const BookingConfirmPage = (props) => {
       const timeZoneParts = timeZoneRef.current.value.split('_');
       const timeZonePlusOrMinus = timeZoneParts[1];
       const timeZoneHoursFromUTC = timeZoneParts[2];
-      
+
       if (timeZonePlusOrMinus === 'minus') {
         timeHour += parseInt(timeZoneHoursFromUTC);
       } else {
@@ -133,8 +135,17 @@ const BookingConfirmPage = (props) => {
         parseInt(month) - 1,
         parseInt(day),
         timeHour,
-        timeMinute,
+        timeMinute
       );
+      const timeNow = Date.now();
+      if (unixTime - timeNow < 86400000) { // 24 hours (milliseconds)
+        await MySwal.fire({
+          title: <strong>{t('time_too_close')}</strong>,
+          html: <p>{t('need_to_be_more_than_24_hour')}</p>,
+          icon: 'error',
+        });
+        return;
+      }
       const data = {
         appointmentDate: meetDateRef.current.value,
         appointmentTime: meetTimeRef.current.value,
