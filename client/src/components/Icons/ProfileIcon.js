@@ -213,11 +213,11 @@ const ProfileIcon = (props) => {
                       {t('update_profile')}
                     </div>
                   )}
-                  {props.isHelperAuthenticated && (
+                  {/* {props.isHelperAuthenticated && (
                     <div onClick={handleToHelperUpdatePayPal}>
                       {t('update_payment')}
                     </div>
-                  )}
+                  )} */}
                   {!props.isHelperAuthenticated && (
                     <div onClick={handleSignIn}>{t('sign_in')}</div>
                   )}
