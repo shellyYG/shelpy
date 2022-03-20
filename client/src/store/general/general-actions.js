@@ -14,11 +14,9 @@ export const postBookingStatus = (data) => {
       console.log('data: ', data);
       console.log('postBookingStatus->data.bookingStatus: ', data.bookingStatus);
     }
-    if (data.helpeeId || data.bookingStatus === 'created') { // is first time created or Helpee updating time
-      console.log('get helpeE token');
+    if (data.bookingStatus === 'created') { // is first time created or Helpee updating time
       generalToken = localStorage.getItem('shelpy-token');
     } else {
-      console.log('get helpeR token');
       generalToken = localStorage.getItem('shelper-token');
     }
     try {
