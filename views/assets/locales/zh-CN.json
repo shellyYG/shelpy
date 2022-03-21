@@ -162,7 +162,7 @@
   "helper_terms_termination_t3": "(3) 违反相关法令或政府规范。",
   "helper_terms_termination_t4": "(4) 私下接单。",
   "helper_terms_termination_t5": "(5) 违反诚实信用(如诈欺、侵占、不正常交易等)、善良风俗、公共秩序之行为。",
-  
+
   "terms_and_condition": "服务条款",
   "privacy_policy": "隐私条款",
 
@@ -318,7 +318,7 @@
   "form_price_unit": "单位：美元",
   "form_price_warning": "价格必须是整数，如：20。像是 20.1 这种格式，是不允许的。",
   "form_email_warning": "邮件信箱必须是有效的 Email 格式",
-  "country_hk": "香港",
+  "country_hong_kong": "香港",
   "country_singapore": "新加坡",
   "country_thailand": "泰国",
   "country_usa": "美国",

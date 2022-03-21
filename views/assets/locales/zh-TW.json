@@ -318,7 +318,7 @@
   "form_price_unit": "單位：美元",
   "form_price_warning": "價格必須是整數，如：20。像是 20.1 這種格式，是不允許的。",
   "form_email_warning": "郵件信箱必須是有效的 Email 格式",
-  "country_hk": "香港",
+  "country_hong_kong": "香港",
   "country_singapore": "新加坡",
   "country_thailand": "泰國",
   "country_usa": "美國",
