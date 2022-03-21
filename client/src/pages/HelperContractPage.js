@@ -76,7 +76,7 @@ const HelperContractPage = () => {
               <br />
               {t('t2_helper_terms_calculation')}
               <br />
-              {t('t3_helper_terms_calculation')}
+              {t('t3_helper_terms_payment_date')}
               <br />
               {t('t4_helper_terms_payment_ways')}
               <br />
