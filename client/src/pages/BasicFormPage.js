@@ -505,7 +505,7 @@ const BasicFormPage = (props) => {
                         <label
                           className='uploadLabel'
                           for='profilePic'
-                          style={{ fontSize: '12px' }}
+                          style={{ fontSize: '9px' }}
                         >
                           {t('upload_profile_pic')}
                         </label>

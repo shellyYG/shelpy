@@ -5,6 +5,7 @@ const helperSlice = createSlice({
   initialState: {
     helperUserId: 0,
     helperName: '',
+    helperStatus: '',
     isHelperAuthenticated: false,
 
     pageFirstTimeLoaded: true,
@@ -41,6 +42,10 @@ const helperSlice = createSlice({
     deleteOfferStatusTitle: '',
     deleteOfferStatusMessage: '',
 
+    setPayPalAccountStatus: 'initial',
+    setPayPalAccountStatusTitle: '',
+    setPayPalAccountStatusMessage: '',
+
     allChattedCustomers: [],
   },
   reducers: {
@@ -49,6 +54,7 @@ const helperSlice = createSlice({
       state.isHelperAuthenticated = payload.isHelperAuthenticated;
       state.helperUserId = payload.helperUserId;
       state.helperName = payload.helperName;
+      state.helperStatus = payload.helperStatus;
     },
     updateActiveAndPastOrders(state, action) {
       const { payload } = action;
@@ -119,18 +125,32 @@ const helperSlice = createSlice({
       const { payload } = action;
       state.allChattedCustomers = payload.allChattedCustomers;
     },
-    setDeleteOfferStatus(state,action) {
+    setDeleteOfferStatus(state, action) {
       const { payload } = action;
       state.deleteOfferStatus = payload.deleteOfferStatus;
-       state.deleteOfferStatusTitle = payload.deleteOfferStatusTitle;
-       state.deleteOfferStatusMessage = payload.deleteOfferStatusMessage;
+      state.deleteOfferStatusTitle = payload.deleteOfferStatusTitle;
+      state.deleteOfferStatusMessage = payload.deleteOfferStatusMessage;
     },
     clearDeleteOfferStatus(state, action) {
-       const { payload } = action;
-       state.deleteOfferStatus = payload.deleteOfferStatus;
-       state.deleteOfferStatusTitle = payload.deleteOfferStatusTitle;
-       state.deleteOfferStatusMessage = payload.deleteOfferStatusMessage;
-    }
+      const { payload } = action;
+      state.deleteOfferStatus = payload.deleteOfferStatus;
+      state.deleteOfferStatusTitle = payload.deleteOfferStatusTitle;
+      state.deleteOfferStatusMessage = payload.deleteOfferStatusMessage;
+    },
+    setUpdatePayPalAccountStatus(state, action) {
+      const { payload } = action;
+      state.setPayPalAccountStatus = payload.setPayPalAccountStatus;
+      state.setPayPalAccountStatusTitle = payload.setPayPalAccountStatusTitle;
+      state.setPayPalAccountStatusMessage =
+        payload.setPayPalAccountStatusMessage;
+    },
+    clearSetPayPalAccountStatus(state, action) {
+      const { payload } = action;
+      state.setPayPalAccountStatus = payload.setPayPalAccountStatus;
+      state.setPayPalAccountStatusTitle = payload.setPayPalAccountStatusTitle;
+      state.setPayPalAccountStatusMessage =
+        payload.setPayPalAccountStatusMessage;
+    },
   },
 });
 

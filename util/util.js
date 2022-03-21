@@ -29,6 +29,7 @@ const verifyHelpeeToken = function (req, res, next) {
       if (decodedData && decodedData.data) {
         res.locals.userId = decodedData.data.id;
         res.locals.username = decodedData.data.username;
+        res.locals.status = decodedData.data.status;
       }
       next();
     } else {
@@ -53,6 +54,7 @@ const verifyHelperToken = function (req, res, next) {
       if (decodedData && decodedData.data) {
         res.locals.userId = decodedData.data.id;
         res.locals.username = decodedData.data.username;
+        res.locals.status = decodedData.data.status;
       }
       next();
     } else {

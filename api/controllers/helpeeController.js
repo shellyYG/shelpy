@@ -8,10 +8,15 @@ const bookingModel = require('../models/bookingModel');
 const { sendHelpeeResetPasswordEmail } = require('../../util/email');
 
 const allowHelpeePrivateRoute = async (req, res) => {
-  const { userId, username } = res.locals;
+  const { userId, username, status } = res.locals;
   res
     .status(200)
-    .json({ isHelpeeAuthenticated: true, helpeeUserId: userId, username });
+    .json({
+      isHelpeeAuthenticated: true,
+      helpeeUserId: userId,
+      username,
+      helpeeStatus: status,
+    });
 };
 
 const postHelpeeServiceRequestForm = async (req, res) => {

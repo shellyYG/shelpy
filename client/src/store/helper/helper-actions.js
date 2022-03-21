@@ -42,6 +42,7 @@ export const getHelperAuthStatus = () => {
             isHelperAuthenticated: response.data.isHelperAuthenticated,
             helperUserId: response.data.helperUserId,
             helperName: response.data.username,
+            helperStatus: response.data.helperStatus,
           })
         );
       }
@@ -50,6 +51,7 @@ export const getHelperAuthStatus = () => {
       dispatch(
         helperActions.updateAuthStatus({
           isHelperAuthenticated: false,
+          helperStatus: '',
         })
       );
     }
@@ -757,9 +759,8 @@ export const setPayPalAccount = (data) => {
           },
           { headers }
         );
-        data.offerId = response.data.offerId;
         dispatch(
-          helperActions.setDeleteOfferStatus({
+          helperActions.setUpdatePayPalAccountStatus({
             setPayPalAccountStatus: 'success',
             setPayPalAccountStatusTitle: 'success',
             setPayPalAccountStatusMessage: 'paypal_account_successfully_update',
@@ -771,7 +772,7 @@ export const setPayPalAccount = (data) => {
       const errorMessage = errorResponse || error.message;
       if (errorMessage) {
         dispatch(
-          helperActions.setDeleteOfferStatus({
+          helperActions.setUpdatePayPalAccountStatus({
             setPayPalAccountStatus: 'error',
             setPayPalAccountStatusTitle: 'oops',
             setPayPalAccountStatusMessage: errorMessage,
@@ -785,7 +786,7 @@ export const setPayPalAccount = (data) => {
 export const clearSetPayPalAccountStatus = (data) => {
   return async (dispatch) => {
     dispatch(
-      helperActions.clearDeleteOfferStatus({
+      helperActions.clearSetPayPalAccountStatus({
         setPayPalAccountStatus: 'initial',
         setPayPalAccountStatusTitle: '',
         setPayPalAccountStatusMessage: '',

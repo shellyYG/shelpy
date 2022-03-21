@@ -44,6 +44,7 @@ export const getHelpeeAuthStatus = () => {
             isHelpeeAuthenticated: response.data.isHelpeeAuthenticated,
             helpeeUserId: response.data.helpeeUserId,
             helpeeName: response.data.username,
+            helpeeStatus: response.data.helpeeStatus,
           })
         );
       }
@@ -52,6 +53,7 @@ export const getHelpeeAuthStatus = () => {
       dispatch(
         helpeeActions.updateAuthStatus({
           isHelpeeAuthenticated: false,
+          helpeeStatus: '',
         })
       );
     }

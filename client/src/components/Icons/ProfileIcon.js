@@ -133,7 +133,7 @@ const ProfileIcon = (props) => {
   }
   function handleToHelperUpdatePayPal(e) {
      e.preventDefault();
-     let path = `/${currentLanguage}/paypal-account`;
+     let path = `/${currentLanguage}/helper/paypal-account`;
      if (window.location.search) path += window.location.search;
      navigate(path);
   }
@@ -213,11 +213,11 @@ const ProfileIcon = (props) => {
                       {t('update_profile')}
                     </div>
                   )}
-                  {/* {props.isHelperAuthenticated && (
+                  {props.isHelperAuthenticated && (props.helperStatus === 'approved' || props.helperStatus === 'agreed_employment_contract') && (
                     <div onClick={handleToHelperUpdatePayPal}>
                       {t('update_payment')}
                     </div>
-                  )} */}
+                  )}
                   {!props.isHelperAuthenticated && (
                     <div onClick={handleSignIn}>{t('sign_in')}</div>
                   )}

@@ -57,6 +57,7 @@ const {
   getHelperAllBookings,
   getAllMarketingOffers,
   getAllChattedCustomers,
+  updatePayPalAccount,
 } = require('../controllers/helperController');
 
 const {
@@ -142,6 +143,13 @@ router
   .delete(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(deleteHelpeeRequest)
+  );
+
+router
+  .route('/api/helper/paypal-account')
+  .post(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(updatePayPalAccount)
   );
 
 router

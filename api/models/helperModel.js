@@ -197,6 +197,18 @@ WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helperId =?) AN
   return { data: { allChattedCustomers } };
 }
 
+async function updatePayPalAccount(data) {
+  const { bankAccount, payPalReceiverName, status, id } = data;
+  const sql = `UPDATE helper_account SET bankAccount=?, payPalReceiverName=?, status=? WHERE id=?`;
+  await query(sql, [
+    bankAccount,
+    payPalReceiverName,
+    status,
+    id,
+  ]);
+  return { data: { id }}
+} 
+
 module.exports = {
   insertHelperOffer,
   getHelperAllOffers,
@@ -208,4 +220,5 @@ module.exports = {
   getHelperAllBookings,
   getAllMarketingOffers,
   getAllChattedCustomers,
+  updatePayPalAccount,
 };

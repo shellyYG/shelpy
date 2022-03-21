@@ -4,27 +4,27 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import CreditCardTextBox from '../../components/CreditCardTextBox';
 import {
   clearSetPayPalAccountStatus,
   setPayPalAccount,
 } from '../../store/helper/helper-actions';
 import FullLineTextBox from '../../components/FullLineTextBox';
+import ConfirmBtn from '../../components/ConfirmBtn';
 const MySwal = withReactContent(Swal);
 
-const HelperSetPayPalPage = () => {
+const HelpersetPayPalPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const payPalNameRef = useRef();
   const payPalEmailRef = useRef();
+  const consentRef = useRef();
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
   const [searchParams] = useSearchParams();
-  const helperName = searchParams.get('helperUsername');
   const refId = searchParams.get('refId');
 
   const {
@@ -33,8 +33,11 @@ const HelperSetPayPalPage = () => {
     setPayPalAccountStatusMessage,
   } = useSelector((state) => state.helper);
 
-  const [title, setTitle] = useState('');
   const [loading, setIsLoading] = useState(false);
+  const [hasGiveConsent, setHasGiveConsent] = useState(false);
+  const [enableBtn, setEnableBtn] = useState(false);
+  const [payPalNameString, setPayPalNameString] = useState('');
+  const [payPalAccountString, setPayPalAccountString] = useState('');
 
   if (loading) {
     MySwal.fire({
@@ -46,6 +49,44 @@ const HelperSetPayPalPage = () => {
         MySwal.showLoading();
       },
     });
+  }
+  function handleHasGiveConsent() {
+    setHasGiveConsent(!hasGiveConsent);
+  }
+  function handlePayPalNameTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setPayPalNameString(typingInput);
+  }
+  function handlePayPalAccountTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setPayPalAccountString(typingInput);
+  }
+  function handleConfirm(e) {
+    e.preventDefault();
+    let payPalName;
+    let payPalEmail;
+    if (payPalNameRef && payPalNameRef.current){
+      payPalName = payPalNameRef.current.value;
+    }
+    if (payPalEmailRef && payPalEmailRef.current){
+      payPalEmail = payPalEmailRef.current.value;
+    }
+    const data = {
+      status: 'agreed_employment_contract',
+      payPalReceiverName: payPalName,
+      bankAccount: payPalEmail,
+      id: props.helperId,
+    };
+    try {
+      dispatch(setPayPalAccount(data));
+      setIsLoading(true);
+    } catch (err) {
+      console.error(err);
+      setIsLoading(false);
+    }
+    
   }
 
   useEffect(() => {
@@ -94,6 +135,10 @@ const HelperSetPayPalPage = () => {
     refId,
   ]);
 
+  useEffect(() => {
+    setEnableBtn(payPalNameString && payPalAccountString && hasGiveConsent);
+  }, [payPalNameString, payPalAccountString, hasGiveConsent]);
+
   return (
     <div
       className='main-content-wrapper-homepage'
@@ -105,10 +150,22 @@ const HelperSetPayPalPage = () => {
             <h2 style={{ textAlign: 'center' }}>
               {t('payment_receive_account')}
             </h2>
-            <p style={{ textAlign: 'center', margin: '5px auto 5px', fontSize: '12px' }}>
+            <p
+              style={{
+                textAlign: 'center',
+                margin: '5px auto 5px',
+                fontSize: '12px',
+              }}
+            >
               {t('payment_payments_notes')} <br />
             </p>
-            <p style={{ textAlign: 'center', fontSize: '10px', marginBottom: '10px' }}>
+            <p
+              style={{
+                textAlign: 'center',
+                fontSize: '10px',
+                marginBottom: '10px',
+              }}
+            >
               {t('apply_paypal_account')} <br />
             </p>
           </div>
@@ -117,22 +174,65 @@ const HelperSetPayPalPage = () => {
               marginTop: '10px',
             }}
           >
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
               <FullLineTextBox
                 title={`${t('paypal_receiver_name')} *`}
                 placeholder={'Shelly Yang'}
                 labelColor='black'
                 inputRef={payPalNameRef}
-                id='card-expiration-date'
+                id='paypal-name'
+                onChange={handlePayPalNameTyping}
               />
               <FullLineTextBox
                 title={`${t('paypal_email')} *`}
                 placeholder={'xxx@gmail.com'}
                 labelColor='black'
                 inputRef={payPalEmailRef}
-                id='card-ccv'
+                id='paypal-acc'
+                onChange={handlePayPalAccountTyping}
               />
-              <button className='btn-contact'>{t('confirm')}</button>
+              <div
+                className='form-row'
+                style={{ marginRight: 'auto', marginBottom: '20px' }}
+              >
+                <input
+                  type='checkbox'
+                  checked={hasGiveConsent}
+                  onChange={handleHasGiveConsent}
+                  style={{
+                    cursor: 'pointer',
+                    marginBottom: 'auto',
+                    width: '30px',
+                  }}
+                  ref={consentRef}
+                />
+                <div className='checkbox-text-password-page'>
+                  <p
+                    style={{
+                      textAlign: 'start',
+                      marginBottom: '10px',
+                      fontSize: '14px',
+                      color: 'black',
+                    }}
+                  >
+                    {t('helper_sign_contract_introduction')}{' '}
+                    <a
+                      href={`/${currentLanguage}/helper-terms?refId=${refId}`}
+                      target='_blank'
+                      rel='noreferrer'
+                    >
+                      {t('helper_home_employee_contract')}
+                    </a>
+                    {t('home_ending')} <br />
+                  </p>
+                </div>
+              </div>
+              <ConfirmBtn
+                cta={t('confirm')}
+                disable={!enableBtn}
+                handleConfirm={handleConfirm}
+              />
+              
             </div>
           </div>
         </div>
@@ -141,4 +241,4 @@ const HelperSetPayPalPage = () => {
   );
 };
 
-export default HelperSetPayPalPage;
+export default HelpersetPayPalPage;

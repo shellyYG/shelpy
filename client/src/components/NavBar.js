@@ -175,6 +175,7 @@ const NavBar = (props) => {
             dropDownNavTarget={dropDownNavTarget}
             isHelpeeAuthenticated={props.isHelpeeAuthenticated}
             isHelperAuthenticated={props.isHelperAuthenticated}
+            helperStatus={props.helperStatus}
           />
           <GlobalIcon dropDownNavTarget={dropDownNavTarget} />
         </div>

@@ -150,6 +150,7 @@
   "helper_home_employee_contract": "承攬契約",
   "comman_and": "、與",
   "helper_home_privacy_policy": "隱私條款",
+  "helper_sign_contract_introduction": "當你打勾勾與提供我們你的收款帳號時，代表你同意接受Shelpy的",
   "home_you_can": "你可以隨時",
   "home_unsubscribe": "取消訂閱",
   "unsubscribe_cta": "取消訂閱",
@@ -781,7 +782,7 @@
   "customer": "新鮮人",
 
   "update_basic_information": "新增/更新帳號資料",
-  "upload_profile_pic": "上傳大頭貼 (可略)",
+  "upload_profile_pic": "上傳大頭貼 (建議,雖非必要,但可增加可信度)",
   "username_title": "暱稱 (公開) *",
   "username_placeholder": "暱稱 (如： Peter)",
   "age_title": "年紀 *",

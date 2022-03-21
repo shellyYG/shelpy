@@ -1,7 +1,7 @@
 require('dotenv').config();
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken'); 
-const helpeeSignInModel = require('../models/signInModel');
+const signInModel = require('../models/signInModel');
 const {
   generateHelpeeAccessToken,
   generateHelperAccessToken,
@@ -12,9 +12,7 @@ const postUserSignInData = async (req, res) => {
 
   async function getUserEncryptedPass() {
     // Need to use the same ivString to encryt the password for comparison
-    const LoginUserResult = await helpeeSignInModel.getUserDataByEmail(
-      req.body.data
-    );
+    const LoginUserResult = await signInModel.getUserDataByEmail(req.body.data);
     const sharedIvString = LoginUserResult[0].ivString;
     const { password } = data;
     const key = process.env.ACCESS_TOKEN_KEY;
@@ -32,7 +30,7 @@ const postUserSignInData = async (req, res) => {
 
   async function comparepass() {
     try {
-      const LoginUserResult = await helpeeSignInModel.getUserDataByEmail(
+      const LoginUserResult = await signInModel.getUserDataByEmail(
         req.body.data
       );
 
@@ -47,13 +45,14 @@ const postUserSignInData = async (req, res) => {
 
         if (userInsertedEncryptedPass === DataBasePass) {
           const userObject = {};
-          const { id, provider, username, email } = LoginUserResult[0];
+          const { id, provider, username, email, status } = LoginUserResult[0];
           const dataObject = {
             user: {
               id,
               provider,
               username,
               email,
+              status,
             },
           };
           const payloadObject = {};
@@ -66,6 +65,7 @@ const postUserSignInData = async (req, res) => {
                   provider,
                   username,
                   email,
+                  status,
                 },
               })
             : generateHelperAccessToken({
@@ -74,6 +74,7 @@ const postUserSignInData = async (req, res) => {
                   provider,
                   username,
                   email,
+                  status,
                 },
               });
 

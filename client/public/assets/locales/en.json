@@ -150,6 +150,7 @@
   "helper_home_employee_contract": "agreement for work",
   "comman_and": " & ",
   "helper_home_privacy_policy": "privacy policy",
+  "helper_sign_contract_introduction": "By checking this box and providing us your receive payment account, you agree with our",
   "home_you_can": "You can",
   "home_unsubscribe": "unsubscribe",
   "unsubscribe_cta": "Unsubscribe My Email",
@@ -781,7 +782,7 @@
   "customer": "Customer",
 
   "update_basic_information": "Update Basic Information",
-  "upload_profile_pic": "Upload Picture (Optional)",
+  "upload_profile_pic": "Upload Picture (Recommended but optional)",
   "username_title": "Username (This will be shown publicly) *",
   "username_placeholder": "Username (e.g. Angela)",
   "age_title": "Age *",

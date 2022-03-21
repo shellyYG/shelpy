@@ -8,10 +8,15 @@ const { sendHelperResetPasswordEmail } = require('../../util/email');
 
 
 const allowHelperPrivateRoute = async (req, res) => {
-  const { userId, username } = res.locals;
+  const { userId, username, status } = res.locals;
   res
     .status(200)
-    .json({ isHelperAuthenticated: true, helperUserId: userId, username });
+    .json({
+      isHelperAuthenticated: true,
+      helperUserId: userId,
+      username,
+      helperStatus: status,
+    });
 };
 
 const postHelperOffer = async (req, res) => {
@@ -209,6 +214,17 @@ const getAllChattedCustomers = async (req, res) => {
   }
 };
 
+const updatePayPalAccount = async (req, res) => {
+  try {
+    const { data } = req.body;
+    const id = await helperModel.updatePayPalAccount(data);
+    res.status(200).json({ userId: id, status: 'success' });
+  } catch (error){
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   allowHelperPrivateRoute,
   postHelperOffer,
@@ -222,4 +238,5 @@ module.exports = {
   getHelperAllBookings,
   getAllMarketingOffers,
   getAllChattedCustomers,
+  updatePayPalAccount,
 };

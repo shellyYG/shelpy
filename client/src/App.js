@@ -40,7 +40,7 @@ import EmailUnSubscriptionPage from './pages/EmailUnSubscriptionPage';
 import PayPage from './pages/PayPage';
 import ImpressumPage from './pages/ImpressumPage';
 import ContactPage from './pages/ContactPage';
-import HelperContractPage from './pages/HelperContractPags';
+import HelperContractPage from './pages/HelperContractPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsConditionaPage from './pages/TermsConditionPage';
 import SelectSignInRolePage from './pages/SelectSignInRolePage';
@@ -64,8 +64,10 @@ function App() {
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   let currentLanguage = routeParts[1];
-  const { helpeeUserId, helpeeName, isHelpeeAuthenticated } = useSelector((state) => state.helpee);
-  const { helperUserId, helperName, isHelperAuthenticated } = useSelector((state) => state.helper);
+  const { helpeeUserId, helpeeName, isHelpeeAuthenticated, helpeeStatus } = useSelector((state) => state.helpee);
+  const { helperUserId, helperName, isHelperAuthenticated, helperStatus } =
+    useSelector((state) => state.helper);
+  
   if (!currentLanguage) {
     currentLanguage = 'en';
   }
@@ -75,6 +77,7 @@ function App() {
           <NavBar
             isHelpeeAuthenticated={isHelpeeAuthenticated}
             isHelperAuthenticated={isHelperAuthenticated}
+            helperStatus={helperStatus}
           />
           <Routes>
             <Route path={`/:locale/about`} element={<AboutPage />} />
@@ -208,8 +211,14 @@ function App() {
               element={<HelperSignInPage />}
             />
             <Route
-              path={`/:locale/paypal-account`}
-              element={<HelperSetPayPalPage />}
+              path={`/:locale/helper/paypal-account`}
+              element={
+                isHelperAuthenticated ? (
+                  <HelperSetPayPalPage helperId={helperUserId} />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
+              }
             />
 
             <Route
