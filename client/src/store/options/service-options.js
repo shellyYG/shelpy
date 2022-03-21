@@ -222,6 +222,7 @@ export const industryOptions = [
 export const countryOptions = [
   { value: 'default', label: 'please_select_option' },
   { value: 'Taiwan', label: 'country_taiwan' },
+  { value: 'Hong Kong', label: 'country_hong_kong' },
   { value: 'Vietnam', label: 'country_vietnam' },
   { value: 'Japan', label: 'country_japan' },
   { value: 'Korean', label: 'country_korea' },
@@ -293,8 +294,9 @@ export const countryOptions = [
 
 export const workingCountryOptions = [
   { value: 'default', label: 'please_select_option' },
-  { value: 'FullyRemote', label: 'country_fully_remote'},
+  { value: 'FullyRemote', label: 'country_fully_remote' },
   { value: 'Taiwan', label: 'country_taiwan' },
+  { value: 'Hong Kong', label: 'country_hong_kong' },
   { value: 'Vietnam', label: 'country_vietnam' },
   { value: 'Japan', label: 'country_japan' },
   { value: 'Korean', label: 'country_korea' },
