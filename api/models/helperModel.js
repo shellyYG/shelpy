@@ -22,7 +22,7 @@ async function getAllMarketingOffers() {
   SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.languages, acc.isAnonymous
   FROM offers ofs 
   INNER JOIN helper_account acc ON ofs.userId = acc.id
-  WHERE acc.isMarketing = true AND acc.status = 'approved' AND NOT ofs.status='deleted' ORDER BY score, id DESC;`;
+  WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' ORDER BY score, id DESC;`;
   const allMKTOffers = await query(sql);
   return { data: { allMKTOffers } };
 }

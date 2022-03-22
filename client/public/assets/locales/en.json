@@ -33,7 +33,7 @@
   "no_email_warning_helper": "Email can not be empty. Please go to Helper Homepage to re-enter your email.",
   "no_email_warning_helpee": "Email can not be empty. Please go to Helpee Homepage to re-enter your email.",
   "successfully_sign_in": "Successfully Signed-In.",
-  "account_does_not_exist": "Account does not exist.",
+  "account_does_not_exist": "Account does not exist. Note: Helpers & Helpees are 2 different account systems. You may be Helper but try to log in as Helpee, or vice versa. Please register first for the corresponding account.",
   "please_confirm_email_first": "You haven't confirm your email yet. Please go to your mailbox to confirm your email first.",
   "log_in_session_expired": "Sign in session expired. Please sign in again.",
   "delete_offer_error": "Server encounters error when deleting offers",

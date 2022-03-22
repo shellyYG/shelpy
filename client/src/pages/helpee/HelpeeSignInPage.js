@@ -70,7 +70,7 @@ const HelpeeSignInPage = () => {
         });
         dispatch(clearSignInStatus());
       }
-      sweetAlertAndClearStatus(signInStatus, signInStatusMessage);
+      sweetAlertAndClearStatus(signInStatusTitle, signInStatusMessage);
       return;
     } else if (signInStatus === 'success') {
       setIsLoading(false);
@@ -108,7 +108,7 @@ const HelpeeSignInPage = () => {
           }
         }
       }
-      sweetAlertAndNavigate(signInStatus, signInStatusMessage);
+      sweetAlertAndNavigate(signInStatusTitle, signInStatusMessage);
     }
   }, [
     t,

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DropDown from '../components/Dropdown';
-import { jobUniOptions } from '../store/options/navigate-options';
+import { jobUniWithDefaultOptions } from '../store/options/navigate-options';
 import { getAllMarketingOffers } from '../store/general/general-actions';
 import MarketingCard from '../components/MarketingCard';
 
@@ -142,7 +142,7 @@ const HelpeeDashboardPage = (props) => {
                 handleSelect={setMainType}
                 title={t('mkt_select_main_category')}
                 selectRef={mainTypeRef}
-                options={jobUniOptions}
+                options={jobUniWithDefaultOptions}
                 titleColor='black'
                 titleMarginLeft='8px'
               />

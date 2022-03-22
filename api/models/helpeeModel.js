@@ -56,7 +56,7 @@ LEFT JOIN requests req ON
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
-WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.status = 'approved' AND NOT ofs.status ='deleted'
+WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status ='deleted'
 ORDER BY acc.score, ofs.id DESC;`;
   const allPotentialHelpers = await query(sql, helpeeUserId);
 

@@ -41,6 +41,28 @@ export const jobUniOptions = [
   },
 ];
 
+export const jobUniWithDefaultOptions = [
+  {
+    value: 'default',
+    label: 'please_select_option',
+  },
+  {
+    value: 'university',
+    label: 'service_types_uni',
+    imgPath: '/static-imgs/university.jpeg',
+  },
+  {
+    value: 'job',
+    label: 'service_types_job',
+    imgPath: '/static-imgs/business.jpeg',
+  },
+  {
+    value: 'selfEmployed',
+    label: 'service_types_self_employed',
+    imgPath: '/static-imgs/mom.jpeg',
+  },
+];
+
 export const secondTypeOptions = {
   default: [{ value: 'default', label: 'please_select_option' }],
   university: [
