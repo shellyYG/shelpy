@@ -33,7 +33,7 @@
   "no_email_warning_helper": "Email不可为空白，请至过来人首页再次输入你的Email",
   "no_email_warning_helpee": "Email不可为空白，请至新鲜人首页再次输入你的Email",
   "successfully_sign_in": "登入成功",
-  "account_does_not_exist": "此帐号不存在",
+  "account_does_not_exist": "此帐号不存在。过来人与新鲜人为分开的帐号系统，你有可能是註册为过来人，然后尝试登入为新鲜人；或是你是新鲜人，尝试登入为过来人。请在登入前先申请好相关帐号。",
   "please_confirm_email_first": "你还未验证信箱，请去你的Email验证你的註册信箱",
   "log_in_session_expired": "你的登入已经过期，请重新登入",
   "delete_offer_error": "在删除报价时，发生伺服器错误",
