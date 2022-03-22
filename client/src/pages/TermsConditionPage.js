@@ -40,6 +40,23 @@ const TermsConditionaPage = () => {
               {t('sign_up_sign_in_terms_6')}
               <p className='legalPagesTitle'>{t('payment_terms_title')}</p>
               {t('payment_intro')}
+              <p className='legalPagesTitle'>{t('receipt_process')}</p>
+              {t('receipt_process_intro')}
+              <p className='legalPagesTitle'>{t('refund_policy')}</p>
+              {t('refund_policy_intro')}
+              <br />
+              <br />
+              {t('refund_policy_s1')}
+              <br />
+              {t('refund_policy_s2')}
+              <br />
+              {t('refund_policy_s3')}
+              <br />
+              {t('refund_policy_s4')}
+              <br />
+              <br />
+              {t('refund_policy_ending')}
+              <br />
               <p className='legalPagesTitle'>{t('service_terms_title')}</p>
               {t('service_terms')}
               <p className='legalPagesTitle'>
