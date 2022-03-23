@@ -98,6 +98,8 @@
   "payment_receive_account": "PayPal 收款帐号",
   "payment_payments_notes": "目前我们只接受 PayPay 作为收款帐号，若有不便，烦请见谅。",
   "apply_paypal_account": "若你还没有PayPal帐号，烦请先至 https://www.paypal.com 申请，再回到此页面输入帐号。",
+  "credit_card_error": "此张卡刷不过",
+  "please_try_another_card": "页面将重新整理，再度回到此页面后，请试试其他张卡，或是Email我们的客服：team@shelpy.co",
 
   "mission_statement": "过来人(Shelpy)使命宣言",
   "mission_statement_part0": "Shelpy 代表着 Share(分享)、Help(帮助)、Happy(快乐)。",

@@ -349,6 +349,7 @@ const PayPage = () => {
           icon: 'error',
         });
         dispatch(clearPayHelperStatus());
+        window.location.reload();
       }
       sweetAlertAndClearStatus(payHelperStatusTitle, payHelperStatusMessage);
       return;

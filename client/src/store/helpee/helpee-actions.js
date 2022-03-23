@@ -824,7 +824,6 @@ export const onClickDeleteRequest = (data) => {
 // };
 
 export const postPayViaTapPay = (data) => {
-  console.log('postPayViaTapPay data->', data);
   return async (dispatch) => {
     const generalToken = localStorage.getItem('shelpy-token');
     try {
@@ -880,14 +879,12 @@ export const postPayViaTapPay = (data) => {
         );
       }
     } catch (error) {
-      console.error('eeeee: ', error);
-      console.log('error.response: ', error.response);
       if (error.response) {
         dispatch(
           helpeeActions.updatePayHelperStatus({
             payHelperStatus: 'error',
-            payHelperStatusTitle: 'oops',
-            payHelperStatusMessage: '' || error.response.data.msg,
+            payHelperStatusTitle: 'credit_card_error',
+            payHelperStatusMessage: 'please_try_another_card',
           })
         );
       }
