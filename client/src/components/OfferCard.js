@@ -63,7 +63,9 @@ function OfferCard(props) {
     const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
-    setTranslatedCountry(t(countryTranslationObj[0].label));
+    if (countryTranslationObj && countryTranslationObj[0]){
+      setTranslatedCountry(t(countryTranslationObj[0].label));
+    }
     switch (props.mainType) {
       case 'university':
         setTitle(t('service_types_uni'));
