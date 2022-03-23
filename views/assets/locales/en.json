@@ -98,6 +98,8 @@
   "payment_receive_account": "Receive Payment Account",
   "payment_payments_notes": "Currently, helpers can only receive money via paypal. Sorry for any inconvenience.",
   "apply_paypal_account": "If you don't have PayPal account. Please apply first here: https://www.paypal.com .",
+  "credit_card_error": "Error occured when paying with your card.",
+  "please_try_another_card": "The page will be refreshed. After entering this page again, please try another card or contact customer service via email: team@shelpy.co",
 
   "mission_statement": "Shelpy Mission Statement",
   "mission_statement_part0": "Shelpy stands for Share, Help, Happy.",
