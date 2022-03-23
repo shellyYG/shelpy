@@ -188,6 +188,14 @@ WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helpeeId =?) AN
   return { data: { allChattedHelpers } };
 }
 
+async function getBookingDetails(data) {
+  const sqlSimplified = ` SELECT *
+  FROM bookings
+  WHERE id=? LIMIT 1;`;
+  const booking = await query(sqlSimplified, data.bookingId);
+  return { data: { booking } };
+}
+
 module.exports = {
   insertHelpeeRequestFormAndGetId,
   insertHelpeeRequest,
@@ -200,4 +208,5 @@ module.exports = {
   confirmHelpeeEmail,
   getHelpeeAllBookings,
   getAllChattedHelpers,
+  getBookingDetails,
 };

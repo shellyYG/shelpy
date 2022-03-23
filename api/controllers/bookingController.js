@@ -13,7 +13,6 @@ const checkBookingExisted = async (data) => {
 
 const updateBookingStatus = async (req, res) => {
   const { data } = req.body;
-  console.log('updateBookingStatus data: ', data);
   let createdBookingId;
   const { bookingStatus } = data;
   try {
@@ -34,6 +33,9 @@ const updateBookingStatus = async (req, res) => {
     let emailReceiverRole = '';
     let initiatorName = '';
     let offerOrRequestId = '';
+    if (bookingStatus === 'paid' && !data.paidDetails) {
+      return;
+    }
     if (bookingStatus === 'created' || bookingStatus === 'paid') {
       emailReceiverRole = 'helper';
       offerOrRequestId = data.offerId;

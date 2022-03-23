@@ -283,22 +283,17 @@ function BookingCard(props) {
   async function handlePayHelper(token) {
     // Temp
     // paypal.me/shelpyltd
-    await MySwal.fire({
-      title: <strong>{t('temp_pay_title')}</strong>,
-      imageWIdth: 442,
-      imageHeight: 293,
-      html: <p>{t('temp_pay_message', {reference: `bookingId${props.bookingId}` })}</p>,
-      // icon: 'success',
-    });
+    // await MySwal.fire({
+    //   title: <strong>{t('temp_pay_title')}</strong>,
+    //   imageWIdth: 442,
+    //   imageHeight: 293,
+    //   html: <p>{t('temp_pay_message', {reference: `bookingId${props.bookingId}` })}</p>,
+    //   // icon: 'success',
+    // });
     // TapPay placeholder
-    // navigate(
-    //   `/${currentLanguage}/pay?bookingId=${props.bookingId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
-    //     `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-    //     `&thirdType=${props.thirdType}` +
-    //     `&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
-    //     `&helperUsername=${props.helperUsername}&refId=${refId}`+
-    //     `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`
-    // );
+    navigate(
+      `/${currentLanguage}/pay?bookingId=${props.bookingId}&refId=${refId}`
+    );
     // Paypal
     try {
       // const data = {
@@ -328,10 +323,9 @@ function BookingCard(props) {
       //     },
       //     onApprove: async (data, actions) => {
       //       const order = await actions.order.capture();
-      //       console.log('order: ', order);
       //     },
       //     onError: (err) => {
-      //       console.log('err: ', err);
+      //       console.error('err: ', err);
       //     },
       //   })
       //   .render(paypal.current);

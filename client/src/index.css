@@ -894,6 +894,17 @@ footer {
   width: 100%;
 }
 
+.creditCardField {
+  height: 40px;
+  border: 1px solid gray;
+  margin: 5px 0;
+  padding: 0 14px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  display: block;
+  width: 100%;
+}
+
 .btn-next {
   border-radius: 4px;
   background-color: #04AA6D;

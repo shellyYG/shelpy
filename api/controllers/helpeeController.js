@@ -7,6 +7,12 @@ const bookingModel = require('../models/bookingModel');
 
 const { sendHelpeeResetPasswordEmail } = require('../../util/email');
 
+const isDeveloping = 0; // TODO before push to ec2
+
+const tapPayAPIURL = isDeveloping
+  ? 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime'
+  : 'https://prod.tappaysdk.com/tpc/payment/pay-by-prime';
+
 const allowHelpeePrivateRoute = async (req, res) => {
   const { userId, username, status } = res.locals;
   res
@@ -240,7 +246,7 @@ const payTapPay = async (req, res) => {
       'x-api-key': data.partner_key,
     };
     const response = await axios.post(
-      'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', // TODO: change to production
+      tapPayAPIURL,
       data,
       { headers }
     );
@@ -248,6 +254,28 @@ const payTapPay = async (req, res) => {
       res.status(200).json(response.data);
     } else {
       res.status(500).json(response.data);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getBookingDetails = async (req, res) => {
+  try {
+    const { bookingId } = req.query;
+    let response;
+    if (bookingId) {
+      response = await helpeeModel.getBookingDetails({
+        bookingId,
+      });
+    }
+    if (response && response.data) {
+      res.status(200).json({
+        booking: response.data.booking,
+      });
+    } else {
+      throw Error('no_booking_details_found');
     }
   } catch (error) {
     console.error(error);
@@ -270,4 +298,5 @@ module.exports = {
   // payHelper,
   payTapPay,
   getAllChattedHelpers,
+  getBookingDetails,
 };

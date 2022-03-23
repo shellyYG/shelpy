@@ -21,6 +21,7 @@ const helpeeSendPasswordResetEmailPath = '/api/helpee/password/reset';
 const payTapPayPath = '/api/tappay/pay';
 const helpeeChattedHelpersPath = '/api/helpee/chat/partners';
 const bookingStatusPath = '/api/booking-status';
+const getBookingDetailsPath = '/api/booking/details';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
@@ -857,6 +858,7 @@ export const postPayViaTapPay = (data) => {
                 priorityScore: 3,
                 helpeeId: data.helpeeId,
                 helperId: data.helperId,
+                paidDetails: JSON.stringify(response.data),
               },
             },
             {
@@ -947,3 +949,27 @@ export const clearDeleteRequestStatus = (data) => {
     );
   };
 };
+
+export const getBookingDetails = (data) => {
+  return async (dispatch) => {
+    if (data && data.bookingId) {
+      try {
+        const response = await axios.get(getBookingDetailsPath, {
+          params: { bookingId: data.bookingId },
+        });
+        dispatch(
+          helpeeActions.updateBookingDetails({
+            booking: response.data.booking,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateBookingDetails({
+            booking: [],
+          })
+        );
+      }
+    }
+  };
+}

@@ -7,7 +7,7 @@ const helpeeSlice = createSlice({
     helpeeName: '',
     isHelpeeAuthenticated: false,
     helpeeStatus: '',
-    
+
     pageFirstTimeLoaded: true,
     DBHelpeeEmail: '',
     helpeeAccountStatus: '',
@@ -45,6 +45,7 @@ const helpeeSlice = createSlice({
     deleteRequestStatusMessage: '',
 
     allChattedHelpers: [],
+    booking: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -164,7 +165,11 @@ const helpeeSlice = createSlice({
       state.deleteRequestStatus = payload.deleteRequestStatus;
       state.deleteRequestStatusTitle = payload.deleteRequestStatusTitle;
       state.deleteRequestStatusMessage = payload.deleteRequestStatusMessage;
-    }
+    },
+    updateBookingDetails(state, action) {
+      const { payload } = action;
+      state.booking = payload.booking;
+    },
   },
 });
 

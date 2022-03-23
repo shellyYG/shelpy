@@ -13,8 +13,22 @@ import {
   professionOptions,
   schoolOptions,
   typeOptions,
+  timeZoneOptions,
 } from '../store/options/service-options';
-import { clearPayHelperStatus, postPayViaTapPay } from '../store/helpee/helpee-actions';
+import {
+  clearPayHelperStatus,
+  postPayViaTapPay,
+  getBookingDetails,
+} from '../store/helpee/helpee-actions';
+
+const isDeveloping = 0; // TODO before push to ec2
+const environment = isDeveloping ? 'sandbox' : 'production';
+const merchantId = isDeveloping
+  ? process.env.REACT_APP_TAPPAY_MERCHANT_ID_SANDBOX
+  : process.env.REACT_APP_TAPPAY_MERCHANT_ID_PRODUCTION;
+
+const usdToNtd = 29;
+
 const MySwal = withReactContent(Swal);
 
 const PayPage = () => {
@@ -28,30 +42,79 @@ const PayPage = () => {
 
   const [searchParams] = useSearchParams();
   const bookingId = searchParams.get('bookingId');
-  const offerId = searchParams.get('offerId');
-  const price = searchParams.get('price');
-  const duration = searchParams.get('duration');
-  const country = searchParams.get('country');
-  const mainType = searchParams.get('mainType');
-  const secondType = searchParams.get('secondType');
-  const thirdType = searchParams.get('thirdType');
-  const bookingDate = searchParams.get('bookingDate');
-  const bookingTime = searchParams.get('bookingTime');
-  const helperName = searchParams.get('helperUsername');
-  const helpeeId = searchParams.get('helpeeId');
-  const helperId = searchParams.get('helperId');
+  const [offerId, setOfferId] = useState('');
+  const [price, setPrice] = useState('');
+  const [NTDPrice, setNTDPrice] = useState('');
+  const [bookingDate, setAppointmentDate] = useState('');
+  const [bookingTime, setAppointmentTime] = useState('');
+  const [country, setCountry] = useState('');
+  const [duration, setDuration] = useState('');
+  const [mainType, setMainType] = useState('');
+  const [secondType, setSecondType] = useState('');
+  const [thirdType, setThirdType] = useState('');
+  const [timeZone, setTimeZone] = useState('');
+  const [helperName, setHelperName] = useState('');
+  const [translatedTimeZone, setTranslatedTimeZone] = useState('');
+  const [helpeeId, setHelpeeId] = useState('');
+  const [helperId, setHelperId] = useState('');
+  
   const refId = searchParams.get('refId');
 
   const cardNumberRef = useRef();
+  const cardExpireDateRef = useRef();
+  const cardCVVRef = useRef();
 
-  const { payHelperStatus, payHelperStatusTitle, payHelperStatusMessage } =
-    useSelector((state) => state.helpee);
-
+  const {
+    payHelperStatus,
+    payHelperStatusTitle,
+    payHelperStatusMessage,
+    booking,
+  } = useSelector((state) => state.helpee);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
   const [loading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(getBookingDetails({ bookingId }));
+  }, [bookingId, dispatch]);
+
+  useEffect(()=>{
+    if (booking && booking.length && booking[0]) {
+      const bookingToPay = booking[0];
+      if (!bookingToPay) return;
+      const {
+        appointmentDate,
+        appointmentTime,
+        country,
+        duration,
+        mainType,
+        price,
+        offerId,
+        secondType,
+        thirdType,
+        timeZone,
+        helperUsername,
+        helpeeId,
+        helperId,
+      } = bookingToPay;
+      setAppointmentDate(appointmentDate);
+      setAppointmentTime(appointmentTime);
+      setCountry(country);
+      setDuration(duration);
+      setMainType(mainType);
+      setSecondType(secondType);
+      setThirdType(thirdType);
+      setTimeZone(timeZone);
+      setOfferId(offerId);
+      setPrice(price);
+      setNTDPrice(price * usdToNtd);
+      setHelperName(helperUsername);
+      setHelpeeId(helpeeId);
+      setHelperId(helperId);
+    }
+  },[booking])
 
   if (loading) {
     MySwal.fire({
@@ -68,9 +131,9 @@ const PayPage = () => {
   // prevent css re-render
   useEffect(()=>{
     window.TPDirect.setupSDK(
-      123621,
-      'app_vsHw4uRU9DospZCvWWitSYtgfv5xovLG3xh6LWnqcOj2ATuXRx9ilNdcuj8P',
-      'sandbox'
+      parseInt(process.env.REACT_APP_APP_ID),
+      process.env.REACT_APP_APP_KEY,
+      environment
     );
     let fields = {
       number: {
@@ -107,6 +170,9 @@ const PayPage = () => {
         'input.card-number': {
           'font-size': '16px',
         },
+        'input.card-holder-name': {
+          'font-size': '16px',
+        },
         // style focus state
         ':focus': {
           color: 'black',
@@ -132,8 +198,6 @@ const PayPage = () => {
 
   function onSubmit(e) {
     e.preventDefault();
-    console.log('onSubmit...');
-    console.log('window.TPDirect: ', window.TPDirect);
 
     // 取得 TapPay Fields 的 status
     const tappayStatus = window.TPDirect.card.getTappayFieldsStatus();
@@ -154,10 +218,11 @@ const PayPage = () => {
 
       // send prime to your server, to pay with Pay by Prime API .
       // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
+      
       const data = {
         prime: result.card.prime,
         partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
-        merchant_id: process.env.REACT_APP_TAPPAY_MERCHANT_ID,
+        merchant_id: merchantId,
         details: 'TapPay Test',
         helpeeId,
         helperId,
@@ -166,14 +231,14 @@ const PayPage = () => {
         offerId,
         appointmentDate: bookingDate,
         appointmentTime: bookingTime,
-        amount: 100,
+        amount: parseInt(NTDPrice),
         cardholder: {
-          phone_number: '+886923456789',
-          name: '王小明',
-          email: 'LittleMing@Wang.com',
-          zip_code: '100',
-          address: '台北市天龍區芝麻街1號1樓',
-          national_id: 'A123456789',
+          phone_number: '',
+          name: '',
+          email: '',
+          zip_code: '',
+          address: '',
+          national_id: '',
         },
         remember: true,
       };
@@ -184,10 +249,19 @@ const PayPage = () => {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
+    
     const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === country
     );
-    setTranslatedCountry(t(countryTranslationObj[0].label));
+    if (countryTranslationObj && countryTranslationObj[0]) {
+      setTranslatedCountry(t(countryTranslationObj[0].label));
+    }
+    const timeZoneObj = timeZoneOptions.filter(
+      (o) => o.value === timeZone
+    );
+    if (timeZoneObj && timeZoneObj[0])
+      setTranslatedTimeZone(t(timeZoneObj[0].label)); 
+      
     switch (mainType) {
       case 'university':
         setTitle(t('service_types_uni'));
@@ -263,7 +337,7 @@ const PayPage = () => {
       default:
         setTitle(t('service_types_job'));
     }
-  }, [t, mainType, secondType, thirdType, country]);
+  }, [t, mainType, secondType, thirdType, country, timeZone]);
 
   useEffect(() => {
     if (payHelperStatus === 'error') {
@@ -328,7 +402,10 @@ const PayPage = () => {
               {t('service_start_time')}: {bookingDate} {bookingTime}
             </p>
             <p style={{ textAlign: 'center' }}>
-              {t('duration')}: {duration}
+              {t('timeZone')} : {translatedTimeZone}
+            </p>
+            <p style={{ textAlign: 'center' }}>
+              {t('duration')}: {duration} {t('minutes')}
             </p>
           </div>
           <div
@@ -348,14 +425,14 @@ const PayPage = () => {
                 title={`${t('expiration_date')} *`}
                 placeholder={'MM/YY'}
                 labelColor='black'
-                inputRef={cardNumberRef}
+                inputRef={cardExpireDateRef}
                 id='card-expiration-date'
               />
               <CreditCardTextBox
                 title={`${t('CVV')} *`}
                 placeholder={`${t('CVV')}`}
                 labelColor='black'
-                inputRef={cardNumberRef}
+                inputRef={cardCVVRef}
                 id='card-ccv'
               />
               <button
@@ -363,7 +440,9 @@ const PayPage = () => {
                 style={{ width: '100%' }}
                 onClick={onSubmit}
               >
-                {t('pay')} {price} {t('usd')}
+                {t('pay')} {price} {t('usd')} <br/>
+                ({NTDPrice}{' '}
+                {t('ntd')})
               </button>
             </div>
           </div>

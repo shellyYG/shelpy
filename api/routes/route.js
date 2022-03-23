@@ -42,6 +42,7 @@ const {
   // payHelper,
   payTapPay,
   getAllChattedHelpers,
+  getBookingDetails,
 } = require('../controllers/helpeeController');
 
 const {
@@ -629,6 +630,13 @@ router
   .post(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(unsubscibeEmail)
+  );
+
+router
+  .route('/api/booking/details')
+  .get(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(getBookingDetails)
   );
 
 module.exports = router;

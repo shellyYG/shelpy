@@ -23,8 +23,13 @@ async function updateBookingStatus(data) {
     timeZone,
     appointmentTimestamp,
     questions,
-    bookingId
+    bookingId,
+    paidDetails,
   } = data;
+  console.log('paidDetails: ', paidDetails);
+  if (!paidDetails) {
+    return;
+  }
   let sqlquery = '';
   const filteredBookingQuestions = questions || '';
     if (
@@ -41,10 +46,14 @@ async function updateBookingStatus(data) {
           timeZone,
           bookingId,
         ]);
-    } else {
+    } else if (paidDetails) {
+      sql = `
+        UPDATE bookings SET bookingStatus =?, paidDetails=?  WHERE id =?`;
+      sqlquery = await query(sql, [bookingStatus, paidDetails, bookingId]);
+    }else {
       sql = `
         UPDATE bookings SET bookingStatus =? WHERE id =?`;
-        sqlquery = await query(sql, [bookingStatus, bookingId]);
+      sqlquery = await query(sql, [bookingStatus, bookingId]);
     }
     return sqlquery;
 }
