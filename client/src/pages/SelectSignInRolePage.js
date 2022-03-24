@@ -31,15 +31,30 @@ const SelectSignInRolePage = (props) => {
     switch (signInRole) {
       case 'helpee':
         path = `/${currentLanguage}/${signInRole}/sign-in`;
-        if (window.location.search) path += window.location.search;
+        if (window.location.search) {
+          path += window.location.search;
+          path += '&isAfterRole=1';
+        } else {
+          path += '?isAfterRole=1';
+        }
         break;
       case 'helper':
         path = `/${currentLanguage}/${signInRole}/sign-in`;
-        if (window.location.search) path += window.location.search;
+        if (window.location.search) {
+          path += window.location.search;
+          path += '&isAfterRole=1';
+        } else {
+          path += '?isAfterRole=1';
+        }
         break;
       default:
         path = `/${currentLanguage}/helpee/sign-in`;
-        if (window.location.search) path += window.location.search;
+        if (window.location.search) {
+          path += window.location.search;
+          path += '&isAfterRole=1';
+        } else {
+          path += '?isAfterRole=1';
+        }
     }
     navigate(path);
   }

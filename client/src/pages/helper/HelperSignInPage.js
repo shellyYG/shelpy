@@ -20,6 +20,7 @@ const HelperSignInPage = () => {
   const refId = searchParams.get('refId');
   const emailToken = searchParams.get('emailToken');
   const passwordResetToken = searchParams.get('passwordResetToken');
+  const isAfterRole = searchParams.get('isAfterRole');
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -85,6 +86,15 @@ const HelperSignInPage = () => {
             navigate(`/${currentLanguage}/helper/home`, {
               replace: true,
             });
+          } else if (isAfterRole === '1') {
+            let path = `/${currentLanguage}/helpee/home`;
+            if (window.location.search) {
+              path += window.location.search;
+              path = path.replace('isAfterRole=1', 'isAfterRole=0');
+            }
+            navigate(path, {
+              replace: true,
+            });
           } else {
             navigate(-1);
           }
@@ -98,7 +108,16 @@ const HelperSignInPage = () => {
             navigate(`/${currentLanguage}/helper/home`, {
               replace: true,
             });
-          }else {
+          } else if (isAfterRole === '1') {
+            let path = `/${currentLanguage}/helper/home`;
+            if (window.location.search) {
+              path += window.location.search;
+              path = path.replace('isAfterRole=1', 'isAfterRole=0');
+            }
+            navigate(path, {
+              replace: true,
+            });
+          } else {
             navigate(-1);
           }
         }
@@ -107,6 +126,7 @@ const HelperSignInPage = () => {
     }
   }, [
     t,
+    isAfterRole,
     emailToken,
     passwordResetToken,
     currentLanguage,
