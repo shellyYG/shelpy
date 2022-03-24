@@ -14,6 +14,8 @@ import {
   schoolOptions,
   typeOptions,
   timeZoneOptions,
+  lifeSharingMainOptions,
+  lifeSharingSubOptions,
 } from '../store/options/service-options';
 import {
   clearPayHelperStatus,
@@ -326,6 +328,31 @@ const PayPage = () => {
         thirdTypeTranslationObj = professionOptions.filter(
           (o) => o.value === thirdType
         );
+        if (
+          thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
+        break;
+      case 'life':
+        setTitle(t('service_types_life'));
+        secondTypeTranslationObj = lifeSharingMainOptions.filter(
+          (o) => o.value === secondType
+        );
+        if (
+          secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        if (lifeSharingSubOptions && lifeSharingSubOptions[secondType]) {
+          thirdTypeTranslationObj = lifeSharingSubOptions[
+            secondType
+          ].filter((o) => o.value === thirdType);
+        }
         if (
           thirdType &&
           thirdTypeTranslationObj &&

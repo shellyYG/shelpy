@@ -66,6 +66,11 @@ export const jobUniWithDefaultOptions = [
     label: 'service_types_self_employed',
     imgPath: '/static-imgs/mom.jpeg',
   },
+  {
+    value: 'life',
+    label: 'service_types_life',
+    imgPath: '/static-imgs/mom.jpeg',
+  },
 ];
 
 export const secondTypeOptions = {
@@ -135,5 +140,10 @@ export const secondTypeOptions = {
     { value: 'default', label: 'please_select_option' },
     { value: 'Entreprenuer', label: 'self_employed_type_entreprenuer' },
     { value: 'Freelancer', label: 'self_employed_type_freelancer' },
+  ],
+  life: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'visaType', label: 'life_sharing_visa_type' },
+    { value: 'nonVisaType', label: 'life_sharing_non_visa_type' },
   ],
 };

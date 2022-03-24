@@ -13,6 +13,8 @@ import {
   professionOptions,
   schoolOptions,
   typeOptions,
+  lifeSharingMainOptions,
+  lifeSharingSubOptions,
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
 
@@ -105,6 +107,31 @@ function PotentialCustomerCard(props) {
         thirdTypeTranslationObj = professionOptions.filter(
           (o) => o.value === props.thirdType
         );
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
+        break;
+      case 'life':
+        setTitle(t('service_types_life'));
+        secondTypeTranslationObj = lifeSharingMainOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        if (lifeSharingSubOptions && lifeSharingSubOptions[props.secondType]) {
+          thirdTypeTranslationObj = lifeSharingSubOptions[
+            props.secondType
+          ].filter((o) => o.value === props.thirdType);
+        }
         if (
           props.thirdType &&
           thirdTypeTranslationObj &&

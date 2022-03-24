@@ -13,6 +13,8 @@ import {
   schoolOptions,
   typeOptions,
   nativeLanguageOptions,
+  lifeSharingMainOptions,
+  lifeSharingSubOptions,
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
 import { useDispatch, useSelector } from 'react-redux';
@@ -140,6 +142,31 @@ function OfferCard(props) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
         setDetails(t('years_of_experience_you_have'));
+        break;
+      case 'life':
+        setTitle(t('service_types_life'));
+        secondTypeTranslationObj = lifeSharingMainOptions.filter(
+          (o) => o.value === props.secondType
+        );
+        if (
+          props.secondType &&
+          secondTypeTranslationObj &&
+          secondTypeTranslationObj[0]
+        ) {
+          setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
+        }
+        if (lifeSharingSubOptions && lifeSharingSubOptions[props.secondType]) {
+          thirdTypeTranslationObj = lifeSharingSubOptions[
+            props.secondType
+          ].filter((o) => o.value === props.thirdType);
+        }
+        if (
+          props.thirdType &&
+          thirdTypeTranslationObj &&
+          thirdTypeTranslationObj[0]
+        ) {
+          setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
+        }
         break;
       default:
         setTitle(t('service_types_job'));
