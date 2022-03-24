@@ -23,6 +23,7 @@ import JobFormPage from './pages/JobFormPage';
 import SelectJobOrUniPage from './pages/SelectJobOrUniPage';
 import UniFormPage from './pages/UniFormPage';
 import SelfEmployedPage from './pages/SelfEmployedPage';
+import LifeSharingFormPage from './pages/LifeSharingFormPage';
 
 import { getHelpeeAuthStatus } from './store/helpee/helpee-actions';
 import { getHelperAuthStatus } from './store/helper/helper-actions';
@@ -299,6 +300,32 @@ function App() {
               element={
                 isHelperAuthenticated ? (
                   <SelfEmployedPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helpee/life-form`}
+              element={
+                isHelpeeAuthenticated ? (
+                  <LifeSharingFormPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helper/life-form`}
+              element={
+                isHelperAuthenticated ? (
+                  <LifeSharingFormPage
                     isHelpee={false}
                     helperUserId={helperUserId}
                   />

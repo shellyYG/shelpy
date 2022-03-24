@@ -1214,6 +1214,55 @@ export const durationOptions = [
   { value: 'Others', label: othersText },
 ];
 
+export const lifeSharingMainOptions = [
+  { value: 'default', label: 'please_select_option' },
+  {
+    value: 'visaType',
+    label: 'life_sharing_visa_type',
+  },
+  {
+    value: 'nonVisaType',
+    label: 'life_sharing_non_visa_type',
+  },
+  { value: 'Others', label: othersText },
+];
+
+export const lifeSharingSubOptions = {
+  default: [{ value: 'default', label: 'please_select_option' }],
+  visaType: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'workingHolidayVisa', label: 'working_holiday_visa' },
+    { value: 'blueCardVisa', label: 'blue_card_visa' },
+    { value: 'studentVisa', label: 'student_visa' },
+    { value: 'workVisa', label: 'work_visa' },
+    { value: 'languageSchoolVisa', label: 'language_school_visa' },
+    { value: 'auPairVisa', label: 'au_pair_visa' },
+    { value: 'Others', label: othersText },
+  ],
+  nonVisaType: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'buyHouse', label: 'buy_house' },
+    { value: 'rentHouse', label: 'rent_house' },
+    { value: 'anmeldenProcess', label: 'anmelden_process' },
+    { value: 'learnSki', label: 'learn_ski' },
+    { value: 'drivingLicense', label: 'driving_licence' },
+    { value: 'getMarried', label: 'getting_married_process' },
+    { value: 'pregnancy', label: 'pregnancy_process' },
+    { value: 'givingBirthProcess', label: 'giving_birth_process' },
+    { value: 'raiseKidProcess', label: 'raise_kid_process' },
+    { value: 'fileTaxProcess', label: 'file_tax_process' },
+    { value: 'seeingDoctor', label: 'seeing_doctor' },
+    { value: 'languageSchoolExperience', label: 'language_school_experience' },
+    { value: 'travelExperience', label: 'travel_experience' },
+    { value: 'auPairExperience', label: 'au_pair' },
+    { value: 'Others', label: othersText },
+  ],
+  Others: [
+    { value: 'default', label: 'please_select_option' },
+    { value: 'Others', label: othersText },
+  ],
+};
+
 export const ageOptions = [
   { value: 'default', label: 'please_select_option' },
   {

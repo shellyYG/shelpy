@@ -47,6 +47,10 @@ const SelectJobOrUniPage = (props) => {
         path = `/${currentLanguage}/${userType}/self-employed-form`;
         if (window.location.search) path += window.location.search;
         break;
+      case 'life':
+        path = `/${currentLanguage}/${userType}/life-form`;
+        if (window.location.search) path += window.location.search;
+        break;
       default:
         path = `/${currentLanguage}/${userType}/job-form`;
         if (window.location.search) path += window.location.search;

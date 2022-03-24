@@ -37,6 +37,11 @@ export const jobUniOptions = [
   {
     value: 'selfEmployed',
     label: 'service_types_self_employed',
+    imgPath: '/static-imgs/freelancer.jpeg',
+  },
+  {
+    value: 'life',
+    label: 'service_types_life',
     imgPath: '/static-imgs/mom.jpeg',
   },
 ];
