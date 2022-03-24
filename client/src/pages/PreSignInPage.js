@@ -29,10 +29,10 @@ const PreSignInPage = (props) => {
     e.preventDefault();
     let path = '';
     if (props.isHelpee) {
-      path = `/${currentLanguage}/helpee/sign-in?refId=${refId}`;
+      path = `/${currentLanguage}/helpee/sign-in`;
       if (window.location.search) path += window.location.search;
     } else {
-      path = `/${currentLanguage}/helper/sign-in?refId=${refId}`;
+      path = `/${currentLanguage}/helper/sign-in`;
       if (window.location.search) path += window.location.search;
     }
     navigate(path);

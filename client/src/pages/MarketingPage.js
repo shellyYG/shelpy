@@ -89,7 +89,7 @@ const HelpeeDashboardPage = (props) => {
   function handleSignIn(e) {
     e.preventDefault();
     let path = '';
-    path = `/${currentLanguage}/helpee/sign-in?refId=${refId}`;
+    path = `/${currentLanguage}/helpee/sign-in`;
     if (window.location.search) path += window.location.search;
     navigate(path);
   }

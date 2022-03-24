@@ -82,7 +82,7 @@ const SignUpPageHelper = () => {
       );
       return;
     } else if (signUpEmailStatus === 'success') {
-      let path = `/${currentLanguage}/helper/sign-up-final-step?refId=${refId}`;
+      let path = `/${currentLanguage}/helper/sign-up-final-step`;
       if (window.location.search) path += window.location.search;
       navigate(path, { replace: true });
       dispatch(clearSignUpEmailStatus());
