@@ -40,7 +40,7 @@ async function getHelperAllBookings(data) {
   return { data: { allBookings } };
 }
 
-async function getPotentialCustomers(data) {
+async function getPotentialCustomers(data) { // maybe customer does NOT have request
   const { helperUserId } = data;
   const sql = ` SELECT DISTINCT req.organization AS organization
     , req.id AS requestId, ofs.id AS offerId
@@ -49,8 +49,8 @@ async function getPotentialCustomers(data) {
     , req.userId AS helpeeId
     , helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.introduction
     , helpee.profilePicPath AS profilePicPath, helpee.languages
-    , ofs.mainType AS mainType, ofs.secondType AS secondType
-    , ofs.thirdType AS thirdType, ofs.fourthType AS fourthType
+    , req.mainType AS mainType, req.secondType AS secondType
+    , req.thirdType AS thirdType, req.fourthType AS fourthType
     , req.notes
     FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id

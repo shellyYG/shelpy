@@ -149,37 +149,12 @@ export const getPotentialCustomers = (data) => {
         const matchedCustomerRes = await axios.get(getPotentialCustomersPath, {
           params: { helperUserId: data.helperUserId },
         });
-        const bookingsRes = await axios.get(getAllBookingsPath, {
-          params: { helperUserId: data.helperUserId },
-        });
-        const chattedCustomerRes = await axios.get(helperChattedCustomersPath, {
-          params: { helperUserId: data.helperUserId },
-        });
+        
         if (matchedCustomerRes && matchedCustomerRes.data) {
           const matchedCustomers = matchedCustomerRes.data.allPotentialCustomers;
           matchedCustomers.forEach((h) => {
             allPotentialCustomers.push(h);
           });
-          const matchedOfferIds = matchedCustomers.map((p) => p.offerId);
-          if (bookingsRes && bookingsRes.data) {
-            const bookings = bookingsRes.data.allBookings || [];
-            for (let i = 0; i < bookings.length; i++) {
-              if (matchedOfferIds.indexOf(bookings[i].offerId) === -1) {
-                allPotentialCustomers.push(bookings[i]);
-                matchedOfferIds.push(bookings[i].offerId);
-              }
-            }
-            if (chattedCustomerRes && chattedCustomerRes.data) {
-              const chatting =
-                chattedCustomerRes.data.allChattedCustomers || [];
-              for (let i = 0; i < chatting.length; i++) {
-                if (matchedOfferIds.indexOf(chatting[i].offerId) === -1) {
-                  allPotentialCustomers.push(chatting[i]);
-                  matchedOfferIds.push(chatting[i].offerId);
-                }
-              }
-            }
-          }
         }
         if (allPotentialCustomers) {
           dispatch(

@@ -47,8 +47,8 @@ async function getPotentialHelpers(data) {
     , ofs.organization AS organization
     , acc.id AS helperId, acc.username AS helperUsername, acc.introduction
     , acc.profilePicPath AS profilePicPath, acc.languages
-		, req.mainType AS mainType, req.secondType AS secondType
-    , req.thirdType AS thirdType, req.fourthType AS fourthType
+		, ofs.mainType AS mainType, ofs.secondType AS secondType
+    , ofs.thirdType AS thirdType, ofs.fourthType AS fourthType
     , ofs.duration, ofs.notes
     FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
