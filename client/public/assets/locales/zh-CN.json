@@ -35,6 +35,7 @@
   "no_email_warning_helper": "Email不可为空白，请至过来人首页再次输入你的Email",
   "no_email_warning_helpee": "Email不可为空白，请至新鲜人首页再次输入你的Email",
   "no_booking_details_found": "找不到此笔预约，请Email客服： team@shelpy.co",
+  "no_user_data_found": "找不到用户资料，请Email客服： team@shelpy.co",
   "successfully_sign_in": "登入成功",
   "account_does_not_exist": "此帐号不存在。过来人与新鲜人为分开的帐号系统，你有可能是註册为过来人，然后尝试登入为新鲜人；或是你是新鲜人，尝试登入为过来人。请在登入前先申请好相关帐号。",
   "please_confirm_email_first": "你还未验证信箱，请去你的Email验证你的註册信箱",
@@ -192,7 +193,7 @@
   "home_unsubscribe": "取消订阅",
   "unsubscribe_cta": "取消订阅",
   "helpee_organization": "目标",
-  "helper_organization": "待过的机构",
+  "helper_organization": "经验发生的机构",
   "home_at_any_time": "。",
   "home_have_account_sign_in": "已经有帐号了吗？按此登入",
 
@@ -574,6 +575,7 @@
   "job_form_job_blockchain_developer": "区块链工程师",
   "job_form_job_product_manager": "产品经理",
   "job_form_job_project_manager": "专案经理",
+  "job_form_job_growth_manager": "成长经理",
   "job_form_job_ui_designer": "UI/UX 设计师",
   "job_form_job_data_analyst": "商业/资料分析师",
   "job_form_job_data_science": "资料科学家",
@@ -985,6 +987,7 @@
   "mkt_suzie_job": "分享在英国爱丁堡大学留学&在台湾当大学英语教学讲师经历",
   "mkt_crystal_selfEmployed": "粉專:歐洲彩妝日誌Makeup Artist Crystal。分享自由職業彩妝師在歐洲跑透透的接案生活歷程",
   "mkt_marcus_selfEmployed": "Easy Cook Asia 创办人。分享如何以外国人的身份，在柏林成功创立食品电商网站之经验谈",
+  "mkt_tingyi_job": "分享在谷歌担任 Growth Ｍanager 的工作经验",
 
   "easy_5_step": "使用过来人App的简单5步骤",
   "helpee_guide": "新鲜人使用指南",

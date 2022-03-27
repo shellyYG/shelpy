@@ -80,6 +80,7 @@ function FeaturedHelperPart(props) {
           tag2={t('uni_form_department_chemistry')}
           tag3={t('country_usa')}
         />
+
         <MktCard
           imageSrc='/static-imgs/Zoe_job.jpg'
           title='Zoe'
@@ -90,6 +91,17 @@ function FeaturedHelperPart(props) {
           tag1={t('job')}
           tag2={t('job_form_job_process_engineer')}
           tag3={t('country_taiwan')}
+        />
+        <MktCard
+          imageSrc='/static-imgs/Tingyi-job.jpeg'
+          title='Ting-Yi'
+          key='tingyi-job'
+          experience={t('mkt_tingyi_job')}
+          language1={t('languages_chinese')}
+          language2={t('languages_english')}
+          tag1={t('job')}
+          tag2={t('job_form_job_growth_manager')}
+          tag3={t('country_ireland')}
         />
         <MktCard
           imageSrc='/static-imgs/Anya_school.jpeg'
