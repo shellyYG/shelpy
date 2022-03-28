@@ -643,6 +643,10 @@ export const jobOptions = {
       label: 'job_form_job_project_manager',
     },
     {
+      value: 'Growth Manager',
+      label: 'job_form_job_growth_manager',
+    },
+    {
       value: 'UI/UX Designer',
       label: 'job_form_job_ui_designer',
     },
