@@ -35,6 +35,7 @@
   "no_email_warning_helper": "Email can not be empty. Please go to Helper Homepage to re-enter your email.",
   "no_email_warning_helpee": "Email can not be empty. Please go to Helpee Homepage to re-enter your email.",
   "no_booking_details_found": "Booking Details Not Found. Please contact customer support: team@shelpy.co",
+  "no_user_data_found": "User Data Not Found. Please contact customer support: team@shelpy.co",
   "successfully_sign_in": "Successfully Signed-In.",
   "account_does_not_exist": "Account does not exist. Note: Helpers & Helpees are 2 different account systems. You may be Helper but try to log in as Helpee, or vice versa. Please register first for the corresponding account.",
   "please_confirm_email_first": "You haven't confirm your email yet. Please go to your mailbox to confirm your email first.",
@@ -192,7 +193,7 @@
   "home_unsubscribe": "unsubscribe",
   "unsubscribe_cta": "Unsubscribe My Email",
   "helpee_organization": "Goal",
-  "helper_organization": "Worked/Studied Organization",
+  "helper_organization": "Experienced Organization",
   "home_at_any_time": "at any time.",
   "home_have_account_sign_in": "Alreave have an account? Sign In here!",
 
@@ -574,6 +575,7 @@
   "job_form_job_blockchain_developer": "Blockchain Developer",
   "job_form_job_product_manager": "Product Manager/Product Owner",
   "job_form_job_project_manager": "Project/Program Manager",
+  "job_form_job_growth_manager": "Growth Manager",
   "job_form_job_ui_designer": "UI/UX Designer",
   "job_form_job_data_analyst": "Data Analyst",
   "job_form_job_data_science": "Data Science",
@@ -985,6 +987,7 @@
   "mkt_suzie_job": "Share MSc experience at University of Edinburgh in UK and work experience as a lecturer in TESOL in Taiwan.",
   "mkt_crystal_selfEmployed": "FB: Makeup Artist Crystal. Share the life of a makeup artist who works and travels around Europe.",
   "mkt_marcus_selfEmployed": "Co-Founder of Easy Cook Asia. Share how to found a successful food E-Commerce startup as a foreigner in Berlin.",
+  "mkt_tingyi_job": "Share experience as a Growth Manager at Google.",
 
   "easy_5_step": "Use Shelpy App in 5 easy steps",
   "helpee_guide": "Helpee Instruction",
