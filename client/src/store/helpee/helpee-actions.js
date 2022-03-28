@@ -22,6 +22,7 @@ const payTapPayPath = '/api/tappay/pay';
 const helpeeChattedHelpersPath = '/api/helpee/chat/partners';
 const bookingStatusPath = '/api/booking-status';
 const getBookingDetailsPath = '/api/booking/details';
+const getHelpeeDataPath = '/api/helpee/data';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
@@ -969,4 +970,28 @@ export const getBookingDetails = (data) => {
       }
     }
   };
+}
+
+export const getHelpeeUserData = (data) => {
+  return async (dispatch) => {
+    if (data && data.helpeeUserId) {
+      try {
+        const response = await axios.get(getHelpeeDataPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        dispatch(
+          helpeeActions.updateHelpeeData({ 
+            helpeeData: response.data.helpeeData,
+          })
+        )
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateHelpeeData({
+            helpeeData: [],
+          })
+        );
+      }
+    }
+  }
 }

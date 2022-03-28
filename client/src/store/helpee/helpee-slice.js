@@ -46,6 +46,7 @@ const helpeeSlice = createSlice({
 
     allChattedHelpers: [],
     booking: [],
+    helpeeData: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -169,6 +170,10 @@ const helpeeSlice = createSlice({
     updateBookingDetails(state, action) {
       const { payload } = action;
       state.booking = payload.booking;
+    },
+    updateHelpeeData(state, action) {
+      const { payload } = action;
+      state.helpeeData = payload.helpeeData;
     },
   },
 });

@@ -6,6 +6,7 @@ function LeftHalfLineTextBox(props) {
         <p style={{ fontSize: '9px', marginBottom: '10px' }}>{props.details}</p>
       )}
       <input
+        defaultValue={props.defaultValue}
         type='text'
         className='form-control'
         style={{ fontSize: '12px' }}

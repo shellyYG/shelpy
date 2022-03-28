@@ -85,6 +85,7 @@ async function updateHelpeeProfilePicPath(data) {
 async function updateHelpeeBasicInfo(data) {
   const {
     userId,
+    username,
     introduction,
     isAnonymous,
     age,
@@ -121,7 +122,7 @@ async function updateHelpeeBasicInfo(data) {
       ,hasEnglish=?, hasGerman=?, hasFrench=?, hasItalien=?
       ,hasChinese=?, hasCantonese=?, hasVietnamese=?
       ,hasKorean=?, hasJapanese=?, hasTurkish=?, hasUkrainian=?
-      ,hasArabic=?, hasOthers=?, languages=?, notificationLanguage=?
+      ,hasArabic=?, hasOthers=?, languages=?, notificationLanguage=?, username=?
     WHERE id = ?`;
   const sqlquery = await query(sql, [
     introduction,
@@ -151,6 +152,7 @@ async function updateHelpeeBasicInfo(data) {
     hasOthers,
     languages,
     notificationLanguage,
+    username,
     userId,
   ]);
   return sqlquery;
@@ -196,6 +198,14 @@ async function getBookingDetails(data) {
   return { data: { booking } };
 }
 
+async function getHelpeeData(data) {
+  const sqlSimplified = ` SELECT *
+  FROM helpee_account
+  WHERE id=? LIMIT 1;`;
+  const helpeeData = await query(sqlSimplified, data.helpeeUserId);
+  return { data: { helpeeData } };
+}
+
 module.exports = {
   insertHelpeeRequestFormAndGetId,
   insertHelpeeRequest,
@@ -209,4 +219,5 @@ module.exports = {
   getHelpeeAllBookings,
   getAllChattedHelpers,
   getBookingDetails,
+  getHelpeeData,
 };

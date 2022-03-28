@@ -13,17 +13,20 @@ import {
   onUploadHelpeeProfilePicture,
   onSubmitUploadHelpeeData,
   clearApplyHelpeeStatus,
+  getHelpeeUserData,
 } from '../store/helpee/helpee-actions';
 
 import {
   onUploadHelperProfilePicture,
   onSubmitUploadHelperData,
   clearApplyHelperStatus,
+  getHelperUserData,
 } from '../store/helper/helper-actions';
 
 import LeftHalfLineTextBox from '../components/LeftHalfLineTextBox';
 import CheckBox from '../components/CheckBox';
 import { useTranslation } from 'react-i18next';
+import EditIcon from '../components/Icons/EditIcon';
 
 const MySwal = withReactContent(Swal);
 
@@ -36,6 +39,7 @@ const BasicFormPage = (props) => {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
+  const usernameRef = useRef();
   const ageRef = useRef();
   const introductionRef = useRef();
   const notesRef = useRef();
@@ -80,20 +84,49 @@ const BasicFormPage = (props) => {
 
   const [languages, setLanguages] = useState('');
 
-  const { helpeeProfilePicPath } = useSelector((state) => state.helpee);
-  const { helperProfilePicPath } = useSelector((state) => state.helper);
+  const [allowUploadPic, setAllowUploadPic] = useState(false);
+  const [isUploadingPic, setIsUploadingPic] = useState(false);
 
+  const [defaultHelpeeProfilePicPath, setDefaultHelpeeProfilePicPath] = useState('');
+  const [defaultHelperProfilePicPath, setDefaultHelperProfilePicPath] =
+    useState('');
+  const [defaultUsername, setDefaultUsername] = useState('');
+  const [defaultLinkedIn, setDefaultLinkedIn] = useState('');
+  const [defaultIntroduction, setDefaultIntroduction] = useState('');
+  const [defaultNotes, setDefaultNotes] = useState('');
+  const [disableClickEvent, setDisableClickEvent] = useState(false);
+
+  const { helpeeProfilePicPath, helpeeData } = useSelector((state) => state.helpee);
+  const { helperProfilePicPath, helperData } = useSelector((state) => state.helper);
   const {
     applyHelpeeStatus,
     applyHelpeeStatusTitle,
     applyHelpeeStatusMessage,
   } = useSelector((state) => state.helpeeNotification);
 
+  useEffect(() => {
+    if (props.isHelpee && helpeeProfilePicPath) {
+      setIsUploadingPic(false);
+      setDisableClickEvent(false);
+    } else if (!props.isHelpee && helperProfilePicPath) {
+      setIsUploadingPic(false);
+      setDisableClickEvent(false);
+    }
+  }, [props.isHelpee, helpeeProfilePicPath, helperProfilePicPath]);
+
   const {
     applyHelperStatus,
     applyHelperStatusTitle,
     applyHelperStatusMessage,
   } = useSelector((state) => state.helperNotification);
+
+  useEffect(() => {
+    if (props.isHelpee) {
+      dispatch(getHelpeeUserData({ helpeeUserId: props.helpeeUserId}));
+    } else {
+      dispatch(getHelperUserData({ helperUserId: props.helperUserId}));
+    }
+  }, [props.isHelpee, props.helpeeUserId, props.helperUserId, dispatch]);
 
   useEffect(() => {
     let languagesString = '';
@@ -138,6 +171,8 @@ const BasicFormPage = (props) => {
   }
   async function handleProfilePicUpload(e) {
     e.preventDefault();
+    setIsUploadingPic(true);
+    setDisableClickEvent(true);
     const file = e.target.files[0];
 
     if (file && file.size > 1000000) {
@@ -162,6 +197,7 @@ const BasicFormPage = (props) => {
       return;
     }
     setProfilePic(file);
+    setAllowUploadPic(false);
     const data = new FormData();
     if (props.isHelpee) {
       data.append('helpeeUserId', props.helpeeUserId);
@@ -216,9 +252,13 @@ const BasicFormPage = (props) => {
 
   async function handleConfirm(e) {
     e.preventDefault();
+    let username;
     let introduction;
     let notes;
     let linkedInUrl;
+    if (usernameRef && usernameRef.current) {
+      username = usernameRef.current.value;
+    }
     if (introductionRef && introductionRef.current) {
       introduction = introductionRef.current.value;
     }
@@ -227,11 +267,14 @@ const BasicFormPage = (props) => {
     }
     if (linkedInUrlRef && linkedInUrlRef.current) {
       linkedInUrl = linkedInUrlRef.current.value;
+    } else {
+      linkedInUrl = defaultLinkedIn;
     }
     let data;
     if (certificate) { // must be helper
       data = new FormData();
       data.append('userId', props.helperUserId);
+      data.append('username', username);
       data.append('isAnonymous', isAnonymous);
       data.append('isMarketing', isMarketing);
       data.append('age', age);
@@ -270,6 +313,7 @@ const BasicFormPage = (props) => {
       if (props.isHelpee) { // helpee
         data = {
           userId: props.helpeeUserId,
+          username,
           isAnonymous,
           age,
           nationality,
@@ -304,6 +348,7 @@ const BasicFormPage = (props) => {
       } else { // helper
         data = {
           userId: props.helperUserId,
+          username,
           isAnonymous,
           isMarketing,
           age,
@@ -339,6 +384,7 @@ const BasicFormPage = (props) => {
         };
       }
     }
+
     try {
       if (props.isHelpee) {
         dispatch(onSubmitUploadHelpeeData(data));
@@ -355,11 +401,11 @@ const BasicFormPage = (props) => {
   useEffect(() => {
     if (props.isHelpee) {
       setEnableBtn(
-          age !== 'default' &&
+        age !== 'default' &&
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
           notificationLanguage !== 'default' &&
-          introductionString
+          (introductionString || defaultIntroduction)
       );
     } else {
       setEnableBtn(
@@ -367,8 +413,8 @@ const BasicFormPage = (props) => {
           nationality !== 'default' &&
           residenceCountry !== 'default' &&
           notificationLanguage !== 'default' &&
-          (linkedInLinkString || certificate) &&
-          introductionString
+          (linkedInLinkString || defaultLinkedIn || certificate) &&
+          (introductionString || defaultIntroduction)
       );
     }
   }, [
@@ -381,6 +427,8 @@ const BasicFormPage = (props) => {
     certificate,
     introductionString,
     notificationLanguage,
+    defaultIntroduction,
+    defaultLinkedIn,
   ]);
 
   // is Helper:
@@ -464,16 +512,90 @@ const BasicFormPage = (props) => {
     navigate,
     dispatch,
   ]);
+
   function haneldLinkedInLinkTyping(e){
     e.preventDefault();
     const typingInput = e.target.value;
     setLinkedInLinkString(typingInput);
   }
+  
   function handleIntroductionTyping(e) {
     e.preventDefault();
     const typingInput = e.target.value;
     setIntroductionString(typingInput);
   }
+
+  function handleShowEditPic(e) {
+    e.preventDefault();
+    setAllowUploadPic(!allowUploadPic);
+  }
+
+  // handle pre-fill
+  useEffect(() => {
+    if (!props.isHelpee) {
+      if (helperData && helperData[0]) {
+        setDefaultHelperProfilePicPath('/images/'+helperData[0].profilePicPath);
+        setDefaultUsername(helperData[0].username);
+        setDefaultLinkedIn(helperData[0].linkedInUrl);
+        setAge(helperData[0].age);
+        setNotificationLanguage(helperData[0].notificationLanguage);
+        setNationality(helperData[0].nationality);
+        setResidenceCountry(helperData[0].residenceCountry);
+        setIsAnonymous(!!helperData[0].isAnonymous);
+        setHasMonToFri(!!helperData[0].hasMonToFri);
+        setHasWeekend(!!helperData[0].hasWeekend);
+        setHasBefore12(!!helperData[0].hasBefore12);
+        setHas12To18(!!helperData[0].has12To18);
+        setHasAfter18(!!helperData[0].hasAfter18);
+        setHasEnglish(!!helperData[0].hasEnglish);
+        setHasGerman(!!helperData[0].hasGerman);
+        setHasFrench(!!helperData[0].hasFrench);
+        setHasItalien(!!helperData[0].hasItalien);
+        setHasChinese(!!helperData[0].hasChinese);
+        setHasCantonese(!!helperData[0].hasCantonese);
+        setHasVietnamese(!!helperData[0].hasVietnamese);
+        setHasKorean(!!helperData[0].hasKorean);
+        setHasJapanese(!!helperData[0].hasJapanese);
+        setHasTurkish(!!helperData[0].hasTurkish);
+        setHasUkrainian(!!helperData[0].hasUkrainian);
+        setHasArabic(!!helperData[0].hasArabic);
+        setHasOthers(!!helperData[0].hasOthers);
+        setDefaultIntroduction(helperData[0].introduction);
+        setDefaultNotes(helperData[0].notes);
+      }
+    } else {
+      if (helpeeData && helpeeData[0]) {
+        setDefaultHelpeeProfilePicPath('/images/'+helpeeData[0].profilePicPath);
+        setDefaultUsername(helpeeData[0].username);
+        setAge(helpeeData[0].age);
+        setNotificationLanguage(helpeeData[0].notificationLanguage);
+        setNationality(helpeeData[0].nationality);
+        setResidenceCountry(helpeeData[0].residenceCountry);
+        setIsAnonymous(!!helpeeData[0].isAnonymous);
+        setHasMonToFri(!!helpeeData[0].hasMonToFri);
+        setHasWeekend(!!helpeeData[0].hasWeekend);
+        setHasBefore12(!!helpeeData[0].hasBefore12);
+        setHas12To18(!!helpeeData[0].has12To18);
+        setHasAfter18(!!helpeeData[0].hasAfter18);
+        setHasEnglish(!!helpeeData[0].hasEnglish);
+        setHasGerman(!!helpeeData[0].hasGerman);
+        setHasFrench(!!helpeeData[0].hasFrench);
+        setHasItalien(!!helpeeData[0].hasItalien);
+        setHasChinese(!!helpeeData[0].hasChinese);
+        setHasCantonese(!!helpeeData[0].hasCantonese);
+        setHasVietnamese(!!helpeeData[0].hasVietnamese);
+        setHasKorean(!!helpeeData[0].hasKorean);
+        setHasJapanese(!!helpeeData[0].hasJapanese);
+        setHasTurkish(!!helpeeData[0].hasTurkish);
+        setHasUkrainian(!!helpeeData[0].hasUkrainian);
+        setHasArabic(!!helpeeData[0].hasArabic);
+        setHasOthers(!!helpeeData[0].hasOthers);
+        setDefaultIntroduction(helpeeData[0].introduction);
+        setDefaultNotes(helpeeData[0].notes);
+      }
+    }
+  }, [props.isHelpee, helperData, helpeeData]);
+
   return (
     <div
       className='main-content-wrapper'
@@ -498,75 +620,126 @@ const BasicFormPage = (props) => {
                   className='form-wrapper'
                   style={{ width: '100%', margin: 'auto' }}
                 >
-                  {!isAnonymous && !profilePic && (
-                    <div className='blankProfileImageBx'>
-                      {' '}
-                      <div className='uploadInnerDiv'>
-                        <label
-                          className='uploadLabel'
-                          for='profilePic'
-                          style={{ fontSize: '9px' }}
-                        >
-                          {t('upload_profile_pic')}
-                        </label>
-                        <input
-                          type='file'
-                          id='profilePic'
-                          onChange={handleProfilePicUpload}
-                          hidden={true}
-                        />
-                      </div>{' '}
-                    </div>
-                  )}
-                  {!isAnonymous &&
-                    !props.isHelpee &&
-                    profilePic &&
-                    (!helperProfilePicPath ||
-                      helperProfilePicPath.length < 1) && (
-                      <div className='blankProfileImageBx'>
-                        <div style={{ margin: 'auto' }}>
-                          <p style={{ color: 'black' }}>{t('loading')}</p>
-                        </div>
-                      </div>
-                    )}
-                  {!isAnonymous &&
-                    !props.isHelpee &&
-                    profilePic &&
-                    helperProfilePicPath &&
-                    helperProfilePicPath.length > 1 && (
-                      <div className='profileImageBx'>
-                        <img src={helperProfilePicPath} alt='connection'></img>
-                      </div>
-                    )}
-                  {!isAnonymous &&
-                    props.isHelpee &&
-                    profilePic &&
-                    (!helpeeProfilePicPath ||
-                      helpeeProfilePicPath.length < 1) && (
-                      <div className='blankProfileImageBx'>
-                        <div style={{ margin: 'auto' }}>
-                          <p style={{ color: 'black' }}>{t('loading')}</p>
-                        </div>
-                      </div>
-                    )}
-                  {isAnonymous && (
+                  {!!isAnonymous && (
                     <div className='blankProfileImageBx'>
                       <div style={{ margin: 'auto' }}>
                         <p style={{ color: 'black' }}>Anonymous</p>
                       </div>
                     </div>
                   )}
-                  {!isAnonymous &&
-                    props.isHelpee &&
-                    profilePic &&
-                    helpeeProfilePicPath &&
-                    helpeeProfilePicPath.length > 1 && (
-                      <div className='profileImageBx'>
-                        <img src={helpeeProfilePicPath} alt='connection'></img>
+                  {!!allowUploadPic && !isUploadingPic && !isAnonymous && (
+                    <>
+                      <div className='blankProfileImageBx'>
+                        {' '}
+                        <div className='uploadInnerDiv'>
+                          <label
+                            className='uploadLabel'
+                            for='profilePic'
+                            style={{ fontSize: '9px' }}
+                          >
+                            {t('upload_profile_pic')}
+                          </label>
+                          <input
+                            type='file'
+                            id='profilePic'
+                            onChange={handleProfilePicUpload}
+                            hidden={true}
+                          />
+                        </div>{' '}
                       </div>
+                      <div style={{ display: 'flex', marginTop: '-50px' }}>
+                        <EditIcon
+                          color='white'
+                          onClick={handleShowEditPic}
+                          disableClickEvent={disableClickEvent}
+                        />
+                      </div>
+                    </>
+                  )}
+                  {!allowUploadPic && !!isUploadingPic && !isAnonymous && (
+                    <>
+                      <div className='blankProfileImageBx'>
+                        <div style={{ margin: 'auto' }}>
+                          <p style={{ color: 'black' }}>{t('loading')}</p>
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', marginTop: '-50px' }}>
+                        <EditIcon
+                          color='white'
+                          onClick={handleShowEditPic}
+                          disableClickEvent={disableClickEvent}
+                        />
+                      </div>
+                    </>
+                  )}
+                  {!allowUploadPic &&
+                    !isUploadingPic &&
+                    !isAnonymous &&
+                    !props.isHelpee &&
+                    (profilePic ||
+                      ((helperProfilePicPath || defaultHelperProfilePicPath) &&
+                        (helperProfilePicPath.length > 1 ||
+                          defaultHelperProfilePicPath.length > 1))) && (
+                      <>
+                        <div className='profileImageBx'>
+                          <img
+                            src={
+                              helperProfilePicPath ||
+                              defaultHelperProfilePicPath
+                            }
+                            alt='connection'
+                          ></img>
+                        </div>
+                        <div style={{ display: 'flex', marginTop: '-50px' }}>
+                          <EditIcon
+                            color='white'
+                            onClick={handleShowEditPic}
+                            disableClickEvent={disableClickEvent}
+                          />
+                        </div>
+                      </>
+                    )}
+
+                  {!allowUploadPic &&
+                    !isUploadingPic &&
+                    !isAnonymous &&
+                    props.isHelpee &&
+                    (profilePic ||
+                      ((helpeeProfilePicPath || defaultHelpeeProfilePicPath) &&
+                        (helpeeProfilePicPath.length > 1 ||
+                          defaultHelpeeProfilePicPath.length > 1))) && (
+                      <>
+                        <div className='profileImageBx'>
+                          <img
+                            src={
+                              helpeeProfilePicPath ||
+                              defaultHelpeeProfilePicPath
+                            }
+                            alt='connection'
+                          ></img>
+                        </div>
+                        <div style={{ display: 'flex', marginTop: '-50px' }}>
+                          <EditIcon
+                            color='white'
+                            onClick={handleShowEditPic}
+                            disableClickEvent={disableClickEvent}
+                          />
+                        </div>
+                      </>
                     )}
                 </div>
               </div>
+              <div style={{ margin: 'auto', textAlign: 'center' }}>
+                <label>{t('username_title')}</label>
+              </div>
+
+              <input
+                defaultValue={defaultUsername}
+                type='input'
+                className='form-control-password'
+                placeholder={t('username_placeholder')}
+                ref={usernameRef}
+              />
               <div className='form-row'>
                 <DropDown
                   selected={age}
@@ -606,6 +779,7 @@ const BasicFormPage = (props) => {
               {!props.isHelpee && (
                 <div className='form-row'>
                   <LeftHalfLineTextBox
+                    defaultValue={defaultLinkedIn}
                     title={t('linkedin_link_title')}
                     details={t('linkedin_link_details')}
                     placeholder={
@@ -860,6 +1034,7 @@ const BasicFormPage = (props) => {
                 />
               </div>
               <FullLineTextBox
+                defaultValue={defaultIntroduction}
                 title={t('introduction_title')}
                 details={t('introduction_details')}
                 placeholder={`${t('introduction_placeholder')} *`}
@@ -869,6 +1044,7 @@ const BasicFormPage = (props) => {
               />
 
               <FullLineTextBox
+                defaultValue={defaultNotes}
                 title={t('notes')}
                 placeholder={t('other_languages_specify_note_placeholder')}
                 inputRef={notesRef}
@@ -910,7 +1086,7 @@ const BasicFormPage = (props) => {
                       ></img>
                     </div>
                   )}
-                {!props.isHelpee && currentLanguage === 'en' && isAnonymous && (
+                {!props.isHelpee && currentLanguage === 'en' && !!isAnonymous && (
                   <div style={{ width: '100%' }}>
                     <img
                       src='/static-imgs/Demo_Helper_Card_EN_Ano.png'
@@ -922,7 +1098,7 @@ const BasicFormPage = (props) => {
                 {!props.isHelpee &&
                   (currentLanguage === 'zh-TW' ||
                     currentLanguage === 'zh-CN') &&
-                  isAnonymous && (
+                  !!isAnonymous && (
                     <div style={{ width: '100%' }}>
                       <img
                         src='/static-imgs/Demo_Helper_Card_ZH_Ano.png'
@@ -952,7 +1128,7 @@ const BasicFormPage = (props) => {
                       ></img>
                     </div>
                   )}
-                {props.isHelpee && currentLanguage === 'en' && isAnonymous && (
+                {props.isHelpee && currentLanguage === 'en' && !!isAnonymous && (
                   <div style={{ width: '100%' }}>
                     <img
                       src='/static-imgs/Demo_Helpee_Card_EN_Ano.png'
@@ -964,7 +1140,7 @@ const BasicFormPage = (props) => {
                 {props.isHelpee &&
                   (currentLanguage === 'zh-TW' ||
                     currentLanguage === 'zh-CN') &&
-                  isAnonymous && (
+                  !!isAnonymous && (
                     <div style={{ width: '100%' }}>
                       <img
                         src='/static-imgs/Demo_Helpee_Card_ZH_Ano.png'

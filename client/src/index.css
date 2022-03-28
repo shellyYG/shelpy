@@ -1295,6 +1295,17 @@ footer {
   z-index: 5;
 }
 
+.editIconContainer {
+  cursor: pointer;
+  margin-left: 55%;
+  z-index: 5;
+}
+.editIconContainerDisabled {
+  margin-left: 55%;
+  z-index: 5;
+  pointer-events: none;
+}
+
 .noShow {
   visibility: hidden;
 }
@@ -1718,7 +1729,7 @@ input[type="checkbox" i] {
   background-color: white;
   text-align: center;
   padding: 15px;
-  margin: 0px auto 0px;
+  margin: 8px auto 15px;
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -1958,6 +1969,15 @@ input[type="checkbox" i] {
 }
 
 @media screen and (max-width: 820px) {
+  .editIconContainer {
+    cursor: pointer;
+    margin-left: 58%;
+    z-index: 5;
+  }
+  .editIconContainerDisabled {
+    margin-left: 58%;
+    z-index: 5;
+  }
   .nav-logo {
     display: none;
   }
@@ -2009,6 +2029,15 @@ input[type="checkbox" i] {
   }
 }
 @media (max-width: 500px) {
+  .editIconContainer {
+    cursor: pointer;
+    margin-left: 65%;
+    z-index: 5;
+  }
+  .editIconContainerDisabled {
+    margin-left: 65%;
+    z-index: 5;
+  }
   input[type="checkbox" i] {
   width: 20px;
   height: 20px;

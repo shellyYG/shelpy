@@ -18,6 +18,7 @@ const helperCanChangePasswordPath = '/api/helper/password/allow-change';
 const helperSendPasswordResetEmailPath = '/api/helper/password/reset';
 const helperChattedCustomersPath = '/api/helper/chat/partners';
 const setPayPalAccountPath = '/api/helper/paypal-account';
+const getHelperDataPath = '/api/helper/data';
 
 
 export const getHelperAuthStatus = () => {
@@ -767,5 +768,29 @@ export const clearSetPayPalAccountStatus = (data) => {
         setPayPalAccountStatusMessage: '',
       })
     );
+  };
+};
+
+export const getHelperUserData = (data) => {
+  return async (dispatch) => {
+    if (data && data.helperUserId) {
+      try {
+        const response = await axios.get(getHelperDataPath, {
+          params: { helperUserId: data.helperUserId },
+        });
+        dispatch(
+          helperActions.updateHelperData({
+            helperData: response.data.helperData,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helperActions.updateHelperData({
+            helperData: [],
+          })
+        );
+      }
+    }
   };
 };

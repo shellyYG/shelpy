@@ -47,6 +47,7 @@ const helperSlice = createSlice({
     setPayPalAccountStatusMessage: '',
 
     allChattedCustomers: [],
+    helperData: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -150,6 +151,10 @@ const helperSlice = createSlice({
       state.setPayPalAccountStatusTitle = payload.setPayPalAccountStatusTitle;
       state.setPayPalAccountStatusMessage =
         payload.setPayPalAccountStatusMessage;
+    },
+    updateHelperData(state, action) {
+      const { payload } = action;
+      state.helperData = payload.helperData;
     },
   },
 });

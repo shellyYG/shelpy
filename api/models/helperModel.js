@@ -75,6 +75,7 @@ async function updateHelperProfilePicPath(data) {
 async function updateHelperCertificatePath(data) {
   const {
     userId,
+    username,
     introduction,
     isAnonymous,
     isMarketing,
@@ -110,7 +111,6 @@ async function updateHelperCertificatePath(data) {
   let newStatus;
   const sql1 = `SELECT status FROM helper_account WHERE id =? LIMIT 1`;
   const sqlquery1 = await query(sql1, userId);
-  console.log('sqlquery1[0].status: ', sqlquery1[0].status, 'useId: ', userId);
   const existingStatus = sqlquery1[0].status || '';
   if (existingStatus === 'approved') {
     newStatus = 'approved';
@@ -128,7 +128,7 @@ async function updateHelperCertificatePath(data) {
       ,hasChinese=?, hasCantonese=?, hasVietnamese=?
       ,hasKorean=?, hasJapanese=?, hasTurkish=?, hasUkrainian=?
       ,hasArabic=?, hasOthers=?, languages=?
-      , notificationLanguage=?
+      , notificationLanguage=?, username=?
     WHERE id =?`;
   const sqlquery2 = await query(sql2, [
     introduction,
@@ -161,6 +161,7 @@ async function updateHelperCertificatePath(data) {
     hasOthers,
     languages,
     notificationLanguage,
+    username,
     userId,
   ]);
   return sqlquery2;
@@ -209,6 +210,14 @@ async function updatePayPalAccount(data) {
   return { data: { id }}
 } 
 
+async function getHelperData(data) {
+  const sqlSimplified = ` SELECT *
+  FROM helper_account
+  WHERE id=? LIMIT 1;`;
+  const helperData = await query(sqlSimplified, data.helperUserId);
+  return { data: { helperData } };
+}
+
 module.exports = {
   insertHelperOffer,
   getHelperAllOffers,
@@ -221,4 +230,5 @@ module.exports = {
   getAllMarketingOffers,
   getAllChattedCustomers,
   updatePayPalAccount,
+  getHelperData,
 };

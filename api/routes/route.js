@@ -43,6 +43,7 @@ const {
   payTapPay,
   getAllChattedHelpers,
   getBookingDetails,
+  getHelpeeData,
 } = require('../controllers/helpeeController');
 
 const {
@@ -59,6 +60,7 @@ const {
   getAllMarketingOffers,
   getAllChattedCustomers,
   updatePayPalAccount,
+  getHelperData,
 } = require('../controllers/helperController');
 
 const {
@@ -297,6 +299,7 @@ router.post(
   async (req, res) => {
     const {
       userId,
+      username,
       introduction,
       isAnonymous,
       isMarketing,
@@ -333,6 +336,7 @@ router.post(
     try {
       await helperModel.updateHelperCertificatePath({
         userId,
+        username,
         introduction,
         isAnonymous,
         isMarketing,
@@ -424,6 +428,7 @@ router.post(
 
     const {
       userId,
+      username,
       introduction,
       age,
       nationality,
@@ -438,6 +443,7 @@ router.post(
       const result = await uploadFile(file, 'user-certificates');
       await helperModel.updateHelperCertificatePath({
         userId,
+        username,
         isAnonymous,
         isMarketing,
         age,
@@ -526,6 +532,7 @@ router.post(
       req.body.hasOthers === 'true' || req.body.hasOthers === true;
     const {
       userId,
+      username,
       introduction,
       age,
       nationality,
@@ -538,6 +545,7 @@ router.post(
     try {
       await helpeeModel.updateHelpeeBasicInfo({
         userId,
+        username,
         introduction,
         isAnonymous,
         age,
@@ -637,6 +645,20 @@ router
   .get(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(getBookingDetails)
+  );
+
+router
+  .route('/api/helpee/data')
+  .get(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(getHelpeeData)
+  );
+
+router
+  .route('/api/helper/data')
+  .get(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(getHelperData)
   );
 
 module.exports = router;

@@ -283,6 +283,28 @@ const getBookingDetails = async (req, res) => {
   }
 };
 
+const getHelpeeData = async (req, res) => {
+  try {
+    const { helpeeUserId } = req.query;
+    let response;
+    if (helpeeUserId) {
+      response = await helpeeModel.getHelpeeData({
+        helpeeUserId,
+      });
+    }
+    if (response && response.data) {
+      res.status(200).json({
+        helpeeData: response.data.helpeeData,
+      });
+    } else {
+      throw Error('no_user_data_found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   allowHelpeePrivateRoute,
   postHelpeeServiceRequestForm,
@@ -299,4 +321,5 @@ module.exports = {
   payTapPay,
   getAllChattedHelpers,
   getBookingDetails,
+  getHelpeeData,
 };

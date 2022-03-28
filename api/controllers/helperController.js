@@ -225,6 +225,28 @@ const updatePayPalAccount = async (req, res) => {
   }
 }
 
+const getHelperData = async (req, res) => {
+  try {
+    const { helperUserId } = req.query;
+    let response;
+    if (helperUserId) {
+      response = await helperModel.getHelperData({
+        helperUserId,
+      });
+    }
+    if (response && response.data) {
+      res.status(200).json({
+        helperData: response.data.helperData,
+      });
+    } else {
+      throw Error('no_user_data_found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   allowHelperPrivateRoute,
   postHelperOffer,
@@ -239,4 +261,5 @@ module.exports = {
   getAllMarketingOffers,
   getAllChattedCustomers,
   updatePayPalAccount,
+  getHelperData,
 };
