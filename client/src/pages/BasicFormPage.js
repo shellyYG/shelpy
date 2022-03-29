@@ -738,6 +738,7 @@ const BasicFormPage = (props) => {
                 type='input'
                 className='form-control-password'
                 placeholder={t('username_placeholder')}
+                maxLength={'11'}
                 ref={usernameRef}
               />
               <div className='form-row'>

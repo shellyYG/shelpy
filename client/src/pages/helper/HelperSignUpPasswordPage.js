@@ -211,6 +211,7 @@ const HelperSignUpPasswordPage = () => {
             placeholder={t('username_placeholder')}
             ref={usernameRef}
             onChange={handleUsernameTyping}
+            maxLength={'11'}
           />
           <input
             type='password'
