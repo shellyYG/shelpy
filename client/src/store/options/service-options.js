@@ -1299,3 +1299,27 @@ export const ageOptions = [
   },
   { value: 'Others', label: othersText },
 ];
+
+export const scoreOptions = [
+  { value: 'default', label: 'please_select_option' },
+  {
+    value: 5,
+    label: 'five_star',
+  },
+  {
+    value: 4,
+    label: 'four_star',
+  },
+  {
+    value: 3,
+    label: 'three_star',
+  },
+  {
+    value: 2,
+    label: 'two_star',
+  },
+  {
+    value: 1,
+    label: 'one_star',
+  },
+];

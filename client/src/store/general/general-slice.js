@@ -29,6 +29,10 @@ const generalSlice = createSlice({
     confirmCanAccessDashboardStatus: 'Initial',
     confirmCanAccessDashboardStatusTitle: '',
     confirmCanAccessDashboardStatusMessage: '',
+
+    ratingNotificationStatus: 'Initial',
+    ratingNotificationStatusTitle: '',
+    ratingNotificationStatusMessage: '',
   },
   reducers: {
     setUserRole(state, action) {
@@ -114,6 +118,19 @@ const generalSlice = createSlice({
       if (confirmCanAccessDashboardStatusMessage)
         state.confirmCanAccessDashboardStatusMessage =
           confirmCanAccessDashboardStatusMessage;
+    },
+    setPostRatingNotificationStatus(state, action) {
+      const {
+        ratingNotificationStatus,
+        ratingNotificationStatusTitle,
+        ratingNotificationStatusMessage,
+      } = action.payload;
+      if (ratingNotificationStatus)
+        state.ratingNotificationStatus = ratingNotificationStatus;
+      if (ratingNotificationStatusTitle)
+        state.ratingNotificationStatusTitle = ratingNotificationStatusTitle;
+      if (ratingNotificationStatusMessage)
+        state.ratingNotificationStatusMessage = ratingNotificationStatusMessage;
     },
   },
 });

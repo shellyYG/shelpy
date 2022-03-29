@@ -103,46 +103,41 @@ const HelpeeBookingsPage = (props) => {
           )}
 
           {filteredBookings &&
-            filteredBookings.map(
-              (
-                option
-              ) => (
-                <BookingCard
-                  isHelpee={true}
-                  key={option.id}
-                  id={option.id}
-                  helpeeEmail={option.helpeeEmail}
-                  helperId={option.helperId}
-                  helpeeId={option.helpeeId}
-                  helpeeUsername={option.helpeeUsername}
-                  helperUsername={option.helperUsername}
-                  partnerName={
-                    props.isHelpee
-                      ? option.helperUsername
-                      : option.helpeeUsername
-                  }
-                  mainType={option.mainType}
-                  secondType={option.secondType}
-                  thirdType={option.thirdType}
-                  fourthType={option.fourthType}
-                  profilePicPath={option.profilePicPath}
-                  country={option.country}
-                  requestId={option.requestId}
-                  offerId={option.offerId}
-                  price={option.price}
-                  duration={option.duration}
-                  bookingId={option.bookingId}
-                  bookingStatus={option.bookingStatus}
-                  appointmentDate={option.appointmentDate}
-                  appointmentTime={option.appointmentTime}
-                  timeZone={option.timeZone}
-                  languages={option.languages}
-                  isAnonymous={option.helperAnonymous}
-                  notes={option.notes}
-                  questions={option.questions}
-                />
-              )
-            )}
+            filteredBookings.map((option) => (
+              <BookingCard
+                isHelpee={true}
+                key={option.id}
+                id={option.id}
+                helpeeEmail={option.helpeeEmail}
+                helperId={option.helperId}
+                helpeeId={option.helpeeId}
+                helpeeUsername={option.helpeeUsername}
+                helperUsername={option.helperUsername}
+                partnerName={
+                  props.isHelpee ? option.helperUsername : option.helpeeUsername
+                }
+                mainType={option.mainType}
+                secondType={option.secondType}
+                thirdType={option.thirdType}
+                fourthType={option.fourthType}
+                profilePicPath={option.profilePicPath}
+                country={option.country}
+                requestId={option.requestId}
+                offerId={option.offerId}
+                price={option.price}
+                duration={option.duration}
+                bookingId={option.bookingId}
+                bookingStatus={option.bookingStatus}
+                appointmentDate={option.appointmentDate}
+                appointmentTime={option.appointmentTime}
+                appointmentTimeStamp={option.appointmentTimestamp}
+                timeZone={option.timeZone}
+                languages={option.languages}
+                isAnonymous={option.helperAnonymous}
+                notes={option.notes}
+                questions={option.questions}
+              />
+            ))}
         </div>
       )}
     </div>

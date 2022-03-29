@@ -119,6 +119,7 @@ const HelperBookingsPage = (props) => {
                   bookingStatus={option.bookingStatus}
                   appointmentDate={option.appointmentDate}
                   appointmentTime={option.appointmentTime}
+                  appointmentTimeStamp={option.appointmentTimestamp}
                   timeZone={option.timeZone}
                   languages={option.languages}
                   isAnonymous={option.helpeeAnonymous}

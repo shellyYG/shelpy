@@ -160,7 +160,7 @@ function FeaturedHelperPart(props) {
           tag3={t('country_taiwan')}
         />
         <MktCard
-          imageSrc='/static-imgs/Chloe_job.png'
+          imageSrc='/static-imgs/Chloe_job.jpeg'
           title='Chloe'
           key='chloe-job'
           experience={t('mkt_chloe_job')}

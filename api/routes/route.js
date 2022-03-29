@@ -67,6 +67,7 @@ const {
   updateBookingStatus,
   getBookingStatus,
   unsubscibeEmail,
+  ratePartner,
 } = require('../controllers/bookingController');
 
 const { postUserSignInData } = require('../controllers/signInController');
@@ -660,5 +661,12 @@ router
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(getHelperData)
   );
+
+router
+  .route('/api/rating')
+  .post(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(ratePartner)
+  );;
 
 module.exports = router;

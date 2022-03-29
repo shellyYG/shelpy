@@ -25,6 +25,8 @@ import UniFormPage from './pages/UniFormPage';
 import SelfEmployedPage from './pages/SelfEmployedPage';
 import LifeSharingFormPage from './pages/LifeSharingFormPage';
 
+import RatePartnerPage from './pages/RatePartnerPage';
+
 import { getHelpeeAuthStatus } from './store/helpee/helpee-actions';
 import { getHelperAuthStatus } from './store/helper/helper-actions';
 import BasicFormPage from './pages/BasicFormPage';
@@ -493,6 +495,18 @@ function App() {
             <Route
               path={`/:locale/helper/user-guide`}
               element={<HelpeeGuidePage />}
+            />
+            <Route
+              path={`/:locale/helper/rate-partner`}
+              element={
+                <RatePartnerPage isHelpee={false} helperUserId={helperUserId} />
+              }
+            />
+            <Route
+              path={`/:locale/helpee/rate-partner`}
+              element={
+                <RatePartnerPage isHelpee={true} helpeeUserId={helpeeUserId} />
+              }
             />
             <Route path='*' element={<ErrorPage />} />
           </Routes>

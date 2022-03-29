@@ -6,14 +6,11 @@ const getAllMarketingOffersPath = '/api/marketing-offers';
 const unSubEmailPath = '/api/unsubscribe/email'
 const canAccessChatroomPath = '/api/access-chatroom';
 const canAccessDashboardPath = '/api/access-dashboard';
+const ratingPath = '/api/rating';
 
 export const postBookingStatus = (data) => {
   return async (dispatch) => {
     let generalToken;
-    if (data && data.bookingStatus) {
-      console.log('data: ', data);
-      console.log('postBookingStatus->data.bookingStatus: ', data.bookingStatus);
-    }
     if (data.bookingStatus === 'created') { // is first time created or Helpee updating time
       generalToken = localStorage.getItem('shelpy-token');
     } else {
@@ -254,3 +251,62 @@ export const confirmCanAccessDashboard = (data) => {
     }
   };
 };
+
+export const postPartnerScore = (data) => {
+  return async (dispatch) => {
+    let generalToken;
+    if (data.writerRole === 'helpee') {
+      // is first time created or Helpee updating time
+      generalToken = localStorage.getItem('shelpy-token');
+    } else {
+      generalToken = localStorage.getItem('shelper-token');
+    }
+    try {
+      if (!generalToken) {
+        throw Error('access_denied_please_log_in_error');
+      }
+      if (generalToken) {
+        const headers = {
+          Authorization: 'Bearer ' + generalToken,
+        };
+        await axios.post(
+          ratingPath,
+          { data },
+          {
+            headers,
+          }
+        );
+        dispatch(
+          generalActions.setPostRatingNotificationStatus({
+            ratingNotificationStatus: 'success',
+            ratingNotificationStatusTitle: 'successfully_submit_rating',
+            ratingNotificationStatusMessage: 'successfully_submit_rating',
+          })
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response) {
+        dispatch(
+          generalActions.setPostRatingNotificationStatus({
+            ratingNotificationStatus: 'error',
+            ratingNotificationStatusTitle: 'oops',
+            ratingNotificationStatusMessage: error.response.data,
+          })
+        );
+      }
+    }
+  };
+}
+
+export const clearPostRatingStatus = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      generalActions.setPostRatingNotificationStatus({
+        ratingNotificationStatus: 'Initial',
+        ratingNotificationStatusTitle: '',
+        ratingNotificationStatusMessage: '',
+      })
+    );
+  };
+}

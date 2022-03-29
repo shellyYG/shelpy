@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import CreditCardTextBox from '../components/CreditCardTextBox';
+
 import {
   workingCountryOptions,
   departmentOptions,
@@ -16,28 +16,28 @@ import {
   timeZoneOptions,
   lifeSharingMainOptions,
   lifeSharingSubOptions,
+  scoreOptions,
 } from '../store/options/service-options';
 import {
-  clearPayHelperStatus,
-  postPayViaTapPay,
   getBookingDetails,
 } from '../store/helpee/helpee-actions';
 
-const isDeveloping = 0; // TODO before push to ec2
-const environment = isDeveloping ? 'sandbox' : 'production';
-const merchantId = isDeveloping
-  ? process.env.REACT_APP_TAPPAY_MERCHANT_ID_SANDBOX
-  : process.env.REACT_APP_TAPPAY_MERCHANT_ID_PRODUCTION;
+import {
+  postPartnerScore,
+  clearPostRatingStatus,
+} from '../store/general/general-actions';
 
-const usdToNtd = 29;
+import DropDown from '../components/Dropdown';
+import LongTextBox from '../components/LongTextBox';
+import ConfirmBtn from '../components/ConfirmBtn';
 
 const MySwal = withReactContent(Swal);
 
-const PayPage = () => {
+const RatePartnerPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -59,19 +59,26 @@ const PayPage = () => {
   const [translatedTimeZone, setTranslatedTimeZone] = useState('');
   const [helpeeId, setHelpeeId] = useState('');
   const [helperId, setHelperId] = useState('');
-  
+  const [partnerName, setPartnerName] = useState('');
+  const [score, setScore] = useState('default');
+  const [commentsString, setCommentsString] = useState('');
+  const [enableBtn, setEnableBtn] = useState(false);
+
   const refId = searchParams.get('refId');
 
-  const cardNumberRef = useRef();
-  const cardExpireDateRef = useRef();
-  const cardCVVRef = useRef();
+  const scoreRef = useRef();
+  const commentsRef = useRef();
 
   const {
-    payHelperStatus,
-    payHelperStatusTitle,
-    payHelperStatusMessage,
+    ratingNotificationStatus,
+    ratingNotificationStatusTitle,
+    ratingNotificationStatusMessage,
+  } = useSelector((state) => state.general);
+
+  const {
     booking,
   } = useSelector((state) => state.helpee);
+
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -83,6 +90,15 @@ const PayPage = () => {
   }, [bookingId, dispatch]);
 
   useEffect(()=>{
+      if (booking && booking.length && booking[0])
+        if (props.isHelpee) {
+          setPartnerName(booking[0].helperUsername);
+        } else {
+          setPartnerName(booking[0].helpeeUsername);
+        }
+  },[booking, props.isHelpee])
+
+  useEffect(() => {
     if (booking && booking.length && booking[0]) {
       const bookingToPay = booking[0];
       if (!bookingToPay) return;
@@ -111,12 +127,12 @@ const PayPage = () => {
       setTimeZone(timeZone);
       setOfferId(offerId);
       setPrice(price);
-      setNTDPrice(price * usdToNtd);
+
       setHelperName(helperUsername);
       setHelpeeId(helpeeId);
       setHelperId(helperId);
     }
-  },[booking])
+  }, [booking]);
 
   if (loading) {
     MySwal.fire({
@@ -130,140 +146,41 @@ const PayPage = () => {
     });
   }
 
-  // prevent css re-render
-  useEffect(()=>{
-    window.TPDirect.setupSDK(
-      parseInt(process.env.REACT_APP_APP_ID),
-      process.env.REACT_APP_APP_KEY,
-      environment
-    );
-    let fields = {
-      number: {
-        // css selector
-        element: '#card-number',
-        placeholder: '**** **** **** ****',
-      },
-      expirationDate: {
-        // DOM object
-        element: document.getElementById('card-expiration-date'),
-        placeholder: 'MM / YY',
-      },
-      ccv: {
-        element: '#card-ccv',
-        placeholder: 'ccv',
-      },
-    };
-    window.TPDirect.card.setup({
-      fields,
-      styles: {
-        // Style all elements
-        input: {
-          color: 'gray',
-        },
-        // Styling ccv field
-        'input.ccv': {
-          'font-size': '16px',
-        },
-        // Styling expiration-date field
-        'input.expiration-date': {
-          'font-size': '16px',
-        },
-        // Styling card-number field
-        'input.card-number': {
-          'font-size': '16px',
-        },
-        'input.card-holder-name': {
-          'font-size': '16px',
-        },
-        // style focus state
-        ':focus': {
-          color: 'black',
-        },
-        // style valid state
-        '.valid': {
-          color: 'green',
-        },
-        // style invalid state
-        '.invalid': {
-          color: 'red',
-        },
-        // Media queries
-        // Note that these apply to the iframe, not the root window.
-        '@media screen and (max-width: 400px)': {
-          input: {
-            color: 'orange',
-          },
-        },
-      },
-    });
-  },[])
 
   function onSubmit(e) {
     e.preventDefault();
+    const data = {
+      bookingId: parseInt(bookingId),
+      writerRole: props.isHelpee ? 'helpee' : 'helper',
+      ratedPartnerId: props.isHelpee ? parseInt(helperId) : parseInt(helpeeId),
+      score: parseInt(score),
+      comments: commentsString,
+    };
+    console.log('data: ', data);
+    dispatch(postPartnerScore(data))
+    setIsLoading(true);
+  }
 
-    // 取得 TapPay Fields 的 status
-    const tappayStatus = window.TPDirect.card.getTappayFieldsStatus();
-
-    // 確認是否可以 getPrime
-    if (tappayStatus.canGetPrime === false) {
-      alert('can not get prime');
-      return;
-    }
-
-    // Get prime
-    window.TPDirect.card.getPrime((result) => {
-      if (result && result.status !== 0) {
-        alert('get prime error ' + result.msg);
-        return;
-      }
-      setIsLoading(true);
-
-      // send prime to your server, to pay with Pay by Prime API .
-      // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
-      
-      const data = {
-        prime: result.card.prime,
-        partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
-        merchant_id: merchantId,
-        details: 'TapPay Test',
-        helpeeId,
-        helperId,
-        bookingId,
-        currentLanguage,
-        offerId,
-        appointmentDate: bookingDate,
-        appointmentTime: bookingTime,
-        amount: parseInt(NTDPrice),
-        cardholder: {
-          phone_number: '',
-          name: '',
-          email: '',
-          zip_code: '',
-          address: '',
-          national_id: '',
-        },
-        remember: true,
-      };
-      dispatch(postPayViaTapPay(data));
-    });
+  function handleCommentsTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setCommentsString(typingInput);
   }
 
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    
+
     const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === country
     );
     if (countryTranslationObj && countryTranslationObj[0]) {
       setTranslatedCountry(t(countryTranslationObj[0].label));
     }
-    const timeZoneObj = timeZoneOptions.filter(
-      (o) => o.value === timeZone
-    );
+    const timeZoneObj = timeZoneOptions.filter((o) => o.value === timeZone);
     if (timeZoneObj && timeZoneObj[0])
-      setTranslatedTimeZone(t(timeZoneObj[0].label)); 
-      
+      setTranslatedTimeZone(t(timeZoneObj[0].label));
+
     switch (mainType) {
       case 'university':
         setTitle(t('service_types_uni'));
@@ -349,9 +266,9 @@ const PayPage = () => {
           setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
         }
         if (lifeSharingSubOptions && lifeSharingSubOptions[secondType]) {
-          thirdTypeTranslationObj = lifeSharingSubOptions[
-            secondType
-          ].filter((o) => o.value === thirdType);
+          thirdTypeTranslationObj = lifeSharingSubOptions[secondType].filter(
+            (o) => o.value === thirdType
+          );
         }
         if (
           thirdType &&
@@ -367,7 +284,7 @@ const PayPage = () => {
   }, [t, mainType, secondType, thirdType, country, timeZone]);
 
   useEffect(() => {
-    if (payHelperStatus === 'error') {
+    if (ratingNotificationStatus === 'error') {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
@@ -375,12 +292,15 @@ const PayPage = () => {
           html: <p>{t(message)}</p>,
           icon: 'error',
         });
-        dispatch(clearPayHelperStatus());
+        dispatch(clearPostRatingStatus());
         window.location.reload();
       }
-      sweetAlertAndClearStatus(payHelperStatusTitle, payHelperStatusMessage);
+      sweetAlertAndClearStatus(
+        ratingNotificationStatusTitle,
+        ratingNotificationStatusMessage
+      );
       return;
-    } else if (payHelperStatus === 'success') {
+    } else if (ratingNotificationStatus === 'success') {
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
@@ -390,21 +310,34 @@ const PayPage = () => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        navigate(`/${currentLanguage}/helpee/bookings?refId=${refId}`);
+        const path = props.isHelpee
+          ? `/${currentLanguage}/helpee/bookings?refId=${refId}`
+          : `/${currentLanguage}/helper/bookings?refId=${refId}`;
+        navigate(path);
       }
-      dispatch(clearPayHelperStatus());
-      sweetAlertAndNavigate(payHelperStatus, payHelperStatusMessage);
+      dispatch(clearPostRatingStatus());
+      sweetAlertAndNavigate(
+        ratingNotificationStatus,
+        ratingNotificationStatusMessage
+      );
     }
   }, [
     t,
     navigate,
-    payHelperStatus,
-    payHelperStatusTitle,
-    payHelperStatusMessage,
+    props.isHelpee,
+    ratingNotificationStatus,
+    ratingNotificationStatusTitle,
+    ratingNotificationStatusMessage,
     dispatch,
     currentLanguage,
     refId,
   ]);
+  
+  useEffect(()=>{
+    setEnableBtn(
+      score !== 'default'
+    );
+  },[score])
 
   return (
     <div
@@ -414,13 +347,15 @@ const PayPage = () => {
       <div className='section-center-align-landing'>
         <div className='centerWrapper' style={{ flexDirection: 'column' }}>
           <div>
-            <h2 style={{ textAlign: 'center' }}>{t('payment')}</h2>
-            <p style={{ marginTop: '5px', textAlign: 'center' }}>
-              {t('booking_id')}: {bookingId}
-            </p>
+            <h2 style={{ textAlign: 'center' }}>
+              {props.isHelpee && t('how_was_helper', { name: partnerName })}
+              {!props.isHelpee && t('how_was_helpee', { name: partnerName })}
+            </h2>
             <br />
             <h3 style={{ textAlign: 'center' }}>
-              {t('helper_big')}: {helperName} <br />
+              {props.isHelpee && `${t('helper_big')}: ${partnerName}`}
+              {!props.isHelpee && `${t('helpee_big')}: ${partnerName}`}
+              <br />
             </h3>
             <p style={{ textAlign: 'center' }}>
               {t('type')}: {title} | {translatedSecondType} |{' '}
@@ -442,34 +377,33 @@ const PayPage = () => {
             }}
           >
             <div>
-              <CreditCardTextBox
-                title={`${t('card_number')} *`}
-                placeholder={'0000 0000 0000 0000'}
-                labelColor='black'
-                inputRef={cardNumberRef}
-                id='card-number'
+              <DropDown
+                selected={score}
+                handleSelect={setScore}
+                title={t('score')}
+                selectRef={scoreRef}
+                options={scoreOptions}
+                titleColor='black'
               />
-              <CreditCardTextBox
-                title={`${t('expiration_date')} *`}
-                placeholder={'MM/YY'}
-                labelColor='black'
-                inputRef={cardExpireDateRef}
-                id='card-expiration-date'
+              <div style={{ marginTop: '10px' }}>
+                <LongTextBox
+                  title={t('comments')}
+                  placeholder={
+                    props.isHelpee
+                      ? t('comments_placeholder_helper')
+                      : t('comments_placeholder_helpee')
+                  }
+                  inputRef={commentsRef}
+                  onChange={handleCommentsTyping}
+                  labelColor='black'
+                />
+              </div>
+
+              <ConfirmBtn
+                cta={t('confirm')}
+                disable={!enableBtn}
+                handleConfirm={onSubmit}
               />
-              <CreditCardTextBox
-                title={`${t('CVV')} *`}
-                placeholder={`${t('CVV')}`}
-                labelColor='black'
-                inputRef={cardCVVRef}
-                id='card-ccv'
-              />
-              <button
-                className='btn-contact'
-                style={{ width: '100%' }}
-                onClick={onSubmit}
-              >
-                {t('pay')} {price} {t('usd')} <br />({NTDPrice} {t('ntd')})
-              </button>
             </div>
           </div>
         </div>
@@ -478,4 +412,4 @@ const PayPage = () => {
   );
 };
 
-export default PayPage;
+export default RatePartnerPage;

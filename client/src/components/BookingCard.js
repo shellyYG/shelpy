@@ -36,6 +36,8 @@ function BookingCard(props) {
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
 
+  const [isExpiredBooking, setIsExpiredBooking] = useState(false);
+  console.log('isExpiredBooking: ', isExpiredBooking);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -85,6 +87,13 @@ function BookingCard(props) {
         `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
     );
   }
+
+  useEffect(() => {
+    if (props.appointmentTimeStamp < Date.now()) {
+      setIsExpiredBooking(true);
+    }
+  }, [props.appointmentTimeStamp]);
+
   useEffect(()=>{
     const timeZoneObj = timeZoneOptions.filter(
       (o) => o.value === props.timeZone
@@ -295,6 +304,17 @@ function BookingCard(props) {
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
         `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
     );
+  };
+
+  async function handleRateHelper(e) {
+    e.preventDefault();
+    navigate(`/${currentLanguage}/helpee/rate-partner?&bookingId=${props.bookingId}&refId=${refId}`)
+  }
+  async function handleRateHelpee(e) {
+     e.preventDefault();
+     navigate(
+       `/${currentLanguage}/helper/rate-partner?&bookingId=${props.bookingId}&refId=${refId}`
+     );
   }
   function handleBookingConfirmation(e) {
     e.preventDefault(e);
@@ -477,9 +497,17 @@ function BookingCard(props) {
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_id')}: {props.id}
             </p>
-            <button onClick={handleBookingConfirmation} className='btn-next'>
-              {t('accept_name_booking', { name: props.partnerName })}
-            </button>
+            {!isExpiredBooking && (
+              <button onClick={handleBookingConfirmation} className='btn-next'>
+                {t('accept_name_booking', { name: props.partnerName })}
+              </button>
+            )}
+            {!!isExpiredBooking && (
+              <p style={{ padding: '6px', fontSize: '14px' }}>
+                {t('booking_status')}: {t('this_meeting_expired')}
+              </p>
+            )}
+
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_time')}: {props.appointmentDate} {t('at')}{' '}
               {props.appointmentTime} <br />
@@ -489,14 +517,16 @@ function BookingCard(props) {
               {t('helpee_questions')}: {props.questions}
             </p>
 
-            <div>
-              <ChatIcon
-                onClick={handleChat}
-                partnerName={props.partnerName}
-                isHelpee={false}
-                reArrangetime={true}
-              />
-            </div>
+            {!isExpiredBooking && (
+              <div>
+                <ChatIcon
+                  onClick={handleChat}
+                  partnerName={props.partnerName}
+                  isHelpee={false}
+                  reArrangetime={true}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -509,7 +539,10 @@ function BookingCard(props) {
                 {t('booking_id')}: {props.id}
               </p>
               <p style={{ fontSize: '14px', padding: '6px' }}>
-                {t('booking_status')}: {helperFilteredBookingStatus}
+                {!isExpiredBooking &&
+                  `${t('booking_status')}: ${helperFilteredBookingStatus}`}
+                {!!isExpiredBooking &&
+                  `${t('booking_status')}: ${t('this_meeting_expired')}`}
                 <br />
                 {t('booking_time')}: {props.appointmentDate} {t('at')}{' '}
                 {props.appointmentTime}
@@ -520,6 +553,11 @@ function BookingCard(props) {
                 {t('helpee_questions')}: {props.questions}
               </p>
             </div>
+            {!!isExpiredBooking && (
+              <button className='btn-green-border' onClick={handleRateHelpee}>
+                {t('rate_helpee', { name: props.partnerName })}
+              </button>
+            )}
           </div>
         )}
       {props.isHelpee && props.bookingStatus === 'helperConfirmed' && (
@@ -549,9 +587,16 @@ function BookingCard(props) {
                 Pay {props.partnerName} ({props.price} USD)
               </button>
             </StripeCheckout> */}
-            <button className='btn-contact' onClick={handlePayHelper}>
-              {t('pay_name', { name: props.partnerName, price: props.price })}
-            </button>
+            {!isExpiredBooking && (
+              <button className='btn-contact' onClick={handlePayHelper}>
+                {t('pay_name', { name: props.partnerName, price: props.price })}
+              </button>
+            )}
+            {!!isExpiredBooking && (
+              <p style={{ padding: '6px', fontSize: '14px' }}>
+                {t('this_meeting_expired')}
+              </p>
+            )}
             <div ref={paypal}> </div>
           </div>
         </div>
@@ -572,9 +617,16 @@ function BookingCard(props) {
               {t('my_questions')}: {props.questions}
             </p>
           </div>
-          <button className='btn-green-border' onClick={handleBookHelper}>
-            {t('propose_new_time_to_helper', { name: props.partnerName })}
-          </button>
+          {!!isExpiredBooking && (
+            <p style={{ padding: '6px', fontSize: '14px' }}>
+              {t('this_meeting_expired')}
+            </p>
+          )}
+          {
+            <button className='btn-green-border' onClick={handleBookHelper}>
+              {t('propose_new_time_to_helper', { name: props.partnerName })}
+            </button>
+          }
         </div>
       )}
       {props.isHelpee && props.bookingStatus === 'paid' && (
@@ -583,9 +635,16 @@ function BookingCard(props) {
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('booking_id')}: {props.id}
             </p>
-            <p style={{ fontSize: '14px', padding: '6px' }}>
-              {t('booking_status')}: {helpeeFilteredBookingStatus}
-            </p>
+            {!!isExpiredBooking && (
+              <p style={{ fontSize: '14px', padding: '6px' }}>
+                {t('booking_status')}: {t('this_meeting_expired')}
+              </p>
+            )}
+            {!isExpiredBooking && (
+              <p style={{ fontSize: '14px', padding: '6px' }}>
+                {t('booking_status')}: {helpeeFilteredBookingStatus}
+              </p>
+            )}
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('timeZone')} : {translatedTimeZone}
             </p>
@@ -593,6 +652,11 @@ function BookingCard(props) {
               {t('my_questions')}: {props.questions}
             </p>
           </div>
+          {!!isExpiredBooking && (
+            <button className='btn-green-border' onClick={handleRateHelper}>
+              {t('rate_helper', { name: props.partnerName })}
+            </button>
+          )}
         </div>
       )}
     </div>

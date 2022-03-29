@@ -65,9 +65,30 @@ async function unsubscribeEmail(data) {
   return sqlquery;
 }
 
+async function ratePartner(data) {
+  let id;
+  const findRatingSQL = `SELECT * FROM ratings WHERE bookingId =? AND writerRole =?`;
+  const findRatingResult = await query(findRatingSQL, [
+    data.bookingId,
+    data.writerRole,
+  ]);
+  if (findRatingResult.length > 0) {
+    id = findRatingResult[0].id;
+    const sql = `UPDATE ratings SET score=?, comments=? WHERE id=?`;
+    await query(sql, [data.score, data.comments, id]);
+    id = findRatingResult[0].id;
+  } else {
+    const sql = 'INSERT INTO ratings SET ?';
+    const sqlResult = await query(sql, data);
+    id = sqlResult.insertId;
+  }
+  return id;
+}
+
 module.exports = {
   checkBookingExisted,
   insertBooking,
   updateBookingStatus,
   unsubscribeEmail,
+  ratePartner,
 };
