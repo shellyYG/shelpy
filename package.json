@@ -5,6 +5,8 @@
     "lint": "cd api && eslint --fix --ext .js,.jsx ."
   },
   "dependencies": {
+    "@azure/identity": "^2.0.4",
+    "@microsoft/microsoft-graph-client": "^3.0.2",
     "@reduxjs/toolkit": "^1.6.2",
     "@sendgrid/mail": "^7.6.2",
     "aws-sdk": "^2.1066.0",
