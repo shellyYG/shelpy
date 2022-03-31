@@ -19,6 +19,7 @@ const helperSendPasswordResetEmailPath = '/api/helper/password/reset';
 const helperChattedCustomersPath = '/api/helper/chat/partners';
 const setPayPalAccountPath = '/api/helper/paypal-account';
 const getHelperDataPath = '/api/helper/data';
+const getHelperRatingPath = '/api/helper/ratings';
 
 
 export const getHelperAuthStatus = () => {
@@ -788,6 +789,30 @@ export const getHelperUserData = (data) => {
         dispatch(
           helperActions.updateHelperData({
             helperData: [],
+          })
+        );
+      }
+    }
+  };
+};
+
+export const getHelperRatingData = (data) => {
+  return async (dispatch) => {
+    if (data && data.helperUserId) {
+      try {
+        const response = await axios.get(getHelperRatingPath, {
+          params: { helperUserId: data.helperUserId },
+        });
+        dispatch(
+          helperActions.updateHelperRatingData({
+            helperRatingData: response.data.helperRatingData,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helperActions.updateHelperRatingData({
+            helperRatingData: [],
           })
         );
       }

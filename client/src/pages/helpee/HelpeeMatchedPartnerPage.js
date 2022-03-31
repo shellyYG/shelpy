@@ -17,8 +17,9 @@ const HelpeeMatchedPartnerPage = (props) => {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
-  const { allPotentialHelpers } =
-    useSelector((state) => state.helpee);
+  const { allPotentialHelpers, allPotentialHelpersRatings } = useSelector(
+    (state) => state.helpee
+  );
 
   useEffect(() => {
     dispatch(getPotentialHelpers({ helpeeUserId: props.helpeeUserId }));
@@ -115,6 +116,9 @@ const HelpeeMatchedPartnerPage = (props) => {
               languages={option.languages}
               notes={option.notes || t('na')}
               introduction={option.introduction || t('na')}
+              helperRatingData={allPotentialHelpersRatings.filter(
+                (item) => item.ratedPartnerId === option.helperId
+              )}
             />
           ))}
         </div>

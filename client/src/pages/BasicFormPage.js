@@ -598,12 +598,23 @@ const BasicFormPage = (props) => {
 
   return (
     <div
-      className='main-content-wrapper'
-      style={{ height: 500, backgroundImage: 'none', flexDirection: 'row' }}
+      className='main-content-wrapper-homepage'
+      style={{
+        backgroundImage: props.isHelpee
+          ? 'url(/static-imgs/helpee-home.jpeg)'
+          : 'url(/static-imgs/helper-home.jpeg)',
+      }}
     >
       <div className='form-center-wrapper'>
         <div>
-          <h1 style={{ textAlign: 'center', marginTop: '30px' }}>
+          <h1
+            style={{
+              textAlign: 'center',
+              marginTop: '30px',
+              marginBottom: '30px',
+              color: props.isHelpee ? 'black' : 'white',
+            }}
+          >
             {t('update_basic_information')}
           </h1>
         </div>
@@ -753,7 +764,7 @@ const BasicFormPage = (props) => {
                 <DropDown
                   selected={notificationLanguage}
                   handleSelect={setNotificationLanguage}
-                  title={t('notification_language_title')}
+                  title={`${t('notification_language_title')} *`}
                   details={t('notification_language_details')}
                   selectRef={notificationLanguageRef}
                   options={webLanguagesOptions}
@@ -827,7 +838,7 @@ const BasicFormPage = (props) => {
                   checked={isAnonymous}
                   handleCheck={setIsAnonymous}
                   title={
-                    props.isHelpee ? t('ask_anonymous') : t('answer_anonymous')
+                    props.isHelpee ? `${t('ask_anonymous')} ${t('not_recommend')}` : `${t('answer_anonymous')} ${t('not_recommend')}`
                   }
                   details={t('ananymous_details')}
                   paddingRight='10px'

@@ -19,9 +19,14 @@ import {
   lifeSharingSubOptions,
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
+import RatingPopUp from '../pages/RatingPopUp';
+import ScoreStars from './ScoreStars';
 
 
 const MySwal = withReactContent(Swal);
+
+const average = (arr) =>
+  arr.map((el) => el.score).reduce((a, b) => a + b, 0) / arr.length;
 
 function MarketingCard(props) {
   const { t } = useTranslation();
@@ -30,6 +35,7 @@ function MarketingCard(props) {
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
 
+  const [showRating, setShowRating] = useState(false);
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
@@ -37,6 +43,8 @@ function MarketingCard(props) {
     useState('');
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
+  const [averageScore, setAverageScore] = useState(0);
+
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -218,9 +226,29 @@ function MarketingCard(props) {
         `&refId=${refId}`
     );
   }
+  function handleShowRatings(e) {
+    e.preventDefault();
+    setShowRating(true);
+  }
+  function handleClosePopUp(e) {
+    e.preventDefault();
+    setShowRating(false);
+  }
+  useEffect(() => {
+    setAverageScore(average(props.helperRatingData));
+  }, [props.helperRatingData]);
+
+ 
 
   return (
     <div className='history-card'>
+      {showRating && (
+        <RatingPopUp
+          onClick={handleClosePopUp}
+          averageScore={averageScore}
+          ratingData={props.helperRatingData}
+        />
+      )}
       <div className='profilePicWidth'>
         {!props.isAnonymous && props.profilePicPath && (
           <div className='helper-ImgBx'>
@@ -245,6 +273,19 @@ function MarketingCard(props) {
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.username}
             </h3>
+            <div
+              className='pureFlexRowMarginAuto'
+              style={{ cursor: 'pointer' }}
+              onClick={handleShowRatings}
+            >
+              <ScoreStars averageScore={averageScore} />
+              <p style={{ marginLeft: '5px' }}>
+                {props.helperRatingData.length}
+                {t('comments_unit')}
+                {t('comments')}
+              </p>
+            </div>
+
             <p style={{ fontSize: '14px' }}>
               {t('introduction')}: {props.introduction || t('na')}
             </p>
@@ -300,7 +341,14 @@ function MarketingCard(props) {
           <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('helper_organization')}: {props.organization || t('na')}
           </p>
-          <p style={{ fontSize: '14px', padding: '6px', color: '#f47174', fontWeight: 'bold' }}>
+          <p
+            style={{
+              fontSize: '14px',
+              padding: '6px',
+              color: '#f47174',
+              fontWeight: 'bold',
+            }}
+          >
             {t('price_per_duration_min', { price: props.price, duration })}
           </p>
         </div>

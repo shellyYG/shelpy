@@ -1,7 +1,7 @@
 function LeftHalfLineTextBox(props) {
   return (
     <div className='form-wrapper' style={{ marginBottom: props.marginBottom }}>
-      <label>{props.title}</label>
+      <label style={{ color: props.titleColor || '' }}>{props.title}</label>
       {props.details && (
         <p style={{ fontSize: '9px', marginBottom: '10px' }}>{props.details}</p>
       )}

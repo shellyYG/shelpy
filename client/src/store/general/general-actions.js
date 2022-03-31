@@ -154,6 +154,7 @@ export const getAllMarketingOffers = (data) => {
       dispatch(
         generalActions.updateAllMarketingOffers({
           allMKTOffers: response.data.allMKTOffers,
+          allMKTHelperRatings: response.data.allMKTHelperRatings,
         })
       );
     } catch (error) {
@@ -161,6 +162,7 @@ export const getAllMarketingOffers = (data) => {
       dispatch(
         generalActions.updateAllMarketingOffers({
           allMKTOffers: [],
+          allMKTHelperRatings: [],
         })
       );
     }

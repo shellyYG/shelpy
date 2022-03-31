@@ -17,6 +17,12 @@ import {
   lifeSharingSubOptions,
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
+import RatingPopUp from '../pages/RatingPopUp';
+import ScoreStars from './ScoreStars';
+
+const average = (arr) =>
+  arr.map((el) => el.score).reduce((a, b) => a + b, 0) / arr.length;
+
 
 function PotentialHelperCard(props) {
   const { t } = useTranslation();
@@ -28,6 +34,9 @@ function PotentialHelperCard(props) {
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
+
+  const [showRating, setShowRating] = useState(false);
+    const [averageScore, setAverageScore] = useState(0);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -200,8 +209,27 @@ function PotentialHelperCard(props) {
     setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
   }, [t, props.languages]);
 
+    function handleShowRatings(e) {
+      e.preventDefault();
+      setShowRating(true);
+    }
+    function handleClosePopUp(e) {
+      e.preventDefault();
+      setShowRating(false);
+    }
+    useEffect(() => {
+      setAverageScore(average(props.helperRatingData));
+    }, [props.helperRatingData]);
+
   return (
     <div className='history-card'>
+      {showRating && (
+        <RatingPopUp
+          onClick={handleClosePopUp}
+          averageScore={averageScore}
+          ratingData={props.helperRatingData}
+        />
+      )}
       <div className='profilePicWidth'>
         {!props.helperAnonymous && props.profilePicPath && (
           <div className='helper-ImgBx'>
@@ -225,6 +253,18 @@ function PotentialHelperCard(props) {
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
               {props.partnerName}
             </h3>
+            <div
+              className='pureFlexRowMarginAuto'
+              style={{ cursor: 'pointer' }}
+              onClick={handleShowRatings}
+            >
+              <ScoreStars averageScore={averageScore} />
+              <p style={{ marginLeft: '5px' }}>
+                {props.helperRatingData.length}
+                {t('comments_unit')}
+                {t('comments')}
+              </p>
+            </div>
             <p style={{ fontSize: '14px' }}>
               {t('introduction')}: {props.introduction}
             </p>

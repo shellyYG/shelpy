@@ -58,9 +58,27 @@ LEFT JOIN requests req ON
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
 WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status ='deleted'
 ORDER BY acc.score, ofs.id DESC;`;
-  const allPotentialHelpers = await query(sql, helpeeUserId);
 
-  return { data: { allPotentialHelpers } };
+const sqlForRating = `
+  SELECT writerUsername, ratedPartnerId, score, comments
+  FROM ratings
+  WHERE ratedPartnerId IN (
+  SELECT DISTINCT acc.id
+    FROM offers ofs
+LEFT JOIN helper_account acc ON ofs.userId = acc.id
+LEFT JOIN requests req ON 
+		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType
+        AND ofs.country = req.country
+LEFT JOIN helpee_account helpee ON req.userId = helpee.id
+WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.internalStatus IN ('pass_eligibility_email_sent') 
+AND NOT ofs.status ='deleted'
+  ) AND writerRole = 'helpee'
+  `;
+
+  const allPotentialHelpers = await query(sql, helpeeUserId);
+  const allPotentialHelpersRatings = await query(sqlForRating, helpeeUserId);
+
+  return { data: { allPotentialHelpers, allPotentialHelpersRatings } };
 }
 
 async function getHelpeeOrderHelperList(data) {
@@ -206,6 +224,14 @@ async function getHelpeeData(data) {
   return { data: { helpeeData } };
 }
 
+async function getHelpeeRatings(data) {
+  const sqlSimplified = ` SELECT writerUsername, score, comments
+  FROM ratings
+  WHERE ratedPartnerId=? AND writerRole='helper' ORDER BY id DESC;`;
+  const helpeeRatingData = await query(sqlSimplified, data.helpeeUserId);
+  return { data: { helpeeRatingData } };
+}
+
 module.exports = {
   insertHelpeeRequestFormAndGetId,
   insertHelpeeRequest,
@@ -220,4 +246,5 @@ module.exports = {
   getAllChattedHelpers,
   getBookingDetails,
   getHelpeeData,
+  getHelpeeRatings,
 };

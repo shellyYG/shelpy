@@ -19,12 +19,24 @@ async function getHelperAllOffers(data) {
 
 async function getAllMarketingOffers() {
   const sql = `
-  SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.languages, acc.isAnonymous
+  SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.languages, acc.isAnonymous, acc.id AS helperId
   FROM offers ofs 
   INNER JOIN helper_account acc ON ofs.userId = acc.id
   WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' ORDER BY score, id DESC;`;
   const allMKTOffers = await query(sql);
-  return { data: { allMKTOffers } };
+  const sqlForRating = `
+  SELECT writerUsername, ratedPartnerId, score, comments
+  FROM ratings
+  WHERE ratedPartnerId IN (
+  SELECT acc.id AS helperId
+  FROM offers ofs 
+  INNER JOIN helper_account acc ON ofs.userId = acc.id
+  WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') 
+    AND NOT ofs.status='deleted' 
+  ) AND writerRole = 'helpee'
+  `;
+  const allMKTHelperRatings = await query(sqlForRating);
+  return { data: { allMKTOffers, allMKTHelperRatings } };
 }
 
 async function getHelperAllBookings(data) {
@@ -218,6 +230,14 @@ async function getHelperData(data) {
   return { data: { helperData } };
 }
 
+async function getHelperRatings(data) {
+  const sqlSimplified = ` SELECT writerUsername, score, comments
+  FROM ratings
+  WHERE ratedPartnerId=? AND writerRole='helpee' ORDER BY id DESC;`;
+  const helperRatingData = await query(sqlSimplified, data.helperUserId);
+  return { data: { helperRatingData } };
+}
+
 module.exports = {
   insertHelperOffer,
   getHelperAllOffers,
@@ -231,4 +251,5 @@ module.exports = {
   getAllChattedCustomers,
   updatePayPalAccount,
   getHelperData,
+  getHelperRatings,
 };

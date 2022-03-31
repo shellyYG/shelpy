@@ -60,6 +60,7 @@ const RatePartnerPage = (props) => {
   const [helpeeId, setHelpeeId] = useState('');
   const [helperId, setHelperId] = useState('');
   const [partnerName, setPartnerName] = useState('');
+  const [writerName, setWriterName] = useState('');
   const [score, setScore] = useState('default');
   const [commentsString, setCommentsString] = useState('');
   const [enableBtn, setEnableBtn] = useState(false);
@@ -93,8 +94,10 @@ const RatePartnerPage = (props) => {
       if (booking && booking.length && booking[0])
         if (props.isHelpee) {
           setPartnerName(booking[0].helperUsername);
+          setWriterName(booking[0].helpeeUsername);
         } else {
           setPartnerName(booking[0].helpeeUsername);
+          setWriterName(booking[0].helperUsername);
         }
   },[booking, props.isHelpee])
 
@@ -155,8 +158,9 @@ const RatePartnerPage = (props) => {
       ratedPartnerId: props.isHelpee ? parseInt(helperId) : parseInt(helpeeId),
       score: parseInt(score),
       comments: commentsString,
+      writerId: props.isHelpee ? parseInt(helpeeId) : parseInt(helperId),
+      writerUsername: writerName,
     };
-    console.log('data: ', data);
     dispatch(postPartnerScore(data))
     setIsLoading(true);
   }

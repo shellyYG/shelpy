@@ -112,6 +112,7 @@ const getAllMarketingOffers = async (req, res) => {
     if (response && response.data) {
       res.status(200).json({
         allMKTOffers: response.data.allMKTOffers,
+        allMKTHelperRatings: response.data.allMKTHelperRatings,
       });
     } else {
       throw Error('no_marketing_offer_error');
@@ -247,6 +248,28 @@ const getHelperData = async (req, res) => {
   }
 };
 
+const getHelperRatings = async (req, res) => {
+  try {
+    const { helperUserId } = req.query;
+    let response;
+    if (helperUserId) {
+      response = await helperModel.getHelperRatings({
+        helperUserId,
+      });
+    }
+    if (response && response.data) {
+      res.status(200).json({
+        helperRatingData: response.data.helperRatingData,
+      });
+    } else {
+      throw Error('no_user_data_found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   allowHelperPrivateRoute,
   postHelperOffer,
@@ -262,4 +285,5 @@ module.exports = {
   getAllChattedCustomers,
   updatePayPalAccount,
   getHelperData,
+  getHelperRatings,
 };

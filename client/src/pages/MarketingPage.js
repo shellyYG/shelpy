@@ -33,7 +33,9 @@ const HelpeeDashboardPage = (props) => {
   const [filteredOffers, setFilteredOffers] = useState([]);
   const [matchedSecondTypes, setMatchedSecondTypes] = useState([]);
 
-  const { allMKTOffers } = useSelector((state) => state.general);
+  const { allMKTOffers, allMKTHelperRatings } = useSelector(
+    (state) => state.general
+  );
 
   useEffect(() => {
     if (mainType === 'default') {
@@ -210,6 +212,9 @@ const HelpeeDashboardPage = (props) => {
                 languages={option.languages}
                 isAnonymous={option.isAnonymous}
                 organization={option.organization}
+                helperRatingData={allMKTHelperRatings.filter(
+                  (item) => item.ratedPartnerId === option.userId
+                )}
               />
             ))}
           </div>

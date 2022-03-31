@@ -44,6 +44,7 @@ const {
   getAllChattedHelpers,
   getBookingDetails,
   getHelpeeData,
+  getHelpeeRatings,
 } = require('../controllers/helpeeController');
 
 const {
@@ -61,6 +62,7 @@ const {
   getAllChattedCustomers,
   updatePayPalAccount,
   getHelperData,
+  getHelperRatings,
 } = require('../controllers/helperController');
 
 const {
@@ -660,6 +662,20 @@ router
   .get(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(getHelperData)
+  );
+
+router
+  .route('/api/helpee/ratings')
+  .get(
+    // customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(getHelpeeRatings)
+  );
+
+router
+  .route('/api/helper/ratings')
+  .get(
+    // customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(getHelperRatings)
   );
 
 router

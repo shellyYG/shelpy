@@ -24,6 +24,7 @@ const helpeeSlice = createSlice({
     helpeeProfilePicPath: '',
     allOrders: [],
     allPotentialHelpers: [],
+    allPotentialHelpersRatings: [],
     allBookings: [],
 
     sendPasswordResetEmailStatus: '',
@@ -47,6 +48,7 @@ const helpeeSlice = createSlice({
     allChattedHelpers: [],
     booking: [],
     helpeeData: [],
+    helpeeRatingData: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -128,8 +130,11 @@ const helpeeSlice = createSlice({
     },
 
     updateAllPotentialHelpers(state, action) {
-      const { payload } = action;
-      state.allPotentialHelpers = payload.allPotentialHelpers;
+      const { allPotentialHelpers, allPotentialHelpersRatings } =
+        action.payload;
+      if (allPotentialHelpers) state.allPotentialHelpers = allPotentialHelpers;
+      if (allPotentialHelpersRatings)
+        state.allPotentialHelpersRatings = allPotentialHelpersRatings;
     },
     updateAllOrders(state, action) {
       const { payload } = action;
@@ -174,6 +179,10 @@ const helpeeSlice = createSlice({
     updateHelpeeData(state, action) {
       const { payload } = action;
       state.helpeeData = payload.helpeeData;
+    },
+    updateHelpeeRatingData(state, action) {
+      const { payload } = action;
+      state.helpeeRatingData = payload.helpeeRatingData;
     },
   },
 });

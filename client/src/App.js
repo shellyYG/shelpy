@@ -57,6 +57,7 @@ import HelperOffersPage from './pages/helper/HelperOffersPage';
 import ReferralPage from './pages/ReferralPage';
 import HelperSetPayPalPage from './pages/helper/HelperSetPayPalPage';
 import HelpeeGuidePage from './pages/helpee/HelpeeGuidePage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -506,6 +507,18 @@ function App() {
               path={`/:locale/helpee/rate-partner`}
               element={
                 <RatePartnerPage isHelpee={true} helpeeUserId={helpeeUserId} />
+              }
+            />
+            <Route
+              path={`/:locale/helper/profile`}
+              element={
+                <ProfilePage isHelpee={false} helperUserId={helperUserId} />
+              }
+            />
+            <Route
+              path={`/:locale/helpee/profile`}
+              element={
+                <ProfilePage isHelpee={true} helpeeUserId={helpeeUserId} />
               }
             />
             <Route path='*' element={<ErrorPage />} />

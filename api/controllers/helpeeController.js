@@ -93,6 +93,7 @@ const getPotentialHelpers = async (req, res) => {
     if (response && response.data) {
       res.status(200).json({
         allPotentialHelpers: response.data.allPotentialHelpers,
+        allPotentialHelpersRatings: response.data.allPotentialHelpersRatings,
       });
     } else {
       throw Error('no_potential_helper_error');
@@ -305,6 +306,28 @@ const getHelpeeData = async (req, res) => {
   }
 };
 
+const getHelpeeRatings = async (req, res) => {
+  try {
+    const { helpeeUserId } = req.query;
+    let response;
+    if (helpeeUserId) {
+      response = await helpeeModel.getHelpeeRatings({
+        helpeeUserId,
+      });
+    }
+    if (response && response.data) {
+      res.status(200).json({
+        helpeeRatingData: response.data.helpeeRatingData,
+      });
+    } else {
+      throw Error('no_user_data_found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   allowHelpeePrivateRoute,
   postHelpeeServiceRequestForm,
@@ -322,4 +345,5 @@ module.exports = {
   getAllChattedHelpers,
   getBookingDetails,
   getHelpeeData,
+  getHelpeeRatings,
 };

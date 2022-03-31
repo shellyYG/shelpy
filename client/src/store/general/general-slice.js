@@ -19,6 +19,7 @@ const generalSlice = createSlice({
     unSubEmailStatusMessage: '',
 
     allMKTOffers: [],
+    allMKTHelperRatings: [],
     userRole: '',
     signInRole: '',
 
@@ -74,8 +75,9 @@ const generalSlice = createSlice({
       if (signInRole) state.signInRole = signInRole;
     },
     updateAllMarketingOffers(state, action) {
-      const { allMKTOffers } = action.payload;
+      const { allMKTOffers, allMKTHelperRatings } = action.payload;
       if (allMKTOffers) state.allMKTOffers = allMKTOffers;
+      if (allMKTHelperRatings) state.allMKTHelperRatings = allMKTHelperRatings;
     },
     setEmailUnsubStatus(state, action) {
       const {

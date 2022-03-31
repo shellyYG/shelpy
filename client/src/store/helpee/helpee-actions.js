@@ -23,6 +23,7 @@ const helpeeChattedHelpersPath = '/api/helpee/chat/partners';
 const bookingStatusPath = '/api/booking-status';
 const getBookingDetailsPath = '/api/booking/details';
 const getHelpeeDataPath = '/api/helpee/data';
+const getHelpeeRatingPath = '/api/helpee/ratings';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
@@ -211,6 +212,7 @@ export const getPotentialHelpers = (data) => {
   return async (dispatch) => {
     if (data && data.helpeeUserId) {
       const allPotentialHelpers = [];
+      const allPotentialHelpersRatings = [];
       try {
         const matchedHelpersRes = await axios.get(getPotentialHelpersPath, {
           params: { helpeeUserId: data.helpeeUserId },
@@ -223,9 +225,14 @@ export const getPotentialHelpers = (data) => {
         });
         if (matchedHelpersRes && matchedHelpersRes.data) {
           const matchedHelpers = matchedHelpersRes.data.allPotentialHelpers;
+          const matchedHelpersRatings =
+            matchedHelpersRes.data.allPotentialHelpersRatings;
           matchedHelpers.forEach((h)=>{
             allPotentialHelpers.push(h);
           })
+          matchedHelpersRatings.forEach((h) => {
+            allPotentialHelpersRatings.push(h);
+          });
           const matchedOfferIds = matchedHelpers.map((p) => p.offerId);
           if (bookingsRes && bookingsRes.data) {
             const bookings = bookingsRes.data.allBookings || [];
@@ -253,6 +260,7 @@ export const getPotentialHelpers = (data) => {
           dispatch(
             helpeeActions.updateAllPotentialHelpers({
               allPotentialHelpers,
+              allPotentialHelpersRatings,
             })
           );
         }
@@ -261,6 +269,7 @@ export const getPotentialHelpers = (data) => {
         dispatch(
           helpeeActions.updateAllPotentialHelpers({
             allPotentialHelpers: [],
+            allPotentialHelpersRatings: [],
           })
         );
       }
@@ -995,3 +1004,27 @@ export const getHelpeeUserData = (data) => {
     }
   }
 }
+
+export const getHelpeeRatingData = (data) => {
+  return async (dispatch) => {
+    if (data && data.helpeeUserId) {
+      try {
+        const response = await axios.get(getHelpeeRatingPath, {
+          params: { helpeeUserId: data.helpeeUserId },
+        });
+        dispatch(
+          helpeeActions.updateHelpeeRatingData({
+            helpeeRatingData: response.data.helpeeRatingData,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateHelpeeRatingData({
+            helpeeRatingData: [],
+          })
+        );
+      }
+    }
+  };
+};

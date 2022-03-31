@@ -119,15 +119,15 @@ const ProfileIcon = (props) => {
     if (refId) path += `?refId=${refId}`;
     navigate(path);
   }
-  function handleToHelpeeUpdateProfile(e) {
+  function handleToHelpeeViewProfile(e) {
     e.preventDefault();
-    let path = `/${currentLanguage}/helpee/basic-form`;
+    let path = `/${currentLanguage}/helpee/profile`;
     if (window.location.search) path += window.location.search;
     navigate(path);
   }
-  function handleToHelperUpdateProfile(e) {
+  function handleToHelperViewProfile(e) {
     e.preventDefault();
-    let path = `/${currentLanguage}/helper/basic-form`;
+    let path = `/${currentLanguage}/helper/profile`;
     if (window.location.search) path += window.location.search;
     navigate(path);
   }
@@ -174,8 +174,8 @@ const ProfileIcon = (props) => {
                     </div>
                   )}
                   {props.isHelpeeAuthenticated && (
-                    <div onClick={handleToHelpeeUpdateProfile}>
-                      {t('update_profile')}
+                    <div onClick={handleToHelpeeViewProfile}>
+                      {t('your_profile')}
                     </div>
                   )}
                   {!props.isHelpeeAuthenticated && (
@@ -209,15 +209,17 @@ const ProfileIcon = (props) => {
                     </div>
                   )}
                   {props.isHelperAuthenticated && (
-                    <div onClick={handleToHelperUpdateProfile}>
-                      {t('update_profile')}
+                    <div onClick={handleToHelperViewProfile}>
+                      {t('your_profile')}
                     </div>
                   )}
-                  {props.isHelperAuthenticated && (props.helperStatus === 'approved' || props.helperStatus === 'agreed_employment_contract') && (
-                    <div onClick={handleToHelperUpdatePayPal}>
-                      {t('update_payment')}
-                    </div>
-                  )}
+                  {props.isHelperAuthenticated &&
+                    (props.helperStatus === 'approved' ||
+                      props.helperStatus === 'agreed_employment_contract') && (
+                      <div onClick={handleToHelperUpdatePayPal}>
+                        {t('update_payment')}
+                      </div>
+                    )}
                   {!props.isHelperAuthenticated && (
                     <div onClick={handleSignIn}>{t('sign_in')}</div>
                   )}

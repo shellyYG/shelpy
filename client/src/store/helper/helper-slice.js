@@ -48,6 +48,7 @@ const helperSlice = createSlice({
 
     allChattedCustomers: [],
     helperData: [],
+    helperRatingData: [],
   },
   reducers: {
     updateAuthStatus(state, action) {
@@ -155,6 +156,10 @@ const helperSlice = createSlice({
     updateHelperData(state, action) {
       const { payload } = action;
       state.helperData = payload.helperData;
+    },
+    updateHelperRatingData(state, action) {
+      const { payload } = action;
+      state.helperRatingData = payload.helperRatingData;
     },
   },
 });
