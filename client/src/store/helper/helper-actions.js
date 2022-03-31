@@ -17,7 +17,7 @@ const helperBasicFormWithoutCertificatePath = '/api/helper/basic-form';
 const helperCanChangePasswordPath = '/api/helper/password/allow-change';
 const helperSendPasswordResetEmailPath = '/api/helper/password/reset';
 const helperChattedCustomersPath = '/api/helper/chat/partners';
-const setPayPalAccountPath = '/api/helper/paypal-account';
+const setPayPalAccountPath = '/api/paypal-account';
 const getHelperDataPath = '/api/helper/data';
 const getHelperRatingPath = '/api/helper/ratings';
 

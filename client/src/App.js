@@ -55,6 +55,7 @@ import HelperMatchedPartnerPage from './pages/helper/HelperMatchedPartnerPage';
 import HelpeeRequestsPage from './pages/helpee/HelpeeRequestsPage';
 import HelperOffersPage from './pages/helper/HelperOffersPage';
 import ReferralPage from './pages/ReferralPage';
+import ReferralContractPage from './pages/ReferralContractPage';
 import HelperSetPayPalPage from './pages/helper/HelperSetPayPalPage';
 import HelpeeGuidePage from './pages/helpee/HelpeeGuidePage';
 import ProfilePage from './pages/ProfilePage';
@@ -88,8 +89,12 @@ function App() {
             <Route path={`/:locale/impressum`} element={<ImpressumPage />} />
             <Route path={`/:locale/contact`} element={<ContactPage />} />
             <Route
-              path={`/:locale/helper-terms`}
+              path={`/:locale/contract-terms`}
               element={<HelperContractPage />}
+            />
+            <Route
+              path={`/:locale/referral-terms`}
+              element={<ReferralContractPage />}
             />
             <Route path={`/:locale/privacy`} element={<PrivacyPolicyPage />} />
             <Route path={`/:locale/terms`} element={<TermsConditionaPage />} />

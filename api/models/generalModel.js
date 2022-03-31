@@ -64,9 +64,18 @@ async function logEmailToDB(data) {
   return sqlResult.insertId;
 }
 
+async function updatePayPalAccount(data) {
+  const { bankAccount, payPalReceiverName, status, id, role } = data;
+  const table = role === 'helpee' ? 'helpee_account': 'helper_account';
+  const sql = `UPDATE ${table} SET bankAccount=?, payPalReceiverName=?, status=? WHERE id=?`;
+  await query(sql, [bankAccount, payPalReceiverName, status, id]);
+  return { data: { id } };
+} 
+
 module.exports = {
   getChatroomReceiverEmail,
   getBookingReceiverEmail,
   getBookingStatusChangeInitiatorName,
   logEmailToDB,
+  updatePayPalAccount,
 };

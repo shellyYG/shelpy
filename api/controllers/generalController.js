@@ -31,7 +31,19 @@ const confirmCanAccessDashboard = async (req, res) => {
   }
 };
 
+const updatePayPalAccount = async (req, res) => {
+  try {
+    const { data } = req.body;
+    const id = await generalModel.updatePayPalAccount(data);
+    res.status(200).json({ userId: id, status: 'success' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   confirmCanAccessChatroom,
   confirmCanAccessDashboard,
+  updatePayPalAccount,
 };

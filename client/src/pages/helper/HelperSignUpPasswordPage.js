@@ -257,7 +257,7 @@ const HelperSignUpPasswordPage = () => {
               >
                 {t('helper_home_terms_and_condition_introduction')}{' '}
                 <a
-                  href={`/${currentLanguage}/helper-terms?refId=${refId}`}
+                  href={`/${currentLanguage}/contract-terms?refId=${refId}`}
                   target='_blank'
                   rel='noreferrer'
                 >

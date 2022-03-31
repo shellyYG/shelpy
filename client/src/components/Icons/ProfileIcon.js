@@ -6,12 +6,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { onClickUpdateActiveIconTarget } from '../../store/general/general-actions';
-import {
-  getHelpeeAuthStatus,
-} from '../../store/helpee/helpee-actions';
-import { getHelperAuthStatus } from '../../store/helper/helper-actions';
-import NavbarIdentity from '../NavbarIdentity';
 import { useTranslation } from 'react-i18next';
+import FireIcon from './FireIcon';
 
 
 const MySwal = withReactContent(Swal);
@@ -99,6 +95,18 @@ const ProfileIcon = (props) => {
     if (window.location.search) path += window.location.search;
     navigate(path);
   }
+  function handleToHelperReferralPage(e){
+    e.preventDefault();
+    let path = `/${currentLanguage}/helper/referrals`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
+  function handleToHelpeeReferralPage(e) {
+    e.preventDefault();
+    let path = `/${currentLanguage}/helpee/referrals`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
   
   function handleSignIn(e) {
     e.preventDefault();
@@ -182,6 +190,16 @@ const ProfileIcon = (props) => {
                     <div onClick={handleSignIn}>{t('sign_in')}</div>
                   )}
                   {props.isHelpeeAuthenticated && (
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <p onClick={handleToHelpeeReferralPage}>
+                        {t('referral_terms')}
+                      </p>
+                      <FireIcon
+                        color={({ isActive }) => (isActive ? 'black' : 'white')}
+                      />
+                    </div>
+                  )}
+                  {props.isHelpeeAuthenticated && (
                     <div onClick={handleHelpeeSignOut}>{t('sign_out')}</div>
                   )}
                 </>
@@ -213,15 +231,23 @@ const ProfileIcon = (props) => {
                       {t('your_profile')}
                     </div>
                   )}
-                  {props.isHelperAuthenticated &&
-                    (props.helperStatus === 'approved' ||
-                      props.helperStatus === 'agreed_employment_contract') && (
-                      <div onClick={handleToHelperUpdatePayPal}>
-                        {t('update_payment')}
-                      </div>
-                    )}
+                  {props.isHelperAuthenticated && (
+                    <div onClick={handleToHelperUpdatePayPal}>
+                      {t('update_payment')}
+                    </div>
+                  )}
                   {!props.isHelperAuthenticated && (
                     <div onClick={handleSignIn}>{t('sign_in')}</div>
+                  )}
+                  {props.isHelperAuthenticated && (
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <p onClick={handleToHelperReferralPage}>
+                        {t('referral_terms')}
+                      </p>
+                      <FireIcon
+                        color={({ isActive }) => (isActive ? 'black' : 'white')}
+                      />
+                    </div>
                   )}
                   {props.isHelperAuthenticated && (
                     <div onClick={handleHelperSignOut}>{t('sign_out')}</div>

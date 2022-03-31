@@ -217,7 +217,7 @@ const HelpersetPayPalPage = (props) => {
                   >
                     {t('helper_sign_contract_introduction')}{' '}
                     <a
-                      href={`/${currentLanguage}/helper-terms?refId=${refId}`}
+                      href={`/${currentLanguage}/contract-terms?refId=${refId}`}
                       target='_blank'
                       rel='noreferrer'
                     >
@@ -232,7 +232,6 @@ const HelpersetPayPalPage = (props) => {
                 disable={!enableBtn}
                 handleConfirm={handleConfirm}
               />
-              
             </div>
           </div>
         </div>

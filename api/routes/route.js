@@ -60,7 +60,6 @@ const {
   getHelperAllBookings,
   getAllMarketingOffers,
   getAllChattedCustomers,
-  updatePayPalAccount,
   getHelperData,
   getHelperRatings,
 } = require('../controllers/helperController');
@@ -78,6 +77,7 @@ const { postUserSignUpData } = require('../controllers/signUpController');
 const {
   confirmCanAccessChatroom,
   confirmCanAccessDashboard,
+  updatePayPalAccount,
 } = require('../controllers/generalController');
 
 router
@@ -152,7 +152,7 @@ router
   );
 
 router
-  .route('/api/helper/paypal-account')
+  .route('/api/paypal-account')
   .post(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(updatePayPalAccount)
