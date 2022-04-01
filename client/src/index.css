@@ -1134,6 +1134,12 @@ footer {
   margin: 10px auto;
   text-align: center;
 }
+.meetingLinkWrapper {
+  width: 100%;
+  line-break: anywhere;
+  font-size: 10px;
+  padding: 6px;
+}
 
 .pure-row {
   display: flex;

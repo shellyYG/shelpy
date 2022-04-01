@@ -956,7 +956,8 @@
   "error_file_too_big": "最大文件大小为1MB，请选择一个小一点的文件",
   "error_only_accept_picture_format": "只接受以下这几种文件类型：.jpg, .jpeg 或是 .png 档案，请选择相符的文件类型上传",
   "error_only_accept_file_format": "只接受以下这几种文件类型：.docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg 或是 .png 档案，请选择相符的文件类型上传",
-  "booking_status_meet_at_when": "已付款。{{name}}将与你在{{date}}日{{time}}时，开始线上会议，我们会寄会议连结，至你的信箱中",
+  "booking_status_meet_at_when": "已付款。{{name}}将与你在{{date}}日{{time}}时，开始线上会议，请勿迟到!",
+  "show_meeting_link": "查看线上会议连结",
 
   "payment": "付款页面",
   "type": "服务类别",

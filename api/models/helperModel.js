@@ -44,10 +44,11 @@ async function getHelperAllBookings(data) {
   const sql = ` 
   SELECT bookings.id AS bookingId,acc.languages, bookings.*, acc.profilePicPath AS profilePicPath
   , acc.isAnonymous AS helpeeAnonymous, acc.introduction
-  , acc.languages
+  , acc.languages, meet.joinUrl
   FROM bookings bookings
   LEFT JOIN helpee_account acc ON bookings.helpeeId = acc.id
-  WHERE helperId = ? ORDER BY priorityScore DESC;`;
+  LEFT JOIN meetings meet ON bookings.id = meet.bookingId
+  WHERE bookings.helperId = ? ORDER BY priorityScore DESC;`;
   const allBookings = await query(sql, helperUserId);
   return { data: { allBookings } };
 }

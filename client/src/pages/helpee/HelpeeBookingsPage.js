@@ -136,6 +136,7 @@ const HelpeeBookingsPage = (props) => {
                 isAnonymous={option.helperAnonymous}
                 notes={option.notes}
                 questions={option.questions}
+                joinUrl={option.joinUrl}
               />
             ))}
         </div>

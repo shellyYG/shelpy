@@ -28,12 +28,13 @@ async function getHelpeeAllBookings(data) {
   , acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous, acc.introduction
   , acc.languages
   , ofs.notes AS notes
-  , bookings.*
+  , bookings.*, meet.joinUrl
   FROM bookings bookings
   LEFT JOIN offers ofs ON bookings.offerId = ofs.id
   LEFT JOIN helper_account acc ON bookings.helperId = acc.id
   LEFT JOIN helpee_account helpee ON bookings.helpeeId = helpee.id
-  WHERE helpeeId=? ORDER BY priorityScore DESC;`;
+  LEFT JOIN meetings meet ON bookings.id = meet.bookingId
+  WHERE bookings.helpeeId=? ORDER BY priorityScore DESC;`;
   const allBookings = await query(sqlSimplified, data.helpeeUserId);
   return { data: { allBookings } };
 }

@@ -125,6 +125,7 @@ const HelperBookingsPage = (props) => {
                   isAnonymous={option.helpeeAnonymous}
                   notes={option.notes}
                   questions={option.questions}
+                  joinUrl={option.joinUrl}
                 />
               )
             )}

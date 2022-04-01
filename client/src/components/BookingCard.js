@@ -50,6 +50,7 @@ function BookingCard(props) {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
   const [loading, setIsLoading] = useState(false);
+  const [showMeetingLink, setShowMeetingLink] = useState(false);
 
   const [product] = useState({
     mainType: props.mainType,
@@ -418,7 +419,12 @@ function BookingCard(props) {
     navigate,
     dispatch,
   ]);
-  // <img src="/images/helper-profile-pictures/1644921329445-markus.jpeg" alt="Markus">
+  
+  function handleShowMeetingLink(e) {
+    e.preventDefault();
+    setShowMeetingLink(!showMeetingLink);
+  }
+
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
@@ -557,6 +563,18 @@ function BookingCard(props) {
                 {t('rate_helpee', { name: props.partnerName })}
               </button>
             )}
+            {!isExpiredBooking &&
+              props.bookingStatus === 'paid' &&
+              props.joinUrl && (
+                <button className='btn-next' onClick={handleShowMeetingLink}>
+                  {t('show_meeting_link')}
+                </button>
+              )}
+            {showMeetingLink && (
+              <div className='contentBx'>
+                <p className='meetingLinkWrapper'>{props.joinUrl}</p>
+              </div>
+            )}
           </div>
         )}
       {props.isHelpee && props.bookingStatus === 'helperConfirmed' && (
@@ -655,6 +673,18 @@ function BookingCard(props) {
             <button className='btn-green-border' onClick={handleRateHelper}>
               {t('rate_helper', { name: props.partnerName })}
             </button>
+          )}
+          {!isExpiredBooking &&
+            props.bookingStatus === 'paid' &&
+            props.joinUrl && (
+              <button className='btn-next' onClick={handleShowMeetingLink}>
+                {t('show_meeting_link')}
+              </button>
+            )}
+          {showMeetingLink && (
+            <div className='contentBx'>
+              <p className='meetingLinkWrapper'>{props.joinUrl}</p>
+            </div>
           )}
         </div>
       )}
