@@ -956,7 +956,8 @@
   "error_file_too_big": "最大文件大小为1MB，请选择一个小一点的文件",
   "error_only_accept_picture_format": "只接受以下这几种文件类型：.jpg, .jpeg 或是 .png 档案，请选择相符的文件类型上传",
   "error_only_accept_file_format": "只接受以下这几种文件类型：.docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg 或是 .png 档案，请选择相符的文件类型上传",
-  "booking_status_meet_at_when": "已付款。{{name}}将与你在{{date}}日{{time}}时，开始线上会议，我们会寄会议连结，至你的信箱中",
+  "booking_status_meet_at_when": "已付款。{{name}}将与你在{{date}}日{{time}}时，开始线上会议，请勿迟到!",
+  "show_meeting_link": "查看线上会议连结",
 
   "payment": "付款页面",
   "type": "服务类别",
@@ -1032,6 +1033,7 @@
   "mkt_crystal_selfEmployed": "粉專:歐洲彩妝日誌Makeup Artist Crystal。分享自由職業彩妝師在歐洲跑透透的接案生活歷程",
   "mkt_marcus_selfEmployed": "Easy Cook Asia 创办人。分享如何以外国人的身份，在柏林成功创立食品电商网站之经验谈",
   "mkt_tingyi_job": "分享在谷歌担任 Growth Ｍanager 的工作经验",
+  "mkt_tina_job": "分享在荷兰零售业与台湾 FMCG 工作心得，包含文化差异与履历撰写",
 
   "easy_5_step": "使用过来人App的简单5步骤",
   "helpee_guide": "新鲜人使用指南",

@@ -956,7 +956,8 @@
   "error_file_too_big": "Max. File size is 1MB. Please choose a smaller file to upload.",
   "error_only_accept_picture_format": "Only accepts .jpg, .jpeg or .png file. Please choose another file to upload.",
   "error_only_accept_file_format": "Only accepts .docx, .doc, .pdf, .ppt, .pptx, .jpg, .jpeg or .png file. Please choose another file to upload.",
-  "booking_status_meet_at_when": "Meet {{name}} on {{date}} at {{time}}. We will send you a meeting link to your email shortly.",
+  "booking_status_meet_at_when": "Meet {{name}} on {{date}} at {{time}}. Please be on time!",
+  "show_meeting_link": "Show meeting link",
 
   "payment": "Payment",
   "type": "Type",
@@ -1032,6 +1033,7 @@
   "mkt_crystal_selfEmployed": "FB: Makeup Artist Crystal. Share the life of a makeup artist who works and travels around Europe.",
   "mkt_marcus_selfEmployed": "Co-Founder of Easy Cook Asia. Share how to found a successful food E-Commerce startup as a foreigner in Berlin.",
   "mkt_tingyi_job": "Share experience as a Growth Manager at Google.",
+  "mkt_tina_job": "Share working experience in FMCG (Taiwan) and Retail (Netherlands), include culture, CV optimization",
 
   "easy_5_step": "Use Shelpy App in 5 easy steps",
   "helpee_guide": "Helpee Instruction",
