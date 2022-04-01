@@ -192,17 +192,7 @@ const ReferralPage = (props) => {
               {t('your_referral_link_title')}:
             </h3>
 
-            <div
-              style={{
-                borderRadius: '8px',
-                backgroundColor: 'black',
-                width: '80%',
-                color: 'white',
-                padding: '10px',
-                margin: '10px auto',
-                textAlign: 'center',
-              }}
-            >
+            <div className='personalLinkWrapper'>
               <p style={{ lineBreak: 'anywhere' }}>
                 {props.isHelpee &&
                   `https://shelpy.co/${currentLanguage}/helpee/home?refId=helpee${props.helpeeId}`}

@@ -20,12 +20,18 @@ import AvatarIcon from './Icons/AvatarIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import TrashIcon from './Icons/TrashIcon';
 import { clearDeleteOfferStatus, deleteHelperOffer } from '../store/helper/helper-actions';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const MySwal = withReactContent(Swal);
 
 function OfferCard(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
   const [loading, setIsLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
@@ -35,6 +41,10 @@ function OfferCard(props) {
   const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
     useState('');
   const [details, setDetails] = useState('');
+
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
 
   const {
     deleteOfferStatus,
@@ -262,6 +272,27 @@ function OfferCard(props) {
     dispatch,
   ]);
 
+  async function handleBookHelperMarketingClick(e) {
+    e.preventDefault();
+    if (!props.helpeeId) {
+      await MySwal.fire({
+        title: <strong>{t('oops')}</strong>,
+        html: <p>{t('please_sign_in_first')}</p>,
+        icon: 'error',
+      });
+    } else {
+      navigate(
+        `/${currentLanguage}/helpee/update-booking?requestId=&partnerName=${props.helpeeName}` +
+          `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
+          `&bookingStatus=&bookingId=` +
+          `&helpeeId=${props.helpeeId}&helperId=${props.helperUserId}` +
+          `&helpeeUsername=${props.helpeeName}&helperUsername=${props.helperName}` +
+          `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
+      );
+    }
+  }
+
   return (
     <div className='history-card'>
       <div className='profilePicWidth'>
@@ -364,7 +395,14 @@ function OfferCard(props) {
           </p>
         </div>
       </div>
-      <TrashIcon onClick={handleDeleteOffer} />
+      {props.showBookingBtn && (
+        <div className='fullWidth'>
+          <button className='btn-next' onClick={handleBookHelperMarketingClick}>
+            {t('book_name', { name: props.helperName })}
+          </button>
+        </div>
+      )}
+      {!props.disableTrash && <TrashIcon onClick={handleDeleteOffer} />}
     </div>
   );
 }

@@ -59,6 +59,7 @@ import ReferralContractPage from './pages/ReferralContractPage';
 import HelperSetPayPalPage from './pages/helper/HelperSetPayPalPage';
 import HelpeeGuidePage from './pages/helpee/HelpeeGuidePage';
 import ProfilePage from './pages/ProfilePage';
+import PersonalOfferPage from './pages/PersonalOfferPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -102,6 +103,16 @@ function App() {
               path={`/:locale/marketing/offers`}
               element={
                 <MarketingPage
+                  helpeeId={helpeeUserId}
+                  helpeeUsername={helpeeName}
+                  isHelpeeAuthenticated={isHelpeeAuthenticated}
+                />
+              }
+            />
+            <Route
+              path={`/:locale/personal/offers`}
+              element={
+                <PersonalOfferPage
                   helpeeId={helpeeUserId}
                   helpeeUsername={helpeeName}
                   isHelpeeAuthenticated={isHelpeeAuthenticated}

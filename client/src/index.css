@@ -1125,6 +1125,16 @@ footer {
   align-self: center;
 }
 
+.personalLinkWrapper {
+  border-radius: 8px;
+  background-color: black;
+  width: 80%;
+  color: white;
+  padding: 10px;
+  margin: 10px auto;
+  text-align: center;
+}
+
 .pure-row {
   display: flex;
   margin-bottom: 10px; }

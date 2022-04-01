@@ -239,14 +239,13 @@ const ProfilePage = (props) => {
             {t('your_profile')}
           </h1>
         </div>
-        {showRating &&
-          !props.isHelpee && (
-            <RatingPopUp
-              onClick={handleClosePopUp}
-              averageScore={averageScore}
-              ratingData={props.isHelpee ? helpeeRatingData : helperRatingData}
-            />
-          )}
+        {showRating && !props.isHelpee && (
+          <RatingPopUp
+            onClick={handleClosePopUp}
+            averageScore={averageScore}
+            ratingData={props.isHelpee ? helpeeRatingData : helperRatingData}
+          />
+        )}
         <div style={{ width: '100%', display: 'flex' }}>
           <div className='profile-inner'>
             <div className='pure-row' style={{ marginBottom: '0px' }}>
@@ -313,24 +312,24 @@ const ProfilePage = (props) => {
                 </p>
               </div>
             </div>
-            {!props.isHelpee && 
-                <div className='pure-row'>
+            {!props.isHelpee && (
+              <div className='pure-row'>
                 <div
-                    className='pureFlexRowMarginAuto'
-                    style={{ cursor: 'pointer' }}
-                    onClick={handleShowRatings}
+                  className='pureFlexRowMarginAuto'
+                  style={{ cursor: 'pointer' }}
+                  onClick={handleShowRatings}
                 >
-                    <ScoreStars averageScore={averageScore} />
-                    <p style={{ marginLeft: '5px' }}>
+                  <ScoreStars averageScore={averageScore} />
+                  <p style={{ marginLeft: '5px' }}>
                     {props.isHelpee
-                        ? helpeeRatingData.length
-                        : helperRatingData.length}
+                      ? helpeeRatingData.length
+                      : helperRatingData.length}
                     {t('comments_unit')}
                     {t('comments')}
-                    </p>
+                  </p>
                 </div>
-                </div>
-            }
+              </div>
+            )}
             <div className='pure-row'>
               <div style={{ margin: 'auto' }}>
                 <p>
@@ -352,6 +351,23 @@ const ProfilePage = (props) => {
                 <p style={{ margin: 'auto' }}>{translatedSpeakingLanguages}</p>
               </div>
             </div>
+            {!props.isHelpee && (
+              <>
+                <h3 style={{ textAlign: 'center', color: 'red' }}>
+                  {t('your_personal_offer_link')}:
+                </h3>
+                <div style={{ textAlign: 'center', color: 'red' }}>
+                  <p>{t('send_this_to_helpee')}:</p>
+                </div>
+
+                <div className='personalLinkWrapper'>
+                  <p style={{ lineBreak: 'anywhere' }}>
+                    {!props.isHelpee &&
+                      `https://shelpy.co/${currentLanguage}/personal/offers?providerId=${props.helperUserId}&refId=helper${props.helperUserId}`}
+                  </p>
+                </div>
+              </>
+            )}
 
             <ConfirmBtn
               cta={`${t('update_profile')} >> `}

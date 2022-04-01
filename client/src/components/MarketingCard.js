@@ -198,7 +198,7 @@ function MarketingCard(props) {
     if (!props.helpeeId) {
       await MySwal.fire({
         title: <strong>{t('oops')}</strong>,
-        html: <p>{t('please_sign_in_firce')}</p>,
+        html: <p>{t('please_sign_in_first')}</p>,
         icon: 'error',
       });
     } else {
@@ -279,7 +279,7 @@ function MarketingCard(props) {
               onClick={handleShowRatings}
             >
               <ScoreStars averageScore={averageScore} />
-              <p style={{ marginLeft: '5px' }}>
+              <p style={{ marginLeft: '3px', fontSize: '12px', alignSelf: 'center' }}>
                 {props.helperRatingData.length}
                 {t('comments_unit')}
                 {t('comments')}
