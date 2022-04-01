@@ -398,7 +398,6 @@ const ChatRoomPage = (props) => {
                     </h3>
                   )}
                 </div>
-                
               </div>
             </div>
           </div>
@@ -424,32 +423,31 @@ const ChatRoomPage = (props) => {
             {roomId && (!messageList || messageList.length === 0) && (
               <div style={{ marginTop: 'auto' }}>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '30px' }}>
-                    You havent with each other yet!
-                  </div>
+                  <div style={{ fontSize: '30px' }}>{t('you_havent_chat')}</div>
                   <div style={{ fontSize: '20px', marginBottom: '10px' }}>
-                    Start chatting by sending your first message to him/her.
+                    {t('start_chatting_by')}
                   </div>
                   <DownPointIcon />
                 </div>
               </div>
             )}
-            {roomId && messageList.map((messageContent) => {
-              return messageContent.author === userId ? (
-                <ChatMessageSelf
-                  key={messageContent.id}
-                  message={messageContent.message}
-                  messageTime={messageContent.messageTime}
-                />
-              ) : (
-                <ChatMessageOther
-                  key={messageContent.id}
-                  message={messageContent.message}
-                  messageTime={messageContent.messageTime}
-                  author={partnerName}
-                />
-              );
-            })}
+            {roomId &&
+              messageList.map((messageContent) => {
+                return messageContent.author === userId ? (
+                  <ChatMessageSelf
+                    key={messageContent.id}
+                    message={messageContent.message}
+                    messageTime={messageContent.messageTime}
+                  />
+                ) : (
+                  <ChatMessageOther
+                    key={messageContent.id}
+                    message={messageContent.message}
+                    messageTime={messageContent.messageTime}
+                    author={partnerName}
+                  />
+                );
+              })}
           </ScrollToBottom>
           {roomId && (
             <div className='send-msg-container'>

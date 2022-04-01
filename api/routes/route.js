@@ -78,6 +78,7 @@ const {
   confirmCanAccessChatroom,
   confirmCanAccessDashboard,
   updatePayPalAccount,
+  generateMeetingLink,
 } = require('../controllers/generalController');
 
 router
@@ -606,6 +607,13 @@ router
   .post(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(payTapPay)
+  );
+
+router
+  .route('/api/meeting/create')
+  .post(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(generateMeetingLink)
   );
 
 router

@@ -26,7 +26,6 @@ async function updateBookingStatus(data) {
     bookingId,
     paidDetails,
   } = data;
-  console.log('paidDetails: ', paidDetails);
   if (bookingStatus === 'paid' && !paidDetails) {
     return;
   }

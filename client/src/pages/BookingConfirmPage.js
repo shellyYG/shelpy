@@ -137,15 +137,16 @@ const BookingConfirmPage = (props) => {
         timeHour,
         timeMinute
       );
-      const timeNow = Date.now();
-      if (unixTime - timeNow < 86400000) { // 24 hours (milliseconds)
-        await MySwal.fire({
-          title: <strong>{t('time_too_close')}</strong>,
-          html: <p>{t('need_to_be_more_than_24_hour')}</p>,
-          icon: 'error',
-        });
-        return;
-      }
+      // depreciated: guard 24 hours
+      // const timeNow = Date.now();
+      // if (unixTime - timeNow < 86400000) { // 24 hours (milliseconds)
+      //   await MySwal.fire({
+      //     title: <strong>{t('time_too_close')}</strong>,
+      //     html: <p>{t('need_to_be_more_than_24_hour')}</p>,
+      //     icon: 'error',
+      //   });
+      //   return;
+      // }
       const data = {
         appointmentDate: meetDateRef.current.value,
         appointmentTime: meetTimeRef.current.value,

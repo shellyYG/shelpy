@@ -496,7 +496,12 @@ function App() {
                 )
               }
             />
-            <Route path={`/:locale/pay`} element={<PayPage />} />
+            <Route
+              path={`/:locale/pay`}
+              element={
+                <PayPage helpeeUserId={helpeeUserId} helpeeName={helpeeName} />
+              }
+            />
             <Route
               path={`/:locale/helper/guidance`}
               element={<HowItWorksPage />}

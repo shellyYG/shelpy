@@ -37,7 +37,6 @@ function BookingCard(props) {
   const refId = searchParams.get('refId');
 
   const [isExpiredBooking, setIsExpiredBooking] = useState(false);
-  console.log('isExpiredBooking: ', isExpiredBooking);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');

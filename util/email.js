@@ -2,9 +2,8 @@ require('dotenv').config();
 const sgMail = require('@sendgrid/mail');
 const jwt = require('jsonwebtoken');
 const { default: axios } = require('axios');
-
 const testEmailReceiver = process.env.TEST_RECEIPIENT_EMAIL;
-const findUsersToNotifyAboutChatPath = '/api/in/users/to-notify-about-chat';
+const { timeZoneUniversalOptions }= require('./timeZoneOptions');
 
 sgMail.setApiKey(process.env.SENDGRID_EMAIL_API_KEY);
 
@@ -369,21 +368,21 @@ const sendBookingStatusReminderEmail = async (user) => {
            if (notificationLanguageValue === 'zh-TW') {
              companyName = '過來人App';
              subject = `[請準時出席會議]${initiatorName} 剛剛付款了!`;
-             html = `預約已成立。<br/>您將會在開會前一天收到webex會議連結，請務必準時出席會議。<br/>會議時間為： ${appointmentDate} ${appointmentTime}<br/> 請按此連結查看會議時間與細節: <a href='${url}'>${url}</a>`;
+             html = `預約已成立。<br/>您將會在下一封信收到會議連結，請務必準時出席會議。<br/>會議時間為： ${appointmentDate} ${appointmentTime}<br/> 請按此連結查看會議時間與細節: <a href='${url}'>${url}</a>`;
            } else if (notificationLanguageValue === 'zh-CN') {
              companyName = '过来人App';
              subject = `[请准时出席会议]${initiatorName} 刚刚付款了!`;
-             html = `预约已成立。<br/>您将会在开会前一天收到webex会议连结，请务必准时出席会议。<br/>会议时间为： ${appointmentDate} ${appointmentTime}<br/> 请按此连结查看会议时间与细节: <a href='${url}'>${url}</a>`;
+             html = `预约已成立。<br/>您将会在下一封信收到会议连结，请务必准时出席会议。<br/>会议时间为： ${appointmentDate} ${appointmentTime}<br/> 请按此连结查看会议时间与细节: <a href='${url}'>${url}</a>`;
            } else {
              companyName = 'Shelpy';
              subject = `[Please attend meeting on time]${initiatorName} just paid you!`;
-             html = `The appointment is officially established. Please attend the meeting on time. <br/>  Appointment time is： ${appointmentDate} ${appointmentTime} <br/> Click here to view meeting time & details: <a href='${url}'>${url}</a>`;
+             html = `The appointment is officially established. You will receive meeting link in next email. Please attend the meeting on time. <br/>  Appointment time is： ${appointmentDate} ${appointmentTime} <br/> Click here to view meeting time & details: <a href='${url}'>${url}</a>`;
            }
            break;
          default:
            companyName = 'Shelpy';
            subject = `[Please attend meeting on time]${initiatorName} just paid you!`;
-           html = `The appointment is officially established. Please attend the meeting on time. Click here to view meeting time & details: <a href='${url}'>${url}</a>`;
+           html = `The appointment is officially established. You will receive meeting link in next email. Please attend the meeting on time. Click here to view meeting time & details: <a href='${url}'>${url}</a>`;
        }
        
         const message = {
@@ -409,6 +408,154 @@ const sendBookingStatusReminderEmail = async (user) => {
   );
 };
 
+const sendMeetingEmailToHelpee = async (data) => {
+  if (!data.meetingDetails) return;
+  const {
+    subject,
+    timeZone,
+    joinUrl,
+    appointmentDate,
+    appointmentTime,
+    helpeeEmail,
+    helpeeNotificationLanguage,
+  } = data.meetingDetails;
+
+  return jwt.sign(
+    data,
+    process.env.EMAIL_SECRET,
+    {
+      expiresIn: '7d',
+    },
+    (err, accessDashboardToken) => {
+      if (helpeeEmail && helpeeNotificationLanguage) {
+        let companyName, html, notificationLanguageValue, universalTimeZone;
+        const timeZoneObj = timeZoneUniversalOptions.filter(
+          (o) => o.value === timeZone
+        );
+        if (timeZoneObj && timeZoneObj[0]) {
+          universalTimeZone = timeZoneObj[0].label;
+        }
+
+        if (helpeeNotificationLanguage === 'English') {
+          notificationLanguageValue = 'en';
+        } else if (helpeeNotificationLanguage === '繁體中文') {
+          notificationLanguageValue = 'zh-TW';
+        } else if (helpeeNotificationLanguage === '简体中文') {
+          notificationLanguageValue = 'zh-CN';
+        }
+        const url = `https://shelpy.co/${notificationLanguageValue}/helpee/access-dashboard?accessDashboardToken=${accessDashboardToken}`;
+        switch (notificationLanguageValue) {
+          case 'en':
+            companyName = 'Shelpy';
+            html = `<h1>Your meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:</h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> <h1>Please attend the meeting on time!</h1><br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
+            break;
+          case 'zh-TW':
+            companyName = '過來人App';
+            html = `<h1>你在 ${appointmentDate} ${appointmentTime} (會議時區: ${universalTimeZone}) 的會議連結為:</h1> <br/> <p style="color:red;"> ${joinUrl} </p> <br/> <h1>請準時出席會議!</h1><br/>  點此查看其他預約狀況: <a href='${url}'>${url}</a>`;
+            break;
+          case 'zh-CN':
+            companyName = '过来人App';
+            html = `你在 ${appointmentDate} ${appointmentTime} (会议时区: ${universalTimeZone}) 的会议连结为:<h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> 请准时出席会议!<br/>  点此查看其他预约状况: <a href='${url}'>${url}</a>`;
+            break;
+          default:
+            html = `<h1>Your Meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:<h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> Please attend the meeting on time!<br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
+        }
+
+        const message = {
+          to: helpeeEmail,
+          from: {
+            name: companyName,
+            email: 'shelpyofficial@gmail.com',
+          },
+          subject,
+          html,
+        };
+
+        sgMail
+          .send(message)
+          .then((response) => {
+            console.log('Successfully sent meeting link to helpee: ', helpeeEmail);
+          })
+          .catch((error) => console.error(error.message));
+      }
+    }
+  );
+};
+
+const sendMeetingEmailToHelper = async (data) => {
+  if (!data.meetingDetails) return;
+  const {
+    subject,
+    timeZone,
+    joinUrl,
+    appointmentDate,
+    appointmentTime,
+    helperEmail,
+    helperNotificationLanguage,
+  } = data.meetingDetails;
+
+  return jwt.sign(
+    data,
+    process.env.EMAIL_SECRET,
+    {
+      expiresIn: '7d',
+    },
+    (err, accessDashboardToken) => {
+      if (helperEmail && helperNotificationLanguage) {
+        let companyName, html, notificationLanguageValue, universalTimeZone;
+        const timeZoneObj = timeZoneUniversalOptions.filter(
+          (o) => o.value === timeZone
+        );
+        if (timeZoneObj && timeZoneObj[0]) {
+          universalTimeZone = timeZoneObj[0].label;
+        }
+
+        if (helperNotificationLanguage === 'English') {
+          notificationLanguageValue = 'en';
+        } else if (helperNotificationLanguage === '繁體中文') {
+          notificationLanguageValue = 'zh-TW';
+        } else if (helperNotificationLanguage === '简体中文') {
+          notificationLanguageValue = 'zh-CN';
+        }
+        const url = `https://shelpy.co/${notificationLanguageValue}/helper/access-dashboard?accessDashboardToken=${accessDashboardToken}`;
+        switch (notificationLanguageValue) {
+          case 'en':
+            companyName = 'Shelpy';
+            html = `<h1>Your meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:</h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> <h1>Please attend the meeting on time!</h1><br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
+            break;
+          case 'zh-TW':
+            companyName = '過來人App';
+            html = `<h1>你在 ${appointmentDate} ${appointmentTime} (會議時區: ${universalTimeZone}) 的會議連結為:</h1> <br/> <p style="color:red;"> ${joinUrl} </p> <br/> <h1>請準時出席會議!</h1><br/>  點此查看其他預約狀況: <a href='${url}'>${url}</a>`;
+            break;
+          case 'zh-CN':
+            companyName = '过来人App';
+            html = `你在 ${appointmentDate} ${appointmentTime} (会议时区: ${universalTimeZone}) 的会议连结为:<h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> 请准时出席会议!<br/>  点此查看其他预约状况: <a href='${url}'>${url}</a>`;
+            break;
+          default:
+            html = `<h1>Your Meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:<h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> Please attend the meeting on time!<br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
+        }
+
+        const message = {
+          to: helperEmail,
+          from: {
+            name: companyName,
+            email: 'shelpyofficial@gmail.com',
+          },
+          subject,
+          html,
+        };
+
+        sgMail
+          .send(message)
+          .then((response) => {
+            console.log('Successfully sent meeting link to helper: ', helperEmail);
+          })
+          .catch((error) => console.error(error.message));
+      }
+    }
+  );
+};
+
 module.exports = {
   sendHelpeeEmail,
   sendHelperEmail,
@@ -416,4 +563,6 @@ module.exports = {
   sendHelperResetPasswordEmail,
   sendChatMessageReminderEmail,
   sendBookingStatusReminderEmail,
+  sendMeetingEmailToHelpee,
+  sendMeetingEmailToHelper,
 };

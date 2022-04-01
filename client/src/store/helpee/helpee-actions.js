@@ -24,6 +24,7 @@ const bookingStatusPath = '/api/booking-status';
 const getBookingDetailsPath = '/api/booking/details';
 const getHelpeeDataPath = '/api/helpee/data';
 const getHelpeeRatingPath = '/api/helpee/ratings';
+const generateMeetingPath = '/api/meeting/create';
 
 export const getHelpeeAuthStatus = () => {
   return async (dispatch) => {
@@ -868,6 +869,34 @@ export const postPayViaTapPay = (data) => {
                 helpeeId: data.helpeeId,
                 helperId: data.helperId,
                 paidDetails: JSON.stringify(response.data),
+              },
+            },
+            {
+              headers,
+            }
+          );
+          // generate meeting link
+          await axios.post(
+            generateMeetingPath,
+            {
+              data: {
+                bookingId: data.bookingId,
+                offerId: data.offerId,
+                bookingStatus: 'paid',
+                currentLanguage: data.currentLanguage,
+                appointmentDate: data.appointmentDate,
+                appointmentTime: data.appointmentTime,
+                helpeeId: data.helpeeId,
+                helperId: data.helperId,
+                timeZone: data.timeZone,
+                duration: data.duration,
+                helperName: data.helperName,
+                helpeeName: data.helpeeName,
+                appointmentTimestamp: data.appointmentTimestamp,
+                helperEmail: data.helperEmail,
+                helpeeEmail: data.helpeeEmail,
+                helpeeNotificationLanguage: data.helpeeNotificationLanguage,
+                helperNotificationLanguage: data.helperNotificationLanguage,
               },
             },
             {

@@ -70,7 +70,40 @@ async function updatePayPalAccount(data) {
   const sql = `UPDATE ${table} SET bankAccount=?, payPalReceiverName=?, status=? WHERE id=?`;
   await query(sql, [bankAccount, payPalReceiverName, status, id]);
   return { data: { id } };
-} 
+}
+
+async function logMeetingToEmail(data) {
+  if (!data.meetingDetails) return;
+  const {
+    bookingId,
+    subject,
+    startDateTime,
+    endDateTime,
+    timeZone,
+    joinUrl,
+    meetingCode,
+    helpeeId,
+    helperId,
+    helperEmail,
+    helpeeEmail,
+  } = data.meetingDetails;
+  const dataToInsert = {
+    bookingId,
+    subject,
+    startDateTime,
+    endDateTime,
+    timeZone,
+    joinUrl,
+    meetingCode,
+    helpeeId,
+    helperId,
+    helperEmail,
+    helpeeEmail,
+  };
+  const sql = 'INSERT INTO meetings SET ?';
+  const sqlResult = await query(sql, dataToInsert);
+  return sqlResult.insertId;
+}
 
 module.exports = {
   getChatroomReceiverEmail,
@@ -78,4 +111,5 @@ module.exports = {
   getBookingStatusChangeInitiatorName,
   logEmailToDB,
   updatePayPalAccount,
+  logMeetingToEmail,
 };

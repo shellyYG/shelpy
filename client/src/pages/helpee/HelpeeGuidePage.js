@@ -23,7 +23,7 @@ const HelpeeGuidePage = () => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            margin: 'auto'
+            margin: 'auto',
           }}
         >
           <div>
@@ -141,7 +141,11 @@ const HelpeeGuidePage = () => {
                 list5={t('helpee_guide_step_8_list5')}
                 list6={t('helpee_guide_step_8_list6')}
                 list7={t('helpee_guide_step_8_list7')}
-                imgPath={'/static-imgs/gifs/helpee/join_webex_meeting.gif'}
+                imgPath={
+                  currentLanguage === 'en'
+                    ? '/static-imgs/gifs/helpee/join_teams_meeting.gif'
+                    : '/static-imgs/gifs/helpee/join_teams_meeting_zh.gif'
+                }
                 imgAlt={'join_webex_meeting'}
               />
             </div>

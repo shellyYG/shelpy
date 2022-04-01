@@ -21,7 +21,11 @@ import {
   clearPayHelperStatus,
   postPayViaTapPay,
   getBookingDetails,
+  getHelpeeUserData,
 } from '../store/helpee/helpee-actions';
+import {
+  getHelperUserData
+} from '../store/helper/helper-actions';
 
 const isDeveloping = 0; // TODO before push to ec2
 const environment = isDeveloping ? 'sandbox' : 'production';
@@ -33,7 +37,7 @@ const usdToNtd = 29;
 
 const MySwal = withReactContent(Swal);
 
-const PayPage = () => {
+const PayPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,6 +53,7 @@ const PayPage = () => {
   const [NTDPrice, setNTDPrice] = useState('');
   const [bookingDate, setAppointmentDate] = useState('');
   const [bookingTime, setAppointmentTime] = useState('');
+  const [appointmentTimestamp, setAppointmentTimestamp] = useState('');
   const [country, setCountry] = useState('');
   const [duration, setDuration] = useState('');
   const [mainType, setMainType] = useState('');
@@ -59,7 +64,11 @@ const PayPage = () => {
   const [translatedTimeZone, setTranslatedTimeZone] = useState('');
   const [helpeeId, setHelpeeId] = useState('');
   const [helperId, setHelperId] = useState('');
-  
+  const [helperEmail, setHelperEmail] = useState('');
+  const [helpeeEmail, setHelpeeEmail] = useState('');
+  const [helpeeNotificationLanguage, setHelpeeNotificationLanguage] = useState('');
+  const [helperNotificationLanguage, setHelperNotificationLanguage] =
+    useState('');
   const refId = searchParams.get('refId');
 
   const cardNumberRef = useRef();
@@ -71,7 +80,13 @@ const PayPage = () => {
     payHelperStatusTitle,
     payHelperStatusMessage,
     booking,
+    helpeeData,
   } = useSelector((state) => state.helpee);
+
+
+  const { helperData } = useSelector(
+    (state) => state.helper
+  );
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -89,6 +104,7 @@ const PayPage = () => {
       const {
         appointmentDate,
         appointmentTime,
+        appointmentTimestamp,
         country,
         duration,
         mainType,
@@ -103,6 +119,7 @@ const PayPage = () => {
       } = bookingToPay;
       setAppointmentDate(appointmentDate);
       setAppointmentTime(appointmentTime);
+      setAppointmentTimestamp(appointmentTimestamp);
       setCountry(country);
       setDuration(duration);
       setMainType(mainType);
@@ -198,8 +215,32 @@ const PayPage = () => {
     });
   },[])
 
+    useEffect(() => {
+      dispatch(getHelpeeUserData({ helpeeUserId: helpeeId }));
+      dispatch(getHelperUserData({ helperUserId: helperId }));
+    }, [helpeeId, helperId, dispatch]);
+
+  useEffect(()=>{
+    if (helperData && helperData[0]) {
+      setHelperEmail(helperData[0].email);
+      setHelperNotificationLanguage(helperData[0].notificationLanguage);
+    }
+    if (helpeeData && helpeeData[0]) {
+      setHelpeeEmail(helpeeData[0].email);
+      setHelpeeNotificationLanguage(helpeeData[0].notificationLanguage);
+    }
+  },[helperData, helpeeData])
+
   function onSubmit(e) {
     e.preventDefault();
+    if (!helperEmail || !helpeeEmail) {
+      MySwal.fire({
+        title: <strong>{t('oops')}</strong>,
+        html: <p>{t('something_went_wrong')}</p>,
+        icon: 'error',
+      });
+      window.location.reload();
+    }
 
     // 取得 TapPay Fields 的 status
     const tappayStatus = window.TPDirect.card.getTappayFieldsStatus();
@@ -225,15 +266,24 @@ const PayPage = () => {
         prime: result.card.prime,
         partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
         merchant_id: merchantId,
-        details: 'TapPay Test',
+        details: `bookingId: ${bookingId}`,
+        duration,
         helpeeId,
         helperId,
         bookingId,
         currentLanguage,
+        helpeeNotificationLanguage,
+        helperNotificationLanguage,
+        helperName,
+        helpeeName: props.helpeeName,
         offerId,
         appointmentDate: bookingDate,
         appointmentTime: bookingTime,
+        helperEmail,
+        helpeeEmail,
+        appointmentTimestamp,
         amount: parseInt(NTDPrice),
+        timeZone,
         cardholder: {
           phone_number: '',
           name: '',

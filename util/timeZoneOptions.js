@@ -1,0 +1,32 @@
+const timeZoneUniversalOptions = [
+  { value: 'gmt_minus_11', label: 'GMT-11' },
+  { value: 'gmt_minus_10', label: 'GMT-10' },
+  { value: 'gmt_minus_9', label: 'GMT-9' },
+  { value: 'gmt_minus_8', label: 'GMT-8' },
+  { value: 'gmt_minus_7', label: 'GMT-7' },
+  { value: 'gmt_minus_6', label: 'GMT-6' },
+  { value: 'gmt_minus_5', label: 'GMT-5' },
+  { value: 'gmt_minus_4', label: 'GMT-4' },
+  { value: 'gmt_minus_3', label: 'GMT-3' },
+  { value: 'gmt_minus_2', label: 'GMT-2' },
+  { value: 'gmt_minus_1', label: 'GMT-1' },
+  { value: 'gmt_plus_0', label: 'GMT+0' },
+  { value: 'gmt_plus_1', label: 'GMT+1' },
+  { value: 'gmt_plus_2', label: 'GMT+2' },
+  { value: 'gmt_plus_3', label: 'GMT+3' },
+  { value: 'gmt_plus_4', label: 'GMT+4' },
+  { value: 'gmt_plus_5', label: 'GMT+5' },
+  { value: 'gmt_plus_6', label: 'GMT+6' },
+  { value: 'gmt_plus_7', label: 'GMT+7' },
+  { value: 'gmt_plus_8', label: 'GMT+8' },
+  { value: 'gmt_plus_9', label: 'GMT+9' },
+  { value: 'gmt_plus_10', label: 'GMT+10' },
+  { value: 'gmt_plus_11', label: 'GMT+11' },
+  { value: 'gmt_plus_12', label: 'GMT+12' },
+  { value: 'gmt_plus_13', label: 'GMT+13' },
+  { value: 'gmt_plus_14', label: 'GMT+14' },
+];
+
+module.exports = {
+  timeZoneUniversalOptions,
+};
