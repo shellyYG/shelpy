@@ -883,7 +883,6 @@ export const postPayViaTapPay = (data) => {
                 bookingId: data.bookingId,
                 offerId: data.offerId,
                 bookingStatus: 'paid',
-                currentLanguage: data.currentLanguage,
                 appointmentDate: data.appointmentDate,
                 appointmentTime: data.appointmentTime,
                 helpeeId: data.helpeeId,

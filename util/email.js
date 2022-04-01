@@ -411,13 +411,14 @@ const sendBookingStatusReminderEmail = async (user) => {
 const sendMeetingEmailToHelpee = async (data) => {
   if (!data.meetingDetails) return;
   const {
-    subject,
     timeZone,
     joinUrl,
     appointmentDate,
     appointmentTime,
     helpeeEmail,
     helpeeNotificationLanguage,
+    helperName,
+    helpeeName,
   } = data.meetingDetails;
 
   return jwt.sign(
@@ -428,7 +429,7 @@ const sendMeetingEmailToHelpee = async (data) => {
     },
     (err, accessDashboardToken) => {
       if (helpeeEmail && helpeeNotificationLanguage) {
-        let companyName, html, notificationLanguageValue, universalTimeZone;
+        let subject, companyName, html, notificationLanguageValue, universalTimeZone;
         const timeZoneObj = timeZoneUniversalOptions.filter(
           (o) => o.value === timeZone
         );
@@ -446,19 +447,24 @@ const sendMeetingEmailToHelpee = async (data) => {
         const url = `https://shelpy.co/${notificationLanguageValue}/helpee/access-dashboard?accessDashboardToken=${accessDashboardToken}`;
         switch (notificationLanguageValue) {
           case 'en':
+            subject = `Shelpy meeting: ${helperName} and ${helpeeName}`;
             companyName = 'Shelpy';
             html = `<h1>Your meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:</h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> <h1>Please attend the meeting on time!</h1><br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-TW':
+            subject = `過來人會議 - ${helperName} 與 ${helpeeName}`;
             companyName = '過來人App';
             html = `<h1>你在 ${appointmentDate} ${appointmentTime} (會議時區: ${universalTimeZone}) 的會議連結為:</h1> <br/> <p style="color:red;"> ${joinUrl} </p> <br/> <h1>請準時出席會議!</h1><br/>  點此查看其他預約狀況: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-CN':
+            subject = `过来人会议 - ${helperName} 与 ${helpeeName}`;
             companyName = '过来人App';
             html = `你在 ${appointmentDate} ${appointmentTime} (会议时区: ${universalTimeZone}) 的会议连结为:<h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> 请准时出席会议!<br/>  点此查看其他预约状况: <a href='${url}'>${url}</a>`;
             break;
           default:
-            html = `<h1>Your Meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:<h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> Please attend the meeting on time!<br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
+            subject = `Shelpy meeting: ${helperName} and ${helpeeName}`;
+            companyName = 'Shelpy';
+            html = `<h1>Your meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:</h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> <h1>Please attend the meeting on time!</h1><br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
         }
 
         const message = {
@@ -485,13 +491,14 @@ const sendMeetingEmailToHelpee = async (data) => {
 const sendMeetingEmailToHelper = async (data) => {
   if (!data.meetingDetails) return;
   const {
-    subject,
     timeZone,
     joinUrl,
     appointmentDate,
     appointmentTime,
     helperEmail,
     helperNotificationLanguage,
+    helperName,
+    helpeeName,
   } = data.meetingDetails;
 
   return jwt.sign(
@@ -502,7 +509,7 @@ const sendMeetingEmailToHelper = async (data) => {
     },
     (err, accessDashboardToken) => {
       if (helperEmail && helperNotificationLanguage) {
-        let companyName, html, notificationLanguageValue, universalTimeZone;
+        let subject, companyName, html, notificationLanguageValue, universalTimeZone;
         const timeZoneObj = timeZoneUniversalOptions.filter(
           (o) => o.value === timeZone
         );
@@ -520,19 +527,24 @@ const sendMeetingEmailToHelper = async (data) => {
         const url = `https://shelpy.co/${notificationLanguageValue}/helper/access-dashboard?accessDashboardToken=${accessDashboardToken}`;
         switch (notificationLanguageValue) {
           case 'en':
+            subject = `Shelpy meeting: ${helperName} and ${helpeeName}`;
             companyName = 'Shelpy';
             html = `<h1>Your meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:</h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> <h1>Please attend the meeting on time!</h1><br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-TW':
+            subject = `過來人會議 - ${helperName} 與 ${helpeeName}`;
             companyName = '過來人App';
             html = `<h1>你在 ${appointmentDate} ${appointmentTime} (會議時區: ${universalTimeZone}) 的會議連結為:</h1> <br/> <p style="color:red;"> ${joinUrl} </p> <br/> <h1>請準時出席會議!</h1><br/>  點此查看其他預約狀況: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-CN':
+            subject = `过来人会议 - ${helperName} 与 ${helpeeName}`;
             companyName = '过来人App';
             html = `你在 ${appointmentDate} ${appointmentTime} (会议时区: ${universalTimeZone}) 的会议连结为:<h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> 请准时出席会议!<br/>  点此查看其他预约状况: <a href='${url}'>${url}</a>`;
             break;
           default:
-            html = `<h1>Your Meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:<h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> Please attend the meeting on time!<br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
+            subject = `Shelpy meeting: ${helperName} and ${helpeeName}`;
+            companyName = 'Shelpy';
+            html = `<h1>Your meeting link for meeting on ${appointmentDate} ${appointmentTime} (timezone: ${universalTimeZone}) is:</h1> <br/> <p style="color:red;font-size: '18px'"> ${joinUrl} </p> <br/> <h1>Please attend the meeting on time!</h1><br/>  Click here to view other meetings: <a href='${url}'>${url}</a>`;
         }
 
         const message = {

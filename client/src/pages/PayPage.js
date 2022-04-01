@@ -271,7 +271,6 @@ const PayPage = (props) => {
         helpeeId,
         helperId,
         bookingId,
-        currentLanguage,
         helpeeNotificationLanguage,
         helperNotificationLanguage,
         helperName,

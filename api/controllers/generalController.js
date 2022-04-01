@@ -50,7 +50,6 @@ const updatePayPalAccount = async (req, res) => {
 const generateMeetingLink = async (req, res) => {
   const { data } = req.body;
   const {
-    currentLanguage,
     appointmentDate,
     appointmentTime,
     appointmentTimestamp,
@@ -66,25 +65,12 @@ const generateMeetingLink = async (req, res) => {
     helperNotificationLanguage,
     bookingId,
   } = data;
-  let subject;
-  switch (currentLanguage) {
-    case 'en':
-      `Shelpy meeting: ${helperName} and ${helpeeName}`;
-      break;
-    case 'zh-TW':
-      subject = `過來人會議 - ${helperName} 與 ${helpeeName}`;
-      break;
-    case 'zh-CN':
-      subject = `过来人会议 - ${helperName} 与 ${helpeeName}`;
-      break;
-    default:
-      subject = `Shelpy meeting: ${helperName} and ${helpeeName}`;
-  }
+  
   const endTimestamp = appointmentTimestamp + parseInt(duration) * 60 * 1000; // millisecond
   const onlineMeeting = {
     startDateTime: new Date(appointmentTimestamp).toISOString(), //  '2022-04-01T14:30:34.2444915-07:00'
     endDateTime: new Date(endTimestamp).toISOString(),
-    subject,
+    subject: `Shelpy meeting - bookingId: ${bookingId}`,
     recordAutomatically: false,
   };
 
@@ -95,7 +81,6 @@ const generateMeetingLink = async (req, res) => {
     meetingDetails.duration = duration;
     meetingDetails.appointmentDate = appointmentDate;
     meetingDetails.appointmentTime = appointmentTime;
-    meetingDetails.currentLanguage = currentLanguage;
     meetingDetails.helperEmail = helperEmail;
     meetingDetails.helpeeEmail = helpeeEmail;
     meetingDetails.helpeeNotificationLanguage = helpeeNotificationLanguage;
@@ -103,6 +88,8 @@ const generateMeetingLink = async (req, res) => {
     meetingDetails.helpeeId = helpeeId;
     meetingDetails.helperId = helperId;
     meetingDetails.bookingId = bookingId;
+    meetingDetails.helpeeName = helpeeName;
+    meetingDetails.helperName = helperName;
     // send email
     await sendMeetingEmailToHelpee({
       meetingDetails,
