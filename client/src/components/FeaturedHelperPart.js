@@ -171,6 +171,17 @@ function FeaturedHelperPart(props) {
           tag3={t('country_germany')}
         />
         <MktCard
+          imageSrc='/static-imgs/Tina_job.jpeg'
+          title='Tina'
+          key='tina-job'
+          experience={t('mkt_tina_job')}
+          language1={t('languages_chinese')}
+          language2={t('languages_english')}
+          tag1={t('job')}
+          tag2={t('job_form_job_retail_sales')}
+          tag3={t('country_netherland')}
+        />
+        <MktCard
           imageSrc='/static-imgs/Shelly_job.jpg'
           title='Shelly'
           key='shelly-job'

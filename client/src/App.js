@@ -533,13 +533,21 @@ function App() {
             <Route
               path={`/:locale/helper/profile`}
               element={
-                <ProfilePage isHelpee={false} helperUserId={helperUserId} />
+                isHelperAuthenticated ? (
+                  <ProfilePage isHelpee={false} helperUserId={helperUserId} />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
               }
             />
             <Route
               path={`/:locale/helpee/profile`}
               element={
-                <ProfilePage isHelpee={true} helpeeUserId={helpeeUserId} />
+                isHelpeeAuthenticated ? (
+                  <ProfilePage isHelpee={true} helpeeUserId={helpeeUserId} />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
               }
             />
             <Route path='*' element={<ErrorPage />} />
