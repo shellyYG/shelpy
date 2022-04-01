@@ -122,23 +122,31 @@ function App() {
             <Route
               path={`/:locale/helpee/referrals`}
               element={
-                <ReferralPage
-                  isHelpee={true}
-                  helpeeId={helpeeUserId}
-                  helpeeUsername={helpeeName}
-                  isHelpeeAuthenticated={isHelpeeAuthenticated}
-                />
+                isHelpeeAuthenticated ? (
+                  <ReferralPage
+                    isHelpee={true}
+                    helpeeId={helpeeUserId}
+                    helpeeUsername={helpeeName}
+                    isHelpeeAuthenticated={isHelpeeAuthenticated}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
               }
             />
             <Route
               path={`/:locale/helper/referrals`}
               element={
-                <ReferralPage
-                  isHelpee={false}
-                  helperId={helperUserId}
-                  helperUsername={helperName}
-                  isHelperAuthenticated={isHelperAuthenticated}
-                />
+                isHelperAuthenticated ? (
+                  <ReferralPage
+                    isHelpee={false}
+                    helperId={helperUserId}
+                    helperUsername={helperName}
+                    isHelperAuthenticated={isHelperAuthenticated}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
               }
             />
             <Route
