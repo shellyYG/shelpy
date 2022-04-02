@@ -485,13 +485,21 @@ function App() {
             <Route
               path={`/:locale/helper/basic-form`}
               element={
-                <BasicFormPage isHelpee={false} helperUserId={helperUserId} />
+                isHelperAuthenticated ? (
+                  <BasicFormPage isHelpee={false} helperUserId={helperUserId} />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
               }
             />
             <Route
               path={`/:locale/helpee/basic-form`}
               element={
-                <BasicFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
+                isHelpeeAuthenticated ? (
+                  <BasicFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
               }
             />
             <Route
