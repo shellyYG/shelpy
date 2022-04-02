@@ -529,13 +529,27 @@ function App() {
             <Route
               path={`/:locale/helper/rate-partner`}
               element={
-                <RatePartnerPage isHelpee={false} helperUserId={helperUserId} />
+                isHelperAuthenticated ? (
+                  <RatePartnerPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
               }
             />
             <Route
               path={`/:locale/helpee/rate-partner`}
               element={
-                <RatePartnerPage isHelpee={true} helpeeUserId={helpeeUserId} />
+                isHelpeeAuthenticated ? (
+                  <RatePartnerPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
               }
             />
             <Route
