@@ -29,21 +29,25 @@ function Footer() {
         </div>
         <div className='footer-column'>
           <FooterElement
-            text={t('contact_us')}
-            link={`/${currentLanguage}/contact?&refId=${refId}`}
+            text={t('sponsor_us')}
+            link={`https://gofund.me/17452767`}
+            isRedirect={true}
           />
           <FooterElement
-            text={t('terms_and_condition')}
-            link={`/${currentLanguage}/terms?&refId=${refId}`}
+            text={t('contact_us')}
+            link={`/${currentLanguage}/contact?&refId=${refId}`}
           />
         </div>
 
         <div className='footer-column'>
           <FooterElement
+            text={t('terms_and_condition')}
+            link={`/${currentLanguage}/terms?&refId=${refId}`}
+          />
+          <FooterElement
             text={t('privacy_policy')}
             link={`/${currentLanguage}/privacy?&refId=${refId}`}
           />
-          <FooterElement text={t('footer_legal_rights')} />
         </div>
         <div className='footer-social'>
           <div
@@ -59,6 +63,7 @@ function Footer() {
               <YoutubeIcon />
             </div> */}
           </div>
+          <FooterElement text={t('footer_legal_rights')}  className='allRightsWrapper'/>
         </div>
       </div>
     </footer>
