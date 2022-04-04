@@ -60,8 +60,8 @@ async function getPotentialCustomers(data) { // maybe customer does NOT have req
     , ofs.price AS price, ofs.duration AS duration, req.country AS country
     , acc.id AS helperId, acc.username AS helperUsername, acc.isAnonymous AS helperAnonymous
     , req.userId AS helpeeId
-    , helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.introduction
-    , helpee.profilePicPath AS profilePicPath, helpee.languages
+    , helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.introduction, helpee.notificationLanguage
+    , helpee.profilePicPath AS profilePicPath, helpee.languages, helpee.email AS helpeeEmail
     , req.mainType AS mainType, req.secondType AS secondType
     , req.thirdType AS thirdType, req.fourthType AS fourthType
     , req.notes
@@ -71,7 +71,7 @@ LEFT JOIN requests req ON
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
-WHERE acc.id = ? AND NOT req.userId IS NULL AND NOT req.status='deleted'
+WHERE acc.id = ? AND NOT req.userId IS NULL AND NOT req.status='deleted' AND NOT ofs.status='deleted'
 ORDER BY req.id DESC;`;
   const allPotentialCustomers = await query(sql, helperUserId);
   return { data: { allPotentialCustomers } };

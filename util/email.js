@@ -568,6 +568,90 @@ const sendMeetingEmailToHelper = async (data) => {
   );
 };
 
+const sendMatchEmailReminder = async (data) => {
+  if (!data.email) return;
+  const { email, targetEmailRole, notificationLanguage } = data;
+  console.log('email to send la: ', email);
+  if (email && notificationLanguage) {
+    let subject, companyName, html, notificationLanguageValue;
+
+    if (notificationLanguage === 'English') {
+      notificationLanguageValue = 'en';
+    } else if (notificationLanguage === '繁體中文') {
+      notificationLanguageValue = 'zh-TW';
+    } else if (notificationLanguage === '简体中文') {
+      notificationLanguageValue = 'zh-CN';
+    }
+    let url;
+    if (targetEmailRole === 'helper') {
+      url = `https://shelpy.co/${notificationLanguageValue}/helper/partners?refId=partnerReminder`;
+      switch (notificationLanguageValue) {
+        case 'en':
+          subject = `[Shelpy] You have a new matched Helpee!`;
+          companyName = 'Shelpy';
+          html = `<h1>Check to see who is your new matched Helpee:</h1> <a href='${url}'>${url}</a>`;
+          break;
+        case 'zh-TW':
+          subject = `[過來人] 你有一個新匹配到的新鮮人`;
+          companyName = '過來人App';
+          html = `<h1>點此查看新匹配到的新鮮人是誰:</h1> <a href='${url}'>${url}</a>`;
+          break;
+        case 'zh-CN':
+          subject = `[过来人] 你有一个新匹配到的新鲜人`;
+          companyName = '过来人App';
+          html = `<h1>点此查看新匹配到的新鲜人是谁:</h1> <a href='${url}'>${url}</a>`;
+          break;
+        default:
+          subject = `[Shelpy] You have a new matched Helpee!`;
+          companyName = 'Shelpy';
+          html = `<h1>Check to see who is your new match:</h1> <a href='${url}'>${url}</a>`;
+      }
+    } else {
+      url = `https://shelpy.co/${notificationLanguageValue}/helpee/partners?refId=partnerReminder`;
+      switch (notificationLanguageValue) {
+        case 'en':
+          subject = `[Shelpy] You have a new matched Helper!`;
+          companyName = 'Shelpy';
+          html = `<h1>Check to see who is your new matched Helper:</h1> <a href='${url}'>${url}</a>`;
+          break;
+        case 'zh-TW':
+          subject = `[過來人] 你有一個新匹配到的過來人`;
+          companyName = '過來人App';
+          html = `<h1>點此查看新匹配到的過來人是誰:</h1> <a href='${url}'>${url}</a>`;
+          break;
+        case 'zh-CN':
+          subject = `[过来人] 你有一个新匹配到的过来人`;
+          companyName = '过来人App';
+          html = `<h1>点此查看新匹配到的过来人是谁:</h1> <a href='${url}'>${url}</a>`;
+          break;
+        default:
+          subject = `[Shelpy] You have a new matched Helper!`;
+          companyName = 'Shelpy';
+          html = `<h1>Check to see who is your new matched Helper:</h1> <a href='${url}'>${url}</a>`;
+      }
+    }
+    const message = {
+      to: email,
+      from: {
+        name: companyName,
+        email: 'shelpyofficial@gmail.com',
+      },
+      subject,
+      html,
+    };
+
+    sgMail
+      .send(message)
+      .then((response) => {
+        console.log(
+          `Successfully sent YOU have new match! email to ${targetEmailRole}: `,
+          email
+        );
+      })
+      .catch((error) => console.error(error.message));
+  }
+};
+
 module.exports = {
   sendHelpeeEmail,
   sendHelperEmail,
@@ -577,4 +661,5 @@ module.exports = {
   sendBookingStatusReminderEmail,
   sendMeetingEmailToHelpee,
   sendMeetingEmailToHelper,
+  sendMatchEmailReminder,
 };

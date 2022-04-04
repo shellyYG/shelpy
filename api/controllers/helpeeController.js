@@ -4,8 +4,12 @@ const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const helpeeModel = require('../models/helpeeModel');
 const bookingModel = require('../models/bookingModel');
+const generalModel = require('../models/generalModel');
 
-const { sendHelpeeResetPasswordEmail } = require('../../util/email');
+const {
+  sendHelpeeResetPasswordEmail,
+  sendMatchEmailReminder,
+} = require('../../util/email');
 
 const isDeveloping = 0; // TODO before push to ec2
 
@@ -39,7 +43,58 @@ const postHelpeeServiceRequestForm = async (req, res) => {
 const postHelpeeRequest = async (req, res) => {
   // new.
   try {
+    // get old matches
+    let oldMatches = [];
+    let newMatches = [];
+    let emailsLanguages = [];
+
+    let emailsToSend = [];
+    let notificationLanguages = [];
+    const oldMatchRes = await helpeeModel.getPotentialHelpers({
+      helpeeUserId: req.body.data.userId,
+    });
+    if (oldMatchRes && oldMatchRes.data) {
+      oldMatches = oldMatchRes.data.allPotentialHelpers.map(
+        (el) => el.helperEmail
+      );
+    }
+
+    // insert new request
     const id = await helpeeModel.insertHelpeeRequest(req.body.data);
+
+    // get new matches
+    const newMatchRes = await helpeeModel.getPotentialHelpers({
+      helpeeUserId: req.body.data.userId,
+    });
+    if (newMatchRes && newMatchRes.data) {
+      newMatches = newMatchRes.data.allPotentialHelpers.map(
+        (el) => el.helperEmail
+      );
+      emailsLanguages = newMatchRes.data.allPotentialHelpers.map(
+        (el) => el.notificationLanguage
+      );
+    }
+    for (let i = 0; i < newMatches.length; i++) {
+      if (!oldMatches.includes(newMatches[i])) {
+        emailsToSend.push(newMatches[i]);
+        notificationLanguages.push(emailsLanguages[i]);
+      }
+    }
+    if (emailsToSend.length > 0) {
+      for (let i = 0; i < emailsToSend.length; i++) {
+        await sendMatchEmailReminder({
+          email: emailsToSend[i],
+          targetEmailRole: 'helper',
+          notificationLanguage: notificationLanguages[i],
+        });
+        await generalModel.logEmailToDB({
+          receiverRole: 'helper',
+          receiverEmail: emailsToSend[i],
+          emailType: `have_new_matched_helpee`,
+          emailSendTimestamp: Date.now(),
+        });
+      }
+    }
     res.status(200).json({ requestId: id, status: 'success' });
   } catch (error) {
     console.error(error);

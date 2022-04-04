@@ -46,8 +46,8 @@ async function getPotentialHelpers(data) {
     , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, acc.isAnonymous AS helperAnonymous
     , helpee.id AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous
     , ofs.organization AS organization
-    , acc.id AS helperId, acc.username AS helperUsername, acc.introduction
-    , acc.profilePicPath AS profilePicPath, acc.languages
+    , acc.id AS helperId, acc.username AS helperUsername, acc.introduction, acc.notificationLanguage
+    , acc.profilePicPath AS profilePicPath, acc.languages, acc.email AS helperEmail
 		, ofs.mainType AS mainType, ofs.secondType AS secondType
     , ofs.thirdType AS thirdType, ofs.fourthType AS fourthType
     , ofs.duration, ofs.notes
@@ -57,7 +57,8 @@ LEFT JOIN requests req ON
 		    ofs.mainType = req.mainType AND ofs.secondType = req.secondType
         AND ofs.country = req.country
 LEFT JOIN helpee_account helpee ON req.userId = helpee.id
-WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status ='deleted'
+WHERE helpee.id = ? AND NOT ofs.userId IS NULL AND acc.internalStatus IN ('pass_eligibility_email_sent') 
+AND NOT ofs.status ='deleted' AND NOT req.status = 'deleted'
 ORDER BY acc.score, ofs.id DESC;`;
 
 const sqlForRating = `
@@ -179,7 +180,6 @@ async function updateHelpeeBasicInfo(data) {
 
 async function deleteHelpeeRequest(data) {
   const { requestId } = data;
-  console.log('deleteHelpeeRequest->data: ', data);
   const sql = `UPDATE requests SET status='deleted' WHERE id=?`;
   await query(sql, requestId);
   return { data: { status: 'success' } };

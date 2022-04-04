@@ -4,7 +4,12 @@ const redis = require('../../util/redis');
 
 const { getFileStream } = require('../../util/s3');
 const helperModel = require('../models/helperModel');
-const { sendHelperResetPasswordEmail } = require('../../util/email');
+const generalModel = require('../models/generalModel');
+
+const {
+  sendHelperResetPasswordEmail,
+  sendMatchEmailReminder,
+} = require('../../util/email');
 
 
 const allowHelperPrivateRoute = async (req, res) => {
@@ -21,7 +26,57 @@ const allowHelperPrivateRoute = async (req, res) => {
 
 const postHelperOffer = async (req, res) => {
   try {
+    // get old matches
+    let oldMatches = [];
+    let newMatches = [];
+    let emailsLanguages = [];
+
+    let emailsToSend = [];
+    let notificationLanguages = [];
+    const oldMatchRes = await helperModel.getPotentialCustomers({
+      helperUserId: req.body.data.userId,
+    });
+    if (oldMatchRes && oldMatchRes.data) {
+      oldMatches = oldMatchRes.data.allPotentialCustomers.map(
+        (el) => el.helpeeEmail
+      );
+    }
+    // insert new offer
     const id = await helperModel.insertHelperOffer(req.body.data);
+
+    // get new matches
+    const newMatchRes = await helperModel.getPotentialCustomers({
+      helperUserId: req.body.data.userId,
+    });
+    if (newMatchRes && newMatchRes.data) {
+      newMatches = newMatchRes.data.allPotentialCustomers.map(
+        (el) => el.helpeeEmail
+      );
+      emailsLanguages = newMatchRes.data.allPotentialCustomers.map(
+        (el) => el.notificationLanguage
+      );
+    }
+    for (let i = 0; i < newMatches.length; i++) {
+      if (!oldMatches.includes(newMatches[i])) {
+        emailsToSend.push(newMatches[i]);
+        notificationLanguages.push(emailsLanguages[i]);
+      }
+    }
+    if (emailsToSend.length > 0) {
+      for (let i = 0; i < emailsToSend.length; i++) {
+        await sendMatchEmailReminder({
+          email: emailsToSend[i],
+          targetEmailRole: 'helpee',
+          notificationLanguage: notificationLanguages[i],
+        });
+        await generalModel.logEmailToDB({
+          receiverRole: 'helpee',
+          receiverEmail: emailsToSend[i],
+          emailType: `have_new_matched_helper`,
+          emailSendTimestamp: Date.now(),
+        });
+      }
+    }
     res.status(200).json({ requestId: id, status: 'success' });
   } catch (error) {
     console.error(error);
