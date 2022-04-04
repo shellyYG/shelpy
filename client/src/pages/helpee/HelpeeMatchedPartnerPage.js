@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PotentialHelperCard from '../../components/PotentialHelperCard';
 import {
+  getAllOrders,
   getPotentialHelpers,
 } from '../../store/helpee/helpee-actions';
 import { useNavigate } from 'react-router-dom';
@@ -17,14 +18,20 @@ const HelpeeMatchedPartnerPage = (props) => {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
-  const { allPotentialHelpers, allPotentialHelpersRatings } = useSelector(
-    (state) => state.helpee
-  );
+  const { allPotentialHelpers, allPotentialHelpersRatings, allOrders } =
+    useSelector((state) => state.helpee); // order === request
 
   useEffect(() => {
     dispatch(getPotentialHelpers({ helpeeUserId: props.helpeeUserId }));
+    dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
   }, [props.helpeeUserId, dispatch]);
 
+  function handleAddRequest(e) {
+    e.preventDefault(e);
+    let path = `/${currentLanguage}/helpee/service-types`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
 
   function handleToHelpeeReferralPage(e) {
     e.preventDefault(e);
@@ -37,7 +44,6 @@ const HelpeeMatchedPartnerPage = (props) => {
     e.preventDefault(e);
     window.location.reload();
   }
-
 
   return (
     <div className='section-left-align'>
@@ -60,8 +66,8 @@ const HelpeeMatchedPartnerPage = (props) => {
       <div className='task-container'></div>
       {allPotentialHelpers && (
         <div className='task-container'>
-          {!allPotentialHelpers ||
-            (allPotentialHelpers.length === 0 && (
+          {allOrders.length !== 0 &&
+            (!allPotentialHelpers || allPotentialHelpers.length === 0) && (
               <>
                 <div
                   className='history-card'
@@ -88,7 +94,47 @@ const HelpeeMatchedPartnerPage = (props) => {
                   </div>
                 </div>
               </>
-            ))}
+            )}
+          {allOrders.length === 0 &&
+            (!allPotentialHelpers || allPotentialHelpers.length === 0) && (
+              <>
+                <div
+                  className='history-card'
+                  style={{
+                    boxShadow: 'none',
+                    border: 'none',
+                    paddingLeft: '18px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <div>
+                    <p style={{ margin: 'auto' }}>{t('no_matched_helpers')}</p>
+                  </div>
+                  <div>
+                    <p
+                      style={{
+                        margin: 'auto',
+                        textAlign: 'center',
+                        marginTop: '10px',
+                      }}
+                    >
+                      {t('you_need_to_create_request_so_match')}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className='history-card'
+                  style={{ boxShadow: 'none', border: 'none' }}
+                >
+                  <div style={{ margin: 'auto' }}>
+                    <button className='btn-contact' onClick={handleAddRequest}>
+                      {t('add_request_cta')}
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
 
           {allPotentialHelpers.map((option) => (
             <PotentialHelperCard

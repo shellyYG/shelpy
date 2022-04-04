@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PotentialCustomerCard from '../../components/PotentialCustomerCard';
 import {
+  getAllOffers,
   getPotentialCustomers,
 } from '../../store/helper/helper-actions';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
@@ -19,15 +20,23 @@ const HelperMatchedPartnerPage = (props) => {
 
   const {
     allPotentialCustomers,
+    allOffers,
   } = useSelector((state) => state.helper);
 
   useEffect(() => {
     dispatch(getPotentialCustomers({ helperUserId: props.helperUserId }));
+    dispatch(getAllOffers({ helperUserId: props.helperUserId }));
   }, [props.helperUserId, props.helpeeUserId, dispatch]);
 
   function handleRrefreshPage(e) {
     e.preventDefault(e);
     window.location.reload();
+  }
+  function handleAddOffer(e) {
+    e.preventDefault(e);
+    let path = `/${currentLanguage}/helper/service-types`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
 
   function handleToHelperReferralPage(e) {
@@ -58,8 +67,8 @@ const HelperMatchedPartnerPage = (props) => {
 
       {allPotentialCustomers && (
         <div className='task-container'>
-          {!allPotentialCustomers ||
-            (allPotentialCustomers.length === 0 && (
+          {allOffers.length !== 0 &&
+            (!allPotentialCustomers || allPotentialCustomers.length === 0) && (
               <>
                 <div
                   className='history-card'
@@ -86,7 +95,43 @@ const HelperMatchedPartnerPage = (props) => {
                   </div>
                 </div>
               </>
-            ))}
+            )}
+          {allOffers.length === 0 &&
+            (!allPotentialCustomers || allPotentialCustomers.length === 0) && (
+              <>
+                <div
+                  className='history-card'
+                  style={{
+                    boxShadow: 'none',
+                    border: 'none',
+                    paddingLeft: '18px',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                >
+                  <div>
+                    <p style={{ margin: 'auto' }}>
+                      {t('no_matched_customers')}
+                    </p>
+                  </div>
+                  <div>
+                    <p style={{ margin: 'auto', textAlign: 'center', marginTop: '10px' }}>
+                      {t('you_need_to_create_offer_so_match')}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className='history-card'
+                  style={{ boxShadow: 'none', border: 'none' }}
+                >
+                  <div style={{ margin: 'auto' }}>
+                    <button className='btn-contact' onClick={handleAddOffer}>
+                      {t('add_a_offer')}
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           {allPotentialCustomers.map((option) => (
             <PotentialCustomerCard
               key={option.bookingId || `${option.requestId}-${option.offerId}`}
