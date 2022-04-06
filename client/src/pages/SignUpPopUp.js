@@ -163,9 +163,6 @@ const { helpeeAccountStatus } = useSelector((state) => state.helpee);
         signUpPasswordStatusTitle,
         signUpPasswordStatusMessage
       );
-      let path = `/${currentLanguage}/home`;
-      if (window.location.search) path += window.location.search;
-      navigate(path, { replace: true });
       return;
     } else if (signUpPasswordStatus === 'success') {
       setIsLoading(false);
