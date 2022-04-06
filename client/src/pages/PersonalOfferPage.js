@@ -43,63 +43,12 @@ const PersonalOfferPage = (props) => {
     e.preventDefault(e);
     window.location.reload();
   }
-  function handleToHomepage(e) {
-    e.preventDefault();
-    let path = `/${currentLanguage}/home`;
-    if (window.location.search) path += window.location.search;
-    navigate(path);
-  }
-  function handleSignIn(e) {
-    e.preventDefault();
-    let path = '';
-    path = `/${currentLanguage}/helpee/sign-in`;
-    if (window.location.search) path += window.location.search;
-    navigate(path);
-  }
-  function handleAddOffer(e) {
-    e.preventDefault(e);
-    let path = `/${currentLanguage}/helper/service-types`;
-    if (window.location.search) path += window.location.search;
-    navigate(path);
-  }
+  
+  
 
   return (
     <div className='section-left-align'>
-      {!props.isHelpeeAuthenticated && (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            textAlign: 'center',
-          }}
-        >
-          <div style={{ margin: '50px auto' }}>
-            <DangerIcon />
-            <h2 style={{ margin: '10px auto' }}>{t('please')}</h2>
-            <button
-              className='btn-next'
-              style={{ width: '180px' }}
-              onClick={handleSignIn}
-            >
-              {t('sign_in')}
-            </button>
-            <h2 style={{ margin: '10px auto' }}>
-              {t('mkt_offer_sign_in_as_helpee')}
-            </h2>
-            <h2 style={{ margin: '10px auto' }}>
-              {t('dont_have_helpee_account')}
-            </h2>
-            <button
-              className='btn-next'
-              style={{ width: '180px' }}
-              onClick={handleToHomepage}
-            >
-              {t('sign_up_here')}
-            </button>
-          </div>
-        </div>
-      )}
-      {props.isHelpeeAuthenticated && (
+      {
         <>
           <div className='orderHistoryBtnWrapper'>
             <div
@@ -111,50 +60,6 @@ const PersonalOfferPage = (props) => {
           </div>
           {allOffers && (
             <div className='task-container'>
-              {allOffers.length === 0 && (
-                  <>
-                    <div
-                      className='history-card'
-                      style={{
-                        boxShadow: 'none',
-                        border: 'none',
-                        paddingLeft: '18px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                      }}
-                    >
-                      <div>
-                        <p style={{ margin: 'auto' }}>
-                          {t('no_matched_customers')}
-                        </p>
-                      </div>
-                      <div>
-                        <p
-                          style={{
-                            margin: 'auto',
-                            textAlign: 'center',
-                            marginTop: '10px',
-                          }}
-                        >
-                          {t('you_need_to_create_offer_so_match')}
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className='history-card'
-                      style={{ boxShadow: 'none', border: 'none' }}
-                    >
-                      <div style={{ margin: 'auto' }}>
-                        <button
-                          className='btn-contact'
-                          onClick={handleAddOffer}
-                        >
-                          {t('add_a_offer')}
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                )}
               {allOffers.map((option) => (
                 <OfferCard
                   key={option.id}
@@ -178,12 +83,14 @@ const PersonalOfferPage = (props) => {
                   showBookingBtn={true}
                   helpeeName={props.helpeeUsername}
                   helpeeId={props.helpeeId}
+                  isPersonalOfferPage={true}
+                  isHelpeeAuthenticated={props.isHelpeeAuthenticated}
                 />
               ))}
             </div>
           )}
         </>
-      )}
+      }
     </div>
   );
 };

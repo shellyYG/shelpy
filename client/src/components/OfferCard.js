@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import TrashIcon from './Icons/TrashIcon';
 import { clearDeleteOfferStatus, deleteHelperOffer } from '../store/helper/helper-actions';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import SignUpPopUp from '../pages/SignUpPopUp';
 
 const MySwal = withReactContent(Swal);
 
@@ -33,6 +34,7 @@ function OfferCard(props) {
   const refId = searchParams.get('refId');
 
   const [loading, setIsLoading] = useState(false);
+  const [showSignUpPopUp, setShowSignUpPopUp] =  useState(false);
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
@@ -272,29 +274,46 @@ function OfferCard(props) {
     dispatch,
   ]);
 
+  function handleClosePopUp(e) {
+    e.preventDefault();
+    setShowSignUpPopUp(false);
+  }
+
   async function handleBookHelperMarketingClick(e) {
     e.preventDefault();
-    if (!props.helpeeId) {
-      await MySwal.fire({
-        title: <strong>{t('oops')}</strong>,
-        html: <p>{t('please_sign_in_first')}</p>,
-        icon: 'error',
-      });
+    if (props.isPersonalOfferPage && !props.isHelpeeAuthenticated) {
+      // sign up helpee here
+      setShowSignUpPopUp(!showSignUpPopUp);
     } else {
-      navigate(
-        `/${currentLanguage}/helpee/update-booking?requestId=&partnerName=${props.helpeeName}` +
-          `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
-          `&bookingStatus=&bookingId=` +
-          `&helpeeId=${props.helpeeId}&helperId=${props.helperUserId}` +
-          `&helpeeUsername=${props.helpeeName}&helperUsername=${props.helperName}` +
-          `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
-      );
+      // allow to book
+      if (!props.helpeeId) {
+        await MySwal.fire({
+          title: <strong>{t('oops')}</strong>,
+          html: <p>{t('please_sign_in_first')}</p>,
+          icon: 'error',
+        });
+      } else {
+        navigate(
+          `/${currentLanguage}/helpee/update-booking?requestId=&partnerName=${props.helpeeName}` +
+            `&userId=${props.helpeeId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
+            `&bookingStatus=&bookingId=` +
+            `&helpeeId=${props.helpeeId}&helperId=${props.helperUserId}` +
+            `&helpeeUsername=${props.helpeeName}&helperUsername=${props.helperName}` +
+            `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
+            `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
+        );
+      }
     }
+    
   }
 
   return (
     <div className='history-card'>
+      {showSignUpPopUp && (
+        <SignUpPopUp
+          onClick={handleClosePopUp}
+        />
+      )}
       <div className='profilePicWidth'>
         {!props.isAnonymous && props.profilePicPath && (
           <div className='helper-ImgBx'>

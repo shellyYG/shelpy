@@ -1099,6 +1099,13 @@ footer {
     color: rgb(238, 241, 222);
     margin-bottom: 8px; }
 
+.signUpPopUpSelectActionWrapper {
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
 .popup {
   border-color: #000; 
   border-style: groove; 
@@ -1114,6 +1121,22 @@ footer {
   top: 20%;
   display: flex;
   flex-direction: column;
+}
+.popupSignUp {
+  border-color: #000; 
+  border-style: groove; 
+  border-width: 2px; 
+  background-color: #FFF;
+  width: 50vw;
+  height: 25vh;
+  position: absolute;
+  z-index: 10;
+  padding: 5px; 
+  border-radius: 5px;
+  left: 15%;
+  display: flex;
+  flex-direction: column;
+  top: 5%;
 }
 .popUpTopSticker {
   display: flex;
@@ -1173,6 +1196,12 @@ footer {
   font-size: '12px';
   font-weight: 'normal';
   padding-left: '30px';
+  vertical-align: 'middle';
+  color: #231f20;
+}
+.checkbox-text-sign-up-popup {
+  font-size: '12px';
+  font-weight: 'normal';
   vertical-align: 'middle';
   color: #231f20;
 }
@@ -1245,6 +1274,17 @@ footer {
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
+  }
+  .form-control-sign-up {
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  width: 30%;
+  height: 42px;
+  padding: 0 14px; 
+  display: flex;
+  margin: auto;
+  margin-top: 1px;
+  margin-bottom: 1px;
   }
   .form-control-chat {
   border: 1px solid #e6e6e6;
@@ -1523,6 +1563,11 @@ footer {
 }
 
 .pureFlexRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.signUpPopUpEmailPassWrapper {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -2067,6 +2112,12 @@ input[type="checkbox" i] {
     left: 20%;
     height: 50vh;
   }
+  .popupSignUp {
+    width: 60vw;
+    left: 20%;
+    top: 10%;
+    height: 20vh;
+  }
   .popUpTopSticker {
     display: flex;
     flex-direction: column;
@@ -2142,6 +2193,18 @@ input[type="checkbox" i] {
   }
 }
 @media (max-width: 500px) {
+  .popupSignUp {
+    width: 60vw;
+    left: 20%;
+    top: 45%;
+    height: 40vh;
+  }
+  .signUpPopUpEmailPassWrapper {
+    flex-direction: column;
+  }
+  .form-control-sign-up {
+    width: 80%;
+  }
   .introductionWrapper {
     width: 90%;
   }
