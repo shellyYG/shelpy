@@ -60,6 +60,7 @@ import HelperSetPayPalPage from './pages/helper/HelperSetPayPalPage';
 import HelpeeGuidePage from './pages/helpee/HelpeeGuidePage';
 import ProfilePage from './pages/ProfilePage';
 import PersonalOfferPage from './pages/PersonalOfferPage';
+import SingleOfferPage from './pages/SingleOfferPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -113,6 +114,16 @@ function App() {
               path={`/:locale/personal/offers`}
               element={
                 <PersonalOfferPage
+                  helpeeId={helpeeUserId}
+                  helpeeUsername={helpeeName}
+                  isHelpeeAuthenticated={isHelpeeAuthenticated}
+                />
+              }
+            />
+            <Route
+              path={`/:locale/single/offer`}
+              element={
+                <SingleOfferPage
                   helpeeId={helpeeUserId}
                   helpeeUsername={helpeeName}
                   isHelpeeAuthenticated={isHelpeeAuthenticated}

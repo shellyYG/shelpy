@@ -1,51 +1,57 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  getAllOffers,
   getHelperUserData,
+  getSingleOffer,
 } from '../store/helper/helper-actions';
 import OfferCard from '../components/OfferCard';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import RefreshIcon from '../components/Icons/RefreshIcon';
 import { useTranslation } from 'react-i18next';
+import DangerIcon from '../components/Icons/DangerIcon';
 
-const PersonalOfferPage = (props) => {
+const SingleOfferPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [helperName, setHelperName] = useState('');
 
   const [searchParams] = useSearchParams();
   const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
-  const { allOffers } = useSelector((state) => state.helper);
-  const { helperData } = useSelector(
-    (state) => state.helper
-  );
+//   const { singleOffer } = useSelector((state) => state.helper);
+  const { helperData } = useSelector((state) => state.helper);
+  const singleOffer = [];
 
   useEffect(() => {
     dispatch(getHelperUserData({ helperUserId: providerId }));
   }, [providerId, dispatch]);
 
   useEffect(() => {
-      if(helperData && helperData[0]) {
-        setHelperName(helperData[0].username);
-      }
-  },[helperData])
+    if (helperData && helperData[0]) {
+      setHelperName(helperData[0].username);
+    }
+  }, [helperData]);
 
   useEffect(() => {
-    dispatch(getAllOffers({ helperUserId: providerId }));
-  }, [providerId, dispatch]);
+    dispatch(getSingleOffer({ offerId }));
+  }, [offerId, dispatch]);
 
   function handleRrefreshPage(e) {
     e.preventDefault(e);
     window.location.reload();
   }
-  
-  
+  function handleToHomepage(e) {
+    e.preventDefault();
+    let path = `/${currentLanguage}/home`;
+    if (window.location.search) path += window.location.search;
+    navigate(path, { replace: true });
+  }
 
   return (
     <div className='section-left-align'>
@@ -59,9 +65,9 @@ const PersonalOfferPage = (props) => {
               <RefreshIcon onClick={handleRrefreshPage} />
             </div>
           </div>
-          {allOffers && (
+          {singleOffer && (
             <div className='task-container'>
-              {allOffers.map((option) => (
+              {singleOffer.map((option) => (
                 <OfferCard
                   key={option.id}
                   offerId={option.id}
@@ -84,10 +90,32 @@ const PersonalOfferPage = (props) => {
                   showBookingBtn={true}
                   helpeeName={props.helpeeUsername}
                   helpeeId={props.helpeeId}
-                  isPersonalOfferPage={true}
+                  isSingleOfferPage={true}
                   isHelpeeAuthenticated={props.isHelpeeAuthenticated}
                 />
               ))}
+            </div>
+          )}
+          {(!singleOffer || singleOffer.length === 0) && (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                textAlign: 'center',
+              }}
+            >
+              <DangerIcon />
+              <h1>{t('oops')}</h1>
+              <h2 style={{ margin: '10px auto' }}>{t('service_not_exist')}</h2>
+              <div>
+                <button
+                  className='btn-next'
+                  style={{ width: '200px' }}
+                  onClick={handleToHomepage}
+                >
+                  {t('back_to_home')}
+                </button>
+              </div>
             </div>
           )}
         </>
@@ -96,4 +124,4 @@ const PersonalOfferPage = (props) => {
   );
 };
 
-export default PersonalOfferPage;
+export default SingleOfferPage;

@@ -136,6 +136,7 @@
 
   "are_you_lost": "Are you lost?",
   "page_not_exist": "This page does not exist.",
+  "service_not_exist": "This service is no longer available",
   "back_to_home": "Back to homepage",
 
   "footer_question": "Question? Contact us: team@shelpy.co",

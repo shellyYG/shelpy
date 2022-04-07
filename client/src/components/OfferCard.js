@@ -281,7 +281,7 @@ function OfferCard(props) {
 
   async function handleBookHelperMarketingClick(e) {
     e.preventDefault();
-    if (props.isPersonalOfferPage && !props.isHelpeeAuthenticated) {
+    if ((props.isSingleOfferPage || props.isPersonalOfferPage) && !props.isHelpeeAuthenticated) {
       // sign up helpee here
       setShowSignUpPopUp(!showSignUpPopUp);
     } else {
