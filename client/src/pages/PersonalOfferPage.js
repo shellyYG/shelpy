@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllOffers, getHelperUserData } from '../store/helper/helper-actions';
-import DangerIcon from '../components/Icons/DangerIcon';
+import {
+  getHelperUserData,
+  getSingleOffer,
+} from '../store/helper/helper-actions';
 import OfferCard from '../components/OfferCard';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import RefreshIcon from '../components/Icons/RefreshIcon';
@@ -10,17 +12,17 @@ import { useTranslation } from 'react-i18next';
 const PersonalOfferPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [helperName, setHelperName] = useState('');
 
   const [searchParams] = useSearchParams();
   const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
-  const { allOffers } = useSelector((state) => state.helper);
+  const { singleOffer } = useSelector((state) => state.helper);
   const { helperData } = useSelector(
     (state) => state.helper
   );
@@ -36,8 +38,8 @@ const PersonalOfferPage = (props) => {
   },[helperData])
 
   useEffect(() => {
-    dispatch(getAllOffers({ helperUserId: providerId }));
-  }, [providerId, dispatch]);
+    dispatch(getSingleOffer({ offerId }));
+  }, [offerId, dispatch]);
 
   function handleRrefreshPage(e) {
     e.preventDefault(e);
@@ -58,9 +60,9 @@ const PersonalOfferPage = (props) => {
               <RefreshIcon onClick={handleRrefreshPage} />
             </div>
           </div>
-          {allOffers && (
+          {singleOffer && (
             <div className='task-container'>
-              {allOffers.map((option) => (
+              {singleOffer.map((option) => (
                 <OfferCard
                   key={option.id}
                   offerId={option.id}

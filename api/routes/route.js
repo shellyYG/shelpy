@@ -54,6 +54,7 @@ const {
   allowHelperPrivateRoute,
   getProfilePic,
   getHelperAllOffers,
+  getHelperSingleOffer,
   confirmHelperEmail,
   confirmHelperCanChangePassword,
   sendHelperPasswordResetLink,
@@ -190,6 +191,13 @@ router
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(getHelperAllOffers)
   );
+router
+  .route('/api/helper/single-offer')
+  .get(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(getHelperSingleOffer)
+  );
+
 router
   .route('/api/helper/all-bookings')
   .get(

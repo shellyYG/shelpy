@@ -17,6 +17,17 @@ async function getHelperAllOffers(data) {
   return { data: { allOffers } };
 }
 
+async function getHelperSingleOffer(data) {
+  const { offerId } = data;
+  const sql = `SELECT helper.profilePicPath, helper.languages, helper.username AS helperName
+  , helper.isAnonymous, helper.introduction, ofs.* 
+  FROM offers ofs
+  INNER JOIN helper_account helper ON ofs.userId = helper.id
+  WHERE ofs.id = ? AND NOT ofs.status='deleted' ORDER BY id DESC;`;
+  const singleOffer = await query(sql, offerId);
+  return { data: { singleOffer} };
+}
+
 async function getAllMarketingOffers() {
   const sql = `
   SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.languages, acc.isAnonymous, acc.id AS helperId
@@ -230,6 +241,7 @@ async function getHelperRatings(data) {
 module.exports = {
   insertHelperOffer,
   getHelperAllOffers,
+  getHelperSingleOffer,
   updateHelperProfilePicPath,
   updateHelperCertificatePath,
   deleteHelperOffer,

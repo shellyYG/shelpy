@@ -27,6 +27,7 @@ const helperSlice = createSlice({
     helperProfilePicPath: '',
     offerTarget: '',
     allOffers: [],
+    singleOffer: [],
     allPotentialCustomers: [],
     allBookings: [],
 
@@ -98,6 +99,10 @@ const helperSlice = createSlice({
     updateAllOffers(state, action) {
       const { payload } = action;
       state.allOffers = payload.allOffers;
+    },
+    updateSingleOffer(state, action) {
+      const { payload } = action;
+      if (payload.singleOffer) state.singleOffer = payload.singleOffer;
     },
     updateAllBookings(state, action) {
       const { payload } = action;

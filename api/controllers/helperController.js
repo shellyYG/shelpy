@@ -161,6 +161,21 @@ const getHelperAllOffers = async (req, res) => {
   }
 };
 
+const getHelperSingleOffer = async (req, res) => {
+  try {
+    const { offerId } = req.query;
+    const response = await helperModel.getHelperSingleOffer({ offerId });
+    if (response && response.data) {
+      res.status(200).json({
+        singleOffer: response.data.singleOffer,
+      })
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
+
 const getAllMarketingOffers = async (req, res) => {
   try {
     const response = await helperModel.getAllMarketingOffers();
@@ -321,6 +336,7 @@ module.exports = {
   deleteHelperOffer,
   getProfilePic,
   getHelperAllOffers,
+  getHelperSingleOffer,
   confirmHelperEmail,
   confirmHelperCanChangePassword,
   sendHelperPasswordResetLink,

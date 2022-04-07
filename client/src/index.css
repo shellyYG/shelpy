@@ -1128,7 +1128,7 @@ footer {
   border-width: 2px; 
   background-color: #FFF;
   width: 50vw;
-  height: 25vh;
+  height: fit-content;
   position: absolute;
   z-index: 10;
   padding: 5px; 
@@ -2116,7 +2116,6 @@ input[type="checkbox" i] {
     width: 60vw;
     left: 20%;
     top: 10%;
-    height: 20vh;
   }
   .popUpTopSticker {
     display: flex;
@@ -2197,7 +2196,6 @@ input[type="checkbox" i] {
     width: 60vw;
     left: 20%;
     top: 45%;
-    height: 40vh;
   }
   .signUpPopUpEmailPassWrapper {
     flex-direction: column;

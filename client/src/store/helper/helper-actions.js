@@ -8,6 +8,7 @@ const helperSignInPath = '/api/helper/sign-in';
 const userOfferPath = '/api/helper/offer';
 const activeHelperPath = '/api/helper/active-helpers';
 const getAllOffersPath = '/api/helper/all-offers';
+const getSingleOfferPath = '/api/helper/single-offer';
 const getAllBookingsPath = '/api/helper/all-bookings';
 const getPotentialCustomersPath = '/api/helper/potential-customers';
 const helperProfilePicUploadPath = '/api/helper/profile-pic-upload';
@@ -82,6 +83,30 @@ export const getAllOffers = (data) => {
       }
     }
       
+  };
+};
+
+export const getSingleOffer = (data) => {
+  return async (dispatch) => {
+    if (data && data.offerId) {
+      try {
+        const response = await axios.get(getSingleOfferPath, {
+          params: { offerId: data.offerId },
+        });
+        dispatch(
+          helperActions.updateSingleOffer({
+            singleOffer: response.data.singleOffer,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helperActions.updateSingleOffer({
+            singleOffer: [],
+          })
+        );
+      }
+    }
   };
 };
 
