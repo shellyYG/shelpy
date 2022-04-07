@@ -561,6 +561,9 @@
   "job_form_job_retail_IT": "技术部门/IT",
   "job_form_job_retail_hr": "人资",
   "job_form_job_retail_pr": "公关",
+  "job_form_job_retail_brand": "品牌管理/主管",
+  "job_form_job_retail_supply_chain": "供应链管理/主管",
+  "job_form_job_retail_legal": "法务部门",
 
   "job_form_manufacture": "製造业",
   "job_form_job_manufacture_worker": "技师",
@@ -580,6 +583,10 @@
   "job_form_job_manufacture_hr": "人资",
   "job_form_job_manufacture_pr": "公关",
   "job_form_job_manufatcure_receptionist": "柜檯接待员",
+  "job_form_job_manufacture_research_engineer": "研发工程师",
+  "job_form_job_manufacture_product_development": "产品设计师",
+  "job_form_job_manufacture_software_engineer": "软体工程师",
+  "job_form_job_manufacture_PM": "产品经理",
 
   "job_form_industry_consulting": "顾问业",
   "job_form_job_strategy_consultant": "策略顾问",
