@@ -24,9 +24,8 @@ const SingleOfferPage = (props) => {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
-//   const { singleOffer } = useSelector((state) => state.helper);
+  const { singleOffer } = useSelector((state) => state.helper);
   const { helperData } = useSelector((state) => state.helper);
-  const singleOffer = [];
 
   useEffect(() => {
     dispatch(getHelperUserData({ helperUserId: providerId }));
