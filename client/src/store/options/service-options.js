@@ -529,6 +529,9 @@ export const jobOptions = {
     { value: 'Engineer/IT', label: 'job_form_job_retail_IT' },
     { value: 'Human Resource', label: 'job_form_job_retail_hr' },
     { value: 'Public Relations', label: 'job_form_job_retail_pr' },
+    { value: 'Brand (Manager)', label: 'job_form_job_retail_brand' },
+    { value: 'Supply Chain (Manager)', label: 'job_form_job_retail_supply_chain' },
+    { value: 'Legal', label: 'job_form_job_retail_legal' },
     { value: 'Others', label: othersText },
   ],
   Manufacture: [
@@ -583,6 +586,18 @@ export const jobOptions = {
       label: 'job_form_job_biotechnology_engineer',
     },
     {
+      value: 'Research Engineer',
+      label: 'job_form_job_manufacture_research_engineer',
+    },
+    {
+      value: 'Product Designer/Development',
+      label: 'job_form_job_manufacture_product_development',
+    },
+    {
+      value: 'Software Engineer',
+      label: 'job_form_job_manufacture_software_engineer',
+    },
+    {
       value: 'Material Engineer',
       label: 'job_form_job_material_engineer',
     },
@@ -597,6 +612,10 @@ export const jobOptions = {
     {
       value: 'Receptionist',
       label: 'job_form_job_manufatcure_receptionist',
+    },
+    {
+      value: 'Product Manager',
+      label: 'job_form_job_manufacture_PM',
     },
     { value: 'Others', label: othersText },
   ],

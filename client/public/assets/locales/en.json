@@ -561,6 +561,9 @@
   "job_form_job_retail_IT": "Engineer/IT",
   "job_form_job_retail_hr": "Human Resource",
   "job_form_job_retail_pr": "Public Relations",
+  "job_form_job_retail_brand": "Brand (Manager)",
+  "job_form_job_retail_supply_chain": "Supply Chain (Manager)",
+  "job_form_job_retail_legal": "Legal",
 
   "job_form_manufacture": "Manufacture",
   "job_form_job_manufacture_worker": "Labor Worker",
@@ -580,6 +583,10 @@
   "job_form_job_manufacture_hr": "Human Resource",
   "job_form_job_manufacture_pr": "Public Relations",
   "job_form_job_manufatcure_receptionist": "Receptionist",
+  "job_form_job_manufacture_research_engineer": "Research Engineer",
+  "job_form_job_manufacture_product_development": "Product Designer/Development",
+  "job_form_job_manufacture_software_engineer": "Software Engineer",
+  "job_form_job_manufacture_PM": "Product Manager",
 
   "job_form_industry_consulting": "Consulting",
   "job_form_job_strategy_consultant": "Strategy Consultant",
