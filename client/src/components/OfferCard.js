@@ -15,6 +15,9 @@ import {
   nativeLanguageOptions,
   lifeSharingMainOptions,
   lifeSharingSubOptions,
+  degreeOptions,
+  WFHOptions,
+  yearsOptions,
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,6 +42,7 @@ function OfferCard(props) {
   const [duration, setDuration] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
+  const [translatedFourthType, setTranslatedFourthType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
   const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
     useState('');
@@ -74,6 +78,7 @@ function OfferCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
+    let fourthTypeTranslationObj;
     const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
@@ -103,6 +108,16 @@ function OfferCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
+        fourthTypeTranslationObj = degreeOptions.filter(
+          (o) => o.value === props.fourthType
+        );
+        if (
+          props.fourthType &&
+          fourthTypeTranslationObj &&
+          fourthTypeTranslationObj[0]
+        ) {
+          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
+        }
         setDetails(t('degree') + ': ');
         break;
       case 'job':
@@ -129,6 +144,16 @@ function OfferCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
+        fourthTypeTranslationObj = WFHOptions.filter(
+          (o) => o.value === props.fourthType
+        );
+        if (
+          props.fourthType &&
+          fourthTypeTranslationObj &&
+          fourthTypeTranslationObj[0]
+        ) {
+          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
+        }
         setDetails(t('wfh_status') + ': ');
         break;
       case 'selfEmployed':
@@ -153,7 +178,17 @@ function OfferCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
-        setDetails(t('years_of_experience_you_have'));
+        fourthTypeTranslationObj = yearsOptions.filter(
+          (o) => o.value === props.fourthType
+        );
+        if (
+          props.fourthType &&
+          fourthTypeTranslationObj &&
+          fourthTypeTranslationObj[0]
+        ) {
+          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
+        }
+        setDetails(t('years_of_experience_you_have') + ': ' );
         break;
       case 'life':
         setTitle(t('service_types_life'));
@@ -209,6 +244,7 @@ function OfferCard(props) {
     props.mainType,
     props.secondType,
     props.thirdType,
+    props.fourthType,
     props.country,
   ]);
   useEffect(() => {
@@ -389,6 +425,12 @@ function OfferCard(props) {
           <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('offer_id')}: {props.offerId}
           </p>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
+            {details} {translatedFourthType}
+          </p>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
+            {t('helper_organization')}: {props.organization || t('na')}
+          </p>
           <p
             style={{
               fontSize: '14px',
@@ -423,11 +465,11 @@ function OfferCard(props) {
               ? t('free_sign_up', { name: props.helperName })
               : t('book_name', { name: props.helperName })}
           </button>
-          {props.isSingleOfferPage && 
+          {props.isSingleOfferPage && (
             <button className='btn-next' onClick={handleToHomepage}>
               {t('learn_at_homepage')}
             </button>
-          }
+          )}
         </div>
       )}
       {!props.disableTrash && <TrashIcon onClick={handleDeleteOffer} />}

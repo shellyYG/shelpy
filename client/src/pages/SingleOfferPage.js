@@ -67,6 +67,7 @@ const SingleOfferPage = (props) => {
                   secondType={option.secondType}
                   thirdType={option.thirdType}
                   fourthType={option.fourthType}
+                  organization={option.organization}
                   notes={option.notes}
                   country={option.country}
                   price={option.price}
