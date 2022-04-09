@@ -49,21 +49,13 @@ const SingleOfferPage = (props) => {
     e.preventDefault();
     let path = `/${currentLanguage}/home`;
     if (window.location.search) path += window.location.search;
-    navigate(path, { replace: true });
+    navigate(path);
   }
 
   return (
     <div className='section-left-align'>
       {
         <>
-          <div className='orderHistoryBtnWrapper'>
-            <div
-              style={{ margin: 'auto', display: 'flex', flexDirection: 'row' }}
-            >
-              <div style={{ margin: 'auto' }}>{t('refresh_to_get_offers')}</div>
-              <RefreshIcon onClick={handleRrefreshPage} />
-            </div>
-          </div>
           {singleOffer && (
             <div className='task-container'>
               {singleOffer.map((option) => (

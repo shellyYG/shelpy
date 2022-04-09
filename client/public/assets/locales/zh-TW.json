@@ -138,6 +138,7 @@
   "page_not_exist": "此頁面不存在",
   "service_not_exist": "此服務已經不在架上了喔",
   "back_to_home": "回到首頁",
+  "learn_at_homepage": "免費去過來人首頁逛逛",
 
   "footer_question": "有任何問題，請與我們聯繫: team@shelpy.co",
   "footer_legal_rights": "版權所有©Shelpy",
@@ -870,6 +871,7 @@
   "chat_with_helpee_name_re_arrange": "與 {{name}} 聊聊改約時間",
   "chat_with_helper_name_re_arrange": "與 {{name}} 聊聊改約時間",
   "my_chat_with": "我與 {{name}} 的聊天室",
+  "free_sign_up": "免費註冊以預約 {{name}}",
   "book_name": "預約 {{name}}",
   "booking_time": "會議時間",
   "at": "於",

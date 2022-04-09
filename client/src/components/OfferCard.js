@@ -237,6 +237,12 @@ function OfferCard(props) {
     dispatch(deleteHelperOffer(data));
     setIsLoading(true);
   }
+  function handleToHomepage(e) {
+    e.preventDefault();
+    let path = `/${currentLanguage}/home`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
   useEffect(() => {
     if (deleteOfferStatus === 'error') {
       setIsLoading(false);
@@ -309,11 +315,7 @@ function OfferCard(props) {
 
   return (
     <div className='history-card'>
-      {showSignUpPopUp && (
-        <SignUpPopUp
-          onClick={handleClosePopUp}
-        />
-      )}
+      {showSignUpPopUp && <SignUpPopUp onClick={handleClosePopUp} />}
       <div className='profilePicWidth'>
         {!props.isAnonymous && props.profilePicPath && (
           <div className='helper-ImgBx'>
@@ -417,8 +419,15 @@ function OfferCard(props) {
       {props.showBookingBtn && (
         <div className='fullWidth'>
           <button className='btn-next' onClick={handleBookHelperMarketingClick}>
-            {t('book_name', { name: props.helperName })}
+            {props.isSingleOfferPage
+              ? t('free_sign_up', { name: props.helperName })
+              : t('book_name', { name: props.helperName })}
           </button>
+          {props.isSingleOfferPage && 
+            <button className='btn-next' onClick={handleToHomepage}>
+              {t('learn_at_homepage')}
+            </button>
+          }
         </div>
       )}
       {!props.disableTrash && <TrashIcon onClick={handleDeleteOffer} />}

@@ -138,6 +138,7 @@
   "page_not_exist": "This page does not exist.",
   "service_not_exist": "This service is no longer available",
   "back_to_home": "Back to homepage",
+  "learn_at_homepage": "FREE visit on Homepage",
 
   "footer_question": "Question? Contact us: team@shelpy.co",
   "footer_legal_rights": "All Rights Reserved to ©Shelpy",
@@ -870,6 +871,7 @@
   "chat_with_helpee_name_re_arrange": "Chat with {{name}} to rearrange meeting time",
   "chat_with_helper_name_re_arrange": "Chat with {{name}} to rearrange meeting time",
   "my_chat_with": "My chat with {{name}}",
+  "free_sign_up": "FREE sign up to book {{name}}",
   "book_name": "Book {{name}}",
   "booking_time": "Booking Time",
   "at": "at",
