@@ -17,6 +17,9 @@ import {
   nativeLanguageOptions,
   lifeSharingMainOptions,
   lifeSharingSubOptions,
+  degreeOptions,
+  WFHOptions,
+  yearsOptions,
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
 import RatingPopUp from '../pages/RatingPopUp';
@@ -38,12 +41,14 @@ function MarketingCard(props) {
   const [showRating, setShowRating] = useState(false);
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
+  const [translatedFourthType, setTranslatedFourthType] = useState('');
   const [translatedCountry, setTranslatedCountry] = useState('');
   const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
     useState('');
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
   const [averageScore, setAverageScore] = useState(0);
+  const [details, setDetails] = useState('');
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
@@ -68,6 +73,7 @@ function MarketingCard(props) {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
+    let fourthTypeTranslationObj;
     const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === props.country
     );
@@ -97,6 +103,17 @@ function MarketingCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
+        fourthTypeTranslationObj = degreeOptions.filter(
+          (o) => o.value === props.fourthType
+        );
+        if (
+          props.fourthType &&
+          fourthTypeTranslationObj &&
+          fourthTypeTranslationObj[0]
+        ) {
+          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
+        }
+        setDetails(t('degree') + ': ');
         break;
       case 'job':
         setTitle(t('service_types_job'));
@@ -122,6 +139,17 @@ function MarketingCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
+        fourthTypeTranslationObj = WFHOptions.filter(
+          (o) => o.value === props.fourthType
+        );
+        if (
+          props.fourthType &&
+          fourthTypeTranslationObj &&
+          fourthTypeTranslationObj[0]
+        ) {
+          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
+        }
+        setDetails(t('wfh_status') + ': ');
         break;
       case 'selfEmployed':
         setTitle(t('service_types_self_employed'));
@@ -145,6 +173,17 @@ function MarketingCard(props) {
         ) {
           setTranslatedThirdType(t(thirdTypeTranslationObj[0].label));
         }
+        fourthTypeTranslationObj = yearsOptions.filter(
+          (o) => o.value === props.fourthType
+        );
+        if (
+          props.fourthType &&
+          fourthTypeTranslationObj &&
+          fourthTypeTranslationObj[0]
+        ) {
+          setTranslatedFourthType(t(fourthTypeTranslationObj[0].label));
+        }
+        setDetails(t('years_of_experience_you_have') + ': ');
         break;
       case 'life':
         setTitle(t('service_types_life'));
@@ -279,7 +318,13 @@ function MarketingCard(props) {
               onClick={handleShowRatings}
             >
               <ScoreStars averageScore={averageScore} />
-              <p style={{ marginLeft: '3px', fontSize: '12px', alignSelf: 'center' }}>
+              <p
+                style={{
+                  marginLeft: '3px',
+                  fontSize: '12px',
+                  alignSelf: 'center',
+                }}
+              >
                 {props.helperRatingData.length}
                 {t('comments_unit')}
                 {t('comments')}
@@ -337,6 +382,9 @@ function MarketingCard(props) {
         <div className='contentBx'>
           <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('offer_id')}: {props.id}
+          </p>
+          <p style={{ fontSize: '14px', padding: '6px' }}>
+            {details} {translatedFourthType}
           </p>
           <p style={{ fontSize: '14px', padding: '6px' }}>
             {t('helper_organization')}: {props.organization || t('na')}
