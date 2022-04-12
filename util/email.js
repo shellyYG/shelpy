@@ -24,8 +24,8 @@ const sendHelpeeEmail = (user) => {
           html = `Please click this link to confirm your email: <a href='${url}'>${url}</a>`;
           break;
         case 'zh-TW':
-          companyName = '過來人App';
-          subject = '完成過來人App註冊';
+          companyName = '過來人平台';
+          subject = '完成過來人平台註冊';
           html = `請按此連結完成註冊: <a href='${url}'>${url}</a>`;
           break;
         case 'zh-CN':
@@ -77,8 +77,8 @@ const sendHelperEmail = (user) => {
           html = `Please click this link to confirm your email: <a href='${url}'>${url}</a>`;
           break;
         case 'zh-TW':
-          companyName = '過來人App';
-          subject = '完成過來人App註冊';
+          companyName = '過來人平台';
+          subject = '完成過來人平台註冊';
           html = `請按此連結完成註冊: <a href='${url}'>${url}</a>`;
           break;
         case 'zh-CN':
@@ -132,8 +132,8 @@ const sendHelpeeResetPasswordEmail = (user) => {
             html = `Please click this link to reset your password: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-TW':
-            companyName = '過來人App';
-            subject = '重設過來人App密碼';
+            companyName = '過來人平台';
+            subject = '重設過來人平台密碼';
             html = `請按此連結重設密碼: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-CN':
@@ -188,8 +188,8 @@ const sendHelperResetPasswordEmail = (user) => {
             html = `Please click this link to reset your password: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-TW':
-            companyName = '過來人App';
-            subject = '重設過來人App密碼';
+            companyName = '過來人平台';
+            subject = '重設過來人平台密碼';
             html = `請按此連結重設密碼: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-CN':
@@ -266,7 +266,7 @@ const sendChatMessageReminderEmail = async (user) => {
             html = `Message is: ${user.message} <br/> Reply here: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-TW':
-            companyName = '過來人App';
+            companyName = '過來人平台';
             subject = `${messageSender} 傳給你一則新訊息!`;
             html = `新訊息為: ${user.message} <br/>請按此回覆訊息: <a href='${url}'>${url}</a>`;
             break;
@@ -336,7 +336,7 @@ const sendBookingStatusReminderEmail = async (user) => {
        switch (bookingStatus) {
          case 'created':
            if (notificationLanguageValue === 'zh-TW') {
-             companyName = '過來人App';
+             companyName = '過來人平台';
              subject = `${initiatorName} 剛剛發出一個諮詢請求!`;
              html = `請按此連結接受預約或更改時間: <a href='${url}'>${url}</a>`;
            } else if (notificationLanguageValue === 'zh-CN') {
@@ -351,7 +351,7 @@ const sendBookingStatusReminderEmail = async (user) => {
            break;
          case 'helperConfirmed':
            if (notificationLanguageValue === 'zh-TW') {
-             companyName = '過來人App';
+             companyName = '過來人平台';
              subject = `[等待付款]${initiatorName} 剛剛答應了你的諮詢預約時間!`;
              html = `但是正式預約只有在您付款後才成立。<br/> 請按此連結付款: <a href='${url}'>${url}</a>`;
            } else if (notificationLanguageValue === 'zh-CN') {
@@ -366,7 +366,7 @@ const sendBookingStatusReminderEmail = async (user) => {
            break;
          case 'paid':
            if (notificationLanguageValue === 'zh-TW') {
-             companyName = '過來人App';
+             companyName = '過來人平台';
              subject = `[請準時出席會議]${initiatorName} 剛剛付款了!`;
              html = `預約已成立。<br/>您將會在下一封信收到會議連結，請務必準時出席會議。<br/>會議時間為： ${appointmentDate} ${appointmentTime}<br/> 請按此連結查看會議時間與細節: <a href='${url}'>${url}</a>`;
            } else if (notificationLanguageValue === 'zh-CN') {
@@ -453,7 +453,7 @@ const sendMeetingEmailToHelpee = async (data) => {
             break;
           case 'zh-TW':
             subject = `過來人會議 - ${helperName} 與 ${helpeeName}`;
-            companyName = '過來人App';
+            companyName = '過來人平台';
             html = `<h1>你在 ${appointmentDate} ${appointmentTime} (會議時區: ${universalTimeZone}) 的會議連結為:</h1> <br/> <p style="color:red;"> ${joinUrl} </p> <br/> <h1>請準時出席會議!</h1><br/>  點此查看其他預約狀況: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-CN':
@@ -533,7 +533,7 @@ const sendMeetingEmailToHelper = async (data) => {
             break;
           case 'zh-TW':
             subject = `過來人會議 - ${helperName} 與 ${helpeeName}`;
-            companyName = '過來人App';
+            companyName = '過來人平台';
             html = `<h1>你在 ${appointmentDate} ${appointmentTime} (會議時區: ${universalTimeZone}) 的會議連結為:</h1> <br/> <p style="color:red;"> ${joinUrl} </p> <br/> <h1>請準時出席會議!</h1><br/>  點此查看其他預約狀況: <a href='${url}'>${url}</a>`;
             break;
           case 'zh-CN':
@@ -593,7 +593,7 @@ const sendMatchEmailReminder = async (data) => {
           break;
         case 'zh-TW':
           subject = `[過來人] 你有一個新匹配到的新鮮人`;
-          companyName = '過來人App';
+          companyName = '過來人平台';
           html = `<h1>點此查看新匹配到的新鮮人是誰:</h1> <a href='${url}'>${url}</a>`;
           break;
         case 'zh-CN':
@@ -616,7 +616,7 @@ const sendMatchEmailReminder = async (data) => {
           break;
         case 'zh-TW':
           subject = `[過來人] 你有一個新匹配到的過來人`;
-          companyName = '過來人App';
+          companyName = '過來人平台';
           html = `<h1>點此查看新匹配到的過來人是誰:</h1> <a href='${url}'>${url}</a>`;
           break;
         case 'zh-CN':
