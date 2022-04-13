@@ -25,6 +25,7 @@ import TrashIcon from './Icons/TrashIcon';
 import { clearDeleteOfferStatus, deleteHelperOffer } from '../store/helper/helper-actions';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SignUpPopUp from '../pages/SignUpPopUp';
+import { clickOnBookHelper, clickOnToHomePage } from '../service/fbPixelsHelper';
 
 const MySwal = withReactContent(Swal);
 
@@ -275,6 +276,7 @@ function OfferCard(props) {
   }
   function handleToHomepage(e) {
     e.preventDefault();
+    clickOnToHomePage(props.helperUserId, props.offerId);
     let path = `/${currentLanguage}/home`;
     if (window.location.search) path += window.location.search;
     navigate(path);
@@ -323,6 +325,7 @@ function OfferCard(props) {
 
   async function handleBookHelperMarketingClick(e) {
     e.preventDefault();
+    clickOnBookHelper(props.helperUserId, props.offerId);
     if ((props.isSingleOfferPage || props.isPersonalOfferPage) && !props.isHelpeeAuthenticated) {
       // sign up helpee here
       setShowSignUpPopUp(!showSignUpPopUp);
@@ -351,7 +354,13 @@ function OfferCard(props) {
 
   return (
     <div className='history-card'>
-      {showSignUpPopUp && <SignUpPopUp onClick={handleClosePopUp} />}
+      {showSignUpPopUp && (
+        <SignUpPopUp
+          onClick={handleClosePopUp}
+          providerId={props.helperUserId}
+          offerId={props.offerId}
+        />
+      )}
       <div className='profilePicWidth'>
         {!props.isAnonymous && props.profilePicPath && (
           <div className='helper-ImgBx'>

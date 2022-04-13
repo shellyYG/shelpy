@@ -1,25 +1,29 @@
-const viewSingleOfferPage = (helperId, offerId) => {
-  window.fbq('track', 'View-Single-Offer', { helperId, offerId } );
+const viewSingleOfferPage = (providerId, offerId) => {
+  window.fbq('trackCustom', 'ViewOffer', { providerId, offerId });
 };
 
-const clickOnBookHelper = () => {
-  window.fbq('track', 'Book-Helper');
+const clickOnBookHelper = (providerId, offerId) => {
+  window.fbq('trackCustom', 'BookHelper', { providerId, offerId });
 };
 
-const clickOnToHomePage = () => {
-  window.fbq('track', 'Book-Helper');
+const clickOnToHomePage = (providerId, offerId) => {
+  window.fbq('trackCustom', 'ToHome', { providerId, offerId });
 };
 
-const signUpOnSingleOffer = () => {
-  window.fbq('track', 'Sign-Up-On-Single-Offer-Page');
+const signUpOnSingleOffer = (providerId, offerId) => {
+  window.fbq('trackCustom', 'SignUpSOP', { providerId, offerId });
 };
 
-const signInOnSingleOffer = () => {
-  window.fbq('track', 'Sign-In-On-Single-Offer-Page');
+const signInOnSingleOffer = (providerId, offerId) => {
+  window.fbq('trackCustom', 'SignInSOP', { providerId, offerId });
 };
 
-const signUpOnHomePage = () => {
-  window.fbq('track', 'Sign-Up-On-Home-Page');
+const signUpOnHelpeeHomePage = (providerId, offerId) => {
+  window.fbq('trackCustom', 'SignUpHelpeeHome', { providerId, offerId });
+};
+
+const signUpOnHelperHomePage = (providerId, offerId) => {
+  window.fbq('trackCustom', 'SignUpHelperHome', { providerId, offerId });
 };
 
 module.exports = {
@@ -28,5 +32,6 @@ module.exports = {
   clickOnToHomePage,
   signUpOnSingleOffer,
   signInOnSingleOffer,
-  signUpOnHomePage,
+  signUpOnHelpeeHomePage,
+  signUpOnHelperHomePage,
 };

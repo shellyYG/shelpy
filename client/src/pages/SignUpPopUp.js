@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import ConfirmBtn from '../components/ConfirmBtn';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearSignInStatus, clearSignUpEmailStatus, clearSignUpPasswordStatus, getHelpeeAuthStatus, postHelpeeSignInData, postHelpeeSignUpPassword } from '../store/helpee/helpee-actions';
+import { signInOnSingleOffer, signUpOnSingleOffer } from '../service/fbPixelsHelper';
 const regex =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
@@ -71,12 +72,14 @@ const { helpeeAccountStatus } = useSelector((state) => state.helpee);
 
   function handleShowSignUpBox(e) {
     e.preventDefault();
+    signUpOnSingleOffer(props.providerId, props.offerId);
     setShowSignUpBox(true);
     setShowLogInBox(false);
     setShowSignUpLogInSelection(false);
   }
   function handleShowLogInBox(e) {
     e.preventDefault();
+    signInOnSingleOffer(props.providerId, props.offerId);
     setShowSignUpBox(false);
     setShowLogInBox(true);
     setShowSignUpLogInSelection(false);

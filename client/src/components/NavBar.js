@@ -20,6 +20,8 @@ const NavBar = (props) => {
 
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
 
   const { dropDownNavTarget } = useSelector((state) => state.general);
   const { userRole } = useSelector((state) => state.general);
@@ -69,8 +71,8 @@ const NavBar = (props) => {
             className='nav-logo'
             to={
               userRole === 'helpee'
-                ? `/${currentLanguage}/helpee/home?refId=${refId}`
-                : `/${currentLanguage}/helper/home?refId=${refId}`
+                ? `/${currentLanguage}/helpee/home?refId=${refId}&providerId=${providerId}&offerId=${offerId}`
+                : `/${currentLanguage}/helper/home?refId=${refId}&providerId=${providerId}&offerId=${offerId}`
             }
           >
             <img
@@ -84,7 +86,7 @@ const NavBar = (props) => {
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to={`/${currentLanguage}/helper/home?refId=${refId}`}
+              to={`/${currentLanguage}/helper/home?refId=${refId}&providerId=${providerId}&offerId=${offerId}`}
             >
               <HomeIcon />{' '}
             </NavLink>
@@ -94,7 +96,7 @@ const NavBar = (props) => {
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to={`/${currentLanguage}/home?refId=${refId}`}
+              to={`/${currentLanguage}/home?refId=${refId}&providerId=${providerId}&offerId=${offerId}`}
             >
               <HomeIcon />{' '}
             </NavLink>
@@ -104,7 +106,7 @@ const NavBar = (props) => {
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to={`/${currentLanguage}/helpee/guidance?refId=${refId}`}
+              to={`/${currentLanguage}/helpee/guidance?refId=${refId}&providerId=${providerId}&offerId=${offerId}`}
             >
               <QuestionMarkIcon />{' '}
               <div className='navBarText'>{t('how_shelpy_works')}</div>
@@ -114,8 +116,8 @@ const NavBar = (props) => {
             style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)}
             to={
               userRole === 'helpee'
-                ? `/${currentLanguage}/helpee/service-types?refId=${refId}`
-                : `/${currentLanguage}/helper/service-types?refId=${refId}`
+                ? `/${currentLanguage}/helpee/service-types?refId=${refId}&providerId=${providerId}&offerId=${offerId}`
+                : `/${currentLanguage}/helper/service-types?refId=${refId}&providerId=${providerId}&offerId=${offerId}`
             }
           >
             <ShopIcon
@@ -134,7 +136,7 @@ const NavBar = (props) => {
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to={`/${currentLanguage}/marketing/offers?refId=${refId}`}
+              to={`/${currentLanguage}/marketing/offers?refId=${refId}&providerId=${providerId}&offerId=${offerId}`}
             >
               <OfferIcon
                 color={({ isActive }) => (isActive ? 'black' : 'white')}
@@ -147,7 +149,7 @@ const NavBar = (props) => {
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to={`/${currentLanguage}/helper/home?refId=${refId}`}
+              to={`/${currentLanguage}/helper/home?refId=${refId}&providerId=${providerId}&offerId=${offerId}`}
             >
               <HelpIcon
                 color={({ isActive }) => (isActive ? 'black' : 'white')}
@@ -161,7 +163,7 @@ const NavBar = (props) => {
               style={({ isActive }) =>
                 isActive ? activeStyle : nonActiveStyle
               }
-              to={`/${currentLanguage}/home?refId=${refId}`}
+              to={`/${currentLanguage}/home?refId=${refId}&providerId=${providerId}&offerId=${offerId}`}
             >
               <HelpIcon />{' '}
               <div className='navBarText'>{t('nav_become_helpee')}</div>

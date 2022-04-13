@@ -14,6 +14,7 @@ import HelperMarketingSection from '../../components/HelperMarketingSection';
 import { useTranslation } from 'react-i18next';
 import JobOrUniCard from '../../components/JobOrUniCard';
 import FeaturedHelperPart from '../../components/FeaturedHelperPart';
+import { signUpOnHelperHomePage } from '../../service/fbPixelsHelper';
 
 
 const MySwal = withReactContent(Swal);
@@ -35,12 +36,15 @@ const SignUpPageHelper = () => {
   const [email, setEmail] = useState('');
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
   async function handleConfirm(e) {
     e.preventDefault();
+    signUpOnHelperHomePage(providerId, offerId);
     if (emailRef && emailRef.current && emailRef.current.value) {
       if (!regex.test(emailRef.current.value)) {
         await MySwal.fire({

@@ -12,6 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import HelpeeMarketingSection from '../../components/HelpeeMarketingSection';
 import FeaturedHelperPart from '../../components/FeaturedHelperPart';
+import { signUpOnHelpeeHomePage } from '../../service/fbPixelsHelper';
 
 const MySwal = withReactContent(Swal);
 const regex =
@@ -34,9 +35,12 @@ function HelpeeSignUpPage(props) {
   const [email, setEmail] = useState('');
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
 
   async function handleConfirm(e) {
     e.preventDefault();
+    signUpOnHelpeeHomePage(providerId, offerId);
     if (emailRef && emailRef.current && emailRef.current.value) {
       if (!regex.test(emailRef.current.value)) {
         await MySwal.fire({
