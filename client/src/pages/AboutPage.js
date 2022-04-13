@@ -19,9 +19,19 @@ const AboutPage = () => {
           <h3>
             {t('mission_statement_part0')} <br />
             <br />
-            {t('mission_statement_part1')} <br />
-            {t('mission_statement_part2')}
           </h3>
+          <p style={{ margin: '3px 30px' }}>
+            {t('mission_statement_part1')} <br />
+          </p>
+          <p style={{ margin: '3px 30px' }}>
+            {t('mission_statement_part2')} <br />
+          </p>
+          <p style={{ margin: '3px 30px' }}>
+            {t('mission_statement_part3')} <br />
+          </p>
+          <p style={{ margin: '3px 30px' }}>
+            {t('mission_statement_part4')} <br />
+          </p>
         </div>
       </div>
     </div>
