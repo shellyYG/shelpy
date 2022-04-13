@@ -6,9 +6,9 @@ import {
 } from '../store/helper/helper-actions';
 import OfferCard from '../components/OfferCard';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import RefreshIcon from '../components/Icons/RefreshIcon';
 import { useTranslation } from 'react-i18next';
 import DangerIcon from '../components/Icons/DangerIcon';
+import { viewSingleOfferPage } from '../service/fbPixelsHelper';
 
 const SingleOfferPage = (props) => {
   const { t } = useTranslation();
@@ -26,6 +26,10 @@ const SingleOfferPage = (props) => {
 
   const { singleOffer } = useSelector((state) => state.helper);
   const { helperData } = useSelector((state) => state.helper);
+
+  useEffect(() => {
+    viewSingleOfferPage(providerId, offerId);
+  }, [providerId, offerId]);
 
   useEffect(() => {
     dispatch(getHelperUserData({ helperUserId: providerId }));
