@@ -20,6 +20,7 @@ function FullLineTextBox(props) {
             ref={props.inputRef}
             maxLength={props.maxLength || '100'}
             onChange={props.onChange}
+            title='full-line-text-box'
           />
         </div>
       </div>
