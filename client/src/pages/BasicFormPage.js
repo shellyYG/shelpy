@@ -95,6 +95,7 @@ const BasicFormPage = (props) => {
   const [defaultIntroduction, setDefaultIntroduction] = useState('');
   const [defaultNotes, setDefaultNotes] = useState('');
   const [disableClickEvent, setDisableClickEvent] = useState(false);
+  const [imageBoxStatus, setImageBoxStatus] = useState('');
 
   const { helpeeProfilePicPath, helpeeData } = useSelector((state) => state.helpee);
   const { helperProfilePicPath, helperData } = useSelector((state) => state.helper);
@@ -181,6 +182,7 @@ const BasicFormPage = (props) => {
         html: <p>{t('error_file_too_big')}</p>,
         icon: 'error',
       });
+      setIsUploadingPic(false);
       return;
     }
     if (
@@ -534,7 +536,11 @@ const BasicFormPage = (props) => {
   useEffect(() => {
     if (!props.isHelpee) {
       if (helperData && helperData[0]) {
-        setDefaultHelperProfilePicPath('/images/'+helperData[0].profilePicPath);
+        if (helperData[0].profilePicPath){
+          setDefaultHelperProfilePicPath(
+            '/images/' + helperData[0].profilePicPath
+          );
+        }
         setDefaultUsername(helperData[0].username);
         setDefaultLinkedIn(helperData[0].linkedInUrl);
         setAge(helperData[0].age);
@@ -565,7 +571,11 @@ const BasicFormPage = (props) => {
       }
     } else {
       if (helpeeData && helpeeData[0]) {
-        setDefaultHelpeeProfilePicPath('/images/'+helpeeData[0].profilePicPath);
+        if (helpeeData[0].profilePicPath){
+          setDefaultHelpeeProfilePicPath(
+            '/images/' + helpeeData[0].profilePicPath
+          );
+        }
         setDefaultUsername(helpeeData[0].username);
         setAge(helpeeData[0].age);
         setNotificationLanguage(helpeeData[0].notificationLanguage);
@@ -595,6 +605,51 @@ const BasicFormPage = (props) => {
       }
     }
   }, [props.isHelpee, helperData, helpeeData]);
+
+  // show upload image if no image on first render, otherwise show image
+  useEffect(() => {
+    if (
+      (props.isHelpee &&
+        !helpeeProfilePicPath &&
+        !defaultHelpeeProfilePicPath) ||
+      (!props.isHelpee && !helperProfilePicPath && !defaultHelperProfilePicPath)
+    ) {
+      setAllowUploadPic(true);
+    } else {
+      setAllowUploadPic(false);
+    }
+  }, [
+    props.isHelpee,
+    helpeeProfilePicPath,
+    defaultHelpeeProfilePicPath,
+    helperProfilePicPath,
+    defaultHelperProfilePicPath,
+  ]);
+
+  // set image box status
+  useEffect(()=>{
+    if (!!isAnonymous) {
+      setImageBoxStatus('showAnonymousBox');
+    } else if (!!allowUploadPic && !isUploadingPic && !isAnonymous) {
+      setImageBoxStatus('showUploadBox');
+    } else if (!allowUploadPic && !!isUploadingPic && !isAnonymous) {
+      setImageBoxStatus('showLoadingBox');
+    } else if (
+      !props.isHelpee &&
+      !allowUploadPic &&
+      !isUploadingPic &&
+      !isAnonymous
+    ) {
+      setImageBoxStatus('showHelperImage');
+    } else if (
+      props.isHelpee &&
+      !allowUploadPic &&
+      !isUploadingPic &&
+      !isAnonymous
+    ) {
+      setImageBoxStatus('showHelpeeImage');
+    }
+  },[props.isHelpee, allowUploadPic, isUploadingPic, isAnonymous])
 
   return (
     <div
@@ -631,14 +686,14 @@ const BasicFormPage = (props) => {
                   className='form-wrapper'
                   style={{ width: '100%', margin: 'auto' }}
                 >
-                  {!!isAnonymous && (
+                  {imageBoxStatus === 'showAnonymousBox' && (
                     <div className='blankProfileImageBx'>
                       <div style={{ margin: 'auto' }}>
                         <p style={{ color: 'black' }}>Anonymous</p>
                       </div>
                     </div>
                   )}
-                  {!!allowUploadPic && !isUploadingPic && !isAnonymous && (
+                  {imageBoxStatus === 'showUploadBox' && (
                     <>
                       <div className='blankProfileImageBx'>
                         {' '}
@@ -667,7 +722,7 @@ const BasicFormPage = (props) => {
                       </div>
                     </>
                   )}
-                  {!allowUploadPic && !!isUploadingPic && !isAnonymous && (
+                  {imageBoxStatus === 'showLoadingBox' && (
                     <>
                       <div className='blankProfileImageBx'>
                         <div style={{ margin: 'auto' }}>
@@ -683,61 +738,45 @@ const BasicFormPage = (props) => {
                       </div>
                     </>
                   )}
-                  {!allowUploadPic &&
-                    !isUploadingPic &&
-                    !isAnonymous &&
-                    !props.isHelpee &&
-                    (profilePic ||
-                      ((helperProfilePicPath || defaultHelperProfilePicPath) &&
-                        (helperProfilePicPath.length > 1 ||
-                          defaultHelperProfilePicPath.length > 1))) && (
-                      <>
-                        <div className='profileImageBx'>
-                          <img
-                            src={
-                              helperProfilePicPath ||
-                              defaultHelperProfilePicPath
-                            }
-                            alt='connection'
-                          ></img>
-                        </div>
-                        <div style={{ display: 'flex', marginTop: '-50px' }}>
-                          <EditIcon
-                            color='white'
-                            onClick={handleShowEditPic}
-                            disableClickEvent={disableClickEvent}
-                          />
-                        </div>
-                      </>
-                    )}
+                  {imageBoxStatus === 'showHelperImage' && (
+                    <>
+                      <div className='profileImageBx'>
+                        <img
+                          src={
+                            helperProfilePicPath || defaultHelperProfilePicPath
+                          }
+                          alt=''
+                        ></img>
+                      </div>
+                      <div style={{ display: 'flex', marginTop: '-50px' }}>
+                        <EditIcon
+                          color='white'
+                          onClick={handleShowEditPic}
+                          disableClickEvent={disableClickEvent}
+                        />
+                      </div>
+                    </>
+                  )}
 
-                  {!allowUploadPic &&
-                    !isUploadingPic &&
-                    !isAnonymous &&
-                    props.isHelpee &&
-                    (profilePic ||
-                      ((helpeeProfilePicPath || defaultHelpeeProfilePicPath) &&
-                        (helpeeProfilePicPath.length > 1 ||
-                          defaultHelpeeProfilePicPath.length > 1))) && (
-                      <>
-                        <div className='profileImageBx'>
-                          <img
-                            src={
-                              helpeeProfilePicPath ||
-                              defaultHelpeeProfilePicPath
-                            }
-                            alt='connection'
-                          ></img>
-                        </div>
-                        <div style={{ display: 'flex', marginTop: '-50px' }}>
-                          <EditIcon
-                            color='white'
-                            onClick={handleShowEditPic}
-                            disableClickEvent={disableClickEvent}
-                          />
-                        </div>
-                      </>
-                    )}
+                  {imageBoxStatus === 'showHelpeeImage' && (
+                    <>
+                      <div className='profileImageBx'>
+                        <img
+                          src={
+                            helpeeProfilePicPath || defaultHelpeeProfilePicPath
+                          }
+                          alt=''
+                        ></img>
+                      </div>
+                      <div style={{ display: 'flex', marginTop: '-50px' }}>
+                        <EditIcon
+                          color='white'
+                          onClick={handleShowEditPic}
+                          disableClickEvent={disableClickEvent}
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
               <div style={{ margin: 'auto', textAlign: 'center' }}>
@@ -838,7 +877,9 @@ const BasicFormPage = (props) => {
                   checked={isAnonymous}
                   handleCheck={setIsAnonymous}
                   title={
-                    props.isHelpee ? `${t('ask_anonymous')} ${t('not_recommend')}` : `${t('answer_anonymous')} ${t('not_recommend')}`
+                    props.isHelpee
+                      ? `${t('ask_anonymous')} ${t('not_recommend')}`
+                      : `${t('answer_anonymous')} ${t('not_recommend')}`
                   }
                   details={t('ananymous_details')}
                   paddingRight='10px'
