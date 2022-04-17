@@ -110,9 +110,25 @@ const generateMeetingLink = async (req, res) => {
   }
 }
 
+const logPageView = async (req, res) => {
+  try {
+    const { data } = req.body;
+    const ip = (
+        req.headers['x-forwarded-for'] || req.connection.remoteAddress
+    );
+    data.ip = ip;
+    const id = await generalModel.logPageView(data);
+    res.status(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   confirmCanAccessChatroom,
   confirmCanAccessDashboard,
   updatePayPalAccount,
   generateMeetingLink,
+  logPageView
 };

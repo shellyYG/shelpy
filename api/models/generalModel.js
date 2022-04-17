@@ -64,6 +64,12 @@ async function logEmailToDB(data) {
   return sqlResult.insertId;
 }
 
+async function logPageView(data) {
+  const sql = 'INSERT INTO page_view SET ?';
+  const sqlResult = await query(sql, data);
+  return sqlResult.insertId;
+}
+
 async function updatePayPalAccount(data) {
   const { bankAccount, payPalReceiverName, status, id, role } = data;
   const table = role === 'helpee' ? 'helpee_account': 'helper_account';
@@ -112,4 +118,5 @@ module.exports = {
   logEmailToDB,
   updatePayPalAccount,
   logMeetingToEmail,
+  logPageView,
 };

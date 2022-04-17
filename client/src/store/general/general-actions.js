@@ -7,6 +7,7 @@ const unSubEmailPath = '/api/unsubscribe/email'
 const canAccessChatroomPath = '/api/access-chatroom';
 const canAccessDashboardPath = '/api/access-dashboard';
 const ratingPath = '/api/rating';
+const logLandOnPagePath = '/api/log/page/view';
 
 export const postBookingStatus = (data) => {
   return async (dispatch) => {
@@ -312,3 +313,13 @@ export const clearPostRatingStatus = (data) => {
     );
   };
 }
+
+export const logLandOnPage = (data) => {
+  return async () => {
+    try {
+      await axios.post(logLandOnPagePath, { data });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};

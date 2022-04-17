@@ -80,6 +80,7 @@ const {
   confirmCanAccessDashboard,
   updatePayPalAccount,
   generateMeetingLink,
+  logPageView,
 } = require('../controllers/generalController');
 
 router
@@ -602,6 +603,8 @@ router
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(updateBookingStatus)
   );
+
+router.route('/api/log/page/view').post(wrapAsync(logPageView));
 
 // router
 //   .route('/api/helpee/pay')
