@@ -97,7 +97,9 @@
   "select_experience_you_want_to_share": "NOW: select the experiences you want to share.",
   "helper_wait_for_verify": "Thanks! We are now working on proving your qualification. When neccessary, you will get a quick phone call from us for simple eligibility check. After that, you will get an email from us once you pass the eligibility check (typically within 2 business days).",
 
-  "update_payment": "Update Receive Payment Account",
+  "paypal_account": "PayPal Account",
+  "your_current_paypal_account": "Your Current PayPal Account",
+  "change_paypal_account": "Change PayPal Account",
   "paypal_account_successfully_update": "Successfully updated your paypal account.",
   "paypal_receiver_name": "Receiver Name",
   "paypal_email": "Paypal Email",
@@ -914,6 +916,7 @@
 
   "update_basic_information": "Update Basic Information",
   "upload_profile_pic": "Upload Picture (Recommended but optional)",
+  "no_picture_please_update": "No Profile Picture. You can add profile picture by Update Profile.",
   "username": "Username",
   "username_title": "Username (This will be shown publicly) *",
   "email_title": "Email",
