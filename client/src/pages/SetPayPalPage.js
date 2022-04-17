@@ -6,13 +6,15 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import {
   clearSetPayPalAccountStatus,
+  getHelperUserData,
   setPayPalAccount,
-} from '../../store/helper/helper-actions';
-import FullLineTextBox from '../../components/FullLineTextBox';
-import ConfirmBtn from '../../components/ConfirmBtn';
+} from '../store/helper/helper-actions';
+import FullLineTextBox from '../components/FullLineTextBox';
+import ConfirmBtn from '../components/ConfirmBtn';
+import { getHelpeeUserData } from '../store/helpee/helpee-actions';
 const MySwal = withReactContent(Swal);
 
-const HelpersetPayPalPage = (props) => {
+const SetPayPalPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +29,9 @@ const HelpersetPayPalPage = (props) => {
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
 
+  const { helperData } = useSelector((state) => state.helper);
+  const { helpeeData } = useSelector((state) => state.helpee);
+
   const {
     setPayPalAccountStatus,
     setPayPalAccountStatusTitle,
@@ -38,6 +43,8 @@ const HelpersetPayPalPage = (props) => {
   const [enableBtn, setEnableBtn] = useState(false);
   const [payPalNameString, setPayPalNameString] = useState('');
   const [payPalAccountString, setPayPalAccountString] = useState('');
+  const [originalPayPalAccount, setOriginalPayPalAccount] = useState('');
+  const [showUpdateAccountPart, setShowUpdateAccountPart] = useState(true);
 
   if (loading) {
     MySwal.fire({
@@ -67,17 +74,18 @@ const HelpersetPayPalPage = (props) => {
     e.preventDefault();
     let payPalName;
     let payPalEmail;
-    if (payPalNameRef && payPalNameRef.current){
+    if (payPalNameRef && payPalNameRef.current) {
       payPalName = payPalNameRef.current.value;
     }
-    if (payPalEmailRef && payPalEmailRef.current){
+    if (payPalEmailRef && payPalEmailRef.current) {
       payPalEmail = payPalEmailRef.current.value;
     }
     const data = {
       status: 'agreed_employment_contract',
       payPalReceiverName: payPalName,
       bankAccount: payPalEmail,
-      id: props.helperId,
+      id: props.isHelpee ? props.helpeeId : props.helperId,
+      role: props.isHelpee ? 'helpee' : 'helper',
     };
     try {
       dispatch(setPayPalAccount(data));
@@ -86,7 +94,6 @@ const HelpersetPayPalPage = (props) => {
       console.error(err);
       setIsLoading(false);
     }
-    
   }
 
   useEffect(() => {
@@ -116,7 +123,11 @@ const HelpersetPayPalPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        navigate(`/${currentLanguage}/helpee/bookings?refId=${refId}`);
+        let path;
+        path = props.isHelpee
+          ? `/${currentLanguage}/helpee/bookings?refId=${refId}`
+          : `/${currentLanguage}/helper/bookings?refId=${refId}`;
+        navigate(path);
       }
       dispatch(clearSetPayPalAccountStatus());
       sweetAlertAndNavigate(
@@ -127,6 +138,7 @@ const HelpersetPayPalPage = (props) => {
   }, [
     t,
     navigate,
+    props.isHelpee,
     setPayPalAccountStatus,
     setPayPalAccountStatusTitle,
     setPayPalAccountStatusMessage,
@@ -138,6 +150,39 @@ const HelpersetPayPalPage = (props) => {
   useEffect(() => {
     setEnableBtn(payPalNameString && payPalAccountString && hasGiveConsent);
   }, [payPalNameString, payPalAccountString, hasGiveConsent]);
+
+  useEffect(() => {
+    if (props.isHelpee) {
+      dispatch(getHelpeeUserData({ helpeeUserId: props.helpeeId }));
+    } else {
+      dispatch(getHelperUserData({ helperUserId: props.helperId }));
+    }
+  }, [props.helperId, props.isHelpee, props.helpeeId, dispatch]);
+
+  useEffect(() => {
+    if (
+      !props.isHelpee &&
+      helperData &&
+      helperData[0] &&
+      helperData[0].bankAccount
+    ) {
+      setOriginalPayPalAccount(helperData[0].bankAccount);
+      setShowUpdateAccountPart(false);
+    } else if (
+      props.isHelpee &&
+      helpeeData &&
+      helpeeData[0] &&
+      helpeeData[0].bankAccount
+    ) {
+      setOriginalPayPalAccount(helpeeData[0].bankAccount);
+      setShowUpdateAccountPart(false);
+    }
+  }, [helperData, helpeeData, props.isHelpee]);
+
+  function handleShowUpdateAccountPart(e) {
+    e.preventDefault();
+    setShowUpdateAccountPart(true);
+  }
 
   return (
     <div
@@ -174,65 +219,82 @@ const HelpersetPayPalPage = (props) => {
               marginTop: '10px',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <FullLineTextBox
-                title={`${t('paypal_receiver_name')} *`}
-                placeholder={'Shelly Yang'}
-                labelColor='black'
-                inputRef={payPalNameRef}
-                id='paypal-name'
-                onChange={handlePayPalNameTyping}
-              />
-              <FullLineTextBox
-                title={`${t('paypal_email')} *`}
-                placeholder={'xxx@gmail.com'}
-                labelColor='black'
-                inputRef={payPalEmailRef}
-                id='paypal-acc'
-                onChange={handlePayPalAccountTyping}
-              />
-              <div
-                className='form-row'
-                style={{ marginRight: 'auto', marginBottom: '20px' }}
-              >
-                <input
-                  type='checkbox'
-                  checked={hasGiveConsent}
-                  onChange={handleHasGiveConsent}
-                  style={{
-                    cursor: 'pointer',
-                    marginBottom: 'auto',
-                    width: '30px',
-                  }}
-                  ref={consentRef}
-                />
-                <div className='checkbox-text-password-page'>
-                  <p
-                    style={{
-                      textAlign: 'start',
-                      marginBottom: '10px',
-                      fontSize: '14px',
-                      color: 'black',
-                    }}
-                  >
-                    {t('helper_sign_contract_introduction')}{' '}
-                    <a
-                      href={`/${currentLanguage}/contract-terms?refId=${refId}`}
-                      target='_blank'
-                      rel='noreferrer'
-                    >
-                      {t('helper_home_employee_contract')}
-                    </a>
-                    {t('home_ending')} <br />
-                  </p>
+            {!showUpdateAccountPart && (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ margin: 'auto' }}>
+                  {t('your_current_paypal_account')}:
+                </div>
+                <div style={{ margin: 'auto' }}>{originalPayPalAccount}</div>
+                <div style={{ margin: 'auto', marginTop: '10px' }}>
+                  <ConfirmBtn
+                    cta={t('change_paypal_account')}
+                    disable={false}
+                    handleConfirm={handleShowUpdateAccountPart}
+                  />
                 </div>
               </div>
-              <ConfirmBtn
-                cta={t('confirm')}
-                disable={!enableBtn}
-                handleConfirm={handleConfirm}
-              />
-            </div>
+            )}
+            {!!showUpdateAccountPart && (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <FullLineTextBox
+                  title={`${t('paypal_receiver_name')} *`}
+                  placeholder={'Shelly Yang'}
+                  labelColor='black'
+                  inputRef={payPalNameRef}
+                  id='paypal-name'
+                  onChange={handlePayPalNameTyping}
+                />
+                <FullLineTextBox
+                  title={`${t('paypal_email')} *`}
+                  placeholder={'xxx@gmail.com'}
+                  labelColor='black'
+                  inputRef={payPalEmailRef}
+                  id='paypal-acc'
+                  onChange={handlePayPalAccountTyping}
+                />
+                <div
+                  className='form-row'
+                  style={{ marginRight: 'auto', marginBottom: '20px' }}
+                >
+                  <input
+                    type='checkbox'
+                    checked={hasGiveConsent}
+                    onChange={handleHasGiveConsent}
+                    style={{
+                      cursor: 'pointer',
+                      marginBottom: 'auto',
+                      width: '30px',
+                    }}
+                    ref={consentRef}
+                  />
+                  <div className='checkbox-text-password-page'>
+                    <p
+                      style={{
+                        textAlign: 'start',
+                        marginBottom: '10px',
+                        fontSize: '14px',
+                        color: 'black',
+                      }}
+                    >
+                      {t('helper_sign_contract_introduction')}{' '}
+                      <a
+                        href={`/${currentLanguage}/contract-terms?refId=${refId}`}
+                        target='_blank'
+                        rel='noreferrer'
+                      >
+                        {t('helper_home_employee_contract')}
+                      </a>
+                      {t('home_ending')} <br />
+                    </p>
+                  </div>
+                </div>
+                <ConfirmBtn
+                  cta={t('confirm')}
+                  disable={!enableBtn}
+                  handleConfirm={handleConfirm}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -240,4 +302,4 @@ const HelpersetPayPalPage = (props) => {
   );
 };
 
-export default HelpersetPayPalPage;
+export default SetPayPalPage;

@@ -56,7 +56,7 @@ import HelpeeRequestsPage from './pages/helpee/HelpeeRequestsPage';
 import HelperOffersPage from './pages/helper/HelperOffersPage';
 import ReferralPage from './pages/ReferralPage';
 import ReferralContractPage from './pages/ReferralContractPage';
-import HelperSetPayPalPage from './pages/helper/HelperSetPayPalPage';
+import SetPayPalPage from './pages/SetPayPalPage';
 import HelpeeGuidePage from './pages/helpee/HelpeeGuidePage';
 import ProfilePage from './pages/ProfilePage';
 import PersonalOfferPage from './pages/PersonalOfferPage';
@@ -253,9 +253,19 @@ function App() {
               path={`/:locale/helper/paypal-account`}
               element={
                 isHelperAuthenticated ? (
-                  <HelperSetPayPalPage helperId={helperUserId} />
+                  <SetPayPalPage helperId={helperUserId} isHelpee={false}/>
                 ) : (
                   <PreSignInPage isHelpee={false} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helpee/paypal-account`}
+              element={
+                isHelpeeAuthenticated ? (
+                  <SetPayPalPage helpeeId={helpeeUserId} isHelpee={true}/>
+                ) : (
+                  <PreSignInPage isHelpee={true} />
                 )
               }
             />

@@ -146,7 +146,11 @@ const ReferralPage = (props) => {
 
   function handleShowPayPalSection(e){
     e.preventDefault();
-    setEnableEditPaypal(!enableEditPaypal);
+    let path = props.isHelpee
+      ? `/${currentLanguage}/helpee/paypal-account`
+      : `/${currentLanguage}/helper/paypal-account`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
 
   useEffect(() => {
@@ -200,6 +204,23 @@ const ReferralPage = (props) => {
                   `https://shelpy.co/${currentLanguage}/helpee/home?refId=helper${props.helperId}`}
               </p>
             </div>
+            <>
+              <h2 style={{ textAlign: 'center' }}>
+                {t('payment_receive_account')}
+              </h2>
+              <h4 style={{ textAlign: 'center', color: 'red' }}>
+                {t('you_must_enter_payment')}
+              </h4>
+              <p
+                style={{
+                  textAlign: 'center',
+                  margin: '5px auto 5px',
+                  fontSize: '12px',
+                }}
+              >
+                {t('payment_payments_notes')} <br />
+              </p>
+            </>
             <div style={{ textAlign: 'center' }}>
               <ConfirmBtn
                 cta={t('update_paypal_account')}
@@ -207,101 +228,6 @@ const ReferralPage = (props) => {
                 handleConfirm={handleShowPayPalSection}
               />
             </div>
-
-            {!!enableEditPaypal && (
-              <>
-                <h2 style={{ textAlign: 'center' }}>
-                  {t('payment_receive_account')}
-                </h2>
-                <h4 style={{ textAlign: 'center', color: 'red' }}>
-                  {t('you_must_enter_payment')}
-                </h4>
-                <p
-                  style={{
-                    textAlign: 'center',
-                    margin: '5px auto 5px',
-                    fontSize: '12px',
-                  }}
-                >
-                  {t('payment_payments_notes')} <br />
-                </p>
-                <p
-                  style={{
-                    textAlign: 'center',
-                    fontSize: '10px',
-                    marginBottom: '10px',
-                  }}
-                >
-                  {t('apply_paypal_account')} <br />
-                  <div
-                    style={{
-                      marginTop: '10px',
-                    }}
-                  >
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <FullLineTextBox
-                        title={`${t('paypal_receiver_name')} *`}
-                        placeholder={'Shelly Yang'}
-                        labelColor='black'
-                        inputRef={payPalNameRef}
-                        id='paypal-name'
-                        onChange={handlePayPalNameTyping}
-                      />
-                      <FullLineTextBox
-                        title={`${t('paypal_email')} *`}
-                        placeholder={'xxx@gmail.com'}
-                        labelColor='black'
-                        inputRef={payPalEmailRef}
-                        id='paypal-acc'
-                        onChange={handlePayPalAccountTyping}
-                      />
-                      <div
-                        className='form-row'
-                        style={{ marginRight: 'auto', marginBottom: '20px' }}
-                      >
-                        <input
-                          type='checkbox'
-                          checked={hasGiveConsent}
-                          onChange={handleHasGiveConsent}
-                          style={{
-                            cursor: 'pointer',
-                            marginBottom: 'auto',
-                            width: '30px',
-                          }}
-                          ref={consentRef}
-                        />
-                        <div className='checkbox-text-password-page'>
-                          <p
-                            style={{
-                              textAlign: 'start',
-                              marginBottom: '10px',
-                              fontSize: '14px',
-                              color: 'black',
-                            }}
-                          >
-                            {t('helper_sign_contract_introduction')}{' '}
-                            <a
-                              href={`/${currentLanguage}/referral-terms?refId=${refId}`}
-                              target='_blank'
-                              rel='noreferrer'
-                            >
-                              {t('helper_home_employee_contract')} -{' '}
-                              {t('referral_terms')}
-                            </a>
-                            {t('home_ending')} <br />
-                          </p>
-                        </div>
-                      </div>
-                      <ConfirmBtn
-                        cta={t('confirm')}
-                        disable={!enableBtn}
-                        handleConfirm={handleConfirm}
-                      />
-                    </div>
-                  </div>
-                </p>
-              </>
-            )}
           </div>
         </div>
       </div>

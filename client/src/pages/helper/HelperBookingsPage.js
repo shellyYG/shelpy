@@ -46,6 +46,12 @@ const HelperBookingsPage = (props) => {
     e.preventDefault(e);
     window.location.reload();
   }
+  function handleToReferralPage(e) {
+    e.preventDefault(e);
+    let path = `/${currentLanguage}/helper/referrals`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
 
   return (
     <div className='section-left-align'>
@@ -80,12 +86,23 @@ const HelperBookingsPage = (props) => {
       {filteredBookings && (
         <div className='task-container'>
           {(!filteredBookings || filteredBookings.length === 0) && (
-            <div
-              className='history-card'
-              style={{ boxShadow: 'none', border: 'none', paddingLeft: '18px' }}
-            >
-              <p style={{ margin: 'auto' }}>{t('no_bookings')}</p>
-            </div>
+            <>
+              <div
+                className='history-card'
+                style={{
+                  boxShadow: 'none',
+                  border: 'none',
+                  paddingLeft: '18px',
+                }}
+              >
+                <p style={{ margin: 'auto' }}>{t('no_bookings')}</p>
+              </div>
+              <div style={{ margin: 'auto' }}>
+                <button className='btn-contact' onClick={handleToReferralPage}>
+                  {t('help_us_find_helpees')}
+                </button>
+              </div>
+            </>
           )}
 
           {filteredBookings &&

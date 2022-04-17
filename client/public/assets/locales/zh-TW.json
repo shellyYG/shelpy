@@ -97,7 +97,9 @@
   "select_experience_you_want_to_share": "選擇你想分享的經驗",
   "helper_wait_for_verify": "謝謝你!我們正在審核你的資格，必要時，我們將會與你進行很短的視訊會議，確認你的資格。待你的資格通過時，我們會寄電子郵件給你(通常為兩個工作天)。",
 
-  "update_payment": "更新收款帳號",
+  "paypal_account": "Paypal收款帳號",
+  "your_current_paypal_account": "你現在綁定的PayPal帳號是",
+  "change_paypal_account": "更新綁定帳號",
   "paypal_account_successfully_update": "成功更新了你的PayPal收款帳號",
   "paypal_receiver_name": "收款人姓名",
   "paypal_email": "Paypal 電郵(Email)",
