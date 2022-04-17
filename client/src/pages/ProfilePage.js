@@ -32,8 +32,6 @@ const ProfilePage = (props) => {
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
-  const [profilePic] = useState();
-
   const [isAnonymous, setIsAnonymous] = useState(false);
 
   const [hasEnglish, setHasEnglish] = useState(false);
@@ -64,19 +62,20 @@ const ProfilePage = (props) => {
     useState('');
   const [defaultUsername, setDefaultUsername] = useState('');
   const [defaultIntroduction, setDefaultIntroduction] = useState('');
+  const [imageBoxStatus, setImageBoxStatus] = useState('');
 
-  const { helpeeProfilePicPath, helpeeData, helpeeRatingData } = useSelector(
+  const { helpeeData, helpeeRatingData } = useSelector(
     (state) => state.helpee
   );
-  const { helperProfilePicPath, helperData, helperRatingData } = useSelector(
+  const { helperData, helperRatingData } = useSelector(
     (state) => state.helper
   );
-
 
   useEffect(() => {
     if (props.isHelpee) {
       dispatch(getHelpeeUserData({ helpeeUserId: props.helpeeUserId }));
-    //   dispatch(getHelpeeRatingData({ helpeeUserId: props.helpeeUserId }));
+      // TODO: Add rating data for helpee as well
+      //   dispatch(getHelpeeRatingData({ helpeeUserId: props.helpeeUserId }));
     } else {
       dispatch(getHelperUserData({ helperUserId: props.helperUserId }));
       dispatch(getHelperRatingData({ helperUserId: props.helperUserId }));
@@ -117,13 +116,13 @@ const ProfilePage = (props) => {
   useEffect(() => {
     if (!props.isHelpee) {
       if (helperData && helperData[0]) {
-        setDefaultHelperProfilePicPath(
-          '/images/' + helperData[0].profilePicPath
-        );
+        if (helperData[0].profilePicPath) {
+          setDefaultHelperProfilePicPath(
+            '/images/' + helperData[0].profilePicPath
+          );
+        }
         setDefaultUsername(helperData[0].username);
-
         setIsAnonymous(!!helperData[0].isAnonymous);
-        
         setHasEnglish(!!helperData[0].hasEnglish);
         setHasGerman(!!helperData[0].hasGerman);
         setHasFrench(!!helperData[0].hasFrench);
@@ -141,12 +140,13 @@ const ProfilePage = (props) => {
       }
     } else {
       if (helpeeData && helpeeData[0]) {
-        setDefaultHelpeeProfilePicPath(
-          '/images/' + helpeeData[0].profilePicPath
-        );
+        if (helpeeData[0].profilePicPath) {
+          setDefaultHelpeeProfilePicPath(
+            '/images/' + helpeeData[0].profilePicPath
+          );
+        }
         setDefaultUsername(helpeeData[0].username);
         setIsAnonymous(!!helpeeData[0].isAnonymous);
-        
         setHasEnglish(!!helpeeData[0].hasEnglish);
         setHasGerman(!!helpeeData[0].hasGerman);
         setHasFrench(!!helpeeData[0].hasFrench);
@@ -192,27 +192,52 @@ const ProfilePage = (props) => {
 
   useEffect(() => {
     if (props.isHelpee) {
-    //   setAverageScore(average(helpeeRatingData));
+      // TODO: Add rating data for helpee as well
+      //   setAverageScore(average(helpeeRatingData));
     } else {
       setAverageScore(average(helperRatingData));
     }
   }, [props.isHelpee, helperRatingData]);
 
-  function handleConfirm (e) {
-      e.preventDefault();
-      let path = props.isHelpee
-        ? `/${currentLanguage}/helpee/basic-form`
-        : `/${currentLanguage}/helper/basic-form`;
-      if (window.location.search) path += window.location.search;
-      navigate(path);
+  // set image box status
+  useEffect(() => {
+    if (!!isAnonymous) {
+      setImageBoxStatus('showAnonymousBox');
+    } else if (!props.isHelpee && !isAnonymous && defaultHelperProfilePicPath) {
+      setImageBoxStatus('showHelperImage');
+    } else if (props.isHelpee && !isAnonymous && defaultHelpeeProfilePicPath) {
+      setImageBoxStatus('showHelpeeImage');
+    } else if (
+      !props.isHelpee &&
+      !isAnonymous &&
+      !defaultHelperProfilePicPath
+    ) {
+      setImageBoxStatus('showNoPicture');
+    } else if (props.isHelpee && !isAnonymous && !defaultHelpeeProfilePicPath) {
+      setImageBoxStatus('showNoPicture');
+    }
+  }, [
+    props.isHelpee,
+    isAnonymous,
+    defaultHelpeeProfilePicPath,
+    defaultHelperProfilePicPath,
+  ]);
+
+  function handleConfirm(e) {
+    e.preventDefault();
+    let path = props.isHelpee
+      ? `/${currentLanguage}/helpee/basic-form`
+      : `/${currentLanguage}/helper/basic-form`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
   }
 
   function handleShowRatings(e) {
-      e.preventDefault();
-      setShowRating(true);
+    e.preventDefault();
+    setShowRating(true);
   }
 
-  function handleClosePopUp(e){
+  function handleClosePopUp(e) {
     e.preventDefault();
     setShowRating(false);
   }
@@ -253,48 +278,35 @@ const ProfilePage = (props) => {
                 className='form-wrapper'
                 style={{ width: '100%', margin: 'auto' }}
               >
-                {!!isAnonymous && (
+                {imageBoxStatus === 'showAnonymousBox' && (
                   <div className='defaultProfileImageBx'>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                       <AvatarIcon size='90' />
                     </div>
                   </div>
                 )}
-                {!isAnonymous &&
-                  !props.isHelpee &&
-                  (profilePic ||
-                    ((helperProfilePicPath || defaultHelperProfilePicPath) &&
-                      (helperProfilePicPath.length > 1 ||
-                        defaultHelperProfilePicPath.length > 1))) && (
-                    <>
-                      <div className='profileImageBx'>
-                        <img
-                          src={
-                            helperProfilePicPath || defaultHelperProfilePicPath
-                          }
-                          alt='connection'
-                        ></img>
-                      </div>
-                    </>
-                  )}
+                {imageBoxStatus === 'showNoPicture' && (
+                  <div className='blankProfileImageBxBlack'>
+                    <div style={{ margin: 'auto' }}>
+                      <p style={{ fontSize: '10px'}}>{t('no_picture_please_update')}</p>
+                    </div>
+                  </div>
+                )}
+                {imageBoxStatus === 'showHelperImage' && (
+                  <>
+                    <div className='profileImageBx'>
+                      <img src={defaultHelperProfilePicPath} alt=''></img>
+                    </div>
+                  </>
+                )}
 
-                {!isAnonymous &&
-                  props.isHelpee &&
-                  (profilePic ||
-                    ((helpeeProfilePicPath || defaultHelpeeProfilePicPath) &&
-                      (helpeeProfilePicPath.length > 1 ||
-                        defaultHelpeeProfilePicPath.length > 1))) && (
-                    <>
-                      <div className='profileImageBx'>
-                        <img
-                          src={
-                            helpeeProfilePicPath || defaultHelpeeProfilePicPath
-                          }
-                          alt='connection'
-                        ></img>
-                      </div>
-                    </>
-                  )}
+                {imageBoxStatus === 'showHelpeeImage' && (
+                  <>
+                    <div className='profileImageBx'>
+                      <img src={defaultHelpeeProfilePicPath} alt=''></img>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             <div className='pure-row'>

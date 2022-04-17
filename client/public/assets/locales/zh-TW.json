@@ -914,6 +914,7 @@
 
   "update_basic_information": "新增/更新帳號資料",
   "upload_profile_pic": "上傳大頭貼 (建議,雖非必要,但可增加可信度)",
+  "no_picture_please_update": "沒有大頭貼，你可以去更新帳號資料頁面新增大頭貼",
   "username": "暱稱",
   "username_title": "暱稱 (公開) *",
   "email_title": "Email",

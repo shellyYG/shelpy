@@ -914,6 +914,7 @@
 
   "update_basic_information": "Update Basic Information",
   "upload_profile_pic": "Upload Picture (Recommended but optional)",
+  "no_picture_please_update": "No Profile Picture. You can add profile picture by Update Profile.",
   "username": "Username",
   "username_title": "Username (This will be shown publicly) *",
   "email_title": "Email",

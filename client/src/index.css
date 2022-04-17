@@ -1854,6 +1854,18 @@ input[type="checkbox" i] {
   display: flex;
 }
 
+.blankProfileImageBxBlack {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin: 8px auto 15px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  display: flex;
+}
+
 .defaultProfileImageBx {
   text-align: center;
   padding: 15px;
