@@ -6,7 +6,6 @@ import { generalActions } from '../general/general-slice';
 const getHelpeeAuthStatusPath = '/api/helpee/get-auth-status';
 const helpeeSignUpPasswordPath = '/api/helpee/signup-password';
 const helpeeSignInPath = '/api/helpee/sign-in';
-const oldUserRequestFormPath = '/api/helpee/request-form'; // depreciated
 const userRequestPath = '/api/helpee/request';
 const activeHelperPath = '/api/helpee/active-helpers';
 const getAllOrdersPath = '/api/helpee/all-orders';
@@ -514,55 +513,6 @@ export const postHelpeeSignInData = (data) => {
   };
 }
 
-// depreciated
-export const postHelpeeServiceRequestForm = (data) => {
-  return async (dispatch) => {
-    try {
-      const generalToken = localStorage.getItem('shelpy-token');
-      if (!generalToken) {
-        throw Error('access_denied_please_log_in_error');
-      }
-      if (generalToken){
-        const headers = {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + generalToken,
-        };
-        const response = await axios.post(
-          oldUserRequestFormPath,
-          {
-            data,
-          },
-          { headers }
-        );
-        data.requestId = response.data.requestId;
-        dispatch(
-          helpeeActions.updateHelpeeRequestFormData({
-            data,
-          })
-        );
-        dispatch(
-          notificationActions.setNotification({
-            requestFormStatus: 'success',
-            requestFormStatusTitle: 'success',
-            requestFormStatusMessage: 'helpee_form_submit_successful',
-          })
-        );
-      }
-    } catch (error) {
-      const errorResponse = error.response ? error.response.data : '';
-      const errorMessage = errorResponse || error.message;
-      if (errorMessage) {
-        dispatch(
-          notificationActions.setNotification({
-            requestFormStatus: 'error',
-            requestFormStatusTitle: 'oops',
-            requestFormStatusMessage: errorMessage,
-          })
-        );
-      }
-    }
-  };
-};
 
 export const onUploadHelpeeProfilePicture = (data) => {
   return async (dispatch) => {

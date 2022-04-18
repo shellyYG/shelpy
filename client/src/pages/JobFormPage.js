@@ -30,13 +30,9 @@ import HalfLineTextBox from '../components/HalfLineTextBox';
 const MySwal = withReactContent(Swal);
 
 const JobFormPage = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
 
   const priceRef = useRef();
   const organizationRef = useRef();
@@ -47,9 +43,15 @@ const JobFormPage = (props) => {
   const companySizeRef = useRef();
   const yearsRef = useRef();
   const notesRef = useRef();
+  const sharingTopicENRef = useRef();
   const durationRef = useRef();
 
   const [loading, setIsLoading] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState('');
+
+  useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
 
   const { requestStatus, requestStatusTitle, requestStatusMessage } =
     useSelector((state) => state.helpeeNotification);
@@ -103,10 +105,21 @@ const JobFormPage = (props) => {
   async function handleConfirm(e) {
     e.preventDefault();
     let notes;
+    let sharingTopicEN;
     let price;
     let organization;
-    if (notesRef && notesRef.current) {
-      notes = notesRef.current.value;
+    if (currentLanguage === 'en') {
+      if (notesRef && notesRef.current) {
+        notes = notesRef.current.value;
+        sharingTopicEN = notesRef.current.value;
+      }
+    } else {
+      if (notesRef && notesRef.current) {
+        notes = notesRef.current.value;
+        if (sharingTopicENRef && sharingTopicENRef.current) {
+          sharingTopicEN = sharingTopicENRef.current.value;
+        }
+      }
     }
     if (priceRef && priceRef.current) {
       price = priceRef.current.value;
@@ -130,6 +143,7 @@ const JobFormPage = (props) => {
         companySize,
         years,
         notes: notes || '',
+        sharingTopicEN,
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
@@ -154,6 +168,7 @@ const JobFormPage = (props) => {
         years,
         duration,
         notes: notes || '',
+        sharingTopicEN,
         step: 'request_submitted',
         status: 'Not Fulfilled',
       };
@@ -388,20 +403,56 @@ const JobFormPage = (props) => {
                   />
                 </div>
               )}
-              <FullLineTextBox
-                title={
-                  props.isHelpee
-                    ? `${t('topics_you_want_to_know')}${' '}${t(
-                        'if_more_than_one_cut_by_comma'
-                      )}`
-                    : `${t('sharing_topics')}${' '}${t(
-                        'if_more_than_one_cut_by_comma'
-                      )}`
-                }
-                placeholder={t('sharing_topics_placeholder_job')}
-                inputRef={notesRef}
-                marginTop='10px'
-              />
+              {currentLanguage === 'en' && (
+                <>
+                  <FullLineTextBox
+                    title={
+                      props.isHelpee
+                        ? `${t('topics_you_want_to_know')}${' '}${t(
+                            'if_more_than_one_cut_by_comma'
+                          )}`
+                        : `${t('sharing_topics')}${' '}${t(
+                            'if_more_than_one_cut_by_comma'
+                          )}`
+                    }
+                    placeholder={t('sharing_topics_placeholder_job')}
+                    inputRef={notesRef}
+                    marginTop='10px'
+                  />
+                </>
+              )}
+              {currentLanguage !== 'en' && (
+                <>
+                  <FullLineTextBox
+                    title={
+                      props.isHelpee
+                        ? `${t('topics_you_want_to_know')}${' '}${t(
+                            'if_more_than_one_cut_by_comma'
+                          )}`
+                        : `${t('sharing_topics')}${' '}${t(
+                            'if_more_than_one_cut_by_comma'
+                          )}`
+                    }
+                    placeholder={t('sharing_topics_placeholder_job')}
+                    inputRef={notesRef}
+                    marginTop='10px'
+                  />
+                  <FullLineTextBox
+                    title={
+                      props.isHelpee
+                        ? `${t('topics_you_want_to_know_en')}${' '}${t(
+                            'if_more_than_one_cut_by_comma_en'
+                          )}`
+                        : `${t('sharing_topics_en')}${' '}${t(
+                            'if_more_than_one_cut_by_comma_en'
+                          )}`
+                    }
+                    placeholder={t('sharing_topics_placeholder_job_en')}
+                    inputRef={sharingTopicENRef}
+                    marginTop='10px'
+                  />
+                </>
+              )}
 
               <ConfirmBtn
                 cta={t('confirm')}

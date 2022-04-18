@@ -28,7 +28,6 @@ const upload = multer({ storage });
 const unlinkFile = util.promisify(fs.unlink);
 
 const {
-  postHelpeeServiceRequestForm,
   postHelpeeRequest,
   allowHelpeePrivateRoute,
   getHelpeeAllOrders,
@@ -135,18 +134,11 @@ router
   );
 
 router
-  .route('/api/helpee/request-form') // depreciated
-  .post(
-    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
-    wrapAsync(postHelpeeServiceRequestForm)
-  );
-
-router
   .route('/api/helpee/request')
   .post(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(postHelpeeRequest)
-  ); // latest
+  );
 router
   .route('/api/helpee/request')
   .delete(

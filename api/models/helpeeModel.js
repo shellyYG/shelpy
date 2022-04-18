@@ -1,11 +1,5 @@
 const { query } = require('./query');
 
-async function insertHelpeeRequestFormAndGetId(data) { // old.
-  const sql = 'INSERT INTO request_form SET?';
-  const sqlResult = await query(sql, data);
-  return sqlResult.insertId;
-}
-
 async function insertHelpeeRequest(data) { // new.
   const sql = 'INSERT INTO requests SET?';
   const sqlResult = await query(sql, data);
@@ -237,7 +231,6 @@ async function getHelpeeRatings(data) {
 }
 
 module.exports = {
-  insertHelpeeRequestFormAndGetId,
   insertHelpeeRequest,
   getHelpeeAllOrders,
   getHelpeeOrderHelperList,

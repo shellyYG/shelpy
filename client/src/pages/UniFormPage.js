@@ -29,13 +29,9 @@ import {
 const MySwal = withReactContent(Swal);
 
 const UniFormPage = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
 
   const priceRef = useRef();
   const organizationRef = useRef();
@@ -44,11 +40,17 @@ const UniFormPage = (props) => {
   const countryRef = useRef();
   const degreeRef = useRef();
   const notesRef = useRef();
+  const sharingTopicENRef = useRef();
   const durationRef = useRef();
 
   const [typingPrice, setTypingPrice] = useState('');
   const [loading, setIsLoading] = useState(false);
   const [duration, setDuration] = useState('default');
+  const [currentLanguage, setCurrentLanguage] = useState('');
+
+  useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
   
   function isInt(value) {
     return (
@@ -93,10 +95,21 @@ const UniFormPage = (props) => {
     e.preventDefault();
     
     let notes;
+    let sharingTopicEN;
     let price;
     let organization;
-    if (notesRef && notesRef.current) {
-      notes = notesRef.current.value;
+    if (currentLanguage === 'en') {
+      if (notesRef && notesRef.current) {
+        notes = notesRef.current.value;
+        sharingTopicEN = notesRef.current.value;
+      }
+    } else {
+      if (notesRef && notesRef.current) {
+        notes = notesRef.current.value;
+        if (sharingTopicENRef && sharingTopicENRef.current) {
+          sharingTopicEN = sharingTopicENRef.current.value;
+        }
+      }
     }
     if (priceRef && priceRef.current) {
       price = priceRef.current.value;
@@ -118,6 +131,7 @@ const UniFormPage = (props) => {
         degree,
         country,
         notes: notes || '',
+        sharingTopicEN,
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
@@ -139,6 +153,7 @@ const UniFormPage = (props) => {
         country,
         duration,
         notes: notes || '',
+        sharingTopicEN,
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
@@ -339,19 +354,53 @@ const UniFormPage = (props) => {
                   />
                 </div>
               )}
-              <FullLineTextBox
-                title={
-                  props.isHelpee
-                    ? `${t('topics_you_want_to_know')}${' '}${t(
-                        'if_more_than_one_cut_by_comma'
-                      )}`
-                    : `${t('sharing_topics')}${' '}${t(
-                        'if_more_than_one_cut_by_comma'
-                      )}`
-                }
-                placeholder={t('sharing_topics_placeholder_study')}
-                inputRef={notesRef}
-              />
+              {currentLanguage === 'en' && (
+                <>
+                  <FullLineTextBox
+                    title={
+                      props.isHelpee
+                        ? `${t('topics_you_want_to_know')}${' '}${t(
+                            'if_more_than_one_cut_by_comma'
+                          )}`
+                        : `${t('sharing_topics')}${' '}${t(
+                            'if_more_than_one_cut_by_comma'
+                          )}`
+                    }
+                    placeholder={t('sharing_topics_placeholder_study')}
+                    inputRef={notesRef}
+                  />
+                </>
+              )}
+              {currentLanguage !== 'en' && (
+                <>
+                  <FullLineTextBox
+                    title={
+                      props.isHelpee
+                        ? `${t('topics_you_want_to_know')}${' '}${t(
+                            'if_more_than_one_cut_by_comma'
+                          )}`
+                        : `${t('sharing_topics')}${' '}${t(
+                            'if_more_than_one_cut_by_comma'
+                          )}`
+                    }
+                    placeholder={t('sharing_topics_placeholder_study')}
+                    inputRef={notesRef}
+                  />
+                  <FullLineTextBox
+                    title={
+                      props.isHelpee
+                        ? `${t('topics_you_want_to_know_en')}${' '}${t(
+                            'if_more_than_one_cut_by_comma_en'
+                          )}`
+                        : `${t('sharing_topics_en')}${' '}${t(
+                            'if_more_than_one_cut_by_comma_en'
+                          )}`
+                    }
+                    placeholder={t('sharing_topics_placeholder_study_en')}
+                    inputRef={sharingTopicENRef}
+                  />
+                </>
+              )}
               <ConfirmBtn
                 cta={t('confirm')}
                 disable={!enableBtn}
