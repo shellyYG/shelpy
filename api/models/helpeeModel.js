@@ -21,7 +21,7 @@ async function getHelpeeAllBookings(data) {
   const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail
   , acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous, acc.introduction, acc.introductionEN
   , acc.languages
-  , ofs.notes AS notes
+  , ofs.notes AS notes, ofs.sharingTopicEN
   , bookings.*, meet.joinUrl
   FROM bookings bookings
   LEFT JOIN offers ofs ON bookings.offerId = ofs.id
@@ -45,7 +45,7 @@ async function getPotentialHelpers(data) {
     , acc.profilePicPath AS profilePicPath, acc.languages, acc.email AS helperEmail
 		, ofs.mainType AS mainType, ofs.secondType AS secondType
     , ofs.thirdType AS thirdType, ofs.fourthType AS fourthType
-    , ofs.duration, ofs.notes
+    , ofs.duration, ofs.notes, ofs.sharingTopicEN
     FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
 LEFT JOIN requests req ON 

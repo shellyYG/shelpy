@@ -141,6 +141,7 @@ const HelperBookingsPage = (props) => {
                   languages={option.languages}
                   isAnonymous={option.helpeeAnonymous}
                   notes={option.notes}
+                  sharingTopicEN={option.sharingTopicEN}
                   questions={option.questions}
                   joinUrl={option.joinUrl}
                   introduction={option.introduction}

@@ -33,6 +33,7 @@ function PotentialCustomerCard(props) {
     useState('');
   const [currentLanguage, setCurrentLanguage] = useState('');
   const [shownIntroduction, setShownIntroduction] = useState('');
+  const [shownSharingTopics, setShownSharingTopics] = useState('');
 
   useEffect(() => {
     setCurrentLanguage(i18n.language);
@@ -181,15 +182,27 @@ function PotentialCustomerCard(props) {
 
   useEffect(() => {
     if (currentLanguage === 'en') {
-      if(props.introductionEN) {
+      if (props.introductionEN) {
         setShownIntroduction(props.introductionEN);
       } else {
         setShownIntroduction(props.introduction);
       }
+      if (props.sharingTopicEN) {
+        setShownSharingTopics(props.sharingTopicEN);
+      } else {
+        setShownSharingTopics(props.notes);
+      }
     } else {
       setShownIntroduction(props.introduction);
+      setShownSharingTopics(props.notes);
     }
-  }, [currentLanguage, props.introduction, props.introductionEN]);
+  }, [
+    currentLanguage,
+    props.introduction,
+    props.introductionEN,
+    props.sharingTopicEN,
+    props.notes,
+  ]);
   
   return (
     <div className='history-card'>
@@ -285,7 +298,7 @@ function PotentialCustomerCard(props) {
                 isHelpee={false}
               />
               <p style={{ fontSize: '14px', marginTop: '10px' }}>
-                {t('topics_you_want_to_know')}: {props.notes}
+                {t('topics_you_want_to_know')}: {shownSharingTopics || t('na')}
               </p>
             </div>
           </div>

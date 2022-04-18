@@ -46,6 +46,7 @@ function PotentialHelperCard(props) {
   const [duration, setDuration] = useState('');
   const [currentLanguage, setCurrentLanguage] = useState('');
   const [shownIntroduction, setShownIntroduction] = useState('');
+  const [shownSharingTopics, setShownSharingTopics] = useState('');
 
   useEffect(() => {
     if (props.duration) {
@@ -269,10 +270,22 @@ function PotentialHelperCard(props) {
         } else {
           setShownIntroduction(props.introduction);
         }
+        if (props.sharingTopicEN) {
+          setShownSharingTopics(props.sharingTopicEN);
+        } else {
+          setShownSharingTopics(props.notes);
+        }
       } else {
         setShownIntroduction(props.introduction);
+        setShownSharingTopics(props.notes);
       }
-    }, [currentLanguage, props.introduction, props.introductionEN]);
+    }, [
+      currentLanguage,
+      props.introduction,
+      props.introductionEN,
+      props.sharingTopicEN,
+      props.notes,
+    ]);
 
   return (
     <div className='history-card'>
@@ -401,7 +414,7 @@ function PotentialHelperCard(props) {
             isHelpee={true}
           />
           <p style={{ fontSize: '14px', marginTop: '10px' }}>
-            {t('sharing_topics')}: {props.notes}
+            {t('sharing_topics')}: {shownSharingTopics || t('na')}
           </p>
         </div>
       }

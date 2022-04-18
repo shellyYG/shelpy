@@ -71,6 +71,7 @@ const PersonalOfferPage = (props) => {
                   thirdType={option.thirdType}
                   fourthType={option.fourthType}
                   notes={option.notes}
+                  sharingTopicEN={option.sharingTopicEN}
                   country={option.country}
                   price={option.price}
                   helperUserId={providerId}

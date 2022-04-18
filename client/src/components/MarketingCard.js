@@ -51,7 +51,7 @@ function MarketingCard(props) {
   const [details, setDetails] = useState('');
   const [currentLanguage, setCurrentLanguage] = useState('');
   const [shownIntroduction, setShownIntroduction] = useState('');
-
+  const [shownSharingTopics, setShownSharingTopics] = useState('');
   useEffect(() => {
     setCurrentLanguage(i18n.language);
   }, [i18n.language]);
@@ -224,10 +224,22 @@ function MarketingCard(props) {
       } else {
         setShownIntroduction(props.introduction);
       }
+      if (props.sharingTopicEN) {
+        setShownSharingTopics(props.sharingTopicEN);
+      } else {
+        setShownSharingTopics(props.notes);
+      }
     } else {
       setShownIntroduction(props.introduction);
+      setShownSharingTopics(props.notes);
     }
-  }, [currentLanguage, props.introduction, props.introductionEN]);
+  }, [
+    currentLanguage,
+    props.introduction,
+    props.introductionEN,
+    props.sharingTopicEN,
+    props.notes
+  ]);
 
   useEffect(()=>{
     let translatedSpeakingLanguagesString = '';
@@ -426,7 +438,7 @@ function MarketingCard(props) {
               padding: '6px',
             }}
           >
-            {t('sharing_topics')}: {props.notes || t('na')}
+            {t('sharing_topics')}: {shownSharingTopics || t('na')}
           </p>
         </div>
       </div>

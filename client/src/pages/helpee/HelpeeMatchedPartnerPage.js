@@ -161,6 +161,7 @@ const HelpeeMatchedPartnerPage = (props) => {
               organization={option.organization}
               languages={option.languages}
               notes={option.notes || t('na')}
+              sharingTopicEN={option.sharingTopicEN}
               introduction={option.introduction || t('na')}
               introductionEN={option.introductionEN}
               helperRatingData={allPotentialHelpersRatings.filter(

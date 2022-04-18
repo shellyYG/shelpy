@@ -92,6 +92,7 @@ const HelperOffersPage = (props) => {
               fourthType={option.fourthType}
               organization={option.organization}
               notes={option.notes}
+              sharingTopicEN={option.sharingTopicEN}
               country={option.country}
               price={option.price}
               helperUserId={props.helperUserId}

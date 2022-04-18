@@ -88,6 +88,7 @@ const HelpeeRequestsPage = (props) => {
               helpeeId={props.helpeeUserId}
               helpeeName={option.helpeeName}
               notes={option.notes}
+              sharingTopicEN={option.sharingTopicEN}
               profilePicPath={option.profilePicPath}
               languages={option.languages}
               isAnonymous={option.isAnonymous}

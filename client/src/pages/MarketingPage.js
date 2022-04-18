@@ -236,6 +236,7 @@ const HelpeeDashboardPage = (props) => {
                 fourthType={option.fourthType}
                 country={option.country}
                 notes={option.notes}
+                sharingTopicEN={option.sharingTopicEN}
                 introduction={option.introduction}
                 introductionEN={option.introductionEN}
                 profilePicPath={option.profilePicPath}

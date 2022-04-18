@@ -55,8 +55,9 @@ async function getHelperAllBookings(data) {
   const sql = ` 
   SELECT bookings.id AS bookingId,acc.languages, bookings.*, acc.profilePicPath AS profilePicPath
   , acc.isAnonymous AS helpeeAnonymous, acc.introduction, acc.introductionEN
-  , acc.languages, meet.joinUrl
+  , acc.languages, meet.joinUrl, ofs.notes, ofs.sharingTopicEN
   FROM bookings bookings
+  LEFT JOIN offers ofs ON bookings.offerId = ofs.id
   LEFT JOIN helpee_account acc ON bookings.helpeeId = acc.id
   LEFT JOIN meetings meet ON bookings.id = meet.bookingId
   WHERE bookings.helperId = ? ORDER BY priorityScore DESC;`;
@@ -76,7 +77,7 @@ async function getPotentialCustomers(data) { // maybe customer does NOT have req
     , helpee.profilePicPath AS profilePicPath, helpee.languages, helpee.email AS helpeeEmail
     , req.mainType AS mainType, req.secondType AS secondType
     , req.thirdType AS thirdType, req.fourthType AS fourthType
-    , req.notes
+    , req.notes, req.sharingTopicEN
     FROM offers ofs
 LEFT JOIN helper_account acc ON ofs.userId = acc.id
 LEFT JOIN requests req ON 

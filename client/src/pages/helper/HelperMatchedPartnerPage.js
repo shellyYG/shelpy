@@ -106,7 +106,7 @@ const HelperMatchedPartnerPage = (props) => {
                     border: 'none',
                     paddingLeft: '18px',
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
                   }}
                 >
                   <div>
@@ -115,7 +115,13 @@ const HelperMatchedPartnerPage = (props) => {
                     </p>
                   </div>
                   <div>
-                    <p style={{ margin: 'auto', textAlign: 'center', marginTop: '10px' }}>
+                    <p
+                      style={{
+                        margin: 'auto',
+                        textAlign: 'center',
+                        marginTop: '10px',
+                      }}
+                    >
                       {t('you_need_to_create_offer_so_match')}
                     </p>
                   </div>
@@ -156,6 +162,7 @@ const HelperMatchedPartnerPage = (props) => {
               bookingStatus={option.bookingStatus}
               organization={option.organization}
               notes={option.notes || t('na')}
+              sharingTopicEN={option.sharingTopicEN}
               introduction={option.introduction || t('na')}
               introductionEN={option.introductionEN}
               languages={option.languages}

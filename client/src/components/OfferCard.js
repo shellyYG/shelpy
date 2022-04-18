@@ -50,6 +50,7 @@ function OfferCard(props) {
   const [details, setDetails] = useState('');
   const [currentLanguage, setCurrentLanguage] = useState('');
   const [shownIntroduction, setShownIntroduction] = useState('');
+  const [shownSharingTopics, setShownSharingTopics] = useState('');
 
   useEffect(() => {
     setCurrentLanguage(i18n.language);
@@ -360,10 +361,16 @@ function OfferCard(props) {
       } else {
         setShownIntroduction(props.introduction);
       }
+      if (props.sharingTopicEN) {
+        setShownSharingTopics(props.sharingTopicEN);
+      } else {
+        setShownSharingTopics(props.notes);
+      }
     } else {
       setShownIntroduction(props.introduction);
+      setShownSharingTopics(props.notes);
     }
-  }, [currentLanguage, props.introduction, props.introductionEN]);
+  }, [currentLanguage, props.introduction, props.introductionEN, props.sharingTopicEN, props.notes]);
 
   return (
     <div className='history-card'>
@@ -476,7 +483,7 @@ function OfferCard(props) {
               padding: '6px',
             }}
           >
-            {t('sharing_topics')}: {props.notes || t('na')}
+            {t('sharing_topics')}: {shownSharingTopics || t('na')}
           </p>
         </div>
       </div>
