@@ -28,7 +28,7 @@ const MySwal = withReactContent(Swal);
 
 
 function RequestCard(props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const [loading, setIsLoading] = useState(false);
   const [title, setTitle] = useState('');
@@ -40,6 +40,24 @@ function RequestCard(props) {
     useState('');
   const [details, setDetails] = useState('');
   const [filteredStatus, setFilteredStatus] = useState('');
+  const [currentLanguage, setCurrentLanguage] = useState('');
+  const [shownIntroduction, setShownIntroduction] = useState('');
+
+  useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
+
+  useEffect(() => {
+    if (currentLanguage === 'en') {
+      if (props.introductionEN) {
+        setShownIntroduction(props.introductionEN);
+      } else {
+        setShownIntroduction(props.introduction);
+      }
+    } else {
+      setShownIntroduction(props.introduction);
+    }
+  }, [currentLanguage, props.introduction, props.introductionEN]);
 
   const {
     deleteRequestStatus,
@@ -312,7 +330,7 @@ function RequestCard(props) {
               {props.helpeeName}
             </h3>
             <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {props.introduction}
+              {t('introduction')}: {shownIntroduction}
             </p>
           </div>
         </div>
@@ -385,12 +403,14 @@ function RequestCard(props) {
           </p>
         </div>
       </div>
-      {filteredStatus && <div className='statusWidth'>
-        <div className='contentBx'>
-          <p style={{ fontSize: '14px', padding: '6px' }}>{filteredStatus}</p>
+      {filteredStatus && (
+        <div className='statusWidth'>
+          <div className='contentBx'>
+            <p style={{ fontSize: '14px', padding: '6px' }}>{filteredStatus}</p>
+          </div>
         </div>
-      </div>}
-      <TrashIcon onClick={handleDeleteRequest}/>
+      )}
+      <TrashIcon onClick={handleDeleteRequest} />
     </div>
   );
 }

@@ -12,9 +12,9 @@ async function insertHelpeeRequest(data) { // new.
   return sqlResult.insertId;
 }
 
-async function getHelpeeAllOrders(data) {
+async function getHelpeeAllOrders(data) { // all requests
   const sqlSimplified = ` SELECT helpee.profilePicPath, helpee.languages
-  , helpee.username AS helpeeName, helpee.isAnonymous, helpee.introduction
+  , helpee.username AS helpeeName, helpee.isAnonymous, helpee.introduction, helpee.introductionEN
   , req.*
   FROM requests req
   INNER JOIN helpee_account helpee ON req.userId = helpee.id
@@ -25,7 +25,7 @@ async function getHelpeeAllOrders(data) {
 
 async function getHelpeeAllBookings(data) {
   const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail
-  , acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous, acc.introduction
+  , acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous, acc.introduction, acc.introductionEN
   , acc.languages
   , ofs.notes AS notes
   , bookings.*, meet.joinUrl
@@ -46,7 +46,8 @@ async function getPotentialHelpers(data) {
     , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, acc.isAnonymous AS helperAnonymous
     , helpee.id AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous
     , ofs.organization AS organization
-    , acc.id AS helperId, acc.username AS helperUsername, acc.introduction, acc.notificationLanguage
+    , acc.id AS helperId, acc.username AS helperUsername, acc.introduction, acc.introductionEN
+    , acc.notificationLanguage
     , acc.profilePicPath AS profilePicPath, acc.languages, acc.email AS helperEmail
 		, ofs.mainType AS mainType, ofs.secondType AS secondType
     , ofs.thirdType AS thirdType, ofs.fourthType AS fourthType
@@ -107,6 +108,7 @@ async function updateHelpeeBasicInfo(data) {
     userId,
     username,
     introduction,
+    introductionEN,
     isAnonymous,
     age,
     nationality,
@@ -135,7 +137,7 @@ async function updateHelpeeBasicInfo(data) {
     notificationLanguage,
   } = data;
   const sql = `
-    UPDATE helpee_account SET introduction=?
+    UPDATE helpee_account SET introduction=?, introductionEN=?
       ,nationality=?, residenceCountry=?
       ,isAnonymous=?, age =?, notes =?, status=? 
       ,hasMonToFri=?, hasWeekend=?, hasBefore12=?, has12To18=?, hasAfter18=?
@@ -146,6 +148,7 @@ async function updateHelpeeBasicInfo(data) {
     WHERE id = ?`;
   const sqlquery = await query(sql, [
     introduction,
+    introductionEN,
     nationality,
     residenceCountry,
     isAnonymous,
@@ -197,7 +200,7 @@ async function getAllChattedHelpers(data) {
   const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername
   , helpee.id AS helpeeId, helpee.username AS helpeeUsername
   , helper.profilePicPath, helper.isAnonymous AS helperAnonymous, helper.introduction
-  , helper.introduction, helper.languages
+  , helper.introductionEN, helper.languages
   , chat.offerId, ofs.*
 FROM shelpydb.offers ofs
 INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId AND chat.offerId = ofs.id

@@ -32,7 +32,7 @@ const average = (arr) =>
   arr.map((el) => el.score).reduce((a, b) => a + b, 0) / arr.length;
 
 function MarketingCard(props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
@@ -49,10 +49,12 @@ function MarketingCard(props) {
   const [duration, setDuration] = useState('');
   const [averageScore, setAverageScore] = useState(0);
   const [details, setDetails] = useState('');
+  const [currentLanguage, setCurrentLanguage] = useState('');
+  const [shownIntroduction, setShownIntroduction] = useState('');
 
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
+  useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
 
   useEffect(() => {
     if (props.duration) {
@@ -213,7 +215,19 @@ function MarketingCard(props) {
       default:
         setTitle(t('na'));
     }
-  }, [t, props.mainType, props.secondType, props.thirdType, props.country]);
+  }, [t, props.mainType, props.secondType, props.thirdType, props.fourthType, props.country]);
+
+  useEffect(() => {
+    if (currentLanguage === 'en') {
+      if (props.introductionEN) {
+        setShownIntroduction(props.introductionEN);
+      } else {
+        setShownIntroduction(props.introduction);
+      }
+    } else {
+      setShownIntroduction(props.introduction);
+    }
+  }, [currentLanguage, props.introduction, props.introductionEN]);
 
   useEffect(()=>{
     let translatedSpeakingLanguagesString = '';
@@ -332,7 +346,7 @@ function MarketingCard(props) {
             </div>
 
             <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {props.introduction || t('na')}
+              {t('introduction')}: {shownIntroduction || t('na')}
             </p>
           </div>
         </div>

@@ -9,7 +9,7 @@ async function insertHelperOffer(data) {
 async function getHelperAllOffers(data) {
   const { helperUserId } = data;
   const sql = `SELECT helper.profilePicPath, helper.languages, helper.username AS helperName
-  , helper.isAnonymous, helper.introduction, ofs.* 
+  , helper.isAnonymous, helper.introduction, helper.introductionEN, ofs.* 
   FROM offers ofs
   INNER JOIN helper_account helper ON ofs.userId = helper.id
   WHERE ofs.userId = ? AND NOT ofs.status='deleted' ORDER BY id DESC;`;
@@ -20,7 +20,7 @@ async function getHelperAllOffers(data) {
 async function getHelperSingleOffer(data) {
   const { offerId } = data;
   const sql = `SELECT helper.profilePicPath, helper.languages, helper.username AS helperName
-  , helper.isAnonymous, helper.introduction, ofs.* 
+  , helper.isAnonymous, helper.introduction, helper.introductionEN, ofs.* 
   FROM offers ofs
   INNER JOIN helper_account helper ON ofs.userId = helper.id
   WHERE ofs.id = ? AND NOT ofs.status='deleted' ORDER BY id DESC;`;
@@ -30,7 +30,7 @@ async function getHelperSingleOffer(data) {
 
 async function getAllMarketingOffers() {
   const sql = `
-  SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.languages, acc.isAnonymous, acc.id AS helperId
+  SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, acc.isAnonymous, acc.id AS helperId
   FROM offers ofs 
   INNER JOIN helper_account acc ON ofs.userId = acc.id
   WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' ORDER BY score, id DESC;`;
@@ -54,7 +54,7 @@ async function getHelperAllBookings(data) {
   const { helperUserId } = data;
   const sql = ` 
   SELECT bookings.id AS bookingId,acc.languages, bookings.*, acc.profilePicPath AS profilePicPath
-  , acc.isAnonymous AS helpeeAnonymous, acc.introduction
+  , acc.isAnonymous AS helpeeAnonymous, acc.introduction, acc.introductionEN
   , acc.languages, meet.joinUrl
   FROM bookings bookings
   LEFT JOIN helpee_account acc ON bookings.helpeeId = acc.id
@@ -71,7 +71,8 @@ async function getPotentialCustomers(data) { // maybe customer does NOT have req
     , ofs.price AS price, ofs.duration AS duration, req.country AS country
     , acc.id AS helperId, acc.username AS helperUsername, acc.isAnonymous AS helperAnonymous
     , req.userId AS helpeeId
-    , helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.introduction, helpee.notificationLanguage
+    , helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.introduction, helpee.introductionEN
+    , helpee.notificationLanguage
     , helpee.profilePicPath AS profilePicPath, helpee.languages, helpee.email AS helpeeEmail
     , req.mainType AS mainType, req.secondType AS secondType
     , req.thirdType AS thirdType, req.fourthType AS fourthType
@@ -101,6 +102,7 @@ async function updateHelperCertificatePath(data) {
     userId,
     username,
     introduction,
+    introductionEN,
     isAnonymous,
     isMarketing,
     path,
@@ -143,7 +145,7 @@ async function updateHelperCertificatePath(data) {
   }
   // update status
   const sql2 = `
-    UPDATE helper_account SET introduction=?
+    UPDATE helper_account SET introduction=?, introductionEN=?
     , nationality=?, residenceCountry=?
     , isAnonymous=?, isMarketing=?
     , certificatePath = ?, age = ?, linkedInUrl = ?, notes = ?, status= ?
@@ -156,6 +158,7 @@ async function updateHelperCertificatePath(data) {
     WHERE id =?`;
   const sqlquery2 = await query(sql2, [
     introduction,
+    introductionEN,
     nationality,
     residenceCountry,
     isAnonymous,
@@ -211,7 +214,7 @@ async function getAllChattedCustomers(data) {
   const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername
   , helpee.username AS helpeeUsername
   , helpee.id AS helpeeId, helpee.profilePicPath
-  , helpee.introduction, helpee.languages
+  , helpee.introduction, helpee.introductionEN, helpee.languages
   , chat.offerId, ofs.*
 FROM shelpydb.offers ofs
 INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId AND chat.offerId = ofs.id

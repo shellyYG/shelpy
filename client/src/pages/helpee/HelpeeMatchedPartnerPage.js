@@ -162,6 +162,7 @@ const HelpeeMatchedPartnerPage = (props) => {
               languages={option.languages}
               notes={option.notes || t('na')}
               introduction={option.introduction || t('na')}
+              introductionEN={option.introductionEN}
               helperRatingData={allPotentialHelpersRatings.filter(
                 (item) => item.ratedPartnerId === option.helperId
               )}

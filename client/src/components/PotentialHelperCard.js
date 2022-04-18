@@ -28,16 +28,11 @@ const average = (arr) =>
 
 
 function PotentialHelperCard(props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
-
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
-
   const [showRating, setShowRating] = useState(false);
     const [averageScore, setAverageScore] = useState(0);
   const [title, setTitle] = useState('');
@@ -49,6 +44,9 @@ function PotentialHelperCard(props) {
     useState('');
   const [details, setDetails] = useState('');
   const [duration, setDuration] = useState('');
+  const [currentLanguage, setCurrentLanguage] = useState('');
+  const [shownIntroduction, setShownIntroduction] = useState('');
+
   useEffect(() => {
     if (props.duration) {
       if (props.duration) setDuration(props.duration.split(' ')[0]);
@@ -233,6 +231,9 @@ function PotentialHelperCard(props) {
     );
   }
   useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
+  useEffect(() => {
     let translatedSpeakingLanguagesString = '';
     const speakingLanguages = props.languages ? props.languages.split(' ') : [];
     speakingLanguages.forEach((speakingLanguage) => {
@@ -260,6 +261,18 @@ function PotentialHelperCard(props) {
     useEffect(() => {
       setAverageScore(average(props.helperRatingData));
     }, [props.helperRatingData]);
+
+    useEffect(() => {
+      if (currentLanguage === 'en') {
+        if (props.introductionEN) {
+          setShownIntroduction(props.introductionEN);
+        } else {
+          setShownIntroduction(props.introduction);
+        }
+      } else {
+        setShownIntroduction(props.introduction);
+      }
+    }, [currentLanguage, props.introduction, props.introductionEN]);
 
   return (
     <div className='history-card'>
@@ -299,14 +312,14 @@ function PotentialHelperCard(props) {
               onClick={handleShowRatings}
             >
               <ScoreStars averageScore={averageScore} />
-              <p style={{ marginLeft: '5px' }}>
+              <p style={{ marginLeft: '3px', fontSize: '12px' }}>
                 {props.helperRatingData.length}
                 {t('comments_unit')}
                 {t('comments')}
               </p>
             </div>
             <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {props.introduction}
+              {t('introduction')}: {shownIntroduction}
             </p>
           </div>
         </div>

@@ -28,7 +28,7 @@ import AvatarIcon from './Icons/AvatarIcon';
 const MySwal = withReactContent(Swal);
 
 function BookingCard(props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const paypal = useRef();
@@ -46,11 +46,26 @@ function BookingCard(props) {
     useState('');
   const [helperFilteredBookingStatus, setHelperFilteredBookingStatus] =
     useState('');
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
+
   const [loading, setIsLoading] = useState(false);
   const [showMeetingLink, setShowMeetingLink] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState('');
+  const [shownIntroduction, setShownIntroduction] = useState('');
+
+   useEffect(() => {
+     setCurrentLanguage(i18n.language);
+   }, [i18n.language]);
+   useEffect(() => {
+     if (currentLanguage === 'en') {
+       if (props.introductionEN) {
+         setShownIntroduction(props.introductionEN);
+       } else {
+         setShownIntroduction(props.introduction);
+       }
+     } else {
+       setShownIntroduction(props.introduction);
+     }
+   }, [currentLanguage, props.introduction, props.introductionEN]);
 
   const [product] = useState({
     mainType: props.mainType,
@@ -451,6 +466,9 @@ function BookingCard(props) {
             <h3 style={{ fontWeight: 'bold', fontSize: '18px' }}>
               {props.partnerName}
             </h3>
+            <p style={{ fontSize: '14px' }}>
+              {t('introduction')}: {shownIntroduction || t('na')}
+            </p>
           </div>
         </div>
       </div>

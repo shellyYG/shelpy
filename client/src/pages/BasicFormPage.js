@@ -31,17 +31,13 @@ import EditIcon from '../components/Icons/EditIcon';
 const MySwal = withReactContent(Swal);
 
 const BasicFormPage = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
-
   const usernameRef = useRef();
   const ageRef = useRef();
   const introductionRef = useRef();
+  const introductionENRef = useRef();
   const notesRef = useRef();
   const linkedInUrlRef = useRef();
   const nationalityRef = useRef();
@@ -57,6 +53,7 @@ const BasicFormPage = (props) => {
   const [residenceCountry, setResidenceCountry] = useState('default');
   
   const [introductionString, setIntroductionString] = useState('');
+  const [introductionENString, setIntroductionENString] = useState('');
   const [linkedInLinkString, setLinkedInLinkString] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isMarketing, setIsMarketing] = useState(true);
@@ -93,9 +90,11 @@ const BasicFormPage = (props) => {
   const [defaultUsername, setDefaultUsername] = useState('');
   const [defaultLinkedIn, setDefaultLinkedIn] = useState('');
   const [defaultIntroduction, setDefaultIntroduction] = useState('');
+  const [defaultENIntroduction, setDefaultENIntroduction] = useState('');
   const [defaultNotes, setDefaultNotes] = useState('');
   const [disableClickEvent, setDisableClickEvent] = useState(false);
   const [imageBoxStatus, setImageBoxStatus] = useState('');
+  const [currentLanguage, setCurrentLanguage] = useState('');
 
   const { helpeeProfilePicPath, helpeeData } = useSelector((state) => state.helpee);
   const { helperProfilePicPath, helperData } = useSelector((state) => state.helper);
@@ -104,6 +103,10 @@ const BasicFormPage = (props) => {
     applyHelpeeStatusTitle,
     applyHelpeeStatusMessage,
   } = useSelector((state) => state.helpeeNotification);
+
+  useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
 
   useEffect(() => {
     if (props.isHelpee && helpeeProfilePicPath) {
@@ -256,13 +259,24 @@ const BasicFormPage = (props) => {
     e.preventDefault();
     let username;
     let introduction;
+    let introductionEN;
     let notes;
     let linkedInUrl;
     if (usernameRef && usernameRef.current) {
       username = usernameRef.current.value;
     }
-    if (introductionRef && introductionRef.current) {
-      introduction = introductionRef.current.value;
+    if (currentLanguage === 'en') {
+      if (introductionRef && introductionRef.current) {
+        introduction = introductionRef.current.value;
+        introductionEN = introductionRef.current.value;
+      }
+    } else {
+      if (introductionRef && introductionRef.current) {
+        introduction = introductionRef.current.value;
+        if (introductionENRef && introductionENRef.current) {
+          introductionEN = introductionENRef.current.value;
+        }
+      }
     }
     if (notesRef && notesRef.current) {
       notes = notesRef.current.value;
@@ -285,6 +299,7 @@ const BasicFormPage = (props) => {
       data.append('notificationLanguage', notificationLanguage);
       data.append('linkedInUrl', linkedInUrl);
       data.append('introduction', introduction);
+      data.append('introductionEN', introductionEN);
       
       data.append('hasMonToFri', hasMonToFri);
       data.append('hasWeekend', hasWeekend);
@@ -322,6 +337,7 @@ const BasicFormPage = (props) => {
           notificationLanguage,
           residenceCountry,
           introduction,
+          introductionEN,
 
           hasMonToFri,
           hasWeekend,
@@ -359,6 +375,7 @@ const BasicFormPage = (props) => {
           notificationLanguage,
           linkedInUrl,
           introduction,
+          introductionEN,
 
           hasMonToFri,
           hasWeekend,
@@ -386,7 +403,6 @@ const BasicFormPage = (props) => {
         };
       }
     }
-
     try {
       if (props.isHelpee) {
         dispatch(onSubmitUploadHelpeeData(data));
@@ -527,6 +543,12 @@ const BasicFormPage = (props) => {
     setIntroductionString(typingInput);
   }
 
+  function handleIntroductionENTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setIntroductionENString(typingInput);
+  }
+
   function handleShowEditPic(e) {
     e.preventDefault();
     setAllowUploadPic(!allowUploadPic);
@@ -567,7 +589,12 @@ const BasicFormPage = (props) => {
         setHasArabic(!!helperData[0].hasArabic);
         setHasOthers(!!helperData[0].hasOthers);
         setDefaultIntroduction(helperData[0].introduction);
-        setDefaultNotes(helperData[0].notes);
+        if (helperData[0] && helperData[0].introductionEN) {
+          setDefaultENIntroduction(helperData[0].introductionEN);
+        }
+        if (helperData[0] && helperData[0].notes) {
+          setDefaultNotes(helperData[0].notes);
+        }
       }
     } else {
       if (helpeeData && helpeeData[0]) {
@@ -601,7 +628,12 @@ const BasicFormPage = (props) => {
         setHasArabic(!!helpeeData[0].hasArabic);
         setHasOthers(!!helpeeData[0].hasOthers);
         setDefaultIntroduction(helpeeData[0].introduction);
-        setDefaultNotes(helpeeData[0].notes);
+        if (helpeeData[0] && helpeeData[0].introductionEN) {
+          setDefaultENIntroduction(helpeeData[0].introductionEN);
+        }
+        if (helpeeData[0] && helpeeData[0].notes) {
+          setDefaultNotes(helpeeData[0].notes);
+        }
       }
     }
   }, [props.isHelpee, helperData, helpeeData]);
@@ -1086,15 +1118,44 @@ const BasicFormPage = (props) => {
                   fontSize='14px'
                 />
               </div>
-              <FullLineTextBox
-                defaultValue={defaultIntroduction}
-                title={t('introduction_title')}
-                details={t('introduction_details')}
-                placeholder={`${t('introduction_placeholder')} *`}
-                inputRef={introductionRef}
-                onChange={handleIntroductionTyping}
-                marginTop='15px'
-              />
+
+              {currentLanguage === 'en' && (
+                <FullLineTextBox
+                  defaultValue={defaultENIntroduction? defaultENIntroduction: defaultIntroduction}
+                  title={`${t('introduction_title')} *`}
+                  details={t('introduction_details')}
+                  placeholder={`${t('introduction_placeholder')}`}
+                  inputRef={introductionRef}
+                  onChange={handleIntroductionTyping}
+                  marginTop='15px'
+                />
+              )}
+              {currentLanguage !== 'en' && (
+                <>
+                  <FullLineTextBox
+                    defaultValue={defaultIntroduction}
+                    title={`${t('introduction_title')} *`}
+                    details={t('introduction_details')}
+                    placeholder={`${t('introduction_placeholder')}`}
+                    inputRef={introductionRef}
+                    onChange={handleIntroductionTyping}
+                    marginTop='15px'
+                  />
+                  <FullLineTextBox
+                    defaultValue={defaultENIntroduction}
+                    title={
+                      props.isHelpee
+                        ? t('introduction_EN_title_for_helper')
+                        : t('introduction_EN_title_for_helpee')
+                    }
+                    details={t('introduction_details')}
+                    placeholder={`${t('introduction_EN_placeholder')}`}
+                    inputRef={introductionENRef}
+                    onChange={handleIntroductionENTyping}
+                    marginTop='15px'
+                  />
+                </>
+              )}
 
               <FullLineTextBox
                 defaultValue={defaultNotes}

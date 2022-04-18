@@ -30,7 +30,7 @@ import { clickOnBookHelper, clickOnToHomePage } from '../service/fbPixelsHelper'
 const MySwal = withReactContent(Swal);
 
 function OfferCard(props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -48,10 +48,12 @@ function OfferCard(props) {
   const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
     useState('');
   const [details, setDetails] = useState('');
+  const [currentLanguage, setCurrentLanguage] = useState('');
+  const [shownIntroduction, setShownIntroduction] = useState('');
 
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
+  useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
 
   const {
     deleteOfferStatus,
@@ -349,8 +351,19 @@ function OfferCard(props) {
         );
       }
     }
-    
   }
+
+  useEffect(() => {
+    if (currentLanguage === 'en') {
+      if (props.introductionEN) {
+        setShownIntroduction(props.introductionEN);
+      } else {
+        setShownIntroduction(props.introduction);
+      }
+    } else {
+      setShownIntroduction(props.introduction);
+    }
+  }, [currentLanguage, props.introduction, props.introductionEN]);
 
   return (
     <div className='history-card'>
@@ -383,7 +396,7 @@ function OfferCard(props) {
               {props.helperName}
             </h3>
             <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {props.introduction}
+              {t('introduction')}: {shownIntroduction}
             </p>
           </div>
         </div>

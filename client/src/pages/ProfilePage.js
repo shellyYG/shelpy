@@ -24,16 +24,11 @@ const average = (arr) =>
   arr.map((el) => el.score).reduce((a, b) => a + b, 0) / arr.length;
 
 const ProfilePage = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
-
   const [isAnonymous, setIsAnonymous] = useState(false);
-
   const [hasEnglish, setHasEnglish] = useState(false);
   const [hasGerman, setHasGerman] = useState(false);
   const [hasFrench, setHasFrench] = useState(false);
@@ -62,7 +57,9 @@ const ProfilePage = (props) => {
     useState('');
   const [defaultUsername, setDefaultUsername] = useState('');
   const [defaultIntroduction, setDefaultIntroduction] = useState('');
+  const [defaultENIntroduction, setDefaultENIntroduction] = useState('');
   const [imageBoxStatus, setImageBoxStatus] = useState('');
+  const [currentLanguage, setCurrentLanguage] = useState('');
 
   const { helpeeData, helpeeRatingData } = useSelector(
     (state) => state.helpee
@@ -70,6 +67,10 @@ const ProfilePage = (props) => {
   const { helperData, helperRatingData } = useSelector(
     (state) => state.helper
   );
+
+  useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
 
   useEffect(() => {
     if (props.isHelpee) {
@@ -137,6 +138,11 @@ const ProfilePage = (props) => {
         setHasArabic(!!helperData[0].hasArabic);
         setHasOthers(!!helperData[0].hasOthers);
         setDefaultIntroduction(helperData[0].introduction);
+        if (helperData[0] && helperData[0].introductionEN) {
+          setDefaultENIntroduction(helperData[0].introductionEN);
+        } else {
+          setDefaultENIntroduction(t('you_dont_have_en_intro_pls_add'));
+        }
       }
     } else {
       if (helpeeData && helpeeData[0]) {
@@ -161,9 +167,14 @@ const ProfilePage = (props) => {
         setHasArabic(!!helpeeData[0].hasArabic);
         setHasOthers(!!helpeeData[0].hasOthers);
         setDefaultIntroduction(helpeeData[0].introduction);
+        if (helpeeData[0] && helpeeData[0].introductionEN) {
+          setDefaultENIntroduction(helpeeData[0].introductionEN);
+        } else {
+          setDefaultENIntroduction(t('you_dont_have_en_intro_pls_add'));
+        }
       }
     }
-  }, [props.isHelpee, helperData, helpeeData]);
+  }, [props.isHelpee, helperData, helpeeData, t]);
 
   useEffect(() => {
     let translatedSpeakingLanguagesString = '';
@@ -288,7 +299,9 @@ const ProfilePage = (props) => {
                 {imageBoxStatus === 'showNoPicture' && (
                   <div className='blankProfileImageBxBlack'>
                     <div style={{ margin: 'auto' }}>
-                      <p style={{ fontSize: '10px'}}>{t('no_picture_please_update')}</p>
+                      <p style={{ fontSize: '10px' }}>
+                        {t('no_picture_please_update')}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -350,13 +363,33 @@ const ProfilePage = (props) => {
                 </p>
               </div>
             </div>
-
-            <div className='pure-row'>
-              <div className='pureFlexColumn'>
-                <p style={{ margin: 'auto' }}>{t('introduction')}:</p>
-                <p className='introductionWrapper'>{defaultIntroduction}</p>
+            {currentLanguage === 'en' && (
+              <div className='pure-row'>
+                <div className='pureFlexColumn'>
+                  <p style={{ margin: 'auto' }}>{t('introduction')}:</p>
+                  <p className='introductionWrapper'>{defaultENIntroduction}</p>
+                </div>
               </div>
-            </div>
+            )}
+
+            {currentLanguage !== 'en' && (
+              <>
+                <div className='pure-row'>
+                  <div className='pureFlexColumn'>
+                    <p style={{ margin: 'auto' }}>{t('introduction')}:</p>
+                    <p className='introductionWrapper'>{defaultIntroduction}</p>
+                  </div>
+                </div>
+                <div className='pure-row'>
+                  <div className='pureFlexColumn'>
+                    <p style={{ margin: 'auto' }}>{t('introduction_EN')}:</p>
+                    <p className='introductionWrapper'>
+                      {defaultENIntroduction}
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
             <div className='pure-row'>
               <div className='pureFlexColumn'>
                 <p style={{ margin: 'auto' }}>{t('speaks')}:</p>

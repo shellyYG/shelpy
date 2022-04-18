@@ -19,7 +19,7 @@ import {
 import AvatarIcon from './Icons/AvatarIcon';
 
 function PotentialCustomerCard(props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
@@ -31,9 +31,13 @@ function PotentialCustomerCard(props) {
   const [translatedCountry, setTranslatedCountry] = useState('');
   const [translatedSpeakingLanguages, setTranslatedSpeakingLanguages] =
     useState('');
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
+  const [currentLanguage, setCurrentLanguage] = useState('');
+  const [shownIntroduction, setShownIntroduction] = useState('');
+
+  useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
+
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
@@ -174,6 +178,18 @@ function PotentialCustomerCard(props) {
     });
     setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
   }, [t, props.languages]);
+
+  useEffect(() => {
+    if (currentLanguage === 'en') {
+      if(props.introductionEN) {
+        setShownIntroduction(props.introductionEN);
+      } else {
+        setShownIntroduction(props.introduction);
+      }
+    } else {
+      setShownIntroduction(props.introduction);
+    }
+  }, [currentLanguage, props.introduction, props.introductionEN]);
   
   return (
     <div className='history-card'>
@@ -201,7 +217,7 @@ function PotentialCustomerCard(props) {
               {props.partnerName}
             </h3>
             <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {props.introduction}
+              {t('introduction')}: {shownIntroduction}
             </p>
           </div>
         </div>

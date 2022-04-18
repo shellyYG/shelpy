@@ -92,6 +92,7 @@ const HelpeeRequestsPage = (props) => {
               languages={option.languages}
               isAnonymous={option.isAnonymous}
               introduction={option.introduction}
+              introductionEN={option.introductionEN}
             />
           ))}
         </div>

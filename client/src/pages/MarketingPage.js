@@ -38,31 +38,67 @@ const HelpeeDashboardPage = (props) => {
   );
 
   useEffect(() => {
-    if (mainType === 'default') {
-      setFilteredOffers(allMKTOffers);
+    if (currentLanguage === 'en') {
+      if (mainType === 'default') {
+        const filteredOffers = allMKTOffers.filter(
+          (offer) => offer.introductionEN
+        );
+        setFilteredOffers(filteredOffers);
+      }
+      if (mainType !== 'default') {
+        const filteredOffers = allMKTOffers.filter(
+          (offer) =>
+            offer.mainType === mainType && offer.introductionEN
+        );
+        setFilteredOffers(filteredOffers);
+      }
+      if (mainType && secondType !== 'default') {
+        const filteredOffers = allMKTOffers.filter(
+          (offer) =>
+            offer.mainType === mainType &&
+            offer.secondType === secondType &&
+            offer.introductionEN
+        );
+        setFilteredOffers(filteredOffers);
+      }
+      if (mainType && secondType !== 'default' && country !== 'default') {
+        const filteredOffers = allMKTOffers.filter(
+          (offer) =>
+            offer.mainType === mainType &&
+            offer.secondType === secondType &&
+            offer.country === country &&
+            offer.introductionEN
+        );
+        setFilteredOffers(filteredOffers);
+      }
+    } else {
+      if (mainType === 'default') {
+        setFilteredOffers(allMKTOffers);
+      }
+      if (mainType !== 'default') {
+        const filteredOffers = allMKTOffers.filter(
+          (offer) => offer.mainType === mainType
+        );
+        setFilteredOffers(filteredOffers);
+      }
+      if (mainType && secondType !== 'default') {
+        const filteredOffers = allMKTOffers.filter(
+          (offer) =>
+            offer.mainType === mainType && offer.secondType === secondType
+        );
+        setFilteredOffers(filteredOffers);
+      }
+      if (mainType && secondType !== 'default' && country !== 'default') {
+        const filteredOffers = allMKTOffers.filter(
+          (offer) =>
+            offer.mainType === mainType &&
+            offer.secondType === secondType &&
+            offer.country === country
+        );
+        setFilteredOffers(filteredOffers);
+      }
     }
-    if (mainType !== 'default') {
-      const filteredOffers = allMKTOffers.filter(
-        (offer) => offer.mainType === mainType
-      );
-      setFilteredOffers(filteredOffers);
-    }
-    if (mainType && secondType !== 'default') {
-      const filteredOffers = allMKTOffers.filter(
-        (offer) =>
-          offer.mainType === mainType && offer.secondType === secondType
-      );
-      setFilteredOffers(filteredOffers);
-    }
-    if (mainType && secondType !== 'default' && country !== 'default') {
-      const filteredOffers = allMKTOffers.filter(
-        (offer) =>
-          offer.mainType === mainType &&
-          offer.secondType === secondType &&
-          offer.country === country
-      );
-      setFilteredOffers(filteredOffers);
-    }
+    
   }, [allMKTOffers, mainType, secondType, country]);
 
   useEffect(() => {
@@ -201,6 +237,7 @@ const HelpeeDashboardPage = (props) => {
                 country={option.country}
                 notes={option.notes}
                 introduction={option.introduction}
+                introductionEN={option.introductionEN}
                 profilePicPath={option.profilePicPath}
                 username={option.username}
                 price={option.price}

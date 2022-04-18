@@ -143,6 +143,8 @@ const HelperBookingsPage = (props) => {
                   notes={option.notes}
                   questions={option.questions}
                   joinUrl={option.joinUrl}
+                  introduction={option.introduction}
+                  introductionEN={option.introductionEN}
                 />
               )
             )}
