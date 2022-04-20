@@ -898,6 +898,7 @@
   "pay_name": "付款给 {{name}} {{price}} 美元",
   "offer_id": "服务编号",
   "no_offers": "还未有公开服务",
+  "no_item_found": "该服务/需求不存在",
   "price": "报价",
   "price_per_duration_min": "分享价格与时间长短: {{price}} 美元 ({{duration}} 分钟)",
   "na": "无",
