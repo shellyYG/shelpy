@@ -260,12 +260,15 @@ function MarketingCard(props) {
 
   async function handleBookHelperMarketingClick(e) {
     e.preventDefault();
-    if (!props.helpeeId) {
+    if (!props.isHelpeeAuthenticated) {
       await MySwal.fire({
         title: <strong>{t('oops')}</strong>,
         html: <p>{t('please_sign_in_first')}</p>,
         icon: 'error',
       });
+      navigate(
+        `/${currentLanguage}/helpee/sign-in?refId=${refId}&offerId=${props.id}`
+      );
     } else {
       navigate(
         `/${currentLanguage}/helpee/update-booking?requestId=&partnerName=${props.username}` +

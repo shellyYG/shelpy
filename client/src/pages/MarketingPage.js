@@ -99,7 +99,7 @@ const HelpeeDashboardPage = (props) => {
       }
     }
     
-  }, [allMKTOffers, mainType, secondType, country]);
+  }, [allMKTOffers, mainType, secondType, country, currentLanguage]);
 
   useEffect(() => {
     dispatch(getAllMarketingOffers());
@@ -134,41 +134,7 @@ const HelpeeDashboardPage = (props) => {
 
   return (
     <div className='section-left-align'>
-      {!props.isHelpeeAuthenticated && (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            textAlign: 'center',
-          }}
-        >
-          <div style={{ margin: '50px auto' }}>
-            <DangerIcon />
-            <h2 style={{ margin: '10px auto' }}>{t('please')}</h2>
-            <button
-              className='btn-next'
-              style={{ width: '180px' }}
-              onClick={handleSignIn}
-            >
-              {t('sign_in')}
-            </button>
-            <h2 style={{ margin: '10px auto' }}>
-              {t('mkt_offer_sign_in_as_helpee')}
-            </h2>
-            <h2 style={{ margin: '10px auto' }}>
-              {t('dont_have_helpee_account')}
-            </h2>
-            <button
-              className='btn-next'
-              style={{ width: '180px' }}
-              onClick={handleToHomepage}
-            >
-              {t('sign_up_here')}
-            </button>
-          </div>
-        </div>
-      )}
-      {props.isHelpeeAuthenticated && (
+      {
         <>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ margin: '15px auto 0px' }}>{t('top_offers')}</h2>
@@ -253,11 +219,12 @@ const HelpeeDashboardPage = (props) => {
                 helperRatingData={allMKTHelperRatings.filter(
                   (item) => item.ratedPartnerId === option.userId
                 )}
+                isHelpeeAuthenticated={props.isHelpeeAuthenticated}
               />
             ))}
           </div>
         </>
-      )}
+      }
     </div>
   );
 };
