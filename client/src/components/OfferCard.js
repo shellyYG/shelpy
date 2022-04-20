@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
+import EditIcon from '../components/Icons/EditIcon';
 import {
   workingCountryOptions,
   departmentOptions,
@@ -23,7 +25,6 @@ import AvatarIcon from './Icons/AvatarIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import TrashIcon from './Icons/TrashIcon';
 import { clearDeleteOfferStatus, deleteHelperOffer } from '../store/helper/helper-actions';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import SignUpPopUp from '../pages/SignUpPopUp';
 import { clickOnBookHelper, clickOnToHomePage } from '../service/fbPixelsHelper';
 
@@ -354,6 +355,30 @@ function OfferCard(props) {
     }
   }
 
+  function handleUpdateOffer(e) {
+    e.preventDefault();
+    let mainTypeFormPath = '';
+    switch (props.mainType) {
+      case 'university':
+        mainTypeFormPath = 'uni-form';
+        break;
+      case 'job':
+        mainTypeFormPath = 'job-form';
+        break;
+      case 'selfEmployed':
+        mainTypeFormPath = 'self-employed-form';
+        break;
+      case 'life':
+        mainTypeFormPath = 'life-form';
+        break;
+      default:
+        mainTypeFormPath = 'uni-form';
+        break;
+    }
+    let path = `/${currentLanguage}/helper/${mainTypeFormPath}/edit?targetItemId=${props.offerId}&refId=${refId}`;
+    navigate(path);
+  }
+
   useEffect(() => {
     if (currentLanguage === 'en') {
       if (props.introductionEN) {
@@ -501,7 +526,16 @@ function OfferCard(props) {
           )}
         </div>
       )}
-      {!props.disableTrash && <TrashIcon onClick={handleDeleteOffer} />}
+      {!props.disableTrash && (
+        <>
+          <div>
+            <EditIcon color='#04AA6D' onClick={handleUpdateOffer} />
+          </div>
+          <div style={{ marginLeft: 'auto' }}>
+            <TrashIcon onClick={handleDeleteOffer} />
+          </div>
+        </>
+      )}
     </div>
   );
 }

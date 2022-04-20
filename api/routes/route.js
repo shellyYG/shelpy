@@ -44,6 +44,7 @@ const {
   getBookingDetails,
   getHelpeeData,
   getHelpeeRatings,
+  getHelpeeSingleRequest,
 } = require('../controllers/helpeeController');
 
 const {
@@ -189,6 +190,13 @@ router
   .get(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(getHelperSingleOffer)
+  );
+
+router
+  .route('/api/helpee/single-request')
+  .get(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(getHelpeeSingleRequest)
   );
 
 router

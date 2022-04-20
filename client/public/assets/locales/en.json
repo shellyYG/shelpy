@@ -898,6 +898,7 @@
   "pay_name": "Pay {{name}} {{price}} USD",
   "offer_id": "Offer ID",
   "no_offers": "No Public Offers yet",
+  "no_item_found": "No Items Found",
   "price": "Price",
   "price_per_duration_min": "Price & Duration: {{price}} USD ({{duration}} minutes)",
   "na": "N/A",

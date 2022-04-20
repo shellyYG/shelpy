@@ -6,6 +6,60 @@ async function insertHelpeeRequest(data) { // new.
   return sqlResult.insertId;
 }
 
+async function updateHelpeeRequest(data) {
+  const {
+    secondType,
+    thirdType,
+    fourthType,
+    organization,
+    years,
+    country,
+    school,
+    department,
+    degree,
+    industry,
+    job,
+    WFH,
+    companySize,
+    selfEmployedType,
+    profession,
+    notes,
+    sharingTopicEN,
+    itemId,
+  } = data;
+  const sql = `
+    UPDATE requests SET secondType=?, thirdType=?
+    , fourthType=?, organization=?
+    , years=?
+    , country = ?, school = ?, department = ?, degree= ?
+    , industry=?, job=?, WFH=?, companySize=?, selfEmployedType=?
+      ,profession=?, notes=?, sharingTopicEN=?
+      ,step = ?
+    WHERE id =?`;
+  const sqlquery = await query(sql, [
+    secondType,
+    thirdType,
+    fourthType,
+    organization,
+    years,
+    country,
+    school,
+    department,
+    degree,
+    industry,
+    job,
+    WFH,
+    companySize,
+    selfEmployedType,
+    profession,
+    notes,
+    sharingTopicEN,
+    'updated',
+    itemId,
+  ]);
+  return sqlquery;
+}
+
 async function getHelpeeAllOrders(data) { // all requests
   const sqlSimplified = ` SELECT helpee.profilePicPath, helpee.languages
   , helpee.username AS helpeeName, helpee.isAnonymous, helpee.introduction, helpee.introductionEN
@@ -87,6 +141,17 @@ async function getHelpeeOrderHelperList(data) {
     WHERE b.requestId = ?;`;
   const sqlResult = await query(sql, requestId);
   return { data: { helpers: sqlResult } };
+}
+
+async function getHelpeeSingleRequest(data) {
+  const { requestId } = data;
+  const sql = `SELECT helpee.profilePicPath, helpee.languages, helpee.username AS helpeeName
+  , helpee.isAnonymous, helpee.introduction, helpee.introductionEN, req.* 
+  FROM requests req
+  INNER JOIN helpee_account helpee ON req.userId = helpee.id
+  WHERE req.id = ? AND NOT req.status='deleted' ORDER BY id DESC;`;
+  const singleRequest = await query(sql, requestId);
+  return { data: { singleRequest } };
 }
 
 async function updateHelpeeProfilePicPath(data) {
@@ -244,4 +309,6 @@ module.exports = {
   getBookingDetails,
   getHelpeeData,
   getHelpeeRatings,
+  getHelpeeSingleRequest,
+  updateHelpeeRequest,
 };

@@ -13,6 +13,7 @@ function HalfLineTextBox(props) {
     <div className='form-wrapper-half'>
       <label>{props.title}</label>
       <input
+        defaultValue={props.defaultValue}
         type='text'
         className='form-control'
         style={{ fontSize: '12px' }}

@@ -31,6 +31,13 @@ const allowHelpeePrivateRoute = async (req, res) => {
 
 const postHelpeeRequest = async (req, res) => {
   try {
+    if (req && req.body && req.body.data && req.body.data.isEdited) {
+      await helpeeModel.updateHelpeeRequest(req.body.data);
+      res
+        .status(200)
+        .json({ requestId: req.body.data.itemId, status: 'success' });
+      return;
+    }
     // get old matches
     let oldMatches = [];
     let newMatches = [];
@@ -117,6 +124,21 @@ const getHelpeeAllBookings = async (req, res) => {
       });
     } else {
       throw Error('no_booking_found_error');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getHelpeeSingleRequest = async (req, res) => {
+  try {
+    const { requestId } = req.query;
+    const response = await helpeeModel.getHelpeeSingleRequest({ requestId });
+    if (response && response.data) {
+      res.status(200).json({
+        singleRequest: response.data.singleRequest,
+      });
     }
   } catch (error) {
     console.error(error);
@@ -388,4 +410,5 @@ module.exports = {
   getBookingDetails,
   getHelpeeData,
   getHelpeeRatings,
+  getHelpeeSingleRequest,
 };

@@ -9,6 +9,7 @@ const helpeeSignInPath = '/api/helpee/sign-in';
 const userRequestPath = '/api/helpee/request';
 const activeHelperPath = '/api/helpee/active-helpers';
 const getAllOrdersPath = '/api/helpee/all-orders';
+const getSingleRequestPath = '/api/helpee/single-request';
 const getAllBookingsPath = '/api/helpee/all-bookings';
 const getPotentialHelpersPath = '/api/helpee/potential-helpers';
 const helpeeProfilePicUploadPath = '/api/helpee/profile-pic-upload';
@@ -295,6 +296,30 @@ export const onClickUpdateHelpeeDashboardTarget = (data) => {
         helpeeDashboardTarget: data.helpeeDashboardTarget,
       })
     );
+  };
+};
+
+export const getSingleRequest = (data) => {
+  return async (dispatch) => {
+    if (data && data.requestId) {
+      try {
+        const response = await axios.get(getSingleRequestPath, {
+          params: { requestId: data.requestId },
+        });
+        dispatch(
+          helpeeActions.updateSingleRequest({
+            singleRequest: response.data.singleRequest,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+        dispatch(
+          helpeeActions.updateSingleRequest({
+            singleRequest: [],
+          })
+        );
+      }
+    }
   };
 };
 

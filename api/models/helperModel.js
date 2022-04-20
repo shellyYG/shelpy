@@ -6,6 +6,64 @@ async function insertHelperOffer(data) {
   return sqlResult.insertId;
 }
 
+async function updateHelperOffer(data) {
+  const {
+    secondType,
+    thirdType,
+    fourthType,
+    organization,
+    years,
+    country,
+    school,
+    department,
+    degree,
+    industry,
+    job,
+    WFH,
+    companySize,
+    selfEmployedType,
+    profession,
+    duration,
+    price,
+    notes,
+    sharingTopicEN,
+    itemId,
+  } = data;
+  const sql = `
+    UPDATE offers SET secondType=?, thirdType=?
+    , fourthType=?, organization=?
+    , years=?
+    , country = ?, school = ?, department = ?, degree= ?
+    , industry=?, job=?, WFH=?, companySize=?, selfEmployedType=?
+      ,profession=?, duration=?, price=?, notes=?, sharingTopicEN=?
+      ,step = ?
+    WHERE id =?`;
+  const sqlquery = await query(sql, [
+    secondType,
+    thirdType,
+    fourthType,
+    organization,
+    years,
+    country,
+    school,
+    department,
+    degree,
+    industry,
+    job,
+    WFH,
+    companySize,
+    selfEmployedType,
+    profession,
+    duration,
+    parseInt(price),
+    notes,
+    sharingTopicEN,
+    'updated',
+    itemId,
+  ]);
+  return sqlquery;
+}
+
 async function getHelperAllOffers(data) {
   const { helperUserId } = data;
   const sql = `SELECT helper.profilePicPath, helper.languages, helper.username AS helperName
@@ -256,4 +314,5 @@ module.exports = {
   getAllChattedCustomers,
   getHelperData,
   getHelperRatings,
+  updateHelperOffer,
 };

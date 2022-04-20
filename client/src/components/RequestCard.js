@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +23,7 @@ import {
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
 import TrashIcon from './Icons/TrashIcon';
+import EditIcon from '../components/Icons/EditIcon';
 import { clearDeleteRequestStatus, deleteHelpeeRequest } from '../store/helpee/helpee-actions';
 
 const MySwal = withReactContent(Swal);
@@ -29,7 +31,10 @@ const MySwal = withReactContent(Swal);
 
 function RequestCard(props) {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
   const [loading, setIsLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
@@ -88,6 +93,38 @@ function RequestCard(props) {
         MySwal.showLoading();
       },
     });
+  }
+
+  function handleDeleteRequest(e) {
+    e.preventDefault(e);
+    const data = {
+      requestId: props.id,
+    };
+    dispatch(deleteHelpeeRequest(data));
+    setIsLoading(true);
+  }
+  function handleUpdateRequest(e) {
+    e.preventDefault();
+    let mainTypeFormPath = '';
+    switch (props.mainType) {
+      case 'university':
+        mainTypeFormPath = 'uni-form';
+        break;
+      case 'job':
+        mainTypeFormPath = 'job-form';
+        break;
+      case 'selfEmployed':
+        mainTypeFormPath = 'self-employed-form';
+        break;
+      case 'life':
+        mainTypeFormPath = 'life-form';
+        break;
+      default:
+        mainTypeFormPath = 'uni-form';
+        break;
+    }
+    let path = `/${currentLanguage}/helper/${mainTypeFormPath}/edit?targetItemId=${props.id}&refId=${refId}`;
+    navigate(path);
   }
 
   useEffect(() => {
@@ -273,15 +310,6 @@ function RequestCard(props) {
     setTranslatedSpeakingLanguages(translatedSpeakingLanguagesString);
   }, [t, props.languages]);
 
-  function handleDeleteRequest(e) {
-     e.preventDefault(e);
-     const data = {
-       requestId: props.id,
-     };
-     console.log('data to dispatch deleteHelpeeRequest: ', data);
-     dispatch(deleteHelpeeRequest(data));
-     setIsLoading(true);
-  }
   useEffect(() => {
     if (deleteRequestStatus === 'error') {
       setIsLoading(false);
@@ -423,7 +451,12 @@ function RequestCard(props) {
           </div>
         </div>
       )}
-      <TrashIcon onClick={handleDeleteRequest} />
+      <div>
+        <EditIcon color='#04AA6D' onClick={handleUpdateRequest} />
+      </div>
+      <div style={{ marginLeft: 'auto' }}>
+        <TrashIcon onClick={handleDeleteRequest} />
+      </div>
     </div>
   );
 }

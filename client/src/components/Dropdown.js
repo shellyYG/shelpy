@@ -28,12 +28,14 @@ function DropDown(props) {
         style={{ cursor: 'pointer' }}
       >
         {!props.isTime &&
+          props.options &&
           props.options.map((option) => (
             <option value={option.value} key={option.value}>
               {t(`${option.label}`)}
             </option>
           ))}
         {props.isTime &&
+          props.options &&
           props.options.map((option) => (
             <option value={option.value} key={option.value}>
               {option.label}

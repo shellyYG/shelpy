@@ -26,6 +26,11 @@ const allowHelperPrivateRoute = async (req, res) => {
 
 const postHelperOffer = async (req, res) => {
   try {
+    if (req && req.body && req.body.data && req.body.data.isEdited) {
+      await helperModel.updateHelperOffer(req.body.data);
+      res.status(200).json({ offerId: req.body.data.itemId, status: 'success' });
+      return;
+    }
     // get old matches
     let oldMatches = [];
     let newMatches = [];
@@ -77,7 +82,7 @@ const postHelperOffer = async (req, res) => {
         });
       }
     }
-    res.status(200).json({ requestId: id, status: 'success' });
+    res.status(200).json({ offerId: id, status: 'success' });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

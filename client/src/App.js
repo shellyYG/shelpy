@@ -253,7 +253,7 @@ function App() {
               path={`/:locale/helper/paypal-account`}
               element={
                 isHelperAuthenticated ? (
-                  <SetPayPalPage helperId={helperUserId} isHelpee={false}/>
+                  <SetPayPalPage helperId={helperUserId} isHelpee={false} />
                 ) : (
                   <PreSignInPage isHelpee={false} />
                 )
@@ -263,7 +263,7 @@ function App() {
               path={`/:locale/helpee/paypal-account`}
               element={
                 isHelpeeAuthenticated ? (
-                  <SetPayPalPage helpeeId={helpeeUserId} isHelpee={true}/>
+                  <SetPayPalPage helpeeId={helpeeUserId} isHelpee={true} />
                 ) : (
                   <PreSignInPage isHelpee={true} />
                 )
@@ -294,7 +294,11 @@ function App() {
               path={`/:locale/helpee/job-form`}
               element={
                 isHelpeeAuthenticated ? (
-                  <JobFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
+                  <JobFormPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                    isEdited={false}
+                  />
                 ) : (
                   <PreSignInPage isHelpee={true} />
                 )
@@ -304,7 +308,39 @@ function App() {
               path={`/:locale/helper/job-form`}
               element={
                 isHelperAuthenticated ? (
-                  <JobFormPage isHelpee={false} helperUserId={helperUserId} />
+                  <JobFormPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                    isEdited={false}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helpee/job-form/edit`}
+              element={
+                isHelpeeAuthenticated ? (
+                  <JobFormPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                    isEdited={true}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helper/job-form/edit`}
+              element={
+                isHelperAuthenticated ? (
+                  <JobFormPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                    isEdited={true}
+                  />
                 ) : (
                   <PreSignInPage isHelpee={false} />
                 )
@@ -314,7 +350,11 @@ function App() {
               path={`/:locale/helpee/uni-form`}
               element={
                 isHelpeeAuthenticated ? (
-                  <UniFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
+                  <UniFormPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                    isEdited={false}
+                  />
                 ) : (
                   <PreSignInPage isHelpee={true} />
                 )
@@ -324,7 +364,39 @@ function App() {
               path={`/:locale/helper/uni-form`}
               element={
                 isHelperAuthenticated ? (
-                  <UniFormPage isHelpee={false} helperUserId={helperUserId} />
+                  <UniFormPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                    isEdited={false}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helpee/uni-form/edit`}
+              element={
+                isHelpeeAuthenticated ? (
+                  <UniFormPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                    isEdited={true}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helper/uni-form/edit`}
+              element={
+                isHelperAuthenticated ? (
+                  <UniFormPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                    isEdited={true}
+                  />
                 ) : (
                   <PreSignInPage isHelpee={false} />
                 )
@@ -337,6 +409,7 @@ function App() {
                   <SelfEmployedPage
                     isHelpee={true}
                     helpeeUserId={helpeeUserId}
+                    isEdited={false}
                   />
                 ) : (
                   <PreSignInPage isHelpee={true} />
@@ -350,6 +423,35 @@ function App() {
                   <SelfEmployedPage
                     isHelpee={false}
                     helperUserId={helperUserId}
+                    isEdited={false}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helpee/self-employed-form/edit`}
+              element={
+                isHelpeeAuthenticated ? (
+                  <SelfEmployedPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                    isEdited={true}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helper/self-employed-form/edit`}
+              element={
+                isHelperAuthenticated ? (
+                  <SelfEmployedPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                    isEdited={true}
                   />
                 ) : (
                   <PreSignInPage isHelpee={false} />
@@ -363,6 +465,7 @@ function App() {
                   <LifeSharingFormPage
                     isHelpee={true}
                     helpeeUserId={helpeeUserId}
+                    isEdited={false}
                   />
                 ) : (
                   <PreSignInPage isHelpee={true} />
@@ -376,6 +479,35 @@ function App() {
                   <LifeSharingFormPage
                     isHelpee={false}
                     helperUserId={helperUserId}
+                    isEdited={false}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={false} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helpee/life-form/edit`}
+              element={
+                isHelpeeAuthenticated ? (
+                  <LifeSharingFormPage
+                    isHelpee={true}
+                    helpeeUserId={helpeeUserId}
+                    isEdited={true}
+                  />
+                ) : (
+                  <PreSignInPage isHelpee={true} />
+                )
+              }
+            />
+            <Route
+              path={`/:locale/helper/life-form/edit`}
+              element={
+                isHelperAuthenticated ? (
+                  <LifeSharingFormPage
+                    isHelpee={false}
+                    helperUserId={helperUserId}
+                    isEdited={true}
                   />
                 ) : (
                   <PreSignInPage isHelpee={false} />

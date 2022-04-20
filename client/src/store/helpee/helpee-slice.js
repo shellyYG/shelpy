@@ -23,6 +23,7 @@ const helpeeSlice = createSlice({
 
     helpeeProfilePicPath: '',
     allOrders: [],
+    singleRequest: [],
     allPotentialHelpers: [],
     allPotentialHelpersRatings: [],
     allBookings: [],
@@ -183,6 +184,10 @@ const helpeeSlice = createSlice({
     updateHelpeeRatingData(state, action) {
       const { payload } = action;
       state.helpeeRatingData = payload.helpeeRatingData;
+    },
+    updateSingleRequest(state, action) {
+      const { payload } = action;
+      if (payload.singleRequest) state.singleRequest = payload.singleRequest;
     },
   },
 });
