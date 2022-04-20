@@ -123,7 +123,7 @@ function RequestCard(props) {
         mainTypeFormPath = 'uni-form';
         break;
     }
-    let path = `/${currentLanguage}/helper/${mainTypeFormPath}/edit?targetItemId=${props.id}&refId=${refId}`;
+    let path = `/${currentLanguage}/helpee/${mainTypeFormPath}/edit?targetItemId=${props.id}&refId=${refId}`;
     navigate(path);
   }
 
