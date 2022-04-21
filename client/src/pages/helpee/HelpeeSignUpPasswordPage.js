@@ -11,6 +11,7 @@ import {
   postHelpeeSignUpPassword,
 } from '../../store/helpee/helpee-actions';
 import { useTranslation } from 'react-i18next';
+import { logLandOnPage } from '../../store/general/general-actions';
 
 const MySwal = withReactContent(Swal);
 
@@ -18,6 +19,10 @@ const HelpeeSignUpPasswordPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
@@ -39,8 +44,6 @@ const HelpeeSignUpPasswordPage = () => {
     signUpPasswordStatusTitle,
     signUpPasswordStatusMessage,
   } = useSelector((state) => state.helpeeNotification);
-  const [searchParams] = useSearchParams();
-  const refId = searchParams.get('refId');
 
   if (loading) {
     MySwal.fire({
@@ -87,14 +90,22 @@ const HelpeeSignUpPasswordPage = () => {
   function handleHasGiveConsent() {
     setHasGiveConsent(!hasGiveConsent);
   }
+  function handleUsernameTyping(e) {
+    e.preventDefault();
+    const typingInput = e.target.value;
+    setUsernameString(typingInput);
+  }
+
   useEffect(()=>{
     if (repeatPassword && repeatPassword === password) {
       if (consentRef.current) consentRef.current.focus();
     }
   },[password, repeatPassword])
+
   useEffect(() => {
     setEmail(DBHelpeeEmail);
   }, [DBHelpeeEmail]);
+
   useEffect(() => {
     if (signUpPasswordStatus === 'error') {
       setIsLoading(false);
@@ -139,14 +150,30 @@ const HelpeeSignUpPasswordPage = () => {
     navigate,
     dispatch,
   ]);
-  function handleUsernameTyping(e) {
-    e.preventDefault();
-    const typingInput = e.target.value;
-    setUsernameString(typingInput);
-  }
+  
   useEffect(() => {
     setEnableBtn(usernameString && hasGiveConsent && password.length !== 0);
   }, [usernameString, hasGiveConsent, password]);
+
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

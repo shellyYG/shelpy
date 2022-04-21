@@ -5,12 +5,13 @@ import {
   getAllBookings,
 } from '../../store/helper/helper-actions';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import BookingCard from '../../components/BookingCard';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
 
 import DropDown from '../../components/Dropdown';
 import { bookingStatusOptionsForHelper } from '../../store/options/service-options';
+import { logLandOnPage } from '../../store/general/general-actions';
 
 
 const HelperBookingsPage = (props) => {
@@ -18,7 +19,13 @@ const HelperBookingsPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const bookingStatusRef = useRef();
+  const [searchParams] = useSearchParams();
+
   const { allBookings } = useSelector((state) => state.helper);
+
+  const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
 
   const [filteredBookingStatus, setFilteredBookingStatus] = useState('default');
   const [filteredBookings, setFilteredBookings] = useState(allBookings);
@@ -26,6 +33,17 @@ const HelperBookingsPage = (props) => {
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
+
+  function handleRrefreshPage(e) {
+    e.preventDefault(e);
+    window.location.reload();
+  }
+  function handleToReferralPage(e) {
+    e.preventDefault(e);
+    let path = `/${currentLanguage}/helper/referrals`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
 
   useEffect(() => {
     dispatch(getAllBookings({ helperUserId: props.helperUserId }));
@@ -42,16 +60,25 @@ const HelperBookingsPage = (props) => {
     }
   }, [allBookings, filteredBookingStatus]);
 
-  function handleRrefreshPage(e) {
-    e.preventDefault(e);
-    window.location.reload();
-  }
-  function handleToReferralPage(e) {
-    e.preventDefault(e);
-    let path = `/${currentLanguage}/helper/referrals`;
-    if (window.location.search) path += window.location.search;
-    navigate(path);
-  }
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div className='section-left-align'>

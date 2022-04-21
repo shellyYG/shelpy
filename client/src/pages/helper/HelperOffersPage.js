@@ -5,14 +5,20 @@ import {
 } from '../../store/helper/helper-actions';
 
 import OfferCard from '../../components/OfferCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
 import { useTranslation } from 'react-i18next';
+import { logLandOnPage } from '../../store/general/general-actions';
 
 const HelperOffersPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
@@ -21,10 +27,6 @@ const HelperOffersPage = (props) => {
   const {
     allOffers,
   } = useSelector((state) => state.helper);
-
-  useEffect(() => {
-    dispatch(getAllOffers({ helperUserId: props.helperUserId }));
-  }, [props.helperUserId, props.helpeeUserId, dispatch]);
 
   function handleAddOffer(e) {
     e.preventDefault(e);
@@ -37,6 +39,31 @@ const HelperOffersPage = (props) => {
     e.preventDefault(e);
     window.location.reload();
   }
+
+  useEffect(() => {
+    dispatch(getAllOffers({ helperUserId: props.helperUserId }));
+  }, [props.helperUserId, props.helpeeUserId, dispatch]);
+
+  
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div className='section-left-align'>

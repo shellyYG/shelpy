@@ -12,12 +12,18 @@ import {
 import FullLineTextBox from '../components/FullLineTextBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import { getHelpeeUserData } from '../store/helpee/helpee-actions';
+import { logLandOnPage } from '../store/general/general-actions';
 const MySwal = withReactContent(Swal);
 
 const SetPayPalPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
+
   const payPalNameRef = useRef();
   const payPalEmailRef = useRef();
   const consentRef = useRef();
@@ -25,9 +31,6 @@ const SetPayPalPage = (props) => {
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
-
-  const [searchParams] = useSearchParams();
-  const refId = searchParams.get('refId');
 
   const { helperData } = useSelector((state) => state.helper);
   const { helpeeData } = useSelector((state) => state.helpee);
@@ -94,6 +97,10 @@ const SetPayPalPage = (props) => {
       console.error(err);
       setIsLoading(false);
     }
+  }
+  function handleShowUpdateAccountPart(e) {
+    e.preventDefault();
+    setShowUpdateAccountPart(true);
   }
 
   useEffect(() => {
@@ -179,10 +186,25 @@ const SetPayPalPage = (props) => {
     }
   }, [helperData, helpeeData, props.isHelpee]);
 
-  function handleShowUpdateAccountPart(e) {
-    e.preventDefault();
-    setShowUpdateAccountPart(true);
-  }
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

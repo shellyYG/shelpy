@@ -13,6 +13,7 @@ import {
 import {
   postBookingStatus,
   clearBookingNotificationStatus,
+  logLandOnPage,
 } from '../store/general/general-actions';
 import { useTranslation } from 'react-i18next';
 import LongTextBox from '../components/LongTextBox';
@@ -36,6 +37,7 @@ const BookingConfirmPage = (props) => {
 
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
   const bookingId = searchParams.get('bookingId');
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
@@ -73,13 +75,17 @@ const BookingConfirmPage = (props) => {
   const [questionsString, setQuestionsString] = useState('');
   const [translatedTimeZone, setTranslatedTimeZone] = useState('');
 
-  useEffect(() => {
-    const timeZoneObj = timeZoneOptions.filter(
-      (o) => o.value === bookingTimeZone
-    );
-    if (timeZoneObj && timeZoneObj[0])
-      setTranslatedTimeZone(t(timeZoneObj[0].label));
-  }, [bookingTimeZone, t]);
+  if (loading) {
+    MySwal.fire({
+      title: t('loading'),
+      html: t('do_not_close_window'),
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        MySwal.showLoading();
+      },
+    });
+  }
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -192,6 +198,18 @@ const BookingConfirmPage = (props) => {
     const typingInput = e.target.value;
     setQuestionsString(typingInput);
   }
+  function handleDateInput(e) {
+    e.preventDefault();
+    setMeetDate(e.target.value);
+  };
+
+  useEffect(() => {
+    const timeZoneObj = timeZoneOptions.filter(
+      (o) => o.value === bookingTimeZone
+    );
+    if (timeZoneObj && timeZoneObj[0])
+      setTranslatedTimeZone(t(timeZoneObj[0].label));
+  }, [bookingTimeZone, t]);
 
   useEffect(() => {
     if (currentPage === 'confirm-booking') {
@@ -204,21 +222,6 @@ const BookingConfirmPage = (props) => {
     }
   }, [meetDateRef, meetTime, timeZone, questionsString, currentPage]);
 
-  const handleDateInput = (e) => {
-    e.preventDefault();
-    setMeetDate(e.target.value);
-  };
-  if (loading) {
-    MySwal.fire({
-      title: t('loading'),
-      html: t('do_not_close_window'),
-      allowOutsideClick: false,
-      showConfirmButton: false,
-      willOpen: () => {
-        MySwal.showLoading();
-      },
-    });
-  }
   useEffect(() => {
     if (bookingNotificationStatus === 'error') {
       setIsLoading(false);
@@ -265,6 +268,26 @@ const BookingConfirmPage = (props) => {
     currentLanguage,
     refId,
   ]);
+
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

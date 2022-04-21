@@ -610,7 +610,12 @@ router
     wrapAsync(updateBookingStatus)
   );
 
-router.route('/api/log/page/view').post(wrapAsync(logPageView));
+router
+  .route('/api/log/page/view')
+  .post(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 30 }),
+    wrapAsync(logPageView)
+  );
 
 // router
 //   .route('/api/helpee/pay')

@@ -5,14 +5,20 @@ import {
   getAllOrders,
   getPotentialHelpers,
 } from '../../store/helpee/helpee-actions';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
 import { useTranslation } from 'react-i18next';
+import { logLandOnPage } from '../../store/general/general-actions';
 
 const HelpeeMatchedPartnerPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
@@ -20,11 +26,6 @@ const HelpeeMatchedPartnerPage = (props) => {
 
   const { allPotentialHelpers, allPotentialHelpersRatings, allOrders } =
     useSelector((state) => state.helpee); // order === request
-
-  useEffect(() => {
-    dispatch(getPotentialHelpers({ helpeeUserId: props.helpeeUserId }));
-    dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
-  }, [props.helpeeUserId, dispatch]);
 
   function handleAddRequest(e) {
     e.preventDefault(e);
@@ -44,6 +45,31 @@ const HelpeeMatchedPartnerPage = (props) => {
     e.preventDefault(e);
     window.location.reload();
   }
+
+  useEffect(() => {
+    dispatch(getPotentialHelpers({ helpeeUserId: props.helpeeUserId }));
+    dispatch(getAllOrders({ helpeeUserId: props.helpeeUserId }));
+  }, [props.helpeeUserId, dispatch]);
+
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div className='section-left-align'>

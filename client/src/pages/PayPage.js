@@ -26,6 +26,7 @@ import {
 import {
   getHelperUserData
 } from '../store/helper/helper-actions';
+import { logLandOnPage } from '../store/general/general-actions';
 
 const isDeveloping = 0; // TODO before push to ec2
 const environment = isDeveloping ? 'sandbox' : 'production';
@@ -41,12 +42,15 @@ const PayPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const [searchParams] = useSearchParams();
+
+  const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
 
-  const [searchParams] = useSearchParams();
   const bookingId = searchParams.get('bookingId');
   const [offerId, setOfferId] = useState('');
   const [price, setPrice] = useState('');
@@ -66,10 +70,10 @@ const PayPage = (props) => {
   const [helperId, setHelperId] = useState('');
   const [helperEmail, setHelperEmail] = useState('');
   const [helpeeEmail, setHelpeeEmail] = useState('');
-  const [helpeeNotificationLanguage, setHelpeeNotificationLanguage] = useState('');
+  const [helpeeNotificationLanguage, setHelpeeNotificationLanguage] =
+    useState('');
   const [helperNotificationLanguage, setHelperNotificationLanguage] =
     useState('');
-  const refId = searchParams.get('refId');
 
   const cardNumberRef = useRef();
   const cardExpireDateRef = useRef();
@@ -83,10 +87,7 @@ const PayPage = (props) => {
     helpeeData,
   } = useSelector((state) => state.helpee);
 
-
-  const { helperData } = useSelector(
-    (state) => state.helper
-  );
+  const { helperData } = useSelector((state) => state.helper);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -97,7 +98,7 @@ const PayPage = (props) => {
     dispatch(getBookingDetails({ bookingId }));
   }, [bookingId, dispatch]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (booking && booking.length && booking[0]) {
       const bookingToPay = booking[0];
       if (!bookingToPay) return;
@@ -133,7 +134,7 @@ const PayPage = (props) => {
       setHelpeeId(helpeeId);
       setHelperId(helperId);
     }
-  },[booking])
+  }, [booking]);
 
   if (loading) {
     MySwal.fire({
@@ -148,7 +149,7 @@ const PayPage = (props) => {
   }
 
   // prevent css re-render
-  useEffect(()=>{
+  useEffect(() => {
     window.TPDirect.setupSDK(
       parseInt(process.env.REACT_APP_APP_ID),
       process.env.REACT_APP_APP_KEY,
@@ -213,14 +214,14 @@ const PayPage = (props) => {
         },
       },
     });
-  },[])
+  }, []);
 
-    useEffect(() => {
-      dispatch(getHelpeeUserData({ helpeeUserId: helpeeId }));
-      dispatch(getHelperUserData({ helperUserId: helperId }));
-    }, [helpeeId, helperId, dispatch]);
+  useEffect(() => {
+    dispatch(getHelpeeUserData({ helpeeUserId: helpeeId }));
+    dispatch(getHelperUserData({ helperUserId: helperId }));
+  }, [helpeeId, helperId, dispatch]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (helperData && helperData[0]) {
       setHelperEmail(helperData[0].email);
       setHelperNotificationLanguage(helperData[0].notificationLanguage);
@@ -229,7 +230,7 @@ const PayPage = (props) => {
       setHelpeeEmail(helpeeData[0].email);
       setHelpeeNotificationLanguage(helpeeData[0].notificationLanguage);
     }
-  },[helperData, helpeeData])
+  }, [helperData, helpeeData]);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -261,7 +262,7 @@ const PayPage = (props) => {
 
       // send prime to your server, to pay with Pay by Prime API .
       // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
-      
+
       const data = {
         prime: result.card.prime,
         partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
@@ -300,19 +301,17 @@ const PayPage = (props) => {
   useEffect(() => {
     let secondTypeTranslationObj;
     let thirdTypeTranslationObj;
-    
+
     const countryTranslationObj = workingCountryOptions.filter(
       (o) => o.value === country
     );
     if (countryTranslationObj && countryTranslationObj[0]) {
       setTranslatedCountry(t(countryTranslationObj[0].label));
     }
-    const timeZoneObj = timeZoneOptions.filter(
-      (o) => o.value === timeZone
-    );
+    const timeZoneObj = timeZoneOptions.filter((o) => o.value === timeZone);
     if (timeZoneObj && timeZoneObj[0])
-      setTranslatedTimeZone(t(timeZoneObj[0].label)); 
-      
+      setTranslatedTimeZone(t(timeZoneObj[0].label));
+
     switch (mainType) {
       case 'university':
         setTitle(t('service_types_uni'));
@@ -398,9 +397,9 @@ const PayPage = (props) => {
           setTranslatedSecondType(t(secondTypeTranslationObj[0].label));
         }
         if (lifeSharingSubOptions && lifeSharingSubOptions[secondType]) {
-          thirdTypeTranslationObj = lifeSharingSubOptions[
-            secondType
-          ].filter((o) => o.value === thirdType);
+          thirdTypeTranslationObj = lifeSharingSubOptions[secondType].filter(
+            (o) => o.value === thirdType
+          );
         }
         if (
           thirdType &&
@@ -454,6 +453,27 @@ const PayPage = (props) => {
     currentLanguage,
     refId,
   ]);
+
+  // Log Page Land
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

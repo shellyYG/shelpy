@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import DropDown from '../components/Dropdown';
@@ -27,6 +27,7 @@ import LeftHalfLineTextBox from '../components/LeftHalfLineTextBox';
 import CheckBox from '../components/CheckBox';
 import { useTranslation } from 'react-i18next';
 import EditIcon from '../components/Icons/EditIcon';
+import { logLandOnPage } from '../store/general/general-actions';
 
 const MySwal = withReactContent(Swal);
 
@@ -34,6 +35,12 @@ const BasicFormPage = (props) => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
+
   const usernameRef = useRef();
   const ageRef = useRef();
   const introductionRef = useRef();
@@ -682,6 +689,27 @@ const BasicFormPage = (props) => {
       setImageBoxStatus('showHelpeeImage');
     }
   },[props.isHelpee, allowUploadPic, isUploadingPic, isAnonymous])
+
+  // Log Page Land
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

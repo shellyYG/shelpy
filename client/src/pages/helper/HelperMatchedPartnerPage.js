@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import PotentialCustomerCard from '../../components/PotentialCustomerCard';
 import {
   getAllOffers,
@@ -8,11 +8,17 @@ import {
 } from '../../store/helper/helper-actions';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
 import { useTranslation } from 'react-i18next';
+import { logLandOnPage } from '../../store/general/general-actions';
 
 const HelperMatchedPartnerPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
@@ -22,11 +28,6 @@ const HelperMatchedPartnerPage = (props) => {
     allPotentialCustomers,
     allOffers,
   } = useSelector((state) => state.helper);
-
-  useEffect(() => {
-    dispatch(getPotentialCustomers({ helperUserId: props.helperUserId }));
-    dispatch(getAllOffers({ helperUserId: props.helperUserId }));
-  }, [props.helperUserId, props.helpeeUserId, dispatch]);
 
   function handleRrefreshPage(e) {
     e.preventDefault(e);
@@ -45,6 +46,32 @@ const HelperMatchedPartnerPage = (props) => {
     if (window.location.search) path += window.location.search;
     navigate(path);
   }
+
+  useEffect(() => {
+    dispatch(getPotentialCustomers({ helperUserId: props.helperUserId }));
+    dispatch(getAllOffers({ helperUserId: props.helperUserId }));
+  }, [props.helperUserId, props.helpeeUserId, dispatch]);
+
+  
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div className='section-left-align'>

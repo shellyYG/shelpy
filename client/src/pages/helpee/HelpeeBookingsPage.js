@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 import {
   getAllBookings,
 } from '../../store/helpee/helpee-actions';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import BookingCard from '../../components/BookingCard';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
 
 import DropDown from '../../components/Dropdown';
 import { bookingStatusOptionsForHelpee } from '../../store/options/service-options';
+import { logLandOnPage } from '../../store/general/general-actions';
 
 
 const HelpeeBookingsPage = (props) => {
@@ -17,13 +18,31 @@ const HelpeeBookingsPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const bookingStatusRef = useRef();
+  const [searchParams] = useSearchParams();
+
   const { allBookings } = useSelector((state) => state.helpee);
+
+  const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
 
   const [filteredBookingStatus, setFilteredBookingStatus] = useState('default');
   const [filteredBookings, setFilteredBookings] = useState(allBookings);
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
   const currentLanguage = routeParts[1];
+
+  function handleSearchHelpers(e) {
+    e.preventDefault(e);
+    let path = `/${currentLanguage}/marketing/offers`;
+    if (window.location.search) path += window.location.search;
+    navigate(path);
+  }
+
+  function handleRrefreshPage(e) {
+    e.preventDefault(e);
+    window.location.reload();
+  }
 
   useEffect(() => {
     dispatch(getAllBookings({ helpeeUserId: props.helpeeUserId }));
@@ -40,17 +59,26 @@ const HelpeeBookingsPage = (props) => {
     }
   },[allBookings, filteredBookingStatus])
 
-  function handleSearchHelpers(e) {
-    e.preventDefault(e);
-    let path = `/${currentLanguage}/marketing/offers`;
-    if (window.location.search) path += window.location.search;
-    navigate(path);
-  }
-
-  function handleRrefreshPage(e) {
-    e.preventDefault(e);
-    window.location.reload();
-  }
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
+  
   return (
     <div className='section-left-align'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>

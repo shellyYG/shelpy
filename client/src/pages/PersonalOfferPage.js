@@ -8,6 +8,7 @@ import OfferCard from '../components/OfferCard';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import RefreshIcon from '../components/Icons/RefreshIcon';
 import { useTranslation } from 'react-i18next';
+import { logLandOnPage } from '../store/general/general-actions';
 
 const PersonalOfferPage = (props) => {
   const { t } = useTranslation();
@@ -17,14 +18,33 @@ const PersonalOfferPage = (props) => {
 
   const [searchParams] = useSearchParams();
   const providerId = searchParams.get('providerId');
-  const currentPathname = window.location.pathname.replace(/\/+$/, '');
-  const routeParts = currentPathname.split('/');
-  const currentLanguage = routeParts[1];
+  const offerId = searchParams.get('offerId');
+  const refId = searchParams.get('refId');
 
   const { allOffers } = useSelector((state) => state.helper);
   const { helperData } = useSelector(
     (state) => state.helper
   );
+
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   useEffect(() => {
     dispatch(getHelperUserData({ helperUserId: providerId }));

@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DropDown from '../components/Dropdown';
 import { jobUniWithDefaultOptions } from '../store/options/navigate-options';
-import { getAllMarketingOffers } from '../store/general/general-actions';
+import { getAllMarketingOffers, logLandOnPage } from '../store/general/general-actions';
 import MarketingCard from '../components/MarketingCard';
 
 import { secondTypeOptions } from '../store/options/navigate-options';
@@ -18,6 +18,8 @@ const HelpeeDashboardPage = (props) => {
 
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
+  const providerId = searchParams.get('providerId');
+  const offerId = searchParams.get('offerId');
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
@@ -36,6 +38,26 @@ const HelpeeDashboardPage = (props) => {
   const { allMKTOffers, allMKTHelperRatings } = useSelector(
     (state) => state.general
   );
+
+  useEffect(() => {
+    const today = new Date();
+    dispatch(
+      logLandOnPage({
+        currentPathname: window.location.href,
+        providerId,
+        offerId,
+        refId,
+        viewTimeStamp: Date.now(),
+        viewTime:
+          today.getHours() +
+          ':' +
+          today.getMinutes() +
+          ':' +
+          today.getSeconds(),
+        viewDate: today.toISOString().slice(0, 10),
+      })
+    );
+  }, [providerId, offerId, refId, dispatch]);
 
   useEffect(() => {
     if (currentLanguage === 'en') {
