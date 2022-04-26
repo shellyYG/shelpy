@@ -1127,7 +1127,7 @@ footer {
   border-style: groove; 
   border-width: 2px; 
   background-color: #FFF;
-  width: 50vw;
+  width: fit-content;
   height: fit-content;
   position: absolute;
   z-index: 10;
@@ -1136,7 +1136,7 @@ footer {
   left: 15%;
   display: flex;
   flex-direction: column;
-  top: 5%;
+  bottom: 45px;
 }
 .popUpTopSticker {
   display: flex;
@@ -1278,7 +1278,6 @@ footer {
   .form-control-sign-up {
   border: 1px solid #e6e6e6;
   border-radius: 5px;
-  width: 30%;
   height: 42px;
   padding: 0 14px; 
   display: flex;
@@ -1569,7 +1568,7 @@ footer {
 }
 .signUpPopUpEmailPassWrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
 }
 .pureFlexRowMarginAuto {
@@ -2127,7 +2126,7 @@ input[type="checkbox" i] {
   .popupSignUp {
     width: 60vw;
     left: 20%;
-    top: 10%;
+    bottom: 55px;
   }
   .popUpTopSticker {
     display: flex;
@@ -2207,10 +2206,6 @@ input[type="checkbox" i] {
   .popupSignUp {
     width: 60vw;
     left: 20%;
-    top: 45%;
-  }
-  .signUpPopUpEmailPassWrapper {
-    flex-direction: column;
   }
   .form-control-sign-up {
     width: 80%;
