@@ -26,6 +26,7 @@ async function updateHelpeeRequest(data) {
     notes,
     sharingTopicEN,
     itemId,
+    isAnonymous,
   } = data;
   const sql = `
     UPDATE requests SET secondType=?, thirdType=?
@@ -34,7 +35,7 @@ async function updateHelpeeRequest(data) {
     , country = ?, school = ?, department = ?, degree= ?
     , industry=?, job=?, WFH=?, companySize=?, selfEmployedType=?
       ,profession=?, notes=?, sharingTopicEN=?
-      ,step = ?
+      ,step = ?, isAnonymous=?
     WHERE id =?`;
   const sqlquery = await query(sql, [
     secondType,
@@ -55,14 +56,15 @@ async function updateHelpeeRequest(data) {
     notes,
     sharingTopicEN,
     'updated',
+    isAnonymous,
     itemId,
   ]);
   return sqlquery;
 }
 
-async function getHelpeeAllOrders(data) { // all requests
+async function getHelpeeAllRequests(data) { // all requests
   const sqlSimplified = ` SELECT helpee.profilePicPath, helpee.languages
-  , helpee.username AS helpeeName, helpee.isAnonymous, helpee.introduction, helpee.introductionEN
+  , helpee.username AS helpeeName, req.isAnonymous, helpee.introduction, helpee.introductionEN
   , req.*
   FROM requests req
   INNER JOIN helpee_account helpee ON req.userId = helpee.id
@@ -73,10 +75,10 @@ async function getHelpeeAllOrders(data) { // all requests
 
 async function getHelpeeAllBookings(data) {
   const sqlSimplified = ` SELECT bookings.id AS bookingId, helpee.email AS helpeeEmail
-  , acc.profilePicPath AS profilePicPath, acc.isAnonymous AS helperAnonymous, acc.introduction, acc.introductionEN
+  , acc.profilePicPath AS profilePicPath, ofs.isAnonymous AS helperAnonymous, acc.introduction, acc.introductionEN
   , acc.languages
   , ofs.notes AS notes, ofs.sharingTopicEN
-  , bookings.*, meet.joinUrl
+  , meet.joinUrl, bookings.helperUsername AS helperOldUsername, bookings.*, acc.username AS helperUsername
   FROM bookings bookings
   LEFT JOIN offers ofs ON bookings.offerId = ofs.id
   LEFT JOIN helper_account acc ON bookings.helperId = acc.id
@@ -91,8 +93,8 @@ async function getPotentialHelpers(data) {
   const { helpeeUserId } = data;
   const sql = `SELECT DISTINCT req.id AS requestId
     , req.country AS country
-    , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, acc.isAnonymous AS helperAnonymous
-    , helpee.id AS helpeeId, helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous
+    , ofs.id AS offerId, ofs.price AS price, acc.id AS helperId, ofs.isAnonymous AS helperAnonymous
+    , helpee.id AS helpeeId, helpee.username AS helpeeUsername, req.isAnonymous AS helpeeAnonymous
     , ofs.organization AS organization
     , acc.id AS helperId, acc.username AS helperUsername, acc.introduction, acc.introductionEN
     , acc.notificationLanguage
@@ -146,7 +148,7 @@ async function getHelpeeOrderHelperList(data) {
 async function getHelpeeSingleRequest(data) {
   const { requestId } = data;
   const sql = `SELECT helpee.profilePicPath, helpee.languages, helpee.username AS helpeeName
-  , helpee.isAnonymous, helpee.introduction, helpee.introductionEN, req.* 
+  , req.isAnonymous, helpee.introduction, helpee.introductionEN, req.* 
   FROM requests req
   INNER JOIN helpee_account helpee ON req.userId = helpee.id
   WHERE req.id = ? AND NOT req.status='deleted' ORDER BY id DESC;`;
@@ -258,7 +260,7 @@ async function getAllChattedHelpers(data) {
   const { helpeeUserId } = data;
   const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername
   , helpee.id AS helpeeId, helpee.username AS helpeeUsername
-  , helper.profilePicPath, helper.isAnonymous AS helperAnonymous, helper.introduction
+  , helper.profilePicPath, ofs.isAnonymous AS helperAnonymous, helper.introduction
   , helper.introductionEN, helper.languages
   , chat.offerId, ofs.*
 FROM shelpydb.offers ofs
@@ -272,9 +274,10 @@ WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helpeeId =?) AN
 }
 
 async function getBookingDetails(data) {
-  const sqlSimplified = ` SELECT *
-  FROM bookings
-  WHERE id=? LIMIT 1;`;
+  const sqlSimplified = ` SELECT bk.*, ofs.isAnonymous
+  FROM bookings bk
+  INNER JOIN offers ofs ON bk.offerId = ofs.id
+  WHERE bk.id=? LIMIT 1;`;
   const booking = await query(sqlSimplified, data.bookingId);
   return { data: { booking } };
 }
@@ -297,7 +300,7 @@ async function getHelpeeRatings(data) {
 
 module.exports = {
   insertHelpeeRequest,
-  getHelpeeAllOrders,
+  getHelpeeAllRequests,
   getHelpeeOrderHelperList,
   updateHelpeeProfilePicPath,
   updateHelpeeBasicInfo,

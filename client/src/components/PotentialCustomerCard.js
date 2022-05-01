@@ -153,14 +153,14 @@ function PotentialCustomerCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+      `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}-${props.offerId}` +
         `&userId=helper_${props.helperId}&partnerName=${props.partnerName}` +
         `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
         `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}&profilePicPath=${props.profilePicPath}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}&profilePicPath=${props.profilePicPath}&currentPartnerAnonymous=${props.helpeeAnonymous}`
     );
   }
   useEffect(() => {
@@ -211,7 +211,7 @@ function PotentialCustomerCard(props) {
           <div className='helper-ImgBx'>
             <img
               src={`/images/${props.profilePicPath}`}
-              alt={props.partnerName}
+              alt='profile'
             ></img>
           </div>
         )}
@@ -227,11 +227,16 @@ function PotentialCustomerCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
-              {props.partnerName}
+              {props.helpeeAnonymous ? props.partnerName[0] : props.partnerName}
             </h3>
-            <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {shownIntroduction}
-            </p>
+            {!props.helpeeAnonymous && (
+              <p style={{ fontSize: '14px' }}>
+                {t('introduction')}: {shownIntroduction}
+              </p>
+            )}
+            {!!props.helpeeAnonymous && (
+              <p style={{ fontSize: '14px' }}>{t('ask_anonymous')}</p>
+            )}
           </div>
         </div>
       </div>
@@ -294,7 +299,7 @@ function PotentialCustomerCard(props) {
             <div>
               <ChatIcon
                 onClick={handleChat}
-                partnerName={props.partnerName}
+                partnerName={props.helpeeAnonymous ? props.partnerName[0]:props.partnerName}
                 isHelpee={false}
               />
               <p style={{ fontSize: '14px', marginTop: '10px' }}>

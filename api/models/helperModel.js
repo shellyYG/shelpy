@@ -28,6 +28,7 @@ async function updateHelperOffer(data) {
     notes,
     sharingTopicEN,
     itemId,
+    isAnonymous,
   } = data;
   const sql = `
     UPDATE offers SET secondType=?, thirdType=?
@@ -36,7 +37,7 @@ async function updateHelperOffer(data) {
     , country = ?, school = ?, department = ?, degree= ?
     , industry=?, job=?, WFH=?, companySize=?, selfEmployedType=?
       ,profession=?, duration=?, price=?, notes=?, sharingTopicEN=?
-      ,step = ?
+      ,step = ?, isAnonymous=?
     WHERE id =?`;
   const sqlquery = await query(sql, [
     secondType,
@@ -59,6 +60,7 @@ async function updateHelperOffer(data) {
     notes,
     sharingTopicEN,
     'updated',
+    isAnonymous,
     itemId,
   ]);
   return sqlquery;
@@ -67,7 +69,7 @@ async function updateHelperOffer(data) {
 async function getHelperAllOffers(data) {
   const { helperUserId } = data;
   const sql = `SELECT helper.profilePicPath, helper.languages, helper.username AS helperName
-  , helper.isAnonymous, helper.introduction, helper.introductionEN, ofs.* 
+  , ofs.isAnonymous, helper.introduction, helper.introductionEN, ofs.* 
   FROM offers ofs
   INNER JOIN helper_account helper ON ofs.userId = helper.id
   WHERE ofs.userId = ? AND NOT ofs.status='deleted' ORDER BY id DESC;`;
@@ -78,7 +80,7 @@ async function getHelperAllOffers(data) {
 async function getHelperSingleOffer(data) {
   const { offerId } = data;
   const sql = `SELECT helper.profilePicPath, helper.languages, helper.username AS helperName
-  , helper.isAnonymous, helper.introduction, helper.introductionEN, ofs.* 
+  , ofs.isAnonymous, helper.introduction, helper.introductionEN, ofs.* 
   FROM offers ofs
   INNER JOIN helper_account helper ON ofs.userId = helper.id
   WHERE ofs.id = ? AND NOT ofs.status='deleted' ORDER BY id DESC;`;
@@ -88,7 +90,7 @@ async function getHelperSingleOffer(data) {
 
 async function getAllMarketingOffers() {
   const sql = `
-  SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, acc.isAnonymous, acc.id AS helperId
+  SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
   FROM offers ofs 
   INNER JOIN helper_account acc ON ofs.userId = acc.id
   WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' ORDER BY score, id DESC;`;
@@ -112,7 +114,7 @@ async function getHelperAllBookings(data) {
   const { helperUserId } = data;
   const sql = ` 
   SELECT bookings.id AS bookingId,acc.languages, bookings.*, acc.profilePicPath AS profilePicPath
-  , acc.isAnonymous AS helpeeAnonymous, acc.introduction, acc.introductionEN
+  , ofs.isAnonymous AS helpeeAnonymous, acc.introduction, acc.introductionEN, acc.username AS helpeeUsername
   , acc.languages, meet.joinUrl, ofs.notes, ofs.sharingTopicEN
   FROM bookings bookings
   LEFT JOIN offers ofs ON bookings.offerId = ofs.id
@@ -128,9 +130,9 @@ async function getPotentialCustomers(data) { // maybe customer does NOT have req
   const sql = ` SELECT DISTINCT req.organization AS organization
     , req.id AS requestId, ofs.id AS offerId
     , ofs.price AS price, ofs.duration AS duration, req.country AS country
-    , acc.id AS helperId, acc.username AS helperUsername, acc.isAnonymous AS helperAnonymous
+    , acc.id AS helperId, acc.username AS helperUsername, ofs.isAnonymous AS helperAnonymous
     , req.userId AS helpeeId
-    , helpee.username AS helpeeUsername, helpee.isAnonymous AS helpeeAnonymous, helpee.introduction, helpee.introductionEN
+    , helpee.username AS helpeeUsername, req.isAnonymous AS helpeeAnonymous, helpee.introduction, helpee.introductionEN
     , helpee.notificationLanguage
     , helpee.profilePicPath AS profilePicPath, helpee.languages, helpee.email AS helpeeEmail
     , req.mainType AS mainType, req.secondType AS secondType
@@ -269,17 +271,19 @@ async function confirmHelperEmail(data) {
 
 async function getAllChattedCustomers(data) {
   const { helperUserId } = data;
-  // Find customers who once chatted with you
+  // Helpees often do not have request created, but book helper directly. Hence, would not anchor request for anonymous option
   const sql = `SELECT DISTINCT chat.helperId AS helperId, helper.username AS helperUsername
   , helpee.username AS helpeeUsername
   , helpee.id AS helpeeId, helpee.profilePicPath
-  , helpee.introduction, helpee.introductionEN, helpee.languages
+  , helpee.introduction, helpee.introductionEN, helpee.languages, req.isAnonymous AS helpeeAnonymous
   , chat.offerId, ofs.*
 FROM shelpydb.offers ofs
 INNER JOIN shelpydb.chat_history chat ON ofs.userId = chat.helperId AND chat.offerId = ofs.id
 INNER JOIN shelpydb.helper_account helper ON chat.helperId = helper.id
 INNER JOIN shelpydb.helpee_account helpee ON chat.helpeeId = helpee.id
-WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helperId =?) AND helperId=?;`;
+LEFT JOIN shelpydb.requests req ON ofs.mainType = req.mainType AND ofs.secondType = req.secondType
+        AND ofs.country = req.country
+WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helperId =?) AND helperId=?;`; // offers that chatted
   const allChattedCustomers = await query(sql, [helperUserId, helperUserId]);
   return { data: { allChattedCustomers } };
 }

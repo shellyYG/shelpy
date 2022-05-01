@@ -14,6 +14,8 @@ import {
   workingCountryOptions,
   degreeOptions,
   durationOptions,
+  anonymousAskOptions,
+  anonymousAnswerOptions,
 } from '../store/options/service-options';
 import HalfLineTextBox from '../components/HalfLineTextBox';
 
@@ -53,6 +55,7 @@ const UniFormPage = (props) => {
   const [duration, setDuration] = useState('default');
   const [DBPrice, setDBPrice] = useState(0);
   const [currentLanguage, setCurrentLanguage] = useState('');
+  const [isAnonymous, setIsAnonymous] = useState('default');
 
   useEffect(() => {
     setCurrentLanguage(i18n.language);
@@ -124,6 +127,11 @@ const UniFormPage = (props) => {
           setOrganization(singleRequest[0].organization);
           setSharingTopic(singleRequest[0].notes);
           setSharingTopicEN(singleRequest[0].sharingTopicEN);
+          if (singleRequest[0].isAnonymous) {
+            setIsAnonymous('yes');
+          } else {
+            setIsAnonymous('no');
+          }
         }
       } else {
         if (singleOffer && singleOffer[0]) {
@@ -137,6 +145,11 @@ const UniFormPage = (props) => {
           setDBPrice(singleOffer[0].price);
           setSharingTopic(singleOffer[0].notes);
           setSharingTopicEN(singleOffer[0].sharingTopicEN);
+          if (singleOffer[0].isAnonymous) {
+            setIsAnonymous('yes');
+          } else {
+            setIsAnonymous('no');
+          }
         }
       }
     }
@@ -183,6 +196,7 @@ const UniFormPage = (props) => {
         country,
         notes: notes || '',
         sharingTopicEN,
+        isAnonymous: isAnonymous === 'yes' ? true : false,
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
@@ -211,6 +225,7 @@ const UniFormPage = (props) => {
         duration,
         notes: notes || '',
         sharingTopicEN,
+        isAnonymous: isAnonymous === 'yes' ? true : false,
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
@@ -320,7 +335,8 @@ const UniFormPage = (props) => {
           country !== 'default' &&
             school !== 'default' &&
             department !== 'default' &&
-            degree !== 'default'
+            degree !== 'default' &&
+            isAnonymous !== 'default'
         );
       } else {
         setEnableBtn(
@@ -330,7 +346,8 @@ const UniFormPage = (props) => {
             degree !== 'default' &&
             typingPrice !== '' &&
             duration !== 'default' &&
-            isInt(typingPrice)
+            isInt(typingPrice) &&
+            isAnonymous !== 'default'
         );
       }
     }
@@ -343,6 +360,7 @@ const UniFormPage = (props) => {
     degree,
     typingPrice,
     duration,
+    isAnonymous,
   ]);
 
   useEffect(() => {
@@ -446,6 +464,23 @@ const UniFormPage = (props) => {
                     title={t('uni_form_degree')}
                     selectRef={degreeRef}
                     options={degreeOptions}
+                  />
+                </div>
+                <div className='form-row last'>
+                  <DropDown
+                    selected={isAnonymous}
+                    handleSelect={setIsAnonymous}
+                    title={
+                      props.isHelpee
+                        ? `${t('ask_anonymous')}`
+                        : `${t('answer_anonymous')}`
+                    }
+                    details={t('ananymous_details')}
+                    options={
+                      props.isHelpee
+                        ? anonymousAskOptions
+                        : anonymousAnswerOptions
+                    }
                   />
                 </div>
                 {props.isHelpee && (

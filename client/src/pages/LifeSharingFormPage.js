@@ -13,6 +13,8 @@ import {
   workingCountryOptions,
   yearsOptions,
   durationOptions,
+  anonymousAskOptions,
+  anonymousAnswerOptions,
 } from '../store/options/service-options';
 
 import {
@@ -51,6 +53,7 @@ const LifeSharingFormPage = (props) => {
 
   const [loading, setIsLoading] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('');
+  const [isAnonymous, setIsAnonymous] = useState('default');
 
   const { requestStatus, requestStatusTitle, requestStatusMessage } =
     useSelector((state) => state.helpeeNotification);
@@ -150,6 +153,7 @@ const LifeSharingFormPage = (props) => {
         years,
         notes: notes || '',
         sharingTopicEN,
+        isAnonymous: isAnonymous === 'yes' ? true : false,
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
@@ -175,6 +179,7 @@ const LifeSharingFormPage = (props) => {
         duration,
         notes: notes || '',
         sharingTopicEN,
+        isAnonymous: isAnonymous === 'yes' ? true : false,
         step: 'request_submitted',
         status: 'Not Fulfilled',
       };
@@ -285,7 +290,8 @@ const LifeSharingFormPage = (props) => {
           lifeSharingMainType !== 'default' &&
             lifeSharingSubType !== 'default' &&
             country !== 'default' &&
-            years !== 'default'
+            years !== 'default' &&
+            isAnonymous !== 'default'
         );
       } else {
         setEnableBtn(
@@ -295,7 +301,8 @@ const LifeSharingFormPage = (props) => {
             years !== 'default' &&
             duration !== 'default' &&
             typingPrice !== '' &&
-            isInt(typingPrice)
+            isInt(typingPrice) &&
+            isAnonymous !== 'default'
         );
       }
     }
@@ -308,6 +315,7 @@ const LifeSharingFormPage = (props) => {
     years,
     typingPrice,
     duration,
+    isAnonymous,
   ]);
 
   useEffect(() => {
@@ -338,6 +346,11 @@ const LifeSharingFormPage = (props) => {
           setOrganization(singleRequest[0].organization);
           setSharingTopic(singleRequest[0].notes);
           setSharingTopicEN(singleRequest[0].sharingTopicEN);
+          if (singleRequest[0].isAnonymous) {
+            setIsAnonymous('yes');
+          } else {
+            setIsAnonymous('no');
+          }
         }
       } else {
         if (singleOffer && singleOffer[0]) {
@@ -351,6 +364,11 @@ const LifeSharingFormPage = (props) => {
           setDBPrice(singleOffer[0].price);
           setSharingTopic(singleOffer[0].notes);
           setSharingTopicEN(singleOffer[0].sharingTopicEN);
+          if (singleOffer[0].isAnonymous) {
+            setIsAnonymous('yes');
+          } else {
+            setIsAnonymous('no');
+          }
         }
       }
     }
@@ -458,6 +476,23 @@ const LifeSharingFormPage = (props) => {
                       options={yearsOptions}
                     />
                   )}
+                </div>
+                <div className='form-row last'>
+                  <DropDown
+                    selected={isAnonymous}
+                    handleSelect={setIsAnonymous}
+                    title={
+                      props.isHelpee
+                        ? `${t('ask_anonymous')}`
+                        : `${t('answer_anonymous')}`
+                    }
+                    details={t('ananymous_details')}
+                    options={
+                      props.isHelpee
+                        ? anonymousAskOptions
+                        : anonymousAnswerOptions
+                    }
+                  />
                 </div>
 
                 {props.isHelpee && (

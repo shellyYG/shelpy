@@ -209,14 +209,14 @@ function PotentialHelperCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+      `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}-${props.offerId}` +
         `&userId=helpee_${props.helpeeId}&partnerName=${props.partnerName}` +
         `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
         `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}&profilePicPath=${props.profilePicPath}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}&profilePicPath=${props.profilePicPath}&currentPartnerAnonymous=${props.helperAnonymous}`
     );
   }
   async function handleBookHelper(e) {
@@ -301,7 +301,7 @@ function PotentialHelperCard(props) {
           <div className='helper-ImgBx'>
             <img
               src={`/images/${props.profilePicPath}`}
-              alt={props.partnerName}
+              alt='profile'
             ></img>
           </div>
         )}
@@ -317,23 +317,30 @@ function PotentialHelperCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
-              {props.partnerName}
+              {props.helperAnonymous ? props.partnerName[0] : props.partnerName}
             </h3>
-            <div
-              className='pureFlexRowMarginAuto'
-              style={{ cursor: 'pointer' }}
-              onClick={handleShowRatings}
-            >
-              <ScoreStars averageScore={averageScore} />
-              <p style={{ marginLeft: '3px', fontSize: '12px' }}>
-                {props.helperRatingData.length}
-                {t('comments_unit')}
-                {t('comments')}
+            {!props.helperAnonymous && (
+              <div
+                className='pureFlexRowMarginAuto'
+                style={{ cursor: 'pointer' }}
+                onClick={handleShowRatings}
+              >
+                <ScoreStars averageScore={averageScore} />
+                <p style={{ marginLeft: '3px', fontSize: '12px' }}>
+                  {props.helperRatingData.length}
+                  {t('comments_unit')}
+                  {t('comments')}
+                </p>
+              </div>
+            )}
+            {!props.helperAnonymous && (
+              <p style={{ fontSize: '14px' }}>
+                {t('introduction')}: {shownIntroduction}
               </p>
-            </div>
-            <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {shownIntroduction}
-            </p>
+            )}
+            {!!props.helperAnonymous && (
+              <p style={{ fontSize: '14px' }}>{t('answer_anonymous')}</p>
+            )}
           </div>
         </div>
       </div>
@@ -401,7 +408,9 @@ function PotentialHelperCard(props) {
             {t('price_per_duration_min', { price: props.price, duration })}
           </p>
           <button className='btn-contact' onClick={handleBookHelper}>
-            {t('book_name', { name: props.partnerName })}
+            {props.helperAnonymous
+              ? t('book_name', { name: props.partnerName[0] })
+              : t('book_name', { name: props.partnerName })}
           </button>
         </div>
       </div>
@@ -410,7 +419,9 @@ function PotentialHelperCard(props) {
         <div className='checkBoxWidth'>
           <ChatIcon
             onClick={handleChat}
-            partnerName={props.partnerName}
+            partnerName={
+              props.helperAnonymous ? props.partnerName[0] : props.partnerName
+            }
             isHelpee={true}
           />
           <p style={{ fontSize: '14px', marginTop: '10px' }}>

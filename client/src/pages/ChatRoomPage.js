@@ -76,6 +76,7 @@ const ChatRoomPage = (props) => {
   const secondType = searchParams.get('secondType');
   const thirdType = searchParams.get('thirdType');
   const fourthType = searchParams.get('fourthType');
+  const currentPartnerAnonymous = searchParams.get('currentPartnerAnonymous');
   
   const { allChattedCustomers } = useSelector((state) => state.helper);  
   const { allChattedHelpers } = useSelector((state) => state.helpee);
@@ -99,29 +100,29 @@ const ChatRoomPage = (props) => {
       secondType,
       thirdType,
       fourthType,
+      helperAnonymous: currentPartnerAnonymous,
+      helpeeAnonymous: currentPartnerAnonymous,
     };
     if (props.isHelpee) {
       allChattedHelpers.forEach((p) => {
         partners.push(p);
       });
-      const partnerIds = allChattedHelpers.map((p) => p.helperId);
-
+      const offerIds = allChattedHelpers.map((p) => p.offerId);
       if (
-        currentPartner.helperId &&
-        partnerIds.indexOf(currentPartner.helperId) === -1
+        currentPartner.offerId &&
+        (offerIds.indexOf(currentPartner.offerId) === -1)
       ) {
         partners.push(currentPartner);
       }
-
       setAllChatPartners(partners);
     } else {
       allChattedCustomers.forEach((p) => {
         partners.push(p);
       });
-      const partnerIds = allChattedCustomers.map((p) => p.helpeeId);
+      const offerIds = allChattedCustomers.map((p) => p.offerId);
       if (
         currentPartner.helpeeId &&
-        partnerIds.indexOf(currentPartner.helpeeId) === -1
+        offerIds.indexOf(currentPartner.offerId) === -1
       ) {
         partners.push(currentPartner);
       }
@@ -146,6 +147,7 @@ const ChatRoomPage = (props) => {
     secondType,
     thirdType,
     fourthType,
+    currentPartnerAnonymous,
   ]);
 
   const [showTaskSection, setShowTaskSection] = useState(true);
@@ -319,7 +321,7 @@ const ChatRoomPage = (props) => {
                 allChatPartners.map((option) => (
                   <ChatRoomCard
                     pageRoomId={roomId}
-                    roomId={`${option.helperId}-${option.helpeeId}`}
+                    roomId={`${option.helperId}-${option.helpeeId}-${option.offerId}`}
                     isHelpee={false}
                     helperAnonymous={option.helperAnonymous}
                     helpeeAnonymous={option.helpeeAnonymous}
@@ -353,7 +355,7 @@ const ChatRoomPage = (props) => {
                 allChatPartners.map((option) => (
                   <ChatRoomCard
                     pageRoomId={roomId}
-                    roomId={`${option.helperId}-${option.helpeeId}`}
+                    roomId={`${option.helperId}-${option.helpeeId}-${option.offerId}`}
                     helperAnonymous={option.helperAnonymous}
                     helpeeAnonymous={option.helpeeAnonymous}
                     isHelpee={true}
@@ -394,7 +396,10 @@ const ChatRoomPage = (props) => {
                   {roomId && (
                     <h3 style={{ margin: 'auto' }}>
                       {' '}
-                      {t('my_chat_with', { name: partnerName })}
+                      {currentPartnerAnonymous === '1' ||
+                      currentPartnerAnonymous === 'true'
+                        ? t('my_chat_with', { name: partnerName[0] })
+                        : t('my_chat_with', { name: partnerName })}
                     </h3>
                   )}
                 </div>
@@ -444,7 +449,8 @@ const ChatRoomPage = (props) => {
                     key={messageContent.id}
                     message={messageContent.message}
                     messageTime={messageContent.messageTime}
-                    author={partnerName}
+                    author={currentPartnerAnonymous === '1' ||
+                      currentPartnerAnonymous === 'true'? partnerName[0]: partnerName}
                   />
                 );
               })}

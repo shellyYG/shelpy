@@ -52,6 +52,7 @@ function OfferCard(props) {
   const [currentLanguage, setCurrentLanguage] = useState('');
   const [shownIntroduction, setShownIntroduction] = useState('');
   const [shownSharingTopics, setShownSharingTopics] = useState('');
+  const [shownHelperName, setShownHelperName] = useState('')
 
   useEffect(() => {
     setCurrentLanguage(i18n.language);
@@ -274,7 +275,6 @@ function OfferCard(props) {
     const data = {
       offerId: props.offerId,
     };
-    console.log('data to dispatch: ', data);
     dispatch(deleteHelperOffer(data));
     setIsLoading(true);
   }
@@ -397,6 +397,14 @@ function OfferCard(props) {
     }
   }, [currentLanguage, props.introduction, props.introductionEN, props.sharingTopicEN, props.notes]);
 
+  useEffect(()=> {
+    if (props.isAnonymous) {
+      setShownHelperName(props.helperName[0])
+    } else {
+      setShownHelperName(props.helperName);
+    }
+  }, [props.isAnonymous, props.helperName])
+
   return (
     <div className='history-card'>
       {showSignUpPopUp && (
@@ -412,7 +420,7 @@ function OfferCard(props) {
             <img src={`/images/${props.profilePicPath}`} alt={'visa'}></img>
           </div>
         )}
-        {(props.isAnonymous || !props.profilePicPath) && (
+        {(!!props.isAnonymous || !props.profilePicPath) && (
           <div className='defaultAvatar-ImgBx'>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <AvatarIcon />
@@ -425,11 +433,17 @@ function OfferCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
-              {props.helperName}
+              {shownHelperName}
             </h3>
-            <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {shownIntroduction}
-            </p>
+
+            {!props.isAnonymous && (
+              <p style={{ fontSize: '14px' }}>
+                {t('introduction')}: {shownIntroduction}
+              </p>
+            )}
+            {!!props.isAnonymous && (
+              <p style={{ fontSize: '14px' }}>{t('answer_anonymous')}</p>
+            )}
           </div>
         </div>
       </div>
@@ -515,9 +529,9 @@ function OfferCard(props) {
       {props.showBookingBtn && (
         <div className='fullWidth'>
           <button className='btn-next' onClick={handleBookHelperMarketingClick}>
-            {props.isSingleOfferPage
-              ? t('free_sign_up', { name: props.helperName })
-              : t('book_name', { name: props.helperName })}
+            {props.isSingleOfferPage && !props.isHelpeeAuthenticated
+              ? t('free_sign_up', { name: shownHelperName })
+              : t('book_name', { name: shownHelperName })}
           </button>
           {props.isSingleOfferPage && (
             <button className='btn-next' onClick={handleToHomepage}>

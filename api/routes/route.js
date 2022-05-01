@@ -30,7 +30,7 @@ const unlinkFile = util.promisify(fs.unlink);
 const {
   postHelpeeRequest,
   allowHelpeePrivateRoute,
-  getHelpeeAllOrders,
+  getHelpeeAllRequests,
   getHelpeeOrderHelperList,
   getPotentialHelpers,
   deleteHelpeeRequest,
@@ -171,7 +171,7 @@ router
   .route('/api/helpee/all-orders')
   .get(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
-    wrapAsync(getHelpeeAllOrders)
+    wrapAsync(getHelpeeAllRequests)
   );
 router
   .route('/api/helpee/all-bookings')

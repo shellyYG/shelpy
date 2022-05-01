@@ -74,6 +74,7 @@ const PayPage = (props) => {
     useState('');
   const [helperNotificationLanguage, setHelperNotificationLanguage] =
     useState('');
+  const [isAnonymous, setIsAnonymous] = useState(true);
 
   const cardNumberRef = useRef();
   const cardExpireDateRef = useRef();
@@ -117,6 +118,7 @@ const PayPage = (props) => {
         helperUsername,
         helpeeId,
         helperId,
+        isAnonymous
       } = bookingToPay;
       setAppointmentDate(appointmentDate);
       setAppointmentTime(appointmentTime);
@@ -133,6 +135,7 @@ const PayPage = (props) => {
       setHelperName(helperUsername);
       setHelpeeId(helpeeId);
       setHelperId(helperId);
+      setIsAnonymous(isAnonymous);
     }
   }, [booking]);
 
@@ -489,7 +492,8 @@ const PayPage = (props) => {
             </p>
             <br />
             <h3 style={{ textAlign: 'center' }}>
-              {t('helper_big')}: {helperName} <br />
+              {t('helper_big')}: {isAnonymous ? helperName[0] : helperName}{' '}
+              <br />
             </h3>
             <p style={{ textAlign: 'center' }}>
               {t('type')}: {title} | {translatedSecondType} |{' '}

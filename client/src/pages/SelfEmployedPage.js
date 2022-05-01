@@ -12,6 +12,8 @@ import {
   professionOptions,
   yearsOptions,
   durationOptions,
+  anonymousAskOptions,
+  anonymousAnswerOptions,
 } from '../store/options/service-options';
 import HalfLineTextBox from '../components/HalfLineTextBox';
 
@@ -62,6 +64,7 @@ const SelfEmployedPage = (props) => {
   const [sharingTopic, setSharingTopic] = useState('');
   const [sharingTopicEN, setSharingTopicEN] = useState('');
   const [currentLanguage, setCurrentLanguage] = useState('');
+  const [isAnonymous, setIsAnonymous] = useState('default');
 
   const { requestStatus, requestStatusTitle, requestStatusMessage } =
     useSelector((state) => state.helpeeNotification);
@@ -125,6 +128,7 @@ const SelfEmployedPage = (props) => {
         years,
         notes: notes || '',
         sharingTopicEN,
+        isAnonymous: isAnonymous === 'yes' ? true : false,
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
@@ -152,6 +156,7 @@ const SelfEmployedPage = (props) => {
         duration,
         notes: notes || '',
         sharingTopicEN,
+        isAnonymous: isAnonymous === 'yes' ? true : false,
         step: 'request_submitted',
         status: 'Not Fulfilled', // Not Fulfilled or Fulfilled
       };
@@ -278,7 +283,8 @@ const SelfEmployedPage = (props) => {
           country !== 'default' &&
             type !== 'default' &&
             profession !== 'default' &&
-            years !== 'default'
+            years !== 'default' &&
+            isAnonymous !== 'default'
         );
       } else {
         setEnableBtn(
@@ -288,7 +294,8 @@ const SelfEmployedPage = (props) => {
             years !== 'default' &&
             duration !== 'default' &&
             typingPrice !== '' &&
-            isInt(typingPrice)
+            isInt(typingPrice) &&
+            isAnonymous !== 'default'
         );
       }
     }
@@ -301,6 +308,7 @@ const SelfEmployedPage = (props) => {
     years,
     typingPrice,
     duration,
+    isAnonymous,
   ]);
 
   useEffect(() => {
@@ -323,6 +331,11 @@ const SelfEmployedPage = (props) => {
           setOrganization(singleRequest[0].organization);
           setSharingTopic(singleRequest[0].notes);
           setSharingTopicEN(singleRequest[0].sharingTopicEN);
+          if (singleRequest[0].isAnonymous) {
+            setIsAnonymous('yes');
+          } else {
+            setIsAnonymous('no');
+          }
         }
       } else {
         if (singleOffer && singleOffer[0]) {
@@ -336,6 +349,11 @@ const SelfEmployedPage = (props) => {
           setDBPrice(singleOffer[0].price);
           setSharingTopic(singleOffer[0].notes);
           setSharingTopicEN(singleOffer[0].sharingTopicEN);
+          if (singleOffer[0].isAnonymous) {
+            setIsAnonymous('yes');
+          } else {
+            setIsAnonymous('no');
+          }
         }
       }
     }
@@ -448,6 +466,23 @@ const SelfEmployedPage = (props) => {
                       options={yearsOptions}
                     />
                   )}
+                </div>
+                <div className='form-row last'>
+                  <DropDown
+                    selected={isAnonymous}
+                    handleSelect={setIsAnonymous}
+                    title={
+                      props.isHelpee
+                        ? `${t('ask_anonymous')}`
+                        : `${t('answer_anonymous')}`
+                    }
+                    details={t('ananymous_details')}
+                    options={
+                      props.isHelpee
+                        ? anonymousAskOptions
+                        : anonymousAnswerOptions
+                    }
+                  />
                 </div>
                 {props.isHelpee && (
                   <FullLineTextBox

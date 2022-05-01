@@ -1342,3 +1342,15 @@ export const scoreOptions = [
     label: 'one_star',
   },
 ];
+
+export const anonymousAskOptions = [
+  { value: 'default', label: 'please_select_option' },
+  { value: 'yes', label: 'yes_ask_anonymously' },
+  { value: 'no', label: 'no_ask_anonymously' },
+];
+
+export const anonymousAnswerOptions = [
+  { value: 'default', label: 'please_select_option' },
+  { value: 'yes', label: 'yes_answer_anonymously' },
+  { value: 'no', label: 'no_answer_anonymously' },
+];

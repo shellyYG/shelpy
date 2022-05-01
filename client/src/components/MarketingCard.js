@@ -284,13 +284,13 @@ function MarketingCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+      `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}-${props.offerId}` +
         `&userId=helpee_${props.helpeeId}&partnerName=${props.username}` +
         `&requestId=&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}&bookingStatus=&bookingId=` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&profilePicPath=${props.profilePicPath}` +
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&profilePicPath=${props.profilePicPath}&currentPartnerAnonymous=${props.isAnonymous}` +
         `&refId=${refId}`
     );
   }
@@ -320,13 +320,10 @@ function MarketingCard(props) {
       <div className='profilePicWidth'>
         {!props.isAnonymous && props.profilePicPath && (
           <div className='helper-ImgBx'>
-            <img
-              src={`/images/${props.profilePicPath}`}
-              alt={props.username}
-            ></img>
+            <img src={`/images/${props.profilePicPath}`} alt='profile'></img>
           </div>
         )}
-        {(props.isAnonymous || !props.profilePicPath) && (
+        {(!!props.isAnonymous || !props.profilePicPath) && (
           <div className='defaultAvatar-ImgBx'>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <AvatarIcon />
@@ -339,30 +336,37 @@ function MarketingCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
-              {props.username}
+              {props.isAnonymous ? props.username[0] : props.username}
             </h3>
-            <div
-              className='pureFlexRowMarginAuto'
-              style={{ cursor: 'pointer' }}
-              onClick={handleShowRatings}
-            >
-              <ScoreStars averageScore={averageScore} />
-              <p
-                style={{
-                  marginLeft: '3px',
-                  fontSize: '12px',
-                  alignSelf: 'center',
-                }}
+            {!props.isAnonymous && (
+              <div
+                className='pureFlexRowMarginAuto'
+                style={{ cursor: 'pointer' }}
+                onClick={handleShowRatings}
               >
-                {props.helperRatingData.length}
-                {t('comments_unit')}
-                {t('comments')}
-              </p>
-            </div>
+                <ScoreStars averageScore={averageScore} />
+                <p
+                  style={{
+                    marginLeft: '3px',
+                    fontSize: '12px',
+                    alignSelf: 'center',
+                  }}
+                >
+                  {props.helperRatingData.length}
+                  {t('comments_unit')}
+                  {t('comments')}
+                </p>
+              </div>
+            )}
 
-            <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {shownIntroduction || t('na')}
-            </p>
+            {!props.isAnonymous && (
+              <p style={{ fontSize: '14px' }}>
+                {t('introduction')}: {shownIntroduction || t('na')}
+              </p>
+            )}
+            {!!props.isAnonymous && (
+              <p style={{ fontSize: '14px' }}>{t('answer_anonymous')}</p>
+            )}
           </div>
         </div>
       </div>
@@ -447,13 +451,15 @@ function MarketingCard(props) {
       </div>
       <div className='fullWidth'>
         <button className='btn-next' onClick={handleBookHelperMarketingClick}>
-          {t('book_name', { name: props.username })}
+          {props.isAnonymous
+            ? t('book_name', { name: props.username[0] })
+            : t('book_name', { name: props.username })}
         </button>
       </div>
       <div className='fullWidth'>
         <ChatIcon
           onClick={handleChat}
-          partnerName={props.username}
+          partnerName={props.isAnonymous? props.username[0] : props.username}
           isHelpee={false}
         />
       </div>

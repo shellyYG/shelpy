@@ -97,10 +97,10 @@ const postHelpeeRequest = async (req, res) => {
   }
 };
 
-const getHelpeeAllOrders = async (req, res) => {
+const getHelpeeAllRequests = async (req, res) => {
   try {
     const { helpeeUserId } = req.query;
-    const response = await helpeeModel.getHelpeeAllOrders({ helpeeUserId });
+    const response = await helpeeModel.getHelpeeAllRequests({ helpeeUserId });
     if (response && response.data) {
       res.status(200).json({
         allOrders: response.data.allOrders,
@@ -396,7 +396,7 @@ const getHelpeeRatings = async (req, res) => {
 module.exports = {
   allowHelpeePrivateRoute,
   postHelpeeRequest,
-  getHelpeeAllOrders,
+  getHelpeeAllRequests,
   getHelpeeOrderHelperList,
   getPotentialHelpers,
   deleteHelpeeRequest,

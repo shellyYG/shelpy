@@ -99,14 +99,14 @@ function BookingCard(props) {
   function handleChat(e) {
     e.preventDefault(e);
     navigate(
-      `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+      `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}-${props.offerId}` +
         `&userId=helper_${props.helperId}&partnerName=${props.partnerName}` +
         `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
         `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
         `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
         `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
+        `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}&currentPartnerAnonymous=${props.isAnonymous}`
     );
   }
 
@@ -236,11 +236,14 @@ function BookingCard(props) {
   }, [t, props.mainType, props.secondType, props.thirdType, props.country]);
 
   useEffect(() => {
+    const shownPartnerName = props.isAnonymous
+      ? props.helperUsername[0]
+      : props.helperUsername;
     switch (props.bookingStatus) {
       case 'created':
         setHelpeeFilteredBookingStatus(
           t('booking_card_waiting_helper_confirm', {
-            helperUsername: props.helperUsername,
+            helperUsername: shownPartnerName,
             appointmentDate: props.appointmentDate,
             appointmentTime: props.appointmentTime,
           })
@@ -252,7 +255,7 @@ function BookingCard(props) {
       case 'paid':
         setHelpeeFilteredBookingStatus(
           t('booking_status_meet_at_when', {
-            name: props.helperUsername,
+            name: shownPartnerName,
             date: props.appointmentDate,
             time: props.appointmentTime,
           })
@@ -266,6 +269,7 @@ function BookingCard(props) {
     }
   }, [
     t,
+    props.isAnonymous,
     props.bookingStatus,
     props.helperUsername,
     props.appointmentDate,
@@ -273,11 +277,14 @@ function BookingCard(props) {
   ]);
 
   useEffect(() => {
+    const shownPartnerName = props.isAnonymous
+      ? props.helpeeUsername[0]
+      : props.helpeeUsername;
     switch (props.bookingStatus) {
       case 'created':
         setHelperFilteredBookingStatus(
           t('booking_card_waiting_helper_confirm', {
-            helperUsername: props.helperUsername,
+            helperUsername: shownPartnerName,
             appointmentDate: props.appointmentDate,
             appointmentTime: props.appointmentTime,
           })
@@ -286,14 +293,14 @@ function BookingCard(props) {
       case 'helperConfirmed':
         setHelperFilteredBookingStatus(
           t('waiting_name_to_pay', {
-            name: props.helpeeUsername,
+            name: shownPartnerName,
           })
         );
         break;
       case 'paid':
         setHelperFilteredBookingStatus(
           t('booking_status_meet_at_when', {
-            name: props.helperUsername,
+            name: shownPartnerName,
             date: props.appointmentDate,
             time: props.appointmentTime,
           })
@@ -312,6 +319,7 @@ function BookingCard(props) {
     props.appointmentDate,
     props.appointmentTime,
     props.helpeeUsername,
+    props.isAnonymous
   ]);
 
   async function handleBookHelper(e) {
@@ -341,13 +349,13 @@ function BookingCard(props) {
   function handleBookingConfirmation(e) {
     e.preventDefault(e);
     navigate(
-      `/${currentLanguage}/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}&userId=helper_${props.helperId}`+
-      `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
+      `/${currentLanguage}/helper/confirm-booking?roomId=${props.helperId}-${props.helpeeId}-${props.offerId}&userId=helper_${props.helperId}` +
+        `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
         `&partnerName=${props.partnerName}&bookingDate=${props.appointmentDate}&bookingTime=${props.appointmentTime}` +
-        `&timeZone=${props.timeZone}`+
-        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}`+
-        `&bookingNotes=${props.questions}&refId=${refId}`+
-        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}`
+        `&timeZone=${props.timeZone}` +
+        `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
+        `&bookingNotes=${props.questions}&refId=${refId}` +
+        `&helpeeId=${props.helpeeId}&helperId=${props.helperId}&currentPartnerAnonymous=${props.isAnonymous}&profilePicPath=${props.profilePicPath}`
     );
   }
 
@@ -452,13 +460,10 @@ function BookingCard(props) {
       <div className='profilePicWidth'>
         {!props.isAnonymous && props.profilePicPath && (
           <div className='helper-ImgBx'>
-            <img
-              src={`/images/${props.profilePicPath}`}
-              alt={props.partnerName}
-            ></img>
+            <img src={`/images/${props.profilePicPath}`} alt='profile'></img>
           </div>
         )}
-        {(props.isAnonymous || !props.profilePicPath) && (
+        {(!!props.isAnonymous || !props.profilePicPath) && (
           <div className='defaultAvatar-ImgBx'>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <AvatarIcon />
@@ -471,11 +476,18 @@ function BookingCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fontWeight: 'bold', fontSize: '18px' }}>
-              {props.partnerName}
+              {props.isAnonymous ? props.partnerName[0] : props.partnerName}
             </h3>
-            <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {shownIntroduction || t('na')}
-            </p>
+            {!props.isAnonymous && (
+              <p style={{ fontSize: '14px' }}>
+                {t('introduction')}: {shownIntroduction || t('na')}
+              </p>
+            )}
+            {!!props.isAnonymous && (
+              <p style={{ fontSize: '14px' }}>
+                {props.isHelpee ? t('answer_anonymous') : t('ask_anonymous')}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -529,7 +541,9 @@ function BookingCard(props) {
             </p>
             {!isExpiredBooking && (
               <button onClick={handleBookingConfirmation} className='btn-next'>
-                {t('accept_name_booking', { name: props.partnerName })}
+                {props.isAnonymous
+                  ? t('accept_name_booking', { name: props.partnerName[0] })
+                  : t('accept_name_booking', { name: props.partnerName })}
               </button>
             )}
             {!!isExpiredBooking && (
@@ -551,7 +565,9 @@ function BookingCard(props) {
               <div>
                 <ChatIcon
                   onClick={handleChat}
-                  partnerName={props.partnerName}
+                  partnerName={
+                    props.isAnonymous ? props.partnerName[0] : props.partnerName
+                  }
                   isHelpee={false}
                   reArrangetime={true}
                 />
@@ -585,7 +601,13 @@ function BookingCard(props) {
             </div>
             {!!isExpiredBooking && (
               <button className='btn-green-border' onClick={handleRateHelpee}>
-                {t('rate_helpee', { name: props.partnerName })}
+                {props.isAnonymous
+                  ? t('rate_helpee', {
+                      name: props.partnerName[0],
+                    })
+                  : t('rate_helpee', {
+                      name: props.partnerName,
+                    })}
               </button>
             )}
             {!isExpiredBooking &&
@@ -631,7 +653,15 @@ function BookingCard(props) {
             </StripeCheckout> */}
             {!isExpiredBooking && (
               <button className='btn-contact' onClick={handlePayHelper}>
-                {t('pay_name', { name: props.partnerName, price: props.price })}
+                {props.isAnonymous
+                  ? t('pay_name', {
+                      name: props.partnerName[0],
+                      price: props.price,
+                    })
+                  : t('pay_name', {
+                      name: props.partnerName,
+                      price: props.price,
+                    })}
               </button>
             )}
             {!!isExpiredBooking && (
@@ -666,7 +696,7 @@ function BookingCard(props) {
           )}
           {
             <button className='btn-green-border' onClick={handleBookHelper}>
-              {t('propose_new_time_to_helper', { name: props.partnerName })}
+              {t('propose_new_time_to_helper')}
             </button>
           }
         </div>
@@ -696,7 +726,9 @@ function BookingCard(props) {
           </div>
           {!!isExpiredBooking && (
             <button className='btn-green-border' onClick={handleRateHelper}>
-              {t('rate_helper', { name: props.partnerName })}
+              {props.isAnonymous
+                ? t('rate_helper', { name: props.partnerName[0] })
+                : t('rate_helper', { name: props.partnerName })}
             </button>
           )}
           {!isExpiredBooking &&

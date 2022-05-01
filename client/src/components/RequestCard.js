@@ -355,7 +355,7 @@ function RequestCard(props) {
             <img src={`/images/${props.profilePicPath}`} alt={'avatar'}></img>
           </div>
         )}
-        {(props.isAnonymous || !props.profilePicPath) && (
+        {(!!props.isAnonymous || !props.profilePicPath) && (
           <div className='defaultAvatar-ImgBx'>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <AvatarIcon />
@@ -368,11 +368,16 @@ function RequestCard(props) {
         <div className='content'>
           <div className='contentBx'>
             <h3 style={{ fonrWeight: 'bold', fontSize: '18px' }}>
-              {props.helpeeName}
+              {props.isAnonymous ? props.helpeeName[0] : props.helpeeName}
             </h3>
-            <p style={{ fontSize: '14px' }}>
-              {t('introduction')}: {shownIntroduction}
-            </p>
+            {!props.isAnonymous && (
+              <p style={{ fontSize: '14px' }}>
+                {t('introduction')}: {shownIntroduction}
+              </p>
+            )}
+            {!!props.isAnonymous && (
+              <p style={{ fontSize: '14px' }}>{t('ask_anonymous')}</p>
+            )}
           </div>
         </div>
       </div>

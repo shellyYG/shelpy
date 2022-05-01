@@ -28,6 +28,7 @@ function ChatRoomCard(props) {
 
   const [active, setActive] = useState(false);
   const [showBell, setShowBell] = useState(false);
+  const [isPartnerAnonymous, setIsPartnerAnonymous] = useState(true);
   const [title, setTitle] = useState('');
   const [translatedSecondType, setTranslatedSecondType] = useState('');
   const [translatedThirdType, setTranslatedThirdType] = useState('');
@@ -171,25 +172,25 @@ function ChatRoomCard(props) {
     setShowBell(false);
     if (!props.isHelpee) {
       navigate(
-        `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+        `/${currentLanguage}/helper/chatroom?roomId=${props.helperId}-${props.helpeeId}-${props.offerId}` +
           `&userId=helper_${props.helperId}&partnerName=${props.partnerName}` +
           `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}&duration=${props.duration}` +
           `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
           `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
           `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
           `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
+          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}&currentPartnerAnonymous=${isPartnerAnonymous}`
       );
     } else {
       navigate(
-        `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}` +
+        `/${currentLanguage}/helpee/chatroom?roomId=${props.helperId}-${props.helpeeId}-${props.offerId}` +
           `&userId=helpee_${props.helpeeId}&partnerName=${props.partnerName}` +
           `&requestId=${props.requestId}&offerId=${props.offerId}&price=${props.price}` +
           `&bookingStatus=${props.bookingStatus}&bookingId=${props.bookingId}` +
           `&helpeeId=${props.helpeeId}&helperId=${props.helperId}` +
           `&helpeeUsername=${props.helpeeUsername}&helperUsername=${props.helperUsername}` +
           `&country=${props.country}&mainType=${props.mainType}&secondType=${props.secondType}` +
-          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}`
+          `&thirdType=${props.thirdType}&fourthType=${props.fourthType}&refId=${refId}&currentPartnerAnonymous=${isPartnerAnonymous}`
       );
     }
     const data = {
@@ -201,6 +202,21 @@ function ChatRoomCard(props) {
       console.error(err);
     }
   }
+  useEffect(()=>{
+    if (props.isHelpee) {
+      if (!props.helperAnonymous || props.helperAnonymous === '0') {
+        setIsPartnerAnonymous(false);
+      } else {
+        setIsPartnerAnonymous(true);
+      }
+    } else {
+       if (!props.helpeeAnonymous || props.helpeeAnonymous === '0') {
+         setIsPartnerAnonymous(false);
+       } else {
+         setIsPartnerAnonymous(true);
+       }
+    }
+  },[props.helpeeAnonymous, props.helperAnonymous, props.isHelpee])
   
   return (
     <>
@@ -216,32 +232,32 @@ function ChatRoomCard(props) {
       >
         <div className='chatRoomContent'>
           {props.isHelpee &&
-            !props.helperAnonymous &&
+            !isPartnerAnonymous && // helperAnonymous from per offer level
             props.profilePicPath !== null &&
             props.profilePicPath !== 'null' && (
               <div className='helper-ImgBx'>
                 {!!props.profilePicPath && (
                   <img
                     src={`/images/${props.profilePicPath}`}
-                    alt={props.partnerName}
+                    alt='profile'
                   ></img>
                 )}
               </div>
             )}
           {!props.isHelpee &&
-            !props.helpeeAnonymous &&
+            !isPartnerAnonymous && // helpeeAnonymous from per user level
             !!props.profilePicPath &&
             props.profilePicPath !== null &&
             props.profilePicPath !== 'null' && (
               <div className='helper-ImgBx'>
                 <img
                   src={`/images/${props.profilePicPath}`}
-                  alt={props.partnerName}
+                  alt='profile'
                 ></img>
               </div>
             )}
           {props.isHelpee &&
-            (!!props.helperAnonymous ||
+            (!!isPartnerAnonymous || // helperAnonymous from per offer level
               !props.profilePicPath ||
               props.profilePicPath === null ||
               props.profilePicPath === 'null') && (
@@ -252,7 +268,7 @@ function ChatRoomCard(props) {
               </div>
             )}
           {!props.isHelpee &&
-            (!!props.helpeeAnonymous ||
+            (!!isPartnerAnonymous || // helpeeAnonymous from per user level
               !props.profilePicPath ||
               props.profilePicPath === null ||
               props.profilePicPath === 'null') && (
@@ -264,13 +280,15 @@ function ChatRoomCard(props) {
             )}
 
           <div className='nameBx'>
-            <h5 style={{ lineBreak: 'anywhere' }}>{props.partnerName}</h5>
+            <h5 style={{ lineBreak: 'anywhere' }}>
+              {isPartnerAnonymous ? props.partnerName[0] : props.partnerName}
+            </h5>
             <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
-              {translatedSecondType}
+              {t('sharing_topics')}: {' '}{translatedSecondType}
             </span>
             <br />
             <span style={{ fontSize: '10px', fontWeight: 'normal' }}>
-              {translatedThirdType}
+              {t('sharing_topics_sub')}: {' '}{translatedThirdType}
             </span>
           </div>
         </div>

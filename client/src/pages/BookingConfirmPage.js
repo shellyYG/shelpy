@@ -62,6 +62,8 @@ const BookingConfirmPage = (props) => {
   const bookingTime = searchParams.get('bookingTime');
   const bookingTimeZone = searchParams.get('timeZone');
   const bookingNotes = searchParams.get('bookingNotes');
+  const profilePicPath = searchParams.get('profilePicPath');
+  const currentPartnerAnonymous = searchParams.get('currentPartnerAnonymous');
 
   const {
     bookingStatus,
@@ -105,7 +107,7 @@ const BookingConfirmPage = (props) => {
         `&helpeeId=${helpeeId}&helperId=${helperId}&price=${price}&duration=${duration}` +
         `&helpeeUsername=${helpeeUsername}&helperUsername=${helperUsername}` +
         `&country=${country}&mainType=${mainType}&secondType=${secondType}` +
-        `&thirdType=${thirdType}&fourthType=${fourthType}&refId=${refId}`
+        `&thirdType=${thirdType}&fourthType=${fourthType}&refId=${refId}&currentPartnerAnonymous=${currentPartnerAnonymous}&profilePicPath=${profilePicPath}`
     );
   }
   async function handleConfirm(e) {
@@ -213,7 +215,6 @@ const BookingConfirmPage = (props) => {
 
   useEffect(() => {
     if (currentPage === 'confirm-booking') {
-      // HERE
       setEnableBtn(meetDateRef && meetTimeRef !== 'default');
     } else if (currentPage === 'update-booking') {
       setEnableBtn(
