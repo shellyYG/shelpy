@@ -30,7 +30,6 @@ import RatePartnerPage from './pages/RatePartnerPage';
 import { getHelpeeAuthStatus } from './store/helpee/helpee-actions';
 import { getHelperAuthStatus } from './store/helper/helper-actions';
 import BasicFormPage from './pages/BasicFormPage';
-import HelperAddServicePage from './pages/helper/HelperAddServicePage';
 import HelperBookingsPage from './pages/helper/HelperBookingsPage';
 import BookingConfirmPage from './pages/BookingConfirmPage';
 import EmailConfirmPage from './pages/EmailConfirmPage';
@@ -652,16 +651,6 @@ function App() {
                   <BasicFormPage isHelpee={true} helpeeUserId={helpeeUserId} />
                 ) : (
                   <PreSignInPage isHelpee={true} />
-                )
-              }
-            />
-            <Route
-              path={`/:locale/helper/add-service`}
-              element={
-                isHelperAuthenticated ? (
-                  <HelperAddServicePage />
-                ) : (
-                  <PreSignInPage isHelpee={false} />
                 )
               }
             />

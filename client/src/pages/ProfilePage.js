@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ConfirmBtn from '../components/ConfirmBtn';
 import {
   nativeLanguageOptions,
 } from '../store/options/service-options';
 import {
   getHelpeeUserData,
-  // getHelpeeRatingData,
 } from '../store/helpee/helpee-actions';
 
 import {
@@ -19,7 +18,6 @@ import { useTranslation } from 'react-i18next';
 import AvatarIcon from '../components/Icons/AvatarIcon';
 import ScoreStars from '../components/ScoreStars';
 import RatingPopUp from './RatingPopUp';
-import { logLandOnPage } from '../store/general/general-actions';
 
 const average = (arr) =>
   arr.map((el) => el.score).reduce((a, b) => a + b, 0) / arr.length;
@@ -28,11 +26,6 @@ const ProfilePage = (props) => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  const refId = searchParams.get('refId');
-  const providerId = searchParams.get('providerId');
-  const offerId = searchParams.get('offerId');
 
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [hasEnglish, setHasEnglish] = useState(false);
@@ -255,26 +248,6 @@ const ProfilePage = (props) => {
     setShowRating(false);
   }
 
-  // Log Page Land
-  useEffect(() => {
-    const today = new Date();
-    dispatch(
-      logLandOnPage({
-        currentPathname: window.location.href,
-        providerId,
-        offerId,
-        refId,
-        viewTimeStamp: Date.now(),
-        viewTime:
-          today.getHours() +
-          ':' +
-          today.getMinutes() +
-          ':' +
-          today.getSeconds(),
-        viewDate: today.toISOString().slice(0, 10),
-      })
-    );
-  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../../App.css";
 import ConfirmBtn from '../../components/ConfirmBtn';
-import { logLandOnPage } from "../../store/general/general-actions";
 import {
   clearSignInStatus,
   postHelpeeSignInData,
@@ -20,8 +19,6 @@ const HelpeeSignInPage = () => {
 
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
-  const providerId = searchParams.get('providerId');
-  const offerId = searchParams.get('offerId');
   const emailToken = searchParams.get('emailToken');
   const passwordResetToken = searchParams.get('passwordResetToken');
   const isAfterRole = searchParams.get('isAfterRole');
@@ -145,26 +142,6 @@ const HelpeeSignInPage = () => {
     navigate,
     dispatch,
   ]);
-
-  useEffect(() => {
-    const today = new Date();
-    dispatch(
-      logLandOnPage({
-        currentPathname: window.location.href,
-        providerId,
-        offerId,
-        refId,
-        viewTimeStamp: Date.now(),
-        viewTime:
-          today.getHours() +
-          ':' +
-          today.getMinutes() +
-          ':' +
-          today.getSeconds(),
-        viewDate: today.toISOString().slice(0, 10),
-      })
-    );
-  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

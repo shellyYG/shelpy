@@ -13,7 +13,6 @@ import {
 import {
   postBookingStatus,
   clearBookingNotificationStatus,
-  logLandOnPage,
 } from '../store/general/general-actions';
 import { useTranslation } from 'react-i18next';
 import LongTextBox from '../components/LongTextBox';
@@ -37,7 +36,6 @@ const BookingConfirmPage = (props) => {
 
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
-  const providerId = searchParams.get('providerId');
   const bookingId = searchParams.get('bookingId');
   const roomId = searchParams.get('roomId');
   const userId = searchParams.get('userId');
@@ -270,25 +268,6 @@ const BookingConfirmPage = (props) => {
     refId,
   ]);
 
-  useEffect(() => {
-    const today = new Date();
-    dispatch(
-      logLandOnPage({
-        currentPathname: window.location.href,
-        providerId,
-        offerId,
-        refId,
-        viewTimeStamp: Date.now(),
-        viewTime:
-          today.getHours() +
-          ':' +
-          today.getMinutes() +
-          ':' +
-          today.getSeconds(),
-        viewDate: today.toISOString().slice(0, 10),
-      })
-    );
-  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

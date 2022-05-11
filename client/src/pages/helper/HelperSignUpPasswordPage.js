@@ -11,7 +11,6 @@ import {
   postHelperSignUpPassword,
 } from '../../store/helper/helper-actions';
 import { useTranslation } from 'react-i18next';
-import { logLandOnPage } from '../../store/general/general-actions';
 
 const MySwal = withReactContent(Swal);
 
@@ -21,8 +20,6 @@ const HelperSignUpPasswordPage = () => {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
-  const providerId = searchParams.get('providerId');
-  const offerId = searchParams.get('offerId');
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
@@ -157,26 +154,6 @@ const HelperSignUpPasswordPage = () => {
   useEffect(() => {
     setEnableBtn(usernameString && hasGiveConsent && password.length !== 0);
   }, [usernameString, hasGiveConsent, password]);
-
-  useEffect(() => {
-    const today = new Date();
-    dispatch(
-      logLandOnPage({
-        currentPathname: window.location.href,
-        providerId,
-        offerId,
-        refId,
-        viewTimeStamp: Date.now(),
-        viewTime:
-          today.getHours() +
-          ':' +
-          today.getMinutes() +
-          ':' +
-          today.getSeconds(),
-        viewDate: today.toISOString().slice(0, 10),
-      })
-    );
-  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

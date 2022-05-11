@@ -11,7 +11,6 @@ import {
   getHelperAuthStatus,
 } from '../../store/helper/helper-actions';
 import { useTranslation } from 'react-i18next';
-import { logLandOnPage } from '../../store/general/general-actions';
 const MySwal = withReactContent(Swal);
 
 const HelperSignInPage = () => {
@@ -22,8 +21,6 @@ const HelperSignInPage = () => {
   const emailToken = searchParams.get('emailToken');
   const passwordResetToken = searchParams.get('passwordResetToken');
   const isAfterRole = searchParams.get('isAfterRole');
-  const providerId = searchParams.get('providerId');
-  const offerId = searchParams.get('offerId');
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -141,25 +138,6 @@ const HelperSignInPage = () => {
     navigate,
     dispatch,
   ]);
-  useEffect(() => {
-    const today = new Date();
-    dispatch(
-      logLandOnPage({
-        currentPathname: window.location.href,
-        providerId,
-        offerId,
-        refId,
-        viewTimeStamp: Date.now(),
-        viewTime:
-          today.getHours() +
-          ':' +
-          today.getMinutes() +
-          ':' +
-          today.getSeconds(),
-        viewDate: today.toISOString().slice(0, 10),
-      })
-    );
-  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

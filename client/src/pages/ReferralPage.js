@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams, useNavigate } from 'react-router-dom';
@@ -7,21 +7,15 @@ import withReactContent from 'sweetalert2-react-content';
 import {
   clearSetPayPalAccountStatus,
   getHelperUserData,
-  setPayPalAccount,
 } from '../store/helper/helper-actions';
-import FullLineTextBox from '../components/FullLineTextBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import { getHelpeeUserData } from '../store/helpee/helpee-actions';
-import { logLandOnPage } from '../store/general/general-actions';
 const MySwal = withReactContent(Swal);
 
 const ReferralPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const payPalNameRef = useRef();
-  const payPalEmailRef = useRef();
-  const consentRef = useRef();
 
   const currentPathname = window.location.pathname.replace(/\/+$/, '');
   const routeParts = currentPathname.split('/');
@@ -29,47 +23,14 @@ const ReferralPage = (props) => {
 
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
-  const providerId = searchParams.get('providerId');
-  const offerId = searchParams.get('offerId');
-
-  useEffect(() => {
-    const today = new Date();
-    dispatch(
-      logLandOnPage({
-        currentPathname: window.location.href,
-        providerId,
-        offerId,
-        refId,
-        viewTimeStamp: Date.now(),
-        viewTime:
-          today.getHours() +
-          ':' +
-          today.getMinutes() +
-          ':' +
-          today.getSeconds(),
-        viewDate: today.toISOString().slice(0, 10),
-      })
-    );
-  }, [providerId, offerId, refId, dispatch]);
 
   const {
     setPayPalAccountStatus,
     setPayPalAccountStatusTitle,
     setPayPalAccountStatusMessage,
   } = useSelector((state) => state.helper);
-  const { helpeeData } = useSelector(
-    (state) => state.helpee
-  );
-  const { helperData } = useSelector(
-    (state) => state.helper
-  );
 
   const [loading, setIsLoading] = useState(false);
-  const [hasGiveConsent, setHasGiveConsent] = useState(false);
-  const [enableBtn, setEnableBtn] = useState(false);
-  const [payPalNameString, setPayPalNameString] = useState('');
-  const [payPalAccountString, setPayPalAccountString] = useState('');
-  const [enableEditPaypal, setEnableEditPaypal] = useState(true);
 
   if (loading) {
     MySwal.fire({
@@ -81,44 +42,6 @@ const ReferralPage = (props) => {
         MySwal.showLoading();
       },
     });
-  }
-  function handleHasGiveConsent() {
-    setHasGiveConsent(!hasGiveConsent);
-  }
-  function handlePayPalNameTyping(e) {
-    e.preventDefault();
-    const typingInput = e.target.value;
-    setPayPalNameString(typingInput);
-  }
-  function handlePayPalAccountTyping(e) {
-    e.preventDefault();
-    const typingInput = e.target.value;
-    setPayPalAccountString(typingInput);
-  }
-  function handleConfirm(e) {
-    e.preventDefault();
-    let payPalName;
-    let payPalEmail;
-    if (payPalNameRef && payPalNameRef.current) {
-      payPalName = payPalNameRef.current.value;
-    }
-    if (payPalEmailRef && payPalEmailRef.current) {
-      payPalEmail = payPalEmailRef.current.value;
-    }
-    const data = {
-      status: 'agreed_employment_contract',
-      payPalReceiverName: payPalName,
-      bankAccount: payPalEmail,
-      id: props.isHelpee? props.helpeeId: props.helperId,
-      role: props.isHelpee? 'helpee': 'helper',
-    };
-    try {
-      dispatch(setPayPalAccount(data));
-      setIsLoading(true);
-    } catch (err) {
-      console.error(err);
-      setIsLoading(false);
-    }
   }
 
   useEffect(() => {
@@ -177,10 +100,6 @@ const ReferralPage = (props) => {
   }
 
   useEffect(() => {
-    setEnableBtn(payPalNameString && payPalAccountString && hasGiveConsent);
-  }, [payPalNameString, payPalAccountString, hasGiveConsent]);
-
-  useEffect(() => {
     if (props.isHelpee) {
       dispatch(getHelpeeUserData({ helpeeUserId: props.helpeeId }));
     } else {
@@ -188,17 +107,6 @@ const ReferralPage = (props) => {
     }
   }, [props.isHelpee, props.helpeeId, props.helperId, dispatch]);
 
-  useEffect(()=>{
-    if (props.isHelpee) {
-      if (helpeeData && helpeeData[0] && helpeeData[0].payPalReceiverName) {
-        setEnableEditPaypal(false);
-      }
-    } else {
-      if (helperData && helperData[0] && helperData[0].payPalReceiverName) {
-        setEnableEditPaypal(false);
-      }
-    }
-  },[helpeeData, helperData, props.isHelpee])
 
   return (
     <div

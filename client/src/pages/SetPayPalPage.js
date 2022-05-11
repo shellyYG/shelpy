@@ -12,7 +12,6 @@ import {
 import FullLineTextBox from '../components/FullLineTextBox';
 import ConfirmBtn from '../components/ConfirmBtn';
 import { getHelpeeUserData } from '../store/helpee/helpee-actions';
-import { logLandOnPage } from '../store/general/general-actions';
 const MySwal = withReactContent(Swal);
 
 const SetPayPalPage = (props) => {
@@ -21,8 +20,6 @@ const SetPayPalPage = (props) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const refId = searchParams.get('refId');
-  const providerId = searchParams.get('providerId');
-  const offerId = searchParams.get('offerId');
 
   const payPalNameRef = useRef();
   const payPalEmailRef = useRef();
@@ -186,25 +183,6 @@ const SetPayPalPage = (props) => {
     }
   }, [helperData, helpeeData, props.isHelpee]);
 
-  useEffect(() => {
-    const today = new Date();
-    dispatch(
-      logLandOnPage({
-        currentPathname: window.location.href,
-        providerId,
-        offerId,
-        refId,
-        viewTimeStamp: Date.now(),
-        viewTime:
-          today.getHours() +
-          ':' +
-          today.getMinutes() +
-          ':' +
-          today.getSeconds(),
-        viewDate: today.toISOString().slice(0, 10),
-      })
-    );
-  }, [providerId, offerId, refId, dispatch]);
 
   return (
     <div

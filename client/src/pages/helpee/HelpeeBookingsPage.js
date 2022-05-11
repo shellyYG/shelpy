@@ -4,13 +4,12 @@ import { useTranslation } from 'react-i18next';
 import {
   getAllBookings,
 } from '../../store/helpee/helpee-actions';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import BookingCard from '../../components/BookingCard';
 import RefreshIcon from '../../components/Icons/RefreshIcon';
 
 import DropDown from '../../components/Dropdown';
 import { bookingStatusOptionsForHelpee } from '../../store/options/service-options';
-import { logLandOnPage } from '../../store/general/general-actions';
 
 
 const HelpeeBookingsPage = (props) => {
@@ -18,13 +17,8 @@ const HelpeeBookingsPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const bookingStatusRef = useRef();
-  const [searchParams] = useSearchParams();
 
   const { allBookings } = useSelector((state) => state.helpee);
-
-  const refId = searchParams.get('refId');
-  const providerId = searchParams.get('providerId');
-  const offerId = searchParams.get('offerId');
 
   const [filteredBookingStatus, setFilteredBookingStatus] = useState('default');
   const [filteredBookings, setFilteredBookings] = useState(allBookings);
@@ -59,25 +53,6 @@ const HelpeeBookingsPage = (props) => {
     }
   },[allBookings, filteredBookingStatus])
 
-  useEffect(() => {
-    const today = new Date();
-    dispatch(
-      logLandOnPage({
-        currentPathname: window.location.href,
-        providerId,
-        offerId,
-        refId,
-        viewTimeStamp: Date.now(),
-        viewTime:
-          today.getHours() +
-          ':' +
-          today.getMinutes() +
-          ':' +
-          today.getSeconds(),
-        viewDate: today.toISOString().slice(0, 10),
-      })
-    );
-  }, [providerId, offerId, refId, dispatch]);
   
   return (
     <div className='section-left-align'>
