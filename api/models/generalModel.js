@@ -64,6 +64,12 @@ async function logEmailToDB(data) {
   return sqlResult.insertId;
 }
 
+async function logReceiptToDB(data) {
+  const sql = 'INSERT INTO receipts SET ?';
+  const sqlResult = await query(sql, data);
+  return sqlResult.insertId;
+}
+
 async function logPageView(data) {
   const sql = 'INSERT INTO page_view SET ?';
   const sqlResult = await query(sql, data);
@@ -116,6 +122,7 @@ module.exports = {
   getBookingReceiverEmail,
   getBookingStatusChangeInitiatorName,
   logEmailToDB,
+  logReceiptToDB,
   updatePayPalAccount,
   logMeetingToEmail,
   logPageView,

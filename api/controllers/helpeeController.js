@@ -10,6 +10,7 @@ const {
   sendHelpeeResetPasswordEmail,
   sendMatchEmailReminder,
 } = require('../../util/email');
+const { generateReceipt } = require('../../util/receipt');
 
 const isDeveloping = 0; // TODO before push to ec2
 
@@ -306,6 +307,7 @@ const getAllChattedHelpers = async (req, res) => {
 
 const payTapPay = async (req, res) => {
   const { data } = req.body;
+  const { bookingId, helpeeId, helpeeName, helpeeEmail, amount } = data;
   try {
     const headers = {
       'Content-Type': 'application/json',
@@ -317,6 +319,32 @@ const payTapPay = async (req, res) => {
       { headers }
     );
     if (response && response.data && response.data.status === 0) {
+      const receiptRes = await generateReceipt({
+        buyerId: helpeeId,
+        buyerName: helpeeName,
+        buyerEmail: helpeeEmail,
+        bookingId,
+        payAmount: amount,
+      });
+      // log to DB
+      const today = new Date();
+      if (receiptRes) {
+        if (receiptRes.status === 200) {
+          await generalModel.logReceiptToDB({
+            bookingId,
+            buyerId: helpeeId,
+            processId: receiptRes.data.process_id,
+            invoiceNumber:
+              receiptRes.data.auto_assign_invoice_track_result[0]
+                .invoice_number || '',
+            salesAmount: amount,
+            logTimeStamp: Date.now(),
+            logDate: today.toISOString().slice(0, 10),
+          });
+        }
+      }
+      // no matter if receipt is successfully generated or not, 
+      // if paid successfully, we should allow next action
       res.status(200).json(response.data);
     } else {
       res.status(500).json(response.data);
