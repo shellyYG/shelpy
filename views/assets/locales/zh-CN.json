@@ -1027,7 +1027,7 @@
   "sign_up_sign_in_terms_5": "5. 我们将根据 Shelpy 隐私条款 https://shelpy.co/zh-CN/privacy 收集、处理或使用您同意通过使用本网站而提供的个资。",
   "sign_up_sign_in_terms_6": "6. 除您与过来人有限公司单独协议中另有约定外，本网站所提供之服务仅供您个人、非商业用途。",
   "payment_terms_title": "付款方式说明",
-  "payment_intro": "Shelpy网站目前仅提供信用卡线上刷卡的付款方式，是与乔睿科技股份有限公司合作，由乔睿科技股份有限公司提供刷卡系统SDK，各家银行之VISA、Master Card皆可使用。",
+  "payment_intro": "Shelpy网站目前仅提供信用卡线上刷卡的付款方式，是与乔睿科技股份有限公司与蓝新金流服务平台合作，由乔睿科技股份有限公司与蓝新金流服务平台提供刷卡系统SDK，各家银行之VISA、Master Card皆可使用。",
   "receipt_process": "发票开立流程",
   "receipt_process_intro": "过来人有限公司在消费者付款后，均开立云端发票(会寄消费者註册的电子信箱)。",
   "refund_policy": "退款流程",

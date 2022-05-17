@@ -1027,7 +1027,7 @@
   "sign_up_sign_in_terms_5": "5. 我們將根據 Shelpy 隱私條款 https://shelpy.co/zh-TW/privacy 收集、處理或使用您同意通過使用本網站而提供的個資。",
   "sign_up_sign_in_terms_6": "6. 除您與過來人有限公司單獨協議中另有約定外，本網站所提供之服務僅供您個人、非商業用途。",
   "payment_terms_title": "付款方式說明",
-  "payment_intro": "Shelpy網站目前僅提供信用卡線上刷卡的付款方式，是與喬睿科技股份有限公司合作，由喬睿科技股份有限公司提供刷卡系統SDK，各家銀行之VISA、Master Card皆可使用。",
+  "payment_intro": "Shelpy網站目前僅提供信用卡線上刷卡的付款方式，是與喬睿科技股份有限公司與藍新金流服務平台合作，由喬睿科技股份有限公司與藍新金流服務平台提供刷卡系統SDK，各家銀行之VISA、Master Card皆可使用。",
   "receipt_process": "發票開立流程",
   "receipt_process_intro": "過來人有限公司在消費者付款後，均開立雲端發票(會寄消費者註冊的電子信箱)。",
   "refund_policy": "退款流程",
