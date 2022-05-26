@@ -33,8 +33,12 @@ const environment = isDeveloping ? 'sandbox' : 'production';
 const merchantId = isDeveloping
   ? process.env.REACT_APP_TAPPAY_MERCHANT_ID_SANDBOX
   : process.env.REACT_APP_TAPPAY_MERCHANT_ID_PRODUCTION;
+const merchantId3D = isDeveloping
+  ? process.env.REACT_APP_TAPPAY_MERCHANT_ID_SANDBOX_3D
+  : process.env.REACT_APP_TAPPAY_MERCHANT_ID_PRODUCTION_3D;
+const tapPayNotifyPath = 'https://shelpy.co/api/tappay/notification'; // only support 443 port even in sandbox
 
-const usdToNtd = 29;
+const usdToNtd = 32;
 
 const MySwal = withReactContent(Swal);
 
@@ -266,38 +270,84 @@ const PayPage = (props) => {
       // send prime to your server, to pay with Pay by Prime API .
       // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
 
-      const data = {
-        prime: result.card.prime,
-        partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
-        merchant_id: merchantId,
-        details: `bookingId: ${bookingId}`,
-        duration,
-        helpeeId,
-        helperId,
-        bookingId,
-        helpeeNotificationLanguage,
-        helperNotificationLanguage,
-        helperName,
-        helpeeName: props.helpeeName,
-        offerId,
-        appointmentDate: bookingDate,
-        appointmentTime: bookingTime,
-        helperEmail,
-        helpeeEmail,
-        appointmentTimestamp,
-        amount: parseInt(NTDPrice),
-        timeZone,
-        cardholder: {
-          phone_number: '',
-          name: '',
-          email: '',
-          zip_code: '',
-          address: '',
-          national_id: '',
-        },
-        remember: true,
-      };
-      dispatch(postPayViaTapPay(data));
+      if (result && result.card) {
+        console.log('result: ', result);
+        console.log('result.card.issuer_zh_tw: ', result.card.issuer_zh_tw);
+        let data;
+        if (result.card.issuer_zh_tw) { // Taiwanese credit card
+          data = {
+            prime: result.card.prime,
+            partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
+            merchant_id: merchantId,
+            details: `bookingId: ${bookingId}`,
+            duration,
+            helpeeId,
+            helperId,
+            bookingId,
+            helpeeNotificationLanguage,
+            helperNotificationLanguage,
+            helperName,
+            helpeeName: props.helpeeName,
+            offerId,
+            appointmentDate: bookingDate,
+            appointmentTime: bookingTime,
+            helperEmail,
+            helpeeEmail,
+            appointmentTimestamp,
+            amount: parseInt(NTDPrice),
+            timeZone,
+            cardholder: {
+              phone_number: '',
+              name: '',
+              email: '',
+              zip_code: '',
+              address: '',
+              national_id: '',
+            },
+            remember: true,
+          };
+        } else { // Credit cards issued from outside of Taiwan
+          console.log('non taiwanese card');
+          data = {
+            three_domain_secure: true,
+            result_url: {
+              frontend_redirect_url: `https://shelpy.co/${currentLanguage}/helpee/bookings?refId=${refId}`,
+              backend_notify_url: tapPayNotifyPath,
+              go_back_url: `https://shelpy.co/${currentLanguage}/helpee/home?refId=${refId}`,
+            },
+            prime: result.card.prime,
+            partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
+            merchant_id: merchantId3D,
+            details: `bookingId: ${bookingId}`,
+            duration,
+            helpeeId,
+            helperId,
+            bookingId,
+            helpeeNotificationLanguage,
+            helperNotificationLanguage,
+            helperName,
+            helpeeName: props.helpeeName,
+            offerId,
+            appointmentDate: bookingDate,
+            appointmentTime: bookingTime,
+            helperEmail,
+            helpeeEmail,
+            appointmentTimestamp,
+            amount: parseInt(NTDPrice),
+            timeZone,
+            cardholder: {
+              phone_number: '',
+              name: '',
+              email: '',
+              zip_code: '',
+              address: '',
+              national_id: '',
+            },
+            remember: true,
+          };
+        }
+        dispatch(postPayViaTapPay(data));
+      }
     });
   }
 

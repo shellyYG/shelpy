@@ -319,6 +319,7 @@ const payTapPay = async (req, res) => {
       { headers }
     );
     if (response && response.data && response.data.status === 0) {
+      console.log('response: (should have backend_notify_url): ', response);
       const receiptRes = await generateReceipt({
         buyerId: helpeeId,
         buyerName: helpeeName,
@@ -354,6 +355,41 @@ const payTapPay = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+const getTapPayNotification = async (req, res) => {
+  const { data } = req.body;
+  console.log('getTapPayNotification data: ', data);
+  // log to DB
+  const today = new Date();
+  if (data) {
+    const {
+      rec_trade_id,
+      auth_code,
+      bank_transaction_id,
+      bank_order_number,
+      amount,
+      status,
+      msg,
+      pay_info,
+      bank_result_code,
+      bank_result_msg,
+    } = data;
+    await generalModel.logPaymentResponseToDB({
+      rec_trade_id,
+      auth_code,
+      bank_transaction_id,
+      bank_order_number,
+      status, // 0 means successful
+      msg,
+      pay_info,
+      bank_result_code,
+      bank_result_msg,
+      salesAmount: amount,
+      logTimeStamp: Date.now(),
+      logDate: today.toISOString().slice(0, 10),
+    });
+  }
+}
 
 const getBookingDetails = async (req, res) => {
   try {
@@ -434,6 +470,7 @@ module.exports = {
   getHelpeeAllBookings,
   // payHelper,
   payTapPay,
+  getTapPayNotification,
   getAllChattedHelpers,
   getBookingDetails,
   getHelpeeData,

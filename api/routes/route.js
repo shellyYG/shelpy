@@ -40,6 +40,7 @@ const {
   getHelpeeAllBookings,
   // payHelper,
   payTapPay,
+  getTapPayNotification,
   getAllChattedHelpers,
   getBookingDetails,
   getHelpeeData,
@@ -630,6 +631,12 @@ router
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(payTapPay)
   );
+router
+  .route('api/tappay/notification')
+  .post(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(getTapPayNotification)
+  );;
 
 router
   .route('/api/meeting/create')

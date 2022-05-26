@@ -70,6 +70,12 @@ async function logReceiptToDB(data) {
   return sqlResult.insertId;
 }
 
+async function logPaymentResponseToDB(data) {
+   const sql = 'INSERT INTO payment_responses SET ?';
+   const sqlResult = await query(sql, data);
+   return sqlResult.insertId;
+}
+
 async function logPageView(data) {
   const sql = 'INSERT INTO page_view SET ?';
   const sqlResult = await query(sql, data);
@@ -123,6 +129,7 @@ module.exports = {
   getBookingStatusChangeInitiatorName,
   logEmailToDB,
   logReceiptToDB,
+  logPaymentResponseToDB,
   updatePayPalAccount,
   logMeetingToEmail,
   logPageView,
