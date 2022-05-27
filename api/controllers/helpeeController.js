@@ -339,23 +339,21 @@ const payTapPay = async (req, res) => {
 };
 
 const getTapPayNotification = async (req, res) => {
-  const { data } = req.body;
-  console.log('Hit getTapPayNotification data: ', data);
+  const {
+    rec_trade_id,
+    auth_code,
+    bank_transaction_id,
+    bank_order_number,
+    amount,
+    status,
+    msg,
+    pay_info,
+    bank_result_code,
+    bank_result_msg,
+  } = req.body;
   // log to DB
   const today = new Date();
-  if (data) {
-    const {
-      rec_trade_id,
-      auth_code,
-      bank_transaction_id,
-      bank_order_number,
-      amount,
-      status,
-      msg,
-      pay_info,
-      bank_result_code,
-      bank_result_msg,
-    } = data;
+  if (rec_trade_id) {
     await generalModel.logPaymentResponseToDB({
       rec_trade_id,
       auth_code,
