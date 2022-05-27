@@ -1,0 +1,45 @@
+import '../App.css';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import DangerIcon from '../components/Icons/DangerIcon';
+
+const PaymentFailedPage = () => {
+  const { t } = useTranslation();
+  const currentPathname = window.location.pathname.replace(/\/+$/, '');
+  const routeParts = currentPathname.split('/');
+  const currentLanguage = routeParts[1];
+
+  const navigate = useNavigate();
+  function handleToHomepage(e) {
+    e.preventDefault();
+    let path = `/${currentLanguage}/home`;
+    if (window.location.search) path += window.location.search;
+    navigate(path, { replace: true });
+  }
+  return (
+    <div className='section-left-align'>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ margin: '50px auto' }}>
+          <DangerIcon />
+          <h1>{t('oops')}</h1>
+          <h2 style={{ margin: '10px auto' }}>{t('payment_failed')}</h2>
+          <button
+            className='btn-next'
+            style={{ width: '200px' }}
+            onClick={handleToHomepage}
+          >
+            {t('back_to_home')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PaymentFailedPage;

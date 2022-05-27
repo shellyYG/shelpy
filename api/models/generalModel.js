@@ -90,6 +90,20 @@ async function updatePayPalAccount(data) {
   return { data: { id } };
 }
 
+async function checkMeetingExist(data) {
+  const { bookingId } = data;
+  const sql = `SELECT * FROM meetings WHERE bookingId =? LIMIT 1`;
+  const meetings = await query(sql, [bookingId]);
+  return meetings;
+}
+
+async function checkReceiptExist(data){
+  const { bookingId } = data;
+  const sql = `SELECT * FROM receipts WHERE bookingId =? LIMIT 1`;
+  const receipts = await query(sql, [bookingId]);
+  return receipts;
+}
+
 async function logMeetingToEmail(data) {
   if (!data.meetingDetails) return;
   const {
@@ -133,4 +147,6 @@ module.exports = {
   updatePayPalAccount,
   logMeetingToEmail,
   logPageView,
+  checkMeetingExist,
+  checkReceiptExist,
 };

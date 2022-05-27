@@ -16,16 +16,11 @@ const updateBookingStatus = async (req, res) => {
   let createdBookingId;
   const { bookingStatus } = data;
   try {
+    const bookingCurrentStatus = await bookingModel.checkBookingExisted(data);
     if (!data.bookingId || data.bookingId === 'null' || data.bookingId === undefined) { // booking is not created yet
       // create a booking
-      if (data.bookingId) {
-        const { bookingId, ...newData} = data;
-        createdBookingId = await bookingModel.insertBooking(newData);
-      } else {
-        const { bookingId, ...newData } = data;
-        createdBookingId = await bookingModel.insertBooking(newData);
-      }
-        
+      const { bookingId, ...newData } = data;
+      createdBookingId = await bookingModel.insertBooking(newData);
     } else {
       // update a booking
       await bookingModel.updateBookingStatus(data);
@@ -36,10 +31,17 @@ const updateBookingStatus = async (req, res) => {
     if (bookingStatus === 'paid' && !data.paidDetails) {
       return;
     }
-    if (bookingStatus === 'created' || bookingStatus === 'paid') {
+    if (bookingStatus === 'created') {
       emailReceiverRole = 'helper';
       offerOrRequestId = data.offerId;
       if (data.helpeeUsername) initiatorName = data.helpeeUsername;
+    } else if (bookingStatus === 'paid' && bookingCurrentStatus && bookingCurrentStatus[0] && bookingCurrentStatus[0].bookingStatus !=='paid') {
+      emailReceiverRole = 'helper';
+      offerOrRequestId = data.offerId;
+      if (data.helpeeUsername) initiatorName = data.helpeeUsername;
+    } else if (bookingStatus === 'paid' && bookingCurrentStatus && bookingCurrentStatus[0] && bookingCurrentStatus[0].bookingStatus ==='paid') {
+      res.status(200).json({ status: 'success', details: 'bookingAlreadyPaid' });
+      return;
     } else if (bookingStatus === 'helperConfirmed') {
       emailReceiverRole = 'helpee';
       offerOrRequestId = data.requestId;
@@ -57,8 +59,6 @@ const updateBookingStatus = async (req, res) => {
       helpeeId: data.helpeeId,
       helperId: data.helperId,
     });
-    
-
     if (!initiatorName || initiatorName.length === 0) {
       initiatorName = name.username;
     }
@@ -82,7 +82,7 @@ const updateBookingStatus = async (req, res) => {
       res.status(200).json({ bookingId: createdBookingId, status: 'success' });
     } else {
       // booking updated
-      res.status(200).json({ status: 'success' });
+      res.status(200).json({ status: 'success', details: 'bookingUpdated' });
     }
   } catch (error) {
     console.error(error);

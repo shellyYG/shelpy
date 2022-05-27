@@ -38,9 +38,10 @@ const helpeeSlice = createSlice({
 
     helpeeDashboardTarget: '',
 
-    payHelperStatus: 'initial',
-    payHelperStatusTitle: '',
-    payHelperStatusMessage: '',
+    paymentStep: 'initial',
+    paymentStepTitle: '',
+    paymentStepMessage: '',
+    paymentUrl: '',
 
     deleteRequestStatus: 'initial',
     deleteRequestStatusTitle: '',
@@ -89,17 +90,22 @@ const helpeeSlice = createSlice({
       const { requestId } = payload.data;
       state.DBRequestId = requestId;
     },
-    updatePayHelperStatus(state, action) {
+    updatePaymentStep(state, action) {
       const { payload } = action;
-      state.payHelperStatus = payload.payHelperStatus;
-      state.payHelperStatusTitle = payload.payHelperStatusTitle;
-      state.payHelperStatusMessage = payload.payHelperStatusMessage;
+      if (payload.paymentStep) state.paymentStep = payload.paymentStep;
+      if (payload.paymentStepTitle)
+        state.paymentStepTitle = payload.paymentStepTitle;
+      if (payload.paymentStepMessage)
+        state.paymentStepMessage = payload.paymentStepMessage;
+      if (payload.paymentUrl) state.paymentUrl = payload.paymentUrl;
     },
-    clearPayHelperStatus(state, action) {
+    clearPaymentStep(state, action) {
       const { payload } = action;
-      state.payHelperStatus = payload.payHelperStatus;
-      state.payHelperStatusTitle = payload.payHelperStatusTitle;
-      state.payHelperStatusMessage = payload.payHelperStatusMessage;
+      if (payload.paymentStep) state.paymentStep = payload.paymentStep;
+      if (payload.paymentStepTitle)
+        state.paymentStepTitle = payload.paymentStepTitle;
+      if (payload.paymentStepMessage)
+        state.paymentStepMessage = payload.paymentStepMessage;
     },
     onClickUpdateHelpeeActiveServiceType(state, action) {
       const { payload } = action;

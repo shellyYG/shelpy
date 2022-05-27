@@ -60,6 +60,8 @@ import HelpeeGuidePage from './pages/helpee/HelpeeGuidePage';
 import ProfilePage from './pages/ProfilePage';
 import PersonalOfferPage from './pages/PersonalOfferPage';
 import SingleOfferPage from './pages/SingleOfferPage';
+import PaymentSuccessPage from './pages/PaymentSuccessPage';
+import PaymentFailedPage from './pages/PaymentFailedPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -657,7 +659,11 @@ function App() {
             <Route
               path={`/:locale/pay`}
               element={
+                isHelpeeAuthenticated ? (
                 <PayPage helpeeUserId={helpeeUserId} helpeeName={helpeeName} />
+                ) : (
+                <PreSignInPage isHelpee={true} />
+                )
               }
             />
             <Route
@@ -721,6 +727,14 @@ function App() {
                   <PreSignInPage isHelpee={true} />
                 )
               }
+            />
+            <Route
+              path={`/:locale/pay/success`}
+              element={<PaymentSuccessPage />}
+            />
+            <Route
+              path={`/:locale/pay/failed`}
+              element={<PaymentFailedPage />}
             />
             <Route path='*' element={<ErrorPage />} />
           </Routes>

@@ -18,7 +18,7 @@ import {
   lifeSharingSubOptions,
 } from '../store/options/service-options';
 import {
-  clearPayHelperStatus,
+  clearPaymentStep,
   postPayViaTapPay,
   getBookingDetails,
   getHelpeeUserData,
@@ -28,7 +28,7 @@ import {
 } from '../store/helper/helper-actions';
 import { logLandOnPage } from '../store/general/general-actions';
 
-const isDeveloping = 0; // TODO before push to ec2
+const isDeveloping = process.env.REACT_APP_IS_DEVELOPING === '1'; // change .env before pushing to ec2
 const environment = isDeveloping ? 'sandbox' : 'production';
 const merchantId = isDeveloping
   ? process.env.REACT_APP_TAPPAY_MERCHANT_ID_SANDBOX
@@ -36,9 +36,9 @@ const merchantId = isDeveloping
 const merchantId3D = isDeveloping
   ? process.env.REACT_APP_TAPPAY_MERCHANT_ID_SANDBOX_3D
   : process.env.REACT_APP_TAPPAY_MERCHANT_ID_PRODUCTION_3D;
-const tapPayNotifyPath = 'https://shelpy.co/api/tappay/notification'; // only support 443 port even in sandbox
+const tapPayNotifyAPIPath = 'https://shelpy.co/api/tappay/notification'; // only support 443 port even in sandbox
 
-const usdToNtd = 32;
+const usdToNtd = process.env.REACT_APP_USD_TO_NTD;
 
 const MySwal = withReactContent(Swal);
 
@@ -85,9 +85,10 @@ const PayPage = (props) => {
   const cardCVVRef = useRef();
 
   const {
-    payHelperStatus,
-    payHelperStatusTitle,
-    payHelperStatusMessage,
+    paymentStep,
+    paymentStepTitle,
+    paymentStepMessage,
+    paymentUrl,
     booking,
     helpeeData,
   } = useSelector((state) => state.helpee);
@@ -135,7 +136,7 @@ const PayPage = (props) => {
       setTimeZone(timeZone);
       setOfferId(offerId);
       setPrice(price);
-      setNTDPrice(price * usdToNtd);
+      setNTDPrice(price * parseInt(usdToNtd));
       setHelperName(helperUsername);
       setHelpeeId(helpeeId);
       setHelperId(helperId);
@@ -271,10 +272,8 @@ const PayPage = (props) => {
       // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
 
       if (result && result.card) {
-        console.log('result: ', result);
-        console.log('result.card.issuer_zh_tw: ', result.card.issuer_zh_tw);
         let data;
-        if (result.card.issuer_zh_tw) { // Taiwanese credit card
+        if (result.card.issuer_zh_tw) { // Taiwanese credit card // e.g. 台新銀行(Taishin Bank)
           data = {
             prime: result.card.prime,
             partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
@@ -287,7 +286,7 @@ const PayPage = (props) => {
             helpeeNotificationLanguage,
             helperNotificationLanguage,
             helperName,
-            helpeeName: props.helpeeName,
+            helpeeName: props.helpeeName || 'customer',
             offerId,
             appointmentDate: bookingDate,
             appointmentTime: bookingTime,
@@ -307,13 +306,12 @@ const PayPage = (props) => {
             remember: true,
           };
         } else { // Credit cards issued from outside of Taiwan
-          console.log('non taiwanese card');
           data = {
             three_domain_secure: true,
             result_url: {
-              frontend_redirect_url: `https://shelpy.co/${currentLanguage}/helpee/bookings?refId=${refId}`,
-              backend_notify_url: tapPayNotifyPath,
-              go_back_url: `https://shelpy.co/${currentLanguage}/helpee/home?refId=${refId}`,
+              frontend_redirect_url: `https://shelpy.co/${currentLanguage}/pay/success?bookingId=${bookingId}&refId=${refId}`,
+              backend_notify_url: tapPayNotifyAPIPath,
+              go_back_url: `https://shelpy.co/${currentLanguage}/pay/failed?bookingId=${bookingId}&refId=${refId}`,
             },
             prime: result.card.prime,
             partner_key: process.env.REACT_APP_TAPPAY_PARTNER_KEY,
@@ -326,7 +324,7 @@ const PayPage = (props) => {
             helpeeNotificationLanguage,
             helperNotificationLanguage,
             helperName,
-            helpeeName: props.helpeeName,
+            helpeeName: props.helpeeName || 'customer',
             offerId,
             appointmentDate: bookingDate,
             appointmentTime: bookingTime,
@@ -345,6 +343,7 @@ const PayPage = (props) => {
             },
             remember: true,
           };
+          
         }
         dispatch(postPayViaTapPay(data));
       }
@@ -468,7 +467,7 @@ const PayPage = (props) => {
   }, [t, mainType, secondType, thirdType, country, timeZone]);
 
   useEffect(() => {
-    if (payHelperStatus === 'error') {
+    if (paymentStep === 'creditCardFailed') {
       setIsLoading(false);
       async function sweetAlertAndClearStatus(title, message) {
         await MySwal.fire({
@@ -476,12 +475,13 @@ const PayPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'error',
         });
-        dispatch(clearPayHelperStatus());
+        dispatch(clearPaymentStep());
         window.location.reload();
       }
-      sweetAlertAndClearStatus(payHelperStatusTitle, payHelperStatusMessage);
+      sweetAlertAndClearStatus(paymentStepTitle, paymentStepMessage);
       return;
-    } else if (payHelperStatus === 'success') {
+    } else if (paymentStep === 'toThreeD' && paymentUrl) {
+      // 3D (foreign credit card)
       setIsLoading(false);
       async function sweetAlertAndNavigate(title, message) {
         await MySwal.fire({
@@ -491,17 +491,36 @@ const PayPage = (props) => {
           html: <p>{t(message)}</p>,
           icon: 'success',
         });
-        navigate(`/${currentLanguage}/helpee/bookings?refId=${refId}`);
+        window.location.href = paymentUrl;
       }
-      dispatch(clearPayHelperStatus());
-      sweetAlertAndNavigate(payHelperStatus, payHelperStatusMessage);
+      dispatch(clearPaymentStep());
+      sweetAlertAndNavigate(paymentStepTitle, paymentStepMessage);
+    } else if (paymentStep === 'toSuccessPage') {
+      // non 3D (taiwanese credit card)
+      setIsLoading(false);
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{t(title)}</strong>,
+          imageWidth: 442,
+          imageHeight: 293,
+          html: <p>{t(message)}</p>,
+          icon: 'success',
+        });
+        navigate(
+          `/${currentLanguage}/pay/success?bookingId=${bookingId}&refId=${refId}`
+        );
+      }
+      dispatch(clearPaymentStep());
+      sweetAlertAndNavigate(paymentStepTitle, paymentStepMessage);
     }
   }, [
     t,
     navigate,
-    payHelperStatus,
-    payHelperStatusTitle,
-    payHelperStatusMessage,
+    paymentStep,
+    paymentStepTitle,
+    paymentStepMessage,
+    bookingId,
+    paymentUrl,
     dispatch,
     currentLanguage,
     refId,

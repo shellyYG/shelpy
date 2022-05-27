@@ -3,7 +3,7 @@ const axios = require('axios');
 const CryptoJS = require('crypto-js');
 // B2C Receipt
 // Production:https://box.ecloudlife.com Test:https://boxtest.ecloudlife.com
-const isDeveloping = 0; // TODO
+const isDeveloping = process.env.IS_DEVELOPING === '1';
 
 const endpoint = isDeveloping
   ? process.env.RECEIPT_DEV_ENDPOINT

@@ -19,6 +19,7 @@ const helpeeCanChangePasswordPath = '/api/helpee/password/allow-change';
 const helpeeSendPasswordResetEmailPath = '/api/helpee/password/reset';
 // const payHelperPath = '/api/helpee/pay';
 const payTapPayPath = '/api/tappay/pay';
+const generateReceiptPath = '/api/receipt/generate';
 const helpeeChattedHelpersPath = '/api/helpee/chat/partners';
 const bookingStatusPath = '/api/booking-status';
 const getBookingDetailsPath = '/api/booking/details';
@@ -663,13 +664,13 @@ export const clearRequestStatus = (data) => {
   };
 };
 
-export const clearPayHelperStatus = (data) => {
+export const clearPaymentStep = (data) => {
   return async (dispatch) => {
     dispatch(
-      helpeeActions.clearPayHelperStatus({
-        payHelperStatus: 'initial',
-        payHelperStatusTitle: '',
-        payHelperStatusMessage: '',
+      helpeeActions.clearPaymentStep({
+        paymentStep: 'initial',
+        paymentStepTitle: '',
+        paymentStepMessage: '',
       })
     );
   };
@@ -762,53 +763,6 @@ export const onClickDeleteRequest = (data) => {
   };
 };
 
-// export const postPayHelper = (data) => {
-//   return async (dispatch) => {
-//     const generalToken = localStorage.getItem('shelpy-token');
-//     try {
-//       if (!generalToken) {
-//         throw Error('access_denied_please_log_in_error');
-//       }
-//       if (generalToken) {
-//         const headers = {
-//           Authorization: 'Bearer ' + generalToken,
-//         };
-//         const response = await axios.post(
-//           payHelperPath,
-//           { data },
-//           {
-//             headers,
-//           }
-//         );
-//         dispatch(
-//           generalActions.setBookingStatus({
-//             bookingStatus: data.bookingStatus,
-//           })
-//         );
-//         dispatch(
-//           helpeeActions.updatePayHelperStatus({
-//             payHelperStatus: 'success',
-//             payHelperStatusTitle: 'thank_you',
-//             payHelperStatusMessage: 'successfully_paid',
-//           })
-//         );
-        
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       if (error.response) {
-//         dispatch(
-//           helpeeActions.updatePayHelperStatus({
-//             payHelperStatus: 'error',
-//             payHelperStatusTitle: 'oops',
-//             payHelperStatusMessage: error.response.data,
-//           })
-//         );
-//       }
-//     }
-//   };
-// };
-
 export const postPayViaTapPay = (data) => {
   return async (dispatch) => {
     const generalToken = localStorage.getItem('shelpy-token');
@@ -827,31 +781,82 @@ export const postPayViaTapPay = (data) => {
             headers,
           }
         );
-        if (response && response.data && response.data.status === 0) {
-          console.log('paid successfully');
-          // update booking status in DB & send email
-          await axios.post(
-            bookingStatusPath,
-            {
-              data: {
-                bookingId: data.bookingId,
-                offerId: data.offerId,
-                bookingStatus: 'paid',
-                currentLanguage: data.currentLanguage,
-                appointmentDate: data.appointmentDate,
-                appointmentTime: data.appointmentTime,
-                priorityScore: 3,
-                helpeeId: data.helpeeId,
-                helperId: data.helperId,
-                paidDetails: JSON.stringify(response.data),
-              },
-            },
-            {
-              headers,
-            }
+        if (response && response.data && response.data.payment_url) {
+          // 3D (foreign credit card)
+          // update paymentStatus to to3DBPayment
+          dispatch(
+            helpeeActions.updatePaymentStep({
+              paymentStep: 'toThreeD',
+              paymentStepTitle: 'redirect_to_3D_payment',
+              paymentStepMessage: 'click_ok_to_continue',
+              paymentUrl: response.data.payment_url,
+            })
           );
-          // generate meeting link
-          await axios.post(
+        } else if (response && response.data && response.data.status === 0) { // non 3D (taiwanese credit card)
+          // update paymentStatus to aboutToUpdateBookingsToSuccess
+          dispatch(
+            generalActions.setBookingStatus({
+              bookingStatus: data.bookingStatus,
+            })
+          );
+          dispatch(
+            helpeeActions.updatePaymentStep({
+              paymentStep: 'toSuccessPage',
+              paymentStepTitle: 'redirect_to_payment_final_page',
+              paymentStepMessage: 'click_ok_to_continue',
+            })
+          );
+        }
+      }
+    } catch (error) {
+      if (error.response) {
+        dispatch(
+          helpeeActions.updatePaymentStep({
+            paymentStep: 'creditCardFailed',
+            paymentStepTitle: 'credit_card_error',
+            paymentStepMessage: 'please_try_another_card',
+          })
+        );
+      }
+    }
+  };
+};
+
+export const updateBookingStatusToPaidAndReceiptMeetLink = (data) => {
+  return async (dispatch) => {
+    const generalToken = localStorage.getItem('shelpy-token');
+    try {
+      if (!generalToken) {
+        throw Error('access_denied_please_log_in_error');
+      }
+      if (generalToken) {
+        const headers = {
+          Authorization: 'Bearer ' + generalToken,
+        };
+        // update booking status in DB & send email
+        const response = await axios.post(
+          bookingStatusPath,
+          {
+            data: {
+              bookingId: data.bookingId,
+              offerId: data.offerId,
+              bookingStatus: 'paid',
+              currentLanguage: data.currentLanguage,
+              appointmentDate: data.appointmentDate,
+              appointmentTime: data.appointmentTime,
+              priorityScore: 3,
+              helpeeId: data.helpeeId,
+              helperId: data.helperId,
+              paidDetails: `bookingId: ${data.bookingId}`,
+            },
+          },
+          {
+            headers,
+          }
+        );
+        if (response && response.details !== 'bookingAlreadyPaid') {
+          // generate meet link
+          const meetingLinkRes = await axios.post(
             generateMeetingPath,
             {
               data: {
@@ -877,33 +882,67 @@ export const postPayViaTapPay = (data) => {
               headers,
             }
           );
+          const receiptRes = await axios.post(
+            generateReceiptPath,
+            { data },
+            {
+              headers,
+            }
+          );
+
+          if (meetingLinkRes && receiptRes) {
+            dispatch(
+              helpeeActions.updatePaymentStep({
+                paymentStep: 'success',
+                paymentStepTitle: 'successfully_paid',
+                paymentStepMessage: 'successfully_paid',
+              })
+            );
+          }
+        } else if (response && response.details === 'bookingAlreadyPaid') {
+          dispatch(
+            helpeeActions.updatePaymentStep({
+              paymentStep: 'success',
+              paymentStepTitle: 'successfully_paid',
+              paymentStepMessage: 'successfully_paid',
+            })
+          );
+          return;
+        } else {
+          dispatch(
+            helpeeActions.updatePaymentStep({
+              paymentStep: 'oops',
+              paymentStepTitle: 'something_went_wrong',
+              paymentStepMessage: 'please_email_us_for_help',
+            })
+          );
         }
-        dispatch(
-          generalActions.setBookingStatus({
-            bookingStatus: data.bookingStatus,
-          })
-        );
-        dispatch(
-          helpeeActions.updatePayHelperStatus({
-            payHelperStatus: 'success',
-            payHelperStatusTitle: 'thank_you',
-            payHelperStatusMessage: 'successfully_paid',
-          })
-        );
       }
     } catch (error) {
       if (error.response) {
         dispatch(
-          helpeeActions.updatePayHelperStatus({
-            payHelperStatus: 'error',
-            payHelperStatusTitle: 'credit_card_error',
-            payHelperStatusMessage: 'please_try_another_card',
+          helpeeActions.updatePaymentStep({
+            paymentStep: 'oops',
+            paymentStepTitle: 'something_went_wrong',
+            paymentStepMessage: 'please_email_us_for_help',
           })
         );
       }
     }
   };
 };
+
+export const changeBookingStatusToAlreadyPaid = () => {
+  return async (dispatch) => {
+    dispatch(
+      helpeeActions.updatePaymentStep({
+        paymentStep: 'success',
+        paymentStepTitle: 'successfully_paid',
+        paymentStepMessage: 'successfully_paid',
+      })
+    );
+  }
+}
 
 export const deleteHelpeeRequest = (data) => {
   return async (dispatch) => {

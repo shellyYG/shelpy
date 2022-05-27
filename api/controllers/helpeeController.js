@@ -12,7 +12,7 @@ const {
 } = require('../../util/email');
 const { generateReceipt } = require('../../util/receipt');
 
-const isDeveloping = 0; // TODO before push to ec2
+const isDeveloping = process.env.IS_DEVELOPING === '1';
 
 const tapPayAPIURL = isDeveloping
   ? 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime'
@@ -319,33 +319,6 @@ const payTapPay = async (req, res) => {
       { headers }
     );
     if (response && response.data && response.data.status === 0) {
-      console.log('response: (should have backend_notify_url): ', response);
-      const receiptRes = await generateReceipt({
-        buyerId: helpeeId,
-        buyerName: helpeeName,
-        buyerEmail: helpeeEmail,
-        bookingId,
-        payAmount: amount,
-      });
-      // log to DB
-      const today = new Date();
-      if (receiptRes) {
-        if (receiptRes.status === 200) {
-          await generalModel.logReceiptToDB({
-            bookingId,
-            buyerId: helpeeId,
-            processId: receiptRes.data.process_id,
-            invoiceNumber:
-              receiptRes.data.auto_assign_invoice_track_result[0]
-                .invoice_number || '',
-            salesAmount: amount,
-            logTimeStamp: Date.now(),
-            logDate: today.toISOString().slice(0, 10),
-          });
-        }
-      }
-      // no matter if receipt is successfully generated or not, 
-      // if paid successfully, we should allow next action
       res.status(200).json(response.data);
     } else {
       res.status(500).json(response.data);
@@ -358,7 +331,7 @@ const payTapPay = async (req, res) => {
 
 const getTapPayNotification = async (req, res) => {
   const { data } = req.body;
-  console.log('getTapPayNotification data: ', data);
+  console.log('Hit getTapPayNotification data: ', data);
   // log to DB
   const today = new Date();
   if (data) {
@@ -390,6 +363,52 @@ const getTapPayNotification = async (req, res) => {
     });
   }
 }
+
+const generateReceiptAndLogToDB = async (req, res) => {
+  const { data } = req.body;
+  const { bookingId, helpeeId, helpeeName, helpeeEmail, amount } = data;
+  try {
+    // return if already have receipt
+    const existingReceipt = await generalModel.checkReceiptExist(data);
+    if (existingReceipt && existingReceipt.length > 0) {
+      res.status(200).json({
+        status: 'success',
+      });
+      return;
+    }
+    const receiptRes = await generateReceipt({
+      buyerId: helpeeId,
+      buyerName: helpeeName,
+      buyerEmail: helpeeEmail,
+      bookingId,
+      payAmount: amount,
+    });
+
+    // log receipt to DB
+    const today = new Date();
+    if (receiptRes) {
+      if (receiptRes.status === 200) {
+        const response = await generalModel.logReceiptToDB({
+          bookingId,
+          buyerId: helpeeId,
+          processId: receiptRes.data.process_id,
+          invoiceNumber:
+            receiptRes.data.auto_assign_invoice_track_result[0]
+              .invoice_number || '',
+          salesAmount: amount,
+          logTimeStamp: Date.now(),
+          logDate: today.toISOString().slice(0, 10),
+        });
+        res.status(200).json(response.data);
+      } else {
+        res.status(500).json(response.data);
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
 
 const getBookingDetails = async (req, res) => {
   try {
@@ -471,6 +490,7 @@ module.exports = {
   // payHelper,
   payTapPay,
   getTapPayNotification,
+  generateReceiptAndLogToDB,
   getAllChattedHelpers,
   getBookingDetails,
   getHelpeeData,

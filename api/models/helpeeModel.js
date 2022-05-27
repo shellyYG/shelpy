@@ -275,8 +275,13 @@ WHERE ofs.id IN (SELECT offerId FROM shelpydb.chat_history WHERE helpeeId =?) AN
 
 async function getBookingDetails(data) {
   const sqlSimplified = ` SELECT bk.*, ofs.isAnonymous
+  , helpee.notificationLanguage AS helpeeNotificationLanguage, helper.notificationLanguage AS helperNotificationLanguage
+  , helpee.username AS helpeeUsername, helper.username AS helperUsername
+  , helpee.email AS helpeeEmail, helper.email AS helperEmail
   FROM bookings bk
   INNER JOIN offers ofs ON bk.offerId = ofs.id
+  INNER JOIN helpee_account helpee ON bk.helpeeId = helpee.id
+  INNER JOIN helper_account helper ON bk.helperId = helper.id
   WHERE bk.id=? LIMIT 1;`;
   const booking = await query(sqlSimplified, data.bookingId);
   return { data: { booking } };

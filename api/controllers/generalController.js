@@ -75,6 +75,14 @@ const generateMeetingLink = async (req, res) => {
   };
 
   try {
+    // do not generate meeting link if already have one
+    const existingMeeting = await generalModel.checkMeetingExist(data);
+    if (existingMeeting && existingMeeting.length > 0) {
+      res.status(200).json({
+        status: 'success',
+      });
+      return;
+    }
     // generate meeting link
     const { meetingDetails } = await createMeeting(onlineMeeting);
     meetingDetails.timeZone = timeZone;

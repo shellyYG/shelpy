@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 // import StripeCheckout from 'react-stripe-checkout';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import DiamondIcon from './Icons/DiamondIcon';
 import EarthIcon from './Icons/EarthIcon';
 import ChatIcon from './Icons/ChatIcon';
-import { postPayHelper, clearPayHelperStatus } from '../store/helpee/helpee-actions';
 import { useRef } from 'react';
 import {
   workingCountryOptions,
@@ -24,13 +20,9 @@ import {
 } from '../store/options/service-options';
 import AvatarIcon from './Icons/AvatarIcon';
 
-
-const MySwal = withReactContent(Swal);
-
 function BookingCard(props) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const paypal = useRef();
 
   const [searchParams] = useSearchParams();
@@ -46,8 +38,6 @@ function BookingCard(props) {
     useState('');
   const [helperFilteredBookingStatus, setHelperFilteredBookingStatus] =
     useState('');
-
-  const [loading, setIsLoading] = useState(false);
   const [showMeetingLink, setShowMeetingLink] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('');
   const [shownIntroduction, setShownIntroduction] = useState('');
@@ -81,20 +71,6 @@ function BookingCard(props) {
     price: props.price,
   });
 
-  const { payHelperStatus, payHelperStatusTitle, payHelperStatusMessage } =
-    useSelector((state) => state.helpee);
-
-  if (loading) {
-    MySwal.fire({
-      title: t('loading'),
-      html: t('do_not_close_window'),
-      allowOutsIdeClick: false,
-      showConfirmButton: false,
-      willOpen: () => {
-        MySwal.showLoading();
-      },
-    });
-  }
   
   function handleChat(e) {
     e.preventDefault(e);
@@ -359,96 +335,11 @@ function BookingCard(props) {
     );
   }
 
-  async function handlePayHelper(token) {
-    // Temp
-    // paypal.me/shelpyltd
-    // await MySwal.fire({
-    //   title: <strong>{t('temp_pay_title')}</strong>,
-    //   imageWIdth: 442,
-    //   imageHeight: 293,
-    //   html: <p>{t('temp_pay_message', {reference: `bookingId${props.bookingId}` })}</p>,
-    //   // icon: 'success',
-    // });
-    // TapPay placeholder
+  async function handlePayHelper() {
     navigate(
       `/${currentLanguage}/pay?bookingId=${props.bookingId}&refId=${refId}`
     );
-    // Paypal
-    try {
-      // const data = {
-      //   bookingStatus: 'paid',
-      //   bookingId: props.bookingId,
-      //   token,
-      //   product,
-      // };
-      // dispatch(postPayHelper(data));
-      // setIsLoading(true);
-      // Test Paypal:
-      // window.paypal
-      //   .Buttons({
-      //     createOrder: function (data, actions) {
-      //       // Set up the transaction
-      //       return actions.order.create({
-      //         purchase_units: [
-      //           {
-      //             description: 'Paying Helper',
-      //             amount: {
-      //               currency_code: 'EUR',
-      //               value: '0.01',
-      //             },
-      //           },
-      //         ],
-      //       });
-      //     },
-      //     onApprove: async (data, actions) => {
-      //       const order = await actions.order.capture();
-      //     },
-      //     onError: (err) => {
-      //       console.error('err: ', err);
-      //     },
-      //   })
-      //   .render(paypal.current);
-    } catch (err) {
-      console.error(err);
-      // setIsLoading(false);
-    }
   }
-
-  useEffect(() => {
-    if (payHelperStatus === 'error') {
-      setIsLoading(false);
-      async function sweetAlertAndClearStatus(title, message) {
-        await MySwal.fire({
-          title: <strong>{t(title)}</strong>,
-          html: <p>{t(message)}</p>,
-          icon: 'error',
-        });
-        dispatch(clearPayHelperStatus());
-      }
-      sweetAlertAndClearStatus(payHelperStatusTitle, payHelperStatusMessage);
-      return;
-    } else if (payHelperStatus === 'success') {
-      setIsLoading(false);
-      async function sweetAlertAndNavigate(title, message) {
-        await MySwal.fire({
-          title: <strong>{t(title)}</strong>,
-          imageWIdth: 442,
-          imageHeight: 293,
-          html: <p>{t(message)}</p>,
-          icon: 'success',
-        });
-      }
-      dispatch(clearPayHelperStatus());
-      sweetAlertAndNavigate(payHelperStatusTitle, payHelperStatusMessage);
-    }
-  }, [
-    t,
-    payHelperStatus,
-    payHelperStatusTitle,
-    payHelperStatusMessage,
-    navigate,
-    dispatch,
-  ]);
   
   function handleShowMeetingLink(e) {
     e.preventDefault();
@@ -639,18 +530,6 @@ function BookingCard(props) {
             <p style={{ fontSize: '14px', padding: '6px' }}>
               {t('my_questions')}: {props.questions}
             </p>
-            {/* <StripeCheckout
-              stripeKey={process.env.REACT_APP_STRIPE_TEST_PUBLISHABLE_KEY}
-              token={handlePayHelper}
-              currency='eur'
-              name={`Pay ${props.partnerName}`}
-              amount={props.price * 100}
-              email={props.helpeeEmail}
-            >
-              <button className='btn-next'>
-                Pay {props.partnerName} ({props.price} USD)
-              </button>
-            </StripeCheckout> */}
             {!isExpiredBooking && (
               <button className='btn-contact' onClick={handlePayHelper}>
                 {props.isAnonymous

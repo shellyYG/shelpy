@@ -41,6 +41,7 @@ const {
   // payHelper,
   payTapPay,
   getTapPayNotification,
+  generateReceiptAndLogToDB,
   getAllChattedHelpers,
   getBookingDetails,
   getHelpeeData,
@@ -632,12 +633,17 @@ router
     wrapAsync(payTapPay)
   );
 router
-  .route('api/tappay/notification')
+  .route('/api/tappay/notification')
   .post(
     customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
     wrapAsync(getTapPayNotification)
-  );;
-
+  );
+router
+  .route('/api/receipt/generate')
+  .post(
+    customRateLimiter({ secondsWindow: 10, allowedHits: 10 }),
+    wrapAsync(generateReceiptAndLogToDB)
+  );
 router
   .route('/api/meeting/create')
   .post(
