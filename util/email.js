@@ -312,6 +312,7 @@ const sendBookingStatusReminderEmail = async (user) => {
     bookingStatus,
     appointmentDate,
     appointmentTime,
+    bookingId,
   } = user;
   
   return jwt.sign(
@@ -333,6 +334,7 @@ const sendBookingStatusReminderEmail = async (user) => {
           notificationLanguageValue = 'zh-CN';
         }
         const url = `https://shelpy.co/${notificationLanguageValue}/${emailReceiverRole}/access-dashboard?accessDashboardToken=${accessDashboardToken}`;
+        const paymentUrl = `https://shelpy.co/${notificationLanguageValue}/pay?bookingId=${bookingId}&refId=emailNotification`;
        switch (bookingStatus) {
          case 'created':
            if (notificationLanguageValue === 'zh-TW') {
@@ -353,15 +355,15 @@ const sendBookingStatusReminderEmail = async (user) => {
            if (notificationLanguageValue === 'zh-TW') {
              companyName = '過來人平台';
              subject = `[等待付款]${initiatorName} 剛剛答應了你的諮詢預約時間!`;
-             html = `但是正式預約只有在您付款後才成立。<br/> 請按此連結付款: <a href='${url}'>${url}</a>`;
+             html = `但是正式預約只有在您付款後才成立。<br/> 請按此連結付款: <a href='${paymentUrl}'>${paymentUrl}</a>`;
            } else if (notificationLanguageValue === 'zh-CN') {
              companyName = '过来人App';
              subject = `[等待付款]${initiatorName} 刚刚答应了你的谘询预约时间!`;
-             html = `但是正式预约只有在您付款后才成立。<br/> 请按此连结付款: <a href='${url}'>${url}</a>`;
+             html = `但是正式预约只有在您付款后才成立。<br/> 请按此连结付款: <a href='${paymentUrl}'>${paymentUrl}</a>`;
            } else {
              companyName = 'Shelpy';
              subject = `[Payment needed]${initiatorName} just accept your booking request time!`;
-             html = `However, booking is only officially confirmed after payment. Please click here to pay: <a href='${url}'>${url}</a>`;
+             html = `However, booking is only officially confirmed after payment. Please click here to pay: <a href='${paymentUrl}'>${paymentUrl}</a>`;
            }
            break;
          case 'paid':

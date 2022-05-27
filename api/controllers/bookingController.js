@@ -70,6 +70,7 @@ const updateBookingStatus = async (req, res) => {
       bookingStatus: data.bookingStatus, // created, helperConfirmed, paid, fulfilled
       appointmentDate: data.appointmentDate,
       appointmentTime: data.appointmentTime,
+      bookingId: data.bookingId || 0,
     });
     await generalModel.logEmailToDB({
       receiverRole: emailReceiverRole,
