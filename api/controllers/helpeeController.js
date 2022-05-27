@@ -361,12 +361,19 @@ const getTapPayNotification = async (req, res) => {
       bank_order_number,
       status, // 0 means successful
       msg,
-      pay_info,
+      pay_info: JSON.stringify(pay_info),
       bank_result_code,
       bank_result_msg,
       salesAmount: amount,
       logTimeStamp: Date.now(),
       logDate: today.toISOString().slice(0, 10),
+    });
+    res.status(200).json({
+      status: 'success',
+    });
+  } else {
+    res.status(500).json({
+      status: 'failed',
     });
   }
 }
