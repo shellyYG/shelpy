@@ -806,6 +806,14 @@ export const postPayViaTapPay = (data) => {
               paymentStepMessage: 'click_ok_to_continue',
             })
           );
+        } else if (response && response.data && response.data.details === 'alreadyPaid') {
+          dispatch(
+            helpeeActions.updatePaymentStep({
+              paymentStep: 'toSuccessPage',
+              paymentStepTitle: 'redirect_to_payment_final_page',
+              paymentStepMessage: 'click_ok_to_continue',
+            })
+          );
         }
       }
     } catch (error) {

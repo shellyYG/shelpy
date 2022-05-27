@@ -69,6 +69,7 @@
   "thank_you": "Thank you!",
   "redirect_to_3D_payment": "Redirect to 3D payment page...",
   "successfully_paid": "Successfully paid the booking.",
+  "already_paid": "This order is already paid.",
   "redirect_to_payment_final_page": "Redirecting you to payment final page...",
   "payment_failed": "Payment Failed. Please Email us to sort out payment issue: team@shelpy.co",
   "please_email_us_for_help": "Please contact our customer service for help: team@shelpy.co",
@@ -149,6 +150,7 @@
   "service_not_exist": "This service is no longer available",
   "back_to_home": "Back to homepage",
   "back_to_bookings_page": "Check My Booking Status",
+  "redirect_back_to_bookings_page": "Redirect to Bookings Page",
   "learn_at_homepage": "FREE visit on Homepage",
 
   "footer_question": "Question? Contact us: team@shelpy.co",

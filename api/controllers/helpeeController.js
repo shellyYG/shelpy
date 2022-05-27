@@ -309,10 +309,19 @@ const payTapPay = async (req, res) => {
   const { data } = req.body;
   const { bookingId, helpeeId, helpeeName, helpeeEmail, amount } = data;
   try {
+    const bookingCurrentStatus = await bookingModel.checkBookingStatus(data);
     const headers = {
       'Content-Type': 'application/json',
       'x-api-key': data.partner_key,
     };
+    if (
+      bookingCurrentStatus &&
+      bookingCurrentStatus[0] &&
+      bookingCurrentStatus[0].bookingStatus === 'paid'
+    ) {
+      res.status(200).json({ details: 'alreadyPaid' });
+      return;
+    }
     const response = await axios.post(
       tapPayAPIURL,
       data,

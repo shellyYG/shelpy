@@ -8,6 +8,13 @@ async function checkBookingExisted(data) {
   return sqlquery;
 }
 
+async function checkBookingStatus(data) {
+  const { bookingId } = data;
+  const sql = `SELECT bookingStatus FROM bookings WHERE id =?`;
+  const sqlquery = await query(sql, [bookingId]);
+  return sqlquery;
+}
+
 async function insertBooking(data) {
   const sql = 'INSERT INTO bookings SET ?';
   const sqlResult = await query(sql, data);
@@ -86,6 +93,7 @@ async function ratePartner(data) {
 
 module.exports = {
   checkBookingExisted,
+  checkBookingStatus,
   insertBooking,
   updateBookingStatus,
   unsubscribeEmail,

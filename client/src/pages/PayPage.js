@@ -79,6 +79,7 @@ const PayPage = (props) => {
   const [helperNotificationLanguage, setHelperNotificationLanguage] =
     useState('');
   const [isAnonymous, setIsAnonymous] = useState(true);
+  const [bookingStatus, setBookingStatus] = useState('');
 
   const cardNumberRef = useRef();
   const cardExpireDateRef = useRef();
@@ -123,7 +124,8 @@ const PayPage = (props) => {
         helperUsername,
         helpeeId,
         helperId,
-        isAnonymous
+        isAnonymous,
+        bookingStatus
       } = bookingToPay;
       setAppointmentDate(appointmentDate);
       setAppointmentTime(appointmentTime);
@@ -141,6 +143,7 @@ const PayPage = (props) => {
       setHelpeeId(helpeeId);
       setHelperId(helperId);
       setIsAnonymous(isAnonymous);
+      setBookingStatus(bookingStatus);
     }
   }, [booking]);
 
@@ -239,6 +242,28 @@ const PayPage = (props) => {
       setHelpeeNotificationLanguage(helpeeData[0].notificationLanguage);
     }
   }, [helperData, helpeeData]);
+
+  useEffect(() => {
+    if (bookingStatus === 'paid') {
+      async function sweetAlertAndNavigate(title, message) {
+        await MySwal.fire({
+          title: <strong>{t(title)}</strong>,
+          imageWidth: 442,
+          imageHeight: 293,
+          html: <p>{t(message)}</p>,
+          icon: 'success',
+        });
+        navigate(
+          `/${currentLanguage}/helpee/bookings?refId=${refId}`
+        );
+      }
+      dispatch(clearPaymentStep());
+      sweetAlertAndNavigate(
+        t('already_paid'),
+        t('redirect_back_to_bookings_page')
+      );
+    }
+  });
 
   function onSubmit(e) {
     e.preventDefault();

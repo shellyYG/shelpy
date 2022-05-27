@@ -69,6 +69,7 @@
   "thank_you": "感謝你!",
   "redirect_to_3D_payment": "正在跳轉至3D付款頁面...",
   "successfully_paid": "付款成功",
+  "already_paid": "本筆交易已經付過款了",
   "redirect_to_payment_final_page": "正在跳轉至最終付款頁面...",
   "payment_failed": "付款失敗，請Email我們以解決付款問題：team@shelpy.co",
   "please_email_us_for_help": "請洽客服: team@shelpy.co",
@@ -149,6 +150,7 @@
   "service_not_exist": "此服務已經不在架上了喔",
   "back_to_home": "回到首頁",
   "back_to_bookings_page": "查看我的預約情況",
+  "redirect_back_to_bookings_page": "重新導向至預約情況頁面",
   "learn_at_homepage": "免費去過來人首頁逛逛",
 
   "footer_question": "有任何問題，請與我們聯繫: team@shelpy.co",
