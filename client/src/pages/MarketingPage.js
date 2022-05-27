@@ -61,61 +61,59 @@ const HelpeeDashboardPage = (props) => {
 
   useEffect(() => {
     if (currentLanguage === 'en') {
-      if (mainType === 'default') {
+      if (country === 'default') {
         const filteredOffers = allMKTOffers.filter(
           (offer) => offer.introductionEN
         );
         setFilteredOffers(filteredOffers);
       }
-      if (mainType !== 'default') {
+      if (country !== 'default') {
         const filteredOffers = allMKTOffers.filter(
-          (offer) =>
-            offer.mainType === mainType && offer.introductionEN
+          (offer) => offer.country === country && offer.introductionEN
         );
         setFilteredOffers(filteredOffers);
       }
-      if (mainType && secondType !== 'default') {
+      if (country && mainType !== 'default') {
         const filteredOffers = allMKTOffers.filter(
           (offer) =>
+            offer.country === country &&
             offer.mainType === mainType &&
-            offer.secondType === secondType &&
             offer.introductionEN
         );
         setFilteredOffers(filteredOffers);
       }
-      if (mainType && secondType !== 'default' && country !== 'default') {
+      if (country && mainType !== 'default' && secondType !== 'default') {
         const filteredOffers = allMKTOffers.filter(
           (offer) =>
+            offer.country === country &&
             offer.mainType === mainType &&
             offer.secondType === secondType &&
-            offer.country === country &&
             offer.introductionEN
         );
         setFilteredOffers(filteredOffers);
       }
     } else {
-      if (mainType === 'default') {
+      if (country === 'default') {
         setFilteredOffers(allMKTOffers);
       }
-      if (mainType !== 'default') {
+      if (country !== 'default') {
         const filteredOffers = allMKTOffers.filter(
-          (offer) => offer.mainType === mainType
+          (offer) => offer.country === country
         );
         setFilteredOffers(filteredOffers);
       }
-      if (mainType && secondType !== 'default') {
+      if (country && mainType !== 'default') {
         const filteredOffers = allMKTOffers.filter(
-          (offer) =>
-            offer.mainType === mainType && offer.secondType === secondType
+          (offer) => offer.country === country && offer.mainType === mainType
         );
         setFilteredOffers(filteredOffers);
       }
-      if (mainType && secondType !== 'default' && country !== 'default') {
+      if (country && mainType !== 'default' && secondType !== 'default') {
         const filteredOffers = allMKTOffers.filter(
           (offer) =>
+            offer.country === country &&
             offer.mainType === mainType &&
-            offer.secondType === secondType &&
-            offer.country === country
+            offer.secondType === secondType
         );
         setFilteredOffers(filteredOffers);
       }
@@ -135,11 +133,6 @@ const HelpeeDashboardPage = (props) => {
     }
   }, [mainType]);
 
-  useEffect(() => { // clear out country options when secondType is selected
-    if (secondType) {
-      setCountry('default');
-    }
-  }, [secondType]);
   function handleToHomepage(e) {
     e.preventDefault();
     let path = `/${currentLanguage}/home`;
@@ -164,6 +157,17 @@ const HelpeeDashboardPage = (props) => {
           <div className='orderHistoryBtnWrapper'>
             <div className='mktFilterWrapper'>
               <DropDown
+                selected={country}
+                handleSelect={setCountry}
+                title={t('mkt_select_country')}
+                selectRef={countryRef}
+                options={workingCountryOptions}
+                titleColor='black'
+                titleMarginLeft='8px'
+              />
+            </div>
+            <div className='mktFilterWrapper'>
+              <DropDown
                 selected={mainType}
                 handleSelect={setMainType}
                 title={t('mkt_select_main_category')}
@@ -180,17 +184,6 @@ const HelpeeDashboardPage = (props) => {
                 title={t('mkt_select_sub_category')}
                 selectRef={secondTypeRef}
                 options={matchedSecondTypes}
-                titleColor='black'
-                titleMarginLeft='8px'
-              />
-            </div>
-            <div className='mktFilterWrapper'>
-              <DropDown
-                selected={country}
-                handleSelect={setCountry}
-                title={t('mkt_select_country')}
-                selectRef={countryRef}
-                options={workingCountryOptions}
                 titleColor='black'
                 titleMarginLeft='8px'
               />
