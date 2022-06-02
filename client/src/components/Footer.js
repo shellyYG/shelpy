@@ -59,9 +59,9 @@ function Footer() {
             <div style={{ margin: '0 5px' }}>
               <InstagramIcon />
             </div>
-            {/* <div style={{ margin: '0 5px' }}>
+            <div style={{ margin: '0 5px' }}>
               <YoutubeIcon />
-            </div> */}
+            </div>
           </div>
           <FooterElement text={t('footer_legal_rights')}  className='allRightsWrapper'/>
         </div>

@@ -1,6 +1,6 @@
 import { IconContext } from 'react-icons';
 import { AiFillYoutube } from 'react-icons/ai';
-const youtubeURL = 'https://www.facebook.com/shelpy.co'; // TODO
+const youtubeURL = 'https://www.youtube.com/channel/UCEUp7L5zWeZUypKEvHJ4J2g';
 const YoutubeIcon = () => {
   async function handleYoutubeClick(e) {
     e.preventDefault();
