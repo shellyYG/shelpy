@@ -77,7 +77,7 @@ function App() {
     useSelector((state) => state.helper);
   
   if (!currentLanguage) {
-    currentLanguage = 'en';
+    currentLanguage = 'zh-TW';
   }
     return (
       <Suspense fallback={null}>
