@@ -1,10 +1,10 @@
-import "../../App.css";
+import '../../App.css';
 import HelpeeSignUpPage from './HelpeeSignUpPage';
 import HelpeeLoggedInHomePage from './HelpeeLoggedInHomePage';
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { logLandOnPage } from '../../store/general/general-actions';
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from 'react-router-dom';
 
 const HelpeeHomePage = (props) => {
   const dispatch = useDispatch();

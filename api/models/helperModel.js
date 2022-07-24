@@ -88,13 +88,175 @@ async function getHelperSingleOffer(data) {
   return { data: { singleOffer} };
 }
 
-async function getAllMarketingOffers() {
-  const sql = `
-  SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
-  FROM offers ofs 
-  INNER JOIN helper_account acc ON ofs.userId = acc.id
-  WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' ORDER BY score, id DESC;`;
-  const allMKTOffers = await query(sql);
+async function getAllMarketingOffers(data) {
+  const { page, filterCountry, filterMainType, filterSecondType } = data;
+
+  const offset = (parseInt(page) - 1) * 10;
+
+  let sql;
+  let allOffersCount = 0;
+  let allMKTOffers = [];
+
+  const hasFilterCountry = filterCountry && filterCountry !== 'default';
+  const hasFilterMainType = filterMainType && filterMainType !== 'default';
+  const hasFilterSecondType = filterSecondType && filterSecondType !== 'default';
+
+  if (hasFilterCountry && hasFilterMainType && hasFilterSecondType) {
+    sqlCount = `
+      SELECT COUNT(*) AS numbers
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND country=? AND mainType=? AND secondType=?
+      ;`;
+    sql = `
+      SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND country=? AND mainType=? AND secondType=?
+      ORDER BY score, id DESC
+      LIMIT 10 OFFSET ?;`;
+    allOffersCount = await query(sqlCount, [
+      filterCountry,
+      filterMainType,
+      filterSecondType,
+      offset,
+    ]);
+    allMKTOffers = await query(sql, [
+      filterCountry,
+      filterMainType,
+      filterSecondType,
+      offset,
+    ]);
+  } else if (!hasFilterCountry && !hasFilterMainType && !hasFilterSecondType) {
+    sqlCount = `
+      SELECT COUNT(*) AS numbers
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted'
+      ;`;
+    sql = `
+      SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted'
+      ORDER BY score, id DESC
+      LIMIT 10 OFFSET ?;`;
+    allOffersCount = await query(sqlCount, [offset]);
+    allMKTOffers = await query(sql, [offset]);
+  } else if (hasFilterCountry && !hasFilterMainType && !hasFilterSecondType) {
+    sqlCount = `
+      SELECT COUNT(*) AS numbers
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND country=?
+      ;`;
+    sql = `
+      SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND country=?
+      ORDER BY score, id DESC
+      LIMIT 10 OFFSET ?;`;
+    allOffersCount = await query(sqlCount, [filterCountry, offset]);
+    allMKTOffers = await query(sql, [filterCountry, offset]);
+
+  } else if (!hasFilterCountry && hasFilterMainType && !hasFilterSecondType) {
+    sqlCount = `
+      SELECT COUNT(*) AS numbers
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND mainType=?
+      ;`;
+    sql = `
+      SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND mainType=?
+      ORDER BY score, id DESC
+      LIMIT 10 OFFSET ?;`;
+    allOffersCount = await query(sqlCount, [filterMainType, offset]);
+    allMKTOffers = await query(sql, [filterMainType, offset]);
+
+  } else if (!hasFilterCountry && !hasFilterMainType && hasFilterSecondType) {
+    sqlCount = `
+      SELECT COUNT(*) AS numbers
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND secondType=?
+      ;`;
+    sql = `
+      SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND secondType=?
+      ORDER BY score, id DESC
+      LIMIT 10 OFFSET ?;`;
+    allOffersCount = await query(sqlCount, [filterSecondType, offset]);
+    allMKTOffers = await query(sql, [filterSecondType, offset]);
+
+  } else if (hasFilterCountry && hasFilterMainType && !hasFilterSecondType) {
+    sqlCount = `
+      SELECT COUNT(*) AS numbers
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND country=? AND mainType=? 
+      ;`;
+    sql = `
+      SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND country=? AND mainType=? 
+      ORDER BY score, id DESC
+      LIMIT 10 OFFSET ?;`;
+    allOffersCount = await query(sqlCount, [
+      filterCountry,
+      filterMainType,
+      offset,
+    ]);
+    allMKTOffers = await query(sql, [filterCountry, filterMainType, offset]);
+
+  } else if (hasFilterCountry && !hasFilterMainType && hasFilterSecondType) {
+    sqlCount = `
+      SELECT COUNT(*) AS numbers
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND country=? AND secondType=?
+      ;`;
+    sql = `
+      SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND country=? AND secondType=?
+      ORDER BY score, id DESC
+      LIMIT 10 OFFSET ?;`;
+    allOffersCount = await query(sqlCount, [
+      filterCountry,
+      filterSecondType,
+      offset,
+    ]);
+    allMKTOffers = await query(sql, [filterCountry, filterSecondType, offset]);
+
+  } else if (!hasFilterCountry && hasFilterMainType && hasFilterSecondType) {
+    sqlCount = `
+      SELECT COUNT(*) AS numbers
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND mainType=? AND secondType=?
+      ;`;
+    sql = `
+      SELECT ofs.*, acc.username, acc.profilePicPath, acc.introduction, acc.introductionEN, acc.languages, ofs.isAnonymous, acc.id AS helperId
+      FROM offers ofs 
+      INNER JOIN helper_account acc ON ofs.userId = acc.id
+      WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') AND NOT ofs.status='deleted' AND mainType=? AND secondType=?
+      ORDER BY score, id DESC
+      LIMIT 10 OFFSET ?;`;
+    allOffersCount = await query(sqlCount, [
+      filterMainType,
+      filterSecondType,
+      offset,
+    ]);
+    allMKTOffers = await query(sql, [filterMainType, filterSecondType, offset]);
+  }
   const sqlForRating = `
   SELECT writerUsername, ratedPartnerId, score, comments
   FROM ratings
@@ -104,10 +266,10 @@ async function getAllMarketingOffers() {
   INNER JOIN helper_account acc ON ofs.userId = acc.id
   WHERE acc.isMarketing = true AND acc.internalStatus IN ('pass_eligibility_email_sent') 
     AND NOT ofs.status='deleted' 
-  ) AND writerRole = 'helpee'
+  ) AND writerRole = 'helpee';
   `;
   const allMKTHelperRatings = await query(sqlForRating);
-  return { data: { allMKTOffers, allMKTHelperRatings } };
+  return { data: { allOffersCount: 0 || allOffersCount[0].numbers, allMKTOffers, allMKTHelperRatings } };
 }
 
 async function getHelperAllBookings(data) {

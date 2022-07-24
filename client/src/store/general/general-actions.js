@@ -150,12 +150,21 @@ export const onClickUpdateActiveIconTarget = (data) => {
 
 export const getAllMarketingOffers = (data) => {
   return async (dispatch) => {
+    const { page, filterCountry, filterMainType, filterSecondType } = data;
     try {
-      const response = await axios.get(getAllMarketingOffersPath);
+      const response = await axios.get(getAllMarketingOffersPath, {
+        params: {
+          page,
+          filterCountry,
+          filterMainType,
+          filterSecondType,
+        },
+      });
       dispatch(
         generalActions.updateAllMarketingOffers({
           allMKTOffers: response.data.allMKTOffers,
           allMKTHelperRatings: response.data.allMKTHelperRatings,
+          allOffersCount: response.data.allOffersCount,
         })
       );
     } catch (error) {
@@ -164,6 +173,7 @@ export const getAllMarketingOffers = (data) => {
         generalActions.updateAllMarketingOffers({
           allMKTOffers: [],
           allMKTHelperRatings: [],
+          allOffersCount: 0,
         })
       );
     }
@@ -321,5 +331,46 @@ export const logLandOnPage = (data) => {
     } catch (error) {
       console.error(error);
     }
+  };
+};
+
+export const onClickUpdatePage = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      generalActions.onClickUpdatePage({
+        page: data.page,
+      })
+    );
+  };
+};
+
+export const onClickUpdateFilterCountry = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      generalActions.onClickUpdateFilterCountry({
+        filterCountry: data.filterCountry,
+      })
+    );
+  };
+};
+
+export const onClickUpdateFilterMainType = (data) => {
+  return async (dispatch) => {
+    dispatch(
+      generalActions.onClickUpdateFilterMainType({
+        filterMainType: data.filterMainType,
+      })
+    );
+  };
+};
+
+export const onClickUpdateFilterSecondType = (data) => {
+  return async (dispatch) => {
+    console.log('onClickUpdateFilterSecondType to be: ', data.filterSecondType);
+    dispatch(
+      generalActions.onClickUpdateFilterSecondType({
+        filterSecondType: data.filterSecondType,
+      })
+    );
   };
 };

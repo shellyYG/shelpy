@@ -17,7 +17,8 @@ const generalSlice = createSlice({
     unSubEmailStatus: 'Initial',
     unSubEmailStatusTitle: '',
     unSubEmailStatusMessage: '',
-
+    
+    allOffersCount: 0,
     allMKTOffers: [],
     allMKTHelperRatings: [],
     userRole: '',
@@ -34,6 +35,10 @@ const generalSlice = createSlice({
     ratingNotificationStatus: 'Initial',
     ratingNotificationStatusTitle: '',
     ratingNotificationStatusMessage: '',
+    page: 1,
+    filterCountry: '',
+    filterMainType: '',
+    filterSecondType: '',
   },
   reducers: {
     setUserRole(state, action) {
@@ -75,9 +80,11 @@ const generalSlice = createSlice({
       if (signInRole) state.signInRole = signInRole;
     },
     updateAllMarketingOffers(state, action) {
-      const { allMKTOffers, allMKTHelperRatings } = action.payload;
+      const { allOffersCount, allMKTOffers, allMKTHelperRatings } =
+        action.payload;
       if (allMKTOffers) state.allMKTOffers = allMKTOffers;
       if (allMKTHelperRatings) state.allMKTHelperRatings = allMKTHelperRatings;
+      if (allOffersCount) state.allOffersCount = allOffersCount;
     },
     setEmailUnsubStatus(state, action) {
       const {
@@ -133,6 +140,22 @@ const generalSlice = createSlice({
         state.ratingNotificationStatusTitle = ratingNotificationStatusTitle;
       if (ratingNotificationStatusMessage)
         state.ratingNotificationStatusMessage = ratingNotificationStatusMessage;
+    },
+    onClickUpdatePage(state, action) {
+      const { page } = action.payload;
+      if (page) state.page = page;
+    },
+    onClickUpdateFilterCountry(state, action) {
+      const { filterCountry } = action.payload;
+      if (filterCountry) state.filterCountry = filterCountry;
+    },
+    onClickUpdateFilterMainType(state, action) {
+      const { filterMainType } = action.payload;
+      if (filterMainType) state.filterMainType = filterMainType;
+    },
+    onClickUpdateFilterSecondType(state, action) {
+      const { filterSecondType } = action.payload;
+      state.filterSecondType = filterSecondType;
     },
   },
 });

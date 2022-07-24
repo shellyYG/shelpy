@@ -183,9 +183,16 @@ const getHelperSingleOffer = async (req, res) => {
 
 const getAllMarketingOffers = async (req, res) => {
   try {
-    const response = await helperModel.getAllMarketingOffers();
+    const { page, filterCountry, filterMainType, filterSecondType } = req.query;
+    const response = await helperModel.getAllMarketingOffers({
+      page,
+      filterCountry,
+      filterMainType,
+      filterSecondType,
+    });
     if (response && response.data) {
       res.status(200).json({
+        allOffersCount: response.data.allOffersCount,
         allMKTOffers: response.data.allMKTOffers,
         allMKTHelperRatings: response.data.allMKTHelperRatings,
       });
