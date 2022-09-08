@@ -46,6 +46,7 @@ function FeaturedHelperPart(props) {
           tag1={t('job')}
           tag2={t('job_form_job_project_manager')}
           tag3={t('country_ireland')}
+          providerId={86}
         />
         <MktCard
           imageSrc='/static-imgs/Chrystal_selfEmployed.jpg'
@@ -57,6 +58,7 @@ function FeaturedHelperPart(props) {
           tag1={t('service_types_self_employed')}
           tag2={t('self_employed_profession_makeup_artist')}
           tag3={t('country_france')}
+          providerId={15}
         />
         {/* <MktCard
           imageSrc='/static-imgs/easyCookAsia_selfEmployed.jpeg'
@@ -79,6 +81,7 @@ function FeaturedHelperPart(props) {
           tag1={t('school')}
           tag2={t('uni_form_department_chemistry')}
           tag3={t('country_usa')}
+          providerId={80}
         />
 
         <MktCard
@@ -91,6 +94,7 @@ function FeaturedHelperPart(props) {
           tag1={t('job')}
           tag2={t('job_form_job_process_engineer')}
           tag3={t('country_taiwan')}
+          providerId={76}
         />
         <MktCard
           imageSrc='/static-imgs/Tingyi-job.jpeg'
@@ -102,6 +106,7 @@ function FeaturedHelperPart(props) {
           tag1={t('job')}
           tag2={t('job_form_job_growth_manager')}
           tag3={t('country_ireland')}
+          providerId={88}
         />
         <MktCard
           imageSrc='/static-imgs/Anya_school.jpeg'
@@ -113,6 +118,7 @@ function FeaturedHelperPart(props) {
           tag1={t('school')}
           tag2={t('uni_form_department_neuroscience')}
           tag3={t('country_usa')}
+          providerId={54}
         />
         <MktCard
           imageSrc='/static-imgs/Yichen_school.jpg'
@@ -124,6 +130,7 @@ function FeaturedHelperPart(props) {
           tag1={t('school')}
           tag2={t('uni_form_department_chemistry')}
           tag3={t('country_germany')}
+          providerId={50}
         />
         <MktCard
           imageSrc='/static-imgs/Markus_job.jpeg'
@@ -135,6 +142,7 @@ function FeaturedHelperPart(props) {
           tag1={t('job')}
           tag2={t('job_form_job_strategy_consultant')}
           tag3={t('country_germany')}
+          providerId={20}
         />
 
         <MktCard
@@ -147,6 +155,7 @@ function FeaturedHelperPart(props) {
           tag1={t('school')}
           tag2={t('uni_form_department_computer_science_and_info_engineering')}
           tag3={t('country_usa')}
+          providerId={66}
         />
         <MktCard
           imageSrc='/static-imgs/Suzie_job.jpg'
@@ -158,6 +167,7 @@ function FeaturedHelperPart(props) {
           tag1={t('job')}
           tag2={t('job_form_job_teacher')}
           tag3={t('country_taiwan')}
+          providerId={3}
         />
         <MktCard
           imageSrc='/static-imgs/Chloe_job.jpeg'
@@ -169,6 +179,7 @@ function FeaturedHelperPart(props) {
           tag1={t('job')}
           tag2={t('job_form_job_mobile_developer')}
           tag3={t('country_germany')}
+          providerId={2}
         />
         <MktCard
           imageSrc='/static-imgs/Tina_job.jpeg'
@@ -180,6 +191,7 @@ function FeaturedHelperPart(props) {
           tag1={t('job')}
           tag2={t('job_form_job_retail_sales')}
           tag3={t('country_netherland')}
+          providerId={60}
         />
         <MktCard
           imageSrc='/static-imgs/Shelly_job.jpg'
@@ -191,6 +203,7 @@ function FeaturedHelperPart(props) {
           tag1={t('job')}
           tag2={t('job_form_job_data_analyst')}
           tag3={t('country_germany')}
+          providerId={1}
         />
       </div>
     </div>

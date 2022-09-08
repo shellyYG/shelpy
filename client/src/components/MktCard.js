@@ -1,7 +1,22 @@
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import SearchIcon from './Icons/SearchIcon';
 import SpeakIcon from './Icons/SpeakIcon';
 
 function MktCard(props) {
+  const { t, i18n } = useTranslation();
+  const [currentLanguage, setCurrentLanguage] = useState('');
+
+  const [searchParams] = useSearchParams();
+  const refId = searchParams.get('refId');
+
+  useEffect(() => {
+    setCurrentLanguage(i18n.language);
+  }, [i18n.language]);
+
+  
   return (
     <div className='mktCard'>
       <div className='content'>
@@ -9,6 +24,12 @@ function MktCard(props) {
           <img
             src={props.imageSrc}
             alt={props.text}
+            onClick={() =>
+              window.open(
+                `/${currentLanguage}/personal/offers?providerId=${props.providerId}&refId=helper${props.providerId}&refId=${refId}`, "_blank"
+              )
+            }
+            style={{ cursor: 'pointer' }}
           ></img>
         </div>
         <div className='contentBxMkt'>
